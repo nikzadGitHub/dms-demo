@@ -18,5 +18,9 @@
       "esnext",
       "dom"
     ]
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": true,
+    "strictInjectionParameters": true,
   }
 }

@@ -6,3 +6,7 @@
 export const environment = {
   production: false
 };
+
+export const settings = {
+  apiBaseUrl: 'https://idsmedapi.localhost/'
+}
