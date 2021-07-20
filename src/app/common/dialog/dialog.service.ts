@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-// import { AlertController } from '@ionic/angular';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../../components/shared/dialog/dialog.component';
+import { DialogInterface } from '../../interfaces/dialog.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +11,7 @@ export class DialogService {
 
   constructor(
     // private alertController: AlertController
+    private dialog: MatDialog
   ) { }
 
   async showErrorDialog(message: string, subMessage: string = "") {
@@ -22,6 +25,25 @@ export class DialogService {
       // });
 
       // await alert.present();
+
+      const dialogInterface: DialogInterface = {
+        dialogHeader: message,
+        dialogContent: subMessage,
+        cancelButtonLabel: 'Cancel',
+        confirmButtonLabel: 'Ok',
+        showCancelButton: false,
+        isError: true,
+        okCallbackMethod: () => {
+          
+        },
+        cancelCallbackMethod: () => {
+
+        }
+      };
+      this.dialog.open(DialogComponent, {
+        width: '300px',
+        data: dialogInterface,
+      });
     }
   }
 

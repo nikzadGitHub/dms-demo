@@ -1,8 +1,8 @@
 export interface UserSession {
     id: string;
     fullname: string;
-    needCreateProfile: boolean;
-    phoneNumber: string;
+    isLocked: boolean;
+    isActive: string;
     email: string;
-
+    language: string;
 }

@@ -23,6 +23,9 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
+// Modal Component
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 const APP_CONTAINERS = [
   DefaultLayoutComponent
 ];
@@ -43,6 +46,14 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './http-interceptors/auth-interceptor';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DialogComponent } from './components/shared/dialog/dialog.component';
 
 @NgModule({
   imports: [
@@ -62,6 +73,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ChartsModule,
     IconModule,
     IconSetModule.forRoot(),
+    HttpClientModule,
+    MatFormFieldModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [
     AppComponent,
@@ -69,12 +86,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    DialogComponent
   ],
   providers: [
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi:true
     },
     IconSetService,
   ],

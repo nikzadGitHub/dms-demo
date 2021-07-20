@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpEvent, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -38,14 +38,14 @@ export class AuthService {
   private forge: any;
 
   constructor(
-    private storage: LocalStorageService, 
     private httpClient: HttpClient,
+    private storage: LocalStorageService, 
     private router: Router
   ) { 
     
     // this.loadRSAKey();
-    // this.loadToken();
-    // this.loadDeviceId();
+    this.loadToken();
+    this.loadDeviceId();
     // this.getFCMCode();
   }
 
@@ -127,17 +127,18 @@ export class AuthService {
   async getUserSession(): Promise<UserSession> {
     let userSession: UserSession;
     
-    let objUser = JSON.parse(this.storage.get(USER_JSON));
+    let stringUser = this.storage.get(USER_JSON); //JSON.parse(this.storage.get(USER_JSON));
 
-    if ((objUser) && (objUser.trim())) {
-      objUser = JSON.parse(objUser);
+    if ((stringUser) && (stringUser.trim())) {
+      let objUser = JSON.parse(stringUser);
       console.log(objUser);
       userSession = {
-        fullname: objUser.name, 
+        fullname: objUser.full_name, 
         id: objUser.id, 
-        needCreateProfile: objUser.need_profile,
-        phoneNumber: objUser.phone_number,
-        email: objUser.email
+        isLocked: objUser.is_locked,
+        isActive: objUser.is_active,
+        email: objUser.email,
+        language: objUser.language
       };
     }
 
@@ -233,11 +234,11 @@ export class AuthService {
     
   }
   
-  changePassword(paswordInfo: {
-    current_password: string, password: string, password_confirmation: string
-  }): Observable<any> {
-    return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/change-password", paswordInfo).pipe();
-  }
+  // changePassword(paswordInfo: {
+  //   current_password: string, password: string, password_confirmation: string
+  // }): Observable<any> {
+  //   return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/change-password", paswordInfo).pipe();
+  // }
 
   updateFcmCodeToServer(fcmCode: string): Observable<any>  {
     let os: string = "web"; //this.platform.platforms().join();

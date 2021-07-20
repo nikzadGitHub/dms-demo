@@ -40,7 +40,7 @@ export class AuthInterceptor implements HttpInterceptor {
     req = req.clone({ headers: req.headers.set("Access-Control-Allow-Headers", "Origin, Authorization, Content-Type, Accept")});
     
     req = req.clone({ headers: req.headers.set('Accept', 'application/json') });
-    req = req.clone({ headers: req.headers.set('app-token', SystemConfig.apiAppToken) });
+    req = req.clone({ headers: req.headers.set('x-app-token', SystemConfig.apiAppToken) });
 
     // send cloned request with header to the next handler.
     return next.handle(req).pipe( 
