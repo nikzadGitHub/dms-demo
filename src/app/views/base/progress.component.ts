@@ -1,4 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
+import { ProgressbarType } from 'ngx-bootstrap/progressbar';
 
 @Component({
   templateUrl: 'progress.component.html'
@@ -8,7 +9,7 @@ export class ProgressComponent implements OnDestroy {
   max: number = 200;
   showWarning: boolean;
   dynamic: number;
-  type: string;
+  type: ProgressbarType;
 
   stacked: any[] = [];
 
@@ -29,7 +30,7 @@ export class ProgressComponent implements OnDestroy {
 
   random(): void {
     const value = Math.floor(Math.random() * 100 + 1);
-    let type: string;
+    let type: ProgressbarType;
 
     if (value < 25) {
       type = 'success';
