@@ -1,5 +1,8 @@
 export interface Quote {
     id: number;
-    title: string;
-    body: string;
+    company_name: string;
+    quotation_id: string;
+    validity_date: Date;
+    is_active:number;
+    status:number;
 }
