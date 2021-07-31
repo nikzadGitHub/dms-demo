@@ -6,3 +6,4 @@ export interface Quote {
     is_active:number;
     status:number;
 }
+
