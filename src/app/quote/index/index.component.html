@@ -32,11 +32,11 @@
             </tr>
             <tr *ngFor="let quote of quotes">
               <td>{{ quote.created_at }}</td>
-              <td><a href="#" [routerLink]="['/quote/', quote.id, 'view']">{{ quote.id }}</a></td>
+              <td><a href="#" [routerLink]="['/quote/', quote.id, 'view']">{{ quote.quote_id }}</a></td>
               <td>{{ quote.company_name }}</td>
               <td>{{ quote.validity_date }}</td>
-              <td>{{ quote.is_active }}<button class="cil-circle"></button></td>
-              <td>{{ quote.status }}</td>
+              <td><i class="fa fa-circle fa-lg" [ngClass]="(quote.is_active==1 ? 'active' : 'inactive')"></i></td>
+              <td>{{ quote.status == 1 ? "Approved" : ( quote.status == 0 ? "Revoke" : "Pending") }}</td>
               <td style="width: 5%;">
                 <a href="#" [routerLink]="['/quote/', quote.id, 'edit']" class="fa fa-edit"></a>
                 <!-- <button type="button" (click)="deleteQuote(quote.id)" class="btn btn-danger">Delete</button> -->
