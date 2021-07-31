@@ -1,0 +1,50 @@
+<div class="animated fadeIn">
+  <div class="col-lg col-md-6">
+    <div class="card">
+        <div class="card-header"><h1>Quote List</h1></div>
+      
+        <!-- <a href="#" routerLink="/quote/create/" class="btn btn-success">Create New Quote</a> -->
+        <div class="card-body">
+          <div class="form-group row">
+            <div style="padding: 9px;"></div>
+            <div class="btn-group" dropdown>
+                <button type="button" class="btn btn-danger buttonColor" (click)='onClick(selected)'>{{selected}}</button>
+                <button type="button" dropdownToggle class="btn btn-danger dropdown-toggle dropdown-toggle-split buttonColor">
+                    <span class="caret"></span>
+                </button>
+                <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <li *ngFor="let selection of selections" (click)='onSelect(selection)' role="menuitem">
+                        <a class="dropdown-item">{{selection}}</a>
+                    </li>
+                </ul>
+            </div>
+          </div>
+
+          <table class="table table-bordered">
+            <tr>
+              <th>Created Date</th>
+              <th>Quotation ID</th>
+              <th>Company Name</th>
+              <th>Validity Date</th>
+              <th>Active</th>
+              <th>Quote Status</th>
+              <th width="220px">Action</th>
+            </tr>
+            <tr *ngFor="let quote of quotes">
+              <td>{{ quote.created_at }}</td>
+              <td><a href="#" [routerLink]="['/quote/', quote.id, 'view']">{{ quote.id }}</a></td>
+              <td>{{ quote.company_name }}</td>
+              <td>{{ quote.validity_date }}</td>
+              <td>{{ quote.is_active }}<button class="cil-circle"></button></td>
+              <td>{{ quote.status }}</td>
+              <td style="width: 5%;">
+                <a href="#" [routerLink]="['/quote/', quote.id, 'edit']" class="fa fa-edit"></a>
+                <!-- <button type="button" (click)="deleteQuote(quote.id)" class="btn btn-danger">Delete</button> -->
+              </td>
+            </tr>
+          </table>
+          
+        </div>
+    </div>
+  </div>
+</div>

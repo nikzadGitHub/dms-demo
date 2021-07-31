@@ -54,6 +54,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DialogComponent } from './components/shared/dialog/dialog.component';
+import { QuoteModule } from './quote/quote.module';
 
 @NgModule({
   imports: [
@@ -79,6 +80,7 @@ import { DialogComponent } from './components/shared/dialog/dialog.component';
     MatButtonModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    QuoteModule
   ],
   declarations: [
     AppComponent,
