@@ -1,16 +1,29 @@
+.rcorners{
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    overflow: hidden;
+}
+
 th {
-    background-color: #33adff;
+    background-color: #2297e6;
     color: white;
     text-align: center;
+    border:hidden;
+}
+
+table {
+    border: 1px solid #2297e6;
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
 td {
-    text-align : center;
+    text-align: center;
 }
 
 .buttonColor {
-    background-color: #006bb3;
-    border-color: #006bb3;
+    background-color: #00538a;
+    border-color: #00538a;
 }
 
 .active{
@@ -19,4 +32,8 @@ td {
 
 .inactive{
     color: red;
+}
+
+.card-body{
+    padding: 0%;
 }
