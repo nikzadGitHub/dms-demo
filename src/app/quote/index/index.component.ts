@@ -11,15 +11,17 @@ import { Quote } from '../quote';
 export class IndexComponent implements OnInit {
    
   quotes: Quote[] = [];
+  paginate: [];
   public selections = ['Quote','Opportunity'];
   selected = 'Quote';
   
   constructor(public quoteService: QuoteService) { }
   
   ngOnInit(): void {
-    this.quoteService.getAll().subscribe((data: Quote[])=>{
-      this.quotes = data;
-      console.log(this.quotes);
+    this.quoteService.getAll().subscribe((data)=>{
+      this.quotes = data['data'];
+      this.paginate = data['links'];
+      console.log(data);
     })  
   }
   
@@ -34,7 +36,11 @@ export class IndexComponent implements OnInit {
     this.selected = selection;
   }
 
-  onClick(selected){
-
+  onClick(url){
+    this.quoteService.getPage(url).subscribe((data)=>{
+      this.quotes = data['data'];
+      this.paginate = data['links'];
+      console.log(data);
+    })  
   }
 }

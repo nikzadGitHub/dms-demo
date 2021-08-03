@@ -60,6 +60,13 @@ export class QuoteService {
     )
   }
   
+  getPage(url){
+    return this.httpClient.get(url,this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   errorHandler(error) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {
