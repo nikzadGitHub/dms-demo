@@ -1,15 +1,150 @@
 <div class="animated fadeIn">
     <div class="col-lg col-md-6">
         <div class="card rcorners">
-            <div class="card-header"><h1>Quote List</h1></div>
+            <div class="card-header"><h1>Create New Quote</h1></div>
                 <div class="card-body">
-                    <h1>Create New Quote</h1>
-                
-                    <a href="#" routerLink="/quote/index" class="btn btn-primary">Back</a>
+                    <!-- <a href="#" routerLink="/quote/index" class="btn btn-primary">Back</a> -->
                         
                     <form [formGroup]="form" (ngSubmit)="submit()">
-                
                         <div class="form-group">
+                            <div class="card rcorners customBorder shadow col-lg-9">
+                                <div class="card-header white">
+                                    <b>Standard Terms</b>
+                                </div>
+                                <div class="card-body grey">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                                Paymment Terms: 30 Days
+                                        </div>
+                                        <div class="col-lg-6" style="text-align: right;">
+                                            Quotation Validity: 30 Days, From <u>25-Jun-2021</u> To <u>24-Jul-2021</u>
+                                        </div>
+                                        <div class="col-lg-3" style="text-align: right;">
+                                            <a [routerLink]="" routerLinkActive="router-link-active" ><i class="fa fa-edit"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer white">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        <b>(As Default)</b> Paymment Terms: 30 Days
+                                        </div>
+                                        <div class="col-lg-6" style="text-align: right;">
+                                            Quotation Validity: 30 Days, From <u>25-Jun-2021</u> To <u>24-Jul-2021</u>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="card rcorners customBorder shadow col-lg-9">
+                                <div class="card-header white">
+                                    <b>Billing Milestone</b>
+                                    <a [routerLink]="" (click)="addBillings()" routerLinkActive="router-link-active" >
+                                        <i class="icon-plus icons"></i>
+                                    </a>
+                                </div>
+                                <div class="card-body" style="padding: 0%;">
+                                    <div class="row">
+                                        <table class="table table-borderless" formArrayName="billings">
+                                            <thead class="grey">
+                                                <tr>
+                                                    <th>Billing ID</th>
+                                                    <th>Stage</th>
+                                                    <th>Percentage</th>
+                                                    <th>Amount (MYR)</th>
+                                                    <th>Status</th>
+                                                    <th>Notes</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let quantity of billings().controls; let i=index" [formGroupName]="i" align="center">
+                                                    <td style="width: 15%;">
+                                                        <input formControlName="billing_id" class="form-control" placeholder="ABC123" type="text">
+                                                    </td>
+                                                    <td style="width: 15%;">
+                                                        <input formControlName="stage" class="form-control" size="1" placeholder="Deploy" type="text">
+                                                    </td>
+                                                    <td style="width: 10%;">
+                                                        <input formControlName="percentage" class="form-control" size="1" placeholder="50" type="number" min="0" max="100.00" step=".01">
+                                                    </td>
+                                                    <td style="width: 20%;">
+                                                        <input formControlName="amount" class="form-control" size="1" placeholder="300" type="number" min="0" step=".01">
+                                                    </td>
+                                                    <td>
+                                                        <input formControlName="status" class="form-control" size="1" placeholder="Deposit" type="input">
+                                                    </td>
+                                                    <td style="width: 15%;">
+                                                        <input formControlName="remarks" class="form-control" size="1" placeholder="Remarks" type="text">
+                                                    </td>
+                                                    <td class="td-actions" style="width: 10%;">
+                                                        <a [routerLink]="" routerLinkActive="router-link-active" ><i class="fa fa-edit"></i></a> &nbsp;
+                                                        <a [routerLink]="" (click)="removeBillings(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="card-header white">
+                                    <b>Payment Schedule</b>
+                                    <a [routerLink]="" routerLinkActive="router-link-active" (click)="addPayments()">
+                                        <i class="icon-plus icons"></i>
+                                    </a>
+                                </div>
+                                <div class="card-body" style="padding: 0%;">
+                                    <div class="row">
+                                        <table class="table table-borderless" formArrayName="payments">
+                                            <thead class="grey">
+                                                <tr>
+                                                    <th>Billing ID</th>
+                                                    <th>Percentage</th>
+                                                    <th>Schedule</th>
+                                                    <th>SOC Payment Terms</th>
+                                                    <th>Status</th>
+                                                    <th>Amount (MYR)</th>
+                                                    <th>Notes</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let quantity of payments().controls; let i=index" [formGroupName]="i" align="center">
+                                                    <td style="width: 13%; padding:6px">
+                                                        <input class="form-control" formControlName="billing_id" placeholder="ABC123" type="text">
+                                                    </td>
+                                                    <td style="width: 10%; padding:6px">
+                                                        <input class="form-control" formControlName="percentage" size="1" placeholder="50" type="number" min="0" max="100.00" step=".01">
+                                                    </td>
+                                                    <td style="width: 10%; padding:6px">
+                                                        <input class="form-control" formControlName="schedule" size="1" type="date"></td>
+                                                    <td style="width: 15%; padding:6px">
+                                                        <input class="form-control" formControlName="soc_payment_term" placeholder="30 Days" type="text">
+                                                    </td>
+                                                    <td style=" padding:6px;">
+                                                        <input class="form-control" formControlName="status" size="1" placeholder="Deposit" type="input">
+                                                    </td>
+                                                    <td style="width: 15%; padding:6px">
+                                                        <input class="form-control" formControlName="amount" size="1" placeholder="300" type="number" min="0" step=".01">
+                                                    </td>
+                                                    <td style="width: 10%; padding:6px">
+                                                        <input class="form-control" formControlName="remarks" size="1" placeholder="Remarks" type="text">
+                                                    </td>
+                                                    <td class="td-actions" style="width: 10%; padding:none">
+                                                        <a [routerLink]="" routerLinkActive="router-link-active" ><i class="fa fa-edit"></i></a> &nbsp;
+                                                        <a [routerLink]="" routerLinkActive="router-link-active" (click)="removePayments(i)" ><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group">
                             <label for="title">Title:</label>
                             <input 
                                 formControlName="title"
@@ -32,7 +167,7 @@
                             <div *ngIf="f.body.touched && f.body.invalid" class="alert alert-danger">
                                 <div *ngIf="f.body.errors.required">Body is required.</div>
                             </div>
-                        </div>
+                        </div> -->
                 
                         <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
                     </form>

@@ -19,8 +19,8 @@ export class IndexComponent implements OnInit {
   
   ngOnInit(): void {
     this.quoteService.getAll().subscribe((data)=>{
-      this.quotes = data['data'];
-      this.paginate = data['links'];
+      this.quotes = data['data']['data'];
+      this.paginate = data['data']['links'];
       console.log(data);
     })  
   }
@@ -38,8 +38,8 @@ export class IndexComponent implements OnInit {
 
   onClick(url){
     this.quoteService.getPage(url).subscribe((data)=>{
-      this.quotes = data['data'];
-      this.paginate = data['links'];
+      this.quotes = data['data']['data'];
+      this.paginate = data['data']['links'];
       console.log(data);
     })  
   }

@@ -1,5 +1,37 @@
 .rcorners{
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    border-radius: 10px;
     overflow: hidden;
+}
+
+.white{
+    background-color: white;
+}
+
+.grey{
+    background-color: rgb(245, 245, 245);
+}
+
+.customBorder{
+    border-color: #2297e6;
+}
+
+.card{
+    padding: 0%;
+}
+
+.card-header{
+    border: none;
+}
+
+thead{
+    text-align: center;
+    border: none;
+}
+
+input{
+    width: 70%;
+}
+
+.td-actions{
+    font-size: 1.5em;
 }

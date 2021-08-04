@@ -29,7 +29,7 @@ export class QuoteService {
     )
   }
    
-  create(post): Observable<Quote> {
+  create(quote): Observable<Quote> {
     return this.httpClient.get<Quote>(this.apiURL + '/quote/create')
     .pipe(
       tap((response: any) => {

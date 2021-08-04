@@ -52,7 +52,9 @@
           <nav>
             <ul class="pagination justify-content-end">
               <li *ngFor="let page of paginate" class="page-item">
-                <a class="page-link {{page.active==true?'active':''}}" [routerLink]="" (click)='onClick(page.url)'>{{page.label}}</a>
+                <a class="page-link {{page.active==true?'active':''}}" [routerLink]="" (click)='onClick(page.url)'>
+                  {{page.label}}
+                </a>
               </li>
             </ul>
           </nav>
