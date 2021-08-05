@@ -29,11 +29,12 @@ export class QuoteService {
     )
   }
    
-  create(quote): Observable<Quote> {
-    return this.httpClient.get<Quote>(this.apiURL + '/quote/create')
+  create(quote): Observable<any> {
+    console.log(quote);
+    return this.httpClient.post(this.apiURL + '/quote', quote, this.httpOptions)
     .pipe(
       tap((response: any) => {
-        console.log("Success logging in: "+response.success);               
+        console.log(response);               
     }),
       catchError(this.errorHandler)
     )

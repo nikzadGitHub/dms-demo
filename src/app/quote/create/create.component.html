@@ -13,13 +13,23 @@
                                 </div>
                                 <div class="card-body grey">
                                     <div class="row">
-                                        <div class="col-md-3">
-                                                Paymment Terms: 30 Days
+                                        <div class="col-md-5">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    Payment Terms:
+                                                </div> 
+                                                <div class="col-md-4">
+                                                    <select formControlName="standard_payment" (change)="termSelect(f.standard_payment.value)"
+                                                    name="standard_terms" class="form-control" >
+                                                        <option *ngFor="let term of terms" value="{{term}}">{{term}} Days</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-6" style="text-align: right;">
-                                            Quotation Validity: 30 Days, From <u>25-Jun-2021</u> To <u>24-Jul-2021</u>
+                                        <div class="col-lg-5" style="text-align: middle;">
+                                            Quotation Validity: {{termSelected}} Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
                                         </div>
-                                        <div class="col-lg-3" style="text-align: right;">
+                                        <div class="col-lg-1" style="text-align: right;">
                                             <a [routerLink]="" routerLinkActive="router-link-active" ><i class="fa fa-edit"></i></a>
                                         </div>
                                     </div>
@@ -27,7 +37,7 @@
                                 <div class="card-footer white">
                                     <div class="row">
                                         <div class="col-md-3">
-                                        <b>(As Default)</b> Paymment Terms: 30 Days
+                                        <b>(As Default)</b> Payment Terms: 30 Days
                                         </div>
                                         <div class="col-lg-6" style="text-align: right;">
                                             Quotation Validity: 30 Days, From <u>25-Jun-2021</u> To <u>24-Jul-2021</u>
@@ -168,7 +178,7 @@
                                             <tbody>
                                                 <tr *ngFor="let cost of addCosts().controls; let i=index" [formGroupName]="i" align="center">
                                                     <td style="width: 15%;">
-                                                        <input formControlName="description" class="form-control" placeholder="ABC123" type="text" (click)="test(addCosts().controls)">
+                                                        <input formControlName="description" class="form-control" placeholder="Training" type="text">
                                                     </td>
                                                     <td style="width: 15%;">
                                                         <input formControlName="quantity" class="form-control" size="1" placeholder="1" 

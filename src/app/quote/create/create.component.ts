@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuoteService } from '../quote.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators} from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray} from '@angular/forms';
    
 @Component({
   selector: 'app-create',
@@ -12,15 +12,20 @@ export class CreateComponent implements OnInit {
   
   form: FormGroup;
   sub_total: number;
+  terms = [30,60,90];
+  termSelected = 30;
+  fromDate = new Date();
+  toDate = this.fromDate.setDate(this.fromDate.getDate() + 30);
 
   constructor(
-    public postService: QuoteService,
+    public quoteService: QuoteService,
     private router: Router,
     private formBuilder: FormBuilder
   ) { }
   
   ngOnInit(): void {
     this.form =  this.formBuilder.group({
+      standard_payment: this.termSelected,
       billings: this.formBuilder.array([]),
       payments: this.formBuilder.array([]),
       addCosts: this.formBuilder.array([])
@@ -128,12 +133,17 @@ export class CreateComponent implements OnInit {
   //---------------- End of Additional Cost -------------------
 
   get f(){
-    return this.form.controls.controls;
+    return this.form.controls;
+  }
+
+  termSelect(term){
+    console.log(this.f);
+    this.termSelected = term;
   }
 
   submit(){
     console.log(this.form.value);
-    this.postService.create(this.form.value).subscribe(res => {
+    this.quoteService.create(this.form.value).subscribe(res => {
          console.log('Quote created successfully!');
          this.router.navigateByUrl('quote/index');
     })
