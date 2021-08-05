@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { QuoteService } from '../quote.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators} from '@angular/forms';
+import { Total } from './total';
    
 @Component({
   selector: 'app-create',
@@ -11,7 +12,9 @@ import { FormGroup, FormBuilder, FormArray, FormControl, Validators} from '@angu
 export class CreateComponent implements OnInit {
   
   form: FormGroup;
-   
+  sub_total: number;
+  total_price: Array<Total> = [];
+
   constructor(
     public postService: QuoteService,
     private router: Router,
@@ -21,14 +24,12 @@ export class CreateComponent implements OnInit {
   ngOnInit(): void {
     this.form =  this.formBuilder.group({
       billings: this.formBuilder.array([]),
-      payments: this.formBuilder.array([])
+      payments: this.formBuilder.array([]),
+      addCosts: this.formBuilder.array([])
     });
-    // new FormGroup({
-    //   title: new FormControl('', [Validators.required]),
-    //   body: new FormControl('', Validators.required)
-
-    // });
   }
+
+  //---------------- Billings Milestone -------------------
 
   billings() : FormArray {
     return this.form.get("billings") as FormArray
@@ -52,6 +53,10 @@ export class CreateComponent implements OnInit {
   removeBillings(i:number) {
     this.billings().removeAt(i);
   }
+
+  //---------------- End of Billings Milestone -------------------
+
+  //---------------- Payment Schedule -------------------
 
   payments() : FormArray {
     return this.form.get("payments") as FormArray
@@ -77,10 +82,57 @@ export class CreateComponent implements OnInit {
     this.payments().removeAt(i);
   }
 
-  get f(){
-    return this.form.controls;
-  }
+  //---------------- End of Payment Schedule -------------------
+
+  //---------------- Additional Cost -------------------
     
+  addCosts() : FormArray {
+    return this.form.get("addCosts") as FormArray
+  }
+   
+  newAddCosts(): FormGroup {
+    return this.formBuilder.group({
+      'description': '',
+      'quantity': 0,
+      'unit_price': 0.00,
+      'total_price': 0.00,
+      'remarks': '',
+    })
+  }
+
+  addAddCosts() {
+    this.addCosts().push(this.newAddCosts());
+  }
+   
+  removeAddCosts(i:number) {
+    this.addCosts().removeAt(i);
+  }
+
+  addTotal(costControl)
+  {
+    costControl.total_price.setValue(<number>costControl.quantity.value * <number>costControl.unit_price.value);
+  }
+
+  subTotal(costs){
+    this.sub_total = 0.00;
+    costs.forEach(element => {
+      console.log(element);
+      this.sub_total += <number>element.controls.total_price.value;
+    });
+    console.log(this.sub_total);
+  }
+
+  allTotal(costControl,costs){
+    this.addTotal(costControl);
+    this.subTotal(costs);
+  }
+
+  //---------------- End of Additional Cost -------------------
+
+  get f(){
+    return this.form.controls.controls;
+  }
+
   submit(){
     console.log(this.form.value);
     this.postService.create(this.form.value).subscribe(res => {
@@ -88,5 +140,4 @@ export class CreateComponent implements OnInit {
          this.router.navigateByUrl('quote/index');
     })
   }
-  
 }
