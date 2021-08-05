@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { QuoteService } from '../quote.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators} from '@angular/forms';
-import { Total } from './total';
    
 @Component({
   selector: 'app-create',
@@ -13,7 +12,6 @@ export class CreateComponent implements OnInit {
   
   form: FormGroup;
   sub_total: number;
-  total_price: Array<Total> = [];
 
   constructor(
     public postService: QuoteService,
