@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { QuoteService } from '../quote.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormArray} from '@angular/forms';
+import { Term } from './terms';
    
 @Component({
   selector: 'app-create',
@@ -12,10 +13,13 @@ export class CreateComponent implements OnInit {
   
   form: FormGroup;
   sub_total: number;
-  terms = [30,60,90];
+  terms: [];
+  billingIdList: number[] = [];
   termSelected = 30;
-  fromDate = new Date();
-  toDate = this.fromDate.setDate(this.fromDate.getDate() + 30);
+
+  fromDate: Date;
+  toDate: Date;
+  
 
   constructor(
     public quoteService: QuoteService,
@@ -24,11 +28,17 @@ export class CreateComponent implements OnInit {
   ) { }
   
   ngOnInit(): void {
+    this.dateInit();
+    this.quoteService.create(3630).subscribe((data)=>{
+      this.terms = data['data']['items'];
+      console.log(this.terms);
+    });
     this.form =  this.formBuilder.group({
       standard_payment: this.termSelected,
       billings: this.formBuilder.array([]),
       payments: this.formBuilder.array([]),
-      addCosts: this.formBuilder.array([])
+      addCosts: this.formBuilder.array([]),
+      tests: this.formBuilder.array([])
     });
   }
 
@@ -136,14 +146,35 @@ export class CreateComponent implements OnInit {
     return this.form.controls;
   }
 
-  termSelect(term){
-    console.log(this.f);
+  termSelect(term:number){
+    console.log(term);
     this.termSelected = term;
+  }
+
+  dateInit(){
+    this.fromDate = new Date();
+    const init = new Date();
+    this.toDate = new Date(init.setDate(init.getDate() + this.termSelected));
+  }
+
+  dateChange(){
+    var tempDate = this.fromDate;
+    tempDate = new Date(tempDate.setDate(tempDate.getDate() + this.termSelected));
+    this.toDate = tempDate;
+  }
+
+  billingIdChange(){
+    var billing_id = this.billings().controls;
+    this.billingIdList = [];
+    billing_id.forEach(test=>{
+      var data = test['controls']['billing_id'].value;
+      this.billingIdList.push(data);
+    });
   }
 
   submit(){
     console.log(this.form.value);
-    this.quoteService.create(this.form.value).subscribe(res => {
+    this.quoteService.store(this.form.value).subscribe(res => {
          console.log('Quote created successfully!');
          this.router.navigateByUrl('quote/index');
     })

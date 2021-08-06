@@ -19,9 +19,9 @@
                                                     Payment Terms:
                                                 </div> 
                                                 <div class="col-md-4">
-                                                    <select formControlName="standard_payment" (change)="termSelect(f.standard_payment.value)"
-                                                    name="standard_terms" class="form-control" >
-                                                        <option *ngFor="let term of terms" value="{{term}}">{{term}} Days</option>
+                                                    <select formControlName="standard_payment" (change)="termSelect(f.standard_payment.value);dateInit()"
+                                                    name="standard_terms" class="form-control">
+                                                        <option *ngFor="let term of terms" value="{{term.no_of_days}}">{{term.description}} Days</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -30,7 +30,10 @@
                                             Quotation Validity: {{termSelected}} Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
                                         </div>
                                         <div class="col-lg-1" style="text-align: right;">
-                                            <a [routerLink]="" routerLinkActive="router-link-active" ><i class="fa fa-edit"></i></a>
+                                            <div (click)="show=!show">
+                                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show"><i class="cil-check-circle"></i></a>
+                                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i class="fa fa-edit"></i></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +75,7 @@
                                             <tbody>
                                                 <tr *ngFor="let quantity of billings().controls; let i=index" [formGroupName]="i" align="center">
                                                     <td style="width: 15%;">
-                                                        <input formControlName="billing_id" class="form-control" placeholder="ABC123" type="text">
+                                                        <input (keyup)='billingIdChange()' formControlName="billing_id" class="form-control" placeholder="ABC123" type="text">
                                                     </td>
                                                     <td style="width: 15%;">
                                                         <input formControlName="stage" class="form-control" size="1" placeholder="Deploy" type="text">
@@ -123,7 +126,10 @@
                                             <tbody>
                                                 <tr *ngFor="let quantity of payments().controls; let i=index" [formGroupName]="i" align="center">
                                                     <td style="width: 13%; padding:6px">
-                                                        <input class="form-control" formControlName="billing_id" placeholder="ABC123" type="text">
+                                                        <select formControlName="billing_id" class="form-control">
+                                                            <option *ngFor="let id of billingIdList">{{id}}</option>
+                                                        </select>
+                                                        <!-- <input class="form-control" formControlName="billing_id" placeholder="ABC123" type="text"> -->
                                                     </td>
                                                     <td style="width: 10%; padding:6px">
                                                         <input class="form-control" formControlName="percentage" size="1" placeholder="50" type="number" min="0" max="100.00" step=".01">
