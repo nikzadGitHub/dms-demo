@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuoteService } from '../quote.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, FormArray} from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators} from '@angular/forms';
 import { Term } from './terms';
    
 @Component({
@@ -16,10 +16,11 @@ export class CreateComponent implements OnInit {
   terms: [];
   billingIdList: number[] = [];
   termSelected = 30;
+  dangerTitle: string;
+  dangerBody: string;
 
   fromDate: Date;
   toDate: Date;
-  
 
   constructor(
     public quoteService: QuoteService,
@@ -31,14 +32,12 @@ export class CreateComponent implements OnInit {
     this.dateInit();
     this.quoteService.create(3630).subscribe((data)=>{
       this.terms = data['data']['items'];
-      console.log(this.terms);
     });
     this.form =  this.formBuilder.group({
       standard_payment: this.termSelected,
       billings: this.formBuilder.array([]),
       payments: this.formBuilder.array([]),
       addCosts: this.formBuilder.array([]),
-      tests: this.formBuilder.array([])
     });
   }
 
@@ -163,13 +162,25 @@ export class CreateComponent implements OnInit {
     this.toDate = tempDate;
   }
 
-  billingIdChange(){
+  addBillingMilestone(){
     var billing_id = this.billings().controls;
-    this.billingIdList = [];
     billing_id.forEach(test=>{
       var data = test['controls']['billing_id'].value;
       this.billingIdList.push(data);
     });
+
+    this.billingIdList = this.billingIdList.map(item => item)
+    .filter((value, index, self) => self.indexOf(value) === index);
+  }
+
+  checkBilling(){
+    if(this.billingIdList.length > 0){
+      return true;
+    } else {
+      this.dangerTitle = "Warning";
+      this.dangerBody = "Please add billing milestone before adding payment schedule or additional cost.";
+      return false;
+    }
   }
 
   submit(){

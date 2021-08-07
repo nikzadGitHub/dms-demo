@@ -9,6 +9,8 @@ import { EditComponent } from './edit/edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { IconModule } from '@coreui/icons-angular';
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 
 
 @NgModule({
@@ -24,7 +26,8 @@ import { IconModule } from '@coreui/icons-angular';
     FormsModule,
     ReactiveFormsModule,
     BsDropdownModule,
-    IconModule
+    IconModule,
+    ModalModule
   ]
 })
 export class QuoteModule { }
