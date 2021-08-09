@@ -21,7 +21,8 @@
                                             <div class="col-md-4">
                                                 <select formControlName="standard_payment" (change)="termSelect(f.standard_payment.value);dateInit()"
                                                 name="standard_terms" class="form-control">
-                                                    <option *ngFor="let term of terms" value="{{term.no_of_days}}">{{term.description}} Days</option>
+                                                    <option>--- Select Term ---</option>
+                                                    <option *ngFor="let term of terms" value="{{term.id}}">{{term.description}}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -134,7 +135,7 @@
                                             <tr *ngFor="let quantity of payments().controls; let i=index" [formGroupName]="i" align="center">
                                                 <td style="width: 13%; padding:6px">
                                                     <select formControlName="billing_id" class="form-control">
-                                                        <option *ngFor="let id of billingIdList">{{id}}</option>
+                                                        <option *ngFor="let id of billingIdList" value="{{id}}">{{id}}</option>
                                                     </select>
                                                     <!-- <input class="form-control" formControlName="billing_id" placeholder="ABC123" type="text"> -->
                                                 </td>

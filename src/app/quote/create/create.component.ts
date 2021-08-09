@@ -13,9 +13,9 @@ export class CreateComponent implements OnInit {
   
   form: FormGroup;
   sub_total: number;
-  terms: [];
+  terms: Term[] = [];
   billingIdList: number[] = [];
-  termSelected = 30;
+  termSelected = 0;
   dangerTitle: string;
   dangerBody: string;
 
@@ -35,6 +35,9 @@ export class CreateComponent implements OnInit {
     });
     this.form =  this.formBuilder.group({
       standard_payment: this.termSelected,
+      fromDate: this.fromDate,
+      toDate: this.toDate,
+      term_id: this.termSelected,
       billings: this.formBuilder.array([]),
       payments: this.formBuilder.array([]),
       addCosts: this.formBuilder.array([]),
@@ -145,9 +148,8 @@ export class CreateComponent implements OnInit {
     return this.form.controls;
   }
 
-  termSelect(term:number){
-    console.log(term);
-    this.termSelected = term;
+  termSelect(term){
+    this.termSelected = this.terms.find(x => x.id == term).no_of_days;
   }
 
   dateInit(){
