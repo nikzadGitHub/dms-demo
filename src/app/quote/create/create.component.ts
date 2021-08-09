@@ -15,7 +15,7 @@ export class CreateComponent implements OnInit {
   sub_total: number;
   terms: Term[] = [];
   billingIdList: number[] = [];
-  termSelected = 0;
+  termSelected: number;
   dangerTitle: string;
   dangerBody: string;
 
