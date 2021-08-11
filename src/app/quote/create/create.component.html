@@ -145,7 +145,7 @@
                                                 <td style="width: 10%; padding:6px">
                                                     <input class="form-control" formControlName="schedule" size="1" type="date"></td>
                                                 <td style="width: 15%; padding:6px">
-                                                    <input class="form-control" formControlName="soc_payment_term" placeholder="30 Days" type="text">
+                                                    <input class="form-control" formControlName="soc_payment_term" placeholder="30 Days" type="number">
                                                 </td>
                                                 <td style=" padding:6px;">
                                                     <input class="form-control" formControlName="status" size="1" placeholder="Deposit" type="input">
@@ -254,8 +254,8 @@
                     </div> -->
                     <div class="col-lg-9" align=center>
                         <div class="form-group">
-                            <a routerLink="/quote/index" class="btn btn-secondary">Back</a>
-                            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
+                            <a routerLink="/quote/index" class="btn btn-secondary">CANCEL</a>
+                            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">SAVE & NEXT</button>
                         </div>
                     </div>                        
                 </form>
@@ -264,20 +264,33 @@
     </div>
 </div>
 
+<div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Success</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{alertBody}}</p>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-danger" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">{{dangerTitle}}</h4>
+          <h4 class="modal-title">Warning</h4>
         </div>
         <div class="modal-body">
-          <p>{{dangerBody}}</p>
+          <p>{{alertBody}}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" (click)="addBillings();dangerModal.hide()">Add Billing Milestone</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+</div><!-- /.modal -->
 
 

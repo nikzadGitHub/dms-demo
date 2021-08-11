@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { QuoteService } from '../quote.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, FormArray, Validators} from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray} from '@angular/forms';
 import { Term } from './terms';
-   
+import { ModalDirective } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -11,13 +11,14 @@ import { Term } from './terms';
 })
 export class CreateComponent implements OnInit {
   
+  @ViewChild('successModal') successModal : ModalDirective;
+
   form: FormGroup;
   sub_total: number;
   terms: Term[] = [];
   billingIdList: number[] = [];
   termSelected: number;
-  dangerTitle: string;
-  dangerBody: string;
+  alertBody: string;
 
   fromDate: Date;
   toDate: Date;
@@ -179,17 +180,20 @@ export class CreateComponent implements OnInit {
     if(this.billingIdList.length > 0){
       return true;
     } else {
-      this.dangerTitle = "Warning";
-      this.dangerBody = "Please add billing milestone before adding payment schedule or additional cost.";
+      this.alertBody = "Please add billing milestone before adding payment schedule.";
       return false;
     }
   }
 
+  redirectPage(){
+    this.router.navigateByUrl('quote/create/product');
+  }
+
   submit(){
     console.log(this.form.value);
-    this.quoteService.store(this.form.value).subscribe(res => {
-         console.log('Quote created successfully!');
-         this.router.navigateByUrl('quote/index');
+    this.quoteService.storeDetails(this.form.value).subscribe(res => {
+        this.alertBody = res.message;
+        this.successModal.show();
     })
   }
 }

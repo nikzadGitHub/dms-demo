@@ -8,5 +8,5 @@ export const environment = {
 };
 
 export const settings = {
-  apiBaseUrl: 'https://idsmedapi.localhost/api'
+  apiBaseUrl: 'http://idsmed-sales-funnel-api.test/api'
 }

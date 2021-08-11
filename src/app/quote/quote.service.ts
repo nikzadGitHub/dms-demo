@@ -6,7 +6,6 @@ import { catchError, tap } from 'rxjs/operators';
   
 import { Quote } from './quote';
 import { settings } from '../../environments/environment';
-import { Term } from './create/terms';
    
 @Injectable({
   providedIn: 'root'
@@ -40,7 +39,18 @@ export class QuoteService {
     )
   }
 
-  store(quote): Observable<any> {
+  storeDetails(quote): Observable<any> {
+    console.log(quote);
+    return this.httpClient.post(this.apiURL + '/quote', quote, this.httpOptions)
+    .pipe(
+      tap((response: any) => {
+        console.log(response);               
+    }),
+      catchError(this.errorHandler)
+    )
+  }  
+
+  storeProducts(quote): Observable<any> {
     console.log(quote);
     return this.httpClient.post(this.apiURL + '/quote', quote, this.httpOptions)
     .pipe(
