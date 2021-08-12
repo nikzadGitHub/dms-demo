@@ -1,0 +1,67 @@
+<div class="animated fadeIn">
+    <div class="col-lg col-md-6">
+        <div class="card rcorners">
+            <div class="card-header"><h1>Create New Quote</h1></div>
+            <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="card rcorners">
+                        <div class="card-header">Product</div>
+                        <div class="card-body">
+                            <table class="table" formArrayName="products">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Item Name</th>
+                                        <th>SKU ID</th>
+                                        <th>Quantity</th>
+                                        <th>Unit Price (RM)</th>
+                                        <th>Total Price (RM)</th>
+                                        <th>Discount (%)</th>
+                                        <th>Net Amount (RM)</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let product of products().controls; let i=index; let x=index" [formGroupName]="i">
+                                        <td>{{x+1}}</td>
+                                        <td>
+                                            <select class="form-control" data-live-search="true" formControlName="product_name" 
+                                            (change)='productDetails(product)'>
+                                                <option *ngFor="let productl of productList" value="{{productl.id}}">{{productl.name}}</option>
+                                            </select>
+                                            <!-- <input type="text" formControlName="product_name" list="products_i"
+                                            (change)="productFilter($event)">
+                                            <datalist id="products_i">
+                                                <option>--- Search ---</option>
+                                                <option *ngFor="let productl of productList" [attr.data-selected]="productl.id">
+                                                    {{productl.name}}
+                                                </option>
+                                            </datalist> -->
+                                        </td>
+                                        <td><input class="form-control" formControlName="sku_id" type="text"></td>
+                                        <td><input class="form-control" formControlName="quantity" type="number"></td>
+                                        <td><input class="form-control" formControlName="unit_price" type="number"></td>
+                                        <td><input class="form-control" formControlName="total_price" type="number"></td>
+                                        <td><input class="form-control" formControlName="discount" type="number"></td>
+                                        <td><input class="form-control" formControlName="net_amount" type="number"></td>
+                                        <td class="td-actions">
+                                            <div (click)="show=!show">
+                                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show"><i class="cil-check-circle"></i></a>
+                                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i class="fa fa-edit"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <a [routerLink]="" (click)="addNewProduct()" routerLinkActive="router-link-active" >
+                                        <i class="icon-plus icons"></i>
+                                    </a>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

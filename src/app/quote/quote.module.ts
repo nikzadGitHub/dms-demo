@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { IconModule } from '@coreui/icons-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ProductsComponent } from './products/products.component';
 
 
 
@@ -19,6 +20,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     ViewComponent,
     CreateComponent,
     EditComponent,
+    ProductsComponent,
   ],
   imports: [
     CommonModule,

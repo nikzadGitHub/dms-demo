@@ -89,6 +89,13 @@ export class QuoteService {
     )
   }
 
+  getProducts(){
+    return this.httpClient.get(this.apiURL + '/quote/products',this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   errorHandler(error) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {
