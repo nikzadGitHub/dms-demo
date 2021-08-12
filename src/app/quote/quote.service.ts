@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
    
 import {  Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -52,7 +52,7 @@ export class QuoteService {
 
   storeProducts(quote): Observable<any> {
     console.log(quote);
-    return this.httpClient.post(this.apiURL + '/quote', quote, this.httpOptions)
+    return this.httpClient.post(this.apiURL + '/quote/products', quote, this.httpOptions)
     .pipe(
       tap((response: any) => {
         console.log(response);               
@@ -91,6 +91,17 @@ export class QuoteService {
 
   getProducts(){
     return this.httpClient.get(this.apiURL + '/quote/products',this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  getCompany(id){
+    let header = new HttpHeaders();
+    let param = new HttpParams();
+    header.append('Content-Type','application/json');
+    param.append('id',id);
+    return this.httpClient.get(this.apiURL + '/quote/companies',{headers:header,params:param})
     .pipe(
       catchError(this.errorHandler)
     )

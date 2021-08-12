@@ -1,6 +1,7 @@
-import { stringify } from '@angular/compiler/src/util';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { QuoteService } from '../quote.service';
 import { Product } from './products';
 import { Soci } from './soci';
@@ -12,6 +13,8 @@ import { Soci } from './soci';
 })
 export class ProductsComponent implements OnInit {
 
+  @ViewChild('successModal') successModal : ModalDirective;
+
   filter: Product;
   form: FormGroup;
   productList: Product[]= [];
@@ -22,11 +25,13 @@ export class ProductsComponent implements OnInit {
     {id: 4, desc: 'Contract Start Date'}, 
     {id: 5, desc: 'Contract Expiry Date'}
   ];
-  tnc: String;
+  tnc: String = '';
+  alertBody: String = '';
 
   constructor(
     private formBuilder: FormBuilder,
-    private quoteService: QuoteService
+    private quoteService: QuoteService,
+    private router:Router
   ) { }
 
   ngOnInit(): void {
@@ -103,8 +108,16 @@ export class ProductsComponent implements OnInit {
     product.controls.net_amount.setValue(total_price * discount);
   }
 
-  test()
-    {console.log(this.tnc);}
-  
+  redirectPage(){
+    this.router.navigateByUrl('quote/create/product');
+  }
+
+  submit(){
+    console.log(this.form.value);
+    this.quoteService.storeDetails(this.form.value).subscribe(res => {
+        this.alertBody = res.message;
+        this.successModal.show();
+    })
+  }
 
 }

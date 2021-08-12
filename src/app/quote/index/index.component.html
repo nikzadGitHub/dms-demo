@@ -35,7 +35,7 @@
             <tbody>
               <tr *ngFor="let quote of quotes">
                 <td>{{ quote.created_at | date:'dd-MMM-yyyy' }}</td>
-                <td><a href="#" [routerLink]="['/quote/', quote.id, 'view']">{{ quote.quote_id }}</a></td>
+                <td><a href="#" [routerLink]="['/quote/', quote.id, 'view']">{{ quote.quote_id_revision }}</a></td>
                 <td>{{ quote.company_id }}</td>
                 <td>{{ quote.validity_date | date:'dd-MMM-yyyy'}}</td>
                 <td><i class="fa fa-circle fa-lg" [ngClass]="(quote.active==1 ? 'active' : 'inactive')"></i></td>
