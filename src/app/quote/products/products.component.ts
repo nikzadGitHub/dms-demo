@@ -1,7 +1,9 @@
+import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { QuoteService } from '../quote.service';
 import { Product } from './products';
+import { Soci } from './soci';
 
 @Component({
   selector: 'app-products',
@@ -13,7 +15,14 @@ export class ProductsComponent implements OnInit {
   filter: Product;
   form: FormGroup;
   productList: Product[]= [];
-  oriProductList: Product[] = [];
+  sociSelect: Soci[] = [
+    {id: 1, desc: 'Bill To'}, 
+    {id: 2, desc: 'Ship To'},
+    {id: 3, desc: 'Tender/Contract No'}, 
+    {id: 4, desc: 'Contract Start Date'}, 
+    {id: 5, desc: 'Contract Expiry Date'}
+  ];
+  tnc: String;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -23,11 +32,31 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     this.quoteService.getProducts().subscribe((data)=>{
       this.productList = data['data']['items'];
-      this.oriProductList = data['data']['items'];
     });
     this.form =  this.formBuilder.group({
-      products: this.formBuilder.array([])
+      tnc:this.tnc,
+      products: this.formBuilder.array([]),
+      sociList: this.formBuilder.array([])
     })
+  }
+
+  sociList(): FormArray{
+    return this.form.get('sociList') as FormArray
+  }
+
+  newSoci(){
+    return this.formBuilder.group({
+      'soci': '',
+      'description': ''
+    })
+  }
+
+  addNewSoci(){
+    this.sociList().push(this.newSoci());
+  }
+
+  removeSoci(i:number) {
+    this.sociList().removeAt(i);
   }
 
   products(): FormArray{
@@ -36,8 +65,8 @@ export class ProductsComponent implements OnInit {
 
   newProduct(){
     return this.formBuilder.group({
-      'product_name': 1,
-      'sku_id': '',
+      'product_name': '',
+      'sku': '',
       'quantity': '',
       'unit_price': 0.00,
       'total_price': 0.00,
@@ -50,7 +79,32 @@ export class ProductsComponent implements OnInit {
     this.products().push(this.newProduct());
   }
 
-  productDetails(product){
-    console.log(product.controls);
+  removeProduct(i:number) {
+    this.products().removeAt(i);
   }
+
+
+
+  productDetails(product){
+    var id:number = product.controls.product_name.value;
+    var objProduct:Product = this.productList.find(p => p.id == id);
+    product.controls.sku.setValue(objProduct['sku']);
+    product.controls.unit_price.setValue(objProduct['amount']);
+  }
+
+  countNetAmount(product){
+    var quantity = product.controls.quantity.value;
+    var unit_price = product.controls.unit_price.value;
+    var total_price = quantity * unit_price;
+    var discount = product.controls.discount.value;
+    discount = (100 - discount) / 100;
+
+    product.controls.total_price.setValue(total_price);
+    product.controls.net_amount.setValue(total_price * discount);
+  }
+
+  test()
+    {console.log(this.tnc);}
+  
+
 }

@@ -4,9 +4,9 @@
             <div class="card-header"><h1>Create New Quote</h1></div>
             <div class="card-body">
                 <form [formGroup]="form" (ngSubmit)="submit()">
-                    <div class="card rcorners">
+                    <div class="card rcorners shadow">
                         <div class="card-header">Product</div>
-                        <div class="card-body">
+                        <div class="card-body" style="padding: 0%;">
                             <table class="table" formArrayName="products">
                                 <thead>
                                     <tr>
@@ -29,37 +29,80 @@
                                             (change)='productDetails(product)'>
                                                 <option *ngFor="let productl of productList" value="{{productl.id}}">{{productl.name}}</option>
                                             </select>
-                                            <!-- <input type="text" formControlName="product_name" list="products_i"
-                                            (change)="productFilter($event)">
-                                            <datalist id="products_i">
-                                                <option>--- Search ---</option>
-                                                <option *ngFor="let productl of productList" [attr.data-selected]="productl.id">
-                                                    {{productl.name}}
-                                                </option>
-                                            </datalist> -->
                                         </td>
-                                        <td><input class="form-control" formControlName="sku_id" type="text"></td>
-                                        <td><input class="form-control" formControlName="quantity" type="number"></td>
+                                        <td><input class="form-control" formControlName="sku" type="text"></td>
+                                        <td><input class="form-control" formControlName="quantity" type="number" (keyup)='countNetAmount(product)'></td>
                                         <td><input class="form-control" formControlName="unit_price" type="number"></td>
                                         <td><input class="form-control" formControlName="total_price" type="number"></td>
-                                        <td><input class="form-control" formControlName="discount" type="number"></td>
+                                        <td><input class="form-control" formControlName="discount" type="number" (keyup)='countNetAmount(product)'></td>
                                         <td><input class="form-control" formControlName="net_amount" type="number"></td>
-                                        <td class="td-actions">
+                                        <td class="td-actions" style="width: 10%;">
                                             <div (click)="show=!show">
                                                 <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show"><i class="cil-check-circle"></i></a>
                                                 <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i class="fa fa-edit"></i></a>
                                             </div>
+                                            <a [routerLink]="" (click)="removeProduct(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
-                                <tfoot>
-                                    <a [routerLink]="" (click)="addNewProduct()" routerLinkActive="router-link-active" >
-                                        <i class="icon-plus icons"></i>
-                                    </a>
+                                <tfoot align="center">
+                                    <tr>
+                                        <td colspan="9" align="center">
+                                            <a [routerLink]="" (click)="addNewProduct()" routerLinkActive="router-link-active" >
+                                                <i class="icon-plus icons"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
                     </div>
+                    <div class="card rcorners shadow">
+                        <div class="card-header white">Additional Instruction & Information</div>
+                        <div class="card-body" style="padding: 0%;">
+                            <table class="table table-borderless" formArrayName="sociList">
+                                <thead class="grey">
+                                    <tr>
+                                        <th>SOCI</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let soci of sociList().controls; let i=index" [formGroupName]="i">
+                                        <td style="width: 20%;">
+                                            <select formControlName="soci" class="form-control">
+                                                <option *ngFor="let soci of sociSelect" value="{{soci.id}}">{{soci.desc}}</option>
+                                            </select>
+                                        </td>
+                                        <td><input formControlName="description" class="form-control" type="text"></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="9" align="center">
+                                            <a [routerLink]="" (click)="addNewSoci()" routerLinkActive="router-link-active" >
+                                                <i class="icon-plus icons"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card rcorners shadow">
+                        <div class="card-header white">Terms & Conditions</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <textarea formControlName="tnc" [(ngModel)]="tnc" class="form-control" (keyup)='test()'>{{tnc}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg col-sm-6" align=center>
+                        <div class="form-group">
+                            <a routerLink="/quote/index" class="btn btn-secondary">CANCEL</a>
+                            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">REQUEST APPROVAL</button>
+                        </div>
+                    </div>  
                 </form>
             </div>
         </div>
