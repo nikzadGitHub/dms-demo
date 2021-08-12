@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { QuoteService } from '../quote.service';
 import { Product } from './products';
@@ -27,19 +27,25 @@ export class ProductsComponent implements OnInit {
   ];
   tnc: String = '';
   alertBody: String = '';
+  quote_id: number;
 
   constructor(
     private formBuilder: FormBuilder,
     private quoteService: QuoteService,
-    private router:Router
+    private router:Router,
+    private route:ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(event => {
+      this.quote_id = event.quote_id;
+     });
     this.quoteService.getProducts().subscribe((data)=>{
       this.productList = data['data']['items'];
     });
     this.form =  this.formBuilder.group({
       tnc:this.tnc,
+      quote_id:this.quote_id,
       products: this.formBuilder.array([]),
       sociList: this.formBuilder.array([])
     })
@@ -70,7 +76,7 @@ export class ProductsComponent implements OnInit {
 
   newProduct(){
     return this.formBuilder.group({
-      'product_name': '',
+      'product_id': '',
       'sku': '',
       'quantity': '',
       'unit_price': 0.00,
@@ -88,10 +94,8 @@ export class ProductsComponent implements OnInit {
     this.products().removeAt(i);
   }
 
-
-
   productDetails(product){
-    var id:number = product.controls.product_name.value;
+    var id:number = product.controls.product_id.value;
     var objProduct:Product = this.productList.find(p => p.id == id);
     product.controls.sku.setValue(objProduct['sku']);
     product.controls.unit_price.setValue(objProduct['amount']);
@@ -109,13 +113,14 @@ export class ProductsComponent implements OnInit {
   }
 
   redirectPage(){
-    this.router.navigateByUrl('quote/create/product');
+    this.router.navigateByUrl('quote/index');
   }
 
   submit(){
     console.log(this.form.value);
-    this.quoteService.storeDetails(this.form.value).subscribe(res => {
-        this.alertBody = res.message;
+    this.quoteService.storeProducts(this.form.value).subscribe(res => {
+        console.log(res);
+        this.alertBody = "Quotation product stored successfully";
         this.successModal.show();
     })
   }

@@ -19,6 +19,7 @@ export class CreateComponent implements OnInit {
   billingIdList: number[] = [];
   termSelected: number;
   alertBody: string;
+  id:number;
 
   fromDate: Date;
   toDate: Date;
@@ -186,13 +187,15 @@ export class CreateComponent implements OnInit {
   }
 
   redirectPage(){
-    this.router.navigateByUrl('quote/create/product');
+    let id = this.id;
+    this.router.navigate(['quote/create/product',{quote_id:id}]);
   }
 
   submit(){
     console.log(this.form.value);
     this.quoteService.storeDetails(this.form.value).subscribe(res => {
         this.alertBody = res.message;
+        this.id = res.data.value;
         this.successModal.show();
     })
   }

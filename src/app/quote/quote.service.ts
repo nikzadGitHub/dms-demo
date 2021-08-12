@@ -54,9 +54,6 @@ export class QuoteService {
     console.log(quote);
     return this.httpClient.post(this.apiURL + '/quote/products', quote, this.httpOptions)
     .pipe(
-      tap((response: any) => {
-        console.log(response);               
-    }),
       catchError(this.errorHandler)
     )
   }  

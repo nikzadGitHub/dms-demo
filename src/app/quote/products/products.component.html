@@ -25,7 +25,7 @@
                                     <tr *ngFor="let product of products().controls; let i=index; let x=index" [formGroupName]="i">
                                         <td>{{x+1}}</td>
                                         <td>
-                                            <select class="form-control" data-live-search="true" formControlName="product_name" 
+                                            <select class="form-control" data-live-search="true" formControlName="product_id" 
                                             (change)='productDetails(product)'>
                                                 <option *ngFor="let productl of productList" value="{{productl.id}}">{{productl.name}}</option>
                                             </select>
