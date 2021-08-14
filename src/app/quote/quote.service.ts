@@ -29,12 +29,10 @@ export class QuoteService {
     )
   }
   
-  create(area_id): Observable<any>{
-    return this.httpClient.get(this.apiURL + '/quote/create')
+  create(data_area_id): Observable<any>{
+    let param = {dataAreaId:data_area_id};
+    return this.httpClient.get(this.apiURL + '/quote/create',{params:param})
     .pipe(
-    //   tap((response: any) => {
-    //     console.log(response);               
-    // }),
       catchError(this.errorHandler)
     )
   }
@@ -94,11 +92,8 @@ export class QuoteService {
   }
 
   getCompany(id){
-    let header = new HttpHeaders();
-    let param = new HttpParams();
-    header.append('Content-Type','application/json');
-    param.append('id',id);
-    return this.httpClient.get(this.apiURL + '/quote/companies',{headers:header,params:param})
+    let param = {id:id};
+    return this.httpClient.get(this.apiURL + '/quote/company/',{params:param})
     .pipe(
       catchError(this.errorHandler)
     )

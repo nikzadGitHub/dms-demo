@@ -1,1 +1,47 @@
-<p>edit works!</p>
+<div class="animated fadeIn">
+    <div class="col-lg col-md-6">
+        <div class="card rcorners">
+            <div class="card-header"><h1>Edit Quote</h1></div>
+            <div class="card-body">
+                <!-- <a href="#" routerLink="/quote/index" class="btn btn-primary">Back</a> -->
+                    
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="form-group">
+                        <div class="card rcorners customBorder shadow col-lg-9">
+                            <div class="card-header white">
+                                <b>Standard Terms</b>
+                            </div>
+                            <div class="card-body grey">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                Payment Terms:
+                                            </div> 
+                                            <div class="col-md-4">
+                                                <select formControlName="standard_payment" (change)="termSelect(f.standard_payment.value);dateInit()"
+                                                name="standard_terms" class="form-control">
+                                                    <option>--- Select Term ---</option>
+                                                    <option *ngFor="let term of terms" value="{{term.id}}">{{term.description}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5" style="text-align: middle;">
+                                        Quotation Validity: {{termSelected}} Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
+                                    </div>
+                                    <div class="col-lg-1" style="text-align: right;">
+                                        <div (click)="show_i=!show_i">
+                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show_i"><i class="cil-check-circle"></i></a>
+                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show_i"><i class="fa fa-edit"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

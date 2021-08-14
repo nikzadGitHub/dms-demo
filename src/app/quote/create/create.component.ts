@@ -20,6 +20,7 @@ export class CreateComponent implements OnInit {
   termSelected: number;
   alertBody: string;
   id:number;
+  company: String[] = [];
 
   fromDate: Date;
   toDate: Date;
@@ -32,7 +33,8 @@ export class CreateComponent implements OnInit {
   
   ngOnInit(): void {
     this.dateInit();
-    this.quoteService.create(3630).subscribe((data)=>{
+    this.quoteService.create('3630').subscribe((data)=>{
+      console.log(data);
       this.terms = data['data']['items'];
     });
     this.form =  this.formBuilder.group({
