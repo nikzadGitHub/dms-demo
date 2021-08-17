@@ -11,7 +11,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { IconModule } from '@coreui/icons-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ProductsComponent } from './products/products.component';
-
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 
 @NgModule({
@@ -29,7 +29,8 @@ import { ProductsComponent } from './products/products.component';
     ReactiveFormsModule,
     BsDropdownModule,
     IconModule,
-    ModalModule
+    ModalModule,
+    AutoCompleteModule
   ]
 })
 export class QuoteModule { }
