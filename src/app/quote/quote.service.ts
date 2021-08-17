@@ -22,8 +22,9 @@ export class QuoteService {
   
   constructor(private httpClient: HttpClient) { }
    
-  getAll(): Observable<Quote[]> {
-    return this.httpClient.get<Quote[]>(this.apiURL + '/quote')
+  getAll(pageItems,search_text): Observable<Quote[]> {
+    let query = '/quote?page_items=' + pageItems + '&search_text=' + search_text;
+    return this.httpClient.get<Quote[]>(this.apiURL + query,this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
@@ -77,8 +78,9 @@ export class QuoteService {
     )
   }
   
-  getPage(url){
-    return this.httpClient.get(url,this.httpOptions)
+  getPage(url,pageItems,search_text){
+    let query = '/quote?page_items=' + pageItems + '&search_text=' + search_text;
+    return this.httpClient.get(url + query,this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )

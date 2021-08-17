@@ -12,14 +12,16 @@ export class IndexComponent implements OnInit {
    
   quotes: Quote[] = [];
   paginate: [];
+  pageItems: number = 10;
+  search_text: string = '';
   public selections = ['Quote','Opportunity'];
   selected = 'Quote';
   
   constructor(public quoteService: QuoteService) { }
   
   ngOnInit(): void {
-    this.quoteService.getAll().subscribe((data)=>{
-      this.quotes = data['data']['data'];
+    this.quoteService.getAll(this.pageItems,this.search_text).subscribe((data)=>{
+      this.quotes = data['data']['data'] ?? data['data']['items'];
       this.paginate = data['data']['links'];
       console.log(data);
     })  
@@ -36,9 +38,17 @@ export class IndexComponent implements OnInit {
     this.selected = selection;
   }
 
+  getAll(){
+    this.quoteService.getAll(this.pageItems,this.search_text).subscribe((data)=>{
+      this.quotes = data['data']['data'] ?? data['data']['items'];
+      this.paginate = data['data']['links'];
+      console.log(data);
+    })  
+  }
+
   onClick(url){
-    this.quoteService.getPage(url).subscribe((data)=>{
-      this.quotes = data['data']['data'];
+    this.quoteService.getPage(url,this.pageItems,this.search_text).subscribe((data)=>{
+      this.quotes = data['data']['data'] ?? data['data']['items'];
       this.paginate = data['data']['links'];
       console.log(data);
     })  

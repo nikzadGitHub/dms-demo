@@ -19,7 +19,7 @@
                                                 Payment Terms:
                                             </div> 
                                             <div class="col-md-4">
-                                                <select formControlName="standard_payment" (change)="termSelect(f.standard_payment.value);dateInit()"
+                                                <select formControlName="standard_payment_term" (change)="termSelect(f.standard_payment.value);dateInit()"
                                                 name="standard_terms" class="form-control">
                                                     <option>--- Select Term ---</option>
                                                     <option *ngFor="let term of terms" value="{{term.id}}">{{term.description}}</option>

@@ -33,12 +33,11 @@ export class CreateComponent implements OnInit {
   
   ngOnInit(): void {
     this.dateInit();
-    this.quoteService.create('3630').subscribe((data)=>{
-      console.log(data);
+    this.quoteService.create('3630').subscribe(data => {
       this.terms = data['data']['items'];
     });
     this.form =  this.formBuilder.group({
-      standard_payment: this.termSelected,
+      standard_payment_term: this.termSelected,
       fromDate: this.fromDate,
       toDate: this.toDate,
       term_id: this.termSelected,
@@ -163,7 +162,7 @@ export class CreateComponent implements OnInit {
   }
 
   dateChange(){
-    var tempDate = this.fromDate;
+    let tempDate = this.fromDate;
     tempDate = new Date(tempDate.setDate(tempDate.getDate() + this.termSelected));
     this.toDate = tempDate;
   }
