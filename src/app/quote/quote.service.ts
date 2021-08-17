@@ -56,8 +56,8 @@ export class QuoteService {
     )
   }  
    
-  find(id): Observable<Quote> {
-    return this.httpClient.get<Quote>(this.apiURL + '/quote/' + id)
+  find(id): Observable<any> {
+    return this.httpClient.get(this.apiURL + '/quote/' + id)
     .pipe(
       catchError(this.errorHandler)
     )
@@ -86,6 +86,14 @@ export class QuoteService {
 
   getProducts(){
     return this.httpClient.get(this.apiURL + '/quote/products',this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  getFilteredProducts(filter){
+    filter = filter == '' ? 0 : filter; 
+    return this.httpClient.get(this.apiURL + '/quote/products/filtered/' + filter,this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )

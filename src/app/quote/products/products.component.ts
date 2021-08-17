@@ -15,9 +15,9 @@ export class ProductsComponent implements OnInit {
 
   @ViewChild('successModal') successModal : ModalDirective;
 
-  filter: Product;
+  filteredProducts: Product[];
+  selectedProductAdvanced: Product;
   form: FormGroup;
-  productList: Product[]= [];
   sociSelect: Soci[] = [
     {id: 1, desc: 'Bill To'}, 
     {id: 2, desc: 'Ship To'},
@@ -40,9 +40,6 @@ export class ProductsComponent implements OnInit {
     this.route.params.subscribe(event => {
       this.quote_id = event.quote_id;
      });
-    this.quoteService.getProducts().subscribe((data)=>{
-      this.productList = data['data']['items'];
-    });
     this.form =  this.formBuilder.group({
       tnc:this.tnc,
       quote_id:this.quote_id,
@@ -94,22 +91,27 @@ export class ProductsComponent implements OnInit {
     this.products().removeAt(i);
   }
 
-  productDetails(product){
-    var id:number = product.controls.product_id.value;
-    var objProduct:Product = this.productList.find(p => p.id == id);
-    product.controls.sku.setValue(objProduct['sku']);
-    product.controls.unit_price.setValue(objProduct['amount']);
+  productDetails(product,productControl){
+    productControl.controls.sku.setValue(product['sku']);
+    productControl.controls.unit_price.setValue(product['amount']);
   }
 
   countNetAmount(product){
-    var quantity = product.controls.quantity.value;
-    var unit_price = product.controls.unit_price.value;
-    var total_price = quantity * unit_price;
-    var discount = product.controls.discount.value;
+    let quantity = product.controls.quantity.value;
+    let unit_price = product.controls.unit_price.value;
+    let total_price = quantity * unit_price;
+    let discount = product.controls.discount.value;
     discount = (100 - discount) / 100;
 
     product.controls.total_price.setValue(total_price);
     product.controls.net_amount.setValue(total_price * discount);
+  }
+
+  filterProduct(event) {
+    let query = event.query;
+    this.quoteService.getFilteredProducts(query).subscribe((data)=>{
+      this.filteredProducts = data['data']['items'];
+    });
   }
 
   redirectPage(){
