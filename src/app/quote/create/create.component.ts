@@ -158,13 +158,15 @@ export class CreateComponent implements OnInit {
   dateInit(){
     this.fromDate = new Date();
     let init = new Date();
-    this.toDate = new Date(init.setDate(init.getDate() + this.termSelected));
+    this.toDate = new Date(init.setDate(init.getDate() + 30));
   }
 
   dateChange(){
     let tempDate = new Date(this.fromDate);
     tempDate = new Date(tempDate.setDate(tempDate.getDate() + this.termSelected));
     this.toDate = new Date(tempDate);
+    this.f.fromDate.setValue(this.fromDate);
+    this.f.toDate.setValue(this.toDate);
   }
 
   addBillingMilestone(){
@@ -188,8 +190,7 @@ export class CreateComponent implements OnInit {
   }
 
   redirectPage(){
-    let id = this.id;
-    this.router.navigate(['quote/create/product',{quote_id:id}]);
+    this.router.navigateByUrl('quote/index');
   }
 
   submit(){
