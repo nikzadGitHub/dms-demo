@@ -1,0 +1,20 @@
+.rcorners{
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.purple{
+    background-color: #424562;
+    color: white;
+}
+.card{
+    padding: 0%;
+}
+.card-header{
+    border: none;
+}
+
+.no-border {
+    border: 0;
+    box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+}
