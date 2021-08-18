@@ -1,7 +1,7 @@
 
 export interface Quotation {
-    billings:[],
-    payments:[],
+    billing_milestones:[],
+    payment_schedules:[],
     addCosts:[],
     'standard_payment_term':number,
     'quote_id': string,
