@@ -1,10 +1,10 @@
 <div class="animated fadeIn">
     <div class="col-lg col-md-6">
+        <app-company-header [company_details]="company_details"></app-company-header>
         <div class="card rcorners">
             <div class="card-header"><h3>Quotation</h3></div>
             <div class="card-body">
                 <!-- <a href="#" routerLink="/quote/index" class="btn btn-primary">Back</a> -->
-                    
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <div class="form-group">
                         <div class="card rcorners customBorder shadow">

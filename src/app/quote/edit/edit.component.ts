@@ -20,6 +20,7 @@ export class EditComponent implements OnInit {
   billingIdList: number[] = [];
   fromDate: Date;
   toDate: Date;
+  company_details: string[] = [];
 
   constructor(
     private quoteService: QuoteService,
@@ -54,6 +55,11 @@ export class EditComponent implements OnInit {
   }
 
   setInitialValue(){
+    this.company_details['company_name'] = this.quotations.company;
+    this.company_details['quote_id'] = this.quote_id;
+    
+    console.log(this.company_details);
+    
     this.f.standard_payment_term.setValue(this.quotations.standard_payment_term);
     this.fromDate = this.quotations.fromDate;
     this.toDate = this.quotations.toDate;
