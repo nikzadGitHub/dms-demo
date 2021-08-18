@@ -21,6 +21,7 @@ export class EditComponent implements OnInit {
   fromDate: Date;
   toDate: Date;
   company_details: string[] = [];
+  sub_total: number;
 
   constructor(
     private quoteService: QuoteService,
@@ -56,7 +57,7 @@ export class EditComponent implements OnInit {
 
   setInitialValue(){
     this.company_details['company_name'] = this.quotations.company;
-    this.company_details['quote_id'] = this.quote_id;
+    this.company_details['quote_id'] = this.quotations.quote_id;
     
     console.log(this.company_details);
     
@@ -71,6 +72,10 @@ export class EditComponent implements OnInit {
     this.quotations.payment_schedules.forEach(payment => {
       this.payments().push(this.existingPayments(payment));
     });
+    this.quotations.additional_costs.forEach(addCost => {
+      this.addCosts().push(this.existingCosts(addCost));
+    });
+    this.subTotal(this.addCosts().controls);
   }
 
   dateInit(){
@@ -168,6 +173,62 @@ export class EditComponent implements OnInit {
   }
 
   //---------------- End of Payment Schedules -------------------
+
+  //---------------- Additional Cost -------------------
+    
+  addCosts() : FormArray {
+    return this.form.get("addCosts") as FormArray
+  }
+  
+  existingCosts(addCosts): FormGroup {
+    
+    return this.formBuilder.group({
+      'description': addCosts.description,
+      'quantity': addCosts.quantity,
+      'unit_price': addCosts.unit_price,
+      'total_price': addCosts.total_price,
+      'remarks': addCosts.remarks,
+    })
+  }
+
+  newAddCosts(): FormGroup {
+    return this.formBuilder.group({
+      'description': '',
+      'quantity': 0,
+      'unit_price': 0.00,
+      'total_price': 0.00,
+      'remarks': '',
+    })
+  }
+
+  addAddCosts() {
+    this.addCosts().push(this.newAddCosts());
+  }
+   
+  removeAddCosts(i:number) {
+    this.addCosts().removeAt(i);
+  }
+
+  addTotal(costControl)
+  {
+    costControl.total_price.setValue(<number>costControl.quantity.value * <number>costControl.unit_price.value);
+  }
+
+  subTotal(costs){
+    this.sub_total = 0.00;
+    costs.forEach(element => {
+      console.log(element);
+      this.sub_total += parseInt(element.controls.total_price.value);
+    });
+    console.log(this.sub_total);
+  }
+
+  allTotal(costControl,costs){
+    this.addTotal(costControl);
+    this.subTotal(costs);
+  }
+
+  //---------------- End of Additional Cost -------------------
 
   addBillingMilestone(){
     var billing_id = this.billings().controls;
