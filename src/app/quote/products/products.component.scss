@@ -1,6 +1,11 @@
 .rcorners{
-    border-radius: 10px;
-    overflow: hidden;
+    // border-radius: 10px;
+    // overflow: hidden;
+    border: none;
+    border-radius: 10pt;
+    box-shadow: 0 0 0 1pt grey;
+    outline: none;
+    transition: .1s;
 }
 
 .td-actions{

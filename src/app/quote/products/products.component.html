@@ -1,124 +1,80 @@
 <div class="animated fadeIn">
     <div class="col-lg col-md-6">
-        <div class="card rcorners">
-            <div class="card-header"><h1>Create New Quote</h1></div>
-            <div class="card-body">
-                <form [formGroup]="form" (ngSubmit)="submit()">
-                    <div class="card rcorners shadow">
-                        <div class="card-header">Product</div>
-                        <div class="card-body" style="padding: 0%;">
-                            <table class="table" formArrayName="products">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Item Name</th>
-                                        <th>SKU ID</th>
-                                        <th>Quantity</th>
-                                        <th>Unit Price (RM)</th>
-                                        <th>Total Price (RM)</th>
-                                        <th>Discount (%)</th>
-                                        <th>Net Amount (RM)</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let productControl of products().controls; let i=index; let x=index" [formGroupName]="i">
-                                        <td>{{x+1}}</td>
-                                        <td style="width: 20%;">
-                                            <!-- <select class="form-control" data-live-search="true" formControlName="product_id" 
-                                            (change)='productDetails(product)'>
-                                                <option *ngFor="let productl of productList" value="{{productl.id}}">{{productl.name}}</option>
-                                            </select> -->
-                                            <p-autoComplete formControlName="product_id" [(ngModel)]="selectedProductAdvanced" [suggestions]="filteredProducts" 
-                                            (completeMethod)="filterProduct($event)" field="name" [dropdown]="true"
-                                            [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
-                                                <ng-template let-product pTemplate="item">
-                                                    <div class="product-item" (click)='productDetails(product,productControl)'>
-                                                        <div>{{product.name}}</div>
-                                                    </div>
-                                                </ng-template>
-                                            </p-autoComplete>  
-                                        </td>
-                                        <td><input class="form-control" formControlName="sku" type="text"></td>
-                                        <td><input class="form-control" formControlName="quantity" type="number" (keyup)='countNetAmount(productControl)'></td>
-                                        <td><input class="form-control" formControlName="unit_price" type="number"></td>
-                                        <td><input class="form-control" formControlName="total_price" type="number"></td>
-                                        <td><input class="form-control" formControlName="discount" type="number" (keyup)='countNetAmount(productControl)'></td>
-                                        <td><input class="form-control" formControlName="net_amount" type="number"></td>
-                                        <td class="td-actions" style="width: 10%;">
-                                            <div (click)="show=!show">
-                                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show"><i class="cil-check-circle"></i></a>
-                                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i class="fa fa-edit"></i></a>
+        <form [formGroup]="form" (ngSubmit)="submit()"> <!-- Adjust the form according to parent form -->
+            <div class="card rcorners shadow">
+                <div class="card-header">Product</div>
+                <div class="card-body" style="padding: 0%;">
+                    <table class="table" formArrayName="products">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Item Name</th>
+                                <th>SKU ID</th>
+                                <th>Quantity</th>
+                                <th>Unit Price (RM)</th>
+                                <th>Total Price (RM)</th>
+                                <th>Discount (%)</th>
+                                <th>Net Amount (RM)</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let productControl of products().controls; let i=index; let x=index" [formGroupName]="i">
+                                <td>{{x+1}}</td>
+                                <td style="width: 20%;">
+                                    <!-- <select class="form-control" data-live-search="true" formControlName="product_id" 
+                                    (change)='productDetails(product)'>
+                                        <option *ngFor="let productl of productList" value="{{productl.id}}">{{productl.name}}</option>
+                                    </select> -->
+                                    <p-autoComplete formControlName="product_id" [(ngModel)]="selectedProductAdvanced" [suggestions]="filteredProducts" 
+                                    (completeMethod)="filterProduct($event)" field="name" [dropdown]="true" tabindex="-1"
+                                    [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
+                                        <ng-template let-product pTemplate="item">
+                                            <div class="product-item" (click)='productDetails(product,productControl)'>
+                                                <div>{{product.name}}</div>
                                             </div>
-                                            <a [routerLink]="" (click)="removeProduct(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <tfoot align="center">
-                                    <tr>
-                                        <td colspan="9" align="center">
-                                            <a [routerLink]="" (click)="addNewProduct()" routerLinkActive="router-link-active" >
-                                                <i class="icon-plus icons"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card rcorners shadow">
-                        <div class="card-header white">Additional Instruction & Information</div>
-                        <div class="card-body" style="padding: 0%;">
-                            <table class="table table-borderless" formArrayName="sociList">
-                                <thead class="grey">
-                                    <tr>
-                                        <th>SOCI</th>
-                                        <th>Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let soci of sociList().controls; let i=index" [formGroupName]="i">
-                                        <td style="width: 20%;">
-                                            <select formControlName="soci" class="form-control">
-                                                <option *ngFor="let soci of sociSelect" value="{{soci.id}}">{{soci.desc}}</option>
-                                            </select>
-                                        </td>
-                                        <td><input formControlName="description" class="form-control" type="text"></td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="9" align="center">
-                                            <a [routerLink]="" (click)="addNewSoci()" routerLinkActive="router-link-active" >
-                                                <i class="icon-plus icons"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card rcorners shadow">
-                        <div class="card-header white">Terms & Conditions</div>
-                        <div class="card-body">
-                            <div class="row">
-                                <textarea formControlName="tnc" [(ngModel)]="tnc" class="form-control" (keyup)='test()'>{{tnc}}</textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg col-sm-6" align=center>
-                        <div class="form-group">
-                            <a routerLink="/quote/index" class="btn btn-secondary">CANCEL</a>
-                            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">REQUEST APPROVAL</button>
-                        </div>
-                    </div>
-                </form>
+                                        </ng-template>
+                                    </p-autoComplete>  
+                                </td>
+                                <td><input class="form-control" formControlName="sku" type="text"></td>
+                                <td><input class="form-control" formControlName="quantity" type="number" (keyup)='countNetAmount(productControl)'></td>
+                                <td><input class="form-control" formControlName="unit_price" type="number"></td>
+                                <td><input class="form-control" formControlName="total_price" type="number"></td>
+                                <td><input class="form-control" formControlName="discount" type="number" (keyup)='countNetAmount(productControl)'></td>
+                                <td><input class="form-control" formControlName="net_amount" type="number"></td>
+                                <td class="td-actions" style="width: 10%;">
+                                    <div (click)="show=!show">
+                                        <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show"><i class="cil-check-circle"></i></a>
+                                        <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i class="fa fa-edit"></i></a>
+                                    </div>
+                                    <a [routerLink]="" (click)="removeProduct(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot align="center">
+                            <tr>
+                                <td colspan="9" align="center">
+                                    <a [routerLink]="" (click)="addNewProduct()" routerLinkActive="router-link-active" >
+                                        <i class="icon-plus icons"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
-        </div>
+            <!-- <div class="col-lg col-sm-6" align=center>
+                <div class="form-group">
+                    <a routerLink="/quote/index" class="btn btn-secondary">CANCEL</a>
+                    <button class="btn btn-primary" type="submit" [disabled]="!form.valid">REQUEST APPROVAL</button>
+                </div>
+            </div> -->
+        </form>
     </div>
 </div>
 
-<div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" 
+    tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-success" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -127,6 +83,6 @@
         <div class="modal-body">
           <p>{{alertBody}}</p>
         </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+      </div>
+    </div>
+</div>

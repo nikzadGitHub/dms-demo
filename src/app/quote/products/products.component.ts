@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { QuoteService } from '../quote.service';
 import { Product } from './products';
-import { Soci } from './soci';
 
 @Component({
   selector: 'app-products',
@@ -18,53 +17,19 @@ export class ProductsComponent implements OnInit {
   filteredProducts: Product[];
   selectedProductAdvanced: Product;
   form: FormGroup;
-  sociSelect: Soci[] = [
-    {id: 1, desc: 'Bill To'}, 
-    {id: 2, desc: 'Ship To'},
-    {id: 3, desc: 'Tender/Contract No'}, 
-    {id: 4, desc: 'Contract Start Date'}, 
-    {id: 5, desc: 'Contract Expiry Date'}
-  ];
   tnc: String = '';
   alertBody: String = '';
-  quote_id: number;
 
   constructor(
     private formBuilder: FormBuilder,
     private quoteService: QuoteService,
     private router:Router,
-    private route:ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(event => {
-      this.quote_id = event.quote_id;
-     });
     this.form =  this.formBuilder.group({
-      tnc:this.tnc,
-      quote_id:this.quote_id,
-      products: this.formBuilder.array([]),
-      sociList: this.formBuilder.array([])
+      products: this.formBuilder.array([])
     })
-  }
-
-  sociList(): FormArray{
-    return this.form.get('sociList') as FormArray
-  }
-
-  newSoci(){
-    return this.formBuilder.group({
-      'soci': '',
-      'description': ''
-    })
-  }
-
-  addNewSoci(){
-    this.sociList().push(this.newSoci());
-  }
-
-  removeSoci(i:number) {
-    this.sociList().removeAt(i);
   }
 
   products(): FormArray{
@@ -115,7 +80,8 @@ export class ProductsComponent implements OnInit {
   }
 
   redirectPage(){
-    this.router.navigateByUrl('quote/index');
+    // ----- Route Navigation after popup modal success showed -------
+    // this.router.navigateByUrl('quote/index');
   }
 
   submit(){
