@@ -157,14 +157,14 @@ export class CreateComponent implements OnInit {
 
   dateInit(){
     this.fromDate = new Date();
-    const init = new Date();
+    let init = new Date();
     this.toDate = new Date(init.setDate(init.getDate() + this.termSelected));
   }
 
   dateChange(){
-    let tempDate = this.fromDate;
+    let tempDate = new Date(this.fromDate);
     tempDate = new Date(tempDate.setDate(tempDate.getDate() + this.termSelected));
-    this.toDate = tempDate;
+    this.toDate = new Date(tempDate);
   }
 
   addBillingMilestone(){

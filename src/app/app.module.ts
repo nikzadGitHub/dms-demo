@@ -56,6 +56,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DialogComponent } from './components/shared/dialog/dialog.component';
 import { QuoteModule } from './quote/quote.module';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   imports: [
@@ -82,7 +83,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     QuoteModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    CalendarModule
   ],
   declarations: [
     AppComponent,

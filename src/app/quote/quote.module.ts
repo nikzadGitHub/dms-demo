@@ -12,6 +12,7 @@ import { IconModule } from '@coreui/icons-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ProductsComponent } from './products/products.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { CalendarModule } from 'primeng/calendar';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     BsDropdownModule,
     IconModule,
     ModalModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    CalendarModule
   ]
 })
 export class QuoteModule { }

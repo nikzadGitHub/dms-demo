@@ -7,7 +7,7 @@
                     
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <div class="form-group">
-                        <div class="card rcorners customBorder shadow col-lg-9">
+                        <div class="card rcorners customBorder shadow">
                             <div class="card-header white">
                                 <b>Standard Terms</b>
                             </div>
@@ -19,7 +19,7 @@
                                                 Payment Terms:
                                             </div> 
                                             <div class="col-md-4">
-                                                <select formControlName="standard_payment_term" (change)="termSelect(f.standard_payment.value);dateInit()"
+                                                <select formControlName="standard_payment_term" (change)="termSelect(f.standard_payment_term.value);dateChange()"
                                                 name="standard_terms" class="form-control">
                                                     <option>--- Select Term ---</option>
                                                     <option *ngFor="let term of terms" value="{{term.id}}">{{term.description}}</option>
@@ -43,16 +43,17 @@
                                     <div class="col-md-3">
                                     <b>(As Default)</b> Payment Terms: 30 Days
                                     </div>
-                                    <div class="col-lg-6" style="text-align: right;">
+                                    <div class="col-lg-5" style="text-align: right;">
                                         Quotation Validity: 30 Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
                                     </div>
+                                    <div class="col-lg-1" style="text-align: right;"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <div class="card rcorners customBorder shadow col-lg-9">
+                        <div class="card rcorners customBorder shadow">
                             <div class="card-header white">
                                 <b>Billing Milestone</b>
                                 <a [routerLink]="" (click)="addBillings()" routerLinkActive="router-link-active" >
@@ -169,7 +170,7 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="card rcorners customBorder shadow col-lg-9">
+                        <div class="card rcorners customBorder shadow">
                             <div class="card-header white">
                                 <b>Additional Cost</b>
                                 <a [routerLink]="" (click)="addAddCosts()" routerLinkActive="router-link-active" >
