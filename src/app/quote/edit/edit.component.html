@@ -1,7 +1,7 @@
 <div class="animated fadeIn">
     <div class="col-lg col-md-6">
         <div class="card rcorners">
-            <div class="card-header purple"><h1>Edit Quote</h1></div>
+            <div class="card-header"><h3>Quotation</h3></div>
             <div class="card-body">
                 <!-- <a href="#" routerLink="/quote/index" class="btn btn-primary">Back</a> -->
                     
@@ -97,8 +97,8 @@
                                                         <div class="row">
                                                             <div (click)="show=!show">
                                                                 <a [routerLink]="" routerLinkActive="router-link-active" (click)="addBillingMilestone()" 
-                                                                *ngIf="!show"><i class="cil-check-circle"></i></a>
-                                                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show"><i class="fa fa-edit"></i></a>
+                                                                *ngIf="show"><i class="cil-check-circle"></i></a>
+                                                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i class="fa fa-edit"></i></a>
                                                             </div>&nbsp;
                                                             <!-- <a [routerLink]="" routerLinkActive="router-link-active" (click)="addBillingMilestone()"><i class="fa fa-edit"></i></a> &nbsp; -->
                                                             <a [routerLink]="" (click)="removeBillings(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
@@ -142,8 +142,8 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let quantity of payments().controls; let i=index" [formGroupName]="i" align="center">
-                                                    <td style="width: 13%; padding:6px">
-                                                        <select formControlName="billing_id" class="form-control">
+                                                    <td style="width: 15%; padding:6px">
+                                                        <select formControlName="billing_id" class="form-control" style="width: 70%;">
                                                             <option *ngFor="let id of billingIdList" value="{{id}}">{{id}}</option>
                                                         </select>
                                                     </td>
@@ -152,13 +152,13 @@
                                                     </td>
                                                     <td style="width: 10%; padding:6px">
                                                         <input class="form-control" formControlName="schedule" size="1" type="date"></td>
-                                                    <td style="width: 15%; padding:6px">
+                                                    <td style="width: 10%; padding:6px">
                                                         <input class="form-control" formControlName="soc_payment_term" placeholder="30 Days" type="number">
                                                     </td>
                                                     <td style=" padding:6px;">
                                                         <input class="form-control" formControlName="status" size="1" placeholder="Deposit" type="input">
                                                     </td>
-                                                    <td style="width: 15%; padding:6px">
+                                                    <td style="width: 10%; padding:6px">
                                                         <input class="form-control" formControlName="amount" size="1" placeholder="300" type="number" min="0" step=".01">
                                                     </td>
                                                     <td style="width: 10%; padding:6px">
