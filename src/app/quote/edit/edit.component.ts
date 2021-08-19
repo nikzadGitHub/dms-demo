@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Term } from '../create/terms';
+import { Quote } from '../quote';
 import { QuoteService } from '../quote.service';
-import { Quotation } from './quotations';
 
 @Component({
   selector: 'app-edit',
@@ -12,16 +13,20 @@ import { Quotation } from './quotations';
 })
 export class EditComponent implements OnInit {
 
-  quotations: Quotation;
+  @ViewChild('successModal') successModal : ModalDirective;
+
+  quotations: Quote;
   form: FormGroup;
   termSelected: number;
   terms: Term[];
-  quote_id: number;
+  id: number;
   billingIdList: number[] = [];
   fromDate: Date;
   toDate: Date;
   company_details: string[] = [];
   sub_total: number;
+  alertBody: string;
+  quote_id: string;
 
   constructor(
     private quoteService: QuoteService,
@@ -36,19 +41,20 @@ export class EditComponent implements OnInit {
     });
 
     this.route.params.subscribe(event => {
-      this.quote_id = event.quoteId; // fetch ID from url
-      this.quoteService.find(this.quote_id).subscribe(data => {
+      this.id = event.quoteId; // fetch ID from url
+      this.quoteService.find(this.id).subscribe(data => {
         this.quotations = data['data']['item'];
-        console.log(this.quotations);
         this.setInitialValue();
       });
     });
 
     this.form =  this.formBuilder.group({
+      company: '',
+      id: 0,
       standard_payment_term: this.termSelected,
       fromDate: this.fromDate,
       toDate: this.toDate,
-      term_id: this.termSelected,
+      quote_id: this.quote_id,
       billings: this.formBuilder.array([]),
       payments: this.formBuilder.array([]),
       addCosts: this.formBuilder.array([]),
@@ -59,9 +65,13 @@ export class EditComponent implements OnInit {
     this.company_details['company_name'] = this.quotations.company;
     this.company_details['quote_id'] = this.quotations.quote_id;
     
-    console.log(this.company_details);
-    
+    this.f.id.setValue(this.quotations.id);
+    this.f.quote_id.setValue(this.quotations.quote_id);
     this.f.standard_payment_term.setValue(this.quotations.standard_payment_term);
+    this.f.fromDate.setValue(this.quotations.fromDate);
+    this.f.toDate.setValue(this.quotations.toDate);
+    this.f.company.setValue(this.quotations.company);
+
     this.fromDate = this.quotations.fromDate;
     this.toDate = this.quotations.toDate;
     this.termSelected = this.quotations.standard_payment_term;
@@ -110,6 +120,8 @@ export class EditComponent implements OnInit {
       'amount': billing.amount,
       'status': billing.status,
       'remarks': billing.remarks,
+      'quote_id': billing.quote_id,
+      'id': billing.id
     })
   }
 
@@ -217,10 +229,8 @@ export class EditComponent implements OnInit {
   subTotal(costs){
     this.sub_total = 0.00;
     costs.forEach(element => {
-      console.log(element);
       this.sub_total += parseInt(element.controls.total_price.value);
     });
-    console.log(this.sub_total);
   }
 
   allTotal(costControl,costs){
@@ -243,5 +253,17 @@ export class EditComponent implements OnInit {
 
   get f(){
     return this.form.controls;
+  }
+
+  redirectPage(){
+    this.router.navigateByUrl('quote/index');
+  }
+
+  submit(){
+    console.log(this.form.value);
+    this.quoteService.update(this.form.value,this.id).subscribe(res => {
+      this.alertBody = res.message;
+      this.successModal.show();
+    })
   }
 }
