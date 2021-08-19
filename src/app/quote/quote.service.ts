@@ -58,7 +58,7 @@ export class QuoteService {
   }  
    
   find(id): Observable<any> {
-    return this.httpClient.get(this.apiURL + '/quote/' + id)
+    return this.httpClient.get(this.apiURL + '/quote/' + id + '/edit')
     .pipe(
       catchError(this.errorHandler)
     )

@@ -91,7 +91,8 @@
                                                         <input formControlName="status" class="form-control" size="1" placeholder="Deposit" type="input">
                                                     </td>
                                                     <td style="width: 15%;">
-                                                        <input formControlName="remarks" class="form-control" size="1" placeholder="Remarks" type="text">
+                                                        <textarea formControlName="remarks" class="form-control" id="" cols="30" rows="1"></textarea>
+                                                        <!-- <input formControlName="remarks" class="form-control" size="1" placeholder="Remarks" type="text"> -->
                                                     </td>
                                                     <td class="td-actions" style="width: 10%;">
                                                         <div class="row">
@@ -108,7 +109,7 @@
                                             </tbody>
                                             <tfoot align="center">
                                                 <tr>
-                                                    <td colspan="9" align="center">
+                                                    <td class="td-actions" colspan="9" align="center">
                                                         <a [routerLink]="" (click)="addBillings()" routerLinkActive="router-link-active" >
                                                             <i class="icon-plus icons"></i>
                                                         </a>
@@ -121,9 +122,9 @@
                                 <hr>
                                 <div class="card-header white">
                                     <b>Payment Schedule</b>
-                                    <a [routerLink]="" routerLinkActive="router-link-active" (click)="addPayments()">
+                                    <!-- <a [routerLink]="" routerLinkActive="router-link-active" (click)="addPayments()">
                                         <i class="icon-plus icons"></i>
-                                    </a>
+                                    </a> -->
                                 </div>
                                 <div class="card-body scroll" style="padding: 0%;">
                                     <div class="row">
@@ -170,6 +171,15 @@
                                                     </td>
                                                 </tr>
                                             </tbody>
+                                            <tfoot align="center">
+                                                <tr>
+                                                    <td class="td-actions" colspan="9" align="center">
+                                                        <a [routerLink]="" (click)="addPayments()" routerLinkActive="router-link-active" >
+                                                            <i class="icon-plus icons"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -181,9 +191,9 @@
                         <div class="card rcorners customBorder shadow">
                             <div class="card-header white">
                                 <b>Additional Cost</b>
-                                <a [routerLink]="" (click)="addAddCosts()" routerLinkActive="router-link-active" >
+                                <!-- <a [routerLink]="" (click)="addAddCosts()" routerLinkActive="router-link-active" >
                                     <i class="icon-plus icons"></i>
-                                </a>
+                                </a> -->
                             </div>
                             <div class="card-body scroll" style="padding: 0%;">
                                 <div class="row">
@@ -226,6 +236,15 @@
                                                 </td>
                                             </tr>
                                         </tbody>
+                                        <tfoot align="center">
+                                            <tr>
+                                                <td class="td-actions" colspan="9" align="center">
+                                                    <a [routerLink]="" (click)="addAddCosts()" routerLinkActive="router-link-active" >
+                                                        <i class="icon-plus icons"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                     <div class="col-lg-9" align="right">
                                         <div class="form-group">
