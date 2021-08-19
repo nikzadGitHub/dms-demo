@@ -79,7 +79,7 @@ export class QuoteService {
   }
   
   getPage(url,pageItems,search_text){
-    let query = '/quote?page_items=' + pageItems + '&search_text=' + search_text;
+    let query = '&page_items=' + pageItems + '&search_text=' + search_text;
     return this.httpClient.get(url + query,this.httpOptions)
     .pipe(
       catchError(this.errorHandler)

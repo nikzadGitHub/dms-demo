@@ -1,24 +1,24 @@
 .rcorners{
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    // border-radius: 20px;
     overflow: hidden;
 }
 
 th {
-    background-color: #70ACF4;
-    color: white;
     text-align: center;
     border:hidden;
+    border-top: gray;
+    border-bottom: gray;
 }
 
 table {
-    border: 1px solid #70ACF4;
+    border: 1px solid gray;
     border-collapse: separate;
     border-spacing: 0;
 }
 
 td {
     text-align: center;
+    border: hidden;
 }
 
 .buttonColor {

@@ -14,8 +14,6 @@ export class IndexComponent implements OnInit {
   paginate: [];
   pageItems: number = 10;
   search_text: string = '';
-  public selections = ['Quote','Opportunity'];
-  selected = 'Quote';
   
   constructor(public quoteService: QuoteService) { }
   
@@ -32,10 +30,6 @@ export class IndexComponent implements OnInit {
          this.quotes = this.quotes.filter(item => item.id !== id);
          console.log('Quote deleted successfully!');
     })
-  }
-
-  onSelect(selection){
-    this.selected = selection;
   }
 
   getAll(){

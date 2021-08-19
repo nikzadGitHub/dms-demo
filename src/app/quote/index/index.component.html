@@ -1,29 +1,17 @@
 <div class="animated fadeIn">
   <div class="col-lg col-md-6">
     <div class="card rcorners">
-        <div class="card-header"><h1>Quote List</h1></div>
+        <div class="card-header row" style="background-color: #898485; color: white;">
+          <div style="padding-left: 20px;">
+            <h2>Quote Listing</h2>
+          </div>
+          <div class="col-lg col-sm-4;" align='right'>
+            <input [(ngModel)]="search_text" style="width: 20%;" class="form-control" placeholder="Search" type="text" (keyup)='getAll()'>
+          </div>
+        </div>
       
         <!-- <a href="#" routerLink="/quote/create/" class="btn btn-success">Create New Quote</a> -->
         <div class="card-body">
-          <div class="form-group row" style="padding-top: 30px;">
-            <div style="padding: 20px;"></div>
-            <div class="col-lg col-sm-4;" align='right'>
-              <input [(ngModel)]="search_text" class="form-inline" placeholder="Search" type="text" (keyup)='getAll()'>
-            </div>
-            <div style="padding: 20px;"></div>
-            <!-- <div class="btn-group" dropdown>
-                <button type="button" class="btn btn-danger buttonColor" routerLink="/quote/create/">{{selected}}</button>
-                <button type="button" dropdownToggle class="btn btn-danger dropdown-toggle dropdown-toggle-split buttonColor">
-                    <span class="caret"></span>
-                </button>
-                <ul *dropdownMenu class="dropdown-menu" role="menu">
-                    <li *ngFor="let selection of selections" (click)='onSelect(selection)' role="menuitem">
-                        <a class="dropdown-item">{{selection}}</a>
-                    </li>
-                </ul>
-            </div> -->
-          </div>
-
           <table class="table table-bordered">
             <thead>
               <tr>
@@ -37,13 +25,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let quote of quotes">
+              <tr *ngFor="let quote of quotes; let i=index">
                 <td>{{ quote.created_at | date:'dd-MMM-yyyy' }}</td>
                 <td><a href="#" [routerLink]="['/quote/', quote.id, 'view']">{{ quote.quote_id }}</a></td>
                 <td>{{ quote.company }}</td>
                 <td>{{ quote.validity_date | date:'dd-MMM-yyyy'}}</td>
                 <td><i class="fa fa-circle fa-lg" [ngClass]="(quote.active==1 ? 'active' : 'inactive')"></i></td>
-                <td style="width: 10%;">{{ quote.status == 1 ? "Approved" : ( quote.status == 0 ? "Revoke" : "Pending") }}</td>
+                <td style="width: 10%;">{{ quote.status }}</td>
                 <td style="width: 5%;">
                   <a href="#" [routerLink]="['/quote/', quote.id, 'edit']" class="fa fa-edit"></a>
                   <!-- <button type="button" (click)="deleteQuote(quote.id)" class="btn btn-danger">Delete</button> -->
@@ -60,7 +48,7 @@
               <option value="20">20</option>
               <option value="50">50</option>
             </select>
-            <ul *ngIf="paginate" class="pagination justify-content-end">
+            <ul class="pagination justify-content-end">
               <li *ngFor="let page of paginate" class="page-item">
                 <a class="page-link {{page.active==true?'active':''}}" [routerLink]="" (click)='onClick(page.url)'>
                   {{page.label}}

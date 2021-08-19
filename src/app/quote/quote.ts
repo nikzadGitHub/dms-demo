@@ -4,7 +4,7 @@ export interface Quote {
     quote_schedule: string;
     quote_revision: string;
     validity_date: Date;
-    is_active:number;
-    status:number;
+    active:number;
+    status:string;
 }
 
