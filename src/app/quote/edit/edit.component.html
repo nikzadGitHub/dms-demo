@@ -7,8 +7,11 @@
                     <div class="col-lg-6">
                         <label class="form-control no-border"><h2><b>{{company_details.company_name}}</b></h2></label>
                     </div>
-                    <div>
-                        <label class="form-control no-border"><b>Quote ID: {{company_details.quote_id}}</b></label>
+                    <div class="col-lg-2">
+                        <select [(ngModel)]="rev" class="form-control" style="width: 70%;" (change)='changeRev(rev)'>
+                            <option *ngFor="let quoteId of quoteIdList" value="{{quoteId.rev_number}}">{{quoteId.quote_id}}</option>
+                        </select>
+                        <!-- <label class="form-control no-border"><b>Quote ID: {{company_details.quote_id}}</b></label> -->
                     </div>
                     <div class="col-lg" align='right'><b>Status</b><br>In Progress</div>
                 </div>

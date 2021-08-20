@@ -16,7 +16,10 @@ export class EditComponent implements OnInit {
   @ViewChild('successModal') successModal : ModalDirective;
 
   quotations: Quote;
+  latestQuotation: Quote;
+  quotationRevisions: Quote[] = [];
   form: FormGroup;
+  rev: number = 0;
   termSelected: number;
   terms: Term[];
   id: number;
@@ -27,7 +30,7 @@ export class EditComponent implements OnInit {
   sub_total: number;
   alertBody: string;
   quote_id: string;
-  quoteIdList: string[] = [];
+  quoteIdList: any[] = [];
 
   constructor(
     private quoteService: QuoteService,
@@ -44,8 +47,12 @@ export class EditComponent implements OnInit {
     this.route.params.subscribe(event => {
       this.id = event.quoteId; // fetch ID from url
       this.quoteService.find(this.id).subscribe(data => {
-        this.quotations = data['data']['item'];
+        this.quotations = data['data']['quotation'];
+        this.latestQuotation = data['data']['quotation'];
+        this.quotationRevisions = data['data']['quotationRevisions'];
+        this.addQuoteIdList();
         this.setInitialValue();
+        this.initData();
       });
     });
 
@@ -65,7 +72,6 @@ export class EditComponent implements OnInit {
   setInitialValue(){
     this.company_details['company_name'] = this.quotations.company;
     this.company_details['quote_id'] = this.quotations.quote_id;
-    this.quoteIdList.push(this.quotations.quote_id);
 
     this.f.id.setValue(this.quotations.id);
     this.f.quote_id.setValue(this.quotations.quote_id);
@@ -78,6 +84,10 @@ export class EditComponent implements OnInit {
     this.toDate = this.quotations.toDate;
     this.termSelected = this.quotations.standard_payment_term;
     this.dateInit();
+  }
+
+  initData()
+  {
     this.quotations.billing_milestones.forEach(billing => {
       this.billings().push(this.existingBillings(billing));
     });
@@ -88,6 +98,36 @@ export class EditComponent implements OnInit {
       this.addCosts().push(this.existingCosts(addCost));
     });
     this.subTotal(this.addCosts().controls);
+  }
+
+  revData(revNumber)
+  {
+    this.quotations.billing_milestones.filter(x => x['rev_number'] == revNumber).forEach(billing => {
+      this.billings().push(this.existingBillings(billing));
+    });
+    this.quotations.payment_schedules.filter(x => x['rev_number'] == revNumber).forEach(payment => {
+      this.payments().push(this.existingPayments(payment));
+    });
+    this.quotations.additional_costs.filter(x => x['rev_number'] == revNumber).forEach(addCost => {
+      this.addCosts().push(this.existingCosts(addCost));
+    });
+    this.subTotal(this.addCosts().controls);
+  }
+
+  changeRev(revNumber){
+    this.billings().clear();
+    this.payments().clear();
+    this.addCosts().clear();
+    if(revNumber == 0){
+      this.quotations = this.latestQuotation;
+      this.setInitialValue();
+      this.initData();
+    } else {
+      this.quotations = this.quotationRevisions.find(x => x.id == revNumber);
+      this.setInitialValue();
+      this.revData(revNumber);
+    }
+    
   }
 
   dateInit(){
@@ -116,14 +156,14 @@ export class EditComponent implements OnInit {
   existingBillings(billing){
     this.billingIdList.push(billing.billing_id);
     return this.formBuilder.group({
+      'id': billing.id,
       'billing_id': billing.billing_id,
       'stage': billing.stage,
       'percentage': billing.percentage,
       'amount': billing.amount,
       'status': billing.status,
       'remarks': billing.remarks,
-      'quote_id': billing.quote_id,
-      'id': billing.id
+      'quote_id': billing.quote_id
     })
   }
 
@@ -169,7 +209,6 @@ export class EditComponent implements OnInit {
 
   newPayments(): FormGroup {
     return this.formBuilder.group({
-      'id': '',
       'billing_id': '',
       'percentage': '',
       'schedule': '',
@@ -199,6 +238,7 @@ export class EditComponent implements OnInit {
   existingCosts(addCosts): FormGroup {
     
     return this.formBuilder.group({
+      'id': addCosts.id,
       'description': addCosts.description,
       'quantity': addCosts.quantity,
       'unit_price': addCosts.unit_price,
@@ -253,6 +293,22 @@ export class EditComponent implements OnInit {
 
     this.billingIdList = this.billingIdList.map(item => item)
     .filter((value, index, self) => self.indexOf(value) === index);
+  }
+
+  addQuoteIdList(){
+    // ------------- Array of Quote ID including revision -----------------
+    this.quoteIdList = [];
+    let newArray = [];
+    newArray['rev_number'] = 0; // rev_number 0 for latest quotation
+    newArray['quote_id'] = this.quotations.quote_id;
+    this.quoteIdList.push(newArray);
+    this.quotationRevisions.forEach(element => {
+        let newArray = [];
+        newArray['rev_number'] = element['rev_number'];
+        newArray['quote_id'] = element['quote_id'];
+        this.quoteIdList.push(newArray);
+    });
+    // ------------- End of Array -----------------
   }
 
   get f(){
