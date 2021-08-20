@@ -25,6 +25,11 @@ export const navItems: INavData[] = [
     icon: 'icon-drop'
   },
   {
+    name: 'Opportunities',
+    url: '/opportunity/new',
+    icon: 'cil-money',  
+  },
+  {
     name: 'Systems',
     url: '/#',
     icon: 'icon-gear',

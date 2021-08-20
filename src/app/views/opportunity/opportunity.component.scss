@@ -1,0 +1,76 @@
+th {
+    background-color: #2297e6;
+    color: white;
+    text-align: center;
+    /*border:hidden;*/
+}
+
+table {
+    /*border: 1px solid #2297e6;*/
+    /*border: none;*/
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+td {
+    text-align: center;
+}
+
+::ng-deep .nav-link.active {    
+    
+    background: #2297e6 !important;
+    color:#FFFFFF !important;
+}
+
+::ng-deep .nav-tabs .nav-link{
+    border:none !important;
+    border-left: 1px solid !important;
+}
+
+.bg-lightgrey{
+    background: #fcfcfc;
+}
+
+.no-outline tr:first-child td {
+  border-top: none !important;
+}
+
+.no-outline tr:first-child th {
+  border-top: none !important;
+}
+
+.no-outline tr:last-child th {
+  border-bottom: none !important;
+}
+
+.no-outline tr:last-child td {
+  border-bottom: none !important;
+}
+
+.no-outline tr td:first-child {
+  border-left: none !important;
+}
+
+.no-outline tr td:last-child {
+  border-right: none !important;
+}
+
+.no-outline tr th:first-child {
+  border-left: none !important;
+}
+
+.no-outline tr th:last-child {
+  border-right: none !important;
+}
+
+.btn-custom {
+    background-color: #00538a;
+    border-color: #00538a;
+    color:#FFFFFF;
+}
+
+.chead{
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+

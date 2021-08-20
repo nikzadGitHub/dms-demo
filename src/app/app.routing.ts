@@ -88,7 +88,11 @@ export const routes: Routes = [
       },
       {
         path: 'quote',
-        loadChildren: () => import('./quote/quote.module').then(m => m.QuoteModule)
+        loadChildren: () => import('./quote/quote.module').then(m => m.QuoteModule)        
+      },
+      {
+        path: 'opportunity',
+        loadChildren: () => import('./views/opportunity/opportunity.module').then(m => m.OpportunityModule)
       }
     ]
   },
