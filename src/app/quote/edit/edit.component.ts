@@ -27,6 +27,7 @@ export class EditComponent implements OnInit {
   sub_total: number;
   alertBody: string;
   quote_id: string;
+  quoteIdList: string[] = [];
 
   constructor(
     private quoteService: QuoteService,
@@ -64,7 +65,8 @@ export class EditComponent implements OnInit {
   setInitialValue(){
     this.company_details['company_name'] = this.quotations.company;
     this.company_details['quote_id'] = this.quotations.quote_id;
-    
+    this.quoteIdList.push(this.quotations.quote_id);
+
     this.f.id.setValue(this.quotations.id);
     this.f.quote_id.setValue(this.quotations.quote_id);
     this.f.standard_payment_term.setValue(this.quotations.standard_payment_term);
@@ -154,6 +156,7 @@ export class EditComponent implements OnInit {
   
   existingPayments(payment): FormGroup {
     return this.formBuilder.group({
+      'id': payment.id,
       'billing_id': payment.billing_id,
       'percentage': payment.percentage,
       'schedule': payment.schedule,
@@ -166,6 +169,7 @@ export class EditComponent implements OnInit {
 
   newPayments(): FormGroup {
     return this.formBuilder.group({
+      'id': '',
       'billing_id': '',
       'percentage': '',
       'schedule': '',
