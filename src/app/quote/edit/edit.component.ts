@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -36,10 +37,9 @@ export class EditComponent implements OnInit {
     private quoteService: QuoteService,
     private router: Router,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
-  ) { }
-
-  ngOnInit(): void {
+    private formBuilder: FormBuilder,
+    private datePipe: DatePipe
+  ) { 
     this.quoteService.create('3630').subscribe(data => {
       this.terms = data['data']['items'];
     });
@@ -298,19 +298,23 @@ export class EditComponent implements OnInit {
   }
 
   addQuoteIdList(){
-    // ------------- Array of Quote ID including revision -----------------
     this.quoteIdList = [];
     let newArray = [];
     newArray['rev_number'] = 0; // rev_number 0 for latest quotation
     newArray['quote_id'] = this.quotations.quote_id;
+    newArray['created_at'] = this.quotations.created_at;
+    newArray['days'] = this.termSelected + ' days / ' + this.datePipe.transform(this.quotations.validity_date,'dd-MMM-yyyy');
+    newArray['status'] = this.quotations.status;
     this.quoteIdList.push(newArray);
     this.quotationRevisions.forEach(element => {
         let newArray = [];
         newArray['rev_number'] = element['rev_number'];
         newArray['quote_id'] = element['quote_id'];
+        newArray['created_at'] = this.quotations.created_at;
+        newArray['days'] = this.termSelected + ' days / ' + this.datePipe.transform(this.quotations.validity_date,'dd-MMM-yyyy');
+        newArray['status'] = this.quotations.status;
         this.quoteIdList.push(newArray);
     });
-    // ------------- End of Array -----------------
   }
 
   get f(){

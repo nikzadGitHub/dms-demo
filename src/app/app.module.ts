@@ -58,6 +58,7 @@ import { QuoteModule } from './quote/quote.module';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CalendarModule } from 'primeng/calendar';
 import { AccordionModule } from 'primeng/accordion';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   imports: [
@@ -108,6 +109,7 @@ import { AccordionModule } from 'primeng/accordion';
       multi:true
     },
     IconSetService,
+    DatePipe,
   ],
   bootstrap: [ AppComponent ]
 })

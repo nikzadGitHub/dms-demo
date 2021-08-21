@@ -8,6 +8,9 @@ export interface Quote {
     'quote_id': string,
     'company': string,
     'fromDate': Date,
-    'toDate': Date
+    'toDate': Date,
+    'created_at': Date,
+    'status': string,
+    'validity_date': Date
 }
 
