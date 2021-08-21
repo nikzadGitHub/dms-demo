@@ -57,6 +57,7 @@ import { DialogComponent } from './components/shared/dialog/dialog.component';
 import { QuoteModule } from './quote/quote.module';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CalendarModule } from 'primeng/calendar';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   imports: [
@@ -84,7 +85,8 @@ import { CalendarModule } from 'primeng/calendar';
     MatProgressSpinnerModule,
     QuoteModule,
     AutoCompleteModule,
-    CalendarModule
+    CalendarModule,
+    AccordionModule
   ],
   declarations: [
     AppComponent,

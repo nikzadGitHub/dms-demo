@@ -43,15 +43,17 @@ export class EditComponent implements OnInit {
     this.quoteService.create('3630').subscribe(data => {
       this.terms = data['data']['items'];
     });
+  }
 
+  ngOnInit(): void {
     this.route.params.subscribe(event => {
       this.id = event.quoteId; // fetch ID from url
       this.quoteService.find(this.id).subscribe(data => {
         this.quotations = data['data']['quotation'];
         this.latestQuotation = data['data']['quotation'];
         this.quotationRevisions = data['data']['quotationRevisions'];
-        this.addQuoteIdList();
         this.setInitialValue();
+        this.addQuoteIdList();
         this.initData();
       });
     });
@@ -72,7 +74,7 @@ export class EditComponent implements OnInit {
   setInitialValue(){
     this.company_details['company_name'] = this.quotations.company;
     this.company_details['quote_id'] = this.quotations.quote_id;
-
+    console.log(this.quotations);
     this.f.id.setValue(this.quotations.id);
     this.f.quote_id.setValue(this.quotations.quote_id);
     this.f.standard_payment_term.setValue(this.quotations.standard_payment_term);
@@ -82,7 +84,7 @@ export class EditComponent implements OnInit {
 
     this.fromDate = this.quotations.fromDate;
     this.toDate = this.quotations.toDate;
-    this.termSelected = this.quotations.standard_payment_term;
+    this.termSelected = this.terms.find(x => x.id == this.quotations.standard_payment_term).no_of_days;
     this.dateInit();
   }
 
