@@ -284,16 +284,14 @@
                 </p-accordionTab>
                 <!-- End of Additional Costs Accordion -->
             </p-accordion>
+            <div class="row"></div>
+            <div class="col-lg" align=center>
+                <div class="form-group">
+                    <button class="btn btn-secondary">SAVE</button>&nbsp;
+                    <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Request Approval</button>
+                </div>
+            </div>
         </form>
-    </div>
-</div>
-
-<div class="row"></div> <!-- Empty row to give some space at the bottom -->
-
-<div class="col-lg" align=center>
-    <div class="form-group">
-        <button class="btn btn-secondary">SAVE</button>&nbsp;
-        <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Request Approval</button>
     </div>
 </div>
 

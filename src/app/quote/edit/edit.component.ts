@@ -52,6 +52,7 @@ export class EditComponent implements OnInit {
         this.quotations = data['data']['quotation'];
         this.latestQuotation = data['data']['quotation'];
         this.quotationRevisions = data['data']['quotationRevisions'];
+
         this.setInitialValue();
         this.addQuoteIdList();
         this.initData();
@@ -74,7 +75,7 @@ export class EditComponent implements OnInit {
   setInitialValue(){
     this.company_details['company_name'] = this.quotations.company;
     this.company_details['quote_id'] = this.quotations.quote_id;
-    console.log(this.quotations);
+
     this.f.id.setValue(this.quotations.id);
     this.f.quote_id.setValue(this.quotations.quote_id);
     this.f.standard_payment_term.setValue(this.quotations.standard_payment_term);
@@ -102,33 +103,16 @@ export class EditComponent implements OnInit {
     this.subTotal(this.addCosts().controls);
   }
 
-  revData(revNumber)
-  {
-    this.quotations.billing_milestones.filter(x => x['rev_number'] == revNumber).forEach(billing => {
-      this.billings().push(this.existingBillings(billing));
-    });
-    this.quotations.payment_schedules.filter(x => x['rev_number'] == revNumber).forEach(payment => {
-      this.payments().push(this.existingPayments(payment));
-    });
-    this.quotations.additional_costs.filter(x => x['rev_number'] == revNumber).forEach(addCost => {
-      this.addCosts().push(this.existingCosts(addCost));
-    });
-    this.subTotal(this.addCosts().controls);
-  }
-
   changeRev(revNumber){
-    this.billings().clear();
-    this.payments().clear();
-    this.addCosts().clear();
-    if(revNumber == 0){
-      this.quotations = this.latestQuotation;
+    this.quoteService.getQuotationRevision(this.id,revNumber).subscribe(data => {
+      this.billings().clear();
+      this.payments().clear();
+      this.addCosts().clear();
+      console.log(data['data']['item']);
+      this.quotations = data['data']['item'];
       this.setInitialValue();
       this.initData();
-    } else {
-      this.quotations = this.quotationRevisions.find(x => x.id == revNumber);
-      this.setInitialValue();
-      this.revData(revNumber);
-    }
+    })
     
   }
 

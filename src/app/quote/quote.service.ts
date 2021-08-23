@@ -108,6 +108,12 @@ export class QuoteService {
       catchError(this.errorHandler)
     )
   }
+  getQuotationRevision(id,revNumber){
+    return this.httpClient.get(this.apiURL + '/quote/revision/'+ id + '/' + revNumber)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
 
   errorHandler(error) {
     let errorMessage = '';
