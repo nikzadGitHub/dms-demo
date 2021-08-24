@@ -104,13 +104,11 @@ export class EditComponent implements OnInit {
     this.quotations.products.forEach(product => {
       this.products().push(this.existingProducts(product));
     });
-    console.log(this.products().controls)
     this.subTotal(this.addCosts().controls);
   }
 
   changeRev(revNumber){
     this.quoteService.getQuotationRevision(this.id,revNumber).subscribe(data => {
-      console.log(data);
       this.billings().clear();
       this.payments().clear();
       this.addCosts().clear();
@@ -148,6 +146,7 @@ export class EditComponent implements OnInit {
   existingProducts(product){
     return this.formBuilder.group({
       'id': product.id,
+      'quote_id': product.quote_id,
       'name': product.name,
       'sku': product.sku,
       'quantity': product.quantity,
@@ -316,6 +315,7 @@ export class EditComponent implements OnInit {
     newArray['created_at'] = this.quotations.created_at;
     newArray['days'] = this.termSelected + ' days / ' + this.datePipe.transform(this.quotations.validity_date,'dd-MMM-yyyy');
     newArray['status'] = this.quotations.status;
+    newArray['amount'] = this.quotations.amount;
     this.quoteIdList.push(newArray);
     this.quotationRevisions.forEach(element => {
         let newArray = [];
@@ -324,16 +324,13 @@ export class EditComponent implements OnInit {
         newArray['created_at'] = this.quotations.created_at;
         newArray['days'] = this.termSelected + ' days / ' + this.datePipe.transform(this.quotations.validity_date,'dd-MMM-yyyy');
         newArray['status'] = this.quotations.status;
+        newArray['amount'] = element['amount'];
         this.quoteIdList.push(newArray);
     });
   }
 
   get f(){
     return this.form.controls;
-  }
-
-  test(test){
-    console.log(test)
   }
 
   redirectPage(){
