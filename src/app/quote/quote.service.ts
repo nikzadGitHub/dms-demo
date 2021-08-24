@@ -64,8 +64,8 @@ export class QuoteService {
     )
   }
    
-  update(id, quote): Observable<Quote> {
-    return this.httpClient.put<Quote>(this.apiURL + '/quote/' + id, JSON.stringify(quote), this.httpOptions)
+  update(quote, id): Observable<any> {
+    return this.httpClient.put(this.apiURL + '/quote/' + id, JSON.stringify(quote), this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
@@ -79,7 +79,7 @@ export class QuoteService {
   }
   
   getPage(url,pageItems,search_text){
-    let query = '/quote?page_items=' + pageItems + '&search_text=' + search_text;
+    let query = '&page_items=' + pageItems + '&search_text=' + search_text;
     return this.httpClient.get(url + query,this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
@@ -104,6 +104,12 @@ export class QuoteService {
   getCompany(id){
     let param = {id:id};
     return this.httpClient.get(this.apiURL + '/quote/company/',{params:param})
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+  getQuotationRevision(id,revNumber){
+    return this.httpClient.get(this.apiURL + '/quote/revision/'+ id + '/' + revNumber)
     .pipe(
       catchError(this.errorHandler)
     )

@@ -61,3 +61,38 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.purple{
+    background-color: #424562;
+    color: white;
+}
+.no-border {
+    border: 0;
+    box-shadow: none;
+}
+
+:host ::ng-deep .customColor.p-accordion {
+    .p-accordion-header {
+        font-size: 1.5em; 
+        font-weight: bolder;
+        background: white;
+        span.pi{
+            margin-top: -8px;
+            position: absolute;
+            right: 0.5em;
+            top: 50%;
+        }
+        .p-accordion-header-link{
+            background: white;
+        }
+    }
+    .p-accordion-content{
+        padding: 0px;
+        overflow-x: hidden;
+    }
+}
+
+.row{
+    padding: 10px;
+}
+

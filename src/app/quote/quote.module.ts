@@ -13,6 +13,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ProductsComponent } from './products/products.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CalendarModule } from 'primeng/calendar';
+import { AccordionModule } from 'primeng/accordion';
 import { CompanyHeaderComponent } from './company-header/company-header.component';
 
 
@@ -34,7 +35,8 @@ import { CompanyHeaderComponent } from './company-header/company-header.componen
     IconModule,
     ModalModule,
     AutoCompleteModule,
-    CalendarModule
+    CalendarModule,
+    AccordionModule,
   ]
 })
 export class QuoteModule { }
