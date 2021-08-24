@@ -41,7 +41,7 @@ export class EditComponent implements OnInit {
     private datePipe: DatePipe
   ) { 
     this.quoteService.create('3630').subscribe(data => {
-      this.terms = data['data']['items'];
+      this.terms = data['data'];
     });
   }
 
@@ -69,13 +69,14 @@ export class EditComponent implements OnInit {
       billings: this.formBuilder.array([]),
       payments: this.formBuilder.array([]),
       addCosts: this.formBuilder.array([]),
+      products: this.formBuilder.array([]),
     });
   }
 
   setInitialValue(){
     this.company_details['company_name'] = this.quotations.company;
     this.company_details['quote_id'] = this.quotations.quote_id;
-
+    console.log(this.quotations)
     this.f.id.setValue(this.quotations.id);
     this.f.quote_id.setValue(this.quotations.quote_id);
     this.f.standard_payment_term.setValue(this.quotations.standard_payment_term);
@@ -100,16 +101,21 @@ export class EditComponent implements OnInit {
     this.quotations.additional_costs.forEach(addCost => {
       this.addCosts().push(this.existingCosts(addCost));
     });
+    this.quotations.products.forEach(product => {
+      this.products().push(this.existingProducts(product));
+    });
+    console.log(this.products().controls)
     this.subTotal(this.addCosts().controls);
   }
 
   changeRev(revNumber){
     this.quoteService.getQuotationRevision(this.id,revNumber).subscribe(data => {
+      console.log(data);
       this.billings().clear();
       this.payments().clear();
       this.addCosts().clear();
-      console.log(data['data']['item']);
-      this.quotations = data['data']['item'];
+      this.products().clear();
+      this.quotations = data['data'];
       this.setInitialValue();
       this.initData();
     })
@@ -132,6 +138,27 @@ export class EditComponent implements OnInit {
   termSelect(term){
     this.termSelected = this.terms.find(x => x.id == term).no_of_days;
   }
+
+  //---------------- Quotation Producs -------------------
+
+  products(): FormArray {
+    return this.form.get('products') as FormArray
+  }
+
+  existingProducts(product){
+    return this.formBuilder.group({
+      'id': product.id,
+      'name': product.name,
+      'sku': product.sku,
+      'quantity': product.quantity,
+      'unit_price': product.unit_price,
+      'total_price': product.quantity * product.unit_price,
+      'discount': product.discount,
+      'amount': product.amount,
+    })
+  }
+
+  //---------------- End of Quotation Products -------------------
 
   //---------------- Billings Milestone -------------------
 
@@ -303,6 +330,10 @@ export class EditComponent implements OnInit {
 
   get f(){
     return this.form.controls;
+  }
+
+  test(test){
+    console.log(test)
   }
 
   redirectPage(){

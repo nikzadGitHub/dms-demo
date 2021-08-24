@@ -3,6 +3,7 @@ export interface Quote {
     payment_schedules:[],
     additional_costs:[],
     quotation_revision:[],
+    products:[],
     'id': number,
     'standard_payment_term':number,
     'quote_id': string,

@@ -57,7 +57,39 @@
 
                 <!-- Products Accordion -->
                 <p-accordionTab header="Products">
-                    Content 2
+                    <div class="row">
+                        <table class="table table-borderless" formArrayName="products">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Product Name</th>
+                                    <th>SKU ID</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price(MYR)</th>
+                                    <th>Total Price(MYR)</th>
+                                    <th>Discount</th>
+                                    <th>Net Amount(MYR)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let product of products().controls; let i=index;" [formGroupName]="i" align="center">
+                                    <td>{{ i+1 }}</td>
+                                    <td><input class="form-control" formControlName="name" type="text" [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="sku" type="text" [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="quantity" type="text" [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="unit_price" type="text" [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="total_price" type="text" [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="discount" type="text" [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="amount" type="text" [attr.disabled]="true"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="card">
+                            <div class=""></div>
+                        </div>
+                    </div>
                 </p-accordionTab>
                 <!-- End of Products Accordion -->
 
@@ -104,7 +136,7 @@
                 <p-accordionTab header="Billing Milestones">
                     <div class="row">
                         <table class="table table-borderless" formArrayName="billings">
-                            <thead class="grey">
+                            <thead>
                                 <tr>
                                     <th>Billing ID</th>
                                     <th>Stage</th>
@@ -167,7 +199,7 @@
                 <p-accordionTab header="Payment Schedules">
                     <div class="row">
                         <table class="table table-borderless" formArrayName="payments">
-                            <thead class="grey">
+                            <thead>
                                 <tr>
                                     <th>Billing ID</th>
                                     <th>Percentage</th>
@@ -227,7 +259,7 @@
                 <p-accordionTab header="Additional Costs">
                     <div class="row">
                         <table class="table table-borderless" formArrayName="addCosts">
-                            <thead class="grey">
+                            <thead>
                                 <tr>
                                     <th>Description</th>
                                     <th>Quantity</th>

@@ -35,10 +35,17 @@
 thead{
     text-align: center;
     border: none;
+    background-color: rgb(245, 245, 245);
 }
 
 input{
     width: 70%;
+}
+
+input:disabled{
+    background: white;
+    border: none;
+    text-align: center;
 }
 
 .td-actions{
