@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SociService } from '../soci.service';
 
 @Component({
   selector: 'app-index',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndexComponent implements OnInit {
 
-  constructor() { }
+  constructor(public sociService: SociService) { }
 
   ngOnInit(): void {
+    this.sociService.getAll(1,1).subscribe(data => {
+      console.log(data);
+    })
   }
 
 }
