@@ -16,8 +16,18 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Quote',
-    url: '/quote/index',
-    icon: 'icon-menu'
+    url: '/#',
+    icon: 'icon-menu',
+    children: [
+      {
+        name: 'Quote List',
+        url: '/quote/index'
+      },
+      {
+        name: 'Quote Approval',
+        url: '/quote/approval'
+      }
+    ]
   },
   {
     name: 'Colors',

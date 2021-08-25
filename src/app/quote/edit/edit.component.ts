@@ -62,6 +62,7 @@ export class EditComponent implements OnInit {
     this.form =  this.formBuilder.group({
       company: '',
       id: 0,
+      data_area_id: 3630,
       standard_payment_term: this.termSelected,
       fromDate: this.fromDate,
       toDate: this.toDate,
@@ -146,6 +147,8 @@ export class EditComponent implements OnInit {
   existingProducts(product){
     return this.formBuilder.group({
       'id': product.id,
+      'external_product_number': product.external_product_number,
+      'data_area_id': product.data_area_id,
       'quote_id': product.quote_id,
       'name': product.name,
       'sku': product.sku,
