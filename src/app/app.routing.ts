@@ -89,6 +89,10 @@ export const routes: Routes = [
       {
         path: 'quote',
         loadChildren: () => import('./quote/quote.module').then(m => m.QuoteModule)
+      },
+      {
+        path: 'soci',
+        loadChildren: () => import('./soci/soci.module').then(m => m.SociModule)
       }
     ]
   },
