@@ -16,6 +16,7 @@ export class EditComponent implements OnInit {
 
   @ViewChild('successModal') successModal : ModalDirective;
 
+  submitType: string;
   quotations: Quote;
   latestQuotation: Quote;
   quotationRevisions: Quote[] = [];
@@ -344,10 +345,21 @@ export class EditComponent implements OnInit {
     this.router.navigateByUrl('quote/index');
   }
 
-  submit(){
+  setSubmitType(type){
+    this.submitType = type;
+  }
+
+  submitRev(){
     console.log(this.form.value);
     this.quoteService.update(this.form.value,this.id).subscribe(res => {
       this.alertBody = res.message;
+      this.successModal.show();
+    })
+  }
+
+  submitApproval(){
+    this.quoteService.submitApproval(this.id).subscribe(res => {
+      this.alertBody = res.message
       this.successModal.show();
     })
   }

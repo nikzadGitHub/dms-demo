@@ -20,7 +20,7 @@
         
             </div>
         </div>
-        <form [formGroup]="form" (ngSubmit)="submit()">
+        <form [formGroup]="form" (ngSubmit)="submitType == 'save' ? submitRev() : submitApproval()">
             <p-accordion [multiple]="true" styleClass="customColor">
                 <!-- Quotation Accordion -->
                 <p-accordionTab header="Quotation">
@@ -319,8 +319,9 @@
             <div class="row"></div>
             <div class="col-lg" align=center>
                 <div class="form-group">
-                    <button class="btn btn-secondary">SAVE</button>&nbsp;
-                    <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Request Approval</button>
+                    <button class="btn btn-secondary" type="submit" (click)='setSubmitType("save")'>SAVE</button>&nbsp;
+                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("approve")' 
+                    [disabled]="!form.valid">Request Approval</button>
                 </div>
             </div>
         </form>

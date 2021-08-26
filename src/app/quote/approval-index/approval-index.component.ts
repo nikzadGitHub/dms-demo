@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Quote } from '../quote';
+import { QuoteService } from '../quote.service';
 
 @Component({
   selector: 'app-approval-index',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApprovalIndexComponent implements OnInit {
 
-  constructor() { }
+  quotations: Quote[] = []
+
+  constructor(private quoteService: QuoteService) { }
 
   ngOnInit(): void {
+    this.quoteService.getQuotationPendingApproval().subscribe(data => {
+      this.quotations = data['data']
+      console.log(this.quotations)
+    })
   }
 
 }

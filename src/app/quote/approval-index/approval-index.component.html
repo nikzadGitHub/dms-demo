@@ -25,11 +25,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let quote of quotes; let i=index">
+                <tr *ngFor="let quote of quotations; let i=index">
                   <td>{{ quote.created_at | date:'dd-MMM-yyyy' }}</td>
                   <td><a href="#" [routerLink]="['/quote/', quote.id, 'view']">{{ quote.quote_id }}</a></td>
                   <td>{{ quote.company }}</td>
-                  <td>{{ quote.request_date | date:'dd-MMM-yyyy'}}</td>
+                  <td>{{ quote.requested_date | date:'dd-MMM-yyyy'}}</td>
                   <td>{{ quote.validity_date | date:'dd-MMM-yyyy'}}</td>
                   <td>{{ quote.amount }}</td>
                   <td style="width: 5%;">

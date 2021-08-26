@@ -115,6 +115,20 @@ export class QuoteService {
     )
   }
 
+  submitApproval(quoteId): Observable<any>{
+    return this.httpClient.post(this.apiURL + '/quote/request-approval',{quoteId:quoteId})
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  getQuotationPendingApproval(){
+    return this.httpClient.get(this.apiURL + '/quote/approval',this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   errorHandler(error) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {
