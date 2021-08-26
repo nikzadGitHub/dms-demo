@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ApprovalIndexComponent } from './approval-index/approval-index.component';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
 import { IndexComponent } from './index/index.component';
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'create', component: CreateComponent },
   { path: 'create/product', component: ProductsComponent },
   { path: ':quoteId/edit', component: EditComponent },
+  { path: 'approval', component:ApprovalIndexComponent }
 ];
 
 @NgModule({

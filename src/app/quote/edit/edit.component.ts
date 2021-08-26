@@ -52,7 +52,7 @@ export class EditComponent implements OnInit {
         this.quotations = data['data']['quotation'];
         this.latestQuotation = data['data']['quotation'];
         this.quotationRevisions = data['data']['quotationRevisions'];
-
+        console.log(this.quotationRevisions);
         this.setInitialValue();
         this.addQuoteIdList();
         this.initData();
@@ -67,6 +67,8 @@ export class EditComponent implements OnInit {
       fromDate: this.fromDate,
       toDate: this.toDate,
       quote_id: this.quote_id,
+      active: '',
+      status: '',
       billings: this.formBuilder.array([]),
       payments: this.formBuilder.array([]),
       addCosts: this.formBuilder.array([]),
@@ -83,6 +85,8 @@ export class EditComponent implements OnInit {
     this.f.standard_payment_term.setValue(this.quotations.standard_payment_term);
     this.f.fromDate.setValue(this.quotations.fromDate);
     this.f.toDate.setValue(this.quotations.toDate);
+    this.f.active.setValue(this.quotations.active);
+    this.f.status.setValue(this.quotations.status);
     this.f.company.setValue(this.quotations.company);
 
     this.fromDate = this.quotations.fromDate;

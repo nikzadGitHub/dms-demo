@@ -12,6 +12,7 @@ export interface Quote {
     'toDate': Date,
     'created_at': Date,
     'status': string,
+    'active': string,
     'validity_date': Date,
     'amount': number
 }

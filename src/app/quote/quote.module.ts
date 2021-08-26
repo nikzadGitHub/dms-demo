@@ -15,6 +15,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CalendarModule } from 'primeng/calendar';
 import { AccordionModule } from 'primeng/accordion';
 import { CompanyHeaderComponent } from './company-header/company-header.component';
+import { ApprovalIndexComponent } from './approval-index/approval-index.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { CompanyHeaderComponent } from './company-header/company-header.componen
     EditComponent,
     ProductsComponent,
     CompanyHeaderComponent,
+    ApprovalIndexComponent,
   ],
   imports: [
     CommonModule,
