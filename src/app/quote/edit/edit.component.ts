@@ -19,7 +19,6 @@ export class EditComponent implements OnInit {
   submitType: string;
   quotations: Quote;
   latestQuotation: Quote;
-  quotationRevisions: Quote[] = [];
   form: FormGroup;
   rev: number = 0;
   termSelected: number;
@@ -49,13 +48,11 @@ export class EditComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(event => {
       this.id = event.quoteId; // fetch ID from url
+      console.log(this.id)
       this.quoteService.find(this.id).subscribe(data => {
         this.quotations = data['data']['quotation'];
         this.latestQuotation = data['data']['quotation'];
-        this.quotationRevisions = data['data']['quotationRevisions'];
-        console.log(this.quotationRevisions);
         this.setInitialValue();
-        this.addQuoteIdList();
         this.initData();
       });
     });
@@ -114,19 +111,6 @@ export class EditComponent implements OnInit {
       this.products().push(this.existingProducts(product));
     });
     this.subTotal(this.addCosts().controls);
-  }
-
-  changeRev(revNumber){
-    this.quoteService.getQuotationRevision(this.id,revNumber).subscribe(data => {
-      this.billings().clear();
-      this.payments().clear();
-      this.addCosts().clear();
-      this.products().clear();
-      this.quotations = data['data'];
-      this.setInitialValue();
-      this.initData();
-    })
-    
   }
 
   dateInit(){
@@ -318,27 +302,7 @@ export class EditComponent implements OnInit {
     .filter((value, index, self) => self.indexOf(value) === index);
   }
 
-  addQuoteIdList(){
-    this.quoteIdList = [];
-    let newArray = [];
-    newArray['rev_number'] = 0; // rev_number 0 for latest quotation
-    newArray['quote_id'] = this.quotations.quote_id;
-    newArray['created_at'] = this.quotations.created_at;
-    newArray['days'] = this.termSelected + ' days / ' + this.datePipe.transform(this.quotations.validity_date,'dd-MMM-yyyy');
-    newArray['status'] = this.quotations.status;
-    newArray['amount'] = this.quotations.amount;
-    this.quoteIdList.push(newArray);
-    this.quotationRevisions.forEach(element => {
-        let newArray = [];
-        newArray['rev_number'] = element['rev_number'];
-        newArray['quote_id'] = element['quote_id'];
-        newArray['created_at'] = this.quotations.created_at;
-        newArray['days'] = this.termSelected + ' days / ' + this.datePipe.transform(this.quotations.validity_date,'dd-MMM-yyyy');
-        newArray['status'] = this.quotations.status;
-        newArray['amount'] = element['amount'];
-        this.quoteIdList.push(newArray);
-    });
-  }
+  
 
   get f(){
     return this.form.controls;
