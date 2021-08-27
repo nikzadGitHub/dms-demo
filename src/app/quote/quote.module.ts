@@ -16,6 +16,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { AccordionModule } from 'primeng/accordion';
 import { CompanyHeaderComponent } from './company-header/company-header.component';
 import { ApprovalIndexComponent } from './approval-index/approval-index.component';
+import { ApprovalCreateComponent } from './approval-create/approval-create.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { ApprovalIndexComponent } from './approval-index/approval-index.componen
     ProductsComponent,
     CompanyHeaderComponent,
     ApprovalIndexComponent,
+    ApprovalCreateComponent,
   ],
   imports: [
     CommonModule,

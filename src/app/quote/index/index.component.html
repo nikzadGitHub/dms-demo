@@ -19,7 +19,6 @@
                 <th>Quotation ID</th>
                 <th>Company Name</th>
                 <th>Validity Date</th>
-                <th>Active</th>
                 <th>Status</th>
                 <th>Amount (MYR)</th>
                 <th width="220px">Action</th>
@@ -31,7 +30,6 @@
                 <td><a href="#" [routerLink]="['/quote/', quote.id, 'view']">{{ quote.quote_id }}</a></td>
                 <td>{{ quote.company }}</td>
                 <td>{{ quote.validity_date | date:'dd-MMM-yyyy'}}</td>
-                <td><i class="fa fa-circle fa-lg" [ngClass]="(quote.active==1 ? 'active' : 'inactive')"></i></td>
                 <td style="width: 10%;">{{ quote.status }}</td>
                 <td>{{quote.amount}}</td>
                 <td style="width: 5%;">

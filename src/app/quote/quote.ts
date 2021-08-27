@@ -5,6 +5,8 @@ export interface Quote {
     quotation_revision:[],
     products:[],
     'id': number,
+    'data_area_id': string,
+    'external_id': string,
     'standard_payment_term':number,
     'quote_id': string,
     'company': string,

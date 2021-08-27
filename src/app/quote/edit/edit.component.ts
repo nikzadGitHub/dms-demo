@@ -63,7 +63,8 @@ export class EditComponent implements OnInit {
     this.form =  this.formBuilder.group({
       company: '',
       id: 0,
-      data_area_id: 3630,
+      data_area_id: '',
+      external_id: '',
       standard_payment_term: this.termSelected,
       fromDate: this.fromDate,
       toDate: this.toDate,
@@ -82,6 +83,8 @@ export class EditComponent implements OnInit {
     this.company_details['quote_id'] = this.quotations.quote_id;
     console.log(this.quotations)
     this.f.id.setValue(this.quotations.id);
+    this.f.data_area_id.setValue(this.quotations.data_area_id);
+    this.f.external_id.setValue(this.quotations.external_id);
     this.f.quote_id.setValue(this.quotations.quote_id);
     this.f.standard_payment_term.setValue(this.quotations.standard_payment_term);
     this.f.fromDate.setValue(this.quotations.fromDate);
