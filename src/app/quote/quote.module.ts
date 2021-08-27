@@ -17,6 +17,8 @@ import { AccordionModule } from 'primeng/accordion';
 import { CompanyHeaderComponent } from './company-header/company-header.component';
 import { ApprovalIndexComponent } from './approval-index/approval-index.component';
 import { ApprovalCreateComponent } from './approval-create/approval-create.component';
+import { RevisionComponent } from './revision/revision.component';
+import { IndexTemplateComponent } from './index-template/index-template.component';
 
 
 @NgModule({
@@ -29,6 +31,8 @@ import { ApprovalCreateComponent } from './approval-create/approval-create.compo
     CompanyHeaderComponent,
     ApprovalIndexComponent,
     ApprovalCreateComponent,
+    RevisionComponent,
+    IndexTemplateComponent,
   ],
   imports: [
     CommonModule,

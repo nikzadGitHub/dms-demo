@@ -24,8 +24,8 @@ export const navItems: INavData[] = [
         url: '/quote/index'
       },
       {
-        name: 'Quote Approval',
-        url: '/quote/approval'
+        name: 'Quote Revision',
+        url: '/quote/revision'
       }
     ]
   },

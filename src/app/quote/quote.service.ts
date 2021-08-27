@@ -129,6 +129,18 @@ export class QuoteService {
     )
   }
 
+
+  getAllRevision(pageItems,search_text): Observable<Quote[]> {
+    let param = {page_items:pageItems,search_text:search_text};
+    // let query = '/quote-revision?page_items=' + pageItems + '&search_text=' + search_text;
+    return this.httpClient.get<Quote[]>(this.apiURL + '/quote-revision',{params:param})
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+
+
   errorHandler(error) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {
