@@ -38,7 +38,6 @@ export class EditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private datePipe: DatePipe
   ) { 
     this.quoteService.create('3630').subscribe(data => {
       this.terms = data['data'];
@@ -48,13 +47,20 @@ export class EditComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(event => {
       this.id = event.quoteId; // fetch ID from url
-      console.log(this.id)
-      this.quoteService.find(this.id).subscribe(data => {
-        this.quotations = data['data']['quotation'];
-        this.latestQuotation = data['data']['quotation'];
-        this.setInitialValue();
-        this.initData();
-      });
+      if(this.router.url.includes('revision')){
+        this.quoteService.getQuotationRevision(this.id).subscribe(data => {
+          console.log(data)
+          this.quotations = data['data'];
+          this.setInitialValue();
+          this.initData();
+        });
+      } else {
+        this.quoteService.find(this.id).subscribe(data => {
+          this.quotations = data['data']['quotation'];
+          this.setInitialValue();
+          this.initData();
+        });
+      }
     });
 
     this.form =  this.formBuilder.group({
@@ -66,7 +72,6 @@ export class EditComponent implements OnInit {
       fromDate: this.fromDate,
       toDate: this.toDate,
       quote_id: this.quote_id,
-      active: '',
       status: '',
       billings: this.formBuilder.array([]),
       payments: this.formBuilder.array([]),
@@ -86,7 +91,6 @@ export class EditComponent implements OnInit {
     this.f.standard_payment_term.setValue(this.quotations.standard_payment_term);
     this.f.fromDate.setValue(this.quotations.fromDate);
     this.f.toDate.setValue(this.quotations.toDate);
-    this.f.active.setValue(this.quotations.active);
     this.f.status.setValue(this.quotations.status);
     this.f.company.setValue(this.quotations.company);
 

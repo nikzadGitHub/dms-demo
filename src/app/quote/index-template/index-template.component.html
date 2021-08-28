@@ -34,7 +34,7 @@
                   <td style="width: 10%;">{{ quote.status }}</td>
                   <td>{{quote.amount}}</td>
                   <td style="width: 5%;">
-                    <a href="#" [routerLink]="['/quote/', quote.id, 'edit']" class="fa fa-edit"></a>
+                    <a href="#" [routerLink]="['/quote/revision', quote.id]" class="fa fa-edit"></a>
                     <!-- <button type="button" (click)="deleteQuote(quote.id)" class="btn btn-danger">Delete</button> -->
                   </td>
                 </tr>

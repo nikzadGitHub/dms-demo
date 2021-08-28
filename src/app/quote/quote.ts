@@ -16,6 +16,7 @@ export interface Quote {
     'status': string,
     'active': string,
     'validity_date': Date,
-    'amount': number
+    'amount': number,
+    'rev_number': number
 }
 

@@ -18,7 +18,8 @@ const routes: Routes = [
   { path: ':quoteId/edit', component: EditComponent },
   { path: 'approval', component:ApprovalIndexComponent },
   { path: 'approval/:quoteId', component:ApprovalCreateComponent },
-  { path: 'revision', component:RevisionComponent }
+  { path: 'revision', component:RevisionComponent },
+  { path: 'revision/:quoteId', component:EditComponent }
 ];
 
 @NgModule({
