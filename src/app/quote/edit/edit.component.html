@@ -212,14 +212,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let quantity of payments().controls; let i=index" [formGroupName]="i" align="center">
+                                <tr *ngFor="let payment of payments().controls; let i=index" [formGroupName]="i" align="center">
                                     <td style="width: 15%; padding:6px">
                                         <select formControlName="billing_id" class="form-control" style="width: 70%;">
-                                            <option *ngFor="let id of billingIdList" value="{{id}}">{{id}}</option>
+                                            <option *ngFor="let bill of billingList" value="{{bill.billing_id}}">{{bill.billing_id}}</option>
                                         </select>
                                     </td>
                                     <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="percentage" size="1" placeholder="50" type="number" min="0" max="100.00" step=".01">
+                                        <input class="form-control" formControlName="percentage" size="1" placeholder="50" 
+                                        type="number" min="0" max="100.00" step=".01" (keyup)="changePaymentPercent(i)">
                                     </td>
                                     <td style="width: 10%; padding:6px">
                                         <input class="form-control" formControlName="schedule" size="1" type="date"></td>
@@ -338,6 +339,24 @@
         </div>
         <div class="modal-body">
           <p>{{alertBody}}</p>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #dangerPaymentModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-danger" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Warning</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{dangerPaymentBody}}</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="dangerPaymentModal.hide()">Keep Changes</button>
+            <button type="button" class="btn btn-primary" (click)="setPaymentAutoAssign();dangerPaymentModal.hide()">Auto-Assign</button>
+            <button type="button" class="btn btn-primary" (click)="setDefaultPayment();dangerPaymentModal.hide()">Revert Default</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

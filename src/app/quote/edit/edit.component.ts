@@ -6,6 +6,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Term } from '../create/terms';
 import { Quote } from '../quote';
 import { QuoteService } from '../quote.service';
+import { BillingList } from './billing-list';
 
 @Component({
   selector: 'app-edit',
@@ -15,6 +16,7 @@ import { QuoteService } from '../quote.service';
 export class EditComponent implements OnInit {
 
   @ViewChild('successModal') successModal : ModalDirective;
+  @ViewChild('dangerPaymentModal') dangerPaymentModal : ModalDirective;
 
   submitType: string;
   quotations: Quote;
@@ -24,14 +26,16 @@ export class EditComponent implements OnInit {
   termSelected: number;
   terms: Term[];
   id: number;
-  billingIdList: number[] = [];
+  billingList: BillingList[] = [];
   fromDate: Date;
   toDate: Date;
   company_details: string[] = [];
   sub_total: number;
   alertBody: string;
+  dangerPaymentBody:string;
   quote_id: string;
   quoteIdList: any[] = [];
+  paymentCurrentIndex: 0;
 
   constructor(
     private quoteService: QuoteService,
@@ -134,6 +138,61 @@ export class EditComponent implements OnInit {
     this.termSelected = this.terms.find(x => x.id == term).no_of_days;
   }
 
+  changePaymentPercent(index){
+    this.paymentCurrentIndex = index;
+    let maxPercentage = 100;
+    let currentPercentage = 0;
+
+    let payments = this.payments().controls;
+    let billing_id = payments[index]['controls'].billing_id.value;
+    let fullAmount = this.billingList.find(x => x.billing_id == billing_id).amount;
+
+    let filteredPayments = payments.filter(x => x['controls'].billing_id.value == billing_id);
+
+    filteredPayments.forEach(payment => {
+      currentPercentage += parseFloat(payment['controls'].percentage.value);
+      if(currentPercentage > maxPercentage){
+        this.dangerPaymentBody = "You have entered more than 100% for the payment schedule for billing ID: "+billing_id
+        this.dangerPaymentModal.show();
+      } else {
+        payment['controls'].amount.setValue((fullAmount * ((payment['controls'].percentage.value)/100)).toFixed(2))
+      }
+    });
+  }
+
+  setDefaultPayment(){
+    this.payments().clear();
+    this.quotations.payment_schedules.forEach(payment => {
+      this.payments().push(this.existingPayments(payment));
+    });
+  }
+
+  setPaymentAutoAssign(){
+    let index = this.paymentCurrentIndex;
+    let maxPercentage = 100;
+
+    let payments = this.payments().controls;
+    let billing_id = payments[index]['controls'].billing_id.value;
+    let fullAmount = this.billingList.find(x => x.billing_id == billing_id).amount;
+
+    let filteredPayments = payments.filter(x => x['controls'].billing_id.value == billing_id);
+
+    filteredPayments.forEach(payment => {
+        maxPercentage -= parseFloat(payment['controls'].percentage.value)
+        if( maxPercentage < 0 )
+        {
+          payment['controls'].percentage.setValue(parseFloat(payment['controls'].percentage.value) + maxPercentage)
+          payment['controls'].amount.setValue((fullAmount * ((payment['controls'].percentage.value)/100)).toFixed(2))
+        }
+        else if( maxPercentage == 0 ){
+          payment['controls'].percentage.setValue(0)
+          payment['controls'].amount.setValue(0)
+        } else {
+          payment['controls'].amount.setValue((fullAmount * ((payment['controls'].percentage.value)/100)).toFixed(2))
+        }
+    });
+  }
+
   //---------------- Quotation Producs -------------------
 
   products(): FormArray {
@@ -165,7 +224,11 @@ export class EditComponent implements OnInit {
   }
   
   existingBillings(billing){
-    this.billingIdList.push(billing.billing_id);
+    let bill = new BillingList;
+    bill['billing_id'] = billing.billing_id;
+    bill['amount'] = billing.amount;
+    this.billingList.push(bill);
+
     return this.formBuilder.group({
       'id': billing.id,
       'billing_id': billing.billing_id,
@@ -297,13 +360,17 @@ export class EditComponent implements OnInit {
 
   addBillingMilestone(){
     var billing_id = this.billings().controls;
+    this.billingList = [];
     billing_id.forEach(test=>{
-      var data = test['controls']['billing_id'].value;
-      this.billingIdList.push(data);
+      // var data = test['controls']['billing_id'].value;
+      let bill = new BillingList;
+      bill['billing_id'] = test['controls']['billing_id'].value;
+      bill['amount'] = test['controls']['amount'].value;
+      this.billingList.push(bill);
     });
 
-    this.billingIdList = this.billingIdList.map(item => item)
-    .filter((value, index, self) => self.indexOf(value) === index);
+    this.billingList = this.billingList.map(item => item)
+    .filter((item, index, self) => self.indexOf(item) === index);
   }
 
   
