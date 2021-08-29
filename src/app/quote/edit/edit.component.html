@@ -344,19 +344,16 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div bsModal #dangerPaymentModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-danger" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Warning</h4>
         </div>
         <div class="modal-body">
-          <p>{{dangerPaymentBody}}</p>
+          <p>{{dangerBody}}</p>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" (click)="dangerPaymentModal.hide()">Keep Changes</button>
-            <button type="button" class="btn btn-primary" (click)="setPaymentAutoAssign();dangerPaymentModal.hide()">Auto-Assign</button>
-            <button type="button" class="btn btn-primary" (click)="setDefaultPayment();dangerPaymentModal.hide()">Revert Default</button>
+        <div class="modal-footer" [innerHTML]="dangerFooter(modal_type)">
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

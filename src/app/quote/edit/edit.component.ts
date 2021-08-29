@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Term } from '../create/terms';
@@ -16,7 +17,7 @@ import { BillingList } from './billing-list';
 export class EditComponent implements OnInit {
 
   @ViewChild('successModal') successModal : ModalDirective;
-  @ViewChild('dangerPaymentModal') dangerPaymentModal : ModalDirective;
+  @ViewChild('dangerModal') dangerModal : ModalDirective;
 
   submitType: string;
   quotations: Quote;
@@ -32,8 +33,9 @@ export class EditComponent implements OnInit {
   company_details: string[] = [];
   sub_total: number;
   alertBody: string;
-  dangerPaymentBody:string;
+  dangerBody:string;
   quote_id: string;
+  modal_type: string = "";
   quoteIdList: any[] = [];
   paymentCurrentIndex: 0;
 
@@ -42,6 +44,7 @@ export class EditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    private sanitizer:DomSanitizer
   ) { 
     this.quoteService.create('3630').subscribe(data => {
       this.terms = data['data'];
@@ -152,12 +155,17 @@ export class EditComponent implements OnInit {
     filteredPayments.forEach(payment => {
       currentPercentage += parseFloat(payment['controls'].percentage.value);
       if(currentPercentage > maxPercentage){
-        this.dangerPaymentBody = "You have entered more than 100% for the payment schedule for billing ID: "+billing_id
-        this.dangerPaymentModal.show();
+        this.dangerBody = "You have entered more than 100% for the payment schedule for billing ID: "+billing_id;
+        this.modal_type = 'payment';
+        this.dangerModal.show();
       } else {
         payment['controls'].amount.setValue((fullAmount * ((payment['controls'].percentage.value)/100)).toFixed(2))
       }
     });
+  }
+
+  changePaymentValue(index){
+    
   }
 
   setDefaultPayment(){
@@ -191,6 +199,19 @@ export class EditComponent implements OnInit {
           payment['controls'].amount.setValue((fullAmount * ((payment['controls'].percentage.value)/100)).toFixed(2))
         }
     });
+  }
+
+  dangerFooter(type: string){
+    if (type = 'payment'){
+      return this.sanitizer.bypassSecurityTrustHtml(this.dangerPaymentFooter());
+    }
+  }
+
+  dangerPaymentFooter(){
+    let html = '<button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Keep Changes</button>'+
+    '<button type="button" class="btn btn-primary" (click)="setPaymentAutoAssign();dangerModal.hide()">Auto-Assign</button>'+
+    '<button type="button" class="btn btn-primary" (click)="setDefaultPayment();dangerModal.hide()">Revert Default</button>';
+    return html;
   }
 
   //---------------- Quotation Producs -------------------
