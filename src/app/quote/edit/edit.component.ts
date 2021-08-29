@@ -156,7 +156,7 @@ export class EditComponent implements OnInit {
       currentPercentage += parseFloat(payment['controls'].percentage.value);
       if(currentPercentage > maxPercentage){
         this.dangerBody = "You have entered more than 100% for the payment schedule for billing ID: "+billing_id;
-        this.modal_type = 'payment';
+        this.modal_type = 'paymentPercentage';
         this.dangerModal.show();
       } else {
         payment['controls'].amount.setValue((fullAmount * ((payment['controls'].percentage.value)/100)).toFixed(2))
@@ -165,7 +165,26 @@ export class EditComponent implements OnInit {
   }
 
   changePaymentValue(index){
-    
+    this.paymentCurrentIndex = index;
+
+    let payments = this.payments().controls;
+    let billing_id = payments[index]['controls'].billing_id.value;
+    let fullAmount = this.billingList.find(x => x.billing_id == billing_id).amount;
+    let currentAmount = 0;
+
+    let filteredPayments = payments.filter(x => x['controls'].billing_id.value == billing_id);
+
+    filteredPayments.forEach(payment => {
+      currentAmount += parseFloat(payment['controls'].amount.value);
+      if(currentAmount > fullAmount){
+        this.dangerBody = "You have entered excessive amount of "+(currentAmount-fullAmount)+" for the payment schedule for "+
+                          "billing ID: "+billing_id;
+        this.modal_type = 'paymentValue';
+        this.dangerModal.show();
+      } else {
+        payment['controls'].percentage.setValue(((currentAmount/fullAmount) * 100).toFixed(2))
+      }
+    });
   }
 
   setDefaultPayment(){
@@ -175,7 +194,7 @@ export class EditComponent implements OnInit {
     });
   }
 
-  setPaymentAutoAssign(){
+  setPaymentAutoAssignPercentage(){
     let index = this.paymentCurrentIndex;
     let maxPercentage = 100;
 
@@ -201,17 +220,31 @@ export class EditComponent implements OnInit {
     });
   }
 
-  dangerFooter(type: string){
-    if (type = 'payment'){
-      return this.sanitizer.bypassSecurityTrustHtml(this.dangerPaymentFooter());
-    }
-  }
+  setPaymentAutoAssignValue(){
+    let index = this.paymentCurrentIndex;
 
-  dangerPaymentFooter(){
-    let html = '<button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Keep Changes</button>'+
-    '<button type="button" class="btn btn-primary" (click)="setPaymentAutoAssign();dangerModal.hide()">Auto-Assign</button>'+
-    '<button type="button" class="btn btn-primary" (click)="setDefaultPayment();dangerModal.hide()">Revert Default</button>';
-    return html;
+    let payments = this.payments().controls;
+    let billing_id = payments[index]['controls'].billing_id.value;
+    let fullAmount = this.billingList.find(x => x.billing_id == billing_id).amount;
+    let fixFullAmount = fullAmount;
+
+    let filteredPayments = payments.filter(x => x['controls'].billing_id.value == billing_id);
+
+    filteredPayments.forEach(payment => {
+      fullAmount -= parseFloat(payment['controls'].amount.value);
+      console.log(fullAmount)
+      if( fullAmount < 0 ){
+        payment['controls'].amount.setValue(parseFloat(payment['controls'].amount.value) + fullAmount)
+        payment['controls'].percentage.setValue(
+          (
+            (payment['controls'].amount.value/fixFullAmount)*100
+          ).toFixed(2)
+          )
+      } else {
+        let percentage = (payment['controls'].amount.value/fixFullAmount) * 100;
+        payment['controls'].percentage.setValue(percentage.toFixed(2))
+      }
+    });
   }
 
   //---------------- Quotation Producs -------------------
