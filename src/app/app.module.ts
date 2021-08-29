@@ -60,6 +60,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { AccordionModule } from 'primeng/accordion';
 import { DatePipe } from '@angular/common';
 import { CreateComponent } from './soci/create/create.component';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   imports: [
@@ -88,7 +89,8 @@ import { CreateComponent } from './soci/create/create.component';
     QuoteModule,
     AutoCompleteModule,
     CalendarModule,
-    AccordionModule
+    AccordionModule,
+    TableModule
   ],
   declarations: [
     AppComponent,

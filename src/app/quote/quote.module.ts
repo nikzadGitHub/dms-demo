@@ -17,6 +17,8 @@ import { AccordionModule } from 'primeng/accordion';
 import { CompanyHeaderComponent } from './company-header/company-header.component';
 import { RevisionComponent } from './revision/revision.component';
 import { IndexTemplateComponent } from './index-template/index-template.component';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 @NgModule({
@@ -41,6 +43,8 @@ import { IndexTemplateComponent } from './index-template/index-template.componen
     AutoCompleteModule,
     CalendarModule,
     AccordionModule,
+    TableModule,
+    InputTextModule,
   ]
 })
 export class QuoteModule { }
