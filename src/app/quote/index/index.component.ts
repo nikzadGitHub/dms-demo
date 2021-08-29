@@ -15,17 +15,18 @@ export class IndexComponent implements OnInit {
   quotes: Quote[] = [];
   paginate: [];
   pageItems: number = 10;
+  totalRecords:number;
   search_text: string = '';
   loading: boolean;
   
   constructor(public quoteService: QuoteService) { }
   
   ngOnInit(): void {
-    this.quoteService.getAll(this.pageItems,this.search_text).subscribe(data=>{
-      this.datasource = data['data'];
-      this.paginate = data['data']['links'];
-      console.log(data['data'])
-    })  
+    // this.quoteService.getAll(this.pageItems,this.search_text).subscribe(data=>{
+    //   this.datasource = data['data'];
+    //   // this.paginate = data['data']['links'];
+    //   console.log(data['data'])
+    // })  
     this.loading = true;
   }
   
@@ -54,11 +55,14 @@ export class IndexComponent implements OnInit {
 
   loadQuotations(event: LazyLoadEvent) {
     this.loading = true;
+    console.log(event.filters)
     setTimeout(() => {
-      if (this.datasource) {
-          this.quotes = this.datasource.slice(event.first, (event.first + event.rows));
-          this.loading = false;
-      }
+      this.quoteService.getAll(event.rows,this.search_text).subscribe(data=>{
+        this.datasource = data['data'];
+        this.totalRecords = data['data'].length;
+        this.quotes = this.datasource.slice(event.first, (event.first + event.rows));
+        this.loading = false;
+      })  
     }, 1000);
   }
 }
