@@ -323,7 +323,10 @@
                 <div class="form-group">
                     <button class="btn btn-secondary" type="submit" (click)='setSubmitType("save")'>SAVE</button>&nbsp;
                     <button class="btn btn-primary" type="submit" (click)='setSubmitType("approve")' 
-                    [disabled]="!form.valid">Request Approval</button>
+                    [disabled]="!form.valid" *ngIf="requested_date == ''">Request Approval</button>
+                    <button class="btn btn-primary" type="submit" *ngIf="requested_date != ''" (click)='setSubmitType("approve")'>
+                        Approve Quotation
+                    </button>
                 </div>
             </div>
         </form>
