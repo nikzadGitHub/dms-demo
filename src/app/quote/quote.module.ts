@@ -19,6 +19,7 @@ import { RevisionComponent } from './revision/revision.component';
 import { IndexTemplateComponent } from './index-template/index-template.component';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { InputTextModule } from 'primeng/inputtext';
     AccordionModule,
     TableModule,
     InputTextModule,
+    PaginatorModule
   ]
 })
 export class QuoteModule { }
