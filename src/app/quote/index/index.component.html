@@ -101,5 +101,5 @@
     </tr>
   </ng-template>
 </p-table>
-<p-paginator (onPageChange)="paginate($event)" [rows]="pageItems" [totalRecords]="totalRecords">
+<p-paginator (onPageChange)="paginate($event)" [rows]="pageItems" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
 </p-paginator>

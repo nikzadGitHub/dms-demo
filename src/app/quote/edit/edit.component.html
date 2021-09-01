@@ -320,12 +320,19 @@
             </p-accordion>
             <div class="row"></div>
             <div class="col-lg" align=center>
-                <div class="form-group">
+                <div class="form-group" *ngIf="requested_date == null && approved_date == null">
                     <button class="btn btn-secondary" type="submit" (click)='setSubmitType("save")'>SAVE</button>&nbsp;
                     <button class="btn btn-primary" type="submit" (click)='setSubmitType("approve")' 
-                    [disabled]="!form.valid" *ngIf="requested_date == ''">Request Approval</button>
-                    <button class="btn btn-primary" type="submit" *ngIf="requested_date != ''" (click)='setSubmitType("approve")'>
+                    [disabled]="!form.valid">Request Approval</button>
+                </div>
+                <div class="form_group" *ngIf="requested_date != null && approved_date == null">
+                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("approve")'>
                         Approve Quotation
+                    </button>
+                </div>
+                <div class="form-group" *ngIf="approved_date != null">
+                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("approve")'>
+                        Set Preferred
                     </button>
                 </div>
             </div>

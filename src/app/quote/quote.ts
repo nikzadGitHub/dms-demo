@@ -18,6 +18,7 @@ export interface Quote {
     'validity_date': Date,
     'amount': number,
     'rev_number': number,
-    'requested_date': Date
+    'requested_date': Date,
+    'approved_date': Date
 }
 

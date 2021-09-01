@@ -44,7 +44,6 @@ export class IndexComponent implements OnInit {
       this.quotes = data['data']['data'];
       this.pages = data['data']['links'];
       this.totalRecords = data['data']['total'];
-      console.log(this.totalRecords)
     })  
   }
 
@@ -52,7 +51,6 @@ export class IndexComponent implements OnInit {
     this.quoteService.getPage(url,this.pageItems,this.search_text).subscribe((data)=>{
       this.quotes = data['data']['data'];
       this.pages = data['data']['links'];
-      console.log(data);
     })  
   }
 
@@ -72,6 +70,8 @@ export class IndexComponent implements OnInit {
   // }
 
   paginate(event){
+    console.log(event)
+    this.pageItems = event.rows;
     let url = "http://idsmed-sales-funnel-api.test/api/quote?page="+(parseInt(event.page) + 1);
     this.onClick(url);
   }

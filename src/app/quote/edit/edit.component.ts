@@ -22,6 +22,7 @@ export class EditComponent implements OnInit {
   submitType: string;
   quotations: Quote;
   requested_date: Date;
+  approved_date: Date;
   form: FormGroup;
   termSelected: number;
   terms: Term[];
@@ -103,6 +104,8 @@ export class EditComponent implements OnInit {
     this.fromDate = this.quotations.fromDate;
     this.toDate = this.quotations.toDate;
     this.requested_date = this.quotations.requested_date;
+    this.approved_date = this.quotations.approved_date;
+    console.log(this.approved_date);
     this.termSelected = this.terms.find(x => x.id == this.quotations.standard_payment_term).no_of_days;
     this.dateInit();
   }
