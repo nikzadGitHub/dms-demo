@@ -9,6 +9,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { IconModule } from '@coreui/icons-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CreateComponent } from './create/create.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FileUploadModule } from 'primeng/fileupload';
 
 
 @NgModule({
@@ -23,7 +26,10 @@ import { CreateComponent } from './create/create.component';
     PaginatorModule,
     InputTextModule,
     IconModule,
-    ModalModule
+    ModalModule,
+    AutoCompleteModule,
+    ReactiveFormsModule,
+    FileUploadModule
   ]
 })
 export class SociModule { }

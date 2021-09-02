@@ -37,4 +37,12 @@ export class SociService {
     }
     return throwError(errorMessage);
  }
+
+  getFilteredQuote(filter){
+    filter = filter == '' ? 0 : filter; 
+    return this.httpClient.get(this.apiURL + '/soci/filtered/' + filter,this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
 }
