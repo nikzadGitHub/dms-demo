@@ -20,7 +20,7 @@
         
             </div>
         </div>
-        <form [formGroup]="form" (ngSubmit)="submitType == 'save' ? submitRev() : submitApproval()">
+        <form [formGroup]="form" (ngSubmit)="submitSelect()">
             <p-accordion [multiple]="true" styleClass="customColor">
                 <!-- Quotation Accordion -->
                 <!-- <p-accordionTab header="Quotation">
@@ -326,6 +326,9 @@
                     [disabled]="!form.valid">Request Approval</button>
                 </div>
                 <div class="form_group" *ngIf="requested_date != null && approved_date == null">
+                    <button class="btn btn-secondary" type="submit" (click)='setSubmitType("cancel")'>
+                        Cancel Quote
+                    </button>
                     <button class="btn btn-primary" type="submit" (click)='setSubmitType("approve")'>
                         Approve Quotation
                     </button>
@@ -377,3 +380,24 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Cancellation Remarks</h4>
+          <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <textarea name="cancel_remarks" id="cancel_remarks" cols="60" placeholder="Reason of cancellation" rows="10" [(ngModel)]="cancelRemarks"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
+          <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  

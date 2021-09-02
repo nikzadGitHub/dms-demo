@@ -140,6 +140,14 @@ export class QuoteService {
     )
   }
 
+  cancelQuote(id,remarks): Observable<any>{
+    let param = {id:id,remarks:remarks}
+    return this.httpClient.post(this.apiURL + '/quote/cancel-quote', param)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   errorHandler(error) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {

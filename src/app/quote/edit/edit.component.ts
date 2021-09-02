@@ -18,6 +18,7 @@ export class EditComponent implements OnInit {
 
   @ViewChild('successModal') successModal : ModalDirective;
   @ViewChild('dangerModal') dangerModal : ModalDirective;
+  @ViewChild('infoModal') infoModal : ModalDirective;
 
   submitType: string;
   quotations: Quote;
@@ -37,6 +38,7 @@ export class EditComponent implements OnInit {
   quote_id: string;
   modal_type: string = "";
   quoteIdList: any[] = [];
+  cancelRemarks: string;
   paymentCurrentIndex: 0;
 
   constructor(
@@ -457,5 +459,35 @@ export class EditComponent implements OnInit {
       this.alertBody = res.message
       this.successModal.show();
     })
+  }
+
+  cancelQuote(){
+    this.quoteService.cancelQuote(this.id,this.cancelRemarks).subscribe(res => {
+      console.log(res);
+      this.alertBody = res['message'];
+      this.infoModal.hide();
+      this.successModal.show();
+    })
+  }
+
+  cancelQuoteModal(){
+    this.infoModal.show();
+  }
+
+  submitSelect(){
+    switch (this.submitType) {
+      case "approve":
+         this.submitApproval()
+        break;
+      case "save":
+        this.submitRev();
+        break;
+      case "cancel":
+        this.cancelQuoteModal()
+        break;
+      default:
+
+        break;
+    }
   }
 }
