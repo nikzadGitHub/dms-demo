@@ -7,11 +7,14 @@ import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconModule } from '@coreui/icons-angular';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { CreateComponent } from './create/create.component';
 
 
 @NgModule({
   declarations: [
-    IndexComponent
+    IndexComponent,
+    CreateComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +22,8 @@ import { IconModule } from '@coreui/icons-angular';
     TableModule,
     PaginatorModule,
     InputTextModule,
-    IconModule
+    IconModule,
+    ModalModule
   ]
 })
 export class SociModule { }

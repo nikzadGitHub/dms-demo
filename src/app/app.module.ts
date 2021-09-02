@@ -59,8 +59,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CalendarModule } from 'primeng/calendar';
 import { AccordionModule } from 'primeng/accordion';
 import { DatePipe } from '@angular/common';
-import { CreateComponent } from './soci/create/create.component';
 import { TableModule } from 'primeng/table';
+import { SociModule } from './soci/soci.module';
 
 @NgModule({
   imports: [
@@ -90,7 +90,8 @@ import { TableModule } from 'primeng/table';
     AutoCompleteModule,
     CalendarModule,
     AccordionModule,
-    TableModule
+    TableModule,
+    SociModule
   ],
   declarations: [
     AppComponent,
@@ -99,8 +100,7 @@ import { TableModule } from 'primeng/table';
     P500Component,
     LoginComponent,
     RegisterComponent,
-    DialogComponent,
-    CreateComponent
+    DialogComponent
   ],
   providers: [
     {

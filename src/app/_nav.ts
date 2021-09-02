@@ -30,6 +30,11 @@ export const navItems: INavData[] = [
     ]
   },
   {
+    name: 'SOCI',
+    url: '/soci/index',
+    icon: 'icon-drop'
+  },
+  {
     name: 'Colors',
     url: '/theme/colors',
     icon: 'icon-drop'
