@@ -61,6 +61,8 @@ import { AccordionModule } from 'primeng/accordion';
 import { DatePipe } from '@angular/common';
 import { SettingsModule } from './views/settings/settings.module';
 import { ContactModule } from './views/contact/contact.module';
+import { TableModule } from 'primeng/table';
+import { SociModule } from './soci/soci.module';
 
 @NgModule({
   imports: [
@@ -92,6 +94,8 @@ import { ContactModule } from './views/contact/contact.module';
     CalendarModule,
     AccordionModule,
     ContactModule,
+    TableModule,
+    SociModule
   ],
   declarations: [
     AppComponent,

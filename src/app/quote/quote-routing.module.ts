@@ -4,6 +4,7 @@ import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
 import { IndexComponent } from './index/index.component';
 import { ProductsComponent } from './products/products.component';
+import { RevisionComponent } from './revision/revision.component';
 import { ViewComponent } from './view/view.component';
 
 const routes: Routes = [
@@ -13,6 +14,8 @@ const routes: Routes = [
   { path: 'create', component: CreateComponent },
   { path: 'create/product', component: ProductsComponent },
   { path: ':quoteId/edit', component: EditComponent },
+  { path: 'revision', component:RevisionComponent },
+  { path: 'revision/:quoteId', component:EditComponent }
 ];
 
 @NgModule({

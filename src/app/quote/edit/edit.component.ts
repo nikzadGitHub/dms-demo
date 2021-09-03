@@ -1,11 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Term } from '../create/terms';
 import { Quote } from '../quote';
 import { QuoteService } from '../quote.service';
+import { BillingList } from './billing-list';
 
 @Component({
   selector: 'app-edit',
@@ -15,76 +17,97 @@ import { QuoteService } from '../quote.service';
 export class EditComponent implements OnInit {
 
   @ViewChild('successModal') successModal : ModalDirective;
+  @ViewChild('dangerModal') dangerModal : ModalDirective;
+  @ViewChild('infoModal') infoModal : ModalDirective;
 
+  submitType: string;
   quotations: Quote;
-  latestQuotation: Quote;
-  quotationRevisions: Quote[] = [];
+  requested_date: Date;
+  approved_date: Date;
   form: FormGroup;
-  rev: number = 0;
   termSelected: number;
   terms: Term[];
   id: number;
-  billingIdList: number[] = [];
+  billingList: BillingList[] = [];
   fromDate: Date;
   toDate: Date;
   company_details: string[] = [];
   sub_total: number;
   alertBody: string;
+  dangerBody:string;
   quote_id: string;
+  modal_type: string = "";
   quoteIdList: any[] = [];
+  cancelRemarks: string;
+  paymentCurrentIndex: 0;
 
   constructor(
     private quoteService: QuoteService,
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private datePipe: DatePipe
+    private sanitizer:DomSanitizer
   ) { 
     this.quoteService.create('3630').subscribe(data => {
-      this.terms = data['data']['items'];
+      this.terms = data['data'];
     });
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(event => {
       this.id = event.quoteId; // fetch ID from url
-      this.quoteService.find(this.id).subscribe(data => {
-        this.quotations = data['data']['quotation'];
-        this.latestQuotation = data['data']['quotation'];
-        this.quotationRevisions = data['data']['quotationRevisions'];
-
-        this.setInitialValue();
-        this.addQuoteIdList();
-        this.initData();
-      });
+      if(this.router.url.includes('revision')){
+        this.quoteService.getQuotationRevision(this.id).subscribe(data => {
+          console.log(data)
+          this.quotations = data['data'];
+          this.setInitialValue();
+          this.initData();
+        });
+      } else {
+        this.quoteService.find(this.id).subscribe(data => {
+          this.quotations = data['data']['quotation'];
+          this.setInitialValue();
+          this.initData();
+        });
+      }
     });
 
     this.form =  this.formBuilder.group({
       company: '',
       id: 0,
+      data_area_id: '',
+      external_id: '',
       standard_payment_term: this.termSelected,
       fromDate: this.fromDate,
       toDate: this.toDate,
       quote_id: this.quote_id,
+      status: '',
       billings: this.formBuilder.array([]),
       payments: this.formBuilder.array([]),
       addCosts: this.formBuilder.array([]),
+      products: this.formBuilder.array([]),
     });
   }
 
   setInitialValue(){
     this.company_details['company_name'] = this.quotations.company;
     this.company_details['quote_id'] = this.quotations.quote_id;
-
+    console.log(this.quotations)
     this.f.id.setValue(this.quotations.id);
+    this.f.data_area_id.setValue(this.quotations.data_area_id);
+    this.f.external_id.setValue(this.quotations.external_id);
     this.f.quote_id.setValue(this.quotations.quote_id);
     this.f.standard_payment_term.setValue(this.quotations.standard_payment_term);
     this.f.fromDate.setValue(this.quotations.fromDate);
     this.f.toDate.setValue(this.quotations.toDate);
+    this.f.status.setValue(this.quotations.status);
     this.f.company.setValue(this.quotations.company);
 
     this.fromDate = this.quotations.fromDate;
     this.toDate = this.quotations.toDate;
+    this.requested_date = this.quotations.requested_date;
+    this.approved_date = this.quotations.approved_date;
+    console.log(this.approved_date);
     this.termSelected = this.terms.find(x => x.id == this.quotations.standard_payment_term).no_of_days;
     this.dateInit();
   }
@@ -100,20 +123,10 @@ export class EditComponent implements OnInit {
     this.quotations.additional_costs.forEach(addCost => {
       this.addCosts().push(this.existingCosts(addCost));
     });
+    this.quotations.products.forEach(product => {
+      this.products().push(this.existingProducts(product));
+    });
     this.subTotal(this.addCosts().controls);
-  }
-
-  changeRev(revNumber){
-    this.quoteService.getQuotationRevision(this.id,revNumber).subscribe(data => {
-      this.billings().clear();
-      this.payments().clear();
-      this.addCosts().clear();
-      console.log(data['data']['item']);
-      this.quotations = data['data']['item'];
-      this.setInitialValue();
-      this.initData();
-    })
-    
   }
 
   dateInit(){
@@ -133,6 +146,136 @@ export class EditComponent implements OnInit {
     this.termSelected = this.terms.find(x => x.id == term).no_of_days;
   }
 
+  changePaymentPercent(index){
+    this.paymentCurrentIndex = index;
+    let maxPercentage = 100;
+    let currentPercentage = 0;
+
+    let payments = this.payments().controls;
+    let billing_id = payments[index]['controls'].billing_id.value;
+    let fullAmount = this.billingList.find(x => x.billing_id == billing_id).amount;
+
+    let filteredPayments = payments.filter(x => x['controls'].billing_id.value == billing_id);
+
+    filteredPayments.forEach(payment => {
+      currentPercentage += parseFloat(payment['controls'].percentage.value);
+      if(currentPercentage > maxPercentage){
+        this.dangerBody = "You have entered more than 100% for the payment schedule for billing ID: "+billing_id;
+        this.modal_type = 'paymentPercentage';
+        this.dangerModal.show();
+      } else {
+        payment['controls'].amount.setValue((fullAmount * ((payment['controls'].percentage.value)/100)).toFixed(2))
+      }
+    });
+  }
+
+  changePaymentValue(index){
+    this.paymentCurrentIndex = index;
+
+    let payments = this.payments().controls;
+    let billing_id = payments[index]['controls'].billing_id.value;
+    let fullAmount = this.billingList.find(x => x.billing_id == billing_id).amount;
+    let currentAmount = 0;
+
+    let filteredPayments = payments.filter(x => x['controls'].billing_id.value == billing_id);
+
+    filteredPayments.forEach(payment => {
+      currentAmount += parseFloat(payment['controls'].amount.value);
+      if(currentAmount > fullAmount){
+        this.dangerBody = "You have entered excessive amount of "+(currentAmount-fullAmount)+" for the payment schedule for "+
+                          "billing ID: "+billing_id;
+        this.modal_type = 'paymentValue';
+        this.dangerModal.show();
+      } else {
+        payment['controls'].percentage.setValue(((currentAmount/fullAmount) * 100).toFixed(2))
+      }
+    });
+  }
+
+  setDefaultPayment(){
+    this.payments().clear();
+    this.quotations.payment_schedules.forEach(payment => {
+      this.payments().push(this.existingPayments(payment));
+    });
+  }
+
+  setPaymentAutoAssignPercentage(){
+    let index = this.paymentCurrentIndex;
+    let maxPercentage = 100;
+
+    let payments = this.payments().controls;
+    let billing_id = payments[index]['controls'].billing_id.value;
+    let fullAmount = this.billingList.find(x => x.billing_id == billing_id).amount;
+
+    let filteredPayments = payments.filter(x => x['controls'].billing_id.value == billing_id);
+
+    filteredPayments.forEach(payment => {
+        maxPercentage -= parseFloat(payment['controls'].percentage.value)
+        if( maxPercentage < 0 )
+        {
+          payment['controls'].percentage.setValue(parseFloat(payment['controls'].percentage.value) + maxPercentage)
+          payment['controls'].amount.setValue((fullAmount * ((payment['controls'].percentage.value)/100)).toFixed(2))
+        }
+        else if( maxPercentage == 0 ){
+          payment['controls'].percentage.setValue(0)
+          payment['controls'].amount.setValue(0)
+        } else {
+          payment['controls'].amount.setValue((fullAmount * ((payment['controls'].percentage.value)/100)).toFixed(2))
+        }
+    });
+  }
+
+  setPaymentAutoAssignValue(){
+    let index = this.paymentCurrentIndex;
+
+    let payments = this.payments().controls;
+    let billing_id = payments[index]['controls'].billing_id.value;
+    let fullAmount = this.billingList.find(x => x.billing_id == billing_id).amount;
+    let fixFullAmount = fullAmount;
+
+    let filteredPayments = payments.filter(x => x['controls'].billing_id.value == billing_id);
+
+    filteredPayments.forEach(payment => {
+      fullAmount -= parseFloat(payment['controls'].amount.value);
+      console.log(fullAmount)
+      if( fullAmount < 0 ){
+        payment['controls'].amount.setValue(parseFloat(payment['controls'].amount.value) + fullAmount)
+        payment['controls'].percentage.setValue(
+          (
+            (payment['controls'].amount.value/fixFullAmount)*100
+          ).toFixed(2)
+          )
+      } else {
+        let percentage = (payment['controls'].amount.value/fixFullAmount) * 100;
+        payment['controls'].percentage.setValue(percentage.toFixed(2))
+      }
+    });
+  }
+
+  //---------------- Quotation Producs -------------------
+
+  products(): FormArray {
+    return this.form.get('products') as FormArray
+  }
+
+  existingProducts(product){
+    return this.formBuilder.group({
+      'id': product.id,
+      'external_product_number': product.external_product_number,
+      'data_area_id': product.data_area_id,
+      'quote_id': product.quote_id,
+      'name': product.name,
+      'sku': product.sku,
+      'quantity': product.quantity,
+      'unit_price': product.unit_price,
+      'total_price': product.quantity * product.unit_price,
+      'discount': product.discount,
+      'amount': product.amount,
+    })
+  }
+
+  //---------------- End of Quotation Products -------------------
+
   //---------------- Billings Milestone -------------------
 
   billings() : FormArray {
@@ -140,7 +283,11 @@ export class EditComponent implements OnInit {
   }
   
   existingBillings(billing){
-    this.billingIdList.push(billing.billing_id);
+    let bill = new BillingList;
+    bill['billing_id'] = billing.billing_id;
+    bill['amount'] = billing.amount;
+    this.billingList.push(bill);
+
     return this.formBuilder.group({
       'id': billing.id,
       'billing_id': billing.billing_id,
@@ -272,34 +419,20 @@ export class EditComponent implements OnInit {
 
   addBillingMilestone(){
     var billing_id = this.billings().controls;
+    this.billingList = [];
     billing_id.forEach(test=>{
-      var data = test['controls']['billing_id'].value;
-      this.billingIdList.push(data);
+      // var data = test['controls']['billing_id'].value;
+      let bill = new BillingList;
+      bill['billing_id'] = test['controls']['billing_id'].value;
+      bill['amount'] = test['controls']['amount'].value;
+      this.billingList.push(bill);
     });
 
-    this.billingIdList = this.billingIdList.map(item => item)
-    .filter((value, index, self) => self.indexOf(value) === index);
+    this.billingList = this.billingList.map(item => item)
+    .filter((item, index, self) => self.indexOf(item) === index);
   }
 
-  addQuoteIdList(){
-    this.quoteIdList = [];
-    let newArray = [];
-    newArray['rev_number'] = 0; // rev_number 0 for latest quotation
-    newArray['quote_id'] = this.quotations.quote_id;
-    newArray['created_at'] = this.quotations.created_at;
-    newArray['days'] = this.termSelected + ' days / ' + this.datePipe.transform(this.quotations.validity_date,'dd-MMM-yyyy');
-    newArray['status'] = this.quotations.status;
-    this.quoteIdList.push(newArray);
-    this.quotationRevisions.forEach(element => {
-        let newArray = [];
-        newArray['rev_number'] = element['rev_number'];
-        newArray['quote_id'] = element['quote_id'];
-        newArray['created_at'] = this.quotations.created_at;
-        newArray['days'] = this.termSelected + ' days / ' + this.datePipe.transform(this.quotations.validity_date,'dd-MMM-yyyy');
-        newArray['status'] = this.quotations.status;
-        this.quoteIdList.push(newArray);
-    });
-  }
+  
 
   get f(){
     return this.form.controls;
@@ -309,11 +442,52 @@ export class EditComponent implements OnInit {
     this.router.navigateByUrl('quote/index');
   }
 
-  submit(){
+  setSubmitType(type){
+    this.submitType = type;
+  }
+
+  submitRev(){
     console.log(this.form.value);
     this.quoteService.update(this.form.value,this.id).subscribe(res => {
       this.alertBody = res.message;
       this.successModal.show();
     })
+  }
+
+  submitApproval(){
+    this.quoteService.submitApproval(this.id).subscribe(res => {
+      this.alertBody = res.message
+      this.successModal.show();
+    })
+  }
+
+  cancelQuote(){
+    this.quoteService.cancelQuote(this.id,this.cancelRemarks).subscribe(res => {
+      console.log(res);
+      this.alertBody = res['message'];
+      this.infoModal.hide();
+      this.successModal.show();
+    })
+  }
+
+  cancelQuoteModal(){
+    this.infoModal.show();
+  }
+
+  submitSelect(){
+    switch (this.submitType) {
+      case "approve":
+         this.submitApproval()
+        break;
+      case "save":
+        this.submitRev();
+        break;
+      case "cancel":
+        this.cancelQuoteModal()
+        break;
+      default:
+
+        break;
+    }
   }
 }

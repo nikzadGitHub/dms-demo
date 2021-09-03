@@ -98,6 +98,10 @@ export const routes: Routes = [
         path: 'contact',
         loadChildren: () => import('./views/contact/contact.module').then(m => m.ContactModule)
       },
+      {
+        path: 'soci',
+        loadChildren: () => import('./soci/soci.module').then(m => m.SociModule)
+      },
     ]
   },
   { path: '**', component: P404Component }

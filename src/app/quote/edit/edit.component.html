@@ -13,17 +13,17 @@
                         </select> -->
                         <label class="form-control no-border"><b>Quote ID: {{company_details.quote_id}}</b></label>
                     </div>
-                    <div class="col-lg" align='right'><b>Status</b><br>In Progress</div>
+                    <div class="col-lg" align='right'><b>Status</b><br><p>{{f.status.value}}</p></div>
                 </div>
             </div>
             <div class="card-footer">
         
             </div>
         </div>
-        <form [formGroup]="form" (ngSubmit)="submit()">
+        <form [formGroup]="form" (ngSubmit)="submitSelect()">
             <p-accordion [multiple]="true" styleClass="customColor">
                 <!-- Quotation Accordion -->
-                <p-accordionTab header="Quotation">
+                <!-- <p-accordionTab header="Quotation">
                     <div class="row">
                         <table class="table table-borderless">
                             <thead>
@@ -46,18 +46,50 @@
                                     </td>
                                     <td>{{quoteId.days}}</td>
                                     <td>{{quoteId.status}}</td>
-                                    <td></td>
+                                    <td>{{quoteId.amount}}</td>
                                     <td class="td-actions"><i class="icon-info icons"></i></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </p-accordionTab>
+                </p-accordionTab> -->
                 <!-- End of Quotation Accordion -->
 
                 <!-- Products Accordion -->
                 <p-accordionTab header="Products">
-                    Content 2
+                    <div class="row">
+                        <table class="table table-borderless" formArrayName="products">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Product Name</th>
+                                    <th>SKU ID</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price(MYR)</th>
+                                    <th>Total Price(MYR)</th>
+                                    <th>Discount</th>
+                                    <th>Net Amount(MYR)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let product of products().controls; let i=index;" [formGroupName]="i" align="center">
+                                    <td>{{ i+1 }}</td>
+                                    <td><input class="form-control" formControlName="name" type="text" [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="sku" type="text" [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="quantity" type="text" [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="unit_price" type="text" [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="total_price" type="text" [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="discount" type="text" [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="amount" type="text" [attr.disabled]="true"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="card">
+                            <div class=""></div>
+                        </div>
+                    </div>
                 </p-accordionTab>
                 <!-- End of Products Accordion -->
 
@@ -104,7 +136,7 @@
                 <p-accordionTab header="Billing Milestones">
                     <div class="row">
                         <table class="table table-borderless" formArrayName="billings">
-                            <thead class="grey">
+                            <thead>
                                 <tr>
                                     <th>Billing ID</th>
                                     <th>Stage</th>
@@ -167,7 +199,7 @@
                 <p-accordionTab header="Payment Schedules">
                     <div class="row">
                         <table class="table table-borderless" formArrayName="payments">
-                            <thead class="grey">
+                            <thead>
                                 <tr>
                                     <th>Billing ID</th>
                                     <th>Percentage</th>
@@ -180,14 +212,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let quantity of payments().controls; let i=index" [formGroupName]="i" align="center">
+                                <tr *ngFor="let payment of payments().controls; let i=index" [formGroupName]="i" align="center">
                                     <td style="width: 15%; padding:6px">
                                         <select formControlName="billing_id" class="form-control" style="width: 70%;">
-                                            <option *ngFor="let id of billingIdList" value="{{id}}">{{id}}</option>
+                                            <option *ngFor="let bill of billingList" value="{{bill.billing_id}}">{{bill.billing_id}}</option>
                                         </select>
                                     </td>
                                     <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="percentage" size="1" placeholder="50" type="number" min="0" max="100.00" step=".01">
+                                        <input class="form-control" formControlName="percentage" size="1" placeholder="50" 
+                                        type="number" min="0" max="100.00" step=".01" (keyup)="changePaymentPercent(i)">
                                     </td>
                                     <td style="width: 10%; padding:6px">
                                         <input class="form-control" formControlName="schedule" size="1" type="date"></td>
@@ -198,7 +231,8 @@
                                         <input class="form-control" formControlName="status" size="1" placeholder="Deposit" type="input">
                                     </td>
                                     <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="amount" size="1" placeholder="300" type="number" min="0" step=".01">
+                                        <input class="form-control" formControlName="amount" size="1" placeholder="300" 
+                                        type="number" min="0" step=".01" (keyup)="changePaymentValue(i)">
                                     </td>
                                     <td style="width: 10%; padding:6px">
                                         <input class="form-control" formControlName="remarks" size="1" placeholder="Remarks" type="text">
@@ -227,7 +261,7 @@
                 <p-accordionTab header="Additional Costs">
                     <div class="row">
                         <table class="table table-borderless" formArrayName="addCosts">
-                            <thead class="grey">
+                            <thead>
                                 <tr>
                                     <th>Description</th>
                                     <th>Quantity</th>
@@ -286,9 +320,23 @@
             </p-accordion>
             <div class="row"></div>
             <div class="col-lg" align=center>
-                <div class="form-group">
-                    <button class="btn btn-secondary">SAVE</button>&nbsp;
-                    <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Request Approval</button>
+                <div class="form-group" *ngIf="requested_date == null && approved_date == null">
+                    <button class="btn btn-secondary" type="submit" (click)='setSubmitType("save")'>SAVE</button>&nbsp;
+                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("approve")' 
+                    [disabled]="!form.valid">Request Approval</button>
+                </div>
+                <div class="form_group" *ngIf="requested_date != null && approved_date == null">
+                    <button class="btn btn-secondary" type="submit" (click)='setSubmitType("cancel")'>
+                        Cancel Quote
+                    </button>
+                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("approve")'>
+                        Approve Quotation
+                    </button>
+                </div>
+                <div class="form-group" *ngIf="approved_date != null">
+                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("approve")'>
+                        Set Preferred
+                    </button>
                 </div>
             </div>
         </form>
@@ -309,3 +357,47 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-danger" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Warning</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{dangerBody}}</p>
+        </div>
+        <div class="modal-footer" *ngIf="modal_type == 'paymentPercentage'">
+            <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Keep Changes</button>
+            <button type="button" class="btn btn-primary" (click)="setPaymentAutoAssignPercentage();dangerModal.hide()">Auto-Assign</button>
+            <button type="button" class="btn btn-primary" (click)="setDefaultPayment();dangerModal.hide()">Revert Default</button>
+        </div>
+        <div class="modal-footer" *ngIf="modal_type == 'paymentValue'">
+            <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Keep Changes</button>
+            <button type="button" class="btn btn-primary" (click)="setPaymentAutoAssignValue();dangerModal.hide()">Auto-Assign</button>
+            <button type="button" class="btn btn-primary" (click)="setDefaultPayment();dangerModal.hide()">Revert Default</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Cancellation Remarks</h4>
+          <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <textarea name="cancel_remarks" id="cancel_remarks" cols="60" placeholder="Reason of cancellation" rows="10" [(ngModel)]="cancelRemarks"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
+          <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  
