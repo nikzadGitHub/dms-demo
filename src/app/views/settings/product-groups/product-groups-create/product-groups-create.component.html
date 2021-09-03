@@ -1,0 +1,108 @@
+<div class="animated fadeIn">
+    <div class="col-lg col-md-6">
+        <div class="card rcorners">
+            <div class="card-header row" style="background-color: #898485; color: white;">
+                <div style="padding-left: 20px;">
+                    <h2>Create Product Group</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="form-group">
+                        <div class="card-row">
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            Data Area Id:
+                                        </div> 
+                                        <div class="col-md-6">
+                                            <input formControlName="data_area_id" class="form-control" placeholder="ID" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            Product Group:
+                                        </div> 
+                                        <div class="col-md-6">
+                                            <input formControlName="product_group" class="form-control" placeholder="Product Group" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            Product Group Code:
+                                        </div> 
+                                        <div class="col-md-6">
+                                            <input formControlName="product_group_code" class="form-control" placeholder="Product Group Code" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            Active:
+                                        </div> 
+                                        <div class="col-md-6">
+                                            <select formControlName="is_active" name="is_active" class="form-control">
+                                                <option [ngValue]="0">Inactive</option>
+                                                <option [ngValue]="1">Active</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-9 submit-button" align=center>
+                        <div class="form-group">
+                            <a routerLink="settings/pg/index" class="btn btn-secondary">CANCEL</a>
+                            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">SAVE & NEXT</button>
+                        </div>
+                    </div>  
+                </form>
+            </div>
+            <div class="card-footer bg-transparent">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Success</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{alertBody}}</p>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-danger" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Warning</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{alertBody}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="addBillings();dangerModal.hide()">Add Billing Milestone</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

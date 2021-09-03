@@ -8,5 +8,7 @@ export const environment = {
 };
 
 export const settings = {
-  apiBaseUrl: 'http://idsmed-sales-funnel-api.test/api'
+  // apiBaseUrl: 'http://idsmed-sales-funnel-api.test/api'
+  // apiBaseUrl: 'https://api.idsmed.websight-app.com/api'
+  apiBaseUrl: 'http://127.0.0.1:8000/api'
 }

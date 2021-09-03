@@ -9,7 +9,7 @@ import { Quote } from '../quote';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-   
+
   quotes: Quote[] = [];
   paginate: [];
   pageItems: number = 10;
