@@ -11,7 +11,7 @@ export class IndexTemplateComponent implements OnInit {
 
   @Input() quotes: Quote[];
   @Input() title: string;
-  @Input() table_header: string;
+  @Input() table_header: string[];
   paginate: [];
   pageItems: number = 10;
   search_text: string = '';
@@ -41,13 +41,13 @@ export class IndexTemplateComponent implements OnInit {
   //   })  
   // }
 
-  // onClick(url){
-  //   this.quoteService.getPage(url,this.pageItems,this.search_text).subscribe((data)=>{
-  //     this.quotes = data['data']['data'] ?? data['data']['items'];
-  //     this.paginate = data['data']['links'];
-  //     console.log(data);
-  //   })  
-  // }
+  onClick(url){
+    this.quoteService.getPage(url,this.pageItems,this.search_text).subscribe((data)=>{
+      this.quotes = data['data']['data'] ?? data['data']['items'];
+      this.paginate = data['data']['links'];
+      console.log(data);
+    })  
+  }
 
   getAll(){
     this.quoteService.getAllRevision(this.pageItems,this.search_text).subscribe((data)=>{

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Quote } from '../../quote/quote';
 import { SociService } from '../soci.service';
 
 @Component({
@@ -7,6 +8,9 @@ import { SociService } from '../soci.service';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
+  search_text:string;
+  pageItems: number = 10;
+  quotes: Quote[] = [];
 
   constructor(public sociService: SociService) { }
 

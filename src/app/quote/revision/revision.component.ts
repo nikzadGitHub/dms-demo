@@ -14,7 +14,7 @@ export class RevisionComponent implements OnInit {
   paginate: [];
   pageItems: number = 10;
   search_text: string = '';
-  table_header: any[];
+  table_header: string[];
   title:string;
   constructor(public quoteService:QuoteService) { }
 

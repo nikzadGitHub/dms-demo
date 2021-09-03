@@ -13,6 +13,7 @@ export class CreateComponent implements OnInit {
 
   @ViewChild('createModal') modal : ModalDirective
 
+  tabIndex: number = -1;
   form: FormGroup;
   filteredQuotes: Quote[];
   selectedQuoteAdvanced: Quote;

@@ -13,6 +13,7 @@ export class CreateComponent implements OnInit {
   
   @ViewChild('successModal') successModal : ModalDirective;
 
+  show: Boolean;
   form: FormGroup;
   sub_total: number;
   terms: Term[] = [];

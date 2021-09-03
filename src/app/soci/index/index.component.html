@@ -10,7 +10,7 @@
         </span>
         <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
-            <input type="text" pInputText placeholder="Global Search" (input)="getAll(pageItems,search_text)" 
+            <input type="text" pInputText placeholder="Global Search" 
             [(ngModel)]="search_text"/>
         </span>
     </div>
@@ -130,7 +130,7 @@
     </tr>
   </ng-template>
 </p-table>
-<p-paginator (onPageChange)="paginate($event)" [rows]="pageItems" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
+<p-paginator [rows]="pageItems" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
 </p-paginator>
 
 <app-create #createModal></app-create>
