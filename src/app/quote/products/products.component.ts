@@ -13,7 +13,7 @@ import { Product } from './products';
 export class ProductsComponent implements OnInit {
 
   @ViewChild('successModal') successModal : ModalDirective;
-
+  show:boolean;
   filteredProducts: Product[];
   selectedProductAdvanced: Product;
   form: FormGroup;

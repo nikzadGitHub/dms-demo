@@ -31,9 +31,9 @@
                                         Quotation Validity: {{termSelected}} Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
                                     </div>
                                     <div class="col-lg-1" style="text-align: right;">
-                                        <div (click)="show_i=!show_i">
-                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show_i"><i class="cil-check-circle"></i></a>
-                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show_i"><i class="fa fa-edit"></i></a>
+                                        <div (click)="show=!show">
+                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show"><i class="cil-check-circle"></i></a>
+                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i class="fa fa-edit"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -197,12 +197,12 @@
                                                 </td>
                                                 <td style="width: 15%;">
                                                     <input formControlName="quantity" class="form-control" size="1" placeholder="1" 
-                                                    (keyup)="allTotal(cost.controls,addCosts().controls)"
+                                                    (keyup)="allTotal(cost['controls'],addCosts().controls)"
                                                     type="number" min="0">
                                                 </td>
                                                 <td style="width: 10%;">
                                                     <input formControlName="unit_price" class="form-control" size="1" placeholder="300"
-                                                    (keyup)="allTotal(cost.controls,addCosts().controls)"
+                                                    (keyup)="allTotal(cost['controls'],addCosts().controls)"
                                                     type="number" min="0" step=".01">
                                                 </td>
                                                 <td style="width: 20%;">

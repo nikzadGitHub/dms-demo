@@ -5,13 +5,13 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-6">
-                        <label class="form-control no-border"><h2><b>{{company_details.company_name}}</b></h2></label>
+                        <label class="form-control no-border"><h2><b>{{company_details['company_name']}}</b></h2></label>
                     </div>
                     <div class="col-lg-2">
                         <!-- <select [(ngModel)]="rev" class="form-control" style="width: 70%;" (change)='changeRev(rev)'>
                             <option *ngFor="let quoteId of quoteIdList" value="{{quoteId.rev_number}}">{{quoteId.quote_id}}</option>
                         </select> -->
-                        <label class="form-control no-border"><b>Quote ID: {{company_details.quote_id}}</b></label>
+                        <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label>
                     </div>
                     <div class="col-lg" align='right'><b>Status</b><br><p>{{f.status.value}}</p></div>
                 </div>
@@ -114,9 +114,9 @@
                             Quotation Validity: {{termSelected}} Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
                         </div>
                         <div class="col-lg-1" style="text-align: right;">
-                            <div (click)="show_i=!show_i">
-                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show_i"><i class="cil-check-circle"></i></a>
-                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show_i"><i class="fa fa-edit"></i></a>
+                            <div (click)="show=!show">
+                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show"><i class="cil-check-circle"></i></a>
+                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i class="fa fa-edit"></i></a>
                             </div>
                         </div>
                     </div>
@@ -278,12 +278,12 @@
                                     </td>
                                     <td style="width: 15%;">
                                         <input formControlName="quantity" class="form-control" size="1" placeholder="1" 
-                                        (keyup)="allTotal(cost.controls,addCosts().controls)"
+                                        (keyup)="allTotal(cost['controls'],addCosts().controls)"
                                         type="number" min="0">
                                     </td>
                                     <td style="width: 10%;">
                                         <input formControlName="unit_price" class="form-control" size="1" placeholder="300"
-                                        (keyup)="allTotal(cost.controls,addCosts().controls)"
+                                        (keyup)="allTotal(cost['controls'],addCosts().controls)"
                                         type="number" min="0" step=".01">
                                     </td>
                                     <td style="width: 20%;">

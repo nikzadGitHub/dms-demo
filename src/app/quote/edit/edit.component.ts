@@ -20,6 +20,7 @@ export class EditComponent implements OnInit {
   @ViewChild('dangerModal') dangerModal : ModalDirective;
   @ViewChild('infoModal') infoModal : ModalDirective;
 
+  show:boolean;
   submitType: string;
   quotations: Quote;
   requested_date: Date;

@@ -15,14 +15,14 @@
                 </div>
                 <div class="col-lg-6">
                   <p-autoComplete formControlName="quote_id" [(ngModel)]="selectedQuoteAdvanced" [suggestions]="filteredQuotes" 
-                  (completeMethod)="filterQuote($event)" field="quote_id" [dropdown]="true" tabindex="-1"
+                  (completeMethod)="filterQuote($event)" field="quote_id" [dropdown]="true"
                   [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
                       <ng-template let-quote pTemplate="item">
                           <div class="quote-item">
                               <div>{{quote.quote_id}}</div>
                           </div>
                       </ng-template>
-                  </p-autoComplete> 
+                  </p-autoComplete>
                 </div>
             </div>
             <br>
@@ -68,7 +68,7 @@
               </div>
               <div class="col-lg-6">
                 <p-fileUpload mode="basic" name="demo[]" url="" accept="image/*" 
-                maxFileSize="1000000"></p-fileUpload>
+                ></p-fileUpload>
               </div>
             </div>
           </form>
