@@ -1,0 +1,30 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <ng-container *ngFor="let header of headers; let i=index; let last = last;">
+                <th *ngIf="!last">{{ header }}</th>
+                <th *ngIf="last" width="220px">{{ header }}</th>
+            </ng-container>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of tableData; let i=index">
+            <!-- <td>{{ data.created_at | date:'dd-MMM-yyyy' || '' }}</td>
+            <td><a href="#" [routerLink]="['/' + path +'/', data.id, 'view']">{{ data.id }}</a></td>
+            <td>{{ data.comapany_name  || ''}}</td>
+            <td>{{ data.validity_date | date:'dd-MMM-yyyy' || '' }}</td>
+            <td><i class="fa fa-circle fa-lg" [ngClass]="(data.active==1 ? 'active' : 'inactive')"></i></td>
+            <td style="width: 10%;">{{ data.status || '' }}</td> -->
+            <td *ngIf="data.data_area_id">{{ data.data_area_id || '' }}</td>
+            <td *ngIf="data[key]">{{ data[key] || '' }}</td>
+            <td *ngIf="data[key + '_code']">{{ data[key + '_code'] || '' }}</td>
+            <td *ngIf="data.is_active!==undefined"><i class="fa fa-circle fa-lg" [ngClass]="(data.is_active == 1 ? 'active' : 'inactive')"></i></td>
+            <td *ngIf="data.title">{{ data.title || '' }}</td>
+            <td *ngIf="data.value">{{ data.value || '' }}</td>
+            <td style="width: 5%;">
+                <a href="#" [routerLink]="['/' + path + '/', data.id, 'edit']" class="fa fa-edit"></a>
+                <i (click)="deleteData(data.id)" class="fa fa-trash text-primary" aria-hidden="true" style="cursor: pointer;"></i>
+            </td>
+        </tr>
+    </tbody>
+</table>

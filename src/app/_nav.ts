@@ -264,5 +264,67 @@ export const navItems: INavData[] = [
       text: 'NEW'
     },
     attributes: { disabled: true },
-  }
+  },
+  {
+    name: 'Settings',
+    url: '/settings',
+    icon: 'icon-bell',
+    children: [
+      {
+        name: 'Agencies',
+        url: '/settings/agencies/index',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'Care Areas',
+        url: '/settings/ca/index',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'Manufacturers',
+        url: '/settings/manufacturers/index',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'OPC',
+        url: '/settings/opcs/index',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'Opportunity Competitor Types',
+        url: '/settings/oct/index',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'Opportunity Funding Sources',
+        url: '/settings/ofsc/index',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'Opportunity Funding Status',
+        url: '/settings/ofst/index',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'Opportunity Preferred Vendor Types',
+        url: '/settings/opvt/index',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'Opportunity Status',
+        url: '/settings/os/index',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'Opportunity Types',
+        url: '/settings/ot/index',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'Product Groups',
+        url: '/settings/pg/index',
+        icon: 'icon-bell'
+      }
+    ]
+  },
 ];

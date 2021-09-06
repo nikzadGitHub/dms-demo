@@ -61,6 +61,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { DatePipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { SociModule } from './soci/soci.module';
+import { SettingsModule } from './views/settings/settings.module';
 
 @NgModule({
   imports: [
@@ -87,6 +88,7 @@ import { SociModule } from './soci/soci.module';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     QuoteModule,
+    SettingsModule,
     AutoCompleteModule,
     CalendarModule,
     AccordionModule,

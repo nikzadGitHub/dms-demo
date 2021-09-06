@@ -94,6 +94,10 @@ export const routes: Routes = [
         path: 'soci',
         loadChildren: () => import('./soci/soci.module').then(m => m.SociModule)
       },
+      {
+        path: 'settings',
+        loadChildren: () => import('./views/settings/settings.module').then(m => m.SettingsModule)
+      },
     ]
   },
   { path: '**', component: P404Component }
