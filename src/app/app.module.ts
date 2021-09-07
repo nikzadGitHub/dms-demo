@@ -89,10 +89,7 @@ import { SettingsModule } from './views/settings/settings.module';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     QuoteModule,
-<<<<<<< Updated upstream
     SettingsModule,
-=======
->>>>>>> Stashed changes
     OpportunityModule,
     AutoCompleteModule,
     CalendarModule,
