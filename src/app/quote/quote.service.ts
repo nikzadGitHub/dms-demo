@@ -108,8 +108,41 @@ export class QuoteService {
       catchError(this.errorHandler)
     )
   }
-  getQuotationRevision(id,revNumber){
-    return this.httpClient.get(this.apiURL + '/quote/revision/'+ id + '/' + revNumber)
+
+  submitApproval(quoteId): Observable<any>{
+    return this.httpClient.post(this.apiURL + '/quote/request-approval',{quoteId:quoteId})
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  getQuotationPendingApproval(){
+    return this.httpClient.get(this.apiURL + '/quote/approval',this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+
+  getAllRevision(pageItems,search_text): Observable<Quote[]> {
+    let param = {page_items:pageItems,search_text:search_text};
+    // let query = '/quote-revision?page_items=' + pageItems + '&search_text=' + search_text;
+    return this.httpClient.get<Quote[]>(this.apiURL + '/quote-revision',{params:param})
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  getQuotationRevision(id){
+    return this.httpClient.get(this.apiURL + '/quote-revision/'+ id + '/edit')
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  cancelQuote(id,remarks): Observable<any>{
+    let param = {id:id,remarks:remarks}
+    return this.httpClient.post(this.apiURL + '/quote/cancel-quote', param)
     .pipe(
       catchError(this.errorHandler)
     )

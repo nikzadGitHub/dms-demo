@@ -59,6 +59,9 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CalendarModule } from 'primeng/calendar';
 import { AccordionModule } from 'primeng/accordion';
 import { DatePipe } from '@angular/common';
+import { TableModule } from 'primeng/table';
+import { SociModule } from './soci/soci.module';
+import { SettingsModule } from './views/settings/settings.module';
 
 @NgModule({
   imports: [
@@ -85,9 +88,12 @@ import { DatePipe } from '@angular/common';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     QuoteModule,
+    SettingsModule,
     AutoCompleteModule,
     CalendarModule,
-    AccordionModule
+    AccordionModule,
+    TableModule,
+    SociModule
   ],
   declarations: [
     AppComponent,

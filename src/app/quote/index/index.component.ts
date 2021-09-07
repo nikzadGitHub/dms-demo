@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { QuoteService } from '../quote.service';
 import { Quote } from '../quote';
+import { LazyLoadEvent } from 'primeng/api';
+import { Paginator } from 'primeng/paginator';
 
 @Component({
   selector: 'app-index',
@@ -9,20 +11,25 @@ import { Quote } from '../quote';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-   
+
+  datasource: Quote[] = [];
   quotes: Quote[] = [];
-  paginate: [];
+  pages: [];
   pageItems: number = 10;
+  totalRecords:number;
   search_text: string = '';
+  loading: boolean;
   
   constructor(public quoteService: QuoteService) { }
   
   ngOnInit(): void {
-    this.quoteService.getAll(this.pageItems,this.search_text).subscribe((data)=>{
-      this.quotes = data['data']['data'] ?? data['data']['items'];
-      this.paginate = data['data']['links'];
-      console.log(data);
+    this.quoteService.getAll(this.pageItems,this.search_text).subscribe(data=>{
+      this.datasource = data['data'];
+      this.quotes = this.datasource['data'];
+      this.pages = data['data']['links'];
+      this.totalRecords = this.datasource['total'];
     })  
+    this.loading = false;
   }
   
   deleteQuote(id){
@@ -34,17 +41,38 @@ export class IndexComponent implements OnInit {
 
   getAll(){
     this.quoteService.getAll(this.pageItems,this.search_text).subscribe((data)=>{
-      this.quotes = data['data']['data'] ?? data['data']['items'];
-      this.paginate = data['data']['links'];
-      console.log(data);
+      this.quotes = data['data']['data'];
+      this.pages = data['data']['links'];
+      this.totalRecords = data['data']['total'];
     })  
   }
 
   onClick(url){
     this.quoteService.getPage(url,this.pageItems,this.search_text).subscribe((data)=>{
-      this.quotes = data['data']['data'] ?? data['data']['items'];
-      this.paginate = data['data']['links'];
-      console.log(data);
+      this.quotes = data['data']['data'];
+      this.pages = data['data']['links'];
     })  
+  }
+
+  // loadQuotations(event: LazyLoadEvent) {
+  //   // this.loading = true;
+  //   console.log(event.rows)
+  //   setTimeout(() => {
+  //     this.quoteService.getAll(this.pageItems,this.search_text).subscribe(data=>{
+  //       this.datasource = data['data'];
+        
+  //       this.quotes = data['data']['total'];
+  //       console.log(this.totalRecords);
+  //       // this.quotes = this.datasource.slice(event.first, (event.first + event.rows));
+  //       this.loading = false;
+  //     })  
+  //   }, 1000);
+  // }
+
+  paginate(event){
+    console.log(event)
+    this.pageItems = event.rows;
+    let url = "http://idsmed-sales-funnel-api.test/api/quote?page="+(parseInt(event.page) + 1);
+    this.onClick(url);
   }
 }

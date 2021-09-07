@@ -35,10 +35,19 @@
 thead{
     text-align: center;
     border: none;
+    border-top: gray;
+    border-bottom: gray;
+    background-color: rgb(245, 245, 245);
 }
 
 input{
     width: 70%;
+}
+
+input:disabled{
+    background: white;
+    border: none;
+    text-align: center;
 }
 
 .td-actions{
@@ -84,6 +93,7 @@ input::-webkit-inner-spin-button {
         }
         .p-accordion-header-link{
             background: white;
+            border-bottom: none;
         }
     }
     .p-accordion-content{

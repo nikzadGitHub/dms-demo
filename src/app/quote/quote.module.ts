@@ -14,7 +14,11 @@ import { ProductsComponent } from './products/products.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CalendarModule } from 'primeng/calendar';
 import { AccordionModule } from 'primeng/accordion';
-import { CompanyHeaderComponent } from './company-header/company-header.component';
+import { RevisionComponent } from './revision/revision.component';
+import { IndexTemplateComponent } from './index-template/index-template.component';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 @NgModule({
@@ -24,7 +28,8 @@ import { CompanyHeaderComponent } from './company-header/company-header.componen
     CreateComponent,
     EditComponent,
     ProductsComponent,
-    CompanyHeaderComponent,
+    RevisionComponent,
+    IndexTemplateComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +42,9 @@ import { CompanyHeaderComponent } from './company-header/company-header.componen
     AutoCompleteModule,
     CalendarModule,
     AccordionModule,
+    TableModule,
+    InputTextModule,
+    PaginatorModule
   ]
 })
 export class QuoteModule { }

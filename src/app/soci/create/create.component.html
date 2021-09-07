@@ -1,0 +1,82 @@
+<div bsModal #createModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Customer Quotation Acceptance</h4>
+          <button type="button" class="close" (click)="createModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="row">
+                <div class="col-lg-4">
+                  <label for="quote_id">Quotation Reference No: </label>
+                </div>
+                <div class="col-lg-6">
+                  <p-autoComplete formControlName="quote_id" [(ngModel)]="selectedQuoteAdvanced" [suggestions]="filteredQuotes" 
+                  (completeMethod)="filterQuote($event)" field="quote_id" [dropdown]="true"
+                  [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
+                      <ng-template let-quote pTemplate="item">
+                          <div class="quote-item">
+                              <div>{{quote.quote_id}}</div>
+                          </div>
+                      </ng-template>
+                  </p-autoComplete>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-lg-4">
+                <label for="po_no">Purchase Order No: </label>
+              </div>
+              <div class="col-lg-6">
+                <input class="form-control" type="text" id="po_no" placeholder="PO Number">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-lg-4">
+                <label for="po_value">Purchase Order Value: </label>
+              </div>
+              <div class="col-lg-6">
+                <input class="form-control" type="text" id="po_value" placeholder="PO Number">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-lg-4">
+                <label for="po_date">Purchase Order Date: </label>
+              </div>
+              <div class="col-lg-6">
+                <input class="form-control" type="text" id="po_date" placeholder="PO Number">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-lg-4">
+                <label for="get_po_date">Receive Purchase Order Date: </label>
+              </div>
+              <div class="col-lg-6">
+                <input class="form-control" type="date" id="get_po_date" placeholder="PO Number">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-lg-4">
+                <label for="attachment">Attachment: </label>
+              </div>
+              <div class="col-lg-6">
+                <p-fileUpload mode="basic" name="demo[]" url="" accept="image/*" 
+                ></p-fileUpload>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="createModal.hide()">Close</button>
+          <button type="button" class="btn btn-primary" (click)="submit()">Save changes</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
