@@ -1,47 +1,109 @@
 <div class="animated fadeIn">
+
 	<div class="row">
 		
 		<div class="col-sm-12 col-md-12">
-      		<div class="card border-primary">
-			    <div class="card-header bg-primary">
-			      Add Opportunity
-			    </div>
-			    <div class="card-body">		
-			    	<table class="table table-borderless" width="100%">
-			    		<tr>
-			    			<td class="text-left w-50">Create Date</td>
-			    			<td class="text-left">-</td>					    			
-			    		</tr>
-			    		<tr>
-			    			<td class="text-left w-50">Opportunity ID</td>
-			    			<td class="text-left">-</td>					    			
-			    		</tr>
-			    		<tr>
-			    			<td class="text-left w-50">Owner</td>
-			    			<td class="text-left">-</td>					    			
-			    		</tr>
-			    		<tr>
-			    			<td class="text-left w-50">Name</td>
-			    			<td class="text-left">-</td>					    			
-			    		</tr>
-			    		<tr>
-			    			<td class="text-left w-50">Email</td>
-			    			<td class="text-left">-</td>					    			
-			    		</tr>
-			    		<tr>
-			    			<td class="text-left w-50">Contact Number</td>
-			    			<td class="text-left">-</td>					    			
-			    		</tr>
-			    		<tr>
-			    			<td class="text-left w-50">Address</td>
-			    			<td class="text-left">-</td>					    			
-			    		</tr>
-			    	</table>			      
-			    </div>
+			<div class="card">
+				<div class="card-header d-flex b-btm-green">
+					<div class="chead">New Opportunity</div>						
+				</div>
+				
+					<div class="card-body p-0">
+						
+						<div class="d-flex justify-content-between p-125">
+							<div style="width:450px">				
+								<input [hidden]="!company_is_from_lead" class="form-control" readonly [(ngModel)]="company_name_from_lead">			
+								<input [hidden]="company_is_from_lead" (input)="companySearch()" type="text" placeholder="Company Name..."  matInput [formControl]="companyControl" [matAutocomplete]="companyNameAutocomplete" class="form-control">
+								<mat-autocomplete #companyNameAutocomplete="matAutocomplete" [displayWith]="displayFn" (optionSelected)='companySelected($event.option.value)'>
+									<mat-option *ngFor="let company of filteredCompanies | async" [value]="company">
+									{{company.name}} | {{company.data_area_id}} / {{company.external_id}}
+									</mat-option>
+								</mat-autocomplete>
+							</div>
+							<!-- <div>Opport. ID {{detail.opportunity_code}}</div> -->
+							<!-- <div>
+								<label>Stages</label>
+								<select class="form-control">
+									<option>123</option>
+								</select>
+							</div>
+							<div>
+								<label>Status</label>
+								<select class="form-control">
+									<option>123</option>
+								</select>
+							</div> -->
+						</div>					
+						<div class="d-flex justify-content-between p-125" style="background-color: #F6F6F6;">
+							<div>
+								<input type="text" [(ngModel)]="topic" class="form-control" placeholder="Topic..."/>
+							</div>
+							<!-- <div>
+								<label>Created Date</label>
+								<div></div>
+							</div>
+							<div>
+								<label>Individual Name</label>
+							</div>
+							<div>
+								<label>Email</label>
+							</div>
+							<div>
+								<label>Owner</label>
+							</div> -->
+						</div>
+				
+					</div>				
+		 
 			</div>
-      	</div>	
+      	</div>
+		
+		<div class="col-md-12 form-group">
+			<p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">	
+				<p-accordionTab header="Details Info">
+					<div class="row">
+						<div class="col-md-12">
+							<table class="table table-striped m-0 no-outline">
+								<tbody>
+									<tr>
+										<td class="bg-lightgrey text-left w-25">Credit Term</td>
+										<td class="w-25"></td>
+										<td class="bg-lightgrey text-left w-25">Customer Category</td>
+										<td class="w-25"></td>
+									</tr>
+									<tr>
+										<td class="bg-lightgrey text-left">Hospital Class</td>
+										<td></td>
+										<td class="bg-lightgrey text-left">Hospital Bed (Range)</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td class="bg-lightgrey text-left">Credit Limit</td>
+										<td></td>
+										<td class="bg-lightgrey text-left">Hospital Bed (Exact Number)</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td class="bg-lightgrey text-left">Segmant</td>
+										<td></td>
+										<td class="bg-lightgrey text-left">Geographical Zone</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td class="bg-lightgrey text-left">Customer Category</td>
+										<td></td>
+										<td class="bg-lightgrey text-left">Customer Tax Code</td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>				
+				</p-accordionTab>
+			</p-accordion>
+		</div>
 
-      	<div class="col-sm-12 col-md-12">
+      	<!-- <div class="col-sm-12 col-md-12">
       		<div class="card border-primary">
 			    <div class="card-header">
 			      Details Info
@@ -83,261 +145,10 @@
 			    	</table>
 			    </div>
 			</div>
-
-			<div class="card border-primary">
-			    <div class="card-header">
-			      Activity Tracking
-			    </div>
-			    <div class="card-body p-0">					      
-			    	<table class="table m-0 no-outline table-striped">
-			    		<thead>
-				    		<tr>
-				    			<th>Opportunity Date & Time</th>
-				    			<th>Order Date & Time</th>
-				    			<th>Estimated Invoice Date</th>
-				    			<th>Customer Expected Delivery Date</th>
-				    			<th>Hospital Department</th>
-				    			<th>Status</th>
-				    			<th>Reason</th>
-				    		</tr>
-			    		</thead>	
-			    		<tbody>
-			    			<tr>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    			</tr>
-			    			<tr>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    			</tr>
-			    			<tr>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    			</tr>
-			    		</tbody>				    		
-			    	</table>
-			    </div>
-			</div>
-
-			<div class="card border-primary">
-			    <div class="card-header">
-			      Products
-			    </div>
-			    <div class="card-body p-0">		
-			    
-					<tabset>
-						<tab class="p-0">
-						  <ng-template tabHeading>Option 1</ng-template>
-						  	<table class="table m-0 no-outline">
-					    		<thead>
-						    		<tr>
-						    			<th>#</th>
-						    			<th>Item Name</th>
-						    			<th>SKU ID</th>
-						    			<th>Quantity</th>
-						    			<th>Unit Price (RM)</th>
-						    			<th>Total Price (RM)</th>
-						    			<th>Discount (%)</th>
-						    			<th>Net Amount (RM)</th>
-						    			<th></th>
-						    		</tr>	
-					    		</thead>	
-					    		<tbody>
-					    			<tr>
-					    				<td>-</td>
-					    				<td>-</td>
-					    				<td>-</td>
-					    				<td>-</td>
-					    				<td>-</td>
-					    				<td>-</td>
-					    				<td>-</td>
-					    				<td>-</td>
-					    				<td></td>
-					    			</tr>
-					    			<tr>
-					    				<td></td>
-					    				<td><input type="text" class="form-control" /></td>
-					    				<td><input type="text" class="form-control" /></td>
-					    				<td><input type="text" class="form-control" /></td>
-					    				<td><input type="text" class="form-control" /></td>
-					    				<td><input type="text" class="form-control" /></td>
-					    				<td><input type="text" class="form-control" /></td>
-					    				<td><input type="text" class="form-control" /></td>
-					    				<td>+</td>
-					    			</tr>
-					    		</tbody>			    		
-					    	</table>									  
-						</tab>
-
-						<tab class="p-0">
-						  <ng-template tabHeading>Option 2</ng-template>
-						  	<table class="table m-0 no-outline">
-					    		<thead>
-						    		<tr>
-						    			<th>#</th>
-						    			<th>Item Name</th>
-						    			<th>SKU ID</th>
-						    			<th>Quantity</th>
-						    			<th>Unit Price (RM)</th>
-						    			<th>Total Price (RM)</th>
-						    			<th>Discount (%)</th>
-						    			<th>Net Amount (RM)</th>
-						    			<th></th>
-						    		</tr>	
-					    		</thead>	
-					    		<tbody>							    			
-					    			<tr>
-					    				<td></td>
-					    				<td><input type="text" class="form-control" /></td>
-					    				<td><input type="text" class="form-control" /></td>
-					    				<td><input type="text" class="form-control" /></td>
-					    				<td><input type="text" class="form-control" /></td>
-					    				<td><input type="text" class="form-control" /></td>
-					    				<td><input type="text" class="form-control" /></td>
-					    				<td><input type="text" class="form-control" /></td>
-					    				<td>+</td>
-					    			</tr>
-					    		</tbody>			    		
-					    	</table>									  
-						</tab>								
-
-					</tabset>
-					
-					<div class="d-flex justify-content-end form-group">
-						<div class="card border-primary m-3 w-50">
-							<div class="card-body">
-								<table class="table table-borderless">
-									<tr>
-										<td class="text-left w-50">Subtotal Before Tax</td>
-										<td class="text-left">-</td>
-									</tr>
-									<tr>
-										<td class="text-left">Tax (SST)</td>
-										<td class="text-left"><input type="text" class="form-control" /></td>
-									</tr>
-									<tr>
-										<td class="text-left">Discount (%)</td>
-										<td class="text-left"><input type="text" class="form-control" /></td>
-									</tr>
-									<tr>
-										<td class="text-left">Total Amount</td>
-										<td class="text-left">-</td>
-									</tr>
-								</table>
-							</div>
-						</div>
-					</div>
-
-					<div class="d-flex justify-content-center mb-3">
-						<button class="btn btn-custom mr-1">CONVERT TO QUOTE</button>
-						<button class="btn btn-custom" data-toggle="modal" (click)="largeModal.show()">ADD PRODUCT</button>
-					</div>
-  					
-			    </div>
-			</div>
-
-			<div class="card border-primary">
-			    <div class="card-header">
-			      Forecast
-			    </div>
-			    <div class="card-body p-0">					      
-			    	<table class="table m-0 no-outline">
-			    		<tr>
-			    			<td class="text-left w-25">Preferred Vendor</td>
-			    			<td></td>
-			    			<td class="text-left w-25">Forecast Category</td>
-			    			<td></td>
-			    		</tr>
-			    		<tr>
-			    			<td class="text-left">Funding Status</td>
-			    			<td></td>
-			    			<td class="text-left">Reason</td>
-			    			<td></td>
-			    		</tr>
-			    		<tr>
-			    			<td class="text-left">Funding Source</td>
-			    			<td></td>
-			    			<td class="text-left">Notes</td>
-			    			<td></td>
-			    		</tr>					    		
-			    	</table>
-			    </div>
-			</div>
-
-			<div class="card border-primary">
-			    <div class="card-header">
-			      Competitor List
-			    </div>
-			    <div class="card-body p-0">					      
-			    	<table class="table m-0 no-outline">
-			    		<thead>
-				    		<tr>
-				    			<th>Opportunity ID</th>
-				    			<th>Opportunity Date</th>
-				    			<th>Competitor Name</th>
-				    			<th>Amount (RM)</th>
-				    			<th>Type</th>					    			
-				    		</tr>	
-			    		</thead>	
-			    		<tbody>
-			    			<tr>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    			</tr>
-			    			<tr>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    				<td>-</td>
-			    			</tr>
-			    		</tbody>			    		
-			    	</table>
-			    </div>
-			</div>
-
-      	</div>
-      		      
+      	</div>	   -->
+		
+		<div class="col-md-12" align="center">
+			<button class="btn btn-custom mr-1" (click)="createOpportunity()">Add Opportunity</button>
+		</div>
 	</div>
-
 </div>
-
-<!-- product full add start -->
-<!-- <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Modal title</h4>
-        <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>One fine body&hellip;</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="largeModal.hide()">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div> -->
-<!-- product full add end -->

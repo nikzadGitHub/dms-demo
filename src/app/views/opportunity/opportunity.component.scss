@@ -1,15 +1,32 @@
-th {
-    background-color: #2297e6;
-    color: white;
-    text-align: center;
-    /*border:hidden;*/
+.card{
+  border-radius:0;
 }
 
-table {
-    /*border: 1px solid #2297e6;*/
-    /*border: none;*/
-    border-collapse: separate;
-    border-spacing: 0;
+.card-header{
+  background-color: #898485;
+  color:#FFFFFF;
+  border-radius:0;
+}
+
+:host ::ng-deep .customColor.p-accordion {
+  .p-accordion-header {
+      font-size: 24px; 
+      font-weight: bolder;
+      background: white;
+      span.pi{
+          margin-top: -8px;
+          position: absolute;
+          right: 0.5em;
+          top: 50%;
+      }
+      .p-accordion-header-link{
+          background: white;
+      }
+  }
+  .p-accordion-content{
+      padding: 0px;
+      overflow-x: hidden;
+  }
 }
 
 td {
@@ -66,11 +83,142 @@ td {
 .btn-custom {
     background-color: #00538a;
     border-color: #00538a;
-    color:#FFFFFF;
+    color:#FFFFFF;    
 }
 
 .chead{
-    font-size: 1.3rem;
-    font-weight: bold;
+    font-size: 24px;    
+    line-height: 34px;    
+    font-style: normal;
+    font-weight: 600;
 }
 
+.btn-icon{
+  height: 2rem;
+  line-height: 1rem;
+  padding: 0 !important;  
+  width: 2rem;  
+  font-size: 1.2rem !important;
+  font-weight: bold;
+  border-radius: 50%;  
+  // color: white;
+  // background-color: #FFFFFF;
+  text-align: center;
+  // cursor: pointer;
+}
+
+.btn-in-tab{
+  position:absolute;
+  right:-3.5rem;
+  height:1.5rem !important;
+  line-height: 0.75rem;
+  width: 1.5rem !important;  
+  font-size:0.9rem;
+}
+
+.btn-white{
+  color:#FFFFFF;
+  border-color: #FFFFFF;
+}
+
+.btn-white i{
+  margin-top:0.2rem;
+}
+
+.p-relative{
+  position: relative;
+}
+
+.p-0{
+  padding:0 !important;
+}
+
+.p-125{
+  padding:1.25rem;
+}
+
+.b-btm-green{
+  border-bottom: solid 3px #5DBEC0;
+}
+
+.bg-opp{
+  background-color:#5DBEC0;
+}
+
+.table-price{
+  border-radius: 30px;
+}
+
+// .c-icon{
+//   vertical-align: middle !important;
+//   font-size:1.1rem;
+//   margin-top:-1rem;
+// }
+
+
+
+
+
+
+
+
+// .rcorners{
+//   // border-radius: 20px;
+//   overflow: hidden;
+// }
+
+// th {
+//   text-align: center;
+//   border:hidden;
+//   border-top: gray;
+//   border-bottom: gray;
+// }
+
+// table {
+//   border: 1px solid gray;
+//   border-collapse: separate;
+//   border-spacing: 0;
+// }
+
+// td {
+//   text-align: center;
+//   border: hidden;
+// }
+
+// .buttonColor {
+//   background-color: #00538a;
+//   border-color: #00538a;
+// }
+
+// .active{
+//   color: green;
+// }
+
+// .inactive{
+//   color: red;
+// }
+
+// .card-body{
+//   padding: 0%;
+// }
+
+// .card { 
+//   background-color: var(--body-color);
+//   border: none;
+// }
+
+// .card-header{
+//   border: 1;
+// }
+
+// .card-body{
+//   padding: 0%;
+//   background-color: white;
+//   border: white;
+// }
+// .card-footer { 
+//   opacity: 1; 
+//   border: none;
+//   padding: 0%;
+//   padding-top: 20px;
+// }

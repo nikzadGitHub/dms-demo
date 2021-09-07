@@ -55,6 +55,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DialogComponent } from './components/shared/dialog/dialog.component';
 import { QuoteModule } from './quote/quote.module';
+import { OpportunityModule } from './views/opportunity/opportunity.module';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CalendarModule } from 'primeng/calendar';
 import { AccordionModule } from 'primeng/accordion';
@@ -89,6 +90,7 @@ import { SettingsModule } from './views/settings/settings.module';
     MatProgressSpinnerModule,
     QuoteModule,
     SettingsModule,
+    OpportunityModule,
     AutoCompleteModule,
     CalendarModule,
     AccordionModule,

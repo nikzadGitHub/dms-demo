@@ -41,7 +41,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Opportunities',
-    url: '/opportunity/new',
+    url: '/opportunity',
     icon: 'cil-money',  
   },
   {

@@ -1,77 +1,46 @@
 <div class="animated fadeIn">
-  <div class="col-lg col-md-6">
-    <div class="card">
-        <div class="card-header">Opportunity Listing</div>
-              
-        <div class="card-body p-0">
-          
-          <div class="form-group mt-3 ml-3">
-          	<a class="btn btn-success" routerLink="/opportunity/new">Opportunity</a>                 	
-          </div>
-
-          <table class="table table-bordered m-0">
-            <thead>
-				<tr>
-					<th>Created Date</th>
-					<th>Opportunity ID</th>
-					<th>Topic</th>
-					<th>Company Name</th>
-					<th>Product</th>
-					<th>Opportunity Status</th>                
-					<th>Action</th>
-				</tr>
-            </thead>
-            <tbody>
-            	<tr>
-            		<td>2021-09-09</td>
-            		<td>A00001</td>
-            		<td>TEST</td>
-            		<td>TEST</td>
-            		<td>TEST PRODUCT</td>
-            		<td>Active</td>
-            		<td></td>
-            	</tr>
-            	<tr>
-            		<td>2021-09-09</td>
-            		<td>A00001</td>
-            		<td>TEST</td>
-            		<td>TEST</td>
-            		<td>TEST PRODUCT</td>
-            		<td>Active</td>
-            		<td></td>
-            	</tr>
-            	<tr>
-            		<td>2021-09-09</td>
-            		<td>A00001</td>
-            		<td>TEST</td>
-            		<td>TEST</td>
-            		<td>TEST PRODUCT</td>
-            		<td>Active</td>
-            		<td></td>
-            	</tr>
-            	<tr>
-            		<td>2021-09-09</td>
-            		<td>A00001</td>
-            		<td>TEST</td>
-            		<td>TEST</td>
-            		<td>TEST PRODUCT</td>
-            		<td>Active</td>
-            		<td></td>
-            	</tr>
-            	<tr>
-            		<td>2021-09-09</td>
-            		<td>A00001</td>
-            		<td>TEST</td>
-            		<td>TEST</td>
-            		<td>TEST PRODUCT</td>
-            		<td>Active</td>
-            		<td></td>
-            	</tr>
-            </tbody>
-          </table>
-        </div>
- 
-    </div>
+	<div class="col-lg col-md-6">
+	  <div class="card">
+		  <div class="card-header d-flex">
+			  <div class="chead">Opportunity Listing <a class="btn btn-icon btn-outline-secondary btn-white" routerLink="/opportunity/new"><i class="cil-plus c-icon"></i></a></div>			  
+			  <div class="ml-auto d-flex">
+				  <div class="pr-2"><input type="text" class="form-control" placeholder="Search..." /></div>
+				  <div class="pr-2"><a class="btn btn-success">?</a></div>
+				  <div class="pr-2"><a class="btn btn-success">?</a></div>
+				  <div><a class="btn btn-success">?</a></div>
+			  </div>			
+		  </div>
+				
+		  <div class="card-body p-0">
+		  
+			<table class="table table-bordered m-0">
+			  <thead>
+				  <tr>
+					  <th>Created Date</th>
+					  <th>Opportunity ID</th>
+					  <th>Topic</th>
+					  <th>Company Name</th>					
+					  <th>Opportunity Status</th>                
+					  <th>Est. Value (RM)</th>
+					  <th>Action</th>
+				  </tr>
+			  </thead>
+			  <tbody>
+				  <tr *ngFor="let opportunity of opportunities; let i=index">
+					  <td>{{opportunity.created_at | date:'dd-MMM-yyyy'}}</td>
+					  <td>{{opportunity.opportunity_code}}</td>
+					  <td>{{opportunity.topic}}</td>
+					  <td>{{opportunity.company_name}}</td>
+					  <td>{{opportunity.status_id}}</td>
+					  <td>{{opportunity.amount | currency: 'MYR'}}</td>
+					  <td><a [routerLink]="['/opportunity/edit/', opportunity.id]"><i class="cil-pencil c-icon"></i></a></td>            		
+				  </tr>            	
+			  </tbody>
+			</table>
+		  </div>
+   
+	  </div>
+	</div>
   </div>
-</div>
-
+  
+  

@@ -16,7 +16,7 @@ const routes: Routes = [
 		data: { title: 'Opportunity' },		
 		children: [
 			{ path: 'new', component: NewOpportunityComponent, data: { title: 'New Opportunity' } },
-			{ path: 'edit', component: EditOpportunityComponent, data: { title: 'Edit Opportunity' } },
+			{ path: 'edit/:opportunityId', component: EditOpportunityComponent, data: { title: 'Edit Opportunity' } },
 		]
 	},
 
