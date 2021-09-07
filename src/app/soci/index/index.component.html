@@ -1,5 +1,5 @@
-<p-table #dt [value]="quotes" styleClass="p-datatable-customers" [rowHover]="true"
-[filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']">
+<p-table #dt [value]="quotes" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true" responsiveLayout="scroll"
+[filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']" [columns]="columns">
   <ng-template pTemplate="caption">
     <div class="table-header">
         <span>
@@ -15,71 +15,78 @@
         </span>
     </div>
   </ng-template>
-  <ng-template pTemplate="header">
+  <ng-template pTemplate="header" let-columns>
     <tr>
-      <th pSortableColumn="created_date" class="text-center">
+      <th *ngFor="let column of columns" pSortableColumn="{{column.field}}" class="text-center" pReorderableColumn>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          {{column.header}}
+          <p-sortIcon field="{{column.field}}"></p-sortIcon>
+          <p-columnFilter type="date" field="{{column.field}}" display="menu" class="p-ml-auto"></p-columnFilter>
+        </div>
+      </th>
+      <!-- <th pSortableColumn="created_date" class="text-center" pReorderableColumn>
         <div class="p-d-flex p-jc-between p-ai-center">
             Created Date
             <p-sortIcon field="created_date"></p-sortIcon>
             <p-columnFilter type="date" field="created_date" display="menu" class="p-ml-auto"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="soci_id" class="text-center">
+      <th pSortableColumn="soci_id" class="text-center" pReorderableColumn>
         <div class="p-d-flex p-jc-between p-ai-center">
             SOCI ID
             <p-sortIcon field="soci_id"></p-sortIcon>
             <p-columnFilter type="text" field="soci_id" display="menu" class="p-ml-auto"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="company" class="text-center">
+      <th pSortableColumn="company" class="text-center" pReorderableColumn>
         <div class="p-d-flex p-jc-between p-ai-center">
             Company Name
             <p-sortIcon field="company"></p-sortIcon>
             <p-columnFilter type="text" field="company" display="menu" class="p-ml-auto"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="quote_id" class="text-center">
+      <th pSortableColumn="quote_id" class="text-center" pReorderableColumn>
         <div class="p-d-flex p-jc-between p-ai-center">
             Quotation ID
             <p-sortIcon field="quote_id"></p-sortIcon>
             <p-columnFilter type="text" field="quote_id" display="menu" class="p-ml-auto"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="quote_date" class="text-center">
+      <th pSortableColumn="quote_date" class="text-center" pReorderableColumn>
         <div class="p-d-flex p-jc-between p-ai-center">
             Quote Date
             <p-sortIcon field="quote_date"></p-sortIcon>
             <p-columnFilter type="date" field="quote_date" display="menu" class="p-ml-auto"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="amount" class="text-center">
+      <th pSortableColumn="amount" class="text-center" pReorderableColumn>
         <div class="p-d-flex p-jc-between p-ai-center">
             Amount (MYR)
             <p-sortIcon field="amount"></p-sortIcon>
             <p-columnFilter type="numeric" field="amount" display="menu" class="p-ml-auto"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="po_no" class="text-center">
+      <th pSortableColumn="po_no" class="text-center" pReorderableColumn>
         <div class="p-d-flex p-jc-between p-ai-center">
             PO No
             <p-sortIcon field="po_no"></p-sortIcon>
             <p-columnFilter type="text" field="po_no" display="menu" class="p-ml-auto"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="po_date" class="text-center">
+      <th pSortableColumn="po_date" class="text-center" pReorderableColumn>
         <div class="p-d-flex p-jc-between p-ai-center">
             PO Date
             <p-sortIcon field="po_date"></p-sortIcon>
             <p-columnFilter type="date" field="po_date" display="menu" class="p-ml-auto"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="status" class="text-center">
+      <th pSortableColumn="status" class="text-center" pReorderableColumn>
         <div class="p-d-flex p-jc-between p-ai-center">
             Status
             <p-sortIcon field="status"></p-sortIcon>
             <p-columnFilter type="text" field="status" display="menu" class="p-ml-auto"></p-columnFilter>
         </div>
-      </th>
+      </th> -->
       
       <th [style]="{'width':'5%'}">
       </th>

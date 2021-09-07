@@ -17,6 +17,7 @@ export class CreateComponent implements OnInit {
   form: FormGroup;
   filteredQuotes: Quote[];
   selectedQuoteAdvanced: Quote;
+  file: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,7 +26,12 @@ export class CreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.form =  this.formBuilder.group({
-      quote_id: ''
+      quote_id: '',
+      po_no: '',
+      po_value: '',
+      po_date: '',
+      receive_po_date: '',
+      file: null,
     })
   }
 
@@ -41,8 +47,17 @@ export class CreateComponent implements OnInit {
     });
   }
 
+  getFile(event){
+    this.file = event.target.files[0];
+  }
+
   submit(){
-    console.log(this.form.value);
+    // console.log(this.form.value);
+    const formData = new FormData;
+    formData.append('file',this.file,this.file.name)
+    this.sociService.store(formData).subscribe(res=>{
+      console.log(res)
+    })
   }
 
 }

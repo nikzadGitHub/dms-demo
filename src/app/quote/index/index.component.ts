@@ -4,6 +4,7 @@ import { QuoteService } from '../quote.service';
 import { Quote } from '../quote';
 import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
+import { Column } from '../../soci/column';
 
 @Component({
   selector: 'app-index',
@@ -15,6 +16,15 @@ export class IndexComponent implements OnInit {
   datasource: Quote[] = [];
   quotes: Quote[] = [];
   pages: [];
+  columns: Column[] = [
+    {header:'Created Date', field: 'created_at', type: 'date'},
+    {header:'Quotation ID', field: 'quote_id', type: 'string'},
+    {header:'Company Name', field: 'company', type: 'string'},
+    {header:'Validity Date', field: 'validity_date', type: 'date'},
+    {header:'Reason', field: 'remarks', type: 'string'},
+    {header:'Status', field: 'status', type: 'string'},
+    {header:'Amount (MYR)', field: 'amount', type: 'numeric'},
+  ];
   pageItems: number = 10;
   totalRecords:number;
   search_text: string = '';
@@ -69,8 +79,12 @@ export class IndexComponent implements OnInit {
   //   }, 1000);
   // }
 
+  test(event){
+    console.log(event.filters)
+  }
+
   paginate(event){
-    console.log(event)
+    console.log(event);
     this.pageItems = event.rows;
     let url = "http://idsmed-sales-funnel-api.test/api/quote?page="+(parseInt(event.page) + 1);
     this.onClick(url);

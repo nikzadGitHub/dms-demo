@@ -10,7 +10,7 @@ import { IconModule } from '@coreui/icons-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CreateComponent } from './create/create.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'primeng/fileupload';
 
 
@@ -29,6 +29,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     ModalModule,
     AutoCompleteModule,
     ReactiveFormsModule,
+    FormsModule,
     FileUploadModule
   ]
 })
