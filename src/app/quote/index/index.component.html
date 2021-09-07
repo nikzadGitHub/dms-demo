@@ -1,5 +1,5 @@
 <p-table #dt [value]="quotes" styleClass="p-datatable-customers" [rowHover]="true"
-[filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']">
+[filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']" (onFilter)='test($event)'>
   <ng-template pTemplate="caption">
     <div class="table-header">
         Quotation Listing

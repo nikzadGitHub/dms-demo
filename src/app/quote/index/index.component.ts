@@ -69,8 +69,12 @@ export class IndexComponent implements OnInit {
   //   }, 1000);
   // }
 
+  test(event){
+    console.log(event.filters)
+  }
+
   paginate(event){
-    console.log(event)
+    console.log(event);
     this.pageItems = event.rows;
     let url = "http://idsmed-sales-funnel-api.test/api/quote?page="+(parseInt(event.page) + 1);
     this.onClick(url);
