@@ -1,5 +1,6 @@
-<p-table #dt [value]="quotes" styleClass="p-datatable-customers" [rowHover]="true"
-[filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']" (onFilter)='test($event)'>
+<p-table #dt [value]="quotes" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true"
+[filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']" (onFilter)='test($event)'
+[columns]="columns">
   <ng-template pTemplate="caption">
     <div class="table-header">
         Quotation Listing
@@ -12,7 +13,14 @@
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="created_date" class="text-center">
+      <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" class="text-center" pReorderableColumn>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          {{col.header}}
+          <p-sortIcon field="{{col.field}}"></p-sortIcon>
+          <p-columnFilter type="{{col.type}}" field="{{col.field}}" display="menu" class="p-ml-auto"></p-columnFilter>
+        </div>
+      </th>
+      <!-- <th pSortableColumn="created_date" class="text-center">
         <div class="p-d-flex p-jc-between p-ai-center">
             Created Date
             <p-sortIcon field="created_date"></p-sortIcon>
@@ -60,14 +68,18 @@
             <p-sortIcon field="amount"></p-sortIcon>
             <p-columnFilter type="numeric" field="amount" display="menu" class="p-ml-auto"></p-columnFilter>
         </div>
-      </th>
+      </th> -->
       <th [style]="{'width':'5%'}">
       </th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-quote>
-    <tr class="p-selectable-row">
-      <td class="text-center">
+  <ng-template pTemplate="body" let-quote let-rowData let-columns="columns" let-index="rowIndex">
+    <tr class="p-selectable-row" [pReorderableRow]="index">
+      <td class="text-center" *ngFor="let col of columns">
+        <span class="p-column-title">{{col.header}}</span>
+        {{ rowData[col.field] }}
+      </td>
+      <!-- <td class="text-center">
         <span class="p-column-title">Created Date</span>
         {{ quote.created_at | date:'dd-MMM-yyyy' }}
       </td>
@@ -94,7 +106,7 @@
       <td class="text-center">
         <span class="p-column-title">Amount (MYR)</span>
         {{ quote.amount }}
-      </td>
+      </td> -->
       <td class="text-center">
         <span class="p-column-title">Action</span>
         <a href="#" [routerLink]="['/quote/', quote.id, 'edit']" class="fa fa-edit"></a>
