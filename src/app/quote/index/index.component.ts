@@ -108,10 +108,10 @@ export class IndexComponent implements OnInit {
     console.log(event)
   }
 
-  SortColumn(event){
+  SortColumn(event: LazyLoadEvent){
     console.log(event)
     this.sort = {'field':event['sortField'],'order':event['sortOrder']}
-    this.getAll()
+    this.ngOnInit()
   }
 
   paginate(event){
