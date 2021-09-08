@@ -148,6 +148,14 @@ export class QuoteService {
     )
   }
 
+  saveColumnOrder(columnOrder,type): Observable<any>{
+    let param = {'columnOrder':columnOrder,'type':type}
+    return this.httpClient.post(this.apiURL + '/quote/column-order',param)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   errorHandler(error) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {

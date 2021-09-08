@@ -16,7 +16,9 @@ export class IndexComponent implements OnInit {
   datasource: Quote[] = [];
   quotes: Quote[] = [];
   pages: [];
-  columns: Column[] = [
+  columns: Column[] = [];
+  existingColumns: Column[] = [];
+  defaultColumns: Column[] = [
     {header:'Created Date', field: 'created_at', type: 'date'},
     {header:'Quotation ID', field: 'quote_id', type: 'text'},
     {header:'Company Name', field: 'company', type: 'text'},
@@ -35,9 +37,13 @@ export class IndexComponent implements OnInit {
   ngOnInit(): void {
     this.quoteService.getAll(this.pageItems,this.search_text).subscribe(data=>{
       this.datasource = data['data'];
-      this.quotes = this.datasource['data'];
-      this.pages = data['data']['links'];
-      this.totalRecords = this.datasource['total'];
+      this.quotes = data['data']['quotes']['data'];
+      this.pages = data['data']['quotes']['links'];
+      this.totalRecords = data['data']['quotes']['total'];
+      this.columns = JSON.parse(data['data']['columnOrder']['column_order']);
+      if(this.columns == null){
+        this.columns = JSON.parse(JSON.stringify(this.defaultColumns));
+      }
     })  
     this.loading = false;
   }
@@ -51,17 +57,21 @@ export class IndexComponent implements OnInit {
 
   getAll(){
     this.quoteService.getAll(this.pageItems,this.search_text).subscribe((data)=>{
-      this.quotes = data['data']['data'];
-      this.pages = data['data']['links'];
-      this.totalRecords = data['data']['total'];
+      this.quotes = data['data']['quotes']['data'];
+      this.pages = data['data']['quotes']['links'];
+      this.totalRecords = data['data']['quotes']['total'];
     })  
   }
 
   onClick(url){
     this.quoteService.getPage(url,this.pageItems,this.search_text).subscribe((data)=>{
-      this.quotes = data['data']['data'];
-      this.pages = data['data']['links'];
+      this.quotes = data['data']['quotes']['data'];
+      this.pages = data['data']['quotes']['links'];
     })  
+  }
+
+  columnOrder(event){
+    this.quoteService.saveColumnOrder(event.columns,'quote')
   }
 
   // loadQuotations(event: LazyLoadEvent) {
