@@ -19,6 +19,8 @@ export class EditComponent implements OnInit {
   @ViewChild('successModal') successModal : ModalDirective;
   @ViewChild('dangerModal') dangerModal : ModalDirective;
   @ViewChild('infoModal') infoModal : ModalDirective;
+  @ViewChild('paymentRemarkModal') paymentRemarkModal : ModalDirective;
+  @ViewChild('billingRemarkModal') billingRemarkModal : ModalDirective;
 
   show:boolean;
   submitType: string;
@@ -43,6 +45,9 @@ export class EditComponent implements OnInit {
   modal_type: string = "";
   quoteIdList: any[] = [];
   cancelRemarks: string;
+  paymentRemarks: string;
+  billingRemarks: string;
+  remarkIndex: number;
   paymentCurrentIndex: 0;
 
   constructor(
@@ -453,6 +458,7 @@ export class EditComponent implements OnInit {
     newArray['created_at'] = this.quotations.created_at;
     newArray['days'] = this.termSelected + ' days / ' + this.datePipe.transform(this.quotations.validity_date,'dd-MMM-yyyy');
     newArray['status'] = this.quotations.status;
+    newArray['amount'] = this.quotations.amount;
     this.quoteIdList.push(newArray);
     if(this.quotationRevisions != null ){
       this.quotationRevisions.forEach(element => {
@@ -462,9 +468,36 @@ export class EditComponent implements OnInit {
           newArray['created_at'] = this.quotations.created_at;
           newArray['days'] = this.termSelected + ' days / ' + this.datePipe.transform(this.quotations.validity_date,'dd-MMM-yyyy');
           newArray['status'] = this.quotations.status;
+          newArray['amount'] = this.quotations.amount;
           this.quoteIdList.push(newArray);
       });
     }
+  }
+
+  paymentRemarkModalOpen(index){
+    let payments = this.payments().controls;
+    this.paymentRemarks = payments[index]['controls'].remarks.value;
+    this.remarkIndex = index;
+    this.paymentRemarkModal.show();
+  }
+
+  paymentRemarkModalClose(){
+    let payments = this.payments().controls;
+    payments[this.remarkIndex]['controls'].remarks.setValue(this.paymentRemarks);
+    this.paymentRemarkModal.hide();
+  }
+
+  billingRemarkModalOpen(index){
+    let billings = this.billings().controls;
+    this.billingRemarks = billings[index]['controls'].remarks.value;
+    this.remarkIndex = index;
+    this.billingRemarkModal.show();
+  }
+
+  billingRemarkModalClose(){
+    let billings = this.billings().controls;
+    billings[this.remarkIndex]['controls'].remarks.setValue(this.billingRemarks);
+    this.billingRemarkModal.hide();
   }
 
   requestApproval()

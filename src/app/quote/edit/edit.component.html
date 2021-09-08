@@ -164,7 +164,7 @@
                                         <input formControlName="status" class="form-control" size="1" placeholder="Deposit" type="input">
                                     </td>
                                     <td style="width: 15%;">
-                                        <textarea formControlName="remarks" class="form-control" id="" cols="30" rows="1"></textarea>
+                                        <textarea formControlName="remarks" class="form-control" id="" cols="30" rows="1" (focus)='billingRemarkModalOpen(i)'></textarea>
                                         <!-- <input formControlName="remarks" class="form-control" size="1" placeholder="Remarks" type="text"> -->
                                     </td>
                                     <td class="td-actions" style="width: 10%;">
@@ -221,7 +221,7 @@
                                         <input class="form-control" formControlName="percentage" size="1" placeholder="50" 
                                         type="number" min="0" max="100.00" step=".01" (keyup)="changePaymentPercent(i)">
                                     </td>
-                                    <td style="width: 10%; padding:6px">
+                                    <td style="width: 20%; padding:6px">
                                         <input class="form-control" formControlName="schedule" size="1" type="date"></td>
                                     <td style="width: 10%; padding:6px">
                                         <input class="form-control" formControlName="soc_payment_term" placeholder="30 Days" type="number">
@@ -234,7 +234,8 @@
                                         type="number" min="0" step=".01" (keyup)="changePaymentValue(i)">
                                     </td>
                                     <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="remarks" size="1" placeholder="Remarks" type="text">
+                                        <input class="form-control" formControlName="remarks" size="1" placeholder="Remarks" type="text" 
+                                        (focus)="paymentRemarkModalOpen(i)">
                                     </td>
                                     <td class="td-actions" style="width: 10%; padding:none">
                                         <a [routerLink]="" routerLinkActive="router-link-active" ><i class="fa fa-edit"></i></a> &nbsp;
@@ -395,6 +396,46 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
           <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <div bsModal #paymentRemarkModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Remarks</h4>
+          <button type="button" class="close" (click)="paymentRemarkModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <textarea name="pformRemarks" id="pformRemarks" cols="60" placeholder="remarks" rows="10" [(ngModel)]="paymentRemarks"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="paymentRemarkModalClose()">Confirm</button>
+          <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <div bsModal #billingRemarkModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Cancellation Remarks</h4>
+          <button type="button" class="close" (click)="billingRemarkModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <textarea name="bformRemarks" id="bformRemarks" cols="60" placeholder="remarks" rows="10" [(ngModel)]="billingRemarks"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="billingRemarkModalClose()">Confirm</button>
+          <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
