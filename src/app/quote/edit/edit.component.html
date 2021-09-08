@@ -23,7 +23,7 @@
         <form [formGroup]="form" (ngSubmit)="submitSelect()">
             <p-accordion [multiple]="true" styleClass="customColor">
                 <!-- Quotation Accordion -->
-                <!-- <p-accordionTab header="Quotation">
+                <p-accordionTab header="Quotation">
                     <div class="row">
                         <table class="table table-borderless">
                             <thead>
@@ -45,14 +45,13 @@
                                         </a>
                                     </td>
                                     <td>{{quoteId.days}}</td>
-                                    <td>{{quoteId.status}}</td>
+                                    <td><i class="icon-info icons"></i>{{quoteId.status}}</td>
                                     <td>{{quoteId.amount}}</td>
-                                    <td class="td-actions"><i class="icon-info icons"></i></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </p-accordionTab> -->
+                </p-accordionTab>
                 <!-- End of Quotation Accordion -->
 
                 <!-- Products Accordion -->
@@ -165,7 +164,7 @@
                                         <input formControlName="status" class="form-control" size="1" placeholder="Deposit" type="input">
                                     </td>
                                     <td style="width: 15%;">
-                                        <textarea formControlName="remarks" class="form-control" id="" cols="30" rows="1"></textarea>
+                                        <textarea formControlName="remarks" class="form-control" id="" cols="30" rows="1" (focus)='billingRemarkModalOpen(i)'></textarea>
                                         <!-- <input formControlName="remarks" class="form-control" size="1" placeholder="Remarks" type="text"> -->
                                     </td>
                                     <td class="td-actions" style="width: 10%;">
@@ -222,7 +221,7 @@
                                         <input class="form-control" formControlName="percentage" size="1" placeholder="50" 
                                         type="number" min="0" max="100.00" step=".01" (keyup)="changePaymentPercent(i)">
                                     </td>
-                                    <td style="width: 10%; padding:6px">
+                                    <td style="width: 20%; padding:6px">
                                         <input class="form-control" formControlName="schedule" size="1" type="date"></td>
                                     <td style="width: 10%; padding:6px">
                                         <input class="form-control" formControlName="soc_payment_term" placeholder="30 Days" type="number">
@@ -235,7 +234,8 @@
                                         type="number" min="0" step=".01" (keyup)="changePaymentValue(i)">
                                     </td>
                                     <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="remarks" size="1" placeholder="Remarks" type="text">
+                                        <input class="form-control" formControlName="remarks" size="1" placeholder="Remarks" type="text" 
+                                        (focus)="paymentRemarkModalOpen(i)">
                                     </td>
                                     <td class="td-actions" style="width: 10%; padding:none">
                                         <a [routerLink]="" routerLinkActive="router-link-active" ><i class="fa fa-edit"></i></a> &nbsp;
@@ -320,21 +320,21 @@
             </p-accordion>
             <div class="row"></div>
             <div class="col-lg" align=center>
-                <div class="form-group" *ngIf="requested_date == null && approved_date == null">
+                <div class="form-group" *ngIf="requestApproval()">
                     <button class="btn btn-secondary" type="submit" (click)='setSubmitType("save")'>SAVE</button>&nbsp;
-                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("approve")' 
+                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("request-approval")' 
                     [disabled]="!form.valid">Request Approval</button>
                 </div>
-                <div class="form_group" *ngIf="requested_date != null && approved_date == null">
+                <div class="form_group" *ngIf="cancelApprove()">
                     <button class="btn btn-secondary" type="submit" (click)='setSubmitType("cancel")'>
                         Cancel Quote
                     </button>
-                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("approve")'>
+                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("approval")'>
                         Approve Quotation
                     </button>
                 </div>
                 <div class="form-group" *ngIf="approved_date != null">
-                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("approve")'>
+                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("preferred")'>
                         Set Preferred
                     </button>
                 </div>
@@ -396,6 +396,46 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
           <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <div bsModal #paymentRemarkModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Remarks</h4>
+          <button type="button" class="close" (click)="paymentRemarkModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <textarea name="pformRemarks" id="pformRemarks" cols="60" placeholder="remarks" rows="10" [(ngModel)]="paymentRemarks"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="paymentRemarkModalClose()">Confirm</button>
+          <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <div bsModal #billingRemarkModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Cancellation Remarks</h4>
+          <button type="button" class="close" (click)="billingRemarkModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <textarea name="bformRemarks" id="bformRemarks" cols="60" placeholder="remarks" rows="10" [(ngModel)]="billingRemarks"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="billingRemarkModalClose()">Confirm</button>
+          <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

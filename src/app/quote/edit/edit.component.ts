@@ -19,12 +19,17 @@ export class EditComponent implements OnInit {
   @ViewChild('successModal') successModal : ModalDirective;
   @ViewChild('dangerModal') dangerModal : ModalDirective;
   @ViewChild('infoModal') infoModal : ModalDirective;
+  @ViewChild('paymentRemarkModal') paymentRemarkModal : ModalDirective;
+  @ViewChild('billingRemarkModal') billingRemarkModal : ModalDirective;
 
   show:boolean;
   submitType: string;
   quotations: Quote;
+  latestQuotation: Quote;
+  quotationRevisions: Quote[] = [];
   requested_date: Date;
   approved_date: Date;
+  cancelled_date: Date;
   form: FormGroup;
   termSelected: number;
   terms: Term[];
@@ -40,6 +45,9 @@ export class EditComponent implements OnInit {
   modal_type: string = "";
   quoteIdList: any[] = [];
   cancelRemarks: string;
+  paymentRemarks: string;
+  billingRemarks: string;
+  remarkIndex: number;
   paymentCurrentIndex: 0;
 
   constructor(
@@ -47,7 +55,8 @@ export class EditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private sanitizer:DomSanitizer
+    private sanitizer:DomSanitizer,
+    private datePipe: DatePipe
   ) { 
     this.quoteService.create('3630').subscribe(data => {
       this.terms = data['data'];
@@ -57,20 +66,15 @@ export class EditComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(event => {
       this.id = event.quoteId; // fetch ID from url
-      if(this.router.url.includes('revision')){
-        this.quoteService.getQuotationRevision(this.id).subscribe(data => {
-          console.log(data)
-          this.quotations = data['data'];
-          this.setInitialValue();
-          this.initData();
-        });
-      } else {
-        this.quoteService.find(this.id).subscribe(data => {
-          this.quotations = data['data']['quotation'];
-          this.setInitialValue();
-          this.initData();
-        });
-      }
+      this.quoteService.find(this.id).subscribe(data => {
+        console.log(data)
+        this.quotations = data['data']['quotation'];
+        this.latestQuotation = data['data']['quotation'];
+        this.quotationRevisions = data['data']['quotationRevision'];
+        this.setInitialValue();
+        this.addQuoteIdList();
+        this.initData();
+      });
     });
 
     this.form =  this.formBuilder.group({
@@ -108,6 +112,7 @@ export class EditComponent implements OnInit {
     this.toDate = this.quotations.toDate;
     this.requested_date = this.quotations.requested_date;
     this.approved_date = this.quotations.approved_date;
+    this.cancelled_date = this.quotations.cancelled_date;
     console.log(this.approved_date);
     this.termSelected = this.terms.find(x => x.id == this.quotations.standard_payment_term).no_of_days;
     this.dateInit();
@@ -128,6 +133,18 @@ export class EditComponent implements OnInit {
       this.products().push(this.existingProducts(product));
     });
     this.subTotal(this.addCosts().controls);
+  }
+
+  changeRev(revNumber){
+    this.quoteService.getQuotationRevision(this.id,revNumber).subscribe(data => {
+      this.billings().clear();
+      this.payments().clear();
+      this.addCosts().clear();
+      this.products().clear();
+      this.quotations = data['data'];
+      this.setInitialValue();
+      this.initData();
+    })
   }
 
   dateInit(){
@@ -433,7 +450,73 @@ export class EditComponent implements OnInit {
     .filter((item, index, self) => self.indexOf(item) === index);
   }
 
-  
+  addQuoteIdList(){
+    this.quoteIdList = [];
+    let newArray = [];
+    newArray['rev_number'] = 0; // rev_number 0 for latest quotation
+    newArray['quote_id'] = this.quotations.quote_id;
+    newArray['created_at'] = this.quotations.created_at;
+    newArray['days'] = this.termSelected + ' days / ' + this.datePipe.transform(this.quotations.validity_date,'dd-MMM-yyyy');
+    newArray['status'] = this.quotations.status;
+    newArray['amount'] = this.quotations.amount;
+    this.quoteIdList.push(newArray);
+    if(this.quotationRevisions != null ){
+      this.quotationRevisions.forEach(element => {
+          let newArray = [];
+          newArray['rev_number'] = element['rev_number'];
+          newArray['quote_id'] = element['quote_id'];
+          newArray['created_at'] = this.quotations.created_at;
+          newArray['days'] = this.termSelected + ' days / ' + this.datePipe.transform(this.quotations.validity_date,'dd-MMM-yyyy');
+          newArray['status'] = this.quotations.status;
+          newArray['amount'] = this.quotations.amount;
+          this.quoteIdList.push(newArray);
+      });
+    }
+  }
+
+  paymentRemarkModalOpen(index){
+    let payments = this.payments().controls;
+    this.paymentRemarks = payments[index]['controls'].remarks.value;
+    this.remarkIndex = index;
+    this.paymentRemarkModal.show();
+  }
+
+  paymentRemarkModalClose(){
+    let payments = this.payments().controls;
+    payments[this.remarkIndex]['controls'].remarks.setValue(this.paymentRemarks);
+    this.paymentRemarkModal.hide();
+  }
+
+  billingRemarkModalOpen(index){
+    let billings = this.billings().controls;
+    this.billingRemarks = billings[index]['controls'].remarks.value;
+    this.remarkIndex = index;
+    this.billingRemarkModal.show();
+  }
+
+  billingRemarkModalClose(){
+    let billings = this.billings().controls;
+    billings[this.remarkIndex]['controls'].remarks.setValue(this.billingRemarks);
+    this.billingRemarkModal.hide();
+  }
+
+  requestApproval()
+  {
+    if(this.requested_date == null && this.approved_date == null && this.cancelled_date == null ){
+      return true
+    } else {
+      return false
+    }
+  }
+
+  cancelApprove()
+  {
+    if(this.requested_date != null && this.approved_date == null){
+      return true
+    } else {
+      return false
+    }
+  }
 
   get f(){
     return this.form.controls;
@@ -456,7 +539,7 @@ export class EditComponent implements OnInit {
   }
 
   submitApproval(){
-    this.quoteService.submitApproval(this.id).subscribe(res => {
+    this.quoteService.quoteApproval(this.id,this.submitType).subscribe(res => {
       this.alertBody = res.message
       this.successModal.show();
     })
@@ -477,8 +560,14 @@ export class EditComponent implements OnInit {
 
   submitSelect(){
     switch (this.submitType) {
-      case "approve":
-         this.submitApproval()
+      case "request-approval":
+        this.submitApproval()
+        break;
+      case "approval":
+        this.submitApproval()
+        break;
+      case "preferred":
+        this.submitApproval()
         break;
       case "save":
         this.submitRev();

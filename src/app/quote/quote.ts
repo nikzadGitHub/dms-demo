@@ -19,6 +19,7 @@ export interface Quote {
     'amount': number,
     'rev_number': number,
     'requested_date': Date,
-    'approved_date': Date
+    'approved_date': Date,
+    'cancelled_date': Date
 }
 

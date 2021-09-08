@@ -28,6 +28,22 @@ export class SociService {
     )
   }
 
+  getFilteredQuote(filter){
+    filter = filter == '' ? 0 : filter; 
+    return this.httpClient.get(this.apiURL + '/soci/filtered/' + filter,this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  store(formData:any){
+    // return this.httpClient.post(this.apiURL + '/soci', formData,{headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' })})
+    return this.httpClient.post(this.apiURL + '/soci', formData,{headers: new HttpHeaders({ 'Content-Type': 'file', 'Accept': 'file' })})
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   errorHandler(error) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {
@@ -37,12 +53,4 @@ export class SociService {
     }
     return throwError(errorMessage);
  }
-
-  getFilteredQuote(filter){
-    filter = filter == '' ? 0 : filter; 
-    return this.httpClient.get(this.apiURL + '/soci/filtered/' + filter,this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    )
-  }
 }

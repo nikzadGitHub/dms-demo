@@ -31,7 +31,7 @@
                 <label for="po_no">Purchase Order No: </label>
               </div>
               <div class="col-lg-6">
-                <input class="form-control" type="text" id="po_no" placeholder="PO Number">
+                <input class="form-control" formControlName="po_no" type="text" id="po_no" placeholder="PO Number">
               </div>
             </div>
             <br>
@@ -40,7 +40,7 @@
                 <label for="po_value">Purchase Order Value: </label>
               </div>
               <div class="col-lg-6">
-                <input class="form-control" type="text" id="po_value" placeholder="PO Number">
+                <input class="form-control" type="text" formControlName="po_value" id="po_value" placeholder="PO Number">
               </div>
             </div>
             <br>
@@ -49,16 +49,16 @@
                 <label for="po_date">Purchase Order Date: </label>
               </div>
               <div class="col-lg-6">
-                <input class="form-control" type="text" id="po_date" placeholder="PO Number">
+                <input class="form-control" type="text" formControlName="po_date" id="po_date" placeholder="PO Number">
               </div>
             </div>
             <br>
             <div class="row">
               <div class="col-lg-4">
-                <label for="get_po_date">Receive Purchase Order Date: </label>
+                <label for="receive_po_date">Receive Purchase Order Date: </label>
               </div>
               <div class="col-lg-6">
-                <input class="form-control" type="date" id="get_po_date" placeholder="PO Number">
+                <input class="form-control" type="date" formControlName="receive_po_date" id="receive_po_date" placeholder="PO Number">
               </div>
             </div>
             <br>
@@ -67,8 +67,7 @@
                 <label for="attachment">Attachment: </label>
               </div>
               <div class="col-lg-6">
-                <p-fileUpload mode="basic" name="demo[]" url="" accept="image/*" 
-                ></p-fileUpload>
+                <input formControlName="file" class="form-control" type="file" name="myFile" (change)='getFile($event)'>
               </div>
             </div>
           </form>

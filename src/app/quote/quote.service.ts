@@ -109,8 +109,8 @@ export class QuoteService {
     )
   }
 
-  submitApproval(quoteId): Observable<any>{
-    return this.httpClient.post(this.apiURL + '/quote/request-approval',{quoteId:quoteId})
+  quoteApproval(quoteId,type): Observable<any>{
+    return this.httpClient.post(this.apiURL + '/quote/'+ type,{quoteId:quoteId})
     .pipe(
       catchError(this.errorHandler)
     )
@@ -133,8 +133,8 @@ export class QuoteService {
     )
   }
 
-  getQuotationRevision(id){
-    return this.httpClient.get(this.apiURL + '/quote-revision/'+ id + '/edit')
+  getQuotationRevision(id,revNumber){
+    return this.httpClient.get(this.apiURL + '/quote/revision/'+ id + '/' + revNumber)
     .pipe(
       catchError(this.errorHandler)
     )
