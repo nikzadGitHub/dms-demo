@@ -18,11 +18,11 @@ export class IndexComponent implements OnInit {
   pages: [];
   columns: Column[] = [
     {header:'Created Date', field: 'created_at', type: 'date'},
-    {header:'Quotation ID', field: 'quote_id', type: 'string'},
-    {header:'Company Name', field: 'company', type: 'string'},
+    {header:'Quotation ID', field: 'quote_id', type: 'text'},
+    {header:'Company Name', field: 'company', type: 'text'},
     {header:'Validity Date', field: 'validity_date', type: 'date'},
-    {header:'Reason', field: 'remarks', type: 'string'},
-    {header:'Status', field: 'status', type: 'string'},
+    {header:'Reason', field: 'cancelled_remarks', type: 'text'},
+    {header:'Status', field: 'status', type: 'text'},
     {header:'Amount (MYR)', field: 'amount', type: 'numeric'},
   ];
   pageItems: number = 10;
