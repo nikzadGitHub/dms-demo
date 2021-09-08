@@ -5,6 +5,8 @@ import { Quote } from '../quote';
 import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Column } from '../../soci/column';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-index',
@@ -13,6 +15,9 @@ import { Column } from '../../soci/column';
 })
 export class IndexComponent implements OnInit {
 
+  private ngUnsubscribe = new Subject;
+
+  sort: any;
   datasource: Quote[] = [];
   quotes: Quote[] = [];
   pages: [];
@@ -35,36 +40,44 @@ export class IndexComponent implements OnInit {
   constructor(public quoteService: QuoteService) { }
   
   ngOnInit(): void {
-    this.quoteService.getAll(this.pageItems,this.search_text).subscribe(data=>{
+    this.quoteService.getAll(this.pageItems,this.search_text,this.sort)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(data=>{
       this.datasource = data['data'];
       this.quotes = data['data']['quotes']['data'];
       this.pages = data['data']['quotes']['links'];
       this.totalRecords = data['data']['quotes']['total'];
-      this.columns = JSON.parse(data['data']['columnOrder']['column_order']);
-      if(this.columns == null){
+      if(data['data']['columnOrder'] == null){
         this.columns = JSON.parse(JSON.stringify(this.defaultColumns));
+      } else {
+        this.columns = JSON.parse(data['data']['columnOrder']['column_order']);
       }
-    })  
-    this.loading = false;
+    })
   }
   
   deleteQuote(id){
-    this.quoteService.delete(id).subscribe(res => {
+    this.quoteService.delete(id)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(res => {
          this.quotes = this.quotes.filter(item => item.id !== id);
          console.log('Quote deleted successfully!');
     })
   }
 
   getAll(){
-    this.quoteService.getAll(this.pageItems,this.search_text).subscribe((data)=>{
+    this.quoteService.getAll(this.pageItems,this.search_text,this.sort)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe((data)=>{
       this.quotes = data['data']['quotes']['data'];
       this.pages = data['data']['quotes']['links'];
       this.totalRecords = data['data']['quotes']['total'];
     })  
   }
 
-  onClick(url){
-    this.quoteService.getPage(url,this.pageItems,this.search_text).subscribe((data)=>{
+  onClick(pageNo){
+    this.quoteService.getPage(pageNo,this.pageItems,this.search_text)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe((data)=>{
       this.quotes = data['data']['quotes']['data'];
       this.pages = data['data']['quotes']['links'];
     })  
@@ -72,6 +85,8 @@ export class IndexComponent implements OnInit {
 
   columnOrder(event){
     this.quoteService.saveColumnOrder(event.columns,'quote')
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe()
   }
 
   // loadQuotations(event: LazyLoadEvent) {
@@ -89,14 +104,24 @@ export class IndexComponent implements OnInit {
   //   }, 1000);
   // }
 
-  test(event){
-    console.log(event.filters)
+  columnFilter(event){
+    console.log(event)
+  }
+
+  SortColumn(event){
+    console.log(event)
+    this.sort = {'field':event['sortField'],'order':event['sortOrder']}
+    this.getAll()
   }
 
   paginate(event){
     console.log(event);
     this.pageItems = event.rows;
-    let url = "http://idsmed-sales-funnel-api.test/api/quote?page="+(parseInt(event.page) + 1);
-    this.onClick(url);
+    this.onClick(parseInt(event.page) + 1);
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
