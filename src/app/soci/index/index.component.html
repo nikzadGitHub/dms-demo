@@ -1,4 +1,5 @@
 <p-table #dt [value]="quotes" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true" responsiveLayout="scroll"
+[reorderableColumns]="true" [lazy]="true" (onLazyLoad)="SortColumn($event)" (onColReorder)="columnOrder($event)"
 [filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']" [columns]="columns">
   <ng-template pTemplate="caption">
     <div class="table-header">

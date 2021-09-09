@@ -75,7 +75,7 @@ export class IndexComponent implements OnInit {
   }
 
   onClick(pageNo){
-    this.quoteService.getPage(pageNo,this.pageItems,this.search_text)
+    this.quoteService.getPage(pageNo,this.pageItems,this.search_text,this.sort)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((data)=>{
       this.quotes = data['data']['quotes']['data'];
@@ -88,21 +88,6 @@ export class IndexComponent implements OnInit {
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe()
   }
-
-  // loadQuotations(event: LazyLoadEvent) {
-  //   // this.loading = true;
-  //   console.log(event.rows)
-  //   setTimeout(() => {
-  //     this.quoteService.getAll(this.pageItems,this.search_text).subscribe(data=>{
-  //       this.datasource = data['data'];
-        
-  //       this.quotes = data['data']['total'];
-  //       console.log(this.totalRecords);
-  //       // this.quotes = this.datasource.slice(event.first, (event.first + event.rows));
-  //       this.loading = false;
-  //     })  
-  //   }, 1000);
-  // }
 
   columnFilter(event){
     console.log(event)
