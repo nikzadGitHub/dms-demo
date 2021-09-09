@@ -65,7 +65,7 @@ export class CreateComponent implements OnInit {
   submit(){
     console.log(this.form.controls);
     const formData = new FormData;
-    formData.append('file',this.file,this.file.name)
+    formData.append('file',this.file)
     formData.append('quote_id',this.form.controls['quote_id'].value['id'])
     formData.append('po_no',this.form.controls['po_no'].value)
     formData.append('po_value',this.form.controls['po_value'].value)

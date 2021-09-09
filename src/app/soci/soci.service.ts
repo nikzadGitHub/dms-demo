@@ -20,8 +20,13 @@ export class SociService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAll(pageItems,search_text): Observable<Soci[]> {
-    let param = {page_items: pageItems, search_text:search_text};
+  getAll(pageItems,search_text,sort): Observable<Soci[]> {
+    let param: any;
+    if(sort && sort['field']!= null){
+      param = {page_items: pageItems, search_text:search_text, field:sort.field, order:sort.order};
+    } else {
+      param = {page_items: pageItems, search_text:search_text};
+    }
     return this.httpClient.get<Soci[]>(this.apiURL + '/soci',{params:param})
     .pipe(
       catchError(this.errorHandler)

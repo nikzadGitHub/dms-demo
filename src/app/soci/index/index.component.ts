@@ -16,14 +16,14 @@ export class IndexComponent implements OnInit {
   private ngUnsubscribe = new Subject;
 
   sort: any;
-  search_text:string;
+  search_text:string = '';
   pageItems: number = 10;
   socis: Soci[] = [];
   columns: Column[] = [];
   defaultColumns: Column[] = [
     {'header':'Created Date','field':'created_at','type':'date'},
     {'header':'SOCI ID','field':'soci_id','type':'text'},
-    {'header':'Quotation ID','field':'quote_id','type':'text'},
+    {'header':'Quotation ID','field':'quote_full_id','type':'text'},
     {'header':'Quote Date','field':'quote_date','type':'date'},
     {'header':'Amount (MYR)','field':'po_amount','type':'number'},
     {'header':'PO No','field':'po_no','type':'text'},
@@ -34,15 +34,27 @@ export class IndexComponent implements OnInit {
   constructor(public sociService: SociService) { }
 
   ngOnInit(): void {
-    this.sociService.getAll(1,1).subscribe(data => {
+    this.sociService.getAll(this.pageItems,this.search_text,this.sort).subscribe(data => {
       console.log(data);
-      this.socis = data['data']['soci'];
+      this.socis = data['data']['soci']['data'];
       if(data['data']['columnOrder'] == null){
         this.columns = JSON.parse(JSON.stringify(this.defaultColumns));
       } else {
         this.columns = JSON.parse(data['data']['columnOrder']['column_order']);
       }
     })
+  }
+
+  getAll(){
+    this.sociService.getAll(this.pageItems,this.search_text,this.sort).subscribe(data => {
+      console.log(data);
+      this.socis = data['data']['soci']['data'];
+      if(data['data']['columnOrder'] == null){
+        this.columns = JSON.parse(JSON.stringify(this.defaultColumns));
+      } else {
+        this.columns = JSON.parse(data['data']['columnOrder']['column_order']);
+      }
+    }) 
   }
 
   SortColumn(event: LazyLoadEvent){
