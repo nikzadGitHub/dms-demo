@@ -40,7 +40,7 @@
                 <label for="po_value">Purchase Order Value: </label>
               </div>
               <div class="col-lg-6">
-                <input class="form-control" type="text" formControlName="po_value" id="po_value" placeholder="PO Number">
+                <input class="form-control" type="number" formControlName="po_value" id="po_value" placeholder="PO Number">
               </div>
             </div>
             <br>
@@ -49,7 +49,7 @@
                 <label for="po_date">Purchase Order Date: </label>
               </div>
               <div class="col-lg-6">
-                <input class="form-control" type="text" formControlName="po_date" id="po_date" placeholder="PO Number">
+                <input class="form-control" type="date" formControlName="po_date" id="po_date" placeholder="PO Number">
               </div>
             </div>
             <br>
@@ -79,3 +79,16 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+
+<div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{alertBody}}</p>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->  
