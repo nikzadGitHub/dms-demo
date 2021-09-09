@@ -49,6 +49,13 @@ export class SociService {
     )
   }
 
+  edit(id:number){
+    return this.httpClient.get(this.apiURL + '/soci/' + id + '/edit',this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    );
+  }
+
   saveColumnOrder(columnOrder,type): Observable<any>{
     let param = {'columnOrder':columnOrder,'type':type}
     return this.httpClient.post(this.apiURL + '/soci/column-order',param)
