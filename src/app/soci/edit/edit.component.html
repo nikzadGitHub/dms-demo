@@ -259,18 +259,38 @@
                                     <th>Total Price(MYR)</th>
                                     <th>Discount</th>
                                     <th>Net Amount(MYR)</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let product of products().controls; let i=index;" [formGroupName]="i" align="center">
+                                <tr *ngFor="let productC of products().controls; let i=index;" [formGroupName]="i" align="center">
                                     <td>{{ i+1 }}</td>
-                                    <td><input class="form-control" formControlName="name" type="text" [attr.disabled]="true"></td>
-                                    <td><input class="form-control" formControlName="sku" type="text" [attr.disabled]="true"></td>
-                                    <td><input class="form-control" formControlName="quantity" type="text" [attr.disabled]="true"></td>
-                                    <td><input class="form-control" formControlName="unit_price" type="text" [attr.disabled]="true"></td>
-                                    <td><input class="form-control" formControlName="total_price" type="text" [attr.disabled]="true"></td>
-                                    <td><input class="form-control" formControlName="discount" type="text" [attr.disabled]="true"></td>
-                                    <td><input class="form-control" formControlName="amount" type="text" [attr.disabled]="true"></td>
+                                    <td style="size: 20%;">
+                                        <p-autoComplete formControlName="name" [(ngModel)]="selectedProductAdvanced" [suggestions]="filteredProducts" 
+                                        (completeMethod)="filterProduct($event)" field="name" [dropdown]="true" 
+                                        [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
+                                            <ng-template let-product pTemplate="item">
+                                                <div class="product-item" (click)='productDetails(product,productC)'>
+                                                    <div>{{product.name}}</div>
+                                                </div>
+                                            </ng-template>
+                                        </p-autoComplete> </td>
+                                    <td><input class="form-control" formControlName="sku" type="text"></td>
+                                    <td><input class="form-control" formControlName="quantity" type="text"></td>
+                                    <td><input class="form-control" formControlName="unit_price" type="text"></td>
+                                    <td><input class="form-control" formControlName="total_price" type="text"></td>
+                                    <td><input class="form-control" formControlName="discount" type="text"></td>
+                                    <td><input class="form-control" formControlName="amount" type="text"></td>
+                                    <td class="td-actions" style="width: 5%;">
+                                        <div class="row">
+                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="disableEditMethod(productC)"
+                                            *ngIf="enableEdit && enableIndex == i"><i class="cil-check-circle"></i></a>
+                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!enableEdit" (click)="enableEditMethod(productC,i)">
+                                                <i class="fa fa-edit"></i>
+                                            </a>&nbsp;
+                                            <a [routerLink]="" (click)="removeProducts(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -283,7 +303,33 @@
                 </p-accordionTab>
                 <!-- End of Products Accordion -->
             </p-accordion>
+
+            <!-- Billing Instruction Accordion -->
+            <p-accordion styleClass="customColor">
+                <p-accordionTab header="Billing Instruction">
+                    <div class="row">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>Schedule</th>
+                                    <th>Percentage</th>
+                                    <th>Amount</th>
+                                    <th>SOC Payment Terms</th>
+                                    <th>Amount</th>
+                                    <th>Note</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </p-accordionTab>
+            </p-accordion>
+            <!-- End of Billing Instruction Accordion -->
         </form>
 
     </div>
 </div>
+
+<div class="row"></div> <!-- Empty row to give some space at the bottom -->

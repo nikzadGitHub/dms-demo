@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Term } from '../../quote/create/terms';
 import { BillingList } from '../../quote/edit/billing-list';
+import { Product } from '../../quote/products/products';
 import { Quote } from '../../quote/quote';
 import { QuoteService } from '../../quote/quote.service';
 import { SociService } from '../soci.service';
@@ -14,6 +15,9 @@ import { SociService } from '../soci.service';
 })
 export class EditComponent implements OnInit {
 
+  filteredProducts: Product[];
+  enableEdit: boolean = false;
+  enableIndex: number = null;
   termSelected: number;
   quotations: Quote[];
   terms: Term[];
@@ -33,7 +37,6 @@ export class EditComponent implements OnInit {
   ) {
     this.quoteService.create('3630').subscribe(data => {
       this.terms = data['data'];
-      console.log(this.terms)
     });
    }
 
@@ -54,6 +57,7 @@ export class EditComponent implements OnInit {
         addCosts: this.formBuilder.array([]),
         products: this.formBuilder.array([])
       })
+      this.form.get('products').disable()
     });
   }
 
@@ -72,7 +76,6 @@ export class EditComponent implements OnInit {
   initData()
   {
     this.quotations.forEach(element => {
-      console.log(element.billing_milestones)
       element.billing_milestones.forEach(billing => {
         this.billings().push(this.existingBillings(billing));
       });
@@ -247,13 +250,13 @@ export class EditComponent implements OnInit {
       'external_product_number': product.external_product_number,
       'data_area_id': product.data_area_id,
       'quote_id': product.quote_id,
-      'name': product.name,
-      'sku': product.sku,
-      'quantity': product.quantity,
-      'unit_price': product.unit_price,
-      'total_price': product.quantity * product.unit_price,
-      'discount': product.discount,
-      'amount': product.amount,
+      'name': [{value:product.name,disabled:true}],
+      'sku': [{value:product.sku,disabled:true}],
+      'quantity': [{value:product.quantity,disabled:true}],
+      'unit_price': [{value:product.unit_price,disabled:true}],
+      'total_price': [{value:(product.quantity * product.unit_price),disabled:true}],
+      'discount': [{value:product.discount,disabled:true}],
+      'amount': [{value:product.amount,disabled:true}],
     })
   }
 
@@ -269,6 +272,45 @@ export class EditComponent implements OnInit {
 
   termSelect(term){
     this.termSelected = this.terms.find(x => x.id == term).no_of_days;
+  }
+
+  enableEditMethod(control,index){
+    this.enableIndex = index
+    this.enableEdit = true
+    control['controls']['name'].enable()
+    control['controls']['quantity'].enable()
+    control['controls']['discount'].enable()
+  }
+
+  disableEditMethod(control){
+    this.enableIndex = null
+    this.enableEdit = false
+    control.disable()
+  }
+
+  productDetails(product,productControl){
+    productControl.controls.sku.setValue(product['sku']);
+    productControl.controls.unit_price.setValue(product['amount']);
+  }
+
+  countNetAmount(product){
+    let quantity = product.controls.quantity.value;
+    let unit_price = product.controls.unit_price.value;
+    let total_price = quantity * unit_price;
+    let discount = product.controls.discount.value;
+    discount = (100 - discount) / 100;
+
+    product.controls.total_price.setValue(total_price);
+    product.controls.net_amount.setValue(total_price * discount);
+  }
+
+  filterProduct(event) {
+    let query = event.query;
+    console.log(query)
+    this.quoteService.getFilteredProducts(query).subscribe((data)=>{
+      console.log(data)
+      this.filteredProducts = data['data'];
+    });
   }
 
   get f(){
