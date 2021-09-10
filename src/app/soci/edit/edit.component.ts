@@ -60,7 +60,13 @@ export class EditComponent implements OnInit {
   setInitialValue(){
     this.company_details['company_name'] = this.quotations[0].company;
     this.company_details['quote_id'] = this.quotations[0].quote_id;
+    this.f.standard_payment_term.setValue(this.quotations[0].standard_payment_term);
+    this.f.fromDate.setValue(this.quotations[0].fromDate);
+    this.f.toDate.setValue(this.quotations[0].toDate);
+    this.fromDate = this.quotations[0].fromDate;
+    this.toDate = this.quotations[0].toDate;
     this.termSelected = this.terms.find(x => x.id == this.quotations[0].standard_payment_term).no_of_days;
+    this.dateInit();
   }
 
   initData()
@@ -81,6 +87,11 @@ export class EditComponent implements OnInit {
       });
       this.subTotal(this.addCosts().controls);
     });
+  }
+
+  dateInit(){
+    this.fromDate = new Date(this.quotations[0].fromDate);
+    this.toDate = new Date(this.quotations[0].toDate);
   }
 
   //---------------- Billings Milestone -------------------
@@ -247,4 +258,20 @@ export class EditComponent implements OnInit {
   }
 
   //---------------- End of Quotation Products -------------------
+
+  dateChange(){
+    let tempDate = new Date(this.fromDate);
+    tempDate = new Date(tempDate.setDate(tempDate.getDate() + this.termSelected));
+    this.toDate = new Date(tempDate);
+    this.f.fromDate.setValue(this.fromDate);
+    this.f.toDate.setValue(this.toDate);
+  }
+
+  termSelect(term){
+    this.termSelected = this.terms.find(x => x.id == term).no_of_days;
+  }
+
+  get f(){
+    return this.form.controls;
+  }
 }
