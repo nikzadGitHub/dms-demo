@@ -327,4 +327,9 @@ export const navItems: INavData[] = [
       }
     ]
   },
+  {
+    name: 'Contact',
+    url: '/contact/index',
+    icon: 'cil-contact',
+  },
 ];

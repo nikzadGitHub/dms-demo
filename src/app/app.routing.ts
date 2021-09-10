@@ -98,6 +98,10 @@ export const routes: Routes = [
         path: 'settings',
         loadChildren: () => import('./views/settings/settings.module').then(m => m.SettingsModule)
       },
+      {
+        path: 'contact',
+        loadChildren: () => import('./views/contact/contact.module').then(m => m.ContactModule)
+      },
     ]
   },
   { path: '**', component: P404Component }
