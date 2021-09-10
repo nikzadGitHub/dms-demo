@@ -75,7 +75,7 @@ export class NewOpportunityComponent implements OnInit{
   //company filter functions
   companySearch(keyword): void{  
     
-    this.appService.getQuery('/opportunity/get-customer?customer_name='+keyword).subscribe((data) => {
+    this.appService.getQuery('/opportunity/get-customer?company_name='+keyword).subscribe((data) => {
       if(data['data'].length > 0){
         
         this.companies.splice(0, this.companies.length);

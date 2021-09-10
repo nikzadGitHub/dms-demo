@@ -31,9 +31,11 @@ export class EditOpportunityComponent implements OnInit{
 	@ViewChild('editProductModal') public editProductModal: ModalDirective;
 	@ViewChild('deleteOptionModal') public deleteOptionModal: ModalDirective;
 	@ViewChild('cloneOptionModal') public cloneOptionModal: ModalDirective;
-
+	@ViewChild('setDefaultOptionSuccessModal') public setDefaultOptionSuccessModal: ModalDirective;
+	
 	default_active_option_tab = 0;
 	product_name:any[] = [];
+	external_product_id:any[] = [];
 	sku:any[] = [];
 	quantity:any[] = [];
 	unit_price:any[] = [];
@@ -42,7 +44,7 @@ export class EditOpportunityComponent implements OnInit{
 	amount:any[] = [];
 	// final_sub_total_before_tax:any[] = [];	
 	// final_discount:any[] = [];
-	// final_total_amount:any[] = [];
+	// final_total_amount:any[] = [];	
 	tax:any[] = [];
 	opportunity_id = '';
 	product_options = [];
@@ -58,14 +60,25 @@ export class EditOpportunityComponent implements OnInit{
 	clone_option_id = 0;
 	statuses = [];
 	stages = [];
-
+	customer_contacts = [];
+	funding_source = [];
+	funding_status = [];
+	care_areas = [];
+	preferred_vendor_types = [];
+	forecast_category = 0;
 	productList : Product[] = [];
   	filteredProductList: Observable<Product[]>;
 	productControl = new FormControl();
+	editing_product = 0;
+	editing_product_index1 = 0;
+	editing_product_index2 = 0;
 
 	active = 1;
+	is_dummy_sku = 0;
 
-	addProductForm = this.formBuilder.group({
+	addProductForm = this.formBuilder.group({		
+		is_dummy_sku: this.is_dummy_sku,
+		external_product_id: '',
 		product_name: '',
 		sku: '',
 		quantity: '',
@@ -101,6 +114,31 @@ export class EditOpportunityComponent implements OnInit{
 		local_distribution: '',
 	});
 
+	opportunityDetailForm1 = this.formBuilder.group({
+		topic: '',
+		customer_contact_id: '',
+		customer_contact2_id: '',
+		status_id: '',
+		is_include_in_forecast: '',
+	});
+
+	opportunityDetailForm2 = this.formBuilder.group({
+		request_delivery_date: '',
+		estimated_delivery_date: '',
+		estimated_po_date: '',
+		estimated_invoice_date: '',
+		care_area: '',
+		hospital_department: ''
+	});
+
+	forecastForm = this.formBuilder.group({
+		preferred_vendor: '',
+		funding_status: '',
+		funding_source: '',
+		reason: '',		
+		competitor_id: '',
+	});
+
 	constructor(private appService: AppService, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) { 
 		
 	}
@@ -123,17 +161,51 @@ export class EditOpportunityComponent implements OnInit{
 			console.log('opportunity-detail:');		
 			console.log(data);
 			this.detail = data['data'];
+
+			this.opportunityDetailForm1.patchValue({
+				topic: data['data']['topic'],
+				customer_contact_id: data['data']['customer_contact_id'],
+				customer_contact2_id: data['data']['customer_contact2_id'],	
+				status_id: data['data']['status_id'],					
+				is_include_in_forecast: data['data']['is_include_in_forecast'],
+			});
+
+			this.opportunityDetailForm2.patchValue({
+				request_delivery_date: data['data']['request_delivery_date'],
+				estimated_delivery_date: data['data']['estimated_delivery_date'],
+				estimated_po_date: data['data']['estimated_po_date'],	
+				estimated_invoice_date: data['data']['estimated_invoice_date'],					
+				care_area: data['data']['care_area'],
+			});
+
+			this.appService.getQuery('/opportunity/get-customer-contacts?data_area_id='+this.detail['data_area_id'], null).subscribe((data) => {					
+				this.customer_contacts = data['data'];								
+			});
 		})
 		
 		this.appService.getQuery('/opportunity/forecast/'+this.opportunity_id, null).subscribe((data) => {		
 			console.log('forecast:');	
 			console.log(data);
-		})
+			this.forecastForm.patchValue({
+				preferred_vendor: data['data']['preferred_vendor'],
+				funding_status: data['data']['funding_status'],
+				funding_source: data['data']['funding_source'],	
+				reason: data['data']['reason'],
+				competitor_id: data['data']['competitor_id'],					
+			});
+			this.forecast_category = data['data']['forecast_category'];
+		});
 
 		this.appService.getQuery('/opportunity/product-list/'+this.opportunity_id, null).subscribe((data) => {
 			console.log('product-list:');
 			this.product_options = data['data'];			
-			console.log(this.product_options);
+			console.log(this.product_options);			
+
+			// for(let i = 0; i < this.product_options.length; i++){
+			// 	if(this.product_options[i].is_default == 0){
+			// 		this.default_option = i;
+			// 	}
+			// }
 		})		
 
 		this.appService.getQuery('/opportunity/competitor/'+this.opportunity_id, null).subscribe((data) => {	
@@ -146,12 +218,62 @@ export class EditOpportunityComponent implements OnInit{
 			console.log('statuses:');		
 			console.log(data);
 			this.statuses = data['data'];
+		});
+
+		this.appService.getQuery('/opportunity-funding-source', null).subscribe((data) => {	
+			console.log('funding source:');		
+			console.log(data);
+			this.funding_source = data['data'];
+		});
+
+		this.appService.getQuery('/opportunity-funding-status', null).subscribe((data) => {	
+			console.log('funding status:');		
+			console.log(data);
+			this.funding_status = data['data'];
+		})		
+
+		this.appService.getQuery('/opportunity-pre-vendor-type', null).subscribe((data) => {	
+			console.log('funding status:');		
+			console.log(data);
+			this.preferred_vendor_types = data['data'];
 		})
+		
+		this.appService.getQuery('/care-area/active-list', null).subscribe((data) => {	
+			console.log('care area:');		
+			console.log(data);
+			this.care_areas = data['data'];
+		})
+		
+	}
+	
+	setDummySku(){
+		this.is_dummy_sku = 1;
 	}
 
-	// get subTotal() { 
-	// 	return `${this.person.firstName} ${this.person.lastName}`; 
-	// }
+	productSelectedRadio(product){
+		this.is_dummy_sku = 0;
+		console.log('product SELECTED IN Radio:');
+		console.log(product);
+		this.addProductForm.patchValue({
+			is_dummy_sku: this.is_dummy_sku,
+			external_product_id: product.id,
+			product_name: product.name,
+			sku: product.sku,
+			quantity: '',
+			discount: '',
+			list_price: product.amount,
+			floor_price: product.amount,
+			principle: product.principle,
+			product_manager: '',
+			standard_warranty: product.std_warranty,
+			extended_warranty: '',
+			tax_rate: product.tax_rate,
+			customer_tax_code: '',
+			tax_code: product.tax_code,
+			category: '',
+			local_distribution: '',
+		});
+	}
 
 	addOption(){
 		
@@ -172,6 +294,7 @@ export class EditOpportunityComponent implements OnInit{
 				opportunity_product_group_id: option_id, 
 				name: this.product_name[index], 
 				sku: this.sku[index], 
+				product_id: this.external_product_id[index], 
 				quantity: this.quantity[index], 
 				unit_price: this.unit_price[index], 
 				total_price: this.total_price[index], 
@@ -179,14 +302,36 @@ export class EditOpportunityComponent implements OnInit{
 				amount: this.amount[index]
 			}
 		).subscribe((data) => {						
+			this.product_options[index].products.push(data['data']);			
+		})
+  	}	
+
+	cloneProduct(index, product_id){
+		this.appService.postQuery('/opportunity/clone-product', 
+			{
+				opportunity_product_id: product_id, 				
+			}
+		).subscribe((data) => {						
 			this.product_options[index].products.push(data['data']);
 			this.product_name[index] = this.sku[index] = this.quantity[index] = this.unit_price[index] = this.total_price[index] = this.discount[index] = this.amount[index] = '';
 		})
-  	}	
+	}
+
+	deleteProduct(index1,index2, product_id){
+		this.appService.postQuery('/opportunity/delete-product', 
+			{
+				opportunity_product_id: product_id, 				
+			}
+		).subscribe((data) => {						
+			this.product_options[index1].products.splice(index2, 1);
+		})
+	}
 
 	addFullProduct(){
 		this.appService.postQuery('/opportunity/create-product', 
 			{
+				is_dummy_sku: this.is_dummy_sku,
+				product_id: this.addProductForm.value.external_product_id,
 				opportunity_product_group_id: this.active_option_id, 
 				name: this.addProductForm.value.product_name, 
 				sku: this.addProductForm.value.sku, 
@@ -199,6 +344,7 @@ export class EditOpportunityComponent implements OnInit{
             	standard_warranty: this.addProductForm.value.standard_warranty,
             	extended_warranty: this.addProductForm.value.extended_warranty,
             	tax_rate: this.addProductForm.value.tax_rate,
+				tax_code: this.addProductForm.value.tax_code,
             	customer_tax_code: this.addProductForm.value.customer_tax_code,
             	local_distribution: this.addProductForm.value.local_distribution,
             	category: this.addProductForm.value.category
@@ -276,6 +422,7 @@ export class EditOpportunityComponent implements OnInit{
 				standard_warranty: data['data'][0]['standard_warranty'],
 				extended_warranty: data['data'][0]['extended_warranty'],
 				tax_rate: data['data'][0]['tax_rate'],
+				
 				customer_tax_code: data['data'][0]['customer_tax_code'],
 				tax_code: data['data'][0]['tax_code'],
 				category: data['data'][0]['category'],
@@ -296,10 +443,11 @@ export class EditOpportunityComponent implements OnInit{
 	}
 
 	calculateDiscount(index){
-		let sum = 0;
 		
+		let sum = 0;
+
 		for(let i = 0; i < this.product_options[index].products.length; i++) {
-		  sum += this.product_options[index].products[i].discount;		
+		  sum += this.product_options[index].products[i].total_price * ((this.product_options[index].products[i].discount)/100);		
 		}
 
 		return sum;
@@ -310,7 +458,7 @@ export class EditOpportunityComponent implements OnInit{
 		let sum = 0;
 		
 		for(let i = 0; i < this.product_options[index].products.length; i++) {
-		  sum += this.product_options[index].products[i].amount;		
+			sum += this.product_options[index].products[i].total_price * ((100-this.product_options[index].products[i].discount)/100);			
 		}
 
 		return sum;
@@ -320,12 +468,6 @@ export class EditOpportunityComponent implements OnInit{
 		this.total_price[index] = (this.unit_price[index] ? this.unit_price[index] : 0) * (this.quantity[index] ? this.quantity[index] : 0);
 		this.discount[index] = (this.discount[index] ? this.discount[index] : 0);
 		this.amount[index] = (this.total_price[index] ? this.total_price[index] : 0) * ((100 - (this.discount[index] ? this.discount[index] : 0)) / 100);
-		 
-		// <td><input type="text" class="form-control" [(ngModel)]="sku[i]" readonly/></td>
-		// 			    				<td><input type="text" class="form-control" [(ngModel)]="quantity[i]" (input)="calculateAmount(i)"/></td>
-		// 			    				<td><input type="text" class="form-control" [(ngModel)]="unit_price[i]" (input)="calculateAmount(i)"/></td>
-		// 			    				<td><input type="text" class="form-control" [(ngModel)]="total_price[i]" (input)="calculateAmount(i)" readonly/></td>
-		// 			    				<td><input type="text" class="form-control" [(ngModel)]="discount[i]" (input)="calculateAmount(i)"/></td>
 	}
 
 	productSelected(value, index){
@@ -333,7 +475,7 @@ export class EditOpportunityComponent implements OnInit{
 		console.log(value);		
 		this.sku[index] = value.sku;
 		this.product_name[index] = value.name;
-		
+		this.external_product_id[index] = value.id;
 	}
 
 	openAddProductModal(option, index){
@@ -343,8 +485,12 @@ export class EditOpportunityComponent implements OnInit{
 		this.addProductModal.show();
 	}	  
 
-	openEditProductModal(product_id){
+	openEditProductModal(index1, index2, product_id){
 		this.editProductModal.show();
+		this.editing_product = product_id;
+		this.editing_product_index1 = index1;
+		this.editing_product_index2 = index2;
+
 		this.productById(product_id);
 		console.log('edit product: '+product_id);
 	}
@@ -372,6 +518,25 @@ export class EditOpportunityComponent implements OnInit{
 		})
 	}
 
+	setDefaultOption(index, option_id){
+
+		this.appService.postQuery('/opportunity/set-as-default-product-option', 
+			{
+				id: option_id				
+			}
+		).subscribe((data) => {			
+			console.log(data['data']);		
+			this.setDefaultOptionSuccessModal.show();
+			
+			for(let i = 0; i < this.product_options.length; i++){
+				this.product_options[i].is_default = 0;
+			}	
+
+			this.product_options[index].is_default = 1;
+		})
+
+	}
+
 	deleteOption(){
 		this.appService.postQuery('/opportunity/delete-product-option', 
 			{
@@ -396,4 +561,67 @@ export class EditOpportunityComponent implements OnInit{
 			this.competitor_name = this.competitor_amount = '';
 		})
 	}
+
+	updateDetail(){
+		this.appService.postQuery('/opportunity/update', 
+			{
+				id: this.opportunity_id,
+				topic: this.opportunityDetailForm1.value.topic,
+				customer_contact_id: this.opportunityDetailForm1.value.customer_contact_id,
+				customer_contact2_id: this.opportunityDetailForm1.value.customer_contact2_id,
+				status_id: this.opportunityDetailForm1.value.status_id,
+				is_include_in_forecast: this.opportunityDetailForm1.value.is_include_in_forecast,
+				
+				request_delivery_date: this.opportunityDetailForm2.value.request_delivery_date,
+				estimated_delivery_date: this.opportunityDetailForm2.value.estimated_delivery_date,
+				estimated_po_date: this.opportunityDetailForm2.value.estimated_po_date,
+				estimated_invoice_date: this.opportunityDetailForm2.value.estimated_invoice_date,
+				care_area: this.opportunityDetailForm2.value.care_area,
+				hospital_department: this.opportunityDetailForm2.value.hospital_department
+			}
+		).subscribe((data) => {						
+			
+		})
+	}
+
+	updateForecast(){
+		
+		this.appService.postQuery('/opportunity/forecast', 
+			{
+				opportunity_id: this.opportunity_id,
+				reason: this.forecastForm.value.reason,
+				preferred_vendor: this.forecastForm.value.preferred_vendor,
+				funding_status: this.forecastForm.value.funding_status,
+				funding_source: this.forecastForm.value.funding_source,				
+				competitor_id: this.forecastForm.value.competitor_id,				
+			}
+		).subscribe((data) => {						
+			this.forecast_category = data['data']['forecast_category'];
+		})
+	}
+
+	updateProduct(){
+		this.appService.postQuery('/opportunity/update-product', 
+			{
+				opportunity_product_id: this.editing_product,
+				quantity: this.editProductForm.value.quantity,
+				discount: this.editProductForm.value.discount,
+				unit_price: this.editProductForm.value.list_price,
+				floor_price: this.editProductForm.value.floor_price,
+				principle: this.editProductForm.value.principle,
+				product_manager: this.editProductForm.value.product_manager,
+				standard_warranty: this.editProductForm.value.standard_warranty,
+				extended_warranty: this.editProductForm.value.extended_warranty,
+				tax_rate: this.editProductForm.value.tax_rate,
+				customer_tax_code: this.editProductForm.value.customer_tax_code,
+				tax_code: this.editProductForm.value.tax_code,
+				category: this.editProductForm.value.category,
+				local_distribution: this.editProductForm.value.local_distribution,
+							
+			}
+		).subscribe((data) => {						
+			this.editProductModal.hide();
+		})
+	}
+
 }

@@ -30,4 +30,7 @@ export class ListOpportunityComponent implements OnInit{
 
 	}
 	
+	getAll(){
+		
+	}
 }
