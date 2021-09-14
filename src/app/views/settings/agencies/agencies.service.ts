@@ -79,6 +79,13 @@ export class AgenciesService {
     )
   }
 
+  getCareArea(): Observable<any> {
+    return this.httpClient.get(this.apiURL+'/data-area-id/all')
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   errorHandler(error) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {

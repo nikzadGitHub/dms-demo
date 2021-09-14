@@ -12,8 +12,9 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 export class AgenciesCreateComponent implements OnInit {
 
   @ViewChild('successModal') successModal : ModalDirective;
-  
+
   form: FormGroup;
+  data_areas:any;
   id:any;
   alertBody: string;
 
@@ -30,6 +31,7 @@ export class AgenciesCreateComponent implements OnInit {
       agency_code: '',
       is_active: 0
     });
+    this.dataArea();
   }
 
   redirectPage(){
@@ -42,6 +44,12 @@ export class AgenciesCreateComponent implements OnInit {
         this.id = res.data.value;
         this.successModal.show();
     })
+  }
+
+  dataArea() {
+    this.agencyService.getCareArea().subscribe(res => {
+      this.data_areas = res.data;
+    });
   }
 
 }

@@ -11,8 +11,9 @@ import { CareAreasService } from '../care-areas.service';
 })
 export class CareAreasCreateComponent implements OnInit {
   @ViewChild('successModal') successModal : ModalDirective;
-  
+
   form: FormGroup;
+  data_areas:any;
   id:any;
   alertBody: string;
 
@@ -29,6 +30,7 @@ export class CareAreasCreateComponent implements OnInit {
       care_area_code: '',
       is_active: 0
     });
+    this.dataArea();
   }
 
   redirectPage(){
@@ -41,6 +43,12 @@ export class CareAreasCreateComponent implements OnInit {
         this.id = res.data.value;
         this.successModal.show();
     })
+  }
+
+  dataArea() {
+    this.caService.getCareArea().subscribe(res => {
+      this.data_areas = res.data;
+    });
   }
 
 }

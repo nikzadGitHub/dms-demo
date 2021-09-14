@@ -8,7 +8,7 @@ import { settings } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class CareAreasService {
-  
+
   private apiURL = settings.apiBaseUrl;
 
   httpOptions = {
@@ -33,12 +33,12 @@ export class CareAreasService {
       catchError(this.errorHandler)
     )
   }
-  
+
   store(data): Observable<any> {
     return this.httpClient.post(this.apiURL + '/care-area', data, this.httpOptions)
     .pipe(
       tap((response: any) => {
-        console.log(response);        
+        console.log(response);
     }),
       catchError(this.errorHandler)
     )
@@ -61,6 +61,13 @@ export class CareAreasService {
   getPage(url,pageItems,search_text){
     let query = '&page_items=' + pageItems + '&search_text=' + search_text;
     return this.httpClient.get(url + query,this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  getCareArea(): Observable<any> {
+    return this.httpClient.get(this.apiURL+'/data-area-id/all')
     .pipe(
       catchError(this.errorHandler)
     )
