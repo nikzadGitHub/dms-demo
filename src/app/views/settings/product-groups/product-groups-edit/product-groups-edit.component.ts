@@ -11,11 +11,12 @@ import { ProductGroupsService } from '../product-groups.service';
 })
 export class ProductGroupsEditComponent implements OnInit {
   @ViewChild('successModal') successModal : ModalDirective;
-  
+
   form: FormGroup;
+  data_areas:any;
   id:any;
   alertBody: string;
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -36,13 +37,14 @@ export class ProductGroupsEditComponent implements OnInit {
       product_group_code: '',
       is_active: 0
     });
+    this.dataArea();
   }
 
   getData(id) {
     this.pgService.find(id).subscribe((data)=>{
       this.form.patchValue(data.data);
       console.log(data);
-    })  
+    })
   }
 
   redirectPage(){
@@ -56,6 +58,12 @@ export class ProductGroupsEditComponent implements OnInit {
         this.id = res.data.value;
         this.successModal.show();
     })
+  }
+
+  dataArea() {
+    this.pgService.getCareArea().subscribe(res => {
+      this.data_areas = res.data;
+    });
   }
 
 }

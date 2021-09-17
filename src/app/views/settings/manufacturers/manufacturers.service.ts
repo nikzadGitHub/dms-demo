@@ -33,12 +33,12 @@ export class ManufacturersService {
       catchError(this.errorHandler)
     )
   }
-  
+
   store(data): Observable<any> {
     return this.httpClient.post(this.apiURL + '/manufacturer', data, this.httpOptions)
     .pipe(
       tap((response: any) => {
-        console.log(response);        
+        console.log(response);
     }),
       catchError(this.errorHandler)
     )
@@ -61,6 +61,13 @@ export class ManufacturersService {
   getPage(url,pageItems,search_text){
     let query = '&page_items=' + pageItems + '&search_text=' + search_text;
     return this.httpClient.get(url + query,this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  getCareArea(): Observable<any> {
+    return this.httpClient.get(this.apiURL+'/data-area-id/all')
     .pipe(
       catchError(this.errorHandler)
     )

@@ -11,11 +11,12 @@ import { AgenciesService } from '../agencies.service';
 })
 export class AgenciesEditComponent implements OnInit {
   @ViewChild('successModal') successModal : ModalDirective;
-  
+
   form: FormGroup;
+  data_areas:any;
   id:any;
   alertBody: string;
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -37,6 +38,7 @@ export class AgenciesEditComponent implements OnInit {
       agency_code: '',
       is_active: 0
     });
+    this.dataArea();
   }
 
   getData(id) {
@@ -44,7 +46,7 @@ export class AgenciesEditComponent implements OnInit {
       console.log(data);
       this.form.patchValue(data.data);
       console.log(data);
-    })  
+    })
   }
 
   redirectPage(){
@@ -58,5 +60,11 @@ export class AgenciesEditComponent implements OnInit {
         this.id = res.data.value;
         this.successModal.show();
     })
+  }
+
+  dataArea() {
+    this.agencyService.getCareArea().subscribe(res => {
+      this.data_areas = res.data;
+    });
   }
 }

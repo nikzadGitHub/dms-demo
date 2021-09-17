@@ -11,8 +11,9 @@ import { ManufacturersService } from '../manufacturers.service';
 })
 export class ManufacturersEditComponent implements OnInit {
   @ViewChild('successModal') successModal : ModalDirective;
-  
+
   form: FormGroup;
+  data_areas:any;
   id:any;
   alertBody: string;
 
@@ -36,13 +37,14 @@ export class ManufacturersEditComponent implements OnInit {
       manufacturer_code: '',
       is_active: 0
     });
+    this.dataArea();
   }
 
   getData(id) {
     this.mService.find(id).subscribe((data)=>{
       this.form.patchValue(data.data);
       console.log(data);
-    })  
+    })
   }
 
   redirectPage(){
@@ -56,6 +58,12 @@ export class ManufacturersEditComponent implements OnInit {
         this.id = res.data.value;
         this.successModal.show();
     })
+  }
+
+  dataArea() {
+    this.mService.getCareArea().subscribe(res => {
+      this.data_areas = res.data;
+    });
   }
 
 }

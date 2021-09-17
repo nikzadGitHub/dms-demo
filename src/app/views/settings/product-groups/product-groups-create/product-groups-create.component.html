@@ -17,7 +17,10 @@
                                             Data Area Id:
                                         </div>
                                         <div class="col-md-6">
-                                            <input formControlName="data_area_id" class="form-control" placeholder="ID" type="input">
+                                          <select formControlName="data_area_id"  class="form-control">
+                                            <option>--- Select Term ---</option>
+                                            <option *ngFor="let data of data_areas" value="{{data.data_area_id}}">{{data.title}}</option>
+                                          </select>
                                         </div>
                                     </div>
                                 </div>

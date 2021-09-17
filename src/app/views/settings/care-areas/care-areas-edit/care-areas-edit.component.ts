@@ -11,11 +11,12 @@ import { CareAreasService } from '../care-areas.service';
 })
 export class CareAreasEditComponent implements OnInit {
   @ViewChild('successModal') successModal : ModalDirective;
-  
+
   form: FormGroup;
+  data_areas:any;
   id:any;
   alertBody: string;
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -36,12 +37,13 @@ export class CareAreasEditComponent implements OnInit {
       care_area_code: '',
       is_active: 0
     });
+    this.dataArea();
   }
 
   getData(id) {
     this.caService.find(id).subscribe((data)=>{
       this.form.patchValue(data.data);
-    })  
+    })
   }
 
   redirectPage(){
@@ -54,6 +56,12 @@ export class CareAreasEditComponent implements OnInit {
         this.id = res.data.value;
         this.successModal.show();
     })
+  }
+
+  dataArea() {
+    this.caService.getCareArea().subscribe(res => {
+      this.data_areas = res.data;
+    });
   }
 
 }

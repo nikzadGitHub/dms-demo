@@ -11,8 +11,9 @@ import { OpcsService } from '../../opcs/opcs.service';
 })
 export class OpcsCreateComponent implements OnInit {
   @ViewChild('successModal') successModal : ModalDirective;
-  
+
   form: FormGroup;
+  data_areas:any;
   id:any;
   alertBody: string;
 
@@ -29,6 +30,7 @@ export class OpcsCreateComponent implements OnInit {
       opc_code: '',
       is_active: 0
     });
+    this.dataArea();
   }
 
   redirectPage(){
@@ -43,5 +45,10 @@ export class OpcsCreateComponent implements OnInit {
     })
   }
 
+  dataArea() {
+    this.pgService.getCareArea().subscribe(res => {
+      this.data_areas = res.data;
+    });
+  }
 
 }

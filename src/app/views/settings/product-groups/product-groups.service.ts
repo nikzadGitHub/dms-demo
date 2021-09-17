@@ -33,12 +33,12 @@ export class ProductGroupsService {
       catchError(this.errorHandler)
     )
   }
-  
+
   store(data): Observable<any> {
     return this.httpClient.post(this.apiURL + '/product-group', data, this.httpOptions)
     .pipe(
       tap((response: any) => {
-        console.log(response);        
+        console.log(response);
     }),
       catchError(this.errorHandler)
     )
@@ -66,6 +66,13 @@ export class ProductGroupsService {
     )
   }
 
+  getCareArea(): Observable<any> {
+    return this.httpClient.get(this.apiURL+'/data-area-id/all')
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   errorHandler(error) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {
@@ -75,5 +82,5 @@ export class ProductGroupsService {
     }
     return throwError(errorMessage);
  }
-  
+
 }
