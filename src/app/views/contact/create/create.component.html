@@ -1,0 +1,402 @@
+<div class="animated fadeIn">
+  <div class="col-lg col-md-6">
+      <div class="card rcorners">
+          <div class="card-header row" style="background-color: #898485; color: white;">
+              <div style="padding-left: 20px;">
+                  <h2>Create Contact</h2>
+              </div>
+          </div>
+          <div class="card-body">
+              <form [formGroup]="form" (ngSubmit)="submit()">
+                  <div class="form-group">
+                    <div class="card-row">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="card-row">
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                              Primary Customer
+                                          </div>
+                                          <div class="col-md-7">
+                                            <span class="p-input-icon-right">
+                                                <p-autoComplete class="search_field" [inputStyle]="{'width':'100%'}" [style]="{'width':'100%'}" formControlName="primary_customer" [suggestions]="filteredData" (completeMethod)="searchCust($event)" (onSelect)="onSelect($event, 'primary_customer')">
+                                                  <ng-template let-item pTemplate="item">
+                                                    <div class="item">
+                                                        <div>{{item.label}}</div>
+                                                    </div>
+                                                  </ng-template>
+                                                </p-autoComplete>
+                                                <i class="pi pi-search"></i>
+                                            </span>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Solution
+                                          </div>
+                                          <div class="col-md-7">
+                                              <!-- <input formControlName="solution" class="form-control" placeholder="Solution" type="input"> -->
+                                              <p-dropdown optionValue="label" [options]="items" formControlName="solution" placeholder="Select Solution" [virtualScroll]="true" [itemSize]="31" [filter]="false" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Nickname
+                                          </div>
+                                          <div class="col-md-7">
+                                              <input pInputText formControlName="nickname" class="form-control" placeholder="" type="input">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Department
+                                          </div>
+                                          <div class="col-md-7">
+                                            <p-dropdown optionValue="label" [options]="items" formControlName="department" placeholder="Select Department" [virtualScroll]="true" [itemSize]="31" [filter]="false" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header required-field">
+                                            Email
+                                          </div>
+                                          <div class="col-md-7">
+                                            <input required [ngClass]="{ 'is-invalid': form_controls.email?.touched && form_controls.email.invalid }" pInputText formControlName="email" class="form-control" placeholder="" type="input">
+                                          </div>
+                                          <div class="invalid-feedback col-md-7 offset-md-4" [ngClass]="{ 'd-block': (form_controls.email.invalid && submitted)|| (form_controls.email.invalid && form_controls.email?.touched) }">
+                                            <small class="p-invalid">Email is required.</small>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Mobile Phone
+                                          </div>
+                                          <div class="col-md-7">
+                                            <input pInputText formControlName="mobile_phone" class="form-control" placeholder="" type="input">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Address 1
+                                          </div>
+                                          <div class="col-md-7">
+                                            <input pInputText formControlName="address_1" class="form-control" placeholder="" type="input">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Address 3
+                                          </div>
+                                          <div class="col-md-7">
+                                            <input pInputText formControlName="address_3" class="form-control" placeholder="" type="input">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            State
+                                          </div>
+                                          <div class="col-md-7">
+                                            <p-dropdown optionValue="label" [options]="items" formControlName="state" placeholder="Select State" [virtualScroll]="true" [itemSize]="31" [filter]="false" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Zipcode
+                                          </div>
+                                          <div class="col-md-7">
+                                            <input pInputText formControlName="zipcode" class="form-control" placeholder="" type="input">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Care Area
+                                          </div>
+                                          <div class="col-md-7">
+                                            <p-multiSelect defaultLabel="Select a Care Area" class="multiselect-custom" [options]="items" formControlName="care_area" optionLabel="label" autoWidth="false" [style]="{'width':'100%'}">
+                                              <ng-template let-value pTemplate="selectedItems">
+                                                <div class="selected-item selected-item-value" *ngFor="let option of form_controls.care_area.value; let i = index">
+                                                    <div>{{option.label}}</div>
+                                                    <span class="close" (click)="removeSelectedItem(i, 'care_area')">&times;</span>
+                                                </div>
+                                                <div *ngIf="!form_controls.care_area.value || form_controls.care_area.value.length === 0 || form_controls.care_area.value === ''" class="placeholder">
+                                                    Select a Care Area
+                                                </div>
+                                              </ng-template>
+                                            </p-multiSelect>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Contact Type
+                                          </div>
+                                          <div class="col-md-7">
+                                            <p-dropdown optionValue="label" [options]="items" formControlName="contact_type" placeholder="Select Contact Type" [virtualScroll]="true" [itemSize]="31" [filter]="false" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="card-row">
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                              Other Accounts
+                                          </div>
+                                          <div class="col-md-7">
+                                            <p-multiSelect defaultLabel="Select a Accounts" class="multiselect-custom" [options]="items" formControlName="other_accounts" optionLabel="label" autoWidth="false" [style]="{'width':'100%'}">
+                                              <ng-template let-value pTemplate="selectedItems">
+                                                <div class="selected-item selected-item-value" *ngFor="let option of form_controls.other_accounts.value; let i = index">
+                                                    <div>{{option.label}}</div>
+                                                    <span class="close" (click)="removeSelectedItem(i, 'other_accounts')">&times;</span>
+                                                </div>
+                                                <div *ngIf="!form_controls.other_accounts.value || form_controls.other_accounts.value.length === 0 || form_controls.other_accounts.value === ''" class="placeholder">
+                                                  Select a Accounts
+                                                </div>
+                                              </ng-template>
+                                            </p-multiSelect>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header required-field">
+                                            Full Name
+                                          </div>
+                                          <div class="col-md-7">
+                                              <span class="p-input-icon-right">
+                                                <p-autoComplete class="search_field" [inputStyle]="{'width':'100%'}" [style]="{'width':'100%'}" formControlName="full_name" [suggestions]="filteredNameData" (completeMethod)="searchName($event)" (onSelect)="onSelect($event, 'full_name')">
+                                                  <ng-template let-item pTemplate="item">
+                                                    <div class="item">
+                                                        <div>{{item.label}}</div>
+                                                    </div>
+                                                  </ng-template>
+                                                </p-autoComplete>
+                                                <i class="pi pi-search"></i>
+                                              </span>
+                                          </div>
+                                          <div class="invalid-feedback col-md-7 offset-md-4" [ngClass]="{ 'd-block': form_controls.full_name.invalid && form_controls.full_name?.touched }">
+                                            <small class="p-invalid">Full Name is required.</small>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header required-field">
+                                            Job Title
+                                          </div>
+                                          <div class="col-md-7">
+                                              <input pInputText formControlName="job_title" class="form-control" placeholder="" type="input" required>
+                                          </div>
+                                          <div class="invalid-feedback col-md-7 offset-md-4" [ngClass]="{ 'd-block': form_controls.job_title.invalid && form_controls.job_title?.touched }">
+                                            <small class="p-invalid">Job Title is required.</small>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Specialization
+                                          </div>
+                                          <div class="col-md-7">
+                                            <input pInputText formControlName="specialization" class="form-control" placeholder="" type="input">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Business Phone
+                                          </div>
+                                          <div class="col-md-7">
+                                            <input pInputText formControlName="business_phone" class="form-control" placeholder="" type="input" required>
+                                          </div>
+                                          <div class="invalid-feedback col-md-7 offset-md-4" [ngClass]="{ 'd-block': form_controls.business_phone.invalid && form_controls.business_phone?.touched }">
+                                            <small class="p-invalid">Business Phone is required.</small>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Fax
+                                          </div>
+                                          <div class="col-md-7">
+                                            <input pInputText formControlName="fax" class="form-control" placeholder="" type="input">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Address 2
+                                          </div>
+                                          <div class="col-md-7">
+                                            <input pInputText formControlName="address_2" class="form-control" placeholder="" type="input">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            City
+                                          </div>
+                                          <div class="col-md-7">
+                                            <input pInputText formControlName="city" class="form-control" placeholder="" type="input">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Country
+                                          </div>
+                                          <div class="col-md-7">
+                                            <p-dropdown optionValue="label" [options]="items" formControlName="country" placeholder="Select Contact Type" [virtualScroll]="true" [itemSize]="31" [filter]="false" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Contact Category
+                                          </div>
+                                          <div class="col-md-7">
+                                            <input pInputText formControlName="contact_category" class="form-control" placeholder="" type="input">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Contact Preference
+                                          </div>
+                                          <div class="col-md-7">
+                                            <p-multiSelect defaultLabel="Select a Contact" class="multiselect-custom" [options]="items" formControlName="contact_preference" optionLabel="label" autoWidth="false" [style]="{'width':'100%'}">
+                                              <ng-template let-value pTemplate="selectedItems">
+                                                <div class="selected-item selected-item-value" *ngFor="let option of form_controls.contact_preference.value; let i = index">
+                                                    <div>{{option.label}}</div>
+                                                    <span class="close" (click)="removeSelectedItem(i, 'contact_preference')">&times;</span>
+                                                </div>
+                                                <div *ngIf="!form_controls.contact_preference.value || form_controls.contact_preference.value.length === 0 || form_controls.contact_preference.value === ''" class="placeholder">
+                                                  Select a Contact
+                                                </div>
+                                              </ng-template>
+                                            </p-multiSelect>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-xl-12">
+                                      <div class="row">
+                                          <div class="col-md-4 text-header">
+                                            Owner
+                                          </div>
+                                          <div class="col-md-7">
+                                            <p-dropdown optionValue="label" [options]="items" formControlName="owner" placeholder="Select Contact Type" [virtualScroll]="true" [itemSize]="31" [filter]="false" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+                  <div class="col-lg-9 submit-button" align=center>
+                      <div class="form-group">
+                          <a routerLink="contact/index" class="btn btn-secondary">CANCEL</a>
+                          <button class="btn btn-primary" type="submit" [disabled]="!form.valid">SAVE</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <div class="card-footer bg-transparent">
+          </div>
+      </div>
+  </div>
+</div>
+
+<div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{alertBody}}</p>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

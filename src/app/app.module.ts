@@ -63,6 +63,7 @@ import { DatePipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { SociModule } from './soci/soci.module';
 import { SettingsModule } from './views/settings/settings.module';
+import { ContactModule } from './views/contact/contact.module';
 
 @NgModule({
   imports: [
@@ -95,7 +96,8 @@ import { SettingsModule } from './views/settings/settings.module';
     CalendarModule,
     AccordionModule,
     TableModule,
-    SociModule
+    SociModule,
+    ContactModule
   ],
   declarations: [
     AppComponent,

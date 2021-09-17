@@ -21,6 +21,13 @@
             <td *ngIf="data.is_active!==undefined"><i class="fa fa-circle fa-lg" [ngClass]="(data.is_active == 1 ? 'active' : 'inactive')"></i></td>
             <td *ngIf="data.title">{{ data.title || '' }}</td>
             <td *ngIf="data.value">{{ data.value || '' }}</td>
+            <td *ngIf="data.created_at">{{ data.created_at || '' }}</td>
+            <td *ngIf="data.id">{{ data.id || '' }}</td>
+            <td *ngIf="data.primary_customer">{{ data.primary_customer || '' }}</td>
+            <td *ngIf="data.full_name">{{ data.full_name || '' }}</td>
+            <td *ngIf="data.email">{{ data.email || '' }}</td>
+            <td *ngIf="data.business_phone">{{ data.business_phone || '' }}</td>
+            <td *ngIf="data.contact_type">{{ data.care_area || '' }}</td>
             <td style="width: 5%;">
                 <a href="#" [routerLink]="['/' + path + '/', data.id, 'edit']" class="fa fa-edit"></a>
                 <i (click)="deleteData(data.id)" class="fa fa-trash text-primary" aria-hidden="true" style="cursor: pointer;"></i>
