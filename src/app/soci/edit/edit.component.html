@@ -73,7 +73,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let quantity of billings().controls; let i=index" [formGroupName]="i" align="center">
+                                <tr *ngFor="let billing of billings().controls; let i=index" [formGroupName]="i" align="center">
                                     <td style="width: 15%;">
                                         <input formControlName="billing_id" class="form-control" placeholder="ABC123" type="text">
                                     </td>
@@ -95,12 +95,13 @@
                                     </td>
                                     <td class="td-actions" style="width: 10%;">
                                         <div class="row">
-                                            <div (click)="show=!show">
-                                                <a [routerLink]="" routerLinkActive="router-link-active" (click)="addBillingMilestone()" 
-                                                *ngIf="show"><i class="cil-check-circle"></i></a>
-                                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i class="fa fa-edit"></i></a>
-                                            </div>&nbsp;
-                                            <!-- <a [routerLink]="" routerLinkActive="router-link-active" (click)="addBillingMilestone()"><i class="fa fa-edit"></i></a> &nbsp; -->
+                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="disableEditMethod(billing,'billing');addBillingMilestones(billing)"  
+                                            *ngIf="enableEdit['billing'] && controller == billing"><i class="cil-check-circle"></i></a>
+                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!enableEdit['billing']" 
+                                            (click)="enableEditMethod(billing,'billing')">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            &nbsp;
                                             <a [routerLink]="" (click)="removeBillings(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
                                         </div>
                                     </td>
@@ -163,8 +164,16 @@
                                         (focus)="paymentRemarkModalOpen(i)">
                                     </td>
                                     <td class="td-actions" style="width: 10%; padding:none">
-                                        <a [routerLink]="" routerLinkActive="router-link-active" ><i class="fa fa-edit"></i></a> &nbsp;
-                                        <a [routerLink]="" routerLinkActive="router-link-active" (click)="removePayments(i)" ><i class="fa fa-trash"></i></a>
+                                        <div class="row">
+                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="disableEditMethod(payment,'payment')"  
+                                            *ngIf="enableEdit['payment'] && controller == payment"><i class="cil-check-circle"></i></a>
+                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!enableEdit['payment']" 
+                                            (click)="enableEditMethod(payment,'payment')">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            &nbsp;
+                                            <a [routerLink]="" (click)="removePayments(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -219,8 +228,16 @@
                                         <input formControlName="remarks" class="form-control" size="1" placeholder="Remarks" type="text">
                                     </td>
                                     <td class="td-actions" style="width: 10%;">
-                                        <a [routerLink]="" routerLinkActive="router-link-active" ><i class="fa fa-edit"></i></a> &nbsp;
-                                        <a [routerLink]="" (click)="removeAddCosts(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
+                                        <div class="row">
+                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="disableEditMethod(cost,'addCost')"  
+                                            *ngIf="enableEdit['addCost'] && controller == cost"><i class="cil-check-circle"></i></a>
+                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!enableEdit['addCost']" 
+                                            (click)="enableEditMethod(cost,'addCost')">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            &nbsp;
+                                            <a [routerLink]="" (click)="removeAddCosts(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -266,33 +283,44 @@
                                 <tr *ngFor="let productC of products().controls; let i=index;" [formGroupName]="i" align="center">
                                     <td>{{ i+1 }}</td>
                                     <td style="size: 20%;">
-                                        <p-autoComplete formControlName="name" [(ngModel)]="selectedProductAdvanced" [suggestions]="filteredProducts" 
+                                        <p-autoComplete formControlName="name" [(ngModel)]="selectedProductAdvanced[i]" [suggestions]="filteredProducts" 
                                         (completeMethod)="filterProduct($event)" field="name" [dropdown]="true" 
                                         [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
                                             <ng-template let-product pTemplate="item">
-                                                <div class="product-item" (click)='productDetails(product,productC)'>
+                                                <div class="product-item" (click)='productDetails(product,productC);countNetAmount(productC)'>
                                                     <div>{{product.name}}</div>
                                                 </div>
                                             </ng-template>
-                                        </p-autoComplete> </td>
+                                        </p-autoComplete> 
+                                    </td>
                                     <td><input class="form-control" formControlName="sku" type="text"></td>
-                                    <td><input class="form-control" formControlName="quantity" type="text"></td>
-                                    <td><input class="form-control" formControlName="unit_price" type="text"></td>
-                                    <td><input class="form-control" formControlName="total_price" type="text"></td>
-                                    <td><input class="form-control" formControlName="discount" type="text"></td>
-                                    <td><input class="form-control" formControlName="amount" type="text"></td>
+                                    <td><input class="form-control" formControlName="quantity" type="number" step=".01" (keyup)='countNetAmount(productC)'></td>
+                                    <td><input class="form-control" formControlName="unit_price" type="number" step=".01"></td>
+                                    <td><input class="form-control" formControlName="total_price" type="number" step=".01"></td>
+                                    <td><input class="form-control" formControlName="discount" type="number" (keyup)='countNetAmount(productC)' step=".01"></td>
+                                    <td><input class="form-control" formControlName="amount" type="number" step=".01"></td>
                                     <td class="td-actions" style="width: 5%;">
                                         <div class="row">
-                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="disableEditMethod(productC)"
-                                            *ngIf="enableEdit && enableIndex == i"><i class="cil-check-circle"></i></a>
-                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!enableEdit" (click)="enableEditMethod(productC,i)">
+                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="disableEditMethod(productC,'product')"
+                                            *ngIf="enableEdit['product'] && controller == productC"><i class="cil-check-circle"></i></a>
+                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!enableEdit['product']" 
+                                            (click)="enableEditMethod(productC,'product')">
                                                 <i class="fa fa-edit"></i>
                                             </a>&nbsp;
-                                            <a [routerLink]="" (click)="removeProducts(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
+                                            <a [routerLink]="" (click)="removeProduct(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
                                         </div>
                                     </td>
                                 </tr>
                             </tbody>
+                            <tfoot align="center">
+                                <tr>
+                                    <td colspan="9" align="center">
+                                        <a [routerLink]="" (click)="addNewProduct()" routerLinkActive="router-link-active" >
+                                            <i class="icon-plus icons"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                     <div class="row">
@@ -320,16 +348,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr></tr>
+                                <tr align="center">
+                                    <td>By Month</td>
+                                    <td>50%</td>
+                                    <td>80,000</td>
+                                    <td>Before Delivery</td>
+                                    <td>Deposit</td>
+                                    <td>No remarks</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </p-accordionTab>
             </p-accordion>
             <!-- End of Billing Instruction Accordion -->
+
+            <!-- Additional Instruction and Information Accordion -->
+            <p-accordion styleClass="customColor">
+                <p-accordionTab header="Additional Instruction and Information">
+                </p-accordionTab>
+            </p-accordion>
+            <!-- End of Additional Instruction and Information -->
         </form>
 
     </div>
 </div>
 
 <div class="row"></div> <!-- Empty row to give some space at the bottom -->
+<div class="row"></div>

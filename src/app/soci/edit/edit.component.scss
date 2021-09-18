@@ -85,6 +85,7 @@ input::-webkit-inner-spin-button {
         font-size: 1.5em; 
         font-weight: bolder;
         background: white;
+        border: none;
         span.pi{
             margin-top: -8px;
             position: absolute;
@@ -93,7 +94,7 @@ input::-webkit-inner-spin-button {
         }
         .p-accordion-header-link{
             background: white;
-            border-bottom: none;
+            border:none;
         }
     }
     .p-accordion-content{
