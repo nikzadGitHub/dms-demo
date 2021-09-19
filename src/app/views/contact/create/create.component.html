@@ -66,7 +66,7 @@
                                             Department
                                           </div>
                                           <div class="col-md-7">
-                                            <p-dropdown optionValue="label" [options]="items" formControlName="department" placeholder="Select Department" [virtualScroll]="true" [itemSize]="31" [filter]="false" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+                                            <p-dropdown optionLabel="value" optionValue="value" [options]="data_department" formControlName="department" placeholder="Select Department" [virtualScroll]="true" [itemSize]="31" [filter]="false" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
                                           </div>
                                       </div>
                                   </div>
@@ -129,7 +129,7 @@
                                             State
                                           </div>
                                           <div class="col-md-7">
-                                            <p-dropdown optionValue="label" [options]="items" formControlName="state" placeholder="Select State" [virtualScroll]="true" [itemSize]="31" [filter]="false" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+                                            <input pInputText formControlName="state" class="form-control" placeholder="" type="input">
                                           </div>
                                       </div>
                                   </div>
@@ -153,13 +153,13 @@
                                             Care Area
                                           </div>
                                           <div class="col-md-7">
-                                            <p-multiSelect defaultLabel="Select a Care Area" class="multiselect-custom" [options]="items" formControlName="care_area" optionLabel="label" autoWidth="false" [style]="{'width':'100%'}">
+                                            <p-multiSelect defaultLabel="Select a Care Area" class="multiselect-custom" [options]="data_careAreas" formControlName="care_areas" optionLabel="value" autoWidth="false" [style]="{'width':'100%'}">
                                               <ng-template let-value pTemplate="selectedItems">
-                                                <div class="selected-item selected-item-value" *ngFor="let option of form_controls.care_area.value; let i = index">
-                                                    <div>{{option.label}}</div>
-                                                    <span class="close" (click)="removeSelectedItem(i, 'care_area')">&times;</span>
+                                                <div class="selected-item selected-item-value" *ngFor="let option of form_controls.care_areas.value; let i = index">
+                                                    <div>{{option.value}}</div>
+                                                    <span class="close" (click)="removeSelectedItem(i, 'care_areas')">&times;</span>
                                                 </div>
-                                                <div *ngIf="!form_controls.care_area.value || form_controls.care_area.value.length === 0 || form_controls.care_area.value === ''" class="placeholder">
+                                                <div *ngIf="!form_controls.care_areas.value || form_controls.care_areas.value.length === 0 || form_controls.care_areas.value === ''" class="placeholder">
                                                     Select a Care Area
                                                 </div>
                                               </ng-template>
@@ -175,7 +175,7 @@
                                             Contact Type
                                           </div>
                                           <div class="col-md-7">
-                                            <p-dropdown optionValue="label" [options]="items" formControlName="contact_type" placeholder="Select Contact Type" [virtualScroll]="true" [itemSize]="31" [filter]="false" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+                                            <p-dropdown optionLabel="value" optionValue="value" [options]="data_contactType" formControlName="contact_type" placeholder="Select Contact Type" [virtualScroll]="true" [itemSize]="31" [filter]="false" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
                                           </div>
                                       </div>
                                   </div>
@@ -341,13 +341,13 @@
                                             Contact Preference
                                           </div>
                                           <div class="col-md-7">
-                                            <p-multiSelect defaultLabel="Select a Contact" class="multiselect-custom" [options]="items" formControlName="contact_preference" optionLabel="label" autoWidth="false" [style]="{'width':'100%'}">
+                                            <p-multiSelect defaultLabel="Select a Contact" class="multiselect-custom" [options]="data_contactPreference" formControlName="contact_preferences" optionLabel="value" autoWidth="false" [style]="{'width':'100%'}">
                                               <ng-template let-value pTemplate="selectedItems">
-                                                <div class="selected-item selected-item-value" *ngFor="let option of form_controls.contact_preference.value; let i = index">
-                                                    <div>{{option.label}}</div>
-                                                    <span class="close" (click)="removeSelectedItem(i, 'contact_preference')">&times;</span>
+                                                <div class="selected-item selected-item-value" *ngFor="let option of form_controls.contact_preferences.value; let i = index">
+                                                    <div>{{option.value}}</div>
+                                                    <span class="close" (click)="removeSelectedItem(i, 'contact_preferences')">&times;</span>
                                                 </div>
-                                                <div *ngIf="!form_controls.contact_preference.value || form_controls.contact_preference.value.length === 0 || form_controls.contact_preference.value === ''" class="placeholder">
+                                                <div *ngIf="!form_controls.contact_preferences.value || form_controls.contact_preferences.value.length === 0 || form_controls.contact_preferences.value === ''" class="placeholder">
                                                   Select a Contact
                                                 </div>
                                               </ng-template>

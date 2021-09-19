@@ -53,6 +53,34 @@ export class ContactService {
     )
   }
 
+  getContactPreferences(): Observable<any> {
+    return this.httpClient.get(this.apiURL+'/contacts/dropdown/contact-preference')
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  getDepartment(): Observable<any> {
+    return this.httpClient.get(this.apiURL+'/contacts/dropdown/department')
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  getCareAreas(): Observable<any> {
+    return this.httpClient.get(this.apiURL+'/contacts/dropdown/care-area')
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  getContactType(): Observable<any> {
+    return this.httpClient.get(this.apiURL+'/contacts/dropdown/contact-type')
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   delete(id){
     return this.httpClient.delete<any>(this.apiURL + '/contacts/' + id, this.httpOptions)
     .pipe(
