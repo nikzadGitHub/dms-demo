@@ -22,6 +22,7 @@ export class EditComponent implements OnInit {
   @ViewChild('paymentRemarkModal') paymentRemarkModal : ModalDirective;
   @ViewChild('billingRemarkModal') billingRemarkModal : ModalDirective;
 
+  signatureStatus:boolean;
   show:boolean;
   submitType: string;
   quotations: Quote;
@@ -579,5 +580,12 @@ export class EditComponent implements OnInit {
 
         break;
     }
+  }
+
+  checkSignature(){
+    this.quoteService.checkSignature().subscribe(res => {
+      console.log(res);
+      this.signatureStatus = true;
+    })
   }
 }

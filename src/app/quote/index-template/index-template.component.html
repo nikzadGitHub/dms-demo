@@ -1,4 +1,4 @@
-<div class="animated fadeIn">
+<!-- <div class="animated fadeIn">
     <div class="col-lg col-md-6">
       <div class="card rcorners">
           <div class="card-header row" style="background-color: #898485; color: white;">
@@ -10,19 +10,19 @@
             </div>
           </div>
         
-          <!-- <a href="#" routerLink="/quote/create/" class="btn btn-success">Create New Quote</a> -->
+          <a href="#" routerLink="/quote/create/" class="btn btn-success">Create New Quote</a>
           <div class="card-body">
             <table class="table table-bordered">
               <thead>
                 <tr>
                     <th *ngFor="let header of table_header">{{header}}</th>
-                  <!-- <th>Created Date</th>
+                  <th>Created Date</th>
                   <th>Quotation ID</th>
                   <th>Company Name</th>
                   <th>Validity Date</th>
                   <th>Status</th>
                   <th>Amount (MYR)</th>
-                  <th width="220px">Action</th> -->
+                  <th width="220px">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -35,7 +35,7 @@
                   <td>{{quote.amount}}</td>
                   <td style="width: 5%;">
                     <a href="#" [routerLink]="['/quote/revision', quote.id]" class="fa fa-edit"></a>
-                    <!-- <button type="button" (click)="deleteQuote(quote.id)" class="btn btn-danger">Delete</button> -->
+                    <button type="button" (click)="deleteQuote(quote.id)" class="btn btn-danger">Delete</button>
                   </td>
                 </tr>
               </tbody>
@@ -62,4 +62,4 @@
     </div>
 </div>
   
-  
+   -->

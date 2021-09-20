@@ -81,8 +81,11 @@ export class QuoteService {
     )
   }
   
-  getPage(pageNo,pageItems,search_text){
+  getPage(pageNo,pageItems,search_text,sort){
     let url = this.apiURL + '/quote?page='+ pageNo + '&page_items=' + pageItems + '&search_text=' + search_text;
+    if(sort && sort['field']!= null){
+      url += '&field=' + sort.field + '&order=' + sort.order;
+    }
     return this.httpClient.get(url,this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
@@ -154,6 +157,13 @@ export class QuoteService {
   saveColumnOrder(columnOrder,type): Observable<any>{
     let param = {'columnOrder':columnOrder,'type':type}
     return this.httpClient.post(this.apiURL + '/quote/column-order',param)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  checkSignature(){
+    return this.httpClient.get(this.apiURL + '/quote/check-signature')
     .pipe(
       catchError(this.errorHandler)
     )

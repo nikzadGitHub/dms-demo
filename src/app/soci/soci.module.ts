@@ -12,12 +12,15 @@ import { CreateComponent } from './create/create.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'primeng/fileupload';
+import { EditComponent } from './edit/edit.component';
+import { AccordionModule } from 'primeng/accordion';
 
 
 @NgModule({
   declarations: [
     IndexComponent,
-    CreateComponent
+    CreateComponent,
+    EditComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +33,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     AutoCompleteModule,
     ReactiveFormsModule,
     FormsModule,
-    FileUploadModule
+    FileUploadModule,
+    AccordionModule
   ]
 })
 export class SociModule { }

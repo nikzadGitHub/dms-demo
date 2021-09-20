@@ -18,6 +18,10 @@ export class CreateComponent implements OnInit {
   alertBody: string;
   filteredData: any;
   filteredNameData: any;
+  data_contactPreference: any;
+  data_department: any;
+  data_careAreas: any;
+  data_contactType: any;
   items:any = [
     {label: 'item 1'},
     {label: 'item 2'},
@@ -27,8 +31,7 @@ export class CreateComponent implements OnInit {
   ];
 
   get form_controls() {
-    // console.log(this.form.controls)
-    return this.form.controls; 
+    return this.form.controls;
   }
 
   constructor(
@@ -45,7 +48,7 @@ export class CreateComponent implements OnInit {
       full_name: ['aa', Validators.required],
       nickname: 'aa',
       job_title: 'aa',
-      department: 'aa',
+      department: '',
       specialization: 'aa',
       email: ['abc@hotmail.com', Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
       business_phone: 'aa',
@@ -59,11 +62,15 @@ export class CreateComponent implements OnInit {
       country: 'aa',
       zipcode: 'aa',
       contact_category: 'aa',
-      care_area: '',
-      contact_preference: '',
-      contact_type: 'aa',
+      care_areas: '',
+      contact_preferences: '',
+      contact_type: '',
       owner: 'aa'
     });
+    this.contactPreferences();
+    this.department();
+    this.careAreas();
+    this.contactType();
   }
 
   redirectPage(){
@@ -73,22 +80,27 @@ export class CreateComponent implements OnInit {
   submit(){
     this.submitted = true;
     var data = this.form.value;
-    // if (data.care_area.length > 0 && data.care_area instanceof Array) {
-    //   data.care_area = data.care_area.map(function(item) {
-    //     return item['label'];
-    //   }).join(",");
-    // }
-    // if (data.contact_preference.length > 0 && data.contact_preference instanceof Array) {
-    //   data.contact_preference = data.contact_preference.map(function(item) {
-    //     return item['label'];
-    //   }).join(",");
-    // }
-    // if (data.other_accounts.length > 0 && data.other_accounts instanceof Array) {
-    //   data.other_accounts = data.other_accounts.map(function(item) {
-    //     return item['label'];
-    //   }).join(",");
-    // }
-    console.log(data);
+    if (data.care_areas.length > 0 && data.care_areas instanceof Array) {
+      data.care_areas = data.care_areas.map(function(item) {
+        return item['value'];
+      });
+    } else {
+      data.care_areas = [];
+    }
+    if (data.contact_preferences.length > 0 && data.contact_preferences instanceof Array) {
+      data.contact_preferences = data.contact_preferences.map(function(item) {
+        return item['value'];
+      });
+    } else {
+      data.contact_preferences = [];
+    }
+    if (data.other_accounts.length > 0 && data.other_accounts instanceof Array) {
+      data.other_accounts = data.other_accounts.map(function(item) {
+        return item['label'];
+      }).join(",");
+    } else {
+      data.other_accounts = [];
+    }
     this.Service.store(data).subscribe(res => {
         this.alertBody = res.message || 'Created Successfully';
         this.id = res.data.value;
@@ -132,6 +144,30 @@ export class CreateComponent implements OnInit {
     let selectedData = event.label;
     let control = this.form.get(title);
     control.patchValue(selectedData);
+  }
+
+  contactPreferences() {
+    this.Service.getContactPreferences().subscribe(res => {
+      this.data_contactPreference = res.data;
+    });
+  }
+
+  department() {
+    this.Service.getDepartment().subscribe(res => {
+      this.data_department = res.data;
+    });
+  }
+
+  careAreas() {
+    this.Service.getCareAreas().subscribe(res => {
+      this.data_careAreas = res.data;
+    });
+  }
+
+  contactType() {
+    this.Service.getContactType().subscribe(res => {
+      this.data_contactType = res.data;
+    });
   }
 
 }
