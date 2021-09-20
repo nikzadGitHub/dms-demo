@@ -13,7 +13,7 @@
 						<div class="d-flex justify-content-between p-125">
 							<div style="width:450px">				
 								<input [hidden]="!company_is_from_lead" class="form-control" readonly [(ngModel)]="company_name_from_lead">			
-								<input [hidden]="company_is_from_lead" (input)="companySearch()" type="text" placeholder="Company Name..."  matInput [formControl]="companyControl" [matAutocomplete]="companyNameAutocomplete" class="form-control">
+								<input [hidden]="company_is_from_lead" (input)="companySearch($event.target.value)" type="text" placeholder="Company Name..."  matInput [formControl]="companyControl" [matAutocomplete]="companyNameAutocomplete" class="form-control">
 								<mat-autocomplete #companyNameAutocomplete="matAutocomplete" [displayWith]="displayFn" (optionSelected)='companySelected($event.option.value)'>
 									<mat-option *ngFor="let company of filteredCompanies | async" [value]="company">
 									{{company.name}} | {{company.data_area_id}} / {{company.external_id}}

@@ -17,7 +17,14 @@ export interface Product {
 	principle: any;
 	group: any;
 	tax_code: any;
-  }
+}
+
+export interface OpportunityDetail {
+	company_name: any;
+	opportunity_code: any;
+	created_at: any;
+	currency_code: any;
+}
 
 @Component({
   templateUrl: 'edit-opportunity.component.html',
@@ -49,7 +56,7 @@ export class EditOpportunityComponent implements OnInit{
 	opportunity_id = '';
 	product_options = [];
 	icons = [];
-	detail = [];
+	detail: OpportunityDetail;
 	competitors = [];
 	competitor_name = '';
 	competitor_amount = '';
@@ -506,7 +513,7 @@ export class EditOpportunityComponent implements OnInit{
 		this.clone_option_id = option_id;		
 	}
 
-	cloneOption(index, option_id){
+	cloneOption(){
 		this.appService.postQuery('/opportunity/clone-product-option', 
 			{
 				id: this.clone_option_id				

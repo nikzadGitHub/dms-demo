@@ -22,5 +22,6 @@
   "angularCompilerOptions": {
     "strictTemplates": true,
     "strictInjectionParameters": true,
+    "strictDomEventTypes": false,
   }
 }
