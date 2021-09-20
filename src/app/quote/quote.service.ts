@@ -162,6 +162,13 @@ export class QuoteService {
     )
   }
 
+  checkSignature(){
+    return this.httpClient.get(this.apiURL + '/quote/check-signature')
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   errorHandler(error) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {

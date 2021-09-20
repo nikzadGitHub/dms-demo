@@ -319,6 +319,61 @@
                 <!-- End of Additional Costs Accordion -->
             </p-accordion>
             <div class="row"></div>
+
+            <div class="col-lg row" align=center>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="Title"><br><br>
+                    <input type="text" class="form-control" placeholder="template"><br><br>
+                    <button class="form-control" style="width: 70%;" (click)="checkSignature()">
+                        <i class="cil-check-circle" style="color: green;" *ngIf="signatureStatus"></i>
+                        <i class="icon-close" style="color: red;" *ngIf="signatureStatus == false"></i>
+                        Signature
+                    </button>
+                </div>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="Subject"><br><br>
+                    <input type="file" class="form-control" placeholder="Appendix/Photo">
+                </div>
+                <div class="col-lg-4">
+                    <p-accordion>
+                        <p-accordionTab header="Quotation Details">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label>Subtotal before text</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" style="border: none;" placeholder="subtotal">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label>Discount Value</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" style="border: none;" placeholder="Discount">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label>SST (Dynamic) Tax</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" style="border: none;" placeholder="SST">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label>Additional Cost</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" style="border: none;" placeholder="Additional Cost">
+                                </div>
+                            </div>
+                        </p-accordionTab>
+                    </p-accordion>
+                </div>
+            </div>
+
             <div class="col-lg" align=center>
                 <div class="form-group" *ngIf="requestApproval()">
                     <button class="btn btn-secondary" type="submit" (click)='setSubmitType("save")'>SAVE</button>&nbsp;
