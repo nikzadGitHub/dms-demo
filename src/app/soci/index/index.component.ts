@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Quote } from '../../quote/quote';
+import { LazyLoadEvent } from 'primeng/api';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Column } from '../column';
+import { Soci } from '../soci';
 import { SociService } from '../soci.service';
 
 @Component({
@@ -9,15 +12,20 @@ import { SociService } from '../soci.service';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-  search_text:string;
+
+  private ngUnsubscribe = new Subject;
+
+  sort: any;
+  search_text:string = '';
   pageItems: number = 10;
-  quotes: Quote[] = [];
-  columns: Column[] = [
-    {'header':'Created Date','field':'created_date','type':'date'},
+  socis: Soci[] = [];
+  columns: Column[] = [];
+  defaultColumns: Column[] = [
+    {'header':'Created Date','field':'created_at','type':'date'},
     {'header':'SOCI ID','field':'soci_id','type':'text'},
-    {'header':'Quotation ID','field':'quote_id','type':'text'},
+    {'header':'Quotation ID','field':'quote_full_id','type':'text'},
     {'header':'Quote Date','field':'quote_date','type':'date'},
-    {'header':'Amount (MYR)','field':'amount','type':'number'},
+    {'header':'Amount (MYR)','field':'po_amount','type':'number'},
     {'header':'PO No','field':'po_no','type':'text'},
     {'header':'PO Date','field':'po_date','type':'date'},
     {'header':'Status','field':'status','type':'text'},
@@ -26,9 +34,44 @@ export class IndexComponent implements OnInit {
   constructor(public sociService: SociService) { }
 
   ngOnInit(): void {
-    this.sociService.getAll(1,1).subscribe(data => {
+    this.sociService.getAll(this.pageItems,this.search_text,this.sort).subscribe(data => {
       console.log(data);
+      this.socis = data['data']['soci']['data'];
+      if(data['data']['columnOrder'] == null){
+        this.columns = JSON.parse(JSON.stringify(this.defaultColumns));
+      } else {
+        this.columns = JSON.parse(data['data']['columnOrder']['column_order']);
+      }
     })
+  }
+
+  getAll(){
+    this.sociService.getAll(this.pageItems,this.search_text,this.sort).subscribe(data => {
+      console.log(data);
+      this.socis = data['data']['soci']['data'];
+      if(data['data']['columnOrder'] == null){
+        this.columns = JSON.parse(JSON.stringify(this.defaultColumns));
+      } else {
+        this.columns = JSON.parse(data['data']['columnOrder']['column_order']);
+      }
+    }) 
+  }
+
+  SortColumn(event: LazyLoadEvent){
+    console.log(event)
+    this.sort = {'field':event['sortField'],'order':event['sortOrder']}
+    this.ngOnInit()
+  }
+
+  columnOrder(event){
+    this.sociService.saveColumnOrder(event.columns,'soci')
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe()
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
 }

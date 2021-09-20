@@ -20,8 +20,13 @@ export class SociService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAll(pageItems,search_text): Observable<Soci[]> {
-    let param = {page_items: pageItems, search_text:search_text};
+  getAll(pageItems,search_text,sort): Observable<Soci[]> {
+    let param: any;
+    if(sort && sort['field']!= null){
+      param = {page_items: pageItems, search_text:search_text, field:sort.field, order:sort.order};
+    } else {
+      param = {page_items: pageItems, search_text:search_text};
+    }
     return this.httpClient.get<Soci[]>(this.apiURL + '/soci',{params:param})
     .pipe(
       catchError(this.errorHandler)
@@ -39,6 +44,21 @@ export class SociService {
   store(formData:any){
     // return this.httpClient.post(this.apiURL + '/soci', formData,{headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' })})
     return this.httpClient.post(this.apiURL + '/soci', formData,{headers: new HttpHeaders({ 'Content-Type': 'file', 'Accept': 'file' })})
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  edit(id:number){
+    return this.httpClient.get(this.apiURL + '/soci/' + id + '/edit',this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    );
+  }
+
+  saveColumnOrder(columnOrder,type): Observable<any>{
+    let param = {'columnOrder':columnOrder,'type':type}
+    return this.httpClient.post(this.apiURL + '/soci/column-order',param)
     .pipe(
       catchError(this.errorHandler)
     )

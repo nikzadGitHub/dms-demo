@@ -1,0 +1,109 @@
+.rcorners{
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.purple{
+    background-color: #424562;
+    color: white;
+}
+
+.white{
+    background-color: white;
+}
+
+.grey{
+    background-color: rgb(245, 245, 245);
+}
+
+.customBorder{
+    border-color: #70ACF4;
+}
+
+.card{
+    padding: 0%;
+}
+
+.card-header{
+    border: none;
+}
+
+.customCardHeight{
+    height: 10px;
+}
+
+thead{
+    text-align: center;
+    border: none;
+    border-top: gray;
+    border-bottom: gray;
+    background-color: rgb(245, 245, 245);
+}
+
+input{
+    width: 70%;
+}
+
+input:disabled{
+    background: white;
+    border: none;
+    text-align: center;
+}
+
+.td-actions{
+    font-size: 1.5em;
+}
+
+.scroll {
+    direction: rtl;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.scroll > * {
+    direction: ltr;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.purple{
+    background-color: #424562;
+    color: white;
+}
+.no-border {
+    border: 0;
+    box-shadow: none;
+}
+
+:host ::ng-deep .customColor.p-accordion {
+    .p-accordion-header {
+        font-size: 1.5em; 
+        font-weight: bolder;
+        background: white;
+        border: none;
+        span.pi{
+            margin-top: -8px;
+            position: absolute;
+            right: 0.5em;
+            top: 50%;
+        }
+        .p-accordion-header-link{
+            background: white;
+            border:none;
+        }
+    }
+    .p-accordion-content{
+        padding: 0px;
+        overflow-x: hidden;
+    }
+}
+
+.row{
+    padding: 10px;
+}
+
