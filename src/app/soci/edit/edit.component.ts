@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Term } from '../../quote/create/terms';
 import { BillingList } from '../../quote/edit/billing-list';
 import { Product } from '../../quote/products/products';
@@ -15,6 +16,17 @@ import { SociService } from '../soci.service';
 })
 export class EditComponent implements OnInit {
 
+  @ViewChild('billingRemarkModal') billingRemarkModal : ModalDirective;
+  @ViewChild('paymentRemarkModal') paymentRemarkModal : ModalDirective;
+  @ViewChild('dangerModal') dangerModal : ModalDirective;
+
+  paymentCurrentIndex:number;
+  billingRemarks:string;
+  paymentRemarks:string;
+  remarkIndex:number;
+  dangerBody:string;
+  modal_type: string = "";
+  show:boolean;
   filteredProducts: Product[];
   controller: any;
   selectedProductAdvanced: Product[] = [];
@@ -363,6 +375,144 @@ export class EditComponent implements OnInit {
       console.log(data)
       this.filteredProducts = data['data'];
     });
+  }
+
+  changePaymentPercent(index){
+    this.paymentCurrentIndex = index;
+    let maxPercentage = 100;
+    let currentPercentage = 0;
+
+    let payments = this.payments().controls;
+    let billing_id = payments[index]['controls'].billing_id.value;
+    let fullAmount = this.billingList.find(x => x.billing_id == billing_id).amount;
+
+    let filteredPayments = payments.filter(x => x['controls'].billing_id.value == billing_id);
+
+    filteredPayments.forEach(payment => {
+      currentPercentage += parseFloat(payment['controls'].percentage.value);
+      if(currentPercentage > maxPercentage){
+        this.dangerBody = "You have entered more than 100% for the payment schedule for billing ID: "+billing_id;
+        this.modal_type = 'paymentPercentage';
+        this.dangerModal.show();
+      } else {
+        payment['controls'].amount.setValue((fullAmount * ((payment['controls'].percentage.value)/100)).toFixed(2))
+      }
+    });
+  }
+
+  changePaymentValue(index){
+    this.paymentCurrentIndex = index;
+
+    let payments = this.payments().controls;
+    let billing_id = payments[index]['controls'].billing_id.value;
+    let fullAmount = this.billingList.find(x => x.billing_id == billing_id).amount;
+    let currentAmount = 0;
+
+    let filteredPayments = payments.filter(x => x['controls'].billing_id.value == billing_id);
+
+    filteredPayments.forEach(payment => {
+      currentAmount += parseFloat(payment['controls'].amount.value);
+      if(currentAmount > fullAmount){
+        this.dangerBody = "You have entered excessive amount of "+(currentAmount-fullAmount)+" for the payment schedule for "+
+                          "billing ID: "+billing_id;
+        this.modal_type = 'paymentValue';
+        this.dangerModal.show();
+      } else {
+        payment['controls'].percentage.setValue(((currentAmount/fullAmount) * 100).toFixed(2))
+      }
+    });
+  }
+
+  billingRemarkModalOpen(index){
+    let billings = this.billings().controls;
+    this.billingRemarks = billings[index]['controls'].remarks.value;
+    this.remarkIndex = index;
+    this.billingRemarkModal.show();
+  }
+
+  billingRemarkModalClose(){
+    let billings = this.billings().controls;
+    billings[this.remarkIndex]['controls'].remarks.setValue(this.billingRemarks);
+    this.billingRemarkModal.hide();
+  }
+
+  paymentRemarkModalOpen(index){
+    let payments = this.payments().controls;
+    this.paymentRemarks = payments[index]['controls'].remarks.value;
+    this.remarkIndex = index;
+    this.paymentRemarkModal.show();
+  }
+
+  paymentRemarkModalClose(){
+    let payments = this.payments().controls;
+    payments[this.remarkIndex]['controls'].remarks.setValue(this.paymentRemarks);
+    this.paymentRemarkModal.hide();
+  }
+
+  setDefaultPayment(){
+    this.payments().clear();
+    this.quotations.forEach(element => {
+      element.payment_schedules.forEach(payment => {
+        this.payments().push(this.existingPayments(payment));
+      });
+    });
+  }
+
+  setPaymentAutoAssignPercentage(){
+    let index = this.paymentCurrentIndex;
+    let maxPercentage = 100;
+
+    let payments = this.payments().controls;
+    let billing_id = payments[index]['controls'].billing_id.value;
+    let fullAmount = this.billingList.find(x => x.billing_id == billing_id).amount;
+
+    let filteredPayments = payments.filter(x => x['controls'].billing_id.value == billing_id);
+
+    filteredPayments.forEach(payment => {
+        maxPercentage -= parseFloat(payment['controls'].percentage.value)
+        if( maxPercentage < 0 )
+        {
+          payment['controls'].percentage.setValue(parseFloat(payment['controls'].percentage.value) + maxPercentage)
+          payment['controls'].amount.setValue((fullAmount * ((payment['controls'].percentage.value)/100)).toFixed(2))
+        }
+        else if( maxPercentage == 0 ){
+          payment['controls'].percentage.setValue(0)
+          payment['controls'].amount.setValue(0)
+        } else {
+          payment['controls'].amount.setValue((fullAmount * ((payment['controls'].percentage.value)/100)).toFixed(2))
+        }
+    });
+  }
+
+  setPaymentAutoAssignValue(){
+    let index = this.paymentCurrentIndex;
+
+    let payments = this.payments().controls;
+    let billing_id = payments[index]['controls'].billing_id.value;
+    let fullAmount = this.billingList.find(x => x.billing_id == billing_id).amount;
+    let fixFullAmount = fullAmount;
+
+    let filteredPayments = payments.filter(x => x['controls'].billing_id.value == billing_id);
+
+    filteredPayments.forEach(payment => {
+      fullAmount -= parseFloat(payment['controls'].amount.value);
+      console.log(fullAmount)
+      if( fullAmount < 0 ){
+        payment['controls'].amount.setValue(parseFloat(payment['controls'].amount.value) + fullAmount)
+        payment['controls'].percentage.setValue(
+          (
+            (payment['controls'].amount.value/fixFullAmount)*100
+          ).toFixed(2)
+          )
+      } else {
+        let percentage = (payment['controls'].amount.value/fixFullAmount) * 100;
+        payment['controls'].percentage.setValue(percentage.toFixed(2))
+      }
+    });
+  }
+
+  submit(){
+    console.log(this.form.value)
   }
 
   get f(){
