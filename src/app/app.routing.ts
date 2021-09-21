@@ -106,6 +106,14 @@ export const routes: Routes = [
         path: 'contact',
         loadChildren: () => import('./views/contact/contact.module').then(m => m.ContactModule)
       },
+      {
+        path: 'leads',
+        loadChildren: () => import('./views/leads/leads.module').then(m => m.LeadsModule)
+      },
+      {
+        path: 'prospects',
+        loadChildren: () => import('./views/prospects/prospects.module').then(m => m.ProspectsModule)
+      },
     ]
   },
   { path: '**', component: P404Component }

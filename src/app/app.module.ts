@@ -64,6 +64,7 @@ import { TableModule } from 'primeng/table';
 import { SociModule } from './soci/soci.module';
 import { SettingsModule } from './views/settings/settings.module';
 import { ContactModule } from './views/contact/contact.module';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   imports: [
@@ -97,7 +98,8 @@ import { ContactModule } from './views/contact/contact.module';
     AccordionModule,
     TableModule,
     SociModule,
-    ContactModule
+    ContactModule,
+    MatSlideToggleModule
   ],
   declarations: [
     AppComponent,

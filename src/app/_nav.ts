@@ -11,6 +11,16 @@ export const navItems: INavData[] = [
     }
   },
   {
+    name: 'Leads',
+    url: 'leads/index',
+    icon: 'icon-home'
+  },
+  {
+    name: 'Prospects',
+    url: 'prospect/index',
+    icon: 'icon-home'
+  },
+  {
     title: true,
     name: 'Theme'
   },

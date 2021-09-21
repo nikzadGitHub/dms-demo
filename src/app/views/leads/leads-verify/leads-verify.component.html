@@ -1,0 +1,164 @@
+<div class="animated fadeIn">
+    <div class="col-lg col-md-6">
+        <div class="card rcorners">
+            <div class="card-header row" style="background-color: #898485; color: white;">
+                <div style="padding-left: 20px;">
+                    <h2>Verify Lead</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="card-row">
+                        <div class="lead-data">
+                            <div class="lead-header">
+                                <div class="row">
+                                    <div class="col-md-auto">
+                                        <h3 class="bold">
+                                            {{ form_controls.company_name.value }}
+                                        </h3>
+                                    </div>
+                                    <div class="col-md-auto lead-id">
+                                        <div>
+                                            <span>LEAD ID</span>
+                                            <span>{{ form_controls.id.value }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="details grey">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="bold">Created Date</label>
+                                            <div>{{ form_controls.created_at.value }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="bold">Contact Name</label>
+                                            <div>{{ form_controls.contact_name.value }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="bold">Email</label>
+                                            <div>{{ form_controls.email.value }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="bold">Owner</label>
+                                            <div>{{ form_controls.lead_owner.value }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="verify-form">
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header required-field">
+                                            Able to Contact
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-slide-toggle formControlName="able_to_contact" class="example-margin">
+                                            </mat-slide-toggle>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Do We Sell These Products
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-slide-toggle formControlName="do_we_sell_these_product" class="example-margin">
+                                            </mat-slide-toggle>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header required-field">
+                                            Porducts That Not Selling
+                                        </div>
+                                        <div class="col-md-7">
+                                            <textarea [rows]="5" style="width: 100%;" pInputTextarea [autoResize]="autoResize" formControlName="products_thats_not_selling"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Lead Status
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p-radioButton name="lead_status" value="new" formControlName="lead_status" inputId="status1"></p-radioButton>
+                                            <label class="radio-label" for="status1">New</label>
+                                            <p-radioButton name="lead_status" value="qualify" formControlName="lead_status" inputId="status2"></p-radioButton>
+                                            <label class="radio-label" for="status2">Qualify</label>
+                                            <p-radioButton name="lead_status" value="disqualify" formControlName="lead_status" inputId="status3"></p-radioButton>
+                                            <label class="radio-label" for="status3">Disqualify</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header required-field">
+                                            Reason for Disqualifying
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p-dropdown [options]="reasons" formControlName="reason_for_disqualifying" placeholder="Select a Reason" [virtualScroll]="true" [itemSize]="31" [filter]="false" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Remark
+                                        </div>
+                                        <div class="col-md-7">
+                                            <textarea [rows]="5" style="width: 100%;" pInputTextarea [autoResize]="autoResize" formControlName="remark"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 submit-button" align=center>
+                        <div class="form-group">
+                            <button class="btn btn-secondary" type="submit">SAVE</button>
+                            <button class="btn btn-primary" type="button" (click)="CreateProspect()">Create Prospect</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer bg-transparent">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Success</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{alertBody}}</p>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

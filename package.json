@@ -54,6 +54,7 @@
     "font-awesome": "^4.7.0",
     "ng2-charts": "^2.4.2",
     "ngx-bootstrap": "^6.2.0",
+    "ngx-csv-parser": "0.0.7",
     "ngx-perfect-scrollbar": "^10.1.0",
     "primeicons": "^4.1.0",
     "primeng": "^11.4.2",
