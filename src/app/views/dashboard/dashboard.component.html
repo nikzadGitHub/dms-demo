@@ -48,6 +48,148 @@
           </div>
         </div><!--/.col-->
       </div><!--/.row-->
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div class="mb-4">
+                  Monthly Sales Performance VS Sales Target
+                </div>
+                <div>
+                  Dropdown
+                </div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <div>
+                  <label style="font-size:12px;">Monthly | Accumulative</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph1" value="salesTarget" ></p-checkbox>
+                  <label class="ml-1 mb-0 mt-1" style="font-size:12px;">Sales Target</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph1" value="invoice" ></p-checkbox>
+                  <label class="ml-1 mb-0 mt-1" style="font-size:12px;">Invoice</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph1" value="salesOrder" ></p-checkbox>
+                  <label class="ml-1 mb-0 mt-1" style="font-size:12px;">Sales Order</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph1" value="funnel" ></p-checkbox>
+                  <label class="ml-1 mb-0 mt-1" style="font-size:12px;">Committed Funnel</label>
+                </div>
+              </div>
+              <div>
+                Graph
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="mb-4">
+                Sales Performance
+              </div>
+              <div class="d-flex justify-content-between">
+                <label>Actual Performance</label>
+                <label>50%</label>
+                <label></label>
+              </div>
+              <div>
+                <p-progressBar [value]="50" [showValue]="false"></p-progressBar>
+              </div>
+              <div class="row ml-2 mt-3">                
+                <div class="col-1"><div style="width:20px;height:20px;background:#FF7B00;border-radius:20px;"></div></div>
+                <div class="col-7">Total Sales Amount</div>
+                <div class="col-4">RM4,700,000.69</div>
+              </div>
+              <div class="row ml-2 mt-4">                
+                <div class="col-1"><div style="width:20px;height:20px;background:#E5E5E5;border-radius:20px;"></div></div>
+                <div class="col-7">Year: 2021-2022 Sales Target Amount</div>
+                <div class="col-4">RM9,600,000.00</div>
+              </div>
+              <div class="row ml-2 mt-1">                
+                <div class="col-1"></div>
+                <div class="col-7">Q1 (3+9): 1 Apr - 30 Jun 2021</div>
+                <div class="col-4">RM3,200,000.00</div>
+              </div>
+              <div class="row ml-2 mt-1">                
+                <div class="col-1"></div>
+                <div class="col-7">Q2 (6+6): 1 Jul - 30 Sep 2021</div>
+                <div class="col-4">RM3,200,000.00</div>
+              </div>
+              <div class="row ml-2 mt-1">                
+                <div class="col-1"></div>
+                <div class="col-7">Q3 (9+3): 1 Oct - 31 Dec 2021</div>
+                <div class="col-4">RM3,200,000.00</div>
+              </div>
+              <div class="row ml-2 mt-1">                
+                <div class="col-1"></div>
+                <div class="col-7">Q4 (11+1): 1 Jan - 31 Mar 2022</div>
+                <div class="col-4">RM3,200,000.00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="mb-4">
+                Sales Performance - Brands (2021)
+              </div>
+              <div class="d-flex justify-content-end">
+                <div class="d-flex">
+                  <p-checkbox name="graph1" value="invoice" ></p-checkbox>
+                  <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Invoice</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph1" value="salesOrder" ></p-checkbox>
+                  <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Sales Order</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph1" value="funnel" ></p-checkbox>
+                  <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Committed Funnel</label>
+                </div>
+              </div>
+              <div>
+                Graph
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="mb-4">
+                Top 10 Customer List
+              </div>
+              <div class="d-flex justify-content-end">
+                <div class="d-flex">
+                  <p-checkbox name="graph1" value="invoice" ></p-checkbox>
+                  <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Invoice</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph1" value="salesOrder" ></p-checkbox>
+                  <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Sales Order</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph1" value="funnel" ></p-checkbox>
+                  <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Committed Funnel</label>
+                </div>
+              </div>
+              <div>
+                Graph
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-body">
           <div class="row">

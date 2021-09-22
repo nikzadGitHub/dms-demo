@@ -4,6 +4,9 @@ import { ChartsModule } from 'ng2-charts';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import {TabViewModule} from 'primeng/tabview';
+import {CheckboxModule} from 'primeng/checkbox';
+import {ProgressBarModule} from 'primeng/progressbar';
+import {DropdownModule} from 'primeng/dropdown';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -15,7 +18,10 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     ChartsModule,
     BsDropdownModule,
     ButtonsModule.forRoot(),
-    TabViewModule
+    TabViewModule,
+    CheckboxModule,
+    ProgressBarModule,
+    DropdownModule
   ],
   declarations: [ DashboardComponent ]
 })

@@ -8,6 +8,11 @@ import { ChartType } from 'chart.js';
 })
 export class DashboardComponent implements OnInit {
 
+  graphOptions=[
+    {label:'code1',value:'id1'},
+    {label:'code2',value:'id2'},
+   ];
+
   radioModel: string = 'Month';
 
   // lineChart1
