@@ -4,30 +4,38 @@ export const navItems: INavData[] = [
   {
     name: 'Home',
     url: '/dashboard',
-    icon: 'icon-home',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    }
+    icon: 'cil-home',
+  },
+  {
+    divider: true,
   },
   {
     name: 'Leads',
     url: 'leads/index',
-    icon: 'icon-home'
+    icon: 'cil-user-plus'
   },
   {
     name: 'Prospects',
     url: 'prospect/index',
-    icon: 'icon-home'
+    icon: 'cil-user-plus'
   },
   {
-    title: true,
-    name: 'Theme'
+    name: 'Opportunities',
+    url: '/opportunity',
+    icon: 'cil-money',
+  },
+  {
+    name: 'Activities',
+    url: '/activities',
+    icon: 'cil-calendar',
+  },
+  {
+    divider: true,
   },
   {
     name: 'Quote',
     url: 'quote/index',
-    icon: 'icon-menu',
+    icon: 'cil-dollar',
     // children: [
     //   {
     //     name: 'Quote List',
@@ -42,17 +50,76 @@ export const navItems: INavData[] = [
   {
     name: 'SOCI',
     url: '/soci/index',
-    icon: 'icon-drop'
+    icon: 'cil-storage'
   },
+  {
+    name: 'Sales Target',
+    url: '/salestarget',
+    icon: 'cil-scrubber'
+  },
+  {
+    name: 'Reports',
+    url: '/reports',
+    icon: 'cil-chart-line'
+  },
+  {
+    divider: true,
+  },
+  {
+    name: 'Customers',
+    url: '/customers',
+    icon: 'cil-briefcase',
+  },
+  {
+    name: 'Contact',
+    url: '/contact/index',
+    icon: 'cil-address-book',
+  },
+  {
+    divider: true,
+  },
+  {
+    name: 'Manager View',
+    url: '/managerview',
+    icon: 'cil-group',
+    children: [
+      {
+        name: 'Approval',
+        url: '/managerview/approval',
+      },
+      {
+        name: 'Reassignment',
+        url: '/managerview/reassignment',
+      },
+      {
+        name: 'Deactivate/Active',
+        url: '/managerview/active',
+      },
+      {
+        name: 'Sales Target Setup',
+        url: '/managerview/setup',
+      },
+    ]
+  },
+  {
+    divider: true,
+  },
+  {
+    name: 'Profile',
+    url: '/rofile',
+    icon: 'cil-user'
+  },
+  {
+    name: 'Logout',
+    url: '/logout',
+    icon: 'cil-account-logout'
+  },
+
+/*
   {
     name: 'Colors',
     url: '/theme/colors',
-    icon: 'icon-drop'
-  },
-  {
-    name: 'Opportunities',
-    url: '/opportunity',
-    icon: 'cil-money',  
+    icon: 'cil-account-logout'
   },
   {
     name: 'Systems',
@@ -342,9 +409,6 @@ export const navItems: INavData[] = [
       }
     ]
   },
-  {
-    name: 'Contact',
-    url: '/contact/index',
-    icon: 'cil-contact',
-  },
+*/
+
 ];
