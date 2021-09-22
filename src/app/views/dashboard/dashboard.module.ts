@@ -8,6 +8,7 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
 import {ChartModule} from 'primeng/chart';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -23,7 +24,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     CheckboxModule,
     ProgressBarModule,
     DropdownModule,
-    ChartModule
+    ChartModule,
+    SplitButtonModule
   ],
   declarations: [ DashboardComponent ]
 })

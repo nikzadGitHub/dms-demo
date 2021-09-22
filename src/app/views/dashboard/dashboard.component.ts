@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { ChartType } from 'chart.js';
+import { SelectItem } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -15,6 +17,7 @@ export class DashboardComponent implements OnInit {
   graph1: string[] = [];
   graph2: string[] = [];
   graph3: string[] = [];
+  period: MenuItem[];
 
   graphOptions=[
     {label:'code1',value:'id1'},
@@ -25,6 +28,21 @@ export class DashboardComponent implements OnInit {
     this.graph1 = ['salesTarget','invoice','salesOrder','funnel'];
     this.graph2 = ['invoice','salesOrder','funnel'];
     this.graph3 = ['invoice','salesOrder','funnel'];
+
+    this.period = [{
+        label: 'Monthly', 
+        command: () => {
+          this.periodChanged();
+        }
+      },
+      {
+        label: 'Quartely', 
+        command: () => {
+          this.periodChanged();
+        }
+      }
+            
+    ];
 
     this.salesData = {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -52,7 +70,7 @@ export class DashboardComponent implements OnInit {
         {
           type: 'bar',
           label: 'Committed Funnel',
-          backgroundColor: '#FFA726',
+          backgroundColor: '#8EB9E5',
           data: [41000, 52000, 24000, 74000, 23000, 21000, 32000, 24000, 74000, 23000, 21000, 32000]
         }
       ]
@@ -76,7 +94,7 @@ export class DashboardComponent implements OnInit {
         {
           type: 'bar',
           label: 'Committed Funnel',
-          backgroundColor: '#FFA726',
+          backgroundColor: '#8EB9E5',
           data: [41000, 52000, 24000, 74000, 23000, 21000, 32000, 24000, 74000, 23000, 21000, 32000]
         }
       ]
@@ -100,7 +118,7 @@ export class DashboardComponent implements OnInit {
         {
           type: 'bar',
           label: 'Committed Funnel',
-          backgroundColor: '#FFA726',
+          backgroundColor: '#8EB9E5',
           data: [41000, 52000, 24000, 74000, 23000, 21000, 32000, 24000, 74000, 23000, 21000, 32000]
         }
       ]
@@ -134,5 +152,13 @@ export class DashboardComponent implements OnInit {
     };
 
   }
+
+  periodChanged(){
+    //ToDo
+  }
+  
+
 }
+
+
 

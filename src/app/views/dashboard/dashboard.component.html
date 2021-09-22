@@ -57,7 +57,10 @@
                   Monthly Sales Performance VS Sales Target
                 </div>
                 <div>
-                  Dropdown
+                  <!--<p-dropdown [options]="period"></p-dropdown>-->
+                  <p-splitButton icon="cil-calendar" [model]="period" styleClass="periodButton"></p-splitButton>
+
+                    
                 </div>
               </div>
               <div class="d-flex justify-content-between">
@@ -157,7 +160,7 @@
                 </div>
               </div>
               <div>
-                <p-chart type="bar" [data]="performData" [options]="chartOptions"></p-chart>h
+                <p-chart type="bar" [data]="performData" [options]="chartOptions"></p-chart>
               </div>
             </div>
           </div>
