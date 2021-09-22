@@ -7,6 +7,7 @@ import {TabViewModule} from 'primeng/tabview';
 import {CheckboxModule} from 'primeng/checkbox';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
+import {ChartModule} from 'primeng/chart';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -21,7 +22,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     TabViewModule,
     CheckboxModule,
     ProgressBarModule,
-    DropdownModule
+    DropdownModule,
+    ChartModule
   ],
   declarations: [ DashboardComponent ]
 })
