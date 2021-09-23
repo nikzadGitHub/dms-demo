@@ -12,6 +12,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     ProgressBarModule,
     DropdownModule,
     ChartModule,
-    SplitButtonModule
+    SplitButtonModule,
+    InputNumberModule
   ],
   declarations: [ DashboardComponent ]
 })

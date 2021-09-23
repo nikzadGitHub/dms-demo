@@ -29,3 +29,16 @@
 .periodButton .p-button-icon {
     color: black;
 }
+
+.arrowBtn.p-button{
+  border: none;
+  background: transparent;
+  color: black;
+}
+
+.arrowBtn.p-button:enabled:hover {
+  border: none;
+  background: transparent;
+  color: black;
+}
+

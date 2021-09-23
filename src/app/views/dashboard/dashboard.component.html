@@ -2,6 +2,18 @@
   <p-tabPanel header="SALES PERFORMANCE" [selected]="true">
     <div class="animated fadeIn">
       <div class="row">
+        <div class="col-12 d-flex justify-content-end mb-2">
+          <div class="mr-1 d-flex">
+            <p-button styleClass="arrowBtn" icon="pi pi-chevron-left"></p-button>
+            <div class="d-flex flex-column justify-content-center">2021 </div>
+            <p-button styleClass="arrowBtn" icon="pi pi-chevron-right"></p-button>
+          </div>
+          <div class="ml-1">
+            <p-splitButton icon="cil-calendar" [model]="period" styleClass="periodButton"></p-splitButton>
+          </div>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-sm-12 col-md-4">
           <div class="card text-white bg-warning">
             <div class="card-body pb-0">
@@ -60,7 +72,7 @@
                   <!--<p-dropdown [options]="period"></p-dropdown>-->
                   <p-splitButton icon="cil-calendar" [model]="period" styleClass="periodButton"></p-splitButton>
 
-                    
+
                 </div>
               </div>
               <div class="d-flex justify-content-between">
