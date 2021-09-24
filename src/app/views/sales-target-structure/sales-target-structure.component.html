@@ -1,0 +1,77 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Sales Target Structure</strong>
+          <!-- <small>Usage ex.</small>
+          <code style="text-transform:lowercase">&lt;button class="btn btn-brand
+            btn-facebook"&gt;&lt;span&gt;Facebook&lt;/span&gt;&lt;/button&gt;</code> -->
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-sm-6"><label for="ccmonth">Country</label>
+              <p-dropdown [options]="countryList" [(ngModel)]="selectedCountry" optionLabel="official_name"
+                optionValue="code" optionDisabled="!is_active" styleClass="form-control"
+                placeholder="Select Country" emptyMessage="No Country Available"
+                (onChange)="countryChanged($event)"></p-dropdown>
+
+            </div>
+            <div class="form-group col-sm-6"><label for="ccyear">Unit</label>
+                <p-dropdown [options]="countryUnits" [(ngModel)]="selectedUnit" optionLabel="title"
+                optionValue="id" optionDisabled="!is_active" styleClass="form-control"
+                placeholder="Select Unit" emptyMessage="No Unit Available"
+                (onChange)="unitChanged($event)"></p-dropdown>
+            </div>
+            <!-- <div class="col-sm-4">
+              <div class="form-group"><label for="cvv">CVV/CVC</label><input type="text" id="cvv" placeholder="123"
+                  class="form-control"></div>
+            </div> -->
+          </div>
+          <p-table [value]="salesTarget" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Unit Code</th>
+                    <th>Name</th>
+                    <th>Year</th>
+                    <!-- <th>January</th>
+                    <th>Febuary</th>
+                    <th>March</th>
+                    <th>April</th>
+                    <th>May</th>
+                    <th>Jun</th>
+                    <th>July</th>
+                    <th>August</th>
+                    <th>September</th>
+                    <th>October</th>
+                    <th>November</th>
+                    <th>December</th> -->
+                    <th>Total</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-target>
+                <tr>
+                    <td>{{target.unit.code}}</td>
+                    <td>{{target.user.full_name}}</td>
+                    <td>{{target.year}}</td>
+                    <!-- <td>{{target.month_01_target}}</td>
+                    <td>{{target.month_02_target}}</td>
+                    <td>{{target.month_03_target}}</td>
+                    <td>{{target.month_04_target}}</td>
+                    <td>{{target.month_05_target}}</td>
+                    <td>{{target.month_06_target}}</td>
+                    <td>{{target.month_07_target}}</td>
+                    <td>{{target.month_08_target}}</td>
+                    <td>{{target.month_09_target}}</td>
+                    <td>{{target.month_10_target}}</td>
+                    <td>{{target.month_11_target}}</td>
+                    <td>{{target.month_12_target}}</td> -->
+                    <td>{{getTargetTotal(target)}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
