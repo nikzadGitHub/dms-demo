@@ -51,7 +51,7 @@ export class LoginComponent {
     
     if(this.formLogin.valid) 
     {
-      this.dialogService.showErrorDialog("In");
+      // this.dialogService.showErrorDialog("In");
       this.formSubmitted = true;
 
       let res = this.authService.loginUser({
