@@ -3,6 +3,12 @@
   overflow: hidden;
 }
 
+.required-field:after {
+  color: #d00;
+  content: "*";
+  margin-left: 3px;
+}
+
 .card-body {
   padding: 0%;
   .submit-button {
@@ -131,12 +137,12 @@
     }
 }
 
-.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>td,
 .table-striped>tbody>tr:nth-child(odd)>th {
    background-color: white; // Choose your own color here
 }
 
-.table-striped>tbody>tr:nth-child(even)>td, 
+.table-striped>tbody>tr:nth-child(even)>td,
 .table-striped>tbody>tr:nth-child(even)>th {
    background-color: rgb(242 242 242); // Choose your own color here
 }
