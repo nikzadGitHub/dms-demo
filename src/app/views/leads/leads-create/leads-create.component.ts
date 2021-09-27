@@ -15,14 +15,15 @@ export class LeadsCreateComponent implements OnInit {
   public autoResize: boolean = true;
   @ViewChild('successModal') successModal : ModalDirective;
   @ViewChild('dangerModal') dangerModal : ModalDirective;
-  @ViewChild('notFoundModal') notFoundModal : ModalDirective;
+  @ViewChild('foundModal') foundModal : ModalDirective;
   
   form: FormGroup;
   id:any;
   alertBody: string;
   alertHeader: string;
   alretType: string = 'company';
-  filteredData: any;
+  filteredData: any = [];
+  filteredCompanyData: any = [];
   source_items:any = [
     'Partner',
     'Partner 1',
@@ -32,6 +33,7 @@ export class LeadsCreateComponent implements OnInit {
     'Selangor',
     'Kuala Lumpur',
     'Perak',
+    'aa'
   ];
   items:any = [
     {label: 'item 1'},
@@ -40,7 +42,7 @@ export class LeadsCreateComponent implements OnInit {
     {label: 'item 4'},
     {label: 'item 5'},
   ];
-  not_found_message = 'Do you want to proceed to create new lead?';
+  message = 'Do you want to go to opportunity add page?';
   isSkipcompany:any = false;
   isSkipcontact:any = false;
 
@@ -100,30 +102,37 @@ export class LeadsCreateComponent implements OnInit {
     if (alretType == 'company') {
       this.isSkipcompany = true;
       this.submit();
-    } else if (alretType == 'contact') {
-      this.isSkipcontact = true;
-      this.submit();
     }
   }
 
   submit(){
-    // if (this.form.value.company_id == '' && !this.isSkipcompany) {
-    //   this.alertHeader = 'Company name not found!';
-    //   this.alertBody = this.not_found_message;
-    //   this.alretType = 'company';
-    //   this.notFoundModal.show();
-    // } else if (this.form.value.contact_id == '' && !this.isSkipcontact) {
-    //   this.alertHeader = 'Individual name not found!';
-    //   this.alertBody = this.not_found_message;
-    //   this.alretType = 'contact';
-    //   this.notFoundModal.show();
-    // } else {
+    let company_name = this.form.value.company_name;
+    if (this.isSkipcompany) {
+      this.create(true);
+      this.router.navigateByUrl('opportunity/new');
+    } else {
+      this.leadsService.searchCompany(company_name).subscribe(res => {
+        if(res.success) {
+          this.alertHeader = res.data;
+          this.alertBody = this.message;
+          this.alretType = 'company';
+          this.foundModal.show();
+          return;
+        } else {
+          this.create();
+        }
+      });
+    }
+  }
+
+  create(skipModal = false) {
     this.leadsService.store(this.form.value).subscribe(res => {
-      this.alertBody = res.message || 'Created Successfully';
-      this.id = res.data.value;
-      this.successModal.show();
+      if (!skipModal) {
+        this.alertBody = res.message || 'Created Successfully';
+        this.id = res.data.value;
+        this.successModal.show();
+      }
     });
-    // }
   }
 
   verify(){
@@ -139,6 +148,35 @@ export class LeadsCreateComponent implements OnInit {
   }
 
   searchName(event){
+    let query = event.query;
+    this.leadsService.searchContact(query).subscribe(res => {
+      console.log(res);
+      if(res.success) {
+        this.filteredData = res.data;
+      }
+    });
+  }
+
+  onSelect(event)
+  {
+    console.log(event);
+    if (event) {
+      let contact_name = this.form.get('contact_name');
+      let mobile_number = this.form.get('mobile_number');
+      let office_number = this.form.get('office_number');
+      let postcode = this.form.get('postcode');
+      let address = this.form.get('address');
+      
+      contact_name.patchValue(event.full_name);
+      mobile_number.patchValue(event.mobile_phone);
+      office_number.patchValue(event.business_phone);
+      postcode.patchValue(event.zipcode);
+      address.patchValue(event.address_1);
+      this.form.patchValue(event);
+    }
+  }
+
+  searchCompanyName(event){
     let filtered: any[] = [];
     let query = event.query;
     for (let i = 0; i < this.items.length; i++) {
@@ -147,15 +185,17 @@ export class LeadsCreateComponent implements OnInit {
         filtered.push(data);
       }
     }
-
-    this.filteredData = filtered;
+    this.filteredCompanyData = filtered;
   }
 
-  onSelect(event, title)
+  onSelectCompany(event, title)
   {
-    let selectedData = event.label;
-    let control = this.form.get(title);
-    control.patchValue(selectedData);
+    console.log(event);
+    if (event) {
+      let selectedData = event.label;
+      let control = this.form.get(title);
+      control.patchValue(selectedData);
+      this.form.patchValue(event);
+    }
   }
-
 }

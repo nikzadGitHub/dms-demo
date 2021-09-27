@@ -88,6 +88,22 @@ export class LeadsService {
     )
   }
 
+  searchContact(contact): Observable<any> {
+    console.log(contact);
+    return this.httpClient.get(this.apiURL + '/lead/contact?contact_name=' + contact)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+  
+  searchCompany(company): Observable<any> {
+    console.log(company);
+    return this.httpClient.get(this.apiURL + '/lead/customer?company_name=' + company)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   errorHandler(error) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {
