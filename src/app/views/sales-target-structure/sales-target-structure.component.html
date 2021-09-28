@@ -31,7 +31,7 @@
           <p-table [value]="salesTarget" responsiveLayout="scroll">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Unit Code</th>
+                    <!-- <th>Unit Code</th> -->
                     <th>Name</th>
                     <th>Year</th>
                     <!-- <th>January</th>
@@ -51,7 +51,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-target>
                 <tr>
-                    <td>{{target.unit.code}}</td>
+                    <!-- <td>{{target.unit.title}}</td> -->
                     <td>{{target.user.full_name}}</td>
                     <td>{{target.year}}</td>
                     <!-- <td>{{target.month_01_target}}</td>
@@ -73,5 +73,41 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="row">
+      <div class="col-12">
+          <div class="card">
+              <div class="card-body">
+                <p-organizationChart [value]="salesTargetOrgChart" styleClass="company">
+                <ng-template let-node pTemplate="leaf">
+                    <span style="font-weight:bold">{{node.label}}</span>
+                    {{node.label}}
+                    <br><b>{{node.data.total}}</b>
+                </ng-template>
+                <ng-template let-node pTemplate="default">
+                    {{node.label}}
+                </ng-template>
+                <ng-template let-node pTemplate="sales-target">
+                    {{node.label}}
+                    <br><small>{{node.data.title}}</small>
+                    <br><small><i>{{node.data.year}}</i></small>
+                    <br><b>{{node.data.total}}</b>
+                </ng-template>
+                <ng-template let-node pTemplate="category">
+                    <b>{{node.label}}</b>
+                    <br>{{node.data.pic}}
+                    <br><small>Approval {{node.data.allowed_discount_percentage * 100}}%</small>
+                    <br><b>{{node.data.total}}</b>
+                </ng-template>
+                <ng-template let-node pTemplate="unit">
+                    <b>{{node.label}}</b>
+                    <br>{{node.data.pic}}
+                    <br><small>Approval {{node.data.allowed_discount_percentage * 100}}%</small>
+                    <br><b>{{node.data.total}}</b>
+                </ng-template>
+            </p-organizationChart>
+              </div>
+          </div>
+      </div>
   </div>
 </div>

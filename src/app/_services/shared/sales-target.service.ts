@@ -15,6 +15,10 @@ export class SalesTargetService {
   getSalesTargetByUnit(unitUuid: string): Observable<any> {
     return this.httpClient.get(SystemConfig.apiBaseUrl + "/sales-target/byunit/" + unitUuid).pipe();
   }
+
+  getSalesTargetOrgChartByCountry(countryCode: string): Observable<any> {
+    return this.httpClient.get(SystemConfig.apiBaseUrl + "/sales-target/orgchart/" + countryCode).pipe();
+  }
 }
 
 // export interface Country {
