@@ -32,8 +32,9 @@
             <ng-template pTemplate="header">
                 <tr>
                     <!-- <th>Unit Code</th> -->
-                    <th>Name</th>
+                    <th pSortableColumn="user.full_name">Name <p-sortIcon field="user.full_name"></p-sortIcon></th>
                     <th>Year</th>
+                    <th>Title</th>
                     <!-- <th>January</th>
                     <th>Febuary</th>
                     <th>March</th>
@@ -54,6 +55,7 @@
                     <!-- <td>{{target.unit.title}}</td> -->
                     <td>{{target.user.full_name}}</td>
                     <td>{{target.year}}</td>
+                    <td>{{target.title}}</td>
                     <!-- <td>{{target.month_01_target}}</td>
                     <td>{{target.month_02_target}}</td>
                     <td>{{target.month_03_target}}</td>
@@ -91,6 +93,7 @@
                     {{node.label}}
                     <br><small>{{node.data.title}}</small>
                     <br><small><i>{{node.data.year}}</i></small>
+                    <br><small>Approval {{node.data.allowed_discount_percentage * 100}}%</small>
                     <br><b>{{node.data.total}}</b>
                 </ng-template>
                 <ng-template let-node pTemplate="category">
