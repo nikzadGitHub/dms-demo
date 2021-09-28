@@ -4,6 +4,7 @@ import { DialogService } from '../../common/dialog/dialog.service';
 import { CountryService, Country } from '../../_services/shared/country.service';
 import { SalesTargetService } from '../../_services/shared/sales-target.service';
 import { Unit, UnitService } from '../../_services/shared/unit.service';
+import {TreeNode} from 'primeng/api';
 
 @Component({
   selector: 'app-sales-target-structure',
@@ -17,6 +18,7 @@ export class SalesTargetStructureComponent implements OnInit {
   selectedUnit: string = "";
   countryUnits: Unit[] = null;
   salesTarget: any = null;
+  salesTargetOrgChart: TreeNode[] = null;
 
   constructor(
     private countryService: CountryService,
@@ -51,6 +53,7 @@ export class SalesTargetStructureComponent implements OnInit {
   countryChanged(event) {
     this.selectedUnit = "";
     this.salesTarget = null;
+    this.salesTargetOrgChart = null;
 
     this.unitService.getCountryUnit(event.value).subscribe({
       next: (response) => {
@@ -70,12 +73,33 @@ export class SalesTargetStructureComponent implements OnInit {
           this.dialogService.showErrorDialog("Error retrieve country units");
         }
       }
-    })
+    });
+
+
+    this.salesTargetService.getSalesTargetOrgChartByCountry(event.value).subscribe({
+      next: (response) => {
+        console.log(response);
+        if (response.success) {
+          this.zone.run(() => {
+            this.salesTargetOrgChart = response.data;
+          });
+        } else {
+          this.dialogService.showErrorDialog(response.message);
+        }
+      },
+      error: (error) => {
+        if (error.error.message != undefined) {
+          this.dialogService.showErrorDialog(error.error.message);
+        } else {
+          this.dialogService.showErrorDialog("Error retrieve country units");
+        }
+      }
+    });
   }
 
   unitChanged(event) {
     this.salesTarget = null;
-    
+
     console.log(event.value);
     this.salesTargetService.getSalesTargetByUnit(event.value).subscribe({
       next: (response) => {
@@ -106,5 +130,19 @@ export class SalesTargetStructureComponent implements OnInit {
     parseFloat(target.month_09_target) + parseFloat(target.month_10_target) + 
     parseFloat(target.month_11_target) + parseFloat(target.month_12_target);
 
+  }
+
+  calculateUnitTotal(unitReference: string) {
+    let total: number = 0;
+
+    if (this.salesTarget) {
+        for (let target of this.salesTarget) {
+            if (target.unit.reference === unitReference) {
+                total += this.getTargetTotal(target);
+            }
+        }
+    }
+    console.log(total);
+    return total;
   }
 }

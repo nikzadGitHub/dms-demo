@@ -6,7 +6,8 @@ import { SalesTargetComponent } from './sales-target.component';
 import { SalesTargetStructureComponent } from '../sales-target-structure/sales-target-structure.component';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
-
+import { ButtonModule } from 'primeng/button';
+import {OrganizationChartModule} from 'primeng/organizationchart';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,8 @@ import { TableModule } from 'primeng/table';
     FormsModule,
     DropdownModule,
     TableModule,
+    ButtonModule,
+    OrganizationChartModule,
     SalesTargetRoutingModule
   ]
 })
