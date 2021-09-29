@@ -66,6 +66,14 @@ import { SettingsModule } from './views/settings/settings.module';
 import { ContactModule } from './views/contact/contact.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DashboardModule } from './views/dashboard/dashboard.module';
+import { TabViewModule } from 'primeng/tabview';
+import { CheckboxModule }  from 'primeng/checkbox';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { DropdownModule } from 'primeng/dropdown';
+import { ChartModule } from 'primeng/chart';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @NgModule({
   imports: [
@@ -101,7 +109,15 @@ import { DashboardModule } from './views/dashboard/dashboard.module';
     SociModule,
     ContactModule,
     MatSlideToggleModule,
-    DashboardModule
+    DashboardModule,
+    TabViewModule,
+    CheckboxModule,
+    ProgressBarModule,
+    DropdownModule,
+    ChartModule,
+    SplitButtonModule,
+    InputNumberModule,
+    SelectButtonModule
   ],
   declarations: [
     AppComponent,
