@@ -30,7 +30,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <span class="p-input-icon-right" style="width: 100%;">
-                                                <p-autoComplete class="search_field" [inputStyle]="{'width':'100%'}" [style]="{'width':'100%'}" formControlName="company_name" [suggestions]="filteredData" (completeMethod)="searchName($event)" (onSelect)="onSelect($event, 'company_name')">
+                                                <p-autoComplete class="search_field" [inputStyle]="{'width':'100%'}" [style]="{'width':'100%'}" formControlName="company_name" [suggestions]="filteredData" (completeMethod)="searchCompanyName($event)" (onSelect)="onSelectCompany($event, 'company_name')">
                                                     <ng-template let-item pTemplate="item">
                                                         <div class="item">
                                                             <div>{{item.label}}</div>
@@ -51,10 +51,10 @@
                                         </div>
                                         <div class="col-md-6">
                                             <span class="p-input-icon-right" style="width: 100%;">
-                                                <p-autoComplete class="search_field" [inputStyle]="{'width':'100%'}" [style]="{'width':'100%'}" formControlName="contact_name" [suggestions]="filteredData" (completeMethod)="searchName($event)" (onSelect)="onSelect($event, 'contact_name')">
+                                                <p-autoComplete class="search_field" [inputStyle]="{'width':'100%'}" [style]="{'width':'100%'}" formControlName="contact_name" [suggestions]="filteredData" (completeMethod)="searchName($event)" (onSelect)="onSelect($event)">
                                                     <ng-template let-item pTemplate="item">
                                                         <div class="item">
-                                                            <div>{{item.label}}</div>
+                                                            <div>{{item.full_name}} ({{item.mobile_phone}})</div>
                                                         </div>
                                                     </ng-template>
                                                 </p-autoComplete>
@@ -216,7 +216,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div bsModal #notFoundModal="bs-modal" class="modal fade not-found-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #foundModal="bs-modal" class="modal fade not-found-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header" align="center">
@@ -226,7 +226,7 @@
           <p>{{alertBody}}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="notFoundModal.hide()">Cancel</button>
+          <button type="button" class="btn btn-secondary" (click)="foundModal.hide()">Cancel</button>
           <button type="button" class="btn btn-primary" (click)="skip(alretType)">Yes</button>
         </div>
       </div><!-- /.modal-content -->
