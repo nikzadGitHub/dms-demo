@@ -42,3 +42,20 @@
   color: black;
 }
 
+.graph-one-option .p-button {
+  background: transparent!important;
+  color: black!important;
+  border: none!important;
+  font-size: 12px;
+  padding-left:10px!important;
+  padding-right:10px!important;
+}
+
+.graph-one-option .p-button.p-highlight {
+  background: transparent!important;
+  color: blue!important;
+  border: none!important;
+  font-size: 12px;
+  padding-left:10px!important;
+  padding-right:10px!important;
+}

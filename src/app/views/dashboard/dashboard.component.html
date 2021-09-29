@@ -4,12 +4,15 @@
       <div class="row">
         <div class="col-12 d-flex justify-content-end mb-2">
           <div class="mr-1 d-flex">
-            <p-button styleClass="arrowBtn" icon="pi pi-chevron-left"></p-button>
-            <div class="d-flex flex-column justify-content-center">2021 </div>
-            <p-button styleClass="arrowBtn" icon="pi pi-chevron-right"></p-button>
+            <p-button styleClass="arrowBtn" icon="pi pi-chevron-left" (onClick)="yearDecrement()"></p-button>
+            <div class="d-flex flex-column justify-content-center"> {{selectedYear}} </div>
+            <p-button styleClass="arrowBtn" icon="pi pi-chevron-right" (onClick)="yearIncrement()"></p-button>
           </div>
           <div class="ml-1">
-            <p-splitButton icon="cil-calendar" [model]="period" styleClass="periodButton"></p-splitButton>
+            <i class="cil cil-calendar"></i>
+              <p-dropdown [options]="headerPeriod" optionLabel="name" optionValue="value"
+                [(ngModel)]="selectedHeaderPeriod"  (onChange)="fetchSalesPerformance(selectedYear, selectedHeaderPeriod)" >
+            </p-dropdown>
           </div>
         </div>
       </div>
@@ -21,10 +24,10 @@
                 Total Invoiced Amount
               </div>
               <div class="col-12 mt-2 mb-2 text-center" style="font-size: 24px;">
-                RM600,269 (60.02%)
+                RM{{invoiceAmt}} ({{invoicePerc}}%)
               </div>
               <div class="col-12 mb-2 text-center" style="font-size: 16px;">
-                of Target RM1,000,000
+                of Target RM{{invoiceTargetAmt}}
               </div>
             </div>
           </div>
@@ -36,10 +39,10 @@
                 Open Order Amount
               </div>
               <div class="col-12 mt-2 mb-2 text-center" style="font-size: 24px;">
-                RM590,269
+                RM{{orderAmt}}
               </div>
               <div class="col-12 mb-2 text-center" style="font-size: 16px;">
-                Open Order: 14
+                Open Order: {{orderQty}}
               </div>
             </div>
           </div>
@@ -51,10 +54,10 @@
                 Committed Funnel Amount
               </div>
               <div class="col-12 mt-2 mb-2 text-center" style="font-size: 24px;">
-                RM585,382
+                RM{{cfAmt}}
               </div>
               <div class="col-12 mb-2 text-center" style="font-size: 16px;">
-                Total: RM908,854
+                Total: RM{{cfTotalAmt}}
               </div>
             </div>
           </div>
@@ -66,38 +69,40 @@
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <div class="mb-4" style="font-size: 24px; font-weight: 600;">
-                  Monthly Sales Performance VS Sales Target
+                  {{selLabel}} Sales Performance VS Sales Target
                 </div>
-                <div>
-                  <!--<p-dropdown [options]="period"></p-dropdown>-->
-                  <p-splitButton icon="cil-calendar" [model]="period" styleClass="periodButton"></p-splitButton>
-
-
+                <div >
+                  <!--<i class="cil cil-calendar"></i>
+                  <p-dropdown [options]="graphPeriod" optionLabel="name" optionValue="value"
+                    [(ngModel)]="selectedGraphPeriod"  (onChange)="fetchSalesDataByPeriod(selectedGraphPeriod)" >
+                  </p-dropdown>-->
+                  <p-splitButton icon="cil-calendar" [model]="graphPeriod" styleClass="periodButton"></p-splitButton>
                 </div>
               </div>
               <div class="d-flex justify-content-between">
-                <div>
-                  <label style="font-size:12px;">Monthly | Accumulative</label>
+                <div style="font-size: 24px; font-weight: 600;">
+                  <p-selectButton [options]="salesOptions" [(ngModel)]="selectedOption" (onChange)="fetchSalesDataByPeriod(selectedGraphPeriod)" optionLabel="label" optionValue="value" styleClass="graph-one-option"></p-selectButton>
+
                 </div>
                 <div class="d-flex">
-                  <p-checkbox name="graph1" value="salesTarget" [(ngModel)]="graph1"></p-checkbox>
+                  <p-checkbox name="graph1" [(ngModel)]="salesTargetCheck" [binary]="true" (onChange)="getSalesData()"></p-checkbox>
                   <label class="ml-1 mb-0 mt-1" style="font-size:12px;">Sales Target</label>
                 </div>
                 <div class="d-flex">
-                  <p-checkbox name="graph1" value="invoice" [(ngModel)]="graph1"></p-checkbox>
+                  <p-checkbox name="graph1" [(ngModel)]="invoiceCheck" [binary]="true" (onChange)="getSalesData()"></p-checkbox>
                   <label class="ml-1 mb-0 mt-1" style="font-size:12px;">Invoice</label>
                 </div>
                 <div class="d-flex">
-                  <p-checkbox name="graph1" value="salesOrder" [(ngModel)]="graph1"></p-checkbox>
+                  <p-checkbox name="graph1" [(ngModel)]="salesOrderCheck" [binary]="true" (onChange)="getSalesData()"></p-checkbox>
                   <label class="ml-1 mb-0 mt-1" style="font-size:12px;">Sales Order</label>
                 </div>
                 <div class="d-flex">
-                  <p-checkbox name="graph1" value="funnel" [(ngModel)]="graph1"></p-checkbox>
+                  <p-checkbox name="graph1" [(ngModel)]="funnelCheck" [binary]="true" (onChange)="getSalesData()"></p-checkbox>
                   <label class="ml-1 mb-0 mt-1" style="font-size:12px;">Committed Funnel</label>
                 </div>
               </div>
               <div class="mt-2">
-                <p-chart type="bar" [data]="salesData" [options]="chartOptions"></p-chart>
+                <p-chart type="bar" [data]="chartSalesMthQtr" [options]="chartOptions"></p-chart>
               </div>
             </div>
           </div>
@@ -110,41 +115,50 @@
               </div>
               <div class="d-flex justify-content-between">
                 <label>Actual Performance</label>
-                <label>50%</label>
+                <label>{{progressPerc}}%</label>
                 <label></label>
               </div>
               <div>
-                <p-progressBar [value]="50" [showValue]="false"></p-progressBar>
+                <p-progressBar [value]="progressPerc" [showValue]="false"></p-progressBar>
               </div>
               <div class="row ml-2 mt-3">
                 <div class="col-1"><div style="width:20px;height:20px;background:#FF7B00;border-radius:20px;"></div></div>
                 <div class="col-7">Total Sales Amount</div>
-                <div class="col-4">RM4,700,000.69</div>
+                <div class="col-4">RM{{ttlSalesAmt}}</div>
               </div>
               <div class="row ml-2 mt-4">
                 <div class="col-1"><div style="width:20px;height:20px;background:#E5E5E5;border-radius:20px;"></div></div>
-                <div class="col-7">Year: 2021-2022 Sales Target Amount</div>
-                <div class="col-4">RM9,600,000.00</div>
+                <div class="col-7">Year: {{selectedYear}}-{{selectedYear+1}} Sales Target Amount</div>
+                <div class="col-4">RM{{targetSalesAmt}}</div>
               </div>
-              <div class="row ml-2 mt-1">
+              <div class="row ml-2 mt-1" [hidden]="selectedHeaderPeriod == 'quarter'">
                 <div class="col-1"></div>
-                <div class="col-7">Q1 (3+9): 1 Apr - 30 Jun 2021</div>
-                <div class="col-4">RM3,200,000.00</div>
+                <div class="col-7">Q1 (3+9): 1 Apr - 30 Jun {{selectedYear}}</div>
+                <div class="col-4">RM{{q1TargetAmt}}</div>
               </div>
-              <div class="row ml-2 mt-1">
+              <div class="row ml-2 mt-1" [hidden]="selectedHeaderPeriod == 'quarter'">
                 <div class="col-1"></div>
-                <div class="col-7">Q2 (6+6): 1 Jul - 30 Sep 2021</div>
-                <div class="col-4">RM3,200,000.00</div>
+                <div class="col-7">Q2 (6+6): 1 Jul - 30 Sep {{selectedYear}}</div>
+                <div class="col-4">RM{{q2TargetAmt}}</div>
               </div>
-              <div class="row ml-2 mt-1">
+              <div class="row ml-2 mt-1" [hidden]="selectedHeaderPeriod == 'quarter'">
                 <div class="col-1"></div>
-                <div class="col-7">Q3 (9+3): 1 Oct - 31 Dec 2021</div>
-                <div class="col-4">RM3,200,000.00</div>
+                <div class="col-7">Q3 (9+3): 1 Oct - 31 Dec {{selectedYear}}</div>
+                <div class="col-4">RM{{q3TargetAmt}}</div>
               </div>
-              <div class="row ml-2 mt-1">
+              <div class="row ml-2 mt-1" [hidden]="selectedHeaderPeriod == 'quarter'">
                 <div class="col-1"></div>
                 <div class="col-7">Q4 (11+1): 1 Jan - 31 Mar 2022</div>
-                <div class="col-4">RM3,200,000.00</div>
+                <div class="col-4">RM{{q4TargetAmt}}</div>
+              </div>
+              <div class="row ml-2 mt-1" [hidden]="selectedHeaderPeriod != 'quarter'">
+                <div class="col-1"></div>
+                <div class="col-7">{{currentQuarter}}</div>
+                <div class="col-4">RM{{currTargetAmt}}</div>
+              </div>
+              <div class="row ml-2 mt-3">
+                <div class="col-7">Balance Amount To Achieve Salaes Target</div>
+                <div class="col-4">RM{{balanceToAchieve}}</div>
               </div>
             </div>
           </div>
@@ -155,24 +169,24 @@
           <div class="card">
             <div class="card-body">
               <div class="mb-4" style="font-size: 24px; font-weight: 600;">
-                Sales Performance - Brands (2021)
+                Sales Performance - Brands ({{selectedYear}})
               </div>
               <div class="d-flex justify-content-end">
                 <div class="d-flex">
-                  <p-checkbox name="graph2" value="invoice" [(ngModel)]="graph2"></p-checkbox>
+                  <p-checkbox name="graph2" value="invoice" [(ngModel)]="brand_invoiceCheck" [binary]="true" (onChange)="getBrandSalesData()"></p-checkbox>
                   <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Invoice</label>
                 </div>
                 <div class="d-flex">
-                  <p-checkbox name="graph2" value="salesOrder" [(ngModel)]="graph2"></p-checkbox>
+                  <p-checkbox name="graph2" value="salesOrder" [(ngModel)]="brand_salesOrderCheck" [binary]="true" (onChange)="getBrandSalesData()"></p-checkbox>
                   <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Sales Order</label>
                 </div>
                 <div class="d-flex">
-                  <p-checkbox name="graph2" value="funnel" [(ngModel)]="graph2"></p-checkbox>
+                  <p-checkbox name="graph2" value="funnel" [(ngModel)]="brand_funnelCheck" [binary]="true" (onChange)="getBrandSalesData()"></p-checkbox>
                   <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Committed Funnel</label>
                 </div>
               </div>
               <div>
-                <p-chart type="bar" [data]="performData" [options]="chartOptions"></p-chart>
+                <p-chart type="bar" [data]="chartBrandSales" [options]="chartOptions"></p-chart>
               </div>
             </div>
           </div>
@@ -185,20 +199,20 @@
               </div>
               <div class="d-flex justify-content-end">
                 <div class="d-flex">
-                  <p-checkbox name="graph3" value="invoice" [(ngModel)]="graph3"></p-checkbox>
+                  <p-checkbox name="graph3" value="invoice" [(ngModel)]="cust_invoiceCheck" [binary]="true" (onChange)="getCustSalesData()"></p-checkbox>
                   <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Invoice</label>
                 </div>
                 <div class="d-flex">
-                  <p-checkbox name="graph3" value="salesOrder" [(ngModel)]="graph3"></p-checkbox>
+                  <p-checkbox name="graph3" value="salesOrder" [(ngModel)]="cust_salesOrderCheck" [binary]="true" (onChange)="getCustSalesData()"></p-checkbox>
                   <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Sales Order</label>
                 </div>
                 <div class="d-flex">
-                  <p-checkbox name="graph3" value="funnel" [(ngModel)]="graph3"></p-checkbox>
+                  <p-checkbox name="graph3" value="funnel" [(ngModel)]="cust_funnelCheck" [binary]="true" (onChange)="getCustSalesData()"></p-checkbox>
                   <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Committed Funnel</label>
                 </div>
               </div>
               <div>
-                <p-chart type="bar" [data]="custData" [options]="chartOptions"></p-chart>
+                <p-chart type="bar" [data]="chartCustSales" [options]="chartOptions"></p-chart>
               </div>
             </div>
           </div>

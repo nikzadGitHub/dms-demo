@@ -65,6 +65,7 @@ import { SociModule } from './soci/soci.module';
 import { SettingsModule } from './views/settings/settings.module';
 import { ContactModule } from './views/contact/contact.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { DashboardModule } from './views/dashboard/dashboard.module';
 
 @NgModule({
   imports: [
@@ -99,7 +100,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     TableModule,
     SociModule,
     ContactModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    DashboardModule
   ],
   declarations: [
     AppComponent,

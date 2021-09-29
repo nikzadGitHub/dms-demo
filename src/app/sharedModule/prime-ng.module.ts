@@ -12,6 +12,11 @@ import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { TabViewModule } from 'primeng/tabview';
+import { CheckboxModule }  from 'primeng/checkbox';
+import { ProgressBarModule } from 'primeng/progressbar';;
+import { ChartModule } from 'primeng/chart';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [],
@@ -28,7 +33,12 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     TableModule,
     PaginatorModule,
     SplitButtonModule,
-    RadioButtonModule
+    RadioButtonModule,
+    TabViewModule,
+    CheckboxModule,
+    ProgressBarModule,
+    ChartModule,
+    InputNumberModule
   ],
   exports: [
     AutoCompleteModule,
@@ -42,7 +52,12 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     TableModule,
     PaginatorModule,
     SplitButtonModule,
-    RadioButtonModule
+    RadioButtonModule,
+    TabViewModule,
+    CheckboxModule,
+    ProgressBarModule,
+    ChartModule,
+    InputNumberModule
   ]
 })
 export class PrimeNgModule { }
