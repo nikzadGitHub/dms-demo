@@ -88,10 +88,6 @@ export class DashboardComponent implements OnInit {
   cust_salesOrderCheck: boolean = true;
   cust_funnelCheck: boolean = true;
 
-
-
-
-
   constructor(private _dashboardService: DashboardService) {
     this.salesOptions = [
       { label: "Monthly", value: "monthly" },
@@ -144,7 +140,6 @@ export class DashboardComponent implements OnInit {
         }]
       }
     };
-
   }
 
   public yearDecrement() {

@@ -24,7 +24,7 @@
                 Total Invoiced Amount
               </div>
               <div class="col-12 mt-2 mb-2 text-center" style="font-size: 24px;">
-                RM{{invoiceAmt}} ({{invoicePerc}}%)
+                <b>RM{{invoiceAmt}} ({{invoicePerc}}%)</b>
               </div>
               <div class="col-12 mb-2 text-center" style="font-size: 16px;">
                 of Target RM{{invoiceTargetAmt}}
@@ -39,7 +39,7 @@
                 Open Order Amount
               </div>
               <div class="col-12 mt-2 mb-2 text-center" style="font-size: 24px;">
-                RM{{orderAmt}}
+                <b>RM{{orderAmt}}</b>
               </div>
               <div class="col-12 mb-2 text-center" style="font-size: 16px;">
                 Open Order: {{orderQty}}
@@ -54,7 +54,7 @@
                 Committed Funnel Amount
               </div>
               <div class="col-12 mt-2 mb-2 text-center" style="font-size: 24px;">
-                RM{{cfAmt}}
+                <b>RM{{cfAmt}}</b>
               </div>
               <div class="col-12 mb-2 text-center" style="font-size: 16px;">
                 Total: RM{{cfTotalAmt}}
@@ -113,7 +113,7 @@
               <div class="mb-4" style="font-size: 24px; font-weight: 600;">
                 Sales Performance
               </div>
-              <div class="d-flex justify-content-between">
+              <div class="d-flex justify-content-between" style="font-weight: 500;">
                 <label>Actual Performance</label>
                 <label>{{progressPerc}}%</label>
                 <label></label>
@@ -126,38 +126,38 @@
                 <div class="col-7">Total Sales Amount</div>
                 <div class="col-4">RM{{ttlSalesAmt}}</div>
               </div>
-              <div class="row ml-2 mt-4">
+              <div class="row ml-2 mt-4" >
                 <div class="col-1"><div style="width:20px;height:20px;background:#E5E5E5;border-radius:20px;"></div></div>
-                <div class="col-7">Year: {{selectedYear}}-{{selectedYear+1}} Sales Target Amount</div>
+                <div class="col-7"><b>Year: {{selectedYear}}-{{selectedYear+1}}</b> Sales Target Amount</div>
                 <div class="col-4">RM{{targetSalesAmt}}</div>
               </div>
-              <div class="row ml-2 mt-1" [hidden]="selectedHeaderPeriod == 'quarter'">
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedHeaderPeriod == 'quarter'">
                 <div class="col-1"></div>
                 <div class="col-7">Q1 (3+9): 1 Apr - 30 Jun {{selectedYear}}</div>
                 <div class="col-4">RM{{q1TargetAmt}}</div>
               </div>
-              <div class="row ml-2 mt-1" [hidden]="selectedHeaderPeriod == 'quarter'">
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedHeaderPeriod == 'quarter'">
                 <div class="col-1"></div>
                 <div class="col-7">Q2 (6+6): 1 Jul - 30 Sep {{selectedYear}}</div>
                 <div class="col-4">RM{{q2TargetAmt}}</div>
               </div>
-              <div class="row ml-2 mt-1" [hidden]="selectedHeaderPeriod == 'quarter'">
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedHeaderPeriod == 'quarter'">
                 <div class="col-1"></div>
                 <div class="col-7">Q3 (9+3): 1 Oct - 31 Dec {{selectedYear}}</div>
                 <div class="col-4">RM{{q3TargetAmt}}</div>
               </div>
-              <div class="row ml-2 mt-1" [hidden]="selectedHeaderPeriod == 'quarter'">
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedHeaderPeriod == 'quarter'">
                 <div class="col-1"></div>
                 <div class="col-7">Q4 (11+1): 1 Jan - 31 Mar 2022</div>
                 <div class="col-4">RM{{q4TargetAmt}}</div>
               </div>
-              <div class="row ml-2 mt-1" [hidden]="selectedHeaderPeriod != 'quarter'">
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedHeaderPeriod != 'quarter'">
                 <div class="col-1"></div>
                 <div class="col-7">{{currentQuarter}}</div>
                 <div class="col-4">RM{{currTargetAmt}}</div>
               </div>
-              <div class="row ml-2 mt-3">
-                <div class="col-7">Balance Amount To Achieve Salaes Target</div>
+              <div class="row ml-2 mt-3" style="font-weight: 500;">
+                <div class="col-8">Balance Amount To Achieve Sales Target</div>
                 <div class="col-4">RM{{balanceToAchieve}}</div>
               </div>
             </div>
