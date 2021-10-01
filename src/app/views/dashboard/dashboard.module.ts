@@ -11,8 +11,12 @@ import { ChartModule } from 'primeng/chart';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { TableModule } from 'primeng/table';
+import { NgxEchartsModule } from 'ngx-echarts';
+import * as echarts from 'echarts';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -29,9 +33,14 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     ChartModule,
     SplitButtonModule,
     InputNumberModule,
-    SelectButtonModule
+    SelectButtonModule,
+    NgxEchartsModule.forRoot({
+      echarts
+    }),
+    TableModule
   ],
   declarations: [ DashboardComponent ],
-  exports:[ DashboardComponent ]
+  exports:[ DashboardComponent ],
+  providers: [ DatePipe ],
 })
 export class DashboardModule { }

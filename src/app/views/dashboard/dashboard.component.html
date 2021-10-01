@@ -148,7 +148,7 @@
               </div>
               <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedHeaderPeriod == 'quarter'">
                 <div class="col-1"></div>
-                <div class="col-7">Q4 (11+1): 1 Jan - 31 Mar 2022</div>
+                <div class="col-7">Q4 (11+1): 1 Jan - 31 Mar {{selectedYear + 1}}</div>
                 <div class="col-4">RM{{q4TargetAmt}}</div>
               </div>
               <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedHeaderPeriod != 'quarter'">
@@ -221,6 +221,128 @@
     </div>
   </p-tabPanel>
   <p-tabPanel header="SALES FUNNEL">
-    Coming Soon!
+    <div class="row">
+      <div class="col-12 d-flex justify-content-end mb-2">
+        <div class="mr-1 d-flex">
+          <p-button styleClass="arrowBtn" icon="pi pi-chevron-left" (onClick)="yearDecrement()"></p-button>
+          <div class="d-flex flex-column justify-content-center"> {{selectedYear}} </div>
+          <p-button styleClass="arrowBtn" icon="pi pi-chevron-right" (onClick)="yearIncrement()"></p-button>
+        </div>
+        <div class="ml-1">
+          <i class="cil cil-calendar"></i>
+            <p-dropdown [options]="headerPeriod" optionLabel="name" optionValue="value"
+               [(ngModel)]="selectedHeaderPeriod"  (onChange)="fetchSalesPerformance(selectedYear, selectedHeaderPeriod)" >
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="card" style="min-height: 400px;">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+                  Activity of July 2021
+                </div>
+                <div >
+                  <p-splitButton icon="cil-calendar" [model]="funnel_graphPeriod" styleClass="periodButton"></p-splitButton>
+                </div>
+              </div>
+              <div class="mt-2">
+                <!--<div
+                  style="width: 100%; height: 40px; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
+                    Activity<Br />Summary
+              </div>
+                <p-chart type="doughnut" [data]="activityData" [options]="activityChartOptions" [style]="{'width': '40%'}"></p-chart>-->
+                <div echarts [options]="activityData" class="demo-chart" style="height: 300px; width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <div class="card" style="min-height: 400px;">
+            <div class="card-body">
+              <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+                Forecast Category
+              </div>
+                <div echarts [options]="forecastData" class="demo-chart" style="height: 300px; width: 100%;"></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="row">
+      <div class="col-12 col-md-4">
+        <div class="card" style="min-height: 418px;">
+          <div class="card-body">
+            <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+              Opportunities
+            </div>
+            <div class="content">
+              <p-tabView>
+                <p-tabPanel header="Latest">
+                  <p-table [value]="opportunityData" styleClass="p-datatable-striped">
+                    <ng-template pTemplate="body" let-opportunity_list>
+                      <tr>
+                        <td>{{ opportunity_list.date}}</td>
+                        <td>{{opportunity_list.id}}</td>
+                        <td>RM {{opportunity_list.amount}}</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </p-tabPanel>
+                <p-tabPanel header="Overdue">
+                </p-tabPanel>
+              </p-tabView>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="card" style="min-height: 418px;">
+          <div class="card-body">
+            <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+              Activities
+            </div>
+            <div class="content">
+              <p-tabView>
+                <p-tabPanel header="Latest">
+
+                  <p-table [value]="activityLogData" styleClass="p-datatable-striped">
+                    <ng-template pTemplate="body" let-activity_log>
+                      <tr>
+                        <td>{{ activity_log.date}}</td>
+                        <td>{{activity_log.description}}</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </p-tabPanel>
+                <p-tabPanel header="Overdue">
+                </p-tabPanel>
+              </p-tabView>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="card" style="min-height: 418px;">
+          <div class="card-body">
+            <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+              Notification
+            </div>
+            <div class="content">
+              <p-table [value]="notificationData" styleClass="p-datatable-striped">
+                <ng-template pTemplate="body" let-notification>
+                  <tr>
+                    <td>{{ notification.description}}</td>
+                    <td>{{ moment(notification.date).fromNow()}}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </p-tabPanel>
 </p-tabView>

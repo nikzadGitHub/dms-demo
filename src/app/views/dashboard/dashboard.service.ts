@@ -21,22 +21,33 @@ export class DashboardService {
     constructor(private httpClient: HttpClient) { }
 
     getSalesPerformance(selectedYear): Observable<any[]> {
-      let query = '/dashboard/sales-performance?currency=RM&year=' + selectedYear
+      let query = '/dashboard/sales-performance?currency=RM&year=' + selectedYear;
 
       return this.httpClient.get<any[]>(this.apiURL + query,this.httpOptions)
       .pipe(
         catchError(this.errorHandler)
-      )
+      );
     }
 
-      errorHandler(error) {
-        let errorMessage = '';
-        if(error.error instanceof ErrorEvent) {
-          errorMessage = error.error.message;
-        } else {
-          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-        }
-        return throwError(errorMessage);
-     }
+    getSalesFunnel(selectedYear) : Observable<any[]> {
+      let query = '/dashboard/sales-funnel?from_date=' + selectedYear + '-01-01&to_date=' + selectedYear + '-12-31';
+
+      return this.httpClient.get<any[]>(this.apiURL + query,this.httpOptions)
+      .pipe(
+        catchError(this.errorHandler)
+      );
+    }
+
+    errorHandler(error) {
+      let errorMessage = '';
+      if(error.error instanceof ErrorEvent) {
+        errorMessage = error.error.message;
+      } else {
+        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      }
+      return throwError(errorMessage);
+    }
+
+
 
 }
