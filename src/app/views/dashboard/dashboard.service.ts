@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { settings } from '../../../environments/environment';
@@ -9,45 +8,41 @@ import { settings } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class DashboardService {
+  private apiURL = settings.apiBaseUrl;
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+  }
 
-    private apiURL = settings.apiBaseUrl;
+  constructor(private httpClient: HttpClient) { }
 
-    httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-        })
-    }
+  getSalesPerformance(selectedYear): Observable<any[]> {
+    let query = '/dashboard/sales-performance?currency=RM&year=' + selectedYear;
 
-    constructor(private httpClient: HttpClient) { }
-
-    getSalesPerformance(selectedYear): Observable<any[]> {
-      let query = '/dashboard/sales-performance?currency=RM&year=' + selectedYear;
-
-      return this.httpClient.get<any[]>(this.apiURL + query,this.httpOptions)
+    return this.httpClient.get<any[]>(this.apiURL + query,this.httpOptions)
       .pipe(
         catchError(this.errorHandler)
-      );
-    }
+    );
+  }
 
-    getSalesFunnel(selectedYear) : Observable<any[]> {
-      let query = '/dashboard/sales-funnel?from_date=' + selectedYear + '-01-01&to_date=' + selectedYear + '-12-31';
+  getSalesFunnel(selectedYear) : Observable<any[]> {
+    let query = '/dashboard/sales-funnel?from_date=' + selectedYear + '-01-01&to_date=' + selectedYear + '-12-31';
 
-      return this.httpClient.get<any[]>(this.apiURL + query,this.httpOptions)
+    return this.httpClient.get<any[]>(this.apiURL + query,this.httpOptions)
       .pipe(
         catchError(this.errorHandler)
-      );
+    );
+  }
+
+  errorHandler(error) {
+    let errorMessage = '';
+    if(error.error instanceof ErrorEvent) {
+      errorMessage = error.error.message;
     }
-
-    errorHandler(error) {
-      let errorMessage = '';
-      if(error.error instanceof ErrorEvent) {
-        errorMessage = error.error.message;
-      } else {
-        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-      }
-      return throwError(errorMessage);
+    else {
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-
-
-
+    return throwError(errorMessage);
+  }
 }

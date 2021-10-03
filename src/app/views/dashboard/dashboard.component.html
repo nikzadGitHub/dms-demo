@@ -4,14 +4,14 @@
       <div class="row">
         <div class="col-12 d-flex justify-content-end mb-2">
           <div class="mr-1 d-flex">
-            <p-button styleClass="arrowBtn" icon="pi pi-chevron-left" (onClick)="yearDecrement()"></p-button>
-            <div class="d-flex flex-column justify-content-center"> {{selectedYear}} </div>
-            <p-button styleClass="arrowBtn" icon="pi pi-chevron-right" (onClick)="yearIncrement()"></p-button>
+            <p-button styleClass="arrowBtn" icon="pi pi-chevron-left" (onClick)="yearDecrement('sales')"></p-button>
+            <div class="d-flex flex-column justify-content-center"> {{ selectedYear }} </div>
+            <p-button styleClass="arrowBtn" icon="pi pi-chevron-right" (onClick)="yearIncrement('sales')"></p-button>
           </div>
           <div class="ml-1">
             <i class="cil cil-calendar"></i>
-              <p-dropdown [options]="headerPeriod" optionLabel="name" optionValue="value"
-                [(ngModel)]="selectedHeaderPeriod"  (onChange)="fetchSalesPerformance(selectedYear, selectedHeaderPeriod)" >
+              <p-dropdown [options]="salesPeriod" optionLabel="name" optionValue="value"
+                [(ngModel)]="selectedSalesPeriod" (onChange)="fetchSalesPerformance(selectedYear, selectedSalesPeriod)" >
             </p-dropdown>
           </div>
         </div>
@@ -24,10 +24,10 @@
                 Total Invoiced Amount
               </div>
               <div class="col-12 mt-2 mb-2 text-center" style="font-size: 24px;">
-                <b>RM{{invoiceAmt}} ({{invoicePerc}}%)</b>
+                <b>RM{{ invoiceAmt }} ({{ invoicePerc }}%)</b>
               </div>
               <div class="col-12 mb-2 text-center" style="font-size: 16px;">
-                of Target RM{{invoiceTargetAmt}}
+                of Target RM{{ invoiceTargetAmt }}
               </div>
             </div>
           </div>
@@ -39,10 +39,10 @@
                 Open Order Amount
               </div>
               <div class="col-12 mt-2 mb-2 text-center" style="font-size: 24px;">
-                <b>RM{{orderAmt}}</b>
+                <b>RM{{ orderAmt }}</b>
               </div>
               <div class="col-12 mb-2 text-center" style="font-size: 16px;">
-                Open Order: {{orderQty}}
+                Open Order: {{ orderQty }}
               </div>
             </div>
           </div>
@@ -54,10 +54,10 @@
                 Committed Funnel Amount
               </div>
               <div class="col-12 mt-2 mb-2 text-center" style="font-size: 24px;">
-                <b>RM{{cfAmt}}</b>
+                <b>RM{{ cfAmt }}</b>
               </div>
               <div class="col-12 mb-2 text-center" style="font-size: 16px;">
-                Total: RM{{cfTotalAmt}}
+                Total: RM{{ cfTotalAmt }}
               </div>
             </div>
           </div>
@@ -115,7 +115,7 @@
               </div>
               <div class="d-flex justify-content-between" style="font-weight: 500;">
                 <label>Actual Performance</label>
-                <label>{{progressPerc}}%</label>
+                <label>{{ progressPerc }}%</label>
                 <label></label>
               </div>
               <div>
@@ -124,41 +124,41 @@
               <div class="row ml-2 mt-3">
                 <div class="col-1"><div style="width:20px;height:20px;background:#FF7B00;border-radius:20px;"></div></div>
                 <div class="col-7">Total Sales Amount</div>
-                <div class="col-4">RM{{ttlSalesAmt}}</div>
+                <div class="col-4">RM{{ ttlSalesAmt }}</div>
               </div>
               <div class="row ml-2 mt-4" >
                 <div class="col-1"><div style="width:20px;height:20px;background:#E5E5E5;border-radius:20px;"></div></div>
-                <div class="col-7"><b>Year: {{selectedYear}}-{{selectedYear+1}}</b> Sales Target Amount</div>
+                <div class="col-7"><b>Year: {{ selectedYear }}-{{ selectedYear + 1 }}</b> Sales Target Amount</div>
                 <div class="col-4">RM{{targetSalesAmt}}</div>
               </div>
-              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedHeaderPeriod == 'quarter'">
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedSalesPeriod == 'quarter'">
                 <div class="col-1"></div>
-                <div class="col-7">Q1 (3+9): 1 Apr - 30 Jun {{selectedYear}}</div>
-                <div class="col-4">RM{{q1TargetAmt}}</div>
+                <div class="col-7">Q1 (3+9): 1 Apr - 30 Jun {{ selectedYear }}</div>
+                <div class="col-4">RM{{ q1TargetAmt }}</div>
               </div>
-              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedHeaderPeriod == 'quarter'">
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedSalesPeriod == 'quarter'">
                 <div class="col-1"></div>
-                <div class="col-7">Q2 (6+6): 1 Jul - 30 Sep {{selectedYear}}</div>
-                <div class="col-4">RM{{q2TargetAmt}}</div>
+                <div class="col-7">Q2 (6+6): 1 Jul - 30 Sep {{ selectedYear }}</div>
+                <div class="col-4">RM{{ q2TargetAmt }}</div>
               </div>
-              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedHeaderPeriod == 'quarter'">
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedSalesPeriod == 'quarter'">
                 <div class="col-1"></div>
-                <div class="col-7">Q3 (9+3): 1 Oct - 31 Dec {{selectedYear}}</div>
-                <div class="col-4">RM{{q3TargetAmt}}</div>
+                <div class="col-7">Q3 (9+3): 1 Oct - 31 Dec {{ selectedYear }}</div>
+                <div class="col-4">RM{{ q3TargetAmt }}</div>
               </div>
-              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedHeaderPeriod == 'quarter'">
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedSalesPeriod == 'quarter'">
                 <div class="col-1"></div>
-                <div class="col-7">Q4 (11+1): 1 Jan - 31 Mar {{selectedYear + 1}}</div>
-                <div class="col-4">RM{{q4TargetAmt}}</div>
+                <div class="col-7">Q4 (11+1): 1 Jan - 31 Mar {{ selectedYear + 1 }}</div>
+                <div class="col-4">RM{{ q4TargetAmt }}</div>
               </div>
-              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedHeaderPeriod != 'quarter'">
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedSalesPeriod != 'quarter'">
                 <div class="col-1"></div>
-                <div class="col-7">{{currentQuarter}}</div>
-                <div class="col-4">RM{{currTargetAmt}}</div>
+                <div class="col-7">{{ currentQuarter }}</div>
+                <div class="col-4">RM{{ currTargetAmt }}</div>
               </div>
               <div class="row ml-2 mt-3" style="font-weight: 500;">
                 <div class="col-8">Balance Amount To Achieve Sales Target</div>
-                <div class="col-4">RM{{balanceToAchieve}}</div>
+                <div class="col-4">RM{{ balanceToAchieve }}</div>
               </div>
             </div>
           </div>
@@ -169,7 +169,7 @@
           <div class="card">
             <div class="card-body">
               <div class="mb-4" style="font-size: 24px; font-weight: 600;">
-                Sales Performance - Brands ({{selectedYear}})
+                Sales Performance - Brands ({{ selectedYear }})
               </div>
               <div class="d-flex justify-content-end">
                 <div class="d-flex">
@@ -224,14 +224,14 @@
     <div class="row">
       <div class="col-12 d-flex justify-content-end mb-2">
         <div class="mr-1 d-flex">
-          <p-button styleClass="arrowBtn" icon="pi pi-chevron-left" (onClick)="yearDecrement()"></p-button>
-          <div class="d-flex flex-column justify-content-center"> {{selectedYear}} </div>
-          <p-button styleClass="arrowBtn" icon="pi pi-chevron-right" (onClick)="yearIncrement()"></p-button>
+          <p-button styleClass="arrowBtn" icon="pi pi-chevron-left" (onClick)="yearDecrement('funnel')"></p-button>
+          <div class="d-flex flex-column justify-content-center"> {{ funnelSelectedYear }} </div>
+          <p-button styleClass="arrowBtn" icon="pi pi-chevron-right" (onClick)="yearIncrement('funnel')"></p-button>
         </div>
         <div class="ml-1">
           <i class="cil cil-calendar"></i>
-            <p-dropdown [options]="headerPeriod" optionLabel="name" optionValue="value"
-               [(ngModel)]="selectedHeaderPeriod"  (onChange)="fetchSalesPerformance(selectedYear, selectedHeaderPeriod)" >
+            <p-dropdown [options]="funnelPeriod" optionLabel="name" optionValue="value"
+               [(ngModel)]="selectedFunnelPeriod" (onChange)="fetchSalesFunnel(funnelSelectedYear, selectedFunnelPeriod)" >
             </p-dropdown>
           </div>
         </div>
@@ -245,16 +245,11 @@
                   Activity of July 2021
                 </div>
                 <div >
-                  <p-splitButton icon="cil-calendar" [model]="funnel_graphPeriod" styleClass="periodButton"></p-splitButton>
+                  <p-splitButton icon="cil-calendar" [model]="activityPeriod" styleClass="periodButton"></p-splitButton>
                 </div>
               </div>
               <div class="mt-2">
-                <!--<div
-                  style="width: 100%; height: 40px; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
-                    Activity<Br />Summary
-              </div>
-                <p-chart type="doughnut" [data]="activityData" [options]="activityChartOptions" [style]="{'width': '40%'}"></p-chart>-->
-                <div echarts [options]="activityData" class="demo-chart" style="height: 300px; width: 100%;"></div>
+                <div echarts [options]="activityChartOption" class="demo-chart" style="height: 300px; width: 100%;"></div>
               </div>
             </div>
           </div>
@@ -262,11 +257,17 @@
         <div class="col-sm-12 col-md-6">
           <div class="card" style="min-height: 400px;">
             <div class="card-body">
-              <div class="mb-4" style="font-size: 24px; font-weight: 600;">
-                Forecast Category
+              <div class="d-flex justify-content-between">
+                <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+                  Forecast Category
+                </div>
+                <div >
+                  <p-splitButton icon="cil-calendar" [model]="forecastPeriod" styleClass="periodButton"></p-splitButton>
+                </div>
               </div>
-                <div echarts [options]="forecastData" class="demo-chart" style="height: 300px; width: 100%;"></div>
-
+              <div class="mt-2">
+                <div echarts [options]="forecastChartOption" class="demo-chart" style="height: 300px; width: 100%;"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -284,9 +285,9 @@
                   <p-table [value]="opportunityData" styleClass="p-datatable-striped">
                     <ng-template pTemplate="body" let-opportunity_list>
                       <tr>
-                        <td>{{ opportunity_list.date}}</td>
-                        <td>{{opportunity_list.id}}</td>
-                        <td>RM {{opportunity_list.amount}}</td>
+                        <td>{{ opportunity_list.date }}</td>
+                        <td>{{ opportunity_list.id }}</td>
+                        <td>RM {{ opportunity_list.amount }}</td>
                       </tr>
                     </ng-template>
                   </p-table>
@@ -307,12 +308,11 @@
             <div class="content">
               <p-tabView>
                 <p-tabPanel header="Latest">
-
                   <p-table [value]="activityLogData" styleClass="p-datatable-striped">
                     <ng-template pTemplate="body" let-activity_log>
                       <tr>
-                        <td>{{ activity_log.date}}</td>
-                        <td>{{activity_log.description}}</td>
+                        <td>{{ activity_log.date }}</td>
+                        <td>{{ activity_log.description }}</td>
                       </tr>
                     </ng-template>
                   </p-table>
@@ -334,8 +334,8 @@
               <p-table [value]="notificationData" styleClass="p-datatable-striped">
                 <ng-template pTemplate="body" let-notification>
                   <tr>
-                    <td>{{ notification.description}}</td>
-                    <td>{{ moment(notification.date).fromNow()}}</td>
+                    <td>{{ notification.description }}</td>
+                    <td>{{ moment(notification.date).fromNow() }}</td>
                   </tr>
                 </ng-template>
               </p-table>

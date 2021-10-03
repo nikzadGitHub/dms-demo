@@ -13,11 +13,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { NgxEchartsModule } from 'ngx-echarts';
-import * as echarts from 'echarts';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { DatePipe } from '@angular/common';
-
+import * as echarts from 'echarts';
 
 @NgModule({
   imports: [
@@ -40,7 +38,6 @@ import { DatePipe } from '@angular/common';
     TableModule
   ],
   declarations: [ DashboardComponent ],
-  exports:[ DashboardComponent ],
-  providers: [ DatePipe ],
+  exports:[ DashboardComponent ]
 })
 export class DashboardModule { }
