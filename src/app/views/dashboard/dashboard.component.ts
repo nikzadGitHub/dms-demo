@@ -1,31 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, SelectItem } from 'primeng/api';
 import * as moment from "moment";
-import { ChartType } from 'chart.js';
-import { SelectItem } from 'primeng/api';
 import { DashboardService } from './dashboard.service';
+import * as echarts from 'echarts';
 
 @Component({
   templateUrl: './dashboard.component.html'
 })
 
 export class DashboardComponent implements OnInit {
+  moment: any = moment;
+  //period option
   selectedYear: number;
-  headerPeriod: any;
-  selectedHeaderPeriod: string = "month";
+  funnelSelectedYear: number;
+  salesPeriod: any;
+  funnelPeriod: any;
+  selectedSalesPeriod: string = "month";
+  selectedFunnelPeriod: string = "month";
   graphPeriod: MenuItem[];
+  activityPeriod: MenuItem[];
+  forecastPeriod: MenuItem[];
   selectedGraphPeriod: string = "month";
+  selectedActivityPeriod: string = "month";
+  selectedForecastPeriod: string = "month";
+  //sales performance vs sales target option
   salesOptions: any[];
-  selectedOption: string = "monthly";
-  selLabel: string = "";
+  selectedOption: string = "monthly"
+  selLabel: string = '';
+  selPeriod: string = '';
   chartOptions: any;
+  //sales performance tab - main array
   monthSalesArr: any[] = [];
   quarterSalesArr: any[] = [];
   yearlySalesArr: any[] = [];
-  selPeriod: string = '';
-  // hearder
+  //hearder
   invoiceArr: any[] = [];
   openOrderArr: any[] = [];
   committedFunnelArr: any[] = [];
@@ -36,7 +44,7 @@ export class DashboardComponent implements OnInit {
   orderQty: any;
   cfAmt: any;
   cfTotalAmt: any;
-  // Chart 1 - Sales Performance VS Sales Target
+  //Chart 1 - Sales Performance VS Sales Target
   salesData: any;
   salesMthQtrArr: any[] = [];
   salesAccArr: any[] = [];
@@ -87,6 +95,22 @@ export class DashboardComponent implements OnInit {
   cust_invoiceCheck: boolean = true;
   cust_salesOrderCheck: boolean = true;
   cust_funnelCheck: boolean = true;
+  //funnel Tab
+  currDate = new Date();
+  currMonth = this.currDate.toLocaleString('en-us', { month: 'long'});
+  activityChartOption:  echarts.EChartsOption;
+  forecastChartOption: echarts.EChartsOption;
+  activitySummDataset: any[];
+  forecastCatDataset: any[];
+  activitySummData: any;
+  forecastCatData: any;
+  opportunityData: any;
+  opportunityDataLatest: any;
+  opportunityDataOverdue: any;
+  activityLogData: any;
+  activityLogDataLatest: any;
+  activityLogDataOverdue: any;
+  notificationData: any;
 
   constructor(private _dashboardService: DashboardService) {
     this.salesOptions = [
@@ -94,7 +118,7 @@ export class DashboardComponent implements OnInit {
       { label: "Accumulative", value: "accumulative" }
     ];
 
-    this.headerPeriod = [
+    this.salesPeriod = this.funnelPeriod = [
       { name: 'Month', value: 'month' },
       { name: 'Quarter', value: 'quarter' },
       { name: 'Year', value: 'year' }
@@ -108,11 +132,42 @@ export class DashboardComponent implements OnInit {
           this.fetchSalesDataByPeriod('quarter');
       }},
     ]
+
+    this.activityPeriod = [
+      {label: 'Week', command: () => {
+        this.fetchActivitySummary('week');
+      }},
+      {label: 'Month', command: () => {
+        this.fetchActivitySummary('month');
+      }},
+      {label: 'Quarter', command: () => {
+          this.fetchActivitySummary('quarter');
+      }},
+      {label: 'Year', command: () => {
+        this.fetchActivitySummary('year');
+      }},
+    ]
+
+    this.forecastPeriod = [
+      {label: 'Week', command: () => {
+        this.fetchForecastCategory('week');
+      }},
+      {label: 'Month', command: () => {
+        this.fetchForecastCategory('month');
+      }},
+      {label: 'Quarter', command: () => {
+          this.fetchForecastCategory('quarter');
+      }},
+      {label: 'Year', command: () => {
+        this.fetchForecastCategory('year');
+      }},
+    ]
   }
 
   ngOnInit(): void {
-    this.selectedYear = new Date().getFullYear();
-    this.fetchSalesPerformance(this.selectedYear, this.selectedHeaderPeriod);
+    this.selectedYear = this.funnelSelectedYear = new Date().getFullYear();
+    this.fetchSalesPerformance(this.selectedYear, this.selectedSalesPeriod);
+    this.fetchSalesFunnel(this.selectedYear,  this.selectedSalesPeriod);
 
     this.chartOptions = {
       tooltips: {
@@ -142,14 +197,26 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  public yearDecrement() {
-    this.selectedYear = this.selectedYear - 1;
-    this.fetchSalesPerformance(this.selectedYear, this.selectedHeaderPeriod);
+  public yearDecrement(sel): any {
+    if (sel == 'sales') {
+      this.selectedYear = this.selectedYear - 1;
+      this.fetchSalesPerformance(this.selectedYear, this.selectedSalesPeriod);
+    }
+    else {
+      this.funnelSelectedYear = this.funnelSelectedYear - 1;
+      this.fetchSalesFunnel(this.funnelSelectedYear, this.selectedFunnelPeriod);
+    }
   }
 
-  public yearIncrement() {
-    this.selectedYear = this.selectedYear + 1
-    this.fetchSalesPerformance(this.selectedYear, this.selectedHeaderPeriod);
+  public yearIncrement(sel): any {
+    if (sel == 'sales') {
+      this.selectedYear = this.selectedYear + 1;
+      this.fetchSalesPerformance(this.selectedYear, this.selectedSalesPeriod);
+    }
+    else {
+      this.funnelSelectedYear = this.funnelSelectedYear + 1;
+      this.fetchSalesFunnel(this.funnelSelectedYear, this.selectedFunnelPeriod);
+    }
   }
 
   fetchSalesPerformance(year, period): any {
@@ -172,31 +239,52 @@ export class DashboardComponent implements OnInit {
 
     this._dashboardService.getSalesPerformance(year)
     .subscribe(res => {
-      this.invoiceArr = res['data']['totalinvoicedamount']
-      this.openOrderArr = res['data']['openorderamount']
-      this.committedFunnelArr = res['data']['committedfunnelamount']
-      this.monthSalesArr = res['data']['monthsales']
-      this.quarterSalesArr = res['data']['quartersales']
-      this.yearlySalesArr = res['data']['yearlysales']
+      this.invoiceArr = res['data']['totalinvoicedamount'];
+      this.openOrderArr = res['data']['openorderamount'];
+      this.committedFunnelArr = res['data']['committedfunnelamount'];
+      this.monthSalesArr = res['data']['monthsales'];
+      this.quarterSalesArr = res['data']['quartersales'];
+      this.yearlySalesArr = res['data']['yearlysales'];
 
-      this.fetchSalesSummary(this.selectedHeaderPeriod);
+      this.fetchSalesSummary(this.selectedSalesPeriod);
       if (this.selPeriod != '') {
         this.fetchSalesDataByPeriod(this.selPeriod);
       }
-      this.fetchSalesPerformanceDataByPeriod(this.selectedHeaderPeriod);
-      this.fetchBrandSalesDataByPeriod(this.selectedHeaderPeriod);
-      this.fetchCustSalesDataByPeriod(this.selectedHeaderPeriod);
+      this.fetchSalesPerformanceDataByPeriod(this.selectedSalesPeriod);
+      this.fetchBrandSalesDataByPeriod(this.selectedSalesPeriod);
+      this.fetchCustSalesDataByPeriod(this.selectedSalesPeriod);
     })
   }
 
+  fetchSalesFunnel(year, period): any {
+    this.opportunityData = [];
+
+    this._dashboardService.getSalesFunnel(year)
+    .subscribe(res => {
+      this.activitySummData = res['data']['activity_summary'];
+      this.forecastCatData = res['data']['forecast_category'];
+      this.opportunityData = res['data']['opportunity_list'];
+      this.activityLogData = res['data']['activity_log'];
+      this.notificationData = res['data']['notification'];
+
+      this.opportunityDataLatest = this.opportunityData.filter(item => moment(item.date, 'DD-MM-YYYY') >= moment());
+      this.opportunityDataOverdue = this.opportunityData.filter(item => moment(item.date, 'DD-MM-YYYY') < moment());
+      this.activityLogDataLatest = this.activityLogData.filter(item => moment(item.date, 'DD-MM-YYYY') >= moment());
+      this.activityLogDataOverdue = this.activityLogData.filter(item => moment(item.date, 'DD-MM-YYYY') < moment());
+
+      this.fetchActivitySummary(period);
+      this.fetchForecastCategory(period);
+    });
+  }
+
   fetchSalesSummary(period): any {
-    this.invoiceAmt = this.invoiceArr[period]['amount']
-    this.invoicePerc = this.invoiceArr[period]['amountpercent']
-    this.invoiceTargetAmt = this.invoiceArr[period]['targetamount']
-    this.orderAmt = this.openOrderArr[period]['amount']
-    this.orderQty = this.openOrderArr[period]['orderquantity']
-    this.cfAmt = this.committedFunnelArr[period]['amount']
-    this.cfTotalAmt = this.committedFunnelArr[period]['totalamount']
+    this.invoiceAmt = this.invoiceArr[period]['amount'];
+    this.invoicePerc = this.invoiceArr[period]['amountpercent'];
+    this.invoiceTargetAmt = this.invoiceArr[period]['targetamount'];
+    this.orderAmt = this.openOrderArr[period]['amount'];
+    this.orderQty = this.openOrderArr[period]['orderquantity'];
+    this.cfAmt = this.committedFunnelArr[period]['amount'];
+    this.cfTotalAmt = this.committedFunnelArr[period]['totalamount'];
   }
 
   fetchSalesDataByPeriod(period): any {
@@ -207,9 +295,9 @@ export class DashboardComponent implements OnInit {
     this.selectedGraphPeriod = period;
 
     if (period == "month") {
-      this.selLabel = 'Monthly'
-      this.salesAccArr = this.monthSalesArr['salespeformancevssalestarget']['accumulative']
-      this.salesMthQtrArr = this.monthSalesArr['salespeformancevssalestarget']['monthly']
+      this.selLabel = 'Monthly';
+      this.salesAccArr = this.monthSalesArr['salespeformancevssalestarget']['accumulative'];
+      this.salesMthQtrArr = this.monthSalesArr['salespeformancevssalestarget']['monthly'];
 
       if (this.selectedOption == "monthly") {
         selArray = this.salesAccArr;
@@ -230,9 +318,9 @@ export class DashboardComponent implements OnInit {
       }
     }
     else if (period == "quarter") {
-      this.selLabel = 'Quarterly'
-      this.salesAccArr = this.quarterSalesArr['salespeformancevssalestarget']['accumulative']
-      this.salesMthQtrArr = this.quarterSalesArr['salespeformancevssalestarget']['quarterly']
+      this.selLabel = 'Quarterly';
+      this.salesAccArr = this.quarterSalesArr['salespeformancevssalestarget']['accumulative'];
+      this.salesMthQtrArr = this.quarterSalesArr['salespeformancevssalestarget']['quarterly'];
 
       if(this.selectedOption == "monthly") {
         selArray = this.salesMthQtrArr;
@@ -260,7 +348,8 @@ export class DashboardComponent implements OnInit {
       backgroundColor: '#656565',
       borderColor: '#656565',
       borderWidth: 2,
-      fill: false
+      fill: false,
+      lineTension: 0
     };
 
     this.invoiceDataset = {
@@ -328,10 +417,30 @@ export class DashboardComponent implements OnInit {
     this.progressPerc = Math.floor((this.ttlSalesAmt.replace(',', '') / this.targetSalesAmt.replace(',', '')) * 100);
 
     if (period == "quarter") {
+      let getCurrQuarter = "";
+
       this.salesItemArr = this.salesPerformanceArr['currentquarter'];
-      this.currentQuarter = this.salesItemArr['label'];
+      getCurrQuarter = this.salesItemArr['label'].substring(0,2);
       this.currTargetAmt = this.salesItemArr['targetamount'];
       this.currSalesAMt = this.salesItemArr['totalsalesamount'];
+
+      switch(getCurrQuarter) {
+        case "Q1":
+          this.currentQuarter = "Q1 (3+9): 1 Apr - 30 Jun " + this.selectedYear;
+          break;
+        case "Q2":
+          this.currentQuarter = "Q2 (6+6): 1 Jul - 30 Sep " + this.selectedYear;
+          break;
+        case "Q3":
+          this.currentQuarter = "Q2 (6+6): 1 Jul - 30 Sep " + this.selectedYear;
+          break;
+        case "Q4":
+          this.currentQuarter = "Q2 (6+6): 1 Jul - 30 Sep " + (this.selectedYear +1);
+          break;
+        default:
+          this.currentQuarter = this.salesItemArr['label'];
+          break;
+      }
     }
     else {
       this.salesItemArr = this.salesPerformanceArr['salesperformanceitem'];
@@ -351,13 +460,13 @@ export class DashboardComponent implements OnInit {
     this.brandSalesData = [];
 
     if (period == "month") {
-      this.brandSalesArr = this.monthSalesArr['brandsalesperformance']
+      this.brandSalesArr = this.monthSalesArr['brandsalesperformance'];
     }
     else if (period == "quarter") {
-      this.brandSalesArr = this.quarterSalesArr['brandsalesperformance']
+      this.brandSalesArr = this.quarterSalesArr['brandsalesperformance'];
     }
     else if (period == "year") {
-      this.brandSalesArr = this.yearlySalesArr['brandsalesperformance']
+      this.brandSalesArr = this.yearlySalesArr['brandsalesperformance'];
     }
 
     for(var i = 0; i < this.brandSalesArr.length; i++){
@@ -394,7 +503,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getBrandSalesData() {
-    let selectedDatase = []
+    let selectedDatase = [];
 
     if (this.brand_invoiceCheck) {
       selectedDatase.push(this.brand_invoiceDataset);
@@ -417,13 +526,13 @@ export class DashboardComponent implements OnInit {
     this.custSalesData = [];
 
     if (period == "month") {
-      this.custSalesArr = this.monthSalesArr['top10customers']
+      this.custSalesArr = this.monthSalesArr['top10customers'];
     }
     else if (period == "quarter") {
-      this.custSalesArr = this.quarterSalesArr['top10customers']
+      this.custSalesArr = this.quarterSalesArr['top10customers'];
     }
     else if (period == "year") {
-      this.custSalesArr = this.yearlySalesArr['top10customers']
+      this.custSalesArr = this.yearlySalesArr['top10customers'];
     }
 
     for(var i = 0; i < this.custSalesArr.length; i++){
@@ -478,10 +587,101 @@ export class DashboardComponent implements OnInit {
     };
   }
 
+  fetchActivitySummary(period) {
+    this.activitySummDataset = [];
+    this.selectedActivityPeriod = period;
 
+    let selPeriod = period + '_summary';
+    let dataset = this.activitySummData[selPeriod];
 
+    for(var i = 0; i < dataset.length; i++){
+      this.activitySummDataset.push( {
+        'name': dataset[i].name,
+        'value': parseInt(dataset[i].amount.replace(',', '')),
+      });
+    };
 
+    this.activityChartOption = {
+      title: {
+        text: 'Activity Summary',
+        left: 'center',
+        top: 'center'
+      },
+      tooltip: {
+      trigger: 'item'
+      },
+      legend: {
+        orient: 'vertical',
+        right: 10,
+        top: 20
+      },
+      series: [{
+        name: 'Activity Summary',
+        type: 'pie',
+        radius: ['70%', '90%'],
+        avoidLabelOverlap: false,
+        label: {
+          show: false,
+        },
+        labelLine: {
+          show: false
+        },
+        data: this.activitySummDataset
+      }]
+    };
+  }
 
+  fetchForecastCategory(period) {
+    this.forecastCatDataset = [];
+    this.selectedActivityPeriod = period;
+    let dataset = this.forecastCatData[period];
+    let sum = dataset.reduce((accumulator, current) => accumulator + parseInt(current.value), 0);
+
+    for(var i = 0; i < dataset.length; i++){
+      this.forecastCatDataset.push( {
+        'name': dataset[i].name + ' (' + ((dataset[i].value/sum)*100).toFixed(1) + '%)',
+        'value': dataset[i].value
+      });
+    }
+
+    this.forecastChartOption = {
+      tooltip: {
+        trigger: 'item',
+        formatter: '{b} : {c}'
+      },
+       legend: {
+        data: this.forecastCatDataset['name'],
+        orient: 'vertical',
+        right: 10,
+        top: 20
+      },
+      series: [ {
+        type: 'funnel',
+        left: '10%',
+        top: 20,
+        bottom: 20,
+        width: '60%',
+        sort: 'descending',
+        gap: 2,
+        label: {
+          position: 'inside',
+          formatter: '{c}',
+        },
+        labelLine: {
+          length: 10,
+          lineStyle: {
+            width: 1,
+            type: 'solid'
+          }
+        },
+        itemStyle: {
+            borderColor: '#fff',
+            borderWidth: 1
+          },
+          data: this.forecastCatDataset
+      }]
+    };
+  }
 }
 
 

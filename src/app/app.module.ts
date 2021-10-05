@@ -74,6 +74,8 @@ import { ChartModule } from 'primeng/chart';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { NgxEchartsModule } from 'ngx-echarts';
+import * as echarts from 'echarts';
 
 @NgModule({
   imports: [
@@ -117,7 +119,10 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     ChartModule,
     SplitButtonModule,
     InputNumberModule,
-    SelectButtonModule
+    SelectButtonModule,
+    NgxEchartsModule.forRoot({
+      echarts
+    }),
   ],
   declarations: [
     AppComponent,
