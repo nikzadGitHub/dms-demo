@@ -242,7 +242,7 @@
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <div class="mb-4" style="font-size: 24px; font-weight: 600;">
-                  Activity of July 2021
+                  Activity of {{ currMonth }} {{ funnelSelectedYear }}
                 </div>
                 <div >
                   <p-splitButton icon="cil-calendar" [model]="activityPeriod" styleClass="periodButton"></p-splitButton>
@@ -280,9 +280,9 @@
               Opportunities
             </div>
             <div class="content">
-              <p-tabView>
+              <p-tabView styleClass="sales-funnel-tab">
                 <p-tabPanel header="Latest">
-                  <p-table [value]="opportunityData" styleClass="p-datatable-striped">
+                  <p-table [value]="opportunityDataLatest" styleClass="p-datatable-striped sales-funnel">
                     <ng-template pTemplate="body" let-opportunity_list>
                       <tr>
                         <td>{{ opportunity_list.date }}</td>
@@ -293,9 +293,21 @@
                   </p-table>
                 </p-tabPanel>
                 <p-tabPanel header="Overdue">
+                  <p-table [value]="opportunityDataOverdue" styleClass="p-datatable-striped sales-funnel">
+                    <ng-template pTemplate="body" let-opportunity_list>
+                      <tr>
+                        <td>{{ opportunity_list.date }}</td>
+                        <td>{{ opportunity_list.id }}</td>
+                        <td>RM {{ opportunity_list.amount }}</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
                 </p-tabPanel>
               </p-tabView>
             </div>
+          </div>
+          <div class="card-footer text-right">
+            <a href="#/opportunity">View More ></a>
           </div>
         </div>
       </div>
@@ -306,9 +318,9 @@
               Activities
             </div>
             <div class="content">
-              <p-tabView>
+              <p-tabView styleClass="sales-funnel-tab">
                 <p-tabPanel header="Latest">
-                  <p-table [value]="activityLogData" styleClass="p-datatable-striped">
+                  <p-table [value]="activityLogDataLatest" styleClass="p-datatable-striped sales-funnel">
                     <ng-template pTemplate="body" let-activity_log>
                       <tr>
                         <td>{{ activity_log.date }}</td>
@@ -318,20 +330,31 @@
                   </p-table>
                 </p-tabPanel>
                 <p-tabPanel header="Overdue">
+                  <p-table [value]="activityLogDataOverdue" styleClass="p-datatable-striped sales-funnel">
+                    <ng-template pTemplate="body" let-activity_log>
+                      <tr>
+                        <td>{{ activity_log.date }}</td>
+                        <td>{{ activity_log.description }}</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
                 </p-tabPanel>
               </p-tabView>
             </div>
           </div>
+          <div class="card-footer text-right">
+            <a href="#/activities">View More ></a>
+          </div>
         </div>
       </div>
       <div class="col-12 col-md-4">
-        <div class="card" style="min-height: 418px;">
+        <div class="card" style="min-height: 550px;">
           <div class="card-body">
             <div class="mb-4" style="font-size: 24px; font-weight: 600;">
               Notification
             </div>
             <div class="content">
-              <p-table [value]="notificationData" styleClass="p-datatable-striped">
+              <p-table [value]="notificationData" styleClass="p-datatable-striped sales-funnel">
                 <ng-template pTemplate="body" let-notification>
                   <tr>
                     <td>{{ notification.description }}</td>

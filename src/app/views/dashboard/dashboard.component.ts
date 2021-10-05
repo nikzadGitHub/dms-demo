@@ -96,6 +96,8 @@ export class DashboardComponent implements OnInit {
   cust_salesOrderCheck: boolean = true;
   cust_funnelCheck: boolean = true;
   //funnel Tab
+  currDate = new Date();
+  currMonth = this.currDate.toLocaleString('en-us', { month: 'long'});
   activityChartOption:  echarts.EChartsOption;
   forecastChartOption: echarts.EChartsOption;
   activitySummDataset: any[];
@@ -103,7 +105,11 @@ export class DashboardComponent implements OnInit {
   activitySummData: any;
   forecastCatData: any;
   opportunityData: any;
+  opportunityDataLatest: any;
+  opportunityDataOverdue: any;
   activityLogData: any;
+  activityLogDataLatest: any;
+  activityLogDataOverdue: any;
   notificationData: any;
 
   constructor(private _dashboardService: DashboardService) {
@@ -260,6 +266,11 @@ export class DashboardComponent implements OnInit {
       this.opportunityData = res['data']['opportunity_list'];
       this.activityLogData = res['data']['activity_log'];
       this.notificationData = res['data']['notification'];
+
+      this.opportunityDataLatest = this.opportunityData.filter(item => moment(item.date, 'DD-MM-YYYY') >= moment());
+      this.opportunityDataOverdue = this.opportunityData.filter(item => moment(item.date, 'DD-MM-YYYY') < moment());
+      this.activityLogDataLatest = this.activityLogData.filter(item => moment(item.date, 'DD-MM-YYYY') >= moment());
+      this.activityLogDataOverdue = this.activityLogData.filter(item => moment(item.date, 'DD-MM-YYYY') < moment());
 
       this.fetchActivitySummary(period);
       this.fetchForecastCategory(period);
