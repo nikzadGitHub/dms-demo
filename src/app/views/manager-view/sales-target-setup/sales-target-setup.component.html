@@ -1,0 +1,388 @@
+<div class="animated fadeIn">
+    <form [formGroup]="setupForm" (ngSubmit)="onSubmit()">
+        <div class="col-lg col-md-6">
+            <div class="card rcorners">
+                <div class="card-header row" style="background-color: #898485; color: white;">
+                    <div style="padding-left: 20px;">
+                        <h2>Add Sales Target</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-row m-4">
+                        <div class="row mb-2">
+                            <h5 class="col-12">
+                                <label><b>General</b></label>
+                            </h5>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="description">
+                                            Description<span class="asterisk"> * </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input id="description" pInputText class="form-control" placeholder="" type="input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        Country<span class="asterisk"> * </span>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown [options]="test" optionLabel="label" optionValue="value"
+                                            placeholder="Select Country" [style]="{ width: '100%' }">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="description">
+                                            FSS<span class="asterisk"> * </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown [options]="test" optionLabel="label" optionValue="value"
+                                            placeholder="Select FSS" [style]="{ width: '100%' }">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        Team Lead
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown [options]="test" optionLabel="label" optionValue="value"
+                                            placeholder="Select Team Lead" [style]="{ width: '100%' }">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="description">
+                                            OPC-PIC<span class="asterisk"> * </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown [options]="test" optionLabel="label" optionValue="value"
+                                            placeholder="Select OPC-PIC" [style]="{ width: '100%' }">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        Class
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown [options]="test" optionLabel="label" optionValue="value"
+                                            placeholder="Select Class" [style]="{ width: '100%' }">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-row m-4">
+                        <div class="row mt-5 mb-2 ml-0 d-flex">
+                            <h5 class="mr-2">
+                                <label><b>Dimensions</b></label>
+                            </h5>
+                            <button class="btn btn-icon btn-outline-primary"
+                                (click)="addDemision()"><i class="cil-plus c-icon"></i>
+                            </button>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="description">
+                                            Level
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown [options]="test" optionLabel="label" optionValue="value"
+                                            placeholder="Select Country" [style]="{ width: '100%' }">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        Description
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown [options]="test" optionLabel="label" optionValue="value"
+                                            placeholder="Select Country" [style]="{ width: '100%' }">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-row m-4">
+                        <div class="row mt-5 mb-2">
+                            <h5 class="col-12">
+                                <label><b>Sales Target</b></label>
+                            </h5>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="description">
+                                            Currency
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown [options]="test" optionLabel="label" optionValue="value"
+                                            placeholder="Select Country" [style]="{ width: '100%' }">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3">
+                                        Year
+                                    </div>
+                                    <div class="col-9">
+                                        <input id="description" pInputText class="form-control" placeholder="" type="input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 submit-button mt-5" align=center>
+                    <div class="form-group">
+                        <button class="btn btn-light mr-2 px-4" type="button" [disabled]="!setupForm.valid"><i class="pi pi-arrow-left mr-2"></i>CANCEL</button>
+                        <button class="btn btn-primary px-5" type="submit" [disabled]="!setupForm.valid"><i class="pi pi-save mr-2"></i>SAVE</button>
+                    </div>
+                </div>
+                <div class="card-row m-4">
+                    <div class="row mt-5 mb-2">
+                        <h5 class="col-12">
+                            <label>Auto-populated</label>
+                        </h5>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row mb-2">
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-5 mt-2">
+                                        {{ salesTargetMonth[0] }}
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">{{ currency }}</span>
+                                            <input id="description" pInputText class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-5 mt-2">
+                                        {{ salesTargetMonth[3] }}
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">{{ currency }}</span>
+                                            <input id="description" pInputText class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-5 mt-2">
+                                        {{ salesTargetMonth[6] }}
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">{{ currency }}</span>
+                                            <input id="description" pInputText class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-5 mt-2">
+                                        {{ salesTargetMonth[9] }}
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">{{ currency }}</span>
+                                            <input id="description" pInputText class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row mb-2">
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-5 mt-2">
+                                        {{ salesTargetMonth[1] }}
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">{{ currency }}</span>
+                                            <input id="description" pInputText class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-5 mt-2">
+                                        {{ salesTargetMonth[4] }}
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">{{ currency }}</span>
+                                            <input id="description" pInputText class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-5 mt-2">
+                                        {{ salesTargetMonth[7] }}
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">{{ currency }}</span>
+                                            <input id="description" pInputText class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-5 mt-2">
+                                        {{ salesTargetMonth[10] }}
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">{{ currency }}</span>
+                                            <input id="description" pInputText class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row mb-2">
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-5 mt-2">
+                                        {{ salesTargetMonth[2] }}
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">{{ currency }}</span>
+                                            <input id="description" pInputText class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-5 mt-2">
+                                        {{ salesTargetMonth[5] }}
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">{{ currency }}</span>
+                                            <input id="description" pInputText class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-5 mt-2">
+                                        {{ salesTargetMonth[8] }}
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">{{ currency }}</span>
+                                            <input id="description" pInputText class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-5 mt-2">
+                                        {{ salesTargetMonth[11] }}
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon">{{ currency }}</span>
+                                            <input id="description" pInputText class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-row m-4">
+                    <div>
+                        <table class="table table-borderless table-striped">
+                            <thead class="grey">
+                                <tr style="border-top: 0.5px;border-top-style: solid;border-bottom: 0.5px;border-bottom-style: solid;">
+                                    <th style="width: 25%;">Description</th>
+                                    <th style="width: 13%;">Q1 ({{ currency }})</th>
+                                    <th style="width: 13%;">Q2 ({{ currency }})</th>
+                                    <th style="width: 13%;">Q3 ({{ currency }})</th>
+                                    <th style="width: 13%;">Q4 ({{ currency }})</th>
+                                    <th style="width: 13%;">Total ({{ currency }})</th>
+                                    <th style="width: 10%;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of setupData; let i=index">
+                                    <td>{{ data.desc }}</td>
+                                    <td>{{ data.q1 }}</td>
+                                    <td>{{ data.q2 }}</td>
+                                    <td>{{ data.q3 }}</td>
+                                    <td>{{ data.q4 }}</td>
+                                    <td>{{ data.total }}</td>
+                                    <td>
+                                      <!--  <a class="btn" style="cursor: pointer;" (click)="deleteRow(i)"><i class="cil-trash"></i></a>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+

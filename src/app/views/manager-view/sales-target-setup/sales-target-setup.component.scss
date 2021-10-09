@@ -1,0 +1,52 @@
+.rcorners {
+    overflow: hidden;
+}
+
+.card {
+  background-color: var(--body-color);
+}
+
+.card-header {
+  border: 1;
+}
+
+.card-body {
+  padding: 0%;
+  background-color: white;
+  border: white;
+  .submit-button {
+    padding-top: 50px;
+  }
+}
+
+.setup-row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    .row {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+.btn-icon{
+  height: 1.5rem;
+  line-height: 1.5rem;
+  padding: 0 !important;
+  width: 1.5rem;
+  font-size: 1rem !important;
+  font-weight: bold;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: white; // Choose your own color here
+}
+
+.table-striped>tbody>tr:nth-child(even)>td,
+.table-striped>tbody>tr:nth-child(even)>th {
+   background-color: rgb(242 242 242); // Choose your own color here
+}
+
+

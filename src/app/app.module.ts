@@ -76,6 +76,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
+import { ManagerViewModule } from './views/manager-view/manager-view.module'
 
 @NgModule({
   imports: [
@@ -123,6 +124,7 @@ import * as echarts from 'echarts';
     NgxEchartsModule.forRoot({
       echarts
     }),
+    ManagerViewModule,
   ],
   declarations: [
     AppComponent,
