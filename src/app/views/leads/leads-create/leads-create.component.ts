@@ -99,56 +99,89 @@ export class LeadsCreateComponent implements OnInit {
   redirectPage() {
     this.router.navigateByUrl('leads/index');
   }
-  gotoOpertunityPage(alretType) {
-    if (alretType == 'company') {
-      this.isSkipcompany = true;
-      this.submit();
-    }
+  gotoOpertunityPage() {
+    this.router.navigateByUrl('opportunity/new');
   }
+  // skip(alretType) {
+  //   if (alretType == 'company') {
+  //     this.isSkipcompany = true;
+  //     this.submit();
+  //   }
+  // }
 
   submit() {
     let company_name = this.form.value.company_name;
-    if (this.isSkipcompany) {
-      this.create(true);
-      this.router.navigateByUrl('opportunity');
-    } else {
-      this.leadsService.searchCompany(company_name).subscribe(res => {
-        if (res.success) {
-          this.alertHeader = this.errorMessage;
-          this.alertBody = res.message || this.message;
-          this.alretType = 'company';
+    this.searchCompany(company_name)
+    // if (this.isSkipcompany) {
+    //   this.create(true);
+    //   this.router.navigateByUrl('opportunity');
+    // } else {
+    // this.leadsService.searchCompany(company_name).subscribe(res => {
+    //   if (res.success) {
+    //     this.alertHeader = this.errorMessage;
+    //     this.alertBody = res.message || this.message;
+    //     this.alretType = 'company';
+    //     this.foundModal.show();
+    //     return;
+    //   } else {
+    //     this.create();
+    //   }
+    // });
+    // }
+
+  }
+  searchCompany(company_name) {
+    this.leadsService.searchCompany(company_name).subscribe(res => {
+      console.log("search-res: ", res);
+      if (res.success) {
+        if (res.message == 'Company name is available.') {
+          this.alertHeader=this.errorMessage;
+          this.alertBody = this.message;
           this.foundModal.show();
-          return;
-        } else {
+        }
+        else {
           this.create();
         }
-      });
-    }
-  }
-
-  create(skipModal = false) {
-    this.leadsService.store(this.form.value).subscribe(res => {
-      if (!skipModal) {
-        this.alertBody = res.message || 'Created Successfully';
-        this.id = res.data.value;
-        this.successModal.show();
       }
+
+    });
+  }
+  create() {
+    this.leadsService.store(this.form.value).subscribe(res => {
+      console.log("store-res: ", res);
+
+      this.alertBody = res.message || 'Created Successfully';
+      this.id = res.data.value;
+      this.successModal.show();
+
+    }, error => {
+      console.log("error: ", error.message);
+      this.alertHeader = "Network Error";
+      this.alertBody = 'Somethink went wrong please try again';
+      this.dangerModal.show();
     });
   }
 
   verify() {
-    this.leadsService.store(this.form.value).subscribe(
-      res => {
-        this.id = res.data.id;
-      }, error => {
-        this.alertHeader = this.errorMessage;
-        this.alertBody = error.message || this.message;
-        this.foundModal.show();
-      },
-      // () => {
-      //   this.router.navigateByUrl('leads/' + this.id + '/verify');
-      // }
-    );
+    let company_name = this.form.value.company_name;
+    console.log("company_name: ", company_name);
+
+    this.searchCompany(company_name);
+
+    // this.leadsService.store(this.form.value).subscribe(
+    //   res => {
+    //     console.log("verify-res: ", res);
+
+    //     this.id = res.data.id;
+    //   }, error => {
+    //     this.alertHeader = this.errorMessage;
+    //     this.alertBody = error.message || this.message;
+    //     this.foundModal.show();
+    //   },
+    //   () => {
+    //     this.router.navigateByUrl('leads/' + this.id + '/verify');
+    //   }
+    // );
   }
 
   searchName(event) {
@@ -187,21 +220,17 @@ export class LeadsCreateComponent implements OnInit {
     let query = event;
     this.leadsService.searchCompany(query).subscribe(res => {
       if (res.success) {
-        if(res.message == 'Company already exist.'){
+        if (res.message == 'Company already exist.') {
           this.alertBody = 'Company already exist.';
           this.dangerModal.show();
         }
-        else{
-            this.alertBody = 'Company name is available to use.';
-            this.successModal.show();    
+        else {
+          this.alertBody = 'Company name is available to use.';
+          this.successModal.show();
         }
         // this.filteredCompanyData = res.data;
       }
     }
-    // , error => {
-    //   this.alertBody = 'Company already exist.';
-    //   this.dangerModal.show();
-    // }
     )
     // let filtered: any[] = [];
     // let query = event.query;
