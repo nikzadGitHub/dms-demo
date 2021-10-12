@@ -3,6 +3,9 @@
   overflow: hidden;
 }
 
+.search-country-name-icon {
+  cursor: pointer;
+}
 .buttonColor {
   background-color: #00538a;
   border-color: #00538a;
@@ -64,6 +67,7 @@
 
 .p-inputtext {
   height: 100%;
+
 }
 
 .not-found-modal {

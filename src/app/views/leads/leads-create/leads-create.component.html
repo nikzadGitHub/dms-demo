@@ -30,14 +30,17 @@
                                         </div>
                                         <div class="col-md-6">
                                             <span class="p-input-icon-right" style="width: 100%;">
-                                                <p-autoComplete class="search_field" [inputStyle]="{'width':'100%'}" [style]="{'width':'100%'}" formControlName="company_name" [suggestions]="filteredData" (completeMethod)="searchCompanyName($event)" (onSelect)="onSelectCompany($event, 'company_name')">
+                                                <!-- (onSelect)="onSelectCompany($event, 'company_name')" -->
+                                                <!-- (completeMethod)="searchCompanyName($event)" -->
+                                                <p-autoComplete class="search_field" [inputStyle]="{'width':'100%'}" [style]="{'width':'100%'}" formControlName="company_name" [suggestions]="filteredCompanyData" (onSelect)="onSelectCompany($event, 'company_name')">
                                                     <ng-template let-item pTemplate="item">
                                                         <div class="item">
                                                             <div>{{item.label}}</div>
                                                         </div>
                                                     </ng-template>
                                                 </p-autoComplete>
-                                                <i class="pi pi-search"></i>
+                                                <!-- (click)="searchCompanyName($event)" -->
+                                                <i class="pi pi-search search-country-name-icon" (click)="searchCompanyName(form.value.company_name)"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -54,7 +57,7 @@
                                                 <p-autoComplete class="search_field" [inputStyle]="{'width':'100%'}" [style]="{'width':'100%'}" formControlName="contact_name" [suggestions]="filteredData" (completeMethod)="searchName($event)" (onSelect)="onSelect($event)">
                                                     <ng-template let-item pTemplate="item">
                                                         <div class="item">
-                                                            <div>{{item.full_name}} ({{item.mobile_phone}})</div>
+                                                            <div>{{item.contact_name}} ({{item.mobile_phone}})</div>
                                                         </div>
                                                     </ng-template>
                                                 </p-autoComplete>
@@ -186,6 +189,7 @@
         </div>
     </div>
 </div>
+<!-- Models-D -->
 
 <div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-success" role="document">
@@ -227,7 +231,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="foundModal.hide()">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="skip(alretType)">Yes</button>
+          <button type="button" class="btn btn-primary" (click)="gotoOpertunityPage(alretType)">Yes</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
