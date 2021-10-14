@@ -1,5 +1,5 @@
 <div class="download-btn">
-    <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload/>
+    <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload />
     <button type="button" class="btn btn-primary btn-sm m-2 file-upload" role="button" rel="nofollow" target="_blank"
         (click)="fileUpload.click()">Upload Image
         <input #fileInput type="file" style="display:none;" />
@@ -10,9 +10,11 @@
     <div #pdfTable class="" id="pdfTable">
         <div class="template-header">
             <div class="img-text">
-                <img src="../../../assets/img/logo.png" class="card-img-top" alt="...">
-
+                <div class=""> 
+                    <img src="../../../assets/img/logo.png" class="card-img-top" alt="...">
+                </div>
                 <div class="vl"></div>
+                <div class="v2"></div>
                 <div class="head-text" [attr.contenteditable]="editable">
                     <p>Slipi-Jakarta 11410, Indonesia</p>
                     <p>T: +622125678989</p>
@@ -23,7 +25,8 @@
             </div>
         </div>
         <div class="address-title">
-            <p [attr.contenteditable]="editable">Kepada Yth,<br>PT.Aditana Intiperdana <br> Ruko Rungkut Megah Raya M-23 <br>
+            <p [attr.contenteditable]="editable">Kepada Yth,<br>PT.Aditana Intiperdana <br> Ruko Rungkut Megah Raya M-23
+                <br>
                 Surabaya</p>
         </div>
         <div class="card-body">
@@ -32,7 +35,8 @@
                     <tbody>
                         <tr class="all-th-td-padding-bottom-none">
                             <th class="name-field-label " scope="row">Perihal </th>
-                            <td [attr.contenteditable]="editable"><span>:&nbsp;&nbsp;</span> <span class="name-field">Penawaran
+                            <td [attr.contenteditable]="editable"><span>:&nbsp;&nbsp;</span> <span
+                                    class="name-field">Penawaran
                                     Harga</span></td>
                             <td></td>
                             <td></td>
@@ -84,17 +88,36 @@
                 <div class="list-detail" [attr.contenteditable]="editable">
                     <p class="">Bootstrap sets basic global display, typography, and link styles:</p>
                     <div class="list-data">
-                        <ol class="list-group">
+                        <table class="table table-borderless item-table">
+                            <tbody>
+                                <tr class="list-group-1">
+                                    <td class="item-list">1.</td>
+                                    <td class="item-name">First item</td>
+                                    <td>:Cras justo odio</td>
+                                </tr>
+                                <tr>
+                                    <td class="item-list">2.</td>
+                                    <td>Second item</td>
+                                    <td>:Dapibus ac facilisis in</td>
+                                </tr>
+                                <tr>
+                                    <td class="item-list">3.</td>
+                                    <td>Third item</td>
+                                    <td>:Morbi leo risus</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- <ol class="list-group-1">
                             <li class="">First item</li>
                             <li class="">Second item</li>
                             <li class="">Third item</li>
                         </ol>
-                        <ul class="list-group">
+                        <ul class="list-group-2">
                             <li class="list-group">:Cras justo odio</li>
                             <li class="list-group">:Dapibus ac facilisis in</li>
                             <li class="list-group">:Morbi leo risus</li>
 
-                        </ul>
+                        </ul> -->
                     </div>
 
                 </div>
@@ -112,7 +135,8 @@
                     <label [attr.contenteditable]="editable">Hormat kami.</label>
                     <p class="company-name" [attr.contenteditable]="editable">PT. IDS Medical System Indonisa</p>
                     <p class="signature"></p>
-                    <p [attr.contenteditable]="editable"><span class="contact-name">ZulfaAlla</span><br>(0812-4920-1673)</p>
+                    <p [attr.contenteditable]="editable"><span class="contact-name">ZulfaAlla</span><br>(0812-4920-1673)
+                    </p>
                 </div>
             </div>
         </div>
@@ -126,32 +150,34 @@
 </div>
 
 
-<div id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-success" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Success</h4>
-        </div>
-        <div class="modal-body">
-          <p>{{alertBody}}</p>
-        </div>
-      </div><!-- /.modal-content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Success</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{alertBody}}</p>
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 
-<div (onHide)="reset()" bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div (onHide)="reset()" bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-danger" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">{{alertHeader}}</h4>
-        </div>
-        <div class="modal-body">
-          <p>{{alertBody}}</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Close</button>
-        </div>
-      </div><!-- /.modal-content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{alertHeader}}</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{alertBody}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

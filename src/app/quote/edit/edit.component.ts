@@ -588,4 +588,8 @@ export class EditComponent implements OnInit {
       this.signatureStatus = true;
     })
   }
+
+  viewQuotationTemplate(){
+    this.router.navigateByUrl('quote/view/quote');
+  }
 }

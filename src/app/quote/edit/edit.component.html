@@ -1,11 +1,15 @@
 <div class="animated fadeIn">
     <div class="col-lg col-md-6">
         <div class="card rcorners">
-            <div class="card-header purple"><h2>Quote Details</h2></div>
+            <div class="card-header purple">
+                <h2>Quote Details</h2>
+            </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-6">
-                        <label class="form-control no-border"><h2><b>{{company_details['company_name']}}</b></h2></label>
+                        <label class="form-control no-border">
+                            <h2><b>{{company_details['company_name']}}</b></h2>
+                        </label>
                     </div>
                     <div class="col-lg-2">
                         <!-- <select [(ngModel)]="rev" class="form-control" style="width: 70%;" (change)='changeRev(rev)'>
@@ -13,11 +17,13 @@
                         </select> -->
                         <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label>
                     </div>
-                    <div class="col-lg" align='right'><b>Status</b><br><p>{{f.status.value}}</p></div>
+                    <div class="col-lg" align='right'><b>Status</b><br>
+                        <p>{{f.status.value}}</p>
+                    </div>
                 </div>
             </div>
             <div class="card-footer">
-        
+
             </div>
         </div>
         <form [formGroup]="form" (ngSubmit)="submitSelect()">
@@ -40,7 +46,8 @@
                                 <tr *ngFor="let quoteId of quoteIdList" align="center">
                                     <td>{{quoteId.created_at | date: 'dd-MMM-yyyy'}}</td>
                                     <td>
-                                        <a [routerLink]="" routerLinkActive="router-link-active" (click)='changeRev(quoteId.rev_number)'>
+                                        <a [routerLink]="" routerLinkActive="router-link-active"
+                                            (click)='changeRev(quoteId.rev_number)'>
                                             {{quoteId.quote_id}}
                                         </a>
                                     </td>
@@ -71,15 +78,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let product of products().controls; let i=index;" [formGroupName]="i" align="center">
+                                <tr *ngFor="let product of products().controls; let i=index;" [formGroupName]="i"
+                                    align="center">
                                     <td>{{ i+1 }}</td>
-                                    <td><input class="form-control" formControlName="name" type="text" [attr.disabled]="true"></td>
-                                    <td><input class="form-control" formControlName="sku" type="text" [attr.disabled]="true"></td>
-                                    <td><input class="form-control" formControlName="quantity" type="text" [attr.disabled]="true"></td>
-                                    <td><input class="form-control" formControlName="unit_price" type="text" [attr.disabled]="true"></td>
-                                    <td><input class="form-control" formControlName="total_price" type="text" [attr.disabled]="true"></td>
-                                    <td><input class="form-control" formControlName="discount" type="text" [attr.disabled]="true"></td>
-                                    <td><input class="form-control" formControlName="amount" type="text" [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="name" type="text"
+                                            [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="sku" type="text"
+                                            [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="quantity" type="text"
+                                            [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="unit_price" type="text"
+                                            [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="total_price" type="text"
+                                            [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="discount" type="text"
+                                            [attr.disabled]="true"></td>
+                                    <td><input class="form-control" formControlName="amount" type="text"
+                                            [attr.disabled]="true"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -99,32 +114,38 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     Payment Terms:
-                                </div> 
+                                </div>
                                 <div class="col-md-4">
-                                    <select formControlName="standard_payment_term" (change)="termSelect(f.standard_payment_term.value);dateChange()"
-                                    name="standard_terms" class="form-control">
+                                    <select formControlName="standard_payment_term"
+                                        (change)="termSelect(f.standard_payment_term.value);dateChange()"
+                                        name="standard_terms" class="form-control">
                                         <option>--- Select Term ---</option>
-                                        <option *ngFor="let term of terms" value="{{term.id}}">{{term.description}}</option>
+                                        <option *ngFor="let term of terms" value="{{term.id}}">{{term.description}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-5" style="text-align: middle;">
-                            Quotation Validity: {{termSelected}} Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
+                            Quotation Validity: {{termSelected}} Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To
+                            <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
                         </div>
                         <div class="col-lg-1" style="text-align: right;">
                             <div (click)="show=!show">
-                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show"><i class="cil-check-circle"></i></a>
-                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i class="fa fa-edit"></i></a>
+                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show"><i
+                                        class="cil-check-circle"></i></a>
+                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i
+                                        class="fa fa-edit"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="row grey">
                         <div class="col-md-3">
-                        <b>(As Default)</b> Payment Terms: 30 Days
+                            <b>(As Default)</b> Payment Terms: 30 Days
                         </div>
                         <div class="col-lg-5" style="text-align: right">
-                            Quotation Validity: 30 Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
+                            Quotation Validity: 30 Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate |
+                                date:'dd-MMM-yyyy'}}</u>
                         </div>
                         <div class="col-lg-1" style="text-align: right;"></div>
                     </div>
@@ -147,35 +168,45 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let quantity of billings().controls; let i=index" [formGroupName]="i" align="center">
+                                <tr *ngFor="let quantity of billings().controls; let i=index" [formGroupName]="i"
+                                    align="center">
                                     <td style="width: 15%;">
-                                        <input formControlName="billing_id" class="form-control" placeholder="ABC123" type="text">
+                                        <input formControlName="billing_id" class="form-control" placeholder="ABC123"
+                                            type="text">
                                     </td>
                                     <td style="width: 15%;">
-                                        <input formControlName="stage" class="form-control" size="1" placeholder="Deploy" type="text">
+                                        <input formControlName="stage" class="form-control" size="1"
+                                            placeholder="Deploy" type="text">
                                     </td>
                                     <td style="width: 10%;">
-                                        <input formControlName="percentage" class="form-control" size="1" placeholder="50" type="number" min="0" max="100.00" step=".01">
+                                        <input formControlName="percentage" class="form-control" size="1"
+                                            placeholder="50" type="number" min="0" max="100.00" step=".01">
                                     </td>
                                     <td style="width: 20%;">
-                                        <input formControlName="amount" class="form-control" size="1" placeholder="300" type="number" min="0" step=".01">
+                                        <input formControlName="amount" class="form-control" size="1" placeholder="300"
+                                            type="number" min="0" step=".01">
                                     </td>
                                     <td>
-                                        <input formControlName="status" class="form-control" size="1" placeholder="Deposit" type="input">
+                                        <input formControlName="status" class="form-control" size="1"
+                                            placeholder="Deposit" type="input">
                                     </td>
                                     <td style="width: 15%;">
-                                        <textarea formControlName="remarks" class="form-control" id="" cols="30" rows="1" (focus)='billingRemarkModalOpen(i)'></textarea>
+                                        <textarea formControlName="remarks" class="form-control" id="" cols="30"
+                                            rows="1" (focus)='billingRemarkModalOpen(i)'></textarea>
                                         <!-- <input formControlName="remarks" class="form-control" size="1" placeholder="Remarks" type="text"> -->
                                     </td>
                                     <td class="td-actions" style="width: 10%;">
                                         <div class="row">
                                             <div (click)="show=!show">
-                                                <a [routerLink]="" routerLinkActive="router-link-active" (click)="addBillingMilestone()" 
-                                                *ngIf="show"><i class="cil-check-circle"></i></a>
-                                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i class="fa fa-edit"></i></a>
+                                                <a [routerLink]="" routerLinkActive="router-link-active"
+                                                    (click)="addBillingMilestone()" *ngIf="show"><i
+                                                        class="cil-check-circle"></i></a>
+                                                <a [routerLink]="" routerLinkActive="router-link-active"
+                                                    *ngIf="!show"><i class="fa fa-edit"></i></a>
                                             </div>&nbsp;
                                             <!-- <a [routerLink]="" routerLinkActive="router-link-active" (click)="addBillingMilestone()"><i class="fa fa-edit"></i></a> &nbsp; -->
-                                            <a [routerLink]="" (click)="removeBillings(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
+                                            <a [routerLink]="" (click)="removeBillings(i)"
+                                                routerLinkActive="router-link-active"><i class="fa fa-trash"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -183,7 +214,8 @@
                             <tfoot align="center">
                                 <tr>
                                     <td class="td-actions" colspan="9" align="center">
-                                        <a [routerLink]="" (click)="addBillings()" routerLinkActive="router-link-active" >
+                                        <a [routerLink]="" (click)="addBillings()"
+                                            routerLinkActive="router-link-active">
                                             <i class="icon-plus icons"></i>
                                         </a>
                                     </td>
@@ -211,42 +243,51 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let payment of payments().controls; let i=index" [formGroupName]="i" align="center">
+                                <tr *ngFor="let payment of payments().controls; let i=index" [formGroupName]="i"
+                                    align="center">
                                     <td style="width: 15%; padding:6px">
                                         <select formControlName="billing_id" class="form-control" style="width: 70%;">
-                                            <option *ngFor="let bill of billingList" value="{{bill.billing_id}}">{{bill.billing_id}}</option>
+                                            <option *ngFor="let bill of billingList" value="{{bill.billing_id}}">
+                                                {{bill.billing_id}}</option>
                                         </select>
                                     </td>
                                     <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="percentage" size="1" placeholder="50" 
-                                        type="number" min="0" max="100.00" step=".01" (keyup)="changePaymentPercent(i)">
+                                        <input class="form-control" formControlName="percentage" size="1"
+                                            placeholder="50" type="number" min="0" max="100.00" step=".01"
+                                            (keyup)="changePaymentPercent(i)">
                                     </td>
                                     <td style="width: 20%; padding:6px">
-                                        <input class="form-control" formControlName="schedule" size="1" type="date"></td>
+                                        <input class="form-control" formControlName="schedule" size="1" type="date">
+                                    </td>
                                     <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="soc_payment_term" placeholder="30 Days" type="number">
+                                        <input class="form-control" formControlName="soc_payment_term"
+                                            placeholder="30 Days" type="number">
                                     </td>
                                     <td style=" padding:6px;">
-                                        <input class="form-control" formControlName="status" size="1" placeholder="Deposit" type="input">
+                                        <input class="form-control" formControlName="status" size="1"
+                                            placeholder="Deposit" type="input">
                                     </td>
                                     <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="amount" size="1" placeholder="300" 
-                                        type="number" min="0" step=".01" (keyup)="changePaymentValue(i)">
+                                        <input class="form-control" formControlName="amount" size="1" placeholder="300"
+                                            type="number" min="0" step=".01" (keyup)="changePaymentValue(i)">
                                     </td>
                                     <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="remarks" size="1" placeholder="Remarks" type="text" 
-                                        (focus)="paymentRemarkModalOpen(i)">
+                                        <input class="form-control" formControlName="remarks" size="1"
+                                            placeholder="Remarks" type="text" (focus)="paymentRemarkModalOpen(i)">
                                     </td>
                                     <td class="td-actions" style="width: 10%; padding:none">
-                                        <a [routerLink]="" routerLinkActive="router-link-active" ><i class="fa fa-edit"></i></a> &nbsp;
-                                        <a [routerLink]="" routerLinkActive="router-link-active" (click)="removePayments(i)" ><i class="fa fa-trash"></i></a>
+                                        <a [routerLink]="" routerLinkActive="router-link-active"><i
+                                                class="fa fa-edit"></i></a> &nbsp;
+                                        <a [routerLink]="" routerLinkActive="router-link-active"
+                                            (click)="removePayments(i)"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
                             <tfoot align="center">
                                 <tr>
                                     <td class="td-actions" colspan="9" align="center">
-                                        <a [routerLink]="" (click)="addPayments()" routerLinkActive="router-link-active" >
+                                        <a [routerLink]="" (click)="addPayments()"
+                                            routerLinkActive="router-link-active">
                                             <i class="icon-plus icons"></i>
                                         </a>
                                     </td>
@@ -272,37 +313,43 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let cost of addCosts().controls; let i=index" [formGroupName]="i" align="center">
+                                <tr *ngFor="let cost of addCosts().controls; let i=index" [formGroupName]="i"
+                                    align="center">
                                     <td style="width: 15%;">
-                                        <input formControlName="description" class="form-control" placeholder="Training" type="text">
+                                        <input formControlName="description" class="form-control" placeholder="Training"
+                                            type="text">
                                     </td>
                                     <td style="width: 15%;">
-                                        <input formControlName="quantity" class="form-control" size="1" placeholder="1" 
-                                        (keyup)="allTotal(cost['controls'],addCosts().controls)"
-                                        type="number" min="0">
+                                        <input formControlName="quantity" class="form-control" size="1" placeholder="1"
+                                            (keyup)="allTotal(cost['controls'],addCosts().controls)" type="number"
+                                            min="0">
                                     </td>
                                     <td style="width: 10%;">
-                                        <input formControlName="unit_price" class="form-control" size="1" placeholder="300"
-                                        (keyup)="allTotal(cost['controls'],addCosts().controls)"
-                                        type="number" min="0" step=".01">
+                                        <input formControlName="unit_price" class="form-control" size="1"
+                                            placeholder="300" (keyup)="allTotal(cost['controls'],addCosts().controls)"
+                                            type="number" min="0" step=".01">
                                     </td>
                                     <td style="width: 20%;">
-                                        <input formControlName="total_price" class="form-control" size="1" placeholder="300"
-                                        type="number" min="0" step=".01">
+                                        <input formControlName="total_price" class="form-control" size="1"
+                                            placeholder="300" type="number" min="0" step=".01">
                                     </td>
                                     <td style="width: 15%;">
-                                        <input formControlName="remarks" class="form-control" size="1" placeholder="Remarks" type="text">
+                                        <input formControlName="remarks" class="form-control" size="1"
+                                            placeholder="Remarks" type="text">
                                     </td>
                                     <td class="td-actions" style="width: 10%;">
-                                        <a [routerLink]="" routerLinkActive="router-link-active" ><i class="fa fa-edit"></i></a> &nbsp;
-                                        <a [routerLink]="" (click)="removeAddCosts(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
+                                        <a [routerLink]="" routerLinkActive="router-link-active"><i
+                                                class="fa fa-edit"></i></a> &nbsp;
+                                        <a [routerLink]="" (click)="removeAddCosts(i)"
+                                            routerLinkActive="router-link-active"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
                             <tfoot align="center">
                                 <tr>
                                     <td class="td-actions" colspan="9" align="center">
-                                        <a [routerLink]="" (click)="addAddCosts()" routerLinkActive="router-link-active" >
+                                        <a [routerLink]="" (click)="addAddCosts()"
+                                            routerLinkActive="router-link-active">
                                             <i class="icon-plus icons"></i>
                                         </a>
                                     </td>
@@ -377,8 +424,8 @@
             <div class="col-lg" align=center>
                 <div class="form-group" *ngIf="requestApproval()">
                     <button class="btn btn-secondary" type="submit" (click)='setSubmitType("save")'>SAVE</button>&nbsp;
-                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("request-approval")' 
-                    [disabled]="!form.valid">Request Approval</button>
+                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("request-approval")'
+                        [disabled]="!form.valid">Request Approval</button>
                 </div>
                 <div class="form_group" *ngIf="cancelApprove()">
                     <button class="btn btn-secondary" type="submit" (click)='setSubmitType("cancel")'>
@@ -388,11 +435,19 @@
                         Approve Quotation
                     </button>
                 </div>
-                <div class="form-group" *ngIf="approved_date != null">
-                    <button class="btn btn-primary" type="submit" (click)='setSubmitType("preferred")'>
-                        Set Preferred
-                    </button>
+                <div class="row d-flex justify-content-center">
+                    <div class="form-group col-sm-2">
+                        <button class="btn btn-primary btn-md" type="submit" (click)='viewQuotationTemplate()'>
+                            Preview Quote
+                        </button>
+                    </div>
+                    <div class="form-group" *ngIf="approved_date != null">
+                        <button class="btn btn-primary btn-md" type="submit" (click)='setSubmitType("preferred")'>
+                            Set Preferred
+                        </button>
+                    </div>
                 </div>
+
             </div>
         </form>
     </div>
@@ -400,99 +455,110 @@
 
 <div class="row"></div> <!-- Empty row to give some space at the bottom -->
 
-<div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1"
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-success" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Success</h4>
-        </div>
-        <div class="modal-body">
-          <p>{{alertBody}}</p>
-        </div>
-      </div><!-- /.modal-content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Success</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{alertBody}}</p>
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-danger" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Warning</h4>
-        </div>
-        <div class="modal-body">
-          <p>{{dangerBody}}</p>
-        </div>
-        <div class="modal-footer" *ngIf="modal_type == 'paymentPercentage'">
-            <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Keep Changes</button>
-            <button type="button" class="btn btn-primary" (click)="setPaymentAutoAssignPercentage();dangerModal.hide()">Auto-Assign</button>
-            <button type="button" class="btn btn-primary" (click)="setDefaultPayment();dangerModal.hide()">Revert Default</button>
-        </div>
-        <div class="modal-footer" *ngIf="modal_type == 'paymentValue'">
-            <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Keep Changes</button>
-            <button type="button" class="btn btn-primary" (click)="setPaymentAutoAssignValue();dangerModal.hide()">Auto-Assign</button>
-            <button type="button" class="btn btn-primary" (click)="setDefaultPayment();dangerModal.hide()">Revert Default</button>
-        </div>
-      </div><!-- /.modal-content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Warning</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{dangerBody}}</p>
+            </div>
+            <div class="modal-footer" *ngIf="modal_type == 'paymentPercentage'">
+                <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Keep Changes</button>
+                <button type="button" class="btn btn-primary"
+                    (click)="setPaymentAutoAssignPercentage();dangerModal.hide()">Auto-Assign</button>
+                <button type="button" class="btn btn-primary" (click)="setDefaultPayment();dangerModal.hide()">Revert
+                    Default</button>
+            </div>
+            <div class="modal-footer" *ngIf="modal_type == 'paymentValue'">
+                <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Keep Changes</button>
+                <button type="button" class="btn btn-primary"
+                    (click)="setPaymentAutoAssignValue();dangerModal.hide()">Auto-Assign</button>
+                <button type="button" class="btn btn-primary" (click)="setDefaultPayment();dangerModal.hide()">Revert
+                    Default</button>
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-info" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Cancellation Remarks</h4>
-          <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <textarea name="cancel_remarks" id="cancel_remarks" cols="60" placeholder="Reason of cancellation" rows="10" [(ngModel)]="cancelRemarks"></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
-          <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button>
-        </div>
-      </div><!-- /.modal-content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cancellation Remarks</h4>
+                <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea name="cancel_remarks" id="cancel_remarks" cols="60" placeholder="Reason of cancellation"
+                    rows="10" [(ngModel)]="cancelRemarks"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
+                <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button>
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div bsModal #paymentRemarkModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #paymentRemarkModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-info" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Remarks</h4>
-          <button type="button" class="close" (click)="paymentRemarkModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <textarea name="pformRemarks" id="pformRemarks" cols="60" placeholder="remarks" rows="10" [(ngModel)]="paymentRemarks"></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="paymentRemarkModalClose()">Confirm</button>
-          <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
-        </div>
-      </div><!-- /.modal-content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Remarks</h4>
+                <button type="button" class="close" (click)="paymentRemarkModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea name="pformRemarks" id="pformRemarks" cols="60" placeholder="remarks" rows="10"
+                    [(ngModel)]="paymentRemarks"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="paymentRemarkModalClose()">Confirm</button>
+                <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div bsModal #billingRemarkModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #billingRemarkModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-info" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Cancellation Remarks</h4>
-          <button type="button" class="close" (click)="billingRemarkModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <textarea name="bformRemarks" id="bformRemarks" cols="60" placeholder="remarks" rows="10" [(ngModel)]="billingRemarks"></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="billingRemarkModalClose()">Confirm</button>
-          <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
-        </div>
-      </div><!-- /.modal-content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cancellation Remarks</h4>
+                <button type="button" class="close" (click)="billingRemarkModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea name="bformRemarks" id="bformRemarks" cols="60" placeholder="remarks" rows="10"
+                    [(ngModel)]="billingRemarks"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="billingRemarkModalClose()">Confirm</button>
+                <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-  
