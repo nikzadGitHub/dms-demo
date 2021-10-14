@@ -19,6 +19,7 @@ import { IndexTemplateComponent } from './index-template/index-template.componen
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
+import { QuoteTemplateComponent } from './quote-template/quote-template.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { PaginatorModule } from 'primeng/paginator';
     ProductsComponent,
     RevisionComponent,
     IndexTemplateComponent,
+    QuoteTemplateComponent,
   ],
   imports: [
     CommonModule,
