@@ -102,12 +102,6 @@ export class LeadsCreateComponent implements OnInit {
   gotoOpertunityPage() {
     this.router.navigateByUrl('opportunity/new');
   }
-  // skip(alretType) {
-  //   if (alretType == 'company') {
-  //     this.isSkipcompany = true;
-  //     this.submit();
-  //   }
-  // }
 
   submit() {
     let company_name = this.form.value.company_name;
@@ -189,8 +183,11 @@ export class LeadsCreateComponent implements OnInit {
     this.leadsService.searchContact(query).subscribe(res => {
       if (res.success) {
         if (res.data.length == 0) {
-          this.alertBody = 'Name is not Correct';
-          this.dangerModal.show();
+          setTimeout(() => {
+            this.alertBody = 'Name is not Correct';
+            this.dangerModal.show();
+          }, 1000);
+    
         } else {
           this.filteredData = res.data
         }
