@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap");
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 $custom-typography: mat-typography-config(
-  $font-family: '"Lato", sans-serif'
+  $font-family: '"Lato", sans-serif',
 );
 @include mat-core($custom-typography);
 
@@ -24,13 +24,15 @@ $ng-warn: mat-palette($mat-red);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$ng-theme: mat-light-theme((
-  color: (
-    primary: $ng-primary,
-    accent: $ng-accent,
-    warn: $ng-warn,
+$ng-theme: mat-light-theme(
+  (
+    color: (
+      primary: $ng-primary,
+      accent: $ng-accent,
+      warn: $ng-warn,
+    ),
   )
-));
+);
 
 .sidebar .nav-divider {
   background-color: white;

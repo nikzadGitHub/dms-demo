@@ -1,14 +1,14 @@
 // Here you can add other styles
 .text-error {
-    color: red;
+  color: red;
 }
 
 .p-tabview-nav {
-    justify-content: center !important;
+  justify-content: center !important;
 }
 
 .p-progressbar .p-progressbar-value {
-    background: #FF7B00!important;
+  background: #ff7b00 !important;
 }
 
 .sidebar .nav-divider {
@@ -17,20 +17,20 @@
 }
 
 .periodButton .p-button {
-    background: white;
-    border: 0px;
+  background: white;
+  border: 0px;
 }
 
 .periodButton .p-button:enabled:hover {
-    background: white;
-    border: 0px;
+  background: white;
+  border: 0px;
 }
 
 .periodButton .p-button-icon {
-    color: black;
+  color: black;
 }
 
-.arrowBtn.p-button{
+.arrowBtn.p-button {
   border: none;
   background: transparent;
   color: black;
@@ -43,31 +43,31 @@
 }
 
 .graph-one-option .p-button {
-  background: transparent!important;
-  color: black!important;
-  border: none!important;
+  background: transparent !important;
+  color: black !important;
+  border: none !important;
   font-size: 12px;
-  padding-left:10px!important;
-  padding-right:10px!important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
 }
 
 .graph-one-option .p-button.p-highlight {
-  background: transparent!important;
-  color: blue!important;
-  border: none!important;
+  background: transparent !important;
+  color: blue !important;
+  border: none !important;
   font-size: 12px;
-  padding-left:10px!important;
-  padding-right:10px!important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
 }
 
-.sales-funnel .p-datatable-tbody{
-    font-size: 14px;
+.sales-funnel .p-datatable-tbody {
+  font-size: 14px;
 }
 
 .sales-funnel .p-datatable-tbody > tr > td {
-    padding: 5px 0.5rem!important;
+  padding: 5px 0.5rem !important;
 }
 
 .sales-funnel-tab .p-tabview-panels {
-    min-height: 350px;
+  min-height: 350px;
 }
