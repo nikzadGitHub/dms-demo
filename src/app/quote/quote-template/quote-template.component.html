@@ -1,0 +1,266 @@
+<div class="download-btn">
+  <input
+    type="file"
+    class="file-input"
+    (change)="onFileSelected($event)"
+    #fileUpload
+  />
+  <button
+    type="button"
+    class="btn btn-primary btn-sm m-2 file-upload"
+    role="button"
+    rel="nofollow"
+    target="_blank"
+    (click)="fileUpload.click()"
+  >
+    Upload Image
+    <input #fileInput type="file" style="display: none" />
+  </button>
+  <button class="btn btn-primary btn-sm" (click)="downloadPDF()">
+    Download Quotation
+  </button>
+</div>
+<div class="card" style="width: 100%">
+  <div #pdfTable class="" id="pdfTable">
+    <div class="template-header">
+      <div class="img-text">
+        <div class="">
+          <img
+            src="../../../assets/img/logo.png"
+            class="card-img-top"
+            alt="..."
+          />
+        </div>
+        <div class="vl"></div>
+        <div class="v2"></div>
+        <div class="head-text" [attr.contenteditable]="editable">
+          <p>Slipi-Jakarta 11410, Indonesia</p>
+          <p>T: +622125678989</p>
+          <p>F: +622125678989</p>
+          <p>E: +622125678989</p>
+          <a href="#">www.idsMED.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="address-title">
+      <p [attr.contenteditable]="editable">
+        Kepada Yth,<br />PT.Aditana Intiperdana <br />
+        Ruko Rungkut Megah Raya M-23
+        <br />
+        Surabaya
+      </p>
+    </div>
+    <div class="card-body">
+      <div class="initial-info">
+        <table class="table table-borderless">
+          <tbody>
+            <tr class="all-th-td-padding-bottom-none">
+              <th class="name-field-label" scope="row">Perihal</th>
+              <td [attr.contenteditable]="editable">
+                <span>:&nbsp;&nbsp;</span>
+                <span class="name-field">Penawaran Harga</span>
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="all-th-td-padding-top-bottom-none">
+              <th scope="row">No. Ref</th>
+              <td><span>:&nbsp;&nbsp;&nbsp;</span>1386/SLS/JKT/ZA/VI/2021</td>
+              <th class="date-field-label">Date :</th>
+              <td class="date-field-data">23 June 2021</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="main-text">
+        <div [attr.contenteditable]="editable">
+          <p class="text-header">Dengan hormat,</p>
+          <p class="text-para">
+            Documentation and examples for opt-in styling of tables (given their
+            prevalent use in JavaScript plugins) with Bootstrap.
+            <b> - RSUD. Dr. Harjono Ponorogo.</b>
+          </p>
+          <p class="table-info-text">
+            Similar to tables and dark tables, use the modifier classes
+            .thead-light or .thead-dark to make s appear light or dark gray:
+          </p>
+        </div>
+        <div>
+          <table class="table table-bordered table-sm">
+            <thead>
+              <tr>
+                <th scope="col">BRAND</th>
+                <th scope="col">P/N</th>
+                <th scope="col">DESCRIPTION</th>
+                <th scope="col">PRICE LIST</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="main-table-data">
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="list-detail" [attr.contenteditable]="editable">
+          <p class="">
+            Bootstrap sets basic global display, typography, and link styles:
+          </p>
+          <div class="list-data">
+            <table class="table table-borderless item-table">
+              <tbody>
+                <tr>
+                  <td class="item-list">1.</td>
+                  <td class="item-name">First item</td>
+                  <td>:Cras justo odio</td>
+                </tr>
+                <tr>
+                  <td class="item-list">2.</td>
+                  <td>Second item</td>
+                  <td>:Dapibus ac facilisis in</td>
+                </tr>
+                <tr>
+                  <td class="item-list">3.</td>
+                  <td>Third item</td>
+                  <td>:Morbi leo risus</td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- <ol class="list-group-1">
+                            <li class="">First item</li>
+                            <li class="">Second item</li>
+                            <li class="">Third item</li>
+                        </ol>
+                        <ul class="list-group-2">
+                            <li class="list-group">:Cras justo odio</li>
+                            <li class="list-group">:Dapibus ac facilisis in</li>
+                            <li class="list-group">:Morbi leo risus</li>
+
+                        </ul> -->
+          </div>
+        </div>
+        <div class="sub-info-text" [attr.contenteditable]="editable">
+          <p>*HTML5 adds a new global attribute named [hidden]</p>
+          <p>
+            [hidden] is not compatible with jQuery’s $(...).hide() and
+            $(...).show() methods. Therefore, we don’t currently especially
+            endorse [hidden] <a href="#">www.idsmed.com</a>
+          </p>
+          <p>
+            To merely toggle the visibility of an element, meaning its display
+            is not modified and the element can still affect the flow of the
+            document, use the .invisible class instead.
+          </p>
+        </div>
+        <div class="sub-text-footer">
+          <label [attr.contenteditable]="editable">Hormat kami.</label>
+          <p class="company-name" [attr.contenteditable]="editable">
+            PT. IDS Medical System Indonisa
+          </p>
+          <p class="signature"></p>
+          <p [attr.contenteditable]="editable">
+            <span class="contact-name">ZulfaAlla</span><br />(0812-4920-1673)
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div #pdfTable class="" id="pdfTable">
+  <div class="card" style="width: 100%" *ngIf="check">
+    <div class="show-image">
+      <img [src]="url" alt="" />
+    </div>
+  </div>
+</div>
+
+<div
+  (onHide)="reset()"
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ alertHeader }}</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              type="radio"
+              class="form-check-input"
+              value=""
+              name="optradio"
+              (click)="onePDF()"
+            />One pdf
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              type="radio"
+              class="form-check-input"
+              value=""
+              name="optradio"
+              (click)="twoPDF()"
+            />Two pdf
+          </label>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- alert -->
+
+<!-- /.modal -->
+
+<div
+  (onHide)="reset()"
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ alertHeader }}</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="dangerModal.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
