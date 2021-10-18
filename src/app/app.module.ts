@@ -74,9 +74,11 @@ import { ChartModule } from 'primeng/chart';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { InputTextModule } from 'primeng/inputtext';
 import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
-import { ManagerViewModule } from './views/manager-view/manager-view.module'
+import { ManagerViewModule } from './views/manager-view/manager-view.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 
 @NgModule({
   imports: [
@@ -125,6 +127,8 @@ import { ManagerViewModule } from './views/manager-view/manager-view.module'
       echarts
     }),
     ManagerViewModule,
+    NgbModule,
+    InputTextModule
   ],
   declarations: [
     AppComponent,

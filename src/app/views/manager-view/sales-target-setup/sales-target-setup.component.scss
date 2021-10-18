@@ -49,4 +49,27 @@
    background-color: rgb(242 242 242); // Choose your own color here
 }
 
+.confirm-modal {
+  .modal-content {
+    padding: 20px;
+    .modal-header {
+      margin: 0 auto;
+      border-bottom: 0px;
+    }
+
+    .model-title {
+      font-weight: bold;
+    }
+
+    .modal-body {
+      margin: 0 auto;
+    }
+
+    .modal-footer {
+      border-top: 0px;
+      justify-content: center;
+    }
+  }
+}
+
 

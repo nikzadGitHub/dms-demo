@@ -16,7 +16,7 @@ export class LeadsCreateComponent implements OnInit {
   @ViewChild('successModal') successModal : ModalDirective;
   @ViewChild('dangerModal') dangerModal : ModalDirective;
   @ViewChild('foundModal') foundModal : ModalDirective;
-  
+
   form: FormGroup;
   id:any;
   alertBody: string;
@@ -166,7 +166,7 @@ export class LeadsCreateComponent implements OnInit {
       let office_number = this.form.get('office_number');
       let postcode = this.form.get('postcode');
       let address = this.form.get('address');
-      
+
       contact_name.patchValue(event.full_name);
       mobile_number.patchValue(event.mobile_phone);
       office_number.patchValue(event.business_phone);
