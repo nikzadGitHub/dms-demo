@@ -6,11 +6,12 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import jsPDF from "jspdf";
 
 import html2canvas from "html2canvas";
 import { ModalDirective } from "ngx-bootstrap/modal";
+import { AuthService } from "../../auth/auth.service";
 
 @Component({
   selector: "app-quote-mobile-template",
@@ -33,12 +34,18 @@ export class QuoteMobileTemplateComponent implements OnInit {
   imageHeight: number;
   single: boolean;
   elem;
+  quotationId: number;
+  templateId: number;
+  userToken: any;
   constructor(
     @Inject(DOCUMENT) private document: any,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.setToken();
     let element = Array.from(
       document.getElementsByTagName(
         "app-header"
@@ -151,6 +158,15 @@ export class QuoteMobileTemplateComponent implements OnInit {
     }
   }
 
+  async setToken() {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      (this.quotationId = params.quotationId),
+        (this.templateId = params.templateId),
+        (this.userToken = params.token);
+    });
+    localStorage.setItem("auth-token", this.userToken);
+    await this.authService.setAuthorizationToken(this.userToken);
+  }
   completeDownload() {
     this.successModal.hide();
     this.reset();

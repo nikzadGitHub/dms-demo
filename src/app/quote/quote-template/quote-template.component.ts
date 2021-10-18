@@ -12,7 +12,7 @@ import html2canvas from "html2canvas";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import * as screenfull from "screenfull";
 import { DOCUMENT } from "@angular/common";
-import { Router } from "@angular/router";
+import { NavigationExtras, Router } from "@angular/router";
 @Component({
   selector: "app-quote-template",
   templateUrl: "./quote-template.component.html",
@@ -33,9 +33,12 @@ export class QuoteTemplateComponent implements OnInit {
   imageWidth: any;
   imageHeight: number;
   single: boolean;
+  userToken: any;
   constructor(private router: Router) {}
 
   ngOnInit(): void {
+    this.userToken = localStorage.getItem("auth-token");
+
     this.getMobileOperatingSystem();
   }
 
@@ -121,15 +124,22 @@ export class QuoteTemplateComponent implements OnInit {
     this.single = true;
   }
   getMobileOperatingSystem() {
+    // let navigate: NavigationExtras = {
+    //   queryParams: {
+    //     quotationId: 1,
+    //     templateId: 10,
+    //     token: this.userToken,
+    //   },
+    // };
     var userAgent = navigator.userAgent || navigator.vendor;
 
     if (userAgent.match(/iPhone/i)) {
       this.editable = false;
-      this.router.navigateByUrl("quote/mobile/view/quote-template");
+      this.router.navigate(["quote/mobile/view/quote-template"]);
       return "iOS";
     } else if (userAgent.match(/Android/i)) {
       this.editable = false;
-      this.router.navigateByUrl("quote/mobile/view/quote-template");
+      this.router.navigate(["quote/mobile/view/quote-template"]);
       return "Android";
     } else {
       this.editable = true;
