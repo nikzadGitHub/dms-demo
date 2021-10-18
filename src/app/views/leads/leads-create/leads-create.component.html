@@ -1,234 +1,397 @@
 <div class="animated fadeIn">
-    <div class="col-lg col-md-6">
-        <div class="card rcorners">
-            <div class="card-header row" style="background-color: #898485; color: white;">
-                <div style="padding-left: 20px;">
-                    <h2>Create Lead</h2>
+  <div class="col-lg col-md-6">
+    <div class="card rcorners">
+      <div
+        class="card-header row"
+        style="background-color: #898485; color: white"
+      >
+        <div style="padding-left: 20px">
+          <h2>Create Lead</h2>
+        </div>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="form-group">
+            <div class="card-row">
+              <div class="row">
+                <div class="col-xl-8">
+                  <div class="row">
+                    <div class="col-md-5 text-header">Lead Owner</div>
+                    <div class="col-md-6">
+                      <input
+                        pInputText
+                        formControlName="lead_owner"
+                        class="form-control"
+                        placeholder=""
+                        type="input"
+                        readonly
+                      />
+                    </div>
+                  </div>
                 </div>
-            </div>
-            <div class="card-body">
-                <form [formGroup]="form" (ngSubmit)="submit()">
-                    <div class="form-group">
-                        <div class="card-row">
-                            <div class="row">
-                                <div class="col-xl-8">
-                                    <div class="row">
-                                        <div class="col-md-5 text-header">
-                                            Lead Owner
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input pInputText formControlName="lead_owner" class="form-control" placeholder="" type="input" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-8">
-                                    <div class="row">
-                                        <div class="col-md-5 text-header required-field">
-                                            Company Name
-                                        </div>
-                                        <div class="col-md-6">
-                                            <span class="p-input-icon-right" style="width: 100%;">
-                                                <p-autoComplete class="search_field" [inputStyle]="{'width':'100%'}" [style]="{'width':'100%'}" formControlName="company_name" [suggestions]="filteredData" (completeMethod)="searchCompanyName($event)" (onSelect)="onSelectCompany($event, 'company_name')">
-                                                    <ng-template let-item pTemplate="item">
-                                                        <div class="item">
-                                                            <div>{{item.label}}</div>
-                                                        </div>
-                                                    </ng-template>
-                                                </p-autoComplete>
-                                                <i class="pi pi-search"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-8">
-                                    <div class="row">
-                                        <div class="col-md-5 text-header">
-                                            Contact Name
-                                        </div>
-                                        <div class="col-md-6">
-                                            <span class="p-input-icon-right" style="width: 100%;">
-                                                <p-autoComplete class="search_field" [inputStyle]="{'width':'100%'}" [style]="{'width':'100%'}" formControlName="contact_name" [suggestions]="filteredData" (completeMethod)="searchName($event)" (onSelect)="onSelect($event)">
-                                                    <ng-template let-item pTemplate="item">
-                                                        <div class="item">
-                                                            <div>{{item.full_name}} ({{item.mobile_phone}})</div>
-                                                        </div>
-                                                    </ng-template>
-                                                </p-autoComplete>
-                                                <i class="pi pi-search"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-8">
-                                    <div class="row">
-                                        <div class="col-md-5 text-header">
-                                            Department
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input pInputText formControlName="department" class="form-control" placeholder="" type="input">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-8">
-                                    <div class="row">
-                                        <div class="col-md-5 text-header">
-                                            Email
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input pInputText formControlName="email" class="form-control" placeholder="" type="input">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-8">
-                                    <div class="row">
-                                        <div class="col-md-5 text-header required-field">
-                                            Mobile Number
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input pInputText formControlName="mobile_number" class="form-control" placeholder="" type="input">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-8">
-                                    <div class="row">
-                                        <div class="col-md-5 text-header">
-                                            Office Phone Number
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input pInputText formControlName="office_number" class="form-control" placeholder="" type="input">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-8">
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            Address
-                                        </div>
-                                        <div class="col-md-6">
-                                            <textarea [rows]="5" style="width: 100%;" pInputTextarea [autoResize]="autoResize" formControlName="address"></textarea>
-                                            <div class="d-inline-flex">
-                                                <div style="margin-right: 5px;">
-                                                    <input pInputText formControlName="postcode" class="form-control" placeholder="Zipcode" type="input">
-                                                </div>
-                                                <div style="margin-right: 5px;">
-                                                    <p-dropdown [options]="states" formControlName="state" placeholder="Select State" [virtualScroll]="true" [itemSize]="31" [filter]="false" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
-                                                </div>
-                                                <div>
-                                                    <input pInputText formControlName="country" class="form-control" placeholder="Country" type="input">
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-8">
-                                    <div class="row">
-                                        <div class="col-md-5 text-header">
-                                            Prospect type
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p-radioButton name="prospect_type" value="individual" formControlName="prospect_type" inputId="prospect_type1"></p-radioButton>
-                                            <label class="radio-label" for="prospect_type1">Individual</label>
-                                            <p-radioButton name="prospect_type" value="company" formControlName="prospect_type" inputId="prospect_type2"></p-radioButton>
-                                            <label class="radio-label" for="prospect_type2">Company</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-8">
-                                    <div class="row">
-                                        <div class="col-md-5 text-header">
-                                            Source
-                                        </div>
-                                        <div class="col-md-6 d-inline-flex">
-                                            <div class="col-md-5" style="padding: 0px;">
-                                                <p-dropdown [options]="source_items" formControlName="source" placeholder="Select Source" [virtualScroll]="true" [itemSize]="31" [filter]="false" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
-                                            </div>
-                                            <div class="col-md-7" style="padding: 0px 0px 0px 10px;">
-                                                <input pInputText formControlName="other_source" class="form-control" placeholder="Others" type="input">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-8">
+                  <div class="row">
+                    <div class="col-md-5 text-header required-field">
+                      Company Name
                     </div>
+                    <div class="col-md-6">
+                      <span class="p-input-icon-right" style="width: 100%">
+                        <!-- (onSelect)="onSelectCompany($event, 'company_name')" -->
+                        <!-- (completeMethod)="searchCompanyName($event)" -->
+                        <p-autoComplete
+                          class="search_field"
+                          [inputStyle]="{ width: '100%' }"
+                          [style]="{ width: '100%' }"
+                          formControlName="company_name"
+                          [suggestions]="filteredCompanyData"
+                          (onSelect)="onSelectCompany($event, 'company_name')"
+                        >
+                          <ng-template let-item pTemplate="item">
+                            <div class="item">
+                              <div>{{ item.label }}</div>
+                            </div>
+                          </ng-template>
+                        </p-autoComplete>
+                        <!-- (click)="searchCompanyName($event)" -->
+                        <i
+                          class="pi pi-search search-country-name-icon"
+                          (click)="searchCompanyName(form.value.company_name)"
+                        ></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-8">
+                  <div class="row">
+                    <div class="col-md-5 text-header">Contact Name</div>
+                    <div class="col-md-6">
+                      <span class="p-input-icon-right" style="width: 100%">
+                        <p-autoComplete
+                          class="search_field"
+                          [inputStyle]="{ width: '100%' }"
+                          [style]="{ width: '100%' }"
+                          formControlName="contact_name"
+                          [suggestions]="filteredData"
+                          (completeMethod)="searchName($event)"
+                          (onSelect)="onSelect($event)"
+                        >
+                          <ng-template let-item pTemplate="item">
+                            <div class="item">
+                              <div>
+                                {{ item.contact_name }} ({{
+                                  item.mobile_phone
+                                }})
+                              </div>
+                            </div>
+                          </ng-template>
+                        </p-autoComplete>
+                        <i class="pi pi-search"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-8">
+                  <div class="row">
+                    <div class="col-md-5 text-header">Department</div>
+                    <div class="col-md-6">
+                      <input
+                        pInputText
+                        formControlName="department"
+                        class="form-control"
+                        placeholder=""
+                        type="input"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-8">
+                  <div class="row">
+                    <div class="col-md-5 text-header">Email</div>
+                    <div class="col-md-6">
+                      <input
+                        pInputText
+                        formControlName="email"
+                        class="form-control"
+                        placeholder=""
+                        type="input"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-8">
+                  <div class="row">
+                    <div class="col-md-5 text-header required-field">
+                      Mobile Number
+                    </div>
+                    <div class="col-md-6">
+                      <input
+                        pInputText
+                        formControlName="mobile_number"
+                        class="form-control"
+                        placeholder=""
+                        type="input"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-8">
+                  <div class="row">
+                    <div class="col-md-5 text-header">Office Phone Number</div>
+                    <div class="col-md-6">
+                      <input
+                        pInputText
+                        formControlName="office_number"
+                        class="form-control"
+                        placeholder=""
+                        type="input"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-8">
+                  <div class="row">
+                    <div class="col-md-5">Address</div>
+                    <div class="col-md-6">
+                      <textarea
+                        [rows]="5"
+                        style="width: 100%"
+                        pInputTextarea
+                        [autoResize]="autoResize"
+                        formControlName="address"
+                      ></textarea>
+                      <div class="d-inline-flex">
+                        <div style="margin-right: 5px">
+                          <input
+                            pInputText
+                            formControlName="postcode"
+                            class="form-control"
+                            placeholder="Zipcode"
+                            type="input"
+                          />
+                        </div>
+                        <div style="margin-right: 5px">
+                          <p-dropdown
+                            [options]="states"
+                            formControlName="state"
+                            placeholder="Select State"
+                            [virtualScroll]="true"
+                            [itemSize]="31"
+                            [filter]="false"
+                            autoWidth="false"
+                            [style]="{ width: '100%' }"
+                          ></p-dropdown>
+                        </div>
+                        <div>
+                          <input
+                            pInputText
+                            formControlName="country"
+                            class="form-control"
+                            placeholder="Country"
+                            type="input"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-8">
+                  <div class="row">
+                    <div class="col-md-5 text-header">Prospect type</div>
+                    <div class="col-md-6">
+                      <p-radioButton
+                        name="prospect_type"
+                        value="individual"
+                        formControlName="prospect_type"
+                        inputId="prospect_type1"
+                      ></p-radioButton>
+                      <label class="radio-label" for="prospect_type1"
+                        >Individual</label
+                      >
+                      <p-radioButton
+                        name="prospect_type"
+                        value="company"
+                        formControlName="prospect_type"
+                        inputId="prospect_type2"
+                      ></p-radioButton>
+                      <label class="radio-label" for="prospect_type2"
+                        >Company</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-8">
+                  <div class="row">
+                    <div class="col-md-5 text-header">Source</div>
+                    <div class="col-md-6 d-inline-flex">
+                      <div class="col-md-5" style="padding: 0px">
+                        <p-dropdown
+                          [options]="source_items"
+                          formControlName="source"
+                          placeholder="Select Source"
+                          [virtualScroll]="true"
+                          [itemSize]="31"
+                          [filter]="false"
+                          autoWidth="false"
+                          [style]="{ width: '100%' }"
+                        ></p-dropdown>
+                      </div>
+                      <div class="col-md-7" style="padding: 0px 0px 0px 10px">
+                        <input
+                          pInputText
+                          formControlName="other_source"
+                          class="form-control"
+                          placeholder="Others"
+                          type="input"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                    <div class="col-lg-9 submit-button" align=center>
-                        <div class="form-group">
-                            <!-- <button class="btn btn-primary" type="button" (click)="notFoundModal.show()">Open</button> -->
-                            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">SAVE</button>
-                            <button class="btn btn-secondary" type="button" [disabled]="!form.valid" (click)="verify()">VERIFY</button>
-                            <!-- <a routerLink="/leads/verify" class="btn btn-secondary">VERIFY</a> -->
-                        </div>
-                    </div>
-                </form>
+          <div class="col-lg-9 submit-button" align="center">
+            <div class="form-group">
+              <!-- <button class="btn btn-primary" type="button" (click)="notFoundModal.show()">Open</button> -->
+              <button
+                class="btn btn-primary"
+                type="submit"
+                [disabled]="!form.valid"
+              >
+                SAVE
+              </button>
+              <button
+                class="btn btn-secondary"
+                type="button"
+                [disabled]="!form.valid"
+                (click)="verify()"
+              >
+                VERIFY
+              </button>
+              <!-- <a routerLink="/leads/verify" class="btn btn-secondary">VERIFY</a> -->
             </div>
-            <div class="card-footer bg-transparent">
-            </div>
-        </div>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer bg-transparent"></div>
     </div>
+  </div>
 </div>
+<!-- Models-D -->
+<!-- (onHide)="redirectPage()" -->
+<div
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
-<div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-success" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Success</h4>
-        </div>
-        <div class="modal-body">
-          <p>{{alertBody}}</p>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="dangerModal.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
-<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-danger" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">{{alertHeader}}</h4>
-        </div>
-        <div class="modal-body">
-          <p>{{alertBody}}</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Close</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<div bsModal #foundModal="bs-modal" class="modal fade not-found-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header" align="center">
-          <h4 class="modal-title">{{alertHeader}}</h4>
-        </div>
-        <div class="modal-body">
-          <p>{{alertBody}}</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="foundModal.hide()">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="skip(alretType)">Yes</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<div
+  bsModal
+  #foundModal="bs-modal"
+  class="modal fade not-found-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" align="center">
+        <h4 class="modal-title">{{ alertHeader }}</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="foundModal.hide()"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="gotoOpertunityPage()"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
