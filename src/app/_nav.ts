@@ -87,7 +87,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Sales Target Setup',
-        url: '/managerview/setup',
+        url: '/managerview/salestargetsetup',
       },
     ]
   },
