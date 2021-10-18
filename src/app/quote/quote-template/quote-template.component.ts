@@ -10,7 +10,6 @@ import {
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ModalDirective } from "ngx-bootstrap/modal";
-import * as screenfull from "screenfull";
 import { DOCUMENT } from "@angular/common";
 import { NavigationExtras, Router } from "@angular/router";
 @Component({
@@ -85,8 +84,12 @@ export class QuoteTemplateComponent implements OnInit {
     if (this.single == true) {
       this.generateCompletePDF();
     } else {
-      this.generateTemplatePDF();
-      this.generateQuotationImagePDF();
+      if (this.url) {
+        this.generateTemplatePDF();
+        this.generateQuotationImagePDF();
+      } else {
+        this.generateTemplatePDF();
+      }
     }
   }
   generateCompletePDF() {
@@ -109,19 +112,18 @@ export class QuoteTemplateComponent implements OnInit {
         doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
-
-      if (this.url) {
-        doc.addPage();
-        if (this.imageWidth > pageWidth) {
-          doc.addImage(this.url, "", 10, 10, 190, 210);
-          doc.save("Quotation.pdf");
-        } else {
-          doc.addImage(this.url, "", 10, 10, 190, 210);
-          doc.save("Quotation.pdf");
-        }
+      // if (this.url) {
+      doc.addPage();
+      if (this.imageWidth > pageWidth) {
+        doc.addImage(this.url, "", 10, 10, 190, 210);
+        doc.save("Quotation.pdf");
       } else {
+        doc.addImage(this.url, "", 10, 10, 190, 210);
         doc.save("Quotation.pdf");
       }
+      // } else {
+      //   doc.save("Quotation.pdf");
+      // }
     });
   }
 
@@ -153,10 +155,10 @@ export class QuoteTemplateComponent implements OnInit {
     const pageWidth = doc.internal.pageSize.getWidth();
     if (this.imageWidth > pageWidth) {
       doc.addImage(this.url, "", 10, 10, 190, 210);
-      doc.save("Quotation.pdf");
+      doc.save("Appendix.pdf");
     } else {
       doc.addImage(this.url, "", 10, 10, 190, 210);
-      doc.save("Quotation.pdf");
+      doc.save("Appendix.pdf");
     }
   }
 

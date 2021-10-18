@@ -9,7 +9,6 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 import jsPDF from "jspdf";
 
-import html2canvas from "html2canvas";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { AuthService } from "../../auth/auth.service";
 
@@ -63,8 +62,12 @@ export class QuoteMobileTemplateComponent implements OnInit {
     if (this.single == true) {
       this.generateCompletePDF();
     } else {
-      this.generateTemplatePDF();
-      this.generateQuotationImagePDF();
+      if (this.url) {
+        this.generateTemplatePDF();
+        this.generateQuotationImagePDF();
+      } else {
+        this.generateTemplatePDF();
+      }
     }
   }
 
@@ -106,37 +109,23 @@ export class QuoteMobileTemplateComponent implements OnInit {
   generateCompletePDF() {
     let pWidth = 595.28;
     let srcWidth = document.getElementById("pdfTable").scrollWidth;
-    let margin = 36;
-
-    let scale = (pWidth - margin * 2) / srcWidth;
+    let margins = 36;
+    let scale = (pWidth - margins * 2) / srcWidth;
     let pdf = new jsPDF("p", "pt", "a4");
     pdf.setProperties;
     var self = this;
     pdf.html(document.getElementById("pdfTable"), {
-      // x: margin,
-      // y: margin,
       margin: [20, 25, 20, 25],
       html2canvas: {
         scale: scale,
       },
       callback: function () {
-        if (self.url) {
-          pdf.addPage();
-          if (self.imageWidth > pWidth) {
-            pdf.addImage(self.url, "", 10, 10, 550, self.imageHeight);
-            pdf.save("Quotation.pdf");
-          } else {
-            pdf.addImage(
-              self.url,
-              "",
-              10,
-              10,
-              self.imageWidth,
-              self.imageHeight
-            );
-            pdf.save("Quotation.pdf");
-          }
+        pdf.addPage();
+        if (self.imageWidth > pWidth) {
+          pdf.addImage(self.url, "", 10, 10, 550, self.imageHeight);
+          pdf.save("Quotation.pdf");
         } else {
+          pdf.addImage(self.url, "", 10, 10, self.imageWidth, self.imageHeight);
           pdf.save("Quotation.pdf");
         }
       },
@@ -150,35 +139,13 @@ export class QuoteMobileTemplateComponent implements OnInit {
     let scale = (pWidth - margin * 2) / srcWidth;
     let pdf = new jsPDF("p", "pt", "a4");
     pdf.setProperties;
-    // var self = this;
     pdf.html(document.getElementById("pdfTable"), {
-      // x: margin,
-      // y: margin,
       margin: [20, 25, 20, 25],
       html2canvas: {
         scale: scale,
       },
       callback: function () {
         pdf.save("Quotation.pdf");
-        // if (self.url) {
-        //   pdf.addPage();
-        //   if (self.imageWidth > pWidth) {
-        //     pdf.addImage(self.url, "", 10, 10, 550, self.imageHeight);
-        //     pdf.save("Quotation.pdf");
-        //   } else {
-        //     pdf.addImage(
-        //       self.url,
-        //       "",
-        //       10,
-        //       10,
-        //       self.imageWidth,
-        //       self.imageHeight
-        //     );
-        //     pdf.save("Quotation.pdf");
-        //   }
-        // } else {
-        //   pdf.save("Quotation.pdf");
-        // }
       },
     });
   }
@@ -187,17 +154,17 @@ export class QuoteMobileTemplateComponent implements OnInit {
     let pWidth = 595.28;
     let pdf = new jsPDF("p", "pt", "a4");
     pdf.setProperties;
-    if (this.url) {
-      if (this.imageWidth > pWidth) {
-        pdf.addImage(this.url, "", 10, 10, 550, this.imageHeight);
-        pdf.save("Quotation.pdf");
-      } else {
-        pdf.addImage(this.url, "", 10, 10, this.imageWidth, this.imageHeight);
-        pdf.save("Quotation.pdf");
-      }
+    // if (this.url) {
+    if (this.imageWidth > pWidth) {
+      pdf.addImage(this.url, "", 10, 10, 550, this.imageHeight);
+      pdf.save("Appendix.pdf");
     } else {
-      pdf.save("Quotation.pdf");
+      pdf.addImage(this.url, "", 10, 10, this.imageWidth, this.imageHeight);
+      pdf.save("Appendix.pdf");
     }
+    // } else {
+    //   pdf.save("Appendix.pdf");
+    // }
   }
 
   toggleFullScreen() {
