@@ -160,25 +160,7 @@ export class QuoteMobileTemplateComponent implements OnInit {
       },
       callback: function () {
         pdf.save("Quotation.pdf");
-        // if (self.url) {
-        //   pdf.addPage();
-        //   if (self.imageWidth > pWidth) {
-        //     pdf.addImage(self.url, "", 10, 10, 550, self.imageHeight);
-        //     pdf.save("Quotation.pdf");
-        //   } else {
-        //     pdf.addImage(
-        //       self.url,
-        //       "",
-        //       10,
-        //       10,
-        //       self.imageWidth,
-        //       self.imageHeight
-        //     );
-        //     pdf.save("Quotation.pdf");
-        //   }
-        // } else {
-        //   pdf.save("Quotation.pdf");
-        // }
+         
       },
     });
   }
