@@ -10,7 +10,6 @@ import {
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ModalDirective } from "ngx-bootstrap/modal";
-import * as screenfull from "screenfull";
 import { DOCUMENT } from "@angular/common";
 import { NavigationExtras, Router } from "@angular/router";
 @Component({
