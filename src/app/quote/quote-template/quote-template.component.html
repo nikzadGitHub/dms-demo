@@ -16,7 +16,7 @@
     Upload Image
     <input #fileInput type="file" style="display: none" />
   </button>
-  <button class="btn btn-primary btn-sm" (click)="generatePDF()">
+  <button class="btn btn-primary btn-sm" (click)="downloadPDF()">
     Download Quotation
   </button>
 </div>
@@ -171,39 +171,16 @@
   </div>
 </div>
 
-<div class="card" style="width: 100%" *ngIf="check">
-  <div class="show-image">
-    <img [src]="url" alt="" />
+<div #pdfTable class="" id="pdfTable">
+  <div class="card" style="width: 100%" *ngIf="check">
+    <div class="show-image">
+      <img [src]="url" alt="" />
+    </div>
   </div>
 </div>
 
 <div
   (onHide)="reset()"
-  id="success"
-  bsModal
-  #successModal="bs-modal"
-  class="modal fade"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="myModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-success" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Success</h4>
-      </div>
-      <div class="modal-body">
-        <p>{{ alertBody }}</p>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- alert -->
-
-<!-- <div
   id="success"
   bsModal
   #successModal="bs-modal"
@@ -222,24 +199,36 @@
         <p>{{ alertBody }}</p>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          (click)="completeDownload()"
-        >
-          Cancel
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="singelDownload() "
-        >
-          Yes
-        </button>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              type="radio"
+              class="form-check-input"
+              value=""
+              name="optradio"
+              (click)="onePDF()"
+            />One pdf
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              type="radio"
+              class="form-check-input"
+              value=""
+              name="optradio"
+              (click)="twoPDF()"
+            />Two pdf
+          </label>
+        </div>
       </div>
     </div>
+    <!-- /.modal-content -->
   </div>
-</div> -->
+  <!-- /.modal-dialog -->
+</div>
+<!-- alert -->
+
 <!-- /.modal -->
 
 <div

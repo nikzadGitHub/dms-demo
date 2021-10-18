@@ -16,7 +16,7 @@
     Upload Image
     <input #fileInput type="file" style="display: none" />
   </button>
-  <button class="btn btn-primary btn-sm" (click)="generatePDF()">
+  <button class="btn btn-primary btn-sm" (click)="downloadPDF()">
     Download Quotation
   </button>
 </div>
@@ -163,6 +163,7 @@
     <img [src]="url" alt="" />
   </div>
 </div>
+
 <div
   (onHide)="reset()"
   id="success"
@@ -177,13 +178,39 @@
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Success</h4>
+        <h4 class="modal-title">{{ alertHeader }}</h4>
       </div>
       <div class="modal-body">
         <p>{{ alertBody }}</p>
       </div>
+      <div class="modal-footer">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              type="radio"
+              class="form-check-input"
+              value=""
+              name="optradio"
+              (click)="onePDF()"
+            />One pdf
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              type="radio"
+              class="form-check-input"
+              value=""
+              name="optradio"
+              (click)="twoPDF()"
+            />Two pdf
+          </label>
+        </div>
+      </div>
     </div>
+    <!-- /.modal-content -->
   </div>
+  <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
 

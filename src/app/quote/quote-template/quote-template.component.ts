@@ -70,8 +70,8 @@ export class QuoteTemplateComponent implements OnInit {
       const formData = new FormData();
       // Store form name as "file" with file data
       formData.append("file", this.file);
-      // this.alertHeader = "Image uploaded successfully";
-      this.alertBody = "Image uploaded successfully";
+      this.alertHeader = "Image uploaded successfully";
+      this.alertBody = "Do you want to download one pdf or two pdf ?";
       this.successModal.show();
     } else {
       this.alertHeader = "Image type error";
@@ -80,7 +80,15 @@ export class QuoteTemplateComponent implements OnInit {
     }
   }
 
-  generatePDF() {
+  downloadPDF() {
+    if (this.single == true) {
+      this.generateCompletePDF();
+    } else {
+      this.generateTemplatePDF();
+      this.generateQuotationImagePDF();
+    }
+  }
+  generateCompletePDF() {
     let data = document.getElementById("pdfTable");
     html2canvas(data).then((canvas) => {
       var imgData = canvas.toDataURL("image/png");
@@ -100,9 +108,13 @@ export class QuoteTemplateComponent implements OnInit {
         doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
+
       if (this.url) {
         doc.addPage();
         if (this.imageWidth > pageWidth) {
+          doc.addImage(this.url, "", 10, 10, 190, 210);
+          doc.save("Quotation.pdf");
+        } else {
           doc.addImage(this.url, "", 10, 10, 190, 210);
           doc.save("Quotation.pdf");
         }
@@ -112,15 +124,52 @@ export class QuoteTemplateComponent implements OnInit {
     });
   }
 
-  completeDownload() {
-    this.successModal.hide();
-    this.reset();
-    this.single = false;
+  generateTemplatePDF() {
+    let data = document.getElementById("pdfTable");
+    html2canvas(data).then((canvas) => {
+      var imgData = canvas.toDataURL("image/png");
+      var imgWidth = 210;
+      var pageHeight = 300;
+      var imgHeight = (canvas.height * imgWidth) / canvas.width;
+      var heightLeft = imgHeight;
+      var doc = new jsPDF("p", "mm");
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeights = doc.internal.pageSize.getHeight();
+      var position = 10;
+      doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+      while (heightLeft >= 0) {
+        position += heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      doc.save("Quotation.pdf");
+    });
   }
-  singelDownload() {
+  generateQuotationImagePDF() {
+    var doc = new jsPDF("p", "mm");
+    const pageWidth = doc.internal.pageSize.getWidth();
+    if (this.imageWidth > pageWidth) {
+      doc.addImage(this.url, "", 10, 10, 190, 210);
+      doc.save("Quotation.pdf");
+    } else {
+      doc.addImage(this.url, "", 10, 10, 190, 210);
+      doc.save("Quotation.pdf");
+    }
+  }
+
+  onePDF() {
+    console.log("One PDF working");
     this.successModal.hide();
     this.reset();
     this.single = true;
+  }
+  twoPDF() {
+    console.log("Two PDF working");
+    this.successModal.hide();
+    this.reset();
+    this.single = false;
   }
   getMobileOperatingSystem() {
     // let navigate: NavigationExtras = {

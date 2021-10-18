@@ -59,6 +59,15 @@ export class QuoteMobileTemplateComponent implements OnInit {
     this.elem = document.documentElement;
   }
 
+  downloadPDF() {
+    if (this.single == true) {
+      this.generateCompletePDF();
+    } else {
+      this.generateTemplatePDF();
+      this.generateQuotationImagePDF();
+    }
+  }
+
   onFileSelected(event: any) {
     this.file = event.target.files[0];
     this.fileName = this.file.name;
@@ -94,7 +103,7 @@ export class QuoteMobileTemplateComponent implements OnInit {
     }
   }
 
-  generatePDF() {
+  generateCompletePDF() {
     let pWidth = 595.28;
     let srcWidth = document.getElementById("pdfTable").scrollWidth;
     let margin = 36;
@@ -133,6 +142,63 @@ export class QuoteMobileTemplateComponent implements OnInit {
       },
     });
   }
+  generateTemplatePDF() {
+    let pWidth = 595.28;
+    let srcWidth = document.getElementById("pdfTable").scrollWidth;
+    let margin = 36;
+
+    let scale = (pWidth - margin * 2) / srcWidth;
+    let pdf = new jsPDF("p", "pt", "a4");
+    pdf.setProperties;
+    // var self = this;
+    pdf.html(document.getElementById("pdfTable"), {
+      // x: margin,
+      // y: margin,
+      margin: [20, 25, 20, 25],
+      html2canvas: {
+        scale: scale,
+      },
+      callback: function () {
+        pdf.save("Quotation.pdf");
+        // if (self.url) {
+        //   pdf.addPage();
+        //   if (self.imageWidth > pWidth) {
+        //     pdf.addImage(self.url, "", 10, 10, 550, self.imageHeight);
+        //     pdf.save("Quotation.pdf");
+        //   } else {
+        //     pdf.addImage(
+        //       self.url,
+        //       "",
+        //       10,
+        //       10,
+        //       self.imageWidth,
+        //       self.imageHeight
+        //     );
+        //     pdf.save("Quotation.pdf");
+        //   }
+        // } else {
+        //   pdf.save("Quotation.pdf");
+        // }
+      },
+    });
+  }
+
+  generateQuotationImagePDF() {
+    let pWidth = 595.28;
+    let pdf = new jsPDF("p", "pt", "a4");
+    pdf.setProperties;
+    if (this.url) {
+      if (this.imageWidth > pWidth) {
+        pdf.addImage(this.url, "", 10, 10, 550, this.imageHeight);
+        pdf.save("Quotation.pdf");
+      } else {
+        pdf.addImage(this.url, "", 10, 10, this.imageWidth, this.imageHeight);
+        pdf.save("Quotation.pdf");
+      }
+    } else {
+      pdf.save("Quotation.pdf");
+    }
+  }
 
   toggleFullScreen() {
     if (this.elem.requestFullscreen) {
@@ -167,15 +233,15 @@ export class QuoteMobileTemplateComponent implements OnInit {
     localStorage.setItem("auth-token", this.userToken);
     await this.authService.setAuthorizationToken(this.userToken);
   }
-  completeDownload() {
-    this.successModal.hide();
-    this.reset();
-    this.single = false;
-  }
-  singelDownload() {
+  onePDF() {
     this.successModal.hide();
     this.reset();
     this.single = true;
+  }
+  twoPDF() {
+    this.successModal.hide();
+    this.reset();
+    this.single = false;
   }
 
   reset() {
