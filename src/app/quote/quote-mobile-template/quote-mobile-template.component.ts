@@ -21,6 +21,7 @@ export class QuoteMobileTemplateComponent implements OnInit {
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("fileUpload") fileUpload: ElementRef;
+
   alertBody: string;
   alertHeader: string;
   fileName = "";
@@ -134,17 +135,34 @@ export class QuoteMobileTemplateComponent implements OnInit {
   generateTemplatePDF() {
     let pWidth = 595.28;
     let srcWidth = document.getElementById("pdfTable").scrollWidth;
+    let pdf = new jsPDF({
+      orientation: "p",
+      unit: "pt",
+      format: "a4",
+      compress: true,
+    });
+    // let pages = pdf.getNumberOfPages();
     let margin = 36;
-
     let scale = (pWidth - margin * 2) / srcWidth;
-    let pdf = new jsPDF("p", "pt", "a4");
     pdf.setProperties;
+
     pdf.html(document.getElementById("pdfTable"), {
       margin: [20, 25, 20, 25],
       html2canvas: {
         scale: scale,
       },
       callback: function () {
+        // for (var i = 1; i <= pages; i++) {
+        //   pdf.setPage(i);
+        //   pdf.text(
+        //     "Page " + String(i) + " of " + String(pages),
+        //     210 - 20,
+        //     297 - 30,
+        //     {
+        //       align: "right",
+        //     }
+        //   );
+        // }
         pdf.save("Quotation.pdf");
       },
     });

@@ -108,7 +108,7 @@ export class QuoteTemplateComponent implements OnInit {
       heightLeft -= pageHeight;
       while (heightLeft >= 0) {
         position += heightLeft - imgHeight;
-        doc.addPage();
+        // doc.addPage();
         doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
@@ -143,7 +143,7 @@ export class QuoteTemplateComponent implements OnInit {
       heightLeft -= pageHeight;
       while (heightLeft >= 0) {
         position += heightLeft - imgHeight;
-        doc.addPage();
+        // doc.addPage();
         doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
