@@ -40,13 +40,12 @@
                       <span class="p-input-icon-right" style="width: 100%">
                         <!-- (onSelect)="onSelectCompany($event, 'company_name')" -->
                         <!-- (completeMethod)="searchCompanyName($event)" -->
+                        <!-- [suggestions]="filteredCompanyData" -->
                         <p-autoComplete
                           class="search_field"
                           [inputStyle]="{ width: '100%' }"
                           [style]="{ width: '100%' }"
                           formControlName="company_name"
-                          [suggestions]="filteredCompanyData"
-                          (onSelect)="onSelectCompany($event, 'company_name')"
                         >
                           <ng-template let-item pTemplate="item">
                             <div class="item">
@@ -55,6 +54,7 @@
                           </ng-template>
                         </p-autoComplete>
                         <!-- (click)="searchCompanyName($event)" -->
+
                         <i
                           class="pi pi-search search-country-name-icon"
                           (click)="searchCompanyName(form.value.company_name)"

@@ -185,17 +185,22 @@ export class LeadsCreateComponent implements OnInit {
 
   searchCompanyName(event) {
     let query = event;
-    this.leadsService.searchCompany(query).subscribe((res) => {
-      if (res.success) {
-        if (res.data.id != 0) {
-          this.alertBody = "Company already exist.";
-          this.dangerModal.show();
-        } else {
-          this.alertBody = "Company name is available to use.";
-          this.successModal.show();
+    if (query) {
+      this.leadsService.searchCompany(query).subscribe((res) => {
+        if (res.success) {
+          if (res.data.id != 0) {
+            this.alertBody = "Company already exist.";
+            this.dangerModal.show();
+          } else {
+            this.alertBody = "Company name is available to use.";
+            this.successModal.show();
+          }
         }
-      }
-    });
+      });
+    } else {
+      this.alertBody = "Please enter company name.";
+      this.dangerModal.show();
+    }
   }
 
   onSelectCompany(event, title) {
