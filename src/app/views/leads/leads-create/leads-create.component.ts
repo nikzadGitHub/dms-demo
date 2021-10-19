@@ -130,10 +130,12 @@ export class LeadsCreateComponent implements OnInit {
             this.form.reset();
           }, 2000);
         } else {
-          this.router.navigate(["/leads/", res.data.id, "verify"]);
           this.alertBody = res.message || "Created Successfully";
           this.id = res.data.value;
           this.successModal.show();
+          setTimeout(() => {
+            this.router.navigate(["/leads/", res.data.id, "verify"]);
+          }, 1000);
         }
       },
       (error) => {
@@ -185,7 +187,7 @@ export class LeadsCreateComponent implements OnInit {
 
   searchCompanyName(event) {
     let query = event;
-    if (query) {
+    if (event) {
       this.leadsService.searchCompany(query).subscribe((res) => {
         if (res.success) {
           if (res.data.id != 0) {
