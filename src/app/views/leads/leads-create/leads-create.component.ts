@@ -37,6 +37,7 @@ export class LeadsCreateComponent implements OnInit {
   errorMessage = "Customer already exist";
   isSkipcompany: any = false;
   isSkipcontact: any = false;
+  isCheck: any = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -100,6 +101,7 @@ export class LeadsCreateComponent implements OnInit {
   }
 
   submit() {
+    this.isCheck = true;
     let company_name = this.form.value.company_name;
     this.searchCompany(company_name);
   }
@@ -119,12 +121,22 @@ export class LeadsCreateComponent implements OnInit {
   create() {
     this.leadsService.store(this.form.value).subscribe(
       (res) => {
-        this.alertBody = res.message || "Created Successfully";
-        this.id = res.data.value;
-        this.successModal.show();
+        if (this.isCheck == true) {
+          this.alertBody = res.message || "Created Successfully";
+          this.id = res.data.value;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.form.reset();
+          }, 2000);
+        } else {
+          this.router.navigate(["/leads/", res.data.id, "verify"]);
+          this.alertBody = res.message || "Created Successfully";
+          this.id = res.data.value;
+          this.successModal.show();
+        }
       },
       (error) => {
-        console.log("error: ", error.message);
         this.alertHeader = "Network Error";
         this.alertBody = "Somethink went wrong please try again";
         this.dangerModal.show();
@@ -133,16 +145,14 @@ export class LeadsCreateComponent implements OnInit {
   }
 
   verify() {
+    this.isCheck = false;
     let company_name = this.form.value.company_name;
     this.searchCompany(company_name);
   }
 
   searchName(event) {
-    console.log("event: ", event);
     let query = event.query;
-    console.log("event-query: ", query);
     this.leadsService.searchContact(query).subscribe((res) => {
-      console.log("res--> ", res);
       if (res.success) {
         if (res.data.length == 0) {
           setTimeout(() => {
@@ -157,7 +167,6 @@ export class LeadsCreateComponent implements OnInit {
   }
 
   onSelect(event) {
-    console.log(event);
     if (event) {
       let contact_name = this.form.get("contact_name");
       let mobile_number = this.form.get("mobile_number");
@@ -190,12 +199,15 @@ export class LeadsCreateComponent implements OnInit {
   }
 
   onSelectCompany(event, title) {
-    console.log(event);
     if (event) {
       let selectedData = event.label;
       let control = this.form.get(title);
       control.patchValue(selectedData);
       this.form.patchValue(event);
     }
+  }
+
+  resetForm() {
+    this.form.reset();
   }
 }
