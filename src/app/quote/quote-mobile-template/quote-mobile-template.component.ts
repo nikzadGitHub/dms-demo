@@ -6,11 +6,12 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import jsPDF from "jspdf";
 
 import html2canvas from "html2canvas";
 import { ModalDirective } from "ngx-bootstrap/modal";
+import { AuthService } from "../../auth/auth.service";
 
 @Component({
   selector: "app-quote-mobile-template",
@@ -33,12 +34,18 @@ export class QuoteMobileTemplateComponent implements OnInit {
   imageHeight: number;
   single: boolean;
   elem;
+  quotationId: number;
+  templateId: number;
+  userToken: any;
   constructor(
     @Inject(DOCUMENT) private document: any,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.setToken();
     let element = Array.from(
       document.getElementsByTagName(
         "app-header"
@@ -50,6 +57,15 @@ export class QuoteMobileTemplateComponent implements OnInit {
     this.getMobileOperatingSystem();
     this.toggleFullScreen();
     this.elem = document.documentElement;
+  }
+
+  downloadPDF() {
+    if (this.single == true) {
+      this.generateCompletePDF();
+    } else {
+      this.generateTemplatePDF();
+      this.generateQuotationImagePDF();
+    }
   }
 
   onFileSelected(event: any) {
@@ -87,7 +103,7 @@ export class QuoteMobileTemplateComponent implements OnInit {
     }
   }
 
-  generatePDF() {
+  generateCompletePDF() {
     let pWidth = 595.28;
     let srcWidth = document.getElementById("pdfTable").scrollWidth;
     let margin = 36;
@@ -126,6 +142,45 @@ export class QuoteMobileTemplateComponent implements OnInit {
       },
     });
   }
+  generateTemplatePDF() {
+    let pWidth = 595.28;
+    let srcWidth = document.getElementById("pdfTable").scrollWidth;
+    let margin = 36;
+
+    let scale = (pWidth - margin * 2) / srcWidth;
+    let pdf = new jsPDF("p", "pt", "a4");
+    pdf.setProperties;
+    // var self = this;
+    pdf.html(document.getElementById("pdfTable"), {
+      // x: margin,
+      // y: margin,
+      margin: [20, 25, 20, 25],
+      html2canvas: {
+        scale: scale,
+      },
+      callback: function () {
+        pdf.save("Quotation.pdf");
+         
+      },
+    });
+  }
+
+  generateQuotationImagePDF() {
+    let pWidth = 595.28;
+    let pdf = new jsPDF("p", "pt", "a4");
+    pdf.setProperties;
+    if (this.url) {
+      if (this.imageWidth > pWidth) {
+        pdf.addImage(this.url, "", 10, 10, 550, this.imageHeight);
+        pdf.save("Quotation.pdf");
+      } else {
+        pdf.addImage(this.url, "", 10, 10, this.imageWidth, this.imageHeight);
+        pdf.save("Quotation.pdf");
+      }
+    } else {
+      pdf.save("Quotation.pdf");
+    }
+  }
 
   toggleFullScreen() {
     if (this.elem.requestFullscreen) {
@@ -151,15 +206,24 @@ export class QuoteMobileTemplateComponent implements OnInit {
     }
   }
 
-  completeDownload() {
-    this.successModal.hide();
-    this.reset();
-    this.single = false;
+  async setToken() {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      (this.quotationId = params.quotationId),
+        (this.templateId = params.templateId),
+        (this.userToken = params.token);
+    });
+    localStorage.setItem("auth-token", this.userToken);
+    await this.authService.setAuthorizationToken(this.userToken);
   }
-  singelDownload() {
+  onePDF() {
     this.successModal.hide();
     this.reset();
     this.single = true;
+  }
+  twoPDF() {
+    this.successModal.hide();
+    this.reset();
+    this.single = false;
   }
 
   reset() {

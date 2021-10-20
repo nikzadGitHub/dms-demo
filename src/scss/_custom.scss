@@ -3,6 +3,11 @@
   color: red;
 }
 
+.asterisk {
+    color: red;
+}
+
+// For Dashboard
 .p-tabview-nav {
   justify-content: center !important;
 }
@@ -70,4 +75,8 @@
 
 .sales-funnel-tab .p-tabview-panels {
   min-height: 350px;
+}
+.p-inputtext {
+  // height: 100%;
+  padding-inline-end: 29px !important;
 }

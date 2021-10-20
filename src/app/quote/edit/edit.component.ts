@@ -2,7 +2,7 @@ import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { Term } from "../create/terms";
 import { Quote } from "../quote";
