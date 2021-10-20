@@ -205,8 +205,9 @@ export class QuoteMobileTemplateComponent implements OnInit {
         ) as HTMLCollectionOf<HTMLElement>
       );
       element.forEach((el) => {
-        el.style.visibility = "hidden";
+        el.style.display = "none";
       });
+
       return "iOS";
     } else if (userAgent.match(/Android/i)) {
       return "Android";
