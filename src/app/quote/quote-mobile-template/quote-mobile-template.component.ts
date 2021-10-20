@@ -116,7 +116,7 @@ export class QuoteMobileTemplateComponent implements OnInit {
     pdf.setProperties;
     var self = this;
     pdf.html(document.getElementById("pdfTable"), {
-      margin: [20, 25, 20, 25],
+      margin: [25, 25, 20, 25],
       html2canvas: {
         scale: scale,
       },

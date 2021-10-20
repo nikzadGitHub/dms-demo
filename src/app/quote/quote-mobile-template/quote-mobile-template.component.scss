@@ -58,7 +58,8 @@
   .address-title {
     display: flex;
     flex-direction: row;
-    margin: 10px;
+    margin-top: -8px;
+    // margin: 10px;
     p {
       font-weight: bold;
       color: black;
@@ -136,17 +137,22 @@
       }
     }
     .sub-text-footer {
-      margin-bottom: 50px;
+      // margin-bottom: 50px;
       label {
         margin-bottom: 2px;
       }
       .company-name {
         font-weight: 700;
-        margin-bottom: 69px;
+        // margin-bottom: 69px;
+        margin-bottom: 0px;
         display: inline-block;
+      }
+      .signature {
+        margin-bottom: 0px;
       }
       .name-number {
         display: inline-block;
+        margin-bottom: 0px;
       }
     }
   }
@@ -159,6 +165,9 @@
 }
 
 @media only screen and (min-width: 768px) {
+  .main-div {
+    font-size: 15px !important;
+  }
   .text-1 {
     margin-bottom: 6px;
   }
@@ -194,6 +203,15 @@
     .v2 {
       display: none;
     }
+  }
+  .sub-text-footer {
+    margin-bottom: 2px;
+  }
+  .company-name {
+    margin-bottom: 0px;
+  }
+  .name-number {
+    margin-bottom: 0px;
   }
 }
 
