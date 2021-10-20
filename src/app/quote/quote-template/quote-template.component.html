@@ -65,9 +65,13 @@
             </tr>
             <tr class="all-th-td-padding-top-bottom-none">
               <th scope="row">No. Ref</th>
-              <td><span>:&nbsp;&nbsp;&nbsp;</span>1386/SLS/JKT/ZA/VI/2021</td>
+              <td [attr.contenteditable]="editable">
+                <span>:&nbsp;&nbsp;&nbsp;</span>1386/SLS/JKT/ZA/VI/2021
+              </td>
               <th class="date-field-label">Date :</th>
-              <td class="date-field-data">23 June 2021</td>
+              <td class="date-field-data" [attr.contenteditable]="editable">
+                23 June 2021
+              </td>
             </tr>
           </tbody>
         </table>
@@ -130,17 +134,6 @@
                 </tr>
               </tbody>
             </table>
-            <!-- <ol class="list-group-1">
-                            <li class="">First item</li>
-                            <li class="">Second item</li>
-                            <li class="">Third item</li>
-                        </ol>
-                        <ul class="list-group-2">
-                            <li class="list-group">:Cras justo odio</li>
-                            <li class="list-group">:Dapibus ac facilisis in</li>
-                            <li class="list-group">:Morbi leo risus</li>
-
-                        </ul> -->
           </div>
         </div>
         <div class="sub-info-text" [attr.contenteditable]="editable">
@@ -157,12 +150,14 @@
           </p>
         </div>
         <div class="sub-text-footer">
-          <label [attr.contenteditable]="editable">Hormat kami.</label>
+          <label [attr.contenteditable]="editable">Hormat kami.</label><br />
           <p class="company-name" [attr.contenteditable]="editable">
             PT. IDS Medical System Indonisa
           </p>
+          <br />
           <p class="signature"></p>
-          <p [attr.contenteditable]="editable">
+          <br />
+          <p [attr.contenteditable]="editable" class="name-number">
             <span class="contact-name">ZulfaAlla</span><br />(0812-4920-1673)
           </p>
         </div>
