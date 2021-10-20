@@ -28,7 +28,7 @@ export class QuoteMobileTemplateComponent implements OnInit {
   file!: File;
   durationInSeconds = 5;
   check = false;
-  editable = true;
+  editable = false;
   url: any;
   imageWidth: any;
   imageHeight: number;
@@ -141,7 +141,6 @@ export class QuoteMobileTemplateComponent implements OnInit {
       format: "a4",
       compress: true,
     });
-    // let pages = pdf.getNumberOfPages();
     let margin = 36;
     let scale = (pWidth - margin * 2) / srcWidth;
     pdf.setProperties;
@@ -152,17 +151,6 @@ export class QuoteMobileTemplateComponent implements OnInit {
         scale: scale,
       },
       callback: function () {
-        // for (var i = 1; i <= pages; i++) {
-        //   pdf.setPage(i);
-        //   pdf.text(
-        //     "Page " + String(i) + " of " + String(pages),
-        //     210 - 20,
-        //     297 - 30,
-        //     {
-        //       align: "right",
-        //     }
-        //   );
-        // }
         pdf.save("Quotation.pdf");
       },
     });
@@ -194,22 +182,33 @@ export class QuoteMobileTemplateComponent implements OnInit {
   }
   getMobileOperatingSystem() {
     var userAgent = navigator.userAgent || navigator.vendor;
-    if (
-      userAgent.match(/iPad/i) ||
-      userAgent.match(/iPod/i) ||
-      userAgent.match(/iPhone/i)
-    ) {
-      let element = Array.from(
-        document.getElementsByTagName(
-          "app-sidebar"
-        ) as HTMLCollectionOf<HTMLElement>
-      );
-      element.forEach((el) => {
-        el.style.display = "none";
-      });
-
+    if (userAgent.match(/iPhone/i)) {
+      this.editable = false;
+      return "iOS";
+    } else if (userAgent.match(/iPad/i) || userAgent.match(/iPod/i)) {
+      this.editable = true;
+      if (window.innerHeight > window.innerWidth) {
+        let element = Array.from(
+          document.getElementsByTagName(
+            "app-sidebar"
+          ) as HTMLCollectionOf<HTMLElement>
+        );
+        element.forEach((el) => {
+          el.style.display = "none";
+        });
+      } else {
+        let element = Array.from(
+          document.getElementsByTagName(
+            "app-sidebar"
+          ) as HTMLCollectionOf<HTMLElement>
+        );
+        element.forEach((el) => {
+          el.style.display = "none";
+        });
+      }
       return "iOS";
     } else if (userAgent.match(/Android/i)) {
+      this.editable = false;
       return "Android";
     } else {
       this.router.navigateByUrl("quote/view/quote-template");

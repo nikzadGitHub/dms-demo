@@ -8,6 +8,13 @@
 .file-input {
   display: none;
 }
+[contenteditable] {
+  padding: 10px;
+}
+[contenteditable]:focus {
+  outline: 1px solid lightgray;
+  border-radius: 3px;
+}
 
 .main-div {
   font-size: 8px !important;
@@ -129,13 +136,17 @@
       }
     }
     .sub-text-footer {
-      display: flex;
-      flex-direction: column;
+      margin-bottom: 50px;
       label {
         margin-bottom: 2px;
       }
       .company-name {
-        margin-bottom: 1px;
+        font-weight: 700;
+        margin-bottom: 69px;
+        display: inline-block;
+      }
+      .name-number {
+        display: inline-block;
       }
     }
   }
@@ -147,17 +158,52 @@
   }
 }
 
-@media only screen and (min-width: 1024px) {
-  .main-content {
-    position: relative;
-    // right: 100px;
-    right: 198px;
+@media only screen and (min-width: 768px) {
+  .text-1 {
+    margin-bottom: 6px;
+  }
+  .table-2 {
+    margin-bottom: 5px;
   }
   .download-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .template-header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-left: 10px;
+    margin-top: 10px;
+    justify-content: space-between;
+    .img-text {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      .card-img-top {
+        width: 150px;
+      }
+    }
+    .vl {
+      border-left: 2px solid #2a2a2a;
+      height: 100px;
+      margin-left: 13px;
+    }
+    .v2 {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .download-btn {
     position: relative;
-    left: 100px;
+    right: 102px;
   }
   .card {
-    width: 960px;
+    position: relative;
+    right: 100px;
   }
 }

@@ -68,7 +68,6 @@ export class QuoteTemplateComponent implements OnInit {
       };
 
       const formData = new FormData();
-      // Store form name as "file" with file data
       formData.append("file", this.file);
       this.alertHeader = "Image uploaded successfully";
       this.alertBody = "Do you want to download one pdf or two pdf ?";
@@ -112,7 +111,6 @@ export class QuoteTemplateComponent implements OnInit {
         doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
-      // if (this.url) {
       doc.addPage();
       if (this.imageWidth > pageWidth) {
         doc.addImage(this.url, "", 10, 10, 190, 210);
@@ -121,9 +119,6 @@ export class QuoteTemplateComponent implements OnInit {
         doc.addImage(this.url, "", 10, 10, 190, 210);
         doc.save("Quotation.pdf");
       }
-      // } else {
-      //   doc.save("Quotation.pdf");
-      // }
     });
   }
 
@@ -143,7 +138,6 @@ export class QuoteTemplateComponent implements OnInit {
       heightLeft -= pageHeight;
       while (heightLeft >= 0) {
         position += heightLeft - imgHeight;
-        // doc.addPage();
         doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
@@ -185,8 +179,8 @@ export class QuoteTemplateComponent implements OnInit {
     var userAgent = navigator.userAgent || navigator.vendor;
 
     if (
-      userAgent.match(/iPad/i) ||
       userAgent.match(/iPhone/i) ||
+      userAgent.match(/iPad/i) ||
       userAgent.match(/iPod/i)
     ) {
       this.editable = false;

@@ -24,24 +24,27 @@
   <div class="card">
     <div #pdfTable class="main-div" style="width: 100%" id="pdfTable">
       <div class="template-header" align="center">
-        <div class="temp-img">
-          <img
-            src="../../../assets/img/logo.png"
-            class="card-img-top"
-            alt="..."
-          />
-        </div>
-        <div class="v2"></div>
-        <div class="info-text">
-          <p>Slipi-Jakarta 11410, Indonesia</p>
-          <p>T: +622125678989</p>
-          <p>F: +622125678989</p>
-          <p>E: +622125678989</p>
-          <a href="#">www.idsMED.com</a>
+        <div class="img-text">
+          <div class="temp-img">
+            <img
+              src="../../../assets/img/logo.png"
+              class="card-img-top"
+              alt="..."
+            />
+          </div>
+          <div class="vl"></div>
+          <div class="v2"></div>
+          <div class="info-text" [attr.contenteditable]="editable">
+            <p>Slipi-Jakarta 11410, Indonesia</p>
+            <p>T: +622125678989</p>
+            <p>F: +622125678989</p>
+            <p>E: +622125678989</p>
+            <a href="#">www.idsMED.com</a>
+          </div>
         </div>
       </div>
       <div class="address-title">
-        <p>
+        <p [attr.contenteditable]="editable">
           Kepada Yth,<br />PT.Aditana Intiperdana <br />
           Ruko Rungkut Megah Raya M-23
           <br />
@@ -54,24 +57,26 @@
             <tbody>
               <tr>
                 <th>Perihal</th>
-                <td>
+                <td [attr.contenteditable]="editable">
                   <span>:&nbsp;&nbsp;</span>
                   <span class="name-field"><b>Penawaran Harga</b></span>
                 </td>
               </tr>
               <tr>
                 <th>No. Ref:</th>
-                <td><span>:&nbsp;&nbsp;</span>1386/SLS/JKT/ZA/VI/2021</td>
+                <td [attr.contenteditable]="editable">
+                  <span>:&nbsp;&nbsp;</span>1386/SLS/JKT/ZA/VI/2021
+                </td>
               </tr>
               <tr>
                 <th>Date :</th>
-                <td>23 June 2021</td>
+                <td [attr.contenteditable]="editable">23 June 2021</td>
               </tr>
             </tbody>
           </table>
         </div>
         <div class="main-text">
-          <div class="text-1">
+          <div class="text-1" [attr.contenteditable]="editable">
             <p class="text-header">Dengan hormat,</p>
             <p class="text-para">
               Documentation and examples for opt-in styling of tables (given
@@ -103,7 +108,7 @@
               </tbody>
             </table>
           </div>
-          <div class="list-detail">
+          <div class="list-detail" [attr.contenteditable]="editable">
             <p class="list-detail-p">
               Bootstrap sets basic global display, typography, and link styles:
             </p>
@@ -130,7 +135,7 @@
             </div>
           </div>
 
-          <div class="sub-info-text">
+          <div class="sub-info-text" [attr.contenteditable]="editable">
             <p class="sub-info-p1">
               *HTML5 adds a new global attribute named [hidden]
             </p>
@@ -146,12 +151,14 @@
             </p>
           </div>
           <div class="sub-text-footer">
-            <label>Hormat kami.</label>
-            <p class="company-name">
+            <label [attr.contenteditable]="editable">Hormat kami.</label><br />
+            <p class="company-name" [attr.contenteditable]="editable">
               <b>PT. IDS Medical System Indonisa</b>
             </p>
+            <br />
             <p class="signature"></p>
-            <p>
+            <br />
+            <p [attr.contenteditable]="editable">
               <span class="contact-name">ZulfaAlla</span><br />(0812-4920-1673)
             </p>
           </div>
