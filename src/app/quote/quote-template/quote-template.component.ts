@@ -29,6 +29,7 @@ export class QuoteTemplateComponent implements OnInit {
   check = false;
   editable = true;
   url: any;
+  elem;
   imageWidth: any;
   imageHeight: number;
   single: boolean;
@@ -37,7 +38,6 @@ export class QuoteTemplateComponent implements OnInit {
 
   ngOnInit(): void {
     this.userToken = localStorage.getItem("auth-token");
-
     this.getMobileOperatingSystem();
   }
 
@@ -184,7 +184,11 @@ export class QuoteTemplateComponent implements OnInit {
     // };
     var userAgent = navigator.userAgent || navigator.vendor;
 
-    if (userAgent.match(/iPhone/i)) {
+    if (
+      userAgent.match(/iPad/i) ||
+      userAgent.match(/iPhone/i) ||
+      userAgent.match(/iPod/i)
+    ) {
       this.editable = false;
       this.router.navigate(["quote/mobile/view/quote-template"]);
       return "iOS";

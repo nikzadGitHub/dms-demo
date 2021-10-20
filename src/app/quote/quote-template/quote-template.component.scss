@@ -132,12 +132,16 @@
       }
     }
     .sub-text-footer {
-      display: flex;
-      flex-direction: column;
+      // display: flex;
+      // flex-direction: column;
       margin-bottom: 50px;
       .company-name {
         font-weight: 700;
         margin-bottom: 69px;
+        display: inline-block;
+      }
+      .name-number {
+        display: inline-block;
       }
     }
   }

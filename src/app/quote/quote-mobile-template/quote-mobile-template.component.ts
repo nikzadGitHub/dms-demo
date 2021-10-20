@@ -172,7 +172,6 @@ export class QuoteMobileTemplateComponent implements OnInit {
     let pWidth = 595.28;
     let pdf = new jsPDF("p", "pt", "a4");
     pdf.setProperties;
-    // if (this.url) {
     if (this.imageWidth > pWidth) {
       pdf.addImage(this.url, "", 10, 10, 550, this.imageHeight);
       pdf.save("Appendix.pdf");
@@ -180,9 +179,6 @@ export class QuoteMobileTemplateComponent implements OnInit {
       pdf.addImage(this.url, "", 10, 10, this.imageWidth, this.imageHeight);
       pdf.save("Appendix.pdf");
     }
-    // } else {
-    //   pdf.save("Appendix.pdf");
-    // }
   }
 
   toggleFullScreen() {
@@ -198,8 +194,19 @@ export class QuoteMobileTemplateComponent implements OnInit {
   }
   getMobileOperatingSystem() {
     var userAgent = navigator.userAgent || navigator.vendor;
-
-    if (userAgent.match(/iPhone/i)) {
+    if (
+      userAgent.match(/iPad/i) ||
+      userAgent.match(/iPod/i) ||
+      userAgent.match(/iPhone/i)
+    ) {
+      let element = Array.from(
+        document.getElementsByTagName(
+          "app-sidebar"
+        ) as HTMLCollectionOf<HTMLElement>
+      );
+      element.forEach((el) => {
+        el.style.visibility = "hidden";
+      });
       return "iOS";
     } else if (userAgent.match(/Android/i)) {
       return "Android";
