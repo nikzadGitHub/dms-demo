@@ -1,5 +1,7 @@
+import { Platform } from "@angular/cdk/platform";
 import { DOCUMENT } from "@angular/common";
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   Inject,
@@ -17,7 +19,7 @@ import { AuthService } from "../../auth/auth.service";
   templateUrl: "./quote-mobile-template.component.html",
   styleUrls: ["./quote-mobile-template.component.scss"],
 })
-export class QuoteMobileTemplateComponent implements OnInit {
+export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("fileUpload") fileUpload: ElementRef;
@@ -37,12 +39,33 @@ export class QuoteMobileTemplateComponent implements OnInit {
   quotationId: number;
   templateId: number;
   userToken: any;
+
   constructor(
     @Inject(DOCUMENT) private document: any,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private platform: Platform
   ) {}
+  ngAfterViewInit(): void {
+    this.getMobileOperatingSystem();
+    setTimeout(() => {
+      let element = Array.from(
+        document.getElementsByTagName(
+          "app-sidebar"
+        ) as HTMLCollectionOf<HTMLElement>
+      );
+      element.forEach((el) => {
+        el.remove();
+      });
+    }, 1000);
+    let element = Array.from(
+      document.getElementsByClassName("main") as HTMLCollectionOf<HTMLElement>
+    );
+    element.forEach((el) => {
+      el.style.margin = "0 0 0 0";
+    });
+  }
 
   ngOnInit(): void {
     this.setToken();
@@ -54,7 +77,7 @@ export class QuoteMobileTemplateComponent implements OnInit {
     element.forEach((el) => {
       el.style.visibility = "hidden";
     });
-    this.getMobileOperatingSystem();
+    // this.getMobileOperatingSystem();
     this.toggleFullScreen();
     this.elem = document.documentElement;
   }
@@ -187,25 +210,6 @@ export class QuoteMobileTemplateComponent implements OnInit {
       return "iOS";
     } else if (userAgent.match(/iPad/i) || userAgent.match(/iPod/i)) {
       this.editable = true;
-      if (window.innerHeight > window.innerWidth) {
-        let element = Array.from(
-          document.getElementsByTagName(
-            "app-sidebar"
-          ) as HTMLCollectionOf<HTMLElement>
-        );
-        element.forEach((el) => {
-          el.style.display = "none";
-        });
-      } else {
-        let element = Array.from(
-          document.getElementsByTagName(
-            "app-sidebar"
-          ) as HTMLCollectionOf<HTMLElement>
-        );
-        element.forEach((el) => {
-          el.style.display = "none";
-        });
-      }
       return "iOS";
     } else if (userAgent.match(/Android/i)) {
       this.editable = false;
@@ -215,6 +219,8 @@ export class QuoteMobileTemplateComponent implements OnInit {
       return "unknown";
     }
   }
+
+  BackButton() {}
 
   async setToken() {
     this.activatedRoute.queryParams.subscribe((params) => {
