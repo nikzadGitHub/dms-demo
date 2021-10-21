@@ -49,20 +49,20 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
   ) {}
   ngAfterViewInit(): void {
     this.getMobileOperatingSystem();
-    setTimeout(() => {
-      let element = Array.from(
-        document.getElementsByTagName(
-          "app-sidebar"
-        ) as HTMLCollectionOf<HTMLElement>
-      );
-      element.forEach((el) => {
-        el.remove();
-      });
-    }, 1000);
+    // setTimeout(() => {
     let element = Array.from(
-      document.getElementsByClassName("main") as HTMLCollectionOf<HTMLElement>
+      document.getElementsByTagName(
+        "app-sidebar"
+      ) as HTMLCollectionOf<HTMLElement>
     );
     element.forEach((el) => {
+      el.remove();
+    });
+    // }, 1000);
+    let elem = Array.from(
+      document.getElementsByClassName("main") as HTMLCollectionOf<HTMLElement>
+    );
+    elem.forEach((el) => {
       el.style.margin = "0 0 0 0";
     });
   }
