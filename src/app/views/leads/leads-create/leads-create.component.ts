@@ -130,16 +130,18 @@ export class LeadsCreateComponent implements OnInit {
             this.form.reset();
           }, 2000);
         } else {
-          this.router.navigate(["/leads/", res.data.id, "verify"]);
           this.alertBody = res.message || "Created Successfully";
           this.id = res.data.value;
           this.successModal.show();
+          setTimeout(() => {
+            this.router.navigate(["/leads/", res.data.id, "verify"]);
+          }, 1000);
         }
       },
       (error) => {
-        this.alertHeader = "Network Error";
-        this.alertBody = "Somethink went wrong please try again";
-        this.dangerModal.show();
+        this.alertHeader = "Customer already exist";
+        this.alertBody = "Do you want to go to add opportunity page?";
+        this.foundModal.show();
       }
     );
   }
@@ -185,17 +187,22 @@ export class LeadsCreateComponent implements OnInit {
 
   searchCompanyName(event) {
     let query = event;
-    this.leadsService.searchCompany(query).subscribe((res) => {
-      if (res.success) {
-        if (res.data.id != 0) {
-          this.alertBody = "Company already exist.";
-          this.dangerModal.show();
-        } else {
-          this.alertBody = "Company name is available to use.";
-          this.successModal.show();
+    if (event) {
+      this.leadsService.searchCompany(query).subscribe((res) => {
+        if (res.success) {
+          if (res.data.id != 0) {
+            this.alertBody = "Company already exist.";
+            this.dangerModal.show();
+          } else {
+            this.alertBody = "Company name is available to use.";
+            this.successModal.show();
+          }
         }
-      }
-    });
+      });
+    } else {
+      this.alertBody = "Please enter company name.";
+      this.dangerModal.show();
+    }
   }
 
   onSelectCompany(event, title) {

@@ -46,7 +46,6 @@
                           [style]="{ width: '100%' }"
                           formControlName="company_name"
                           [suggestions]="filteredCompanyData"
-                          (onSelect)="onSelectCompany($event, 'company_name')"
                         >
                           <ng-template let-item pTemplate="item">
                             <div class="item">
@@ -55,6 +54,7 @@
                           </ng-template>
                         </p-autoComplete>
                         <!-- (click)="searchCompanyName($event)" -->
+
                         <i
                           class="pi pi-search search-country-name-icon"
                           (click)="searchCompanyName(form.value.company_name)"
@@ -82,7 +82,7 @@
                           <ng-template let-item pTemplate="item">
                             <div class="item">
                               <div>
-                                {{ item.contact_name }} ({{
+                                {{ item.full_name }} ({{
                                   item.mobile_phone
                                 }})
                               </div>
