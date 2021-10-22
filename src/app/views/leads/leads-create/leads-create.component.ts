@@ -107,6 +107,8 @@ export class LeadsCreateComponent implements OnInit {
   }
   searchCompany(company_name) {
     this.leadsService.searchCompany(company_name).subscribe((res) => {
+      console.log("search_name: ", res);
+      
       if (res.success) {
         if (res.data.id != 0) {
           this.alertHeader = this.errorMessage;
@@ -121,6 +123,8 @@ export class LeadsCreateComponent implements OnInit {
   create() {
     this.leadsService.store(this.form.value).subscribe(
       (res) => {
+        console.log("create-res: ", res);
+        
         if (this.isCheck == true) {
           this.alertBody = res.message || "Created Successfully";
           this.id = res.data.value;
@@ -153,8 +157,12 @@ export class LeadsCreateComponent implements OnInit {
   }
 
   searchName(event) {
+    console.log("event: ", event);
+    
     let query = event.query;
     this.leadsService.searchContact(query).subscribe((res) => {
+      console.log("search_name_res: ", res);
+      
       if (res.success) {
         if (res.data.length == 0) {
           setTimeout(() => {
@@ -189,6 +197,8 @@ export class LeadsCreateComponent implements OnInit {
     let query = event;
     if (event) {
       this.leadsService.searchCompany(query).subscribe((res) => {
+        console.log("S-res---->", res);
+        
         if (res.success) {
           if (res.data.id != 0) {
             this.alertBody = "Company already exist.";
