@@ -25,6 +25,29 @@ export const navItems: INavData[] = [
     icon: 'cil-money',
   },
   {
+    name: 'DMS',
+    url: '/dms',
+    icon: 'cil-file',
+    children: [
+      {
+        name: 'Inventory',
+        url: '/dms/inventory',
+      },
+      {
+        name: 'Bookings',
+        url: '/dms/bookings',
+      },
+      {
+        name: 'Approvals (5)',
+        url: '/dms/approvals',
+      },
+      {
+        name: 'Calender',
+        url: '/dms/calender',
+      },
+    ]
+  },
+  {
     name: 'Activities',
     url: '/activities',
     icon: 'cil-calendar',
