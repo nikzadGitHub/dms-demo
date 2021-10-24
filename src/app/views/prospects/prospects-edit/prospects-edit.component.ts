@@ -19,6 +19,7 @@ export class ProspectsEditComponent implements OnInit {
   public autoResize: boolean = true;
   @ViewChild('addContactModal') public addContactModal: ModalDirective;
   @ViewChild('successModal') successModal : ModalDirective;
+  @ViewChild('successModal') successContactModal : ModalDirective;
   id:any;
   alertBody: string;
   form: FormGroup;
@@ -165,7 +166,8 @@ export class ProspectsEditComponent implements OnInit {
     this.prospectsService.deleteContact(this.id, prospect.id).subscribe(res => {
       this.prospect_list.splice(i, 1);
       this.confirmModal.hide();
-      this.successModal.show();
+      this.alertBody = res.message || 'Contact deleted successfully';
+      this.successContactModal.show();
     })
   }
 
@@ -174,21 +176,21 @@ export class ProspectsEditComponent implements OnInit {
   }
 
   addContact(_frm) {
-    this.prospect_list.push(
-      { 'name': _frm.value.name,
-        'title': _frm.value.title,
-        'phone': _frm.value.phone,
-        'email': _frm.value.email,
-        'department': _frm.value.department,
-        'primary': false,
-      }
-    );
     this.addContactModal.hide();
-
     this.prospectsService.addContact(this.id, _frm.value.id).subscribe(res => {
       //console.log(res);
       this.alertBody = res.message || 'Contact added successfully';
-      this.successModal.show();
+      this.successContactModal.show();
+
+      this.prospect_list.push(
+        { 'name': _frm.value.name,
+          'title': _frm.value.title,
+          'phone': _frm.value.phone,
+          'email': _frm.value.email,
+          'department': _frm.value.department,
+          'primary': false,
+        }
+      );
     })
   }
 
