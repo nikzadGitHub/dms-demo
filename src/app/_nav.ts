@@ -38,12 +38,12 @@ export const navItems: INavData[] = [
         url: '/dms/bookings',
       },
       {
-        name: 'Approvals (5)',
+        name: 'Approvals',
         url: '/dms/approvals',
       },
       {
-        name: 'Calender',
-        url: '/dms/calender',
+        name: 'Calendar',
+        url: '/dms/calendar',
       },
     ]
   },
