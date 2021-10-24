@@ -41,6 +41,9 @@ export class SalesTargetSetupComponent implements OnInit {
   modalBody: string = '';
   selectedId: string = '';
   mode: string = 'new';
+  first: number = 0;
+  rows: number = 5;
+  dataLength: number = 0;
 
   constructor (
     private _fb: FormBuilder,
@@ -59,7 +62,6 @@ export class SalesTargetSetupComponent implements OnInit {
     this.copiedData = new SalesTargetSetup ('','','','','','','','','','','','','','','','','','',null,null,null,null,null,null,null,null,null,null,null,null,null);
     this.fetchSalesTargetData();
     this.loadCountryArr();
-    this.loadClassArr();
     this.onAddDimensionRow();
 
     let d = new Date();
@@ -97,6 +99,8 @@ export class SalesTargetSetupComponent implements OnInit {
     }
 
     this.loadQuarterMonth(code, inputYear);
+    this.loadClassArr(code);
+    this.loadLevelArr(code);
     this.loadSetupList(code);
   }
 
@@ -120,12 +124,17 @@ export class SalesTargetSetupComponent implements OnInit {
         'id': item.id, 'title': item.title, 'q1': q1total, 'q2': q2total, 'q3': q3total, 'q4': q4total, 'total': sum
       });
     });
+
+    this.dataLength = this.list.length;
+    console.log(this.dataLength);
+    console.log(this.fssArr);
   }
 
   onUnitChanged(countryCd, unitCd) {
     this._salesTargetSetupService.getFssList(countryCd, unitCd)
       .subscribe(res => {
         this.fssArr = res['data'];
+        console.log(res['data']);
     });
 
     this._salesTargetSetupService.getTeamLeadList(countryCd, unitCd)
@@ -139,59 +148,31 @@ export class SalesTargetSetupComponent implements OnInit {
     });
   }
 
-  loadClassArr() {
-  /*
-    this._salesTargetSetupService.getClassList()
+  loadClassArr(countryCode) {
+    this.classArr = [];
+    this._salesTargetSetupService.getClassList(countryCode)
       .subscribe(res => {
         this.classArr = res['data'];
-        console.log(this.classArr);
     });
-
-
-    this._salesTargetSetupService.getDimensionLevelList()
-      .subscribe(res => {
-        this.levelArr = res['data']['countries'];
-        console.log(this.levelArr);
-    }); */
-
-    this.classArr = [
-      { name: 'FSS', value: 'FSS' },
-      { name: 'BME', value: 'BME' },
-      { name: 'MSC', value: 'lMSC' }
-    ];
-
-    this.levelArr = [
-      { name: 'Level 1', value: 'level1' },
-      { name: 'Level 2', value: 'level2' },
-      { name: 'Level 3', value: 'level3' },
-      { name: 'Level 4', value: 'level4' },
-      { name: 'Level 5', value: 'level5' }
-    ];
-
-    this.descArr = [
-      { level: 'level1', name: 'Description 1', value: 'desc1' },
-      { level: 'level2', name: 'Description 2', value: 'desc2' },
-      { level: 'level3', name: 'Description 3', value: 'desc3' },
-      { level: 'level4', name: 'Description 4', value: 'desc4' },
-      { level: 'level5', name: 'Description 5', value: 'desc5' }
-    ];
-
   }
 
-  onLevelChanges(level) {
-  /*  this._salesTargetSetupService.getDimensionDescList(this.data.countryCode, level)
-      .subscribe(res => {
-        this.descArr = res['data']['countries'];
-        console.log(this.descArr);
-    }); */
+  loadLevelArr(countryCode) {
+    this.descArr = [];
 
-    this.descArr = [
-      { level: 'level1', name: 'Description 1', value: 'desc1' },
-      { level: 'level2', name: 'Description 2', value: 'desc2' },
-      { level: 'level3', name: 'Description 3', value: 'desc3' },
-      { level: 'level4', name: 'Description 4', value: 'desc4' },
-      { level: 'level5', name: 'Description 5', value: 'desc5' }
-    ];
+    this._salesTargetSetupService.getDimensionLevelList(countryCode)
+      .subscribe(res => {
+        this.levelArr = res['data'];
+    });
+  }
+
+  onLevelChanges(level, countryCode) {
+    console.log(this.dimensionLevelArr);
+    this.descArr = [];
+    this._salesTargetSetupService.getDimensionDescList(countryCode, level)
+      .subscribe(res => {
+        this.descArr = res['data'];
+        console.log(this.descArr);
+    });
   }
 
   onAddDimensionRow() {
@@ -237,7 +218,6 @@ export class SalesTargetSetupComponent implements OnInit {
     this._salesTargetSetupService.updateSalesTargetSetupData(data.id, data)
       .subscribe(res => {
         this.modalBody = res.message || 'Updated Successfully';;
-
         this.successModal.show();
         this.mode = 'new';  //reset to new mode
     });
@@ -248,7 +228,6 @@ export class SalesTargetSetupComponent implements OnInit {
     temp = this.salesTargetData.find(s => s.id == id);
     this.mode = 'copy';
 
-    console.log(temp);
     this.copiedData.title = temp.title;
     this.copiedData.country_code = temp.country_code;
     this.copiedData.unit_id = temp.unit.id;
@@ -291,50 +270,58 @@ export class SalesTargetSetupComponent implements OnInit {
     temp = this.salesTargetData.find(s => s.id == id);
     this.mode = 'edit';
 
-    this.data.title = temp.title;
-    this.data.country_code = temp.country_code;
-    this.data.unit_id = temp.unit_id;
-    this.data.user_id = temp.user_id;
-    this.data.tl_user_id = temp.tl_user_id;
-    this.data.opc_pic_user_id = temp.opc_pic_user_id;
-    this.data.class_id = temp.class_id;
-    this.data.level_1_type = temp.level_1_type;
-    this.data.level_1_value = temp.level_1_value;
-    this.data.level_2_type = temp.level_2_type;
-    this.data.level_2_value = temp.level_2_value;
-    this.data.level_3_type = temp.level_3_type;
-    this.data.level_3_value = temp.level_3_value;
-    this.data.level_4_type = temp.level_4_type;
-    this.data.level_4_value = temp.level_4_value;
-    this.data.level_5_type = temp.level_5_type;
-    this.data.level_5_value = temp.level_5_value;
-    this.data.currency_code = temp.currency_code;
-    this.data.year = temp.year;
-    this.data.month_01_target = temp.month_01_target;
-    this.data.month_02_target = temp.month_02_target;
-    this.data.month_03_target = temp.month_03_target;
-    this.data.month_04_target = temp.month_04_target;
-    this.data.month_05_target = temp.month_05_target;
-    this.data.month_06_target = temp.month_06_target;
-    this.data.month_07_target = temp.month_07_target;
-    this.data.month_08_target = temp.month_08_target;
-    this.data.month_09_target = temp.month_09_target;
-    this.data.month_10_target = temp.month_10_target;
-    this.data.month_11_target = temp.month_11_target;
-    this.data.month_12_target = temp.month_12_target;
+   // this.onCountryChanged(temp.country_code);
+    this.onUnitChanged(temp.country_code, temp.unit.id);
+    this.loadData(temp, this.data);
+    console.log(temp);
 
-    this.onCountryChanged(this.data.country_code);
-    this.onUnitChanged(this.data.country_code, this.data.unit_id);
+
   }
 
-  showConfirmationDialog (id): void {
+  loadData(source, destination) {
+    let user = this.fssArr.find(s => s.uuid = source.user.id);
+
+    destination.title = source.title;
+    destination.country_code = source.country_code;
+    destination.unit_id = source.unit.id;
+    //destination.user_id = source.user.id;
+    destination.tl_user_id = source.tl_user_id;
+    destination.opc_pic_user_id = source.opc_pic_user_id;
+    destination.class_id = source.class;
+    destination.level_1_type = source.level_1_type;
+    destination.level_1_value = source.level_1_value;
+    destination.level_2_type = source.level_2_type;
+    destination.level_2_value = source.level_2_value;
+    destination.level_3_type = source.level_3_type;
+    destination.level_3_value = source.level_3_value;
+    destination.level_4_type = source.level_4_type;
+    destination.level_4_value = source.level_4_value;
+    destination.level_5_type = source.level_5_type;
+    destination.level_5_value = source.level_5_value;
+    destination.currency_code = source.currency_code;
+    destination.year = source.year;
+    destination.month_01_target = source.month_01_target;
+    destination.month_02_target = source.month_02_target;
+    destination.month_03_target = source.month_03_target;
+    destination.month_04_target = source.month_04_target;
+    destination.month_05_target = source.month_05_target;
+    destination.month_06_target = source.month_06_target;
+    destination.month_07_target = source.month_07_target;
+    destination.month_08_target = source.month_08_target;
+    destination.month_09_target = source.month_09_target;
+    destination.month_10_target = source.month_10_target;
+    destination.month_11_target = source.month_11_target;
+    destination.month_12_target = source.month_12_target;
+  }
+
+  showConfirmationDialog(id): void {
     this.selectedId = id;
     this.modalHeader = 'Delete Sales Target Setup';
     this.modalBody = 'Are you sure you want to delete this sales target?'
     this.confirmModal.show();
   }
 
-  deleteData(id){
+  deleteData(id) {
     this.confirmModal.hide();
     this._salesTargetSetupService.deleteSalesTargetSetupData(id)
       .subscribe(res => {
@@ -356,6 +343,7 @@ export class SalesTargetSetupComponent implements OnInit {
     data.level_4_value = this.dimensionDescArr[3];
     data.level_5_type = this.dimensionLevelArr[4];
     data.level_5_value = this.dimensionDescArr[4];
+    data.currency_code = this.currency;
 
     if (this.mode == 'new') {
       this.saveSalesTargetSetup(data);
@@ -372,5 +360,27 @@ export class SalesTargetSetupComponent implements OnInit {
     this.data = new SalesTargetSetup ('','','','','','','','','','','','','','','','','','',null,null,null,null,null,null,null,null,null,null,null,null,null);
     this.copiedData = new SalesTargetSetup ('','','','','','','','','','','','','','','','','','',null,null,null,null,null,null,null,null,null,null,null,null,null);
     this.list = [];
+    this.rowCount = 0;
+    this.onAddDimensionRow();
+  }
+
+  next() {
+    this.first = this.first + this.rows;
+  }
+
+  prev() {
+    this.first = this.first - this.rows;
+  }
+
+  reset() {
+      this.first = 0;
+  }
+
+  isLastPage(): boolean {
+      return this.list ? this.first === (this.list.length - this.rows): true;
+  }
+
+  isFirstPage(): boolean {
+      return this.list ? this.first === 0 : true;
   }
 }

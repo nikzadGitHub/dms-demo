@@ -12,14 +12,14 @@
                         <div class="lead-data">
                             <div class="lead-header">
                                 <div class="row">
-                                    <div class="col-md-auto">
+                                    <div class="col-md-3">
                                         <h3 class="bold">
                                             {{ form_controls.company_name.value }}
                                         </h3>
                                     </div>
-                                    <div class="col-md-auto lead-id">
-                                        <div>
-                                            <span>Prospect ID</span>
+                                    <div class="col-md-3 ">
+                                        <div class="lead-id">
+                                            <span>Prospect ID:</span>
                                             <span>{{ form_controls.id.value }}</span>
                                         </div>
                                     </div>
@@ -30,7 +30,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="bold">Created Date</label>
-                                            <div>{{ form_controls.created_at.value }}</div>
+                                            <div>{{ moment(form_controls.created_at.value).format('DD-MMM-YYYY') }}</div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -258,6 +258,9 @@
                         <p-header>
                             <i class="cil-clipboard"></i>
                             <span class="accordion-header">Contact</span>
+                            <button class="btn btn-icon btn-outline-primary ml-2" type="button"
+                                (click)="onNewContact(); $event.stopPropagation();"><i class="cil-plus c-icon"></i>
+                            </button>
                         </p-header>
                         <div>
                             <table class="table table-borderless table-striped">
@@ -274,7 +277,11 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let prospect of prospect_list; let i=index">
-                                        <td><p-checkbox (click)="selectedRow(i)"></p-checkbox></td>
+                                        <td>
+                                          <p-checkbox [(ngModel)]="prospect.primary" [ngModelOptions]="{standalone: true}" [binary]="prospect.primary"
+                                            (onChange)="updatePrimary(i, prospect.primary);" [inputId]="'primary'+i"
+                                          ></p-checkbox>
+                                        </td>
                                         <td>
                                             {{ prospect.name }}
                                         </td>
@@ -312,16 +319,16 @@
                             <table class="table table-borderless table-striped" formArrayName="modifiction_log">
                                 <thead class="grey">
                                     <tr>
-                                        <th style="width: 20%;">Date</th>
-                                        <th>Description</th>
+                                        <th style="width: 20%; padding-left: 50px;">Date</th>
+                                        <th style="padding-left: 50px;">Description</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let log of getLog.controls; let i=index" [formGroupName]="i">
-                                        <td style="width: 20%;">
-                                            {{ log.value.created_at }}
+                                        <td style="width: 20%; padding-left: 50px;">
+                                            {{ moment(log.value.created_at).format('DD-MMM-YYYY') }}
                                         </td>
-                                        <td>
+                                        <td style="padding-left: 50px;">
                                             {{ log.value.description }}
                                         </td>
                                     </tr>
@@ -349,8 +356,8 @@
             <div class="col-xl-12 submit-button" align=center>
                 <div class="form-group">
                     <!-- <a routerLink="/prospects/index" class="btn btn-secondary">Save</a> -->
-                    <button class="btn btn-secondary" type="submit">Save</button>
-                    <button class="btn btn-primary" type="button">Create Opportunity</button>
+                    <button class="btn btn-secondary pr-5 pl-5 mr-2" type="submit"><i class="cil-save mt-1 mr-1"></i>Save</button>
+                    <button class="btn btn-primary pr-4 pl-4" type="button"><i class="cil-money mt-1 mr-1"></i>Create Opportunity</button>
                     <!-- <button class="btn btn-primary" type="button" (click)="CreateProspect()">Create Prospect</button> -->
                 </div>
             </div>
@@ -370,3 +377,39 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+
+<div id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{modalBody}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="successModal.hide()">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #confirmModal="bs-modal" class="modal fade confirm-modal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" align="center">
+              <h4 class="modal-title">{{ modalHeader }}</h4>
+        </div>
+        <div class="modal-body">
+            <p>{{ modalBody }}</p>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="confirmModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="deleteData(selectedId)">Yes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>

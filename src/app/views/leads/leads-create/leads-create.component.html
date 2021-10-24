@@ -269,23 +269,23 @@
             </div>
           </div>
 
-          <div class="col-lg-9 submit-button" align="center">
+          <div class="col-12 submit-button" align="center">
             <div class="form-group">
               <!-- <button class="btn btn-primary" type="button" (click)="notFoundModal.show()">Open</button> -->
               <button
-                class="btn btn-primary"
+                class="btn btn-primary mr-2 pr-5 pl-5"
                 type="submit"
                 [disabled]="!form.valid"
               >
-                SAVE
+                <i class="cil-save mt-1 mr-1"></i>SAVE
               </button>
               <button
-                class="btn btn-secondary"
+                class="btn btn-secondary pr-5 pl-5"
                 type="button"
                 [disabled]="!form.valid"
                 (click)="verify()"
               >
-                VERIFY
+                <i class="cil-check-alt mt-1 mr-1"></i>VERIFY
               </button>
               <!-- <a routerLink="/leads/verify" class="btn btn-secondary">VERIFY</a> -->
             </div>
@@ -297,8 +297,7 @@
   </div>
 </div>
 <!-- Models-D -->
-<!--   (onHide)="resetForm()"
- -->
+<!-- (onHide)="redirectPage()" -->
 <div
   id="success"
   bsModal
