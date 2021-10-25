@@ -56,10 +56,45 @@
             </td>
             <td class="text-center">
                 <span class="p-column-title">Action</span>
-                <a href="#" [routerLink]="['/prospects/', data.id, 'edit']" class="fa fa-edit"></a>
+                <div class="d-flex">
+                  <a href="#" [routerLink]="['/prospects/', data.id, 'edit']" class="fa fa-edit mr-2"></a>
+                  <a href="javascript:void(0)" (click)="showConfirmationDialog(data.id)" class="fa fa-trash"></a>
+                </div>
             </td>
         </tr>
     </ng-template>
 </p-table>
 <p-paginator (onPageChange)="paginate($event)" [rows]="pageItems" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
 </p-paginator>
+<div id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{modalBody}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="successModal.hide()">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div bsModal #confirmModal="bs-modal" class="modal fade confirm-modal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" align="center">
+              <h4 class="modal-title">{{ modalHeader }}</h4>
+        </div>
+        <div class="modal-body">
+            <p>{{ modalBody }}</p>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="confirmModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="deleteData(selectedId)">Yes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
