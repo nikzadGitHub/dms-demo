@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bookings.component.scss']
 })
 export class BookingsComponent implements OnInit {
+  bookingList: [];
+	paginate: [];
+	pageItems: number = 10;
+	search_text: string = '';
+	icons = [];
 
   constructor() { }
 

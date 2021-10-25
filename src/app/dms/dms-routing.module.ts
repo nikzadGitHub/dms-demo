@@ -7,10 +7,12 @@ import { BookingsComponent } from './components/bookings/bookings.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 
+export const fallbackPath = 'inventory';
+
 export const mainChildren = [
   {
     path: '',
-    redirectTo: 'inventory',
+    redirectTo: fallbackPath,
     pathMatch: 'full',
   },
   {
@@ -43,7 +45,7 @@ export const mainChildren = [
   },
   {
     path: '**',
-    redirectTo: 'inventory',
+    redirectTo: fallbackPath,
   },
 ];
 
