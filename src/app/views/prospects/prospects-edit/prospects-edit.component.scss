@@ -166,3 +166,26 @@
   border-color: #00538a;
   color:#FFFFFF;
 }
+
+.confirm-modal {
+  .modal-content {
+    padding: 20px;
+    .modal-header {
+      margin: 0 auto;
+      border-bottom: 0px;
+    }
+
+    .model-title {
+      font-weight: bold;
+    }
+
+    .modal-body {
+      margin: 0 auto;
+    }
+
+    .modal-footer {
+      border-top: 0px;
+      justify-content: center;
+    }
+  }
+}

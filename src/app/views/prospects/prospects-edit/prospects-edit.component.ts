@@ -19,18 +19,20 @@ export class ProspectsEditComponent implements OnInit {
   public autoResize: boolean = true;
   @ViewChild('addContactModal') public addContactModal: ModalDirective;
   @ViewChild('successModal') successModal : ModalDirective;
-  @ViewChild('successModal') successContactModal : ModalDirective;
+  @ViewChild('successContactModal') successContactModal : ModalDirective;
   id:any;
   alertBody: string;
   form: FormGroup;
   addContactForm: FormGroup;
   selectedId: any;
   modalHeader: any;
-  modalBody: any;
+  modalBody: string = '';
   contactList: any = [];
   prospect_list:any;
   searchByName: string = '';
   filterData: any = [];
+  primaryContact: string;
+  primaryContactIndex: any = 0;
 
   reasons:any = [
     'Customer Budget',
@@ -110,7 +112,7 @@ export class ProspectsEditComponent implements OnInit {
     this.prospect_list = [];
     this.prospectsService.getContactList(id)
       .subscribe(res => {
-        let primaryContact = res['data']['primary_contact'];
+        this.primaryContact = res['data']['primary_contact'];
         this.contactList = res['data']['contacts'];
         this.contactList.forEach(element => {
           this.prospect_list.push({
@@ -120,9 +122,9 @@ export class ProspectsEditComponent implements OnInit {
             'phone': element.mobile_phone,
             'email': element.email,
             'department': element.department,
-            'primary': element.id == primaryContact ? true : false,
+            'primary': element.id == this.primaryContact ? true : false,
           });
-
+          this.primaryContactIndex= this.prospect_list.findIndex(x => x.primary === true);
         });
     });
   }
@@ -149,10 +151,6 @@ export class ProspectsEditComponent implements OnInit {
     })
   }
 
-  selectedRow(i) {
-    //console.log(i);
-  }
-
   deleteRow(i) {
     this.selectedId = i;
     this.modalHeader = 'Delete Contact';
@@ -162,11 +160,10 @@ export class ProspectsEditComponent implements OnInit {
 
   deleteData(i) {
     let prospect = this.prospect_list[i];
-
     this.prospectsService.deleteContact(this.id, prospect.id).subscribe(res => {
       this.prospect_list.splice(i, 1);
       this.confirmModal.hide();
-      this.alertBody = res.message || 'Contact deleted successfully';
+      this.modalBody = res.message || 'Contact deleted successfully';
       this.successContactModal.show();
     })
   }
@@ -178,12 +175,13 @@ export class ProspectsEditComponent implements OnInit {
   addContact(_frm) {
     this.addContactModal.hide();
     this.prospectsService.addContact(this.id, _frm.value.id).subscribe(res => {
-      //console.log(res);
-      this.alertBody = res.message || 'Contact added successfully';
+      this.modalBody = res.message || 'Contact added successfully';
       this.successContactModal.show();
 
       this.prospect_list.push(
-        { 'name': _frm.value.name,
+        {
+          'id': _frm.value.id,
+          'name': _frm.value.name,
           'title': _frm.value.title,
           'phone': _frm.value.phone,
           'email': _frm.value.email,
@@ -199,13 +197,12 @@ export class ProspectsEditComponent implements OnInit {
     this.leadsService.searchContact(name).subscribe((res) => {
       if (res.success) {
         if (res.data.length == 0) {
-          setTimeout(() => {
-            this.alertBody = "Name is not Correct";
-            console.log(this.alertBody);
-           // this.dangerModal.show();
-          }, 2000);
+          //do nothing
         } else {
-         this.filterData = res.data;
+          this.filterData = res.data;
+          this.prospect_list.forEach(element => {
+            this.filterData = this.filterData.filter(item => item.id !== element.id);
+          });
         }
       }
     });
@@ -223,10 +220,15 @@ export class ProspectsEditComponent implements OnInit {
 	}
 
   updatePrimary(i, event: any) {
-
-    if (event == true) {
-
-      //set to primary
+    if (this.primaryContactIndex !== i) {
+      this.prospect_list[this.primaryContactIndex].primary = false;
+      this.prospect_list[i].primary = true;
     }
+    this.primaryContactIndex = i;
+
+    this.prospectsService.setPrimaryContact(this.id, this.prospect_list[i].id).subscribe(res => {
+      this.modalBody = res.message || 'Primary contact changed';
+      this.successContactModal.show();
+    });
   }
 }

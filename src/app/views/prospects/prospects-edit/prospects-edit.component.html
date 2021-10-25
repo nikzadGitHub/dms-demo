@@ -279,7 +279,7 @@
                                     <tr *ngFor="let prospect of prospect_list; let i=index">
                                         <td>
                                           <p-checkbox [(ngModel)]="prospect.primary" [ngModelOptions]="{standalone: true}" [binary]="prospect.primary"
-                                            (onChange)="updatePrimary(i, prospect.primary);" [inputId]="'primary'+i"
+                                            (onChange)="updatePrimary(i, prospect.primary);"
                                           ></p-checkbox>
                                         </td>
                                         <td>
@@ -367,108 +367,93 @@
 
 <div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-success" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Success</h4>
-        </div>
-        <div class="modal-body">
-          <p>{{alertBody}}</p>
-        </div>
-      </div><!-- /.modal-content -->
+        <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Success</h4>
+            </div>
+            <div class="modal-body">
+              <p>{{alertBody}}</p>
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 <div bsModal #addContactModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h4 class="modal-title">Add Contact</h4>
-              <button type="button" class="close" (click)="addContactModal.hide()" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              <div class="row form-group">
-                  <div class="col-md-2 offset-1">Name</div>
-                  <div class="col-md-6"><input type="text" class="form-control" [(ngModel)]="searchByName"/></div>
-                  <div class="col-md-3">
-                    <button class="btn btn-custom mr-1" (click)="searchContact(searchByName)">
-                      <i class="cil-magnifying-glass c-icon"></i>
-                      Search
-                    </button>
-                  </div>
-              </div>
-          <hr/>
-          <ng-container *ngIf="filterData.length > 0; else elseContactListEmptyTemplate">
-              <div class="row">
-                  <div class="col-md-12" style="height:200px; overflow: scroll">
-                      <table class="table">
-                          <tr>
-                              <th>Select</th>
-                              <th>Name</th>
-                              <th>Title</th>
-                              <th>Phone</th>
-                              <th>Email</th>
-                              <th>Department</th>
-                          </tr>
-                          <tr *ngFor="let contact of filterData; let i = index">
-                              <td><input type="radio" [attr.id]="'p'+i" name="contact[]" (click)="contactSelectedRadio(contact)"/></td>
-                              <td class="text-left">{{contact.full_name}}</td>
-                              <td class="text-left">{{contact.job_title}}</td>
-                              <td class="text-left">{{contact.mobile_phone}}</td>
-                              <td class="text-left">{{contact.email}}</td>
-                              <td class="text-left">{{contact.department}}</td>
-                          </tr>
-                      </table>
-                  </div>
-              </div>
-          </ng-container>
-          <ng-template #elseContactListEmptyTemplate>
-              <div class="row">
-                  <div class="col-md-12" align="center">
-                      No contact(s) found...
-                  </div>
-              </div>
-          </ng-template>
-          <hr/>
-          <div class="row form-group text-center">
-            <div class="col-md-12"><button class="btn btn-custom" type="submit" (click)="addContact(addContactForm)" >Add</button></div>
-          </div>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Contact</h4>
+                <button type="button" class="close" (click)="addContactModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-md-2 offset-1">Name</div>
+                    <div class="col-md-6"><input type="text" class="form-control" [(ngModel)]="searchByName"/></div>
+                    <div class="col-md-3">
+                        <button class="btn btn-custom mr-1" (click)="searchContact(searchByName)">
+                            <i class="cil-magnifying-glass c-icon"></i>
+                            Search
+                        </button>
+                    </div>
+                </div>
+                <hr/>
+                <ng-container *ngIf="filterData.length > 0; else elseContactListEmptyTemplate">
+                    <div class="row">
+                        <div class="col-md-12" style="height:200px; overflow: scroll">
+                            <table class="table">
+                                <tr>
+                                    <th>Select</th>
+                                    <th>Name</th>
+                                    <th>Title</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Department</th>
+                                </tr>
+                                <tr *ngFor="let contact of filterData; let i = index">
+                                    <td><input type="radio" [attr.id]="'p'+i" name="contact[]" (click)="contactSelectedRadio(contact)"/></td>
+                                    <td class="text-left">{{contact.full_name}}</td>
+                                    <td class="text-left">{{contact.job_title}}</td>
+                                    <td class="text-left">{{contact.mobile_phone}}</td>
+                                    <td class="text-left">{{contact.email}}</td>
+                                    <td class="text-left">{{contact.department}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-template #elseContactListEmptyTemplate>
+                    <div class="row">
+                        <div class="col-md-12" align="center">
+                            No contact(s) found...
+                        </div>
+                    </div>
+                </ng-template>
+                <hr/>
+                <div class="row form-group text-center">
+                  <div class="col-md-12"><button class="btn btn-custom" type="submit" (click)="addContact(addContactForm)" >Add</button></div>
+                </div>
+            </div>
         </div>
-      </div>
-  </div>
+    </div>
 </div>
 
-<div id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-success" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Success</h4>
-      </div>
-      <div class="modal-body">
-        <p>{{modalBody}}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="successModal.hide()">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<div id="success" bsModal #successContactModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-success" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Success</h4>
-      </div>
-      <div class="modal-body">
-        <p>{{modalBody}}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="successContactModal.hide()">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+<div id="contactSuccess" bsModal #successContactModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Contact Success</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{modalBody}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="successContactModal.hide()">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 <div bsModal #confirmModal="bs-modal" class="modal fade confirm-modal" tabindex="-1" role="dialog"
@@ -477,14 +462,14 @@
         <div class="modal-content">
             <div class="modal-header" align="center">
               <h4 class="modal-title">{{ modalHeader }}</h4>
-        </div>
-        <div class="modal-body">
-            <p>{{ modalBody }}</p>
-        </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="confirmModal.hide()">Cancel</button>
-        <button type="button" class="btn btn-primary" (click)="deleteData(selectedId)">Yes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+            </div>
+            <div class="modal-body">
+                <p>{{ modalBody }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="confirmModal.hide()">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="deleteData(selectedId)">Yes</button>
+            </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
 </div>

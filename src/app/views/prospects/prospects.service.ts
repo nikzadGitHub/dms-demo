@@ -106,8 +106,8 @@ export class ProspectsService {
     )
   }
 
-  setPrimaryContact(prospectId, data){
-    return this.httpClient.post(this.apiURL + '/prospect/' + prospectId + '/contacts/add', data, this.httpOptions)
+  setPrimaryContact(prospectId, contactId){
+    return this.httpClient.post(this.apiURL + '/prospect/' + prospectId + '/contacts/primary', {contact_id: contactId}, this.httpOptions)
     .pipe(
       tap((response: any) => {
         console.log(response);
