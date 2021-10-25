@@ -28,8 +28,12 @@ describe('App: Routing', () => {
   it('should contain route for /dms', () => {
     expect(routes).toContain(
       jasmine.objectContaining({
-        path: 'dms',
-        loadChildren: jasmine.any(Function)
+        children: jasmine.arrayContaining([
+          jasmine.objectContaining({
+            path: 'dms',
+            loadChildren: jasmine.any(Function)
+          }),
+        ])
       })
     );
   });

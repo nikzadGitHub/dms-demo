@@ -53,6 +53,7 @@
     "classlist.js": "^1.1.20150312",
     "core-js": "^3.9.1",
     "echarts": "^5.2.1",
+    "events": "^3.3.0",
     "flag-icon-css": "^3.5.0",
     "font-awesome": "^4.7.0",
     "jspdf": "^2.4.0",
