@@ -48,8 +48,8 @@ export class LeadsService {
     )
   }
 
-  createProspect(lead_id): Observable<any> {
-    return this.httpClient.post(this.apiURL + '/lead/create-prospect', {id: lead_id}, this.httpOptions)
+  createProspect(id): Observable<any> {
+    return this.httpClient.post(this.apiURL + '/lead/create-prospect', id, this.httpOptions)
     .pipe(
       tap((response: any) => {
         console.log(response);
