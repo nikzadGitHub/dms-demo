@@ -1,77 +1,102 @@
-<p-table #dt [value]="inventoryList" styleClass="p-datatable-table" [rowHover]="true" [filterDelay]="0" [globalFilterFields]="['serial_no','stock_keep_unit','product_name']">
+<p-table #dt [value]="inventoryList" styleClass="p-datatable-table" [rowHover]="true" [filterDelay]="0"
+    [globalFilterFields]="['serial_no','stock_keep_unit','product_name']">
     <ng-template pTemplate="caption">
-      <div class="table-header d-flex">
-          <div class="d-flex">
+        <div class="table-header d-flex">
+            <div class="d-flex">
                 <div>Inventory Listing</div>
-                <div class="ml-2 mt-1"><a routerLink="/inventory/new" routerLinkActive="router-link-active"><i class="icon-plus icons" style="color: #FFFFFF"></i></a></div>
-          </div>
-          <div class="p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input type="text" pInputText placeholder="Global Search" [(ngModel)]="search_text" (input)="getAll()"/>
-          </div>
-      </div>
+                <div class="ml-2 mt-1"><a routerLink="/inventory/new" routerLinkActive="router-link-active"><i
+                            class="icon-plus icons" style="color: #FFFFFF"></i></a></div>
+            </div>
+            <div class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input type="text" pInputText placeholder="Global Search" [(ngModel)]="search_text"
+                    (input)="getAll()" />
+            </div>
+        </div>
     </ng-template>
     <ng-template pTemplate="header">
-      <tr>
-        <th pSortableColumn="serial_no" class="text-center">
-            <div class="p-d-flex p-jc-between p-ai-center">
-                Serial No
-                <p-sortIcon field="serial_no"></p-sortIcon>
-                <p-columnFilter type="text" field="serial_no" display="menu" class="p-ml-auto"></p-columnFilter>
-            </div>
-          </th>
-        <th pSortableColumn="stock_keep_unit" class="text-center">
-          <div class="p-d-flex p-jc-between p-ai-center">
-              SKU
-              <p-sortIcon field="stock_keep_unit"></p-sortIcon>
-              <p-columnFilter type="date" field="stock_keep_unit" display="menu" class="p-ml-auto"></p-columnFilter>
-          </div>
-        </th>
-        <th pSortableColumn="product_name" class="text-center">
-          <div class="p-d-flex p-jc-between p-ai-center">
-               Product Name
-              <p-sortIcon field="product_name"></p-sortIcon>
-              <p-columnFilter type="text" field="product_name" display="menu" class="p-ml-auto"></p-columnFilter>
-          </div>
-        </th>
-        <th pSortableColumn="agency" class="text-center">
-          <div class="p-d-flex p-jc-between p-ai-center">
-                Agency/ Principal
-              <p-sortIcon field="agency"></p-sortIcon>
-              <p-columnFilter type="text" field="agency" display="menu" class="p-ml-auto"></p-columnFilter>
-          </div>
-        </th>
-        <th pSortableColumn="description" class="text-center">
-          <div class="p-d-flex p-jc-between p-ai-center">
-              Description
-              <p-sortIcon field="description"></p-sortIcon>
-              <p-columnFilter type="text" field="description" display="menu" class="p-ml-auto"></p-columnFilter>
-          </div>
-        </th>
-        <th pSortableColumn="status" class="text-center">
-          <div class="p-d-flex p-jc-between p-ai-center">
-              Status
-              <p-sortIcon field="status"></p-sortIcon>
-              <p-columnFilter type="text" field="status" display="menu" class="p-ml-auto"></p-columnFilter>
-          </div>
-        </th>
-        <th pSortableColumn="booking_current" class="text-center">
-          <div class="p-d-flex p-jc-between p-ai-center">
-              Current Booking
-              <p-sortIcon field="booking_current"></p-sortIcon>
-              <p-columnFilter type="numeric" field="booking_current" display="menu" class="p-ml-auto"></p-columnFilter>
-          </div>
-        </th>
+        <tr>
+            <th pSortableColumn="serial_no" class="text-center">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Serial No
+                    <p-sortIcon field="serial_no"></p-sortIcon>
+                    <p-columnFilter type="text" field="serial_no" display="menu" class="p-ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="stock_keep_unit" class="text-center">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    SKU
+                    <p-sortIcon field="stock_keep_unit"></p-sortIcon>
+                    <p-columnFilter type="date" field="stock_keep_unit" display="menu" class="p-ml-auto">
+                    </p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="product_name" class="text-center">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Product Name
+                    <p-sortIcon field="product_name"></p-sortIcon>
+                    <p-columnFilter type="text" field="product_name" display="menu" class="p-ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="agency" class="text-center">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Agency/ Principal
+                    <p-sortIcon field="agency"></p-sortIcon>
+                    <p-columnFilter type="text" field="agency" display="menu" class="p-ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="description" class="text-center">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Description
+                    <p-sortIcon field="description"></p-sortIcon>
+                    <p-columnFilter type="text" field="description" display="menu" class="p-ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="status" class="text-center">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Status
+                    <p-sortIcon field="status"></p-sortIcon>
+                    <p-columnFilter type="text" field="status" display="menu" class="p-ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="booking_id" class="text-center">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Current Booking
+                    <p-sortIcon field="booking_id"></p-sortIcon>
+                    <p-columnFilter type="numeric" field="booking_id" display="menu" class="p-ml-auto">
+                    </p-columnFilter>
+                </div>
+            </th>
 
-        <th [style]="{'width':'5%'}">
-        </th>
-      </tr>
+            <th [style]="{'width':'5%'}">
+            </th>
+        </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-inventoryListRef>
-      <tr class="p-selectable-row">
-
-      </tr>
+    <ng-template pTemplate="body" let-inventoryItem>
+        <tr class="p-selectable-row">
+            <td class="text-center">
+                {{ inventoryItem.serial_no | number:'5.' }}
+            </td>
+            <td class="text-center">
+                {{ inventoryItem.stock_keep_unit }}
+            </td>
+            <td class="text-center">
+                {{ inventoryItem.product_name }}
+            </td>
+            <td class="text-center">
+                {{ inventoryItem.agency_name }}
+            </td>
+            <td class="text-center">
+                {{ inventoryItem.description }}
+            </td>
+            <td class="text-center">
+                {{ inventoryItem.status }}
+            </td>
+            <td class="text-center">
+                {{ formatBooking(inventoryItem.booking_id) }}
+            </td>
+        </tr>
     </ng-template>
-  </p-table>
-  <p-paginator [rows]="pageItems" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
-  </p-paginator>
+</p-table>
+<p-paginator [rows]="pageItems" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
+</p-paginator>

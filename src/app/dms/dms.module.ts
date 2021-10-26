@@ -6,15 +6,14 @@ import { CommonModule } from '@angular/common';
 
 // Dependencies.
 //
+import { PrimeNgModule } from '../sharedModule/prime-ng.module';
 import { IconModule } from '@coreui/icons-angular';
-import { TableModule } from 'primeng/table';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { PaginatorModule } from 'primeng/paginator';
-import { InputTextModule } from 'primeng/inputtext';
 
 // Local.
 //
 import { DmsRoutingModule } from './dms-routing.module';
+import { providersForEnvironment } from './services/providers';
 import { DmsComponent } from './dms.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
@@ -35,11 +34,12 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     DmsRoutingModule,
 
     // Dependencies.
-    TableModule,
+    PrimeNgModule,
     IconModule,
-    ModalModule,
-    PaginatorModule,
-    InputTextModule,
+    ModalModule
+  ],
+  providers: [
+    ...providersForEnvironment
   ]
 })
 export class DmsModule { }
