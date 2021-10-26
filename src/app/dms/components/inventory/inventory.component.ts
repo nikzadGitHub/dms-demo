@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./inventory.component.scss']
 })
 export class InventoryComponent implements OnInit {
+  inventoryList: [];
+	paginate: [];
+	pageItems: number = 10;
+	search_text: string = '';
+	icons = [];
 
   constructor() { }
 
