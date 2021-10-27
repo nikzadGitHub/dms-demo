@@ -3,7 +3,7 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { DmsComponent } from './dms.component';
-import { routes, mainChildren } from './dms-routing.module';
+import { routes, mainChildren, fallbackPath } from './dms-routing.module';
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
@@ -58,7 +58,7 @@ describe('DMS: Routing', () => {
   it('should handle invalid route', () => {
     expect(mainChildren).toContain(
       jasmine.objectContaining({
-        path: '**', redirectTo: 'inventory'
+        path: '**', redirectTo: fallbackPath
       })
     );
   });
@@ -66,7 +66,7 @@ describe('DMS: Routing', () => {
   it('should default to /inventory', () => {
     expect(mainChildren).toContain(
       jasmine.objectContaining({
-        path: '', redirectTo: 'inventory', pathMatch: 'full',
+        path: '', redirectTo: fallbackPath, pathMatch: 'full',
       })
     );
   });
