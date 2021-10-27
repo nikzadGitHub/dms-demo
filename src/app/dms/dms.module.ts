@@ -17,8 +17,11 @@ import { providersForEnvironment } from './services/providers';
 import { DmsComponent } from './dms.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
+import { BookingEntityComponent } from './components/bookings/booking-entity/booking-entity.component';
+import { BookingApprovalComponent } from './components/bookings/booking-approval/booking-approval.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { ExpandPanelComponent } from './components/widgets/expand-panel/expand-panel.component';
 
 
 @NgModule({
@@ -26,8 +29,11 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     DmsComponent,
     InventoryComponent,
     BookingsComponent,
+    BookingEntityComponent,
+    BookingApprovalComponent,
     ApprovalsComponent,
-    CalendarComponent
+    CalendarComponent,
+    ExpandPanelComponent
   ],
   imports: [
     CommonModule,
