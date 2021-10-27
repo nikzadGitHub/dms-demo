@@ -1,673 +1,1818 @@
 <div class="animated fadeIn">
-	<div class="row">
-		<div class="col-sm-12 col-md-12">
-			<form [formGroup]="opportunityDetailForm1">
-				<div class="card">
-					<div class="card-header d-flex b-btm-green">
-						<div class="chead">Opportunity Detail</div>						
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      <form [formGroup]="opportunityDetailForm1">
+        <div class="card">
+          <div class="card-header d-flex b-btm-green">
+            <div class="chead">Opportunity Detail</div>
+          </div>
+
+          <div class="card-body p-0">
+            <div
+              class="d-flex justify-content-between p-125"
+              style="align-items: center; justify-content: center"
+            >
+              <div class="chead w-25">{{ detail?.customer?.company_name }}</div>
+              <div class="bg-opp text-white p-1">
+                Opport. ID {{ detail?.opportunity_code }}
+              </div>
+              <div>
+                <mat-slide-toggle
+                  formControlName="is_include_in_forecast"
+                  color="primary"
+                  (change)="updateDetail()"
+                  >Include in forecast</mat-slide-toggle
+                >
+              </div>
+              <div>
+                <label>Stages</label>
+                <select class="form-control">
+                  <option>Negotiation & Procurement</option>
+                </select>
+              </div>
+              <div>
+                <label>Status</label>
+                <select
+                  class="form-control"
+                  formControlName="status_id"
+                  (change)="updateDetail()"
+                >
+                  <option
+                    *ngFor="let status of statuses; let i = index"
+                    value="{{ status.id }}"
+                  >
+                    {{ status.title }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="d-flex justify-content-between p-125"
+              style="background-color: #f6f6f6"
+            >
+              <div>
+                <input
+                  type="text"
+                  formControlName="topic"
+                  class="form-control"
+                  (change)="updateDetail()"
+                />
+              </div>
+              <div>
+                <label>Created Date</label>
+
+                <div>{{ detail?.created_at | date: "dd-MMM-yyyy" }}</div>
+              </div>
+              <div>
+                <label>Primary Contact</label>
+                <div>
+                  <select
+                    class="form-control"
+                    formControlName="customer_contact_id"
+                    (change)="updateDetail()"
+                  >
+                    <option value="">Please select...</option>
+                    <option
+                      *ngFor="let contact of customer_contacts; let i = index"
+                      value="{{ contact.id }}"
+                    >
+                      {{ contact.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label>Other Contact</label>
+                <div>
+                  <select
+                    class="form-control"
+                    formControlName="customer_contact2_id"
+                    (change)="updateDetail()"
+                  >
+                    <option value="">Please select...</option>
+                    <option
+                      *ngFor="let contact of customer_contacts; let i = index"
+                      value="{{ contact.id }}"
+                    >
+                      {{ contact.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label>Owner</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-12 form-group">
+      <p-accordion
+        [multiple]="true"
+        styleClass="customColor"
+        activeIndex="0,1,2"
+      >
+        <!-- Details Info	 -->
+        <p-accordionTab>
+          <ng-template pTemplate="header"
+            ><i class="cil-info c-icon"></i>&nbsp;&nbsp;Details
+            Info</ng-template
+          >
+          <form [formGroup]="opportunityDetailForm2">
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table table-striped m-0 no-outline">
+                  <tbody>
+                    <tr>
+                      <td class="bg-lightgrey text-left w-25">Credit Term</td>
+                      <td class="w-25"></td>
+                      <td class="bg-lightgrey text-left w-25">
+                        Hospital Bed (Exact Number)
+                      </td>
+                      <td class="text-left w-25">
+                        <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">Credit Limit</td>
+                      <td></td>
+                      <td class="bg-lightgrey text-left">Geographical Zone</td>
+                      <td class="text-left w-25">
+                        <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">Hospital Class</td>
+                      <td></td>
+                      <td class="bg-lightgrey text-left">Customer Tax Code</td>
+                      <td class="text-left w-25">
+                        <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">Segment</td>
+                      <td>
+                        <select class="form-control">
+                          <option>Government</option>
+                          <option>Semi Government</option>
+                          <option>Private</option>
+                        </select>
+                      </td>
+                      <td class="bg-lightgrey text-left">Sold To</td>
+                      <td class="text-left w-25">
+                        <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">Customer Category</td>
+                      <td></td>
+                      <td class="bg-lightgrey text-left">Ship To</td>
+                      <td class="text-left w-25">
+                        <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">
+                        Customer Subcategory
+                      </td>
+                      <td></td>
+                      <td class="bg-lightgrey text-left">Bill To</td>
+                      <td class="text-left w-25">
+                        <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">
+                        Hospital Bed (Range)
+                      </td>
+                      <td></td>
+                      <td class="bg-lightgrey text-left"></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </form>
+        </p-accordionTab>
+        <!-- Tracking Info -->
+        <p-accordionTab>
+          <ng-template pTemplate="header"
+            ><i class="cil-clock c-icon"></i>&nbsp;&nbsp;Tracking
+            Info</ng-template
+          >
+          <form [formGroup]="opportunityDetailForm2">
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table m-0 no-outline">
+                  <tr>
+                    <td class="text-left w-25">Request Delivery Date</td>
+                    <td class="w-25">
+                      <input
+                        type="date"
+                        class="form-control"
+                        formControlName="request_delivery_date"
+                        (change)="updateDetail()"
+                      />
+                    </td>
+                    <td class="text-left w-25">Estimated Delivery Date</td>
+                    <td class="w-25">
+                      <input
+                        type="date"
+                        class="form-control"
+                        formControlName="estimated_delivery_date"
+                        (change)="updateDetail()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Estimated PO Date</td>
+                    <td class="w-25">
+                      <input
+                        type="date"
+                        class="form-control"
+                        formControlName="estimated_po_date"
+                        (change)="updateDetail()"
+                      />
+                    </td>
+                    <td class="text-left">Estimated Invoice Date</td>
+                    <td class="w-25">
+                      <input
+                        type="date"
+                        class="form-control"
+                        formControlName="estimated_invoice_date"
+                        (change)="updateDetail()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Care Area</td>
+                    <td class="w-25">
+                      <select
+                        class="form-control"
+                        formControlName="care_area"
+                        (change)="updateDetail()"
+                      >
+                        <option
+                          *ngFor="let care_area of care_areas; let i = index"
+                          value="{{ care_area.care_area_code }}"
+                        >
+                          {{ care_area.care_area_code }}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="text-left">Department</td>
+                    <td class="w-25">
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="hospital_department"
+                        (change)="updateDetail()"
+                      />
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </form>
+        </p-accordionTab>
+        <!-- Forecast -->
+        <p-accordionTab>
+          <ng-template pTemplate="header"
+            ><i class="cil-columns c-icon"></i>&nbsp;&nbsp;Forecast</ng-template
+          >
+          <form [formGroup]="forecastForm">
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table m-0 no-outline">
+                  <tr>
+                    <td class="text-left w-25">Preferred Vendor</td>
+                    <td class="w-25">
+                      <select
+                        class="form-control"
+                        (change)="updateForecast()"
+                        formControlName="preferred_vendor"
+                      >
+                        <option
+                          *ngFor="
+                            let type of preferred_vendor_types;
+                            let i = index
+                          "
+                          value="{{ type.id }}"
+                        >
+                          {{ type.title }}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="text-left w-25">Forecast Category</td>
+                    <td class="w-25" style="vertical-align: middle">
+                      <progressbar
+                        [value]="forecast_category"
+                        class="progress-striped active"
+                        [animate]="true"
+                        [striped]="true"
+                        >{{ forecast_category }}%</progressbar
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Funding Status</td>
+                    <td>
+                      <select
+                        class="form-control"
+                        (change)="updateForecast()"
+                        formControlName="funding_status"
+                      >
+                        <option
+                          *ngFor="let status of funding_status; let i = index"
+                          value="{{ status.id }}"
+                        >
+                          {{ status.title }}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="text-left">Reason for Loss</td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        (change)="updateForecast()"
+                        formControlName="reason"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Funding Source</td>
+                    <td>
+                      <select
+                        class="form-control"
+                        (change)="updateForecast()"
+                        formControlName="funding_source"
+                      >
+                        <option
+                          *ngFor="let source of funding_source; let i = index"
+                          value="{{ source.id }}"
+                        >
+                          {{ source.title }}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="text-left">Loss to which competitor</td>
+                    <td>
+                      <select
+                        class="form-control"
+                        (change)="updateForecast()"
+                        formControlName="competitor_id"
+                      >
+                        <option
+                          *ngFor="let competitor of competitors; let i = index"
+                          value="{{ competitor.id }}"
+                        >
+                          {{ competitor.name }}
+                        </option>
+                      </select>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </form>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+    <!-- Products -->
+    <div class="col-md-12 form-group">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+        <p-accordionTab>
+          <ng-template pTemplate="header"
+            ><i class="cil-cart c-icon"></i>&nbsp;&nbsp;Products</ng-template
+          >
+          <tabset>
+            <tab
+              class="p-0"
+              *ngFor="let option of product_options; let i = index"
+              [active]="option.is_default == 1"
+            >
+              <ng-template tabHeading>
+                <div class="p-relative">
+                  <span
+                    ><i
+                      class="icon icon-check mr-1"
+                      *ngIf="option.is_default == 1"
+                    ></i
+                    >Option {{ i + 1 }}</span
+                  >
+                  <button
+                    (click)="addOption()"
+                    class="btn btn-icon btn-outline-primary btn-in-tab"
+                    *ngIf="product_options.length == i + 1"
+                  >
+                    <i class="cil-plus c-icon"></i>
+                  </button>
+                </div>
+              </ng-template>
+              <table class="table m-0 no-outline">
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Product Name</th>
+                    <th>SKU ID</th>
+                    <th>Quantity</th>
+                    <th>Unit Price ({{ detail.currency_code }})</th>
+                    <th>Total Price ({{ detail.currency_code }})</th>
+                    <th>Discount (%)</th>
+                    <th>Net Amount ({{ detail.currency_code }})</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let product of option.products; let x = index">
+                    <td>{{ x + 1 }}</td>
+                    <td class="text-left">{{ product.name }}</td>
+                    <td class="text-left">{{ product.sku }}</td>
+                    <td class="text-left">{{ product.quantity }}</td>
+                    <td class="text-left">
+                      {{
+                        product.unit_price
+                          | currency: detail.currency_code:"symbol-narrow"
+                      }}
+                    </td>
+                    <td class="text-left">
+                      {{
+                        product.total_price
+                          | currency: detail.currency_code:"symbol-narrow"
+                      }}
+                    </td>
+                    <td class="text-left">{{ product.discount }}</td>
+                    <td class="text-left">
+                      {{
+                        product.amount
+                          | currency: detail.currency_code:"symbol-narrow"
+                      }}
+                    </td>
+                    <td style="width: 8%">
+                      <a
+                        style="cursor: pointer"
+                        (click)="cloneProduct(i, product.id)"
+                        ><i class="icon-docs icon"></i
+                      ></a>
+                      <a
+                        style="cursor: pointer"
+                        (click)="openEditProductModal(i, x, product.id)"
+                        ><i class="icon-note icon"></i
+                      ></a>
+                      <a
+                        style="cursor: pointer"
+                        (click)="deleteProduct(i, x, product.id)"
+                        ><i class="icon-trash icon"></i
+                      ></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <!-- <input type="text" class="form-control" [(ngModel)]="product_name[i]"/> -->
+                      <input
+                        (input)="productSearch($event.target.value)"
+                        type="text"
+                        matInput
+                        [formControl]="productControl"
+                        [matAutocomplete]="productNameAutoComplete"
+                        class="form-control"
+                      />
+                      <mat-autocomplete
+                        #productNameAutoComplete="matAutocomplete"
+                        [displayWith]="displayFn"
+                        (optionSelected)="
+                          productSelected($event.option.value, i)
+                        "
+                        [panelWidth]="450"
+                      >
+                        <mat-option
+                          *ngFor="let product of filteredProductList | async"
+                          [value]="product"
+                        >
+                          {{ product.name }} | {{ product.sku }}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="sku[i]"
+                        readonly
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="quantity[i]"
+                        (input)="calculateAmount(i)"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="unit_price[i]"
+                        (input)="calculateAmount(i)"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="total_price[i]"
+                        (input)="calculateAmount(i)"
+                        readonly
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="discount[i]"
+                        (input)="calculateAmount(i)"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="amount[i]"
+                        readonly
+                      />
+                    </td>
+                    <td>
+                      <button
+                        class="btn btn-icon btn-outline-primary"
+                        (click)="addProduct(i, option.id)"
+                      >
+                        <i class="cil-plus c-icon"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div
+                class="d-flex justify-content-end form-group"
+                style="align-items: center; justify-content: center"
+              >
+                <div class="ml-3 w-70">
+                  <button
+                    class="btn btn-custom mr-1 form-group"
+                    (click)="setDefaultOption(i, option.id)"
+                  >
+                    <i class="cil-heart c-icon"></i>
+                    SET PREFERED OPTION
+                  </button>
+                  <button
+                    class="btn btn-custom mr-1 form-group"
+                    (click)="openDeleteOptionModal(i, option.id)"
+                  >
+                    <i class="cil-trash c-icon"></i>
+                    <span>DELETE OPTION</span>
+                  </button>
+                  <button
+                    class="btn btn-custom mr-1 form-group"
+                    (click)="openCloneOptionModal(i, option.id)"
+                  >
+                    <i class="cil-copy c-icon"></i>
+                    <span>CLONE OPTION</span>
+                  </button>
+                  <button class="btn btn-custom mr-1 form-group">
+                    <i class="cil-notes c-icon"></i>
+                    <span>CONVERT TO QUOTE</span>
+                  </button>
+                  <button
+                    class="btn btn-custom form-group"
+                    data-toggle="modal"
+                    (click)="openAddProductModal(option, i)"
+                  >
+                    <i class="cil-plus c-icon"></i>
+                    <span>PRODUCT</span>
+                  </button>
+                </div>
+                <div class="card border-primary m-3 w-50">
+                  <div class="card-body">
+                    <table class="table table-borderless table-price">
+                      <tr>
+                        <td class="text-left w-50">Subtotal Before Tax</td>
+                        <td class="text-left">
+                          {{
+                            calculateSubTotal(i)
+                              | currency: detail.currency_code:"symbol-narrow"
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Tax (SST)</td>
+                        <td class="text-left"></td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Discount</td>
+                        <td class="text-left">
+                          {{
+                            calculateDiscount(i)
+                              | currency: detail.currency_code:"symbol-narrow"
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Total Amount</td>
+                        <td class="text-left">
+                          {{
+                            calculateNetAmount(i)
+                              | currency: detail.currency_code:"symbol-narrow"
+                          }}
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </tab>
+          </tabset>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+    <!-- Competitor List -->
+    <div class="col-sm-12 col-md-12 form-group">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+        <p-accordionTab header="Competitor List">
+          <table class="table m-0 no-outline">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Amount (RM)</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let competitor of competitors; let i = index">
+                <td class="text-left">{{ competitor.name }}</td>
+                <td class="text-left">{{ competitor.amount }}</td>
+                <td style="width: 8%">
+                  <a style="cursor: pointer; color: #386fa4"
+                    ><i class="icon-note icon"></i
+                  ></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="competitor_name"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="competitor_amount"
+                  />
+                </td>
+                <td>
+                  <button
+                    class="btn btn-icon btn-outline-primary"
+                    (click)="addCompetitor()"
+                  >
+                    <i class="cil-plus c-icon"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+    <!-- Quotation -->
+    <div class="col-sm-12 col-md-12 form-group">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <img
+              src="../../../assets/img/icons/transaction.svg"
+              style="width: 18px"
+            />&nbsp;Quotation</ng-template
+          >
+          <p-tabView class="">
+            <p-tabPanel header="Header 1" [selected]="true">
+              <form>
+                <div class="quotation-table">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Created Date</th>
+                        <th>Quotation ID - Version</th>
+                        <th>Validity Date</th>
+                        <th>Status</th>
+                        <th>Amount (RM)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-left">21-Jul-2021</td>
+                        <td class="text-left">QT00111-4</td>
+                        <td class="text-left">30 days / 20-Aug-2021</td>
+                        <td class="text-left">
+                          <i class="pi pi-info-circle"></i> Approved
+                        </td>
+                        <td class="text-left">273,400.00</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">20-Jul-2021</td>
+                        <td class="text-left">QT00111-3</td>
+                        <td class="text-left">30 days / 19-Aug-2021</td>
+                        <td class="text-left">
+                          <i class="pi pi-info-circle"></i> Pending Approval
+                        </td>
+                        <td class="text-left">273,400.00</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">19-Jul-2021</td>
+                        <td class="text-left">QT00111-2</td>
+                        <td class="text-left">30 days / 19-Aug-2021</td>
+                        <td class="text-left">
+                          <i class="pi pi-info-circle"></i> In Progress
+                        </td>
+                        <td class="text-left">273,400.00</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </form>
+              <!-- quote-product -->
+              <div style="margin-top: 10px">
+                <p-accordionTab header="Products">
+                  <form class="product-form">
+                    <div class="product-quotation-table">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>No.</th>
+                            <th>Product Name</th>
+                            <th>Medical License</th>
+                            <th>SKU ID</th>
+                            <th>Quantity</th>
+                            <th>Unit Price (RM)</th>
+                            <th>Total Price (RM)</th>
+                            <th>Discount</th>
+                            <th>Net Amount (RM)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="text-center">1</td>
+                            <td class="text-left">
+                              <i class="pi pi-info-circle"></i> Product 1
+                            </td>
+                            <td class="text-left">369694</td>
+                            <td class="text-left">ZY2332</td>
+                            <td class="text-center">1</td>
+                            <td class="text-left">80,000.00</td>
+                            <td class="text-left">80,000.00</td>
+                            <td class="text-left">0.00</td>
+                            <td class="text-left">80,000.00</td>
+                          </tr>
+                          <tr>
+                            <td class="text-center">1</td>
+                            <td class="text-left">
+                              <i class="pi pi-info-circle"></i> Product 1
+                            </td>
+                            <td class="text-left">369694</td>
+                            <td class="text-left">ZY2332</td>
+                            <td class="text-center">1</td>
+                            <td class="text-left">80,000.00</td>
+                            <td class="text-left">80,000.00</td>
+                            <td class="text-left">0.00</td>
+                            <td class="text-left">80,000.00</td>
+                          </tr>
+                          <tr>
+                            <td class="text-center">1</td>
+                            <td class="text-left">
+                              <i class="pi pi-info-circle"></i> Product 1
+                            </td>
+                            <td class="text-left">369694</td>
+                            <td class="text-left">ZY2332</td>
+                            <td class="text-center">1</td>
+                            <td class="text-left">80,000.00</td>
+                            <td class="text-left">80,000.00</td>
+                            <td class="text-left">0.00</td>
+                            <td class="text-left">80,000.00</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="slip-card">
+                        <div class="card total-amount-card">
+                          <div class="card-body">
+                            <div class="amount-slip">
+                              <label for="" class="amount-label"
+                                >Subtotal before tax</label
+                              >
+                              <p class="amount-value">RM 273,400.00</p>
+                            </div>
+                            <div class="amount-slip">
+                              <label for="" class="amount-label"
+                                >tax (SST)</label
+                              >
+                              <p class="amount-value">RM 0.00</p>
+                            </div>
+                            <div class="amount-slip">
+                              <label for="" class="amount-label"
+                                >Discount (%)</label
+                              >
+                              <p class="amount-value">0.00 %</p>
+                            </div>
+                            <div class="amount-slip">
+                              <label
+                                for=""
+                                class="amount-label total-amount-label"
+                                >Total Amount</label
+                              >
+                              <p class="amount-value total-amount-value">
+                                RM 273,400.00
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </p-accordionTab>
+              </div>
+              <!-- Standard Terms -->
+              <div style="margin-top: 10px">
+                <p-accordionTab header="Standard Terms">
+                  <form class="standard-terms-form">
+                    <div class="standard-terms">
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <td class="text-left">Payment Term: 30 Days</td>
+                            <td class="text-left">
+                              Quotation Validilty: 30 days, from 25-Jun-2021 to
+                              24-Jul-2021
+                            </td>
+                            <td class="text-left"></td>
+                            <td class="text-left"></td>
+                            <td class="text-center">
+                              <i class="icon-note icon"></i>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="text-left">
+                              (As Default) Payment Term: 30 Days
+                            </td>
+                            <td class="text-left">
+                              Quotation Validilty: 30 days, from 25-Jun-2021 to
+                              24-Jul-2021
+                            </td>
+                            <td class="text-left"></td>
+                            <td class="text-left"></td>
+                            <td class="text-center">
+                              <i class="icon-note icon"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </form>
+                </p-accordionTab>
+              </div>
+              <!-- Biling Milestone -->
+              <div style="margin-top: 10px">
+                <p-accordionTab header="Biling Milestone">
+                  <ng-template pTemplate="header">
+                    <img
+                      src="../../../assets/img/icons/group_add.svg"
+                      style="position: relative; left: 845px; width: 30px"
+                  /></ng-template>
+                  <form class="biling-milestone-form">
+                    <div class="biling-milestone">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th class="text-center">Biling ID</th>
+                            <th class="text-center">Stage</th>
+                            <th class="text-center">Percentage (%)</th>
+                            <th class="text-center">Amount (RM)</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Notes</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>654321</td>
+                            <td>Training</td>
+                            <td>50</td>
+                            <td>80,000.00</td>
+                            <td>Deposit</td>
+                            <td>No Remark</td>
+                            <td
+                              style="
+                                display: flex;
+                                flex-direction: row;
+                                color: #386fa4;
+                              "
+                            >
+                              <i
+                                class="icon-note icon"
+                                style="margin-right: 10px"
+                              ></i>
+                              <i class="pi pi-trash"></i>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <input
+                                type="text"
+                                matInput
+                                [formControl]="productControl"
+                                [matAutocomplete]="productNameAutoComplete"
+                                class="form-control"
+                              />
+                              <mat-autocomplete
+                                #productNameAutoComplete="matAutocomplete"
+                                [displayWith]="displayFn"
+                              >
+                                <mat-option></mat-option>
+                              </mat-autocomplete>
+                            </td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td>
+                              <button class="btn btn-icon btn-outline-primary">
+                                <i class="cil-plus c-icon"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </form>
+                </p-accordionTab>
+              </div>
+              <!-- Payment Schedule -->
+              <div style="margin-top: 10px">
+                <p-accordionTab header="Payment Schedule">
+                  <ng-template pTemplate="header">
+                    <img
+                      src="../../../assets/img/icons/group_add.svg"
+                      style="position: relative; left: 816px; width: 30px"
+                  /></ng-template>
+                  <form class="payment-schedule-form">
+                    <div class="payment-schedule">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th class="text-center">Biling ID</th>
+                            <th class="text-center">Percentage (%)</th>
+                            <th class="text-center">Schedule</th>
+                            <th class="text-center">SOC Payment Terms</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Amount (RM)</th>
+                            <th class="text-center">Notes</th>
+                            <th></th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>654321</td>
+                            <td>50</td>
+                            <td>17-Aug-2021</td>
+                            <td>45 Days</td>
+                            <td>Deposit</td>
+                            <td>80,000.00</td>
+                            <td>No Remark</td>
+                            <td></td>
+                            <td
+                              style="
+                                display: flex;
+                                flex-direction: row;
+                                color: #386fa4;
+                              "
+                            >
+                              <i
+                                class="icon-note icon"
+                                style="margin-right: 10px"
+                              ></i>
+                              <i class="pi pi-trash"></i>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <input
+                                type="text"
+                                matInput
+                                [formControl]="productControl"
+                                [matAutocomplete]="productNameAutoComplete"
+                                class="form-control"
+                              />
+                              <mat-autocomplete
+                                #productNameAutoComplete="matAutocomplete"
+                                [displayWith]="displayFn"
+                              >
+                                <mat-option></mat-option>
+                              </mat-autocomplete>
+                            </td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td></td>
+                            <td>
+                              <button class="btn btn-icon btn-outline-primary">
+                                <i class="cil-plus c-icon"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </form>
+                </p-accordionTab>
+              </div>
+              <!-- Absorbed Cost -->
+              <div style="margin-top: 10px">
+                <p-accordionTab header="Absorbed Cost">
+                  <ng-template pTemplate="header">
+                    <img
+                      src="../../../assets/img/icons/group_add.svg"
+                      style="position: relative; left: 856px; width: 30px"
+                  /></ng-template>
+                  <form class="absorbed-cost-form">
+                    <div class="absorbed-cost">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th class="text-center">Description</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Amount (RM)</th>
+                            <th class="text-center">Total Price (RM)</th>
+                            <th class="text-center">Notes</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>654321</td>
+                            <td>50</td>
+                            <td>17-Aug-2021</td>
+                            <td>45 Days</td>
+                            <td>Deposit</td>
+                            <td></td>
+                            <td></td>
+                            <td
+                              style="
+                                display: flex;
+                                flex-direction: row;
+                                color: #386fa4;
+                              "
+                            >
+                              <i
+                                class="icon-note icon"
+                                style="margin-right: 10px"
+                              ></i>
+                              <i class="pi pi-trash"></i>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <input
+                                type="text"
+                                matInput
+                                [formControl]="productControl"
+                                [matAutocomplete]="productNameAutoComplete"
+                                class="form-control"
+                              />
+                              <mat-autocomplete
+                                #productNameAutoComplete="matAutocomplete"
+                                [displayWith]="displayFn"
+                              >
+                                <mat-option></mat-option>
+                              </mat-autocomplete>
+                            </td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                              <button class="btn btn-icon btn-outline-primary">
+                                <i class="cil-plus c-icon"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </form>
+                </p-accordionTab>
+              </div>
+			  <!--Quotation Details-->
+			  <div style="margin-top: 10px; display: flex;flex-direction: row;justify-content: flex-end;">
+				<p-accordionTab header="Quotation Details">
+					<ng-template pTemplate="header">
+					</ng-template>
+					<div class="slip-info">
+						<div class="slip-card">
+							<div class="card total-amount-card">
+							<div class="card-body">
+								<div class="amount-slip">
+								<label for="" class="amount-label"
+									>Subtotal before tax</label
+								>
+								<p class="amount-value">RM 273,400.00</p>
+								</div>
+								<div class="amount-slip">
+								<label for="" class="amount-label"
+									>tax (SST)</label
+								>
+								<p class="amount-value">RM 0.00</p>
+								</div>
+								<div class="amount-slip">
+								<label for="" class="amount-label"
+									>Discount (%)</label
+								>
+								<p class="amount-value">0.00 %</p>
+								</div>
+								<!-- <div class="amount-slip">
+								<label
+									for=""
+									class="amount-label total-amount-label"
+									>Total Amount</label
+								>
+								<p class="amount-value total-amount-value">
+									RM 273,400.00
+								</p>
+								</div> -->
+							</div>
+							</div>
+						</div>
+						<div class="amount-slip">
+							<label
+							for=""
+							class="amount-label total-amount-label"
+							>Total Amount</label
+							>
+							<p class="amount-value total-amount-value">
+							RM 273,400.00
+							</p>
+						</div>
 					</div>
-					
-						<div class="card-body p-0">
-							
-							<div class="d-flex justify-content-between p-125" style="align-items: center; justify-content: center;">
-								<div class="chead w-25">{{detail.company_name}}</div>
-								<div class="bg-opp text-white p-1">Opport. ID {{detail.opportunity_code}}</div>
-								<div>
-									<mat-slide-toggle formControlName="is_include_in_forecast" color="primary" (change)="updateDetail()">Include in forecast</mat-slide-toggle>
-								</div>
-								<div>
-									<label>Stages</label>
-									<select class="form-control">
-										<option>Negotiation & Procurement</option>
-									</select>
-								</div>
-								<div>
-									<label>Status</label>
-									<select class="form-control" formControlName="status_id" (change)="updateDetail()">
-										<option *ngFor="let status of statuses; let i = index" value="{{status.id}}">{{status.title}}</option>
-									</select>
-								</div>
-							</div>					
-							<div class="d-flex justify-content-between p-125" style="background-color: #F6F6F6;">
-								<div>
-									<input type="text" formControlName="topic" class="form-control" (change)="updateDetail()"/>
-								</div>
-								<div>
-									<label>Created Date</label>
-									<div>{{detail.created_at}}</div>
-								</div>
-								<div>
-									<label>Primary Contact</label>
-									<div>
-										<select class="form-control" formControlName="customer_contact_id" (change)="updateDetail()">
-											<option value="">Please select...</option>
-											<option *ngFor="let contact of customer_contacts; let i = index" value="{{contact.id}}">{{contact.name}}</option>
-										</select>
-									</div>
-								</div>
-								<div>
-									<label>Other Contact</label>
-									<div>
-										<select class="form-control" formControlName="customer_contact2_id" (change)="updateDetail()">
-											<option value="">Please select...</option>
-											<option *ngFor="let contact of customer_contacts; let i = index" value="{{contact.id}}">{{contact.name}}</option>
-										</select>
-									</div>
-								</div>
-								<div>
-									<label>Owner</label>
-								</div>
-							</div>
-					
-						</div>				
-			
-				</div>
-			</form>
-		</div>			
-		
-		<div class="col-md-12 form-group">
-			
-			<p-accordion [multiple]="true" styleClass="customColor" activeIndex="0,1,2">	
-				<p-accordionTab>					
-					<ng-template pTemplate="header"><i class="cil-info c-icon"></i>&nbsp;&nbsp;Details Info</ng-template>
-					<form [formGroup]="opportunityDetailForm2">
-						<div class="row">
-							<div class="col-md-12">
-								<table class="table table-striped m-0 no-outline">
-									<tbody>
-										<tr>
-											<td class="bg-lightgrey text-left w-25">Credit Term</td>
-											<td class="w-25"></td>
-											<td class="bg-lightgrey text-left w-25">Hospital Bed (Exact Number)</td>
-											<td class="w-25"></td>
-										</tr>
-										<tr>
-											<td class="bg-lightgrey text-left">Credit Limit</td>
-											<td></td>
-											<td class="bg-lightgrey text-left">Geographical Zone</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td class="bg-lightgrey text-left">Hospital Class</td>
-											<td></td>
-											<td class="bg-lightgrey text-left">Customer Tax Code</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td class="bg-lightgrey text-left">Segment</td>
-											<td>
-												<select class="form-control">
-													<option>Government</option>
-													<option>Semi Government</option>
-													<option>Private</option>
-												</select>
-											</td>
-											<td class="bg-lightgrey text-left">Sold To</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td class="bg-lightgrey text-left">Customer Category</td>
-											<td></td>
-											<td class="bg-lightgrey text-left">Ship To</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td class="bg-lightgrey text-left">Customer Subcategory</td>
-											<td></td>
-											<td class="bg-lightgrey text-left">Bill To</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td class="bg-lightgrey text-left">Hospital Bed (Range)</td>
-											<td></td>
-											<td class="bg-lightgrey text-left"></td>
-											<td></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>					
-						</div>	
-					</form>								
 				</p-accordionTab>
-
-				<p-accordionTab>					
-					<ng-template pTemplate="header"><i class="cil-clock c-icon"></i>&nbsp;&nbsp;Tracking Info</ng-template>
-					<form [formGroup]="opportunityDetailForm2">
-						<div class="row">							
-							<div class="col-md-12">							
-								<table class="table m-0 no-outline">
-									<tr>
-										<td class="text-left w-25">Request Delivery Date</td>
-										<td class="w-25"><input type="date" class="form-control" formControlName="request_delivery_date" (change)="updateDetail()"/></td>
-										<td class="text-left w-25">Estimated Delivery Date</td>
-										<td class="w-25"><input type="date" class="form-control" formControlName="estimated_delivery_date" (change)="updateDetail()"/></td>
-									</tr>
-									<tr>
-										<td class="text-left">Estimated PO Date</td>
-										<td class="w-25"><input type="date" class="form-control" formControlName="estimated_po_date" (change)="updateDetail()"/></td>
-										<td class="text-left">Estimated Invoice Date</td>
-										<td class="w-25"><input type="date" class="form-control" formControlName="estimated_invoice_date" (change)="updateDetail()"/></td>
-									</tr>
-									<tr>
-										<td class="text-left">Care Area</td>
-										<td class="w-25">
-											<select class="form-control" formControlName="care_area" (change)="updateDetail()">
-												<option *ngFor="let care_area of care_areas; let i = index" value="{{care_area.care_area_code}}">{{care_area.care_area_code}}</option>
-											</select>
-										</td>
-										<td class="text-left">Department</td>
-										<td class="w-25"><input type="text" class="form-control" formControlName="hospital_department" (change)="updateDetail()"/></td>
-									</tr>					    		
-								</table>
-							</div>							
-						</div>	
-					</form>									
-				</p-accordionTab>
-
-				<p-accordionTab>
-					<ng-template pTemplate="header"><i class="cil-columns c-icon"></i>&nbsp;&nbsp;Forecast</ng-template>
-					<form [formGroup]="forecastForm">
-						<div class="row">
-							<div class="col-md-12">							
-								<table class="table m-0 no-outline">
-									<tr>
-										<td class="text-left w-25">Preferred Vendor</td>
-										<td class="w-25">
-											<select class="form-control" (change)="updateForecast()" formControlName="preferred_vendor">
-												<option *ngFor="let type of preferred_vendor_types; let i = index" value="{{type.id}}">{{type.title}}</option>							
-											</select>
-										</td>
-										<td class="text-left w-25">Forecast Category</td>
-										<td class="w-25" style="vertical-align: middle;">
-											<progressbar [value]="forecast_category" class="progress-striped active" [animate]="true" [striped]="true">{{forecast_category}}%</progressbar>
-										</td>
-									</tr>
-									<tr>
-										<td class="text-left">Funding Status</td>
-										<td>
-											<select class="form-control" (change)="updateForecast()" formControlName="funding_status">
-												<option *ngFor="let status of funding_status; let i = index" value="{{status.id}}">{{status.title}}</option>
-											</select>
-										</td>
-										<td class="text-left">Reason for Loss</td>
-										<td><input type="text" class="form-control" (change)="updateForecast()" formControlName="reason"/></td>
-									</tr>
-									<tr>
-										<td class="text-left">Funding Source</td>
-										<td>
-											<select class="form-control" (change)="updateForecast()" formControlName="funding_source">
-												<option *ngFor="let source of funding_source; let i = index" value="{{source.id}}">{{source.title}}</option>
-											</select>
-										</td>
-										<td class="text-left">Loss to which competitor</td>
-										<td>
-											<select class="form-control" (change)="updateForecast()" formControlName="competitor_id">
-												<option *ngFor="let competitor of competitors; let i = index" value="{{competitor.id}}">{{competitor.name}}</option>
-											</select>
-											
-										</td>
-									</tr>					    		
-								</table>
-							</div>
-						</div>		
-					</form>		
-				</p-accordionTab>
-
-			</p-accordion>
-		</div>
-
-		<div class="col-md-12 form-group">
-			<p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
-				<p-accordionTab>					
-					<ng-template pTemplate="header"><i class="cil-cart c-icon"></i>&nbsp;&nbsp;Products</ng-template>
-					<tabset>						
-						<tab class="p-0" *ngFor="let option of product_options; let i = index" [active]="option.is_default == 1">						
-						  	<ng-template tabHeading>
-								<div class="p-relative">
-									<span><i class="icon icon-check mr-1" *ngIf="option.is_default == 1"></i>Option {{i+1}}</span>
-							  		<button (click)="addOption()" class="btn btn-icon btn-outline-primary btn-in-tab" *ngIf="product_options.length == i + 1"><i class="cil-plus c-icon"></i></button>
-								</div>							  	
-							</ng-template>
-						  	<table class="table m-0 no-outline">
-					    		<thead>
-						    		<tr>
-						    			<th>No.</th>
-						    			<th>Product Name</th>
-						    			<th>SKU ID</th>
-						    			<th>Quantity</th>
-						    			<th>Unit Price ({{detail.currency_code}})</th>
-						    			<th>Total Price ({{detail.currency_code}})</th>
-						    			<th>Discount (%)</th>
-						    			<th>Net Amount ({{detail.currency_code}})</th>
-						    			<th></th>
-						    		</tr>	
-					    		</thead>	
-					    		<tbody>
-					    			<tr *ngFor="let product of option.products; let x = index">
-										<td>{{x+1}}</td>
-					    				<td class="text-left">{{product.name}}</td>
-					    				<td class="text-left">{{product.sku}}</td>
-					    				<td class="text-left">{{product.quantity}}</td>
-					    				<td class="text-left">{{product.unit_price |currency:detail.currency_code:'symbol-narrow'}}</td>
-					    				<td class="text-left">{{product.total_price |currency:detail.currency_code:'symbol-narrow'}}</td>
-					    				<td class="text-left">{{product.discount}}</td>					    				
-					    				<td class="text-left">{{product.amount |currency:detail.currency_code:'symbol-narrow'}}</td>
-					    				<td style="width:8%">
-											<a style="cursor: pointer;" (click)="cloneProduct(i, product.id)"><i class="icon-docs icon"></i></a>
-											<a style="cursor: pointer;" (click)="openEditProductModal(i, x, product.id)"><i class="icon-note icon"></i></a>
-											<a style="cursor: pointer;" (click)="deleteProduct(i, x, product.id)"><i class="icon-trash icon"></i></a>
-										</td>
-					    			</tr>
-					    			<tr>
-					    				<td></td>
-					    				<td>
-											<!-- <input type="text" class="form-control" [(ngModel)]="product_name[i]"/> -->
-											<input (input)="productSearch($event.target.value)" type="text"  matInput [formControl]="productControl" [matAutocomplete]="productNameAutoComplete" class="form-control">
-											<mat-autocomplete #productNameAutoComplete="matAutocomplete" [displayWith]="displayFn" (optionSelected)='productSelected($event.option.value, i)' [panelWidth]="450">
-												<mat-option *ngFor="let product of filteredProductList | async" [value]="product">
-												{{product.name}} | {{product.sku}}
-												</mat-option>
-											</mat-autocomplete>
-										</td>
-					    				<td><input type="text" class="form-control" [(ngModel)]="sku[i]" readonly/></td>
-					    				<td><input type="text" class="form-control" [(ngModel)]="quantity[i]" (input)="calculateAmount(i)"/></td>
-					    				<td><input type="text" class="form-control" [(ngModel)]="unit_price[i]" (input)="calculateAmount(i)"/></td>
-					    				<td><input type="text" class="form-control" [(ngModel)]="total_price[i]" (input)="calculateAmount(i)" readonly/></td>
-					    				<td><input type="text" class="form-control" [(ngModel)]="discount[i]" (input)="calculateAmount(i)"/></td>
-					    				<td><input type="text" class="form-control" [(ngModel)]="amount[i]" readonly/></td>
-					    				<td><button class="btn btn-icon btn-outline-primary" (click)="addProduct(i, option.id)"><i class="cil-plus c-icon"></i></button></td>
-					    			</tr>
-					    		</tbody>			    		
-					    	</table>
-							
-							<div class="d-flex justify-content-end form-group" style="align-items: center; justify-content: center;">
-								<div class="ml-3 w-70">
-									<button class="btn btn-custom mr-1 form-group" (click)="setDefaultOption(i, option.id)">
-										<i class="cil-heart c-icon"></i>
-										SET PREFERED OPTION
-									</button>
-									<button class="btn btn-custom mr-1 form-group" (click)="openDeleteOptionModal(i, option.id)">
-										<i class="cil-trash c-icon"></i>
-										<span>DELETE OPTION</span>
-									</button>
-									<button class="btn btn-custom mr-1 form-group" (click)="openCloneOptionModal(i, option.id)">
-										<i class="cil-copy c-icon"></i>
-										<span>CLONE OPTION</span>
-									</button>
-									<button class="btn btn-custom mr-1 form-group">
-										<i class="cil-notes c-icon"></i>
-										<span>CONVERT TO QUOTE</span>
-									</button>
-									<button class="btn btn-custom form-group" data-toggle="modal" (click)="openAddProductModal(option, i)">
-										<i class="cil-plus c-icon"></i>
-										<span>PRODUCT</span>
-									</button>
-								</div>
-								<div class="card border-primary m-3 w-50">
-									<div class="card-body">
-										<table class="table table-borderless table-price">
-											<tr>
-												<td class="text-left w-50">Subtotal Before Tax</td>
-												<td class="text-left">{{calculateSubTotal(i) |currency:detail.currency_code:'symbol-narrow'}}</td>
-											</tr>
-											<tr>
-												<td class="text-left">Tax (SST)</td>
-												<td class="text-left"></td>
-											</tr>
-											<tr>
-												<td class="text-left">Discount</td>
-												<td class="text-left">{{calculateDiscount(i) |currency:detail.currency_code:'symbol-narrow'}}</td>
-											</tr>
-											<tr>
-												<td class="text-left">Total Amount</td>
-												<td class="text-left">{{calculateNetAmount(i) |currency:detail.currency_code:'symbol-narrow'}}</td>
-											</tr>
-										</table>
-									</div>
-								</div>
-							</div>
-
-						</tab>				
-					</tabset>
-					
-				</p-accordionTab>
-			</p-accordion>
-		</div>
-
-      	<div class="col-sm-12 col-md-12 form-group">
-      		<p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
-				<p-accordionTab header="Competitor List">
-					<table class="table m-0 no-outline">
-			    		<thead>
-				    		<tr>				    			
-				    			<th>Name</th>
-				    			<th>Amount (RM)</th>
-				    			<th></th>					    			
-				    		</tr>	
-			    		</thead>	
-			    		<tbody>
-							<tr *ngFor="let competitor of competitors; let i = index">
-								<td class="text-left">{{competitor.name}}</td>
-								<td class="text-left">{{competitor.amount}}</td>
-								<td style="width: 8%">
-									<a style="cursor: pointer; color: #386fa4"
-									  ><i class="icon-note icon"></i
-									></a>
-								  </td>
-							</tr>						
-			    			<tr>
-			    				<td><input type="text" class="form-control" [(ngModel)]="competitor_name"/></td>
-			    				<td><input type="text" class="form-control" [(ngModel)]="competitor_amount"/></td>
-			    				<td><button class="btn btn-icon btn-outline-primary" (click)="addCompetitor()"><i class="cil-plus c-icon"></i></button></td>			    		
-			    			</tr>			    			
-			    		</tbody>			    		
-			    	</table>
-				</p-accordionTab>
-			</p-accordion>
-      	</div>
-      		      
-	</div>
-
+			  </div>
+			  <!-- Buttun -->
+			  <div class="col-md-10" align="center">
+				<button class="btn btn-custom mr-1">
+					<i class="pi pi-map-marker"></i>
+				  Request Approval
+				</button>
+			  </div>
+            </p-tabPanel>
+            <p-tabPanel header="Header 2"> Content 2 </p-tabPanel>
+            <p-tabPanel header="Header 3"> Content 3 </p-tabPanel>
+          </p-tabView>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+  </div>
 </div>
 
-<div bsModal #addProductModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-			<h4 class="modal-title">Add Product</h4>
-				<button type="button" class="close" (click)="addProductModal.hide()" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
+<div
+  bsModal
+  #addProductModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Product</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="addProductModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-			<div class="modal-body">
-				<div class="row form-group">
-					<div class="col-md-6">Product Principal</div>
-					<div class="col-md-6"><input type="text" class="form-control" /></div>
-				</div>
-				<div class="row form-group">
-					<div class="col-md-6">Product Group</div>
-					<div class="col-md-6"><input type="text" class="form-control" /></div>
-				</div>
-				<div class="row form-group">
-					<div class="col-md-6">Product Name</div>
-					<div class="col-md-6"><input type="text" class="form-control" [(ngModel)]="search_product_name" /></div>
-				</div>
-				<div class="row form-group">
-					<div class="col-md-6"></div>
-					<div class="col-md-6">
-						<button class="btn btn-custom mr-1" (click)="productSearch2()">
-							<i class="cil-magnifying-glass c-icon"></i>
-							Search
-						</button>
-						<button class="btn btn-custom mr-1" (click)="setDummySku()">
-							<i class="cil-plus c-icon"></i>
-							Dummy SKU
-						</button>
-					</div>					
-				</div>
-				<hr/>
-				<ng-container *ngIf="productList.length > 0; else elseProductListEmptyTemplate">
-					<div class="row">
-						<div class="col-md-12" style="height:200px; overflow: scroll">
-							<table class="table">
-								<tr>
-									<th>Select</th>
-									<th>Name</th>
-									<th>SKU ID</th>
-									<th>Principle</th>
-									<th>Product Group</th>
-								</tr>
-								<tr *ngFor="let product of productList; let i = index">
-									<td><input type="radio" [attr.id]="'p'+i" name="product[]" (click)="productSelectedRadio(product)"/></td>
-									<td class="text-left">{{product.name}}</td>
-									<td class="text-left">{{product.sku}}</td>
-									<td class="text-left">{{product.principle}}</td>
-									<td class="text-left">{{product.group}}</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-				</ng-container>
-				<ng-template #elseProductListEmptyTemplate>
-					<div class="row">
-						<div class="col-md-12" align="center">
-							No product(s) found...
-						</div>
-					</div>
-				</ng-template>
-				
-				<hr/>
-				<form [formGroup]="addProductForm" (ngSubmit)="addFullProduct()">
-					<div class="row form-group">
-						<div class="col-md-6">Product Name</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="product_name" [readonly]="!is_dummy_sku"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6" *ngIf="is_dummy_sku == 0; else elseDummySkuTemplate">SKU ID</div>
-						<ng-template #elseDummySkuTemplate>
-							<div class="col-md-6">Dummy SKU ID</div>
-						</ng-template>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="sku" [readonly]="!is_dummy_sku"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Quantity</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="quantity"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Item Discount</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="discount"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">List Price</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="list_price"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Principle</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="principle"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Floor Price</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="floor_price"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Product Manager</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="product_manager"/></div>
-					</div>
+      <div class="modal-body">
+        <div class="row form-group">
+          <div class="col-md-6">Product Principal</div>
+          <div class="col-md-6"><input type="text" class="form-control" /></div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-6">Product Group</div>
+          <div class="col-md-6"><input type="text" class="form-control" /></div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-6">Product Name</div>
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="search_product_name"
+            />
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-6"></div>
+          <div class="col-md-6">
+            <button class="btn btn-custom mr-1" (click)="productSearch2()">
+              <i class="cil-magnifying-glass c-icon"></i>
+              Search
+            </button>
+            <button class="btn btn-custom mr-1" (click)="setDummySku()">
+              <i class="cil-plus c-icon"></i>
+              Dummy SKU
+            </button>
+          </div>
+        </div>
+        <hr />
+        <ng-container
+          *ngIf="productList.length > 0; else elseProductListEmptyTemplate"
+        >
+          <div class="row">
+            <div class="col-md-12" style="height: 200px; overflow: scroll">
+              <table class="table">
+                <tr>
+                  <th>Select</th>
+                  <th>Name</th>
+                  <th>SKU ID</th>
+                  <th>Principle</th>
+                  <th>Product Group</th>
+                </tr>
+                <tr *ngFor="let product of productList; let i = index">
+                  <td>
+                    <input
+                      type="radio"
+                      [attr.id]="'p' + i"
+                      name="product[]"
+                      (click)="productSelectedRadio(product)"
+                    />
+                  </td>
+                  <td class="text-left">{{ product.name }}</td>
+                  <td class="text-left">{{ product.sku }}</td>
+                  <td class="text-left">{{ product.principle }}</td>
+                  <td class="text-left">{{ product.group }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #elseProductListEmptyTemplate>
+          <div class="row">
+            <div class="col-md-12" align="center">No product(s) found...</div>
+          </div>
+        </ng-template>
 
-					<hr/>
-					<div class="row form-group">
-						<div class="col-md-6">For Equipment Product</div>						
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Standard Warranty</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="standard_warranty"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Extended Warranty</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="extended_warranty"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Tax Rate</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="tax_rate"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Customer Tax Code</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="customer_tax_code"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Tax Code</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="tax_code"/></div>
-					</div>
+        <hr />
+        <form [formGroup]="addProductForm" (ngSubmit)="addFullProduct()">
+          <div class="row form-group">
+            <div class="col-md-6">Product Name</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="product_name"
+                [readonly]="!is_dummy_sku"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div
+              class="col-md-6"
+              *ngIf="is_dummy_sku == 0; else elseDummySkuTemplate"
+            >
+              SKU ID
+            </div>
+            <ng-template #elseDummySkuTemplate>
+              <div class="col-md-6">Dummy SKU ID</div>
+            </ng-template>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="sku"
+                [readonly]="!is_dummy_sku"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Quantity</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="quantity"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Item Discount</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="discount"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">List Price</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="list_price"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Principle</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="principle"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Floor Price</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="floor_price"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Product Manager</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="product_manager"
+              />
+            </div>
+          </div>
 
-					<hr/>
-					<div class="row form-group">
-						<div class="col-md-6">Other Cost</div>						
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Category</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="category"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Local Distribution</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="local_distribution"/></div>
-					</div>
-					<div class="row form-group text-center">
-						<div class="col-md-12"><button class="btn btn-custom" type="submit">Ok</button></div>						
-					</div>
-				</form>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+          <hr />
+          <div class="row form-group">
+            <div class="col-md-6">For Equipment Product</div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Standard Warranty</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="standard_warranty"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Extended Warranty</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="extended_warranty"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Tax Rate</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="tax_rate"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Customer Tax Code</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="customer_tax_code"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Tax Code</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="tax_code"
+              />
+            </div>
+          </div>
 
-<div bsModal #editProductModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-			<h4 class="modal-title">Edit Product</h4>
-				<button type="button" class="close" (click)="editProductModal.hide()" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
+          <hr />
+          <div class="row form-group">
+            <div class="col-md-6">Other Cost</div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Category</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="category"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Local Distribution</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="local_distribution"
+              />
+            </div>
+          </div>
+          <div class="row form-group text-center">
+            <div class="col-md-12">
+              <button class="btn btn-custom" type="submit">Ok</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
-			<div class="modal-body">				
-				<form [formGroup]="editProductForm" (ngSubmit)="updateProduct()">
-					<div class="row form-group">
-						<div class="col-md-6">Product Name</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="product_name" readonly/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">SKU ID</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="sku" readonly /></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Quantity</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="quantity"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Item Discount</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="discount"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">List Price</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="list_price"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Principle</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="principle"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Floor Price</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="floor_price"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Product Manager</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="product_manager"/></div>
-					</div>
+<div
+  bsModal
+  #editProductModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Product</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="editProductModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-					<hr/>
-					<div class="row form-group">
-						<div class="col-md-6">For Equipment Product</div>						
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Standard Warranty</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="standard_warranty"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Extended Warranty</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="extended_warranty"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Tax Rate</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="tax_rate"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Customer Tax Code</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="customer_tax_code"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Tax Code</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="tax_code"/></div>
-					</div>
+      <div class="modal-body">
+        <form [formGroup]="editProductForm" (ngSubmit)="updateProduct()">
+          <div class="row form-group">
+            <div class="col-md-6">Product Name</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="product_name"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">SKU ID</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="sku"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Quantity</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="quantity"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Item Discount</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="discount"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">List Price</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="list_price"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Principle</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="principle"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Floor Price</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="floor_price"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Product Manager</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="product_manager"
+              />
+            </div>
+          </div>
 
-					<hr/>
-					<div class="row form-group">
-						<div class="col-md-6">Other Cost</div>						
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Category</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="category"/></div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">Local Distribution</div>
-						<div class="col-md-6"><input type="text" class="form-control" formControlName="local_distribution"/></div>
-					</div>
-					<div class="row form-group text-center">
-						<div class="col-md-12"><button class="btn btn-custom" type="submit">Update</button></div>						
-					</div>
-				</form>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+          <hr />
+          <div class="row form-group">
+            <div class="col-md-6">For Equipment Product</div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Standard Warranty</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="standard_warranty"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Extended Warranty</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="extended_warranty"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Tax Rate</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="tax_rate"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Customer Tax Code</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="customer_tax_code"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Tax Code</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="tax_code"
+              />
+            </div>
+          </div>
 
+          <hr />
+          <div class="row form-group">
+            <div class="col-md-6">Other Cost</div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Category</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="category"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-6">Local Distribution</div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="local_distribution"
+              />
+            </div>
+          </div>
+          <div class="row form-group text-center">
+            <div class="col-md-12">
+              <button class="btn btn-custom" type="submit">Update</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
-<div bsModal #deleteOptionModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-danger" role="document">
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h4 class="modal-title">Delete Option?</h4>
-		  <button type="button" class="close" (click)="deleteOptionModal.hide()" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		  </button>
-		</div>
-		<div class="modal-body">
-		  <p>Are you sure you want to delete this option?</p>
-		</div>
-		<div class="modal-footer">
-		  <button type="button" class="btn btn-secondary" (click)="deleteOptionModal.hide()">Close</button>
-		  <button type="button" class="btn btn-danger" (click)="deleteOption()">Delete</button>
-		</div>
-	  </div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<div
+  bsModal
+  #deleteOptionModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Delete Option?</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="deleteOptionModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this option?</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="deleteOptionModal.hide()"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-danger" (click)="deleteOption()">
+          Delete
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
-<div bsModal #cloneOptionModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-info" role="document">
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h4 class="modal-title">Clone Option?</h4>
-		  <button type="button" class="close" (click)="cloneOptionModal.hide()" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		  </button>
-		</div>
-		<div class="modal-body">
-		  <p>Are you sure you want to clone this option?</p>
-		</div>
-		<div class="modal-footer">
-		  <button type="button" class="btn btn-secondary" (click)="cloneOptionModal.hide()">Close</button>
-		  <button type="button" class="btn btn-info" (click)="cloneOption()">Clone</button>
-		</div>
-	  </div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<div
+  bsModal
+  #cloneOptionModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Clone Option?</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="cloneOptionModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to clone this option?</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cloneOptionModal.hide()"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-info" (click)="cloneOption()">
+          Clone
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
-<div bsModal #setDefaultOptionSuccessModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-success" role="document">
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h4 class="modal-title">Success</h4>
-		  <button type="button" class="close" (click)="setDefaultOptionSuccessModal.hide()" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		  </button>
-		</div>
-		<div class="modal-body">
-		  <p>Option has been set as the preferred option</p>
-		</div>
-		<div class="modal-footer">
-		  <button type="button" class="btn btn-secondary" (click)="setDefaultOptionSuccessModal.hide()">Close</button>		  
-		</div>
-	  </div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<div
+  bsModal
+  #setDefaultOptionSuccessModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="setDefaultOptionSuccessModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Option has been set as the preferred option</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="setDefaultOptionSuccessModal.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

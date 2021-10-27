@@ -15,7 +15,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import {TabViewModule} from 'primeng/tabview';
 
 @NgModule({
   imports: [    
@@ -33,6 +33,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatAutocompleteModule,
     ProgressbarModule,
     MatSlideToggleModule,
+    TabViewModule
   
   ],
   declarations: [
