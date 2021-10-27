@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DmsComponent } from './dms.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
+import { BookingFormComponent } from './components/bookings/booking-form/booking-form.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 
@@ -27,6 +28,13 @@ export const mainChildren = [
     component: BookingsComponent,
     data: {
       title: 'Bookings',
+    },
+  },
+  {
+    path: 'bookings/new',
+    component: BookingFormComponent,
+    data: {
+      title: 'Bookings Form',
     },
   },
   {
