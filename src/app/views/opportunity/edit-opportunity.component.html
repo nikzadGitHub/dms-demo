@@ -349,7 +349,11 @@
 							<tr *ngFor="let competitor of competitors; let i = index">
 								<td class="text-left">{{competitor.name}}</td>
 								<td class="text-left">{{competitor.amount}}</td>
-								<td></td>
+								<td style="width: 8%">
+									<a style="cursor: pointer; color: #386fa4"
+									  ><i class="icon-note icon"></i
+									></a>
+								  </td>
 							</tr>						
 			    			<tr>
 			    				<td><input type="text" class="form-control" [(ngModel)]="competitor_name"/></td>

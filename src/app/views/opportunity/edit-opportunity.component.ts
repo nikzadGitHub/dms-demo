@@ -563,7 +563,9 @@ export class EditOpportunityComponent implements OnInit{
 				name: this.competitor_name, 
 				amount: this.competitor_amount, 				
 			}
-		).subscribe((data) => {						
+		).subscribe((data) => {		
+			console.log("addCompetitor: ", data);
+							
 			this.competitors.push(data['data']);
 			this.competitor_name = this.competitor_amount = '';
 		})

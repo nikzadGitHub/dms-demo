@@ -14,8 +14,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   imports: [    
@@ -32,7 +32,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ModalModule,
     MatAutocompleteModule,
     ProgressbarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+  
   ],
   declarations: [
     NewOpportunityComponent,

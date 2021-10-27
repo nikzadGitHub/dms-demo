@@ -6,11 +6,13 @@ import {filter, map, startWith} from 'rxjs/operators';
 import { AppService } from './app.service';
 import { Router, ActivatedRoute } from "@angular/router";
 
+
 export interface Company {
   id: any;
   name: string;
   external_id: any;
   data_area_id: any;  
+  
 }
 
 @Component({
@@ -32,6 +34,8 @@ export class NewOpportunityComponent implements OnInit{
   company_id_from_lead = '';
   company_is_from_lead = false;
   company_name_from_lead = '';
+  product_options = [];
+  opportunity_id = '';
 
   constructor(private formBuilder: FormBuilder, private appService: AppService, private router: Router, private route: ActivatedRoute) { 
     
@@ -57,6 +61,20 @@ export class NewOpportunityComponent implements OnInit{
     );
   }
 
+
+
+	addOption(){
+		
+		this.appService.postQuery('/opportunity/create-product-option', 
+			{
+				opportunity_id: this.opportunity_id
+			}
+		).subscribe((data) => {						
+			console.log(data);
+			this.product_options.push(data['data']);			
+		})
+	}
+
   //company filter functions
   displayFn(company: Company): string {
     return company && company.name ? company.name : '';
@@ -76,6 +94,8 @@ export class NewOpportunityComponent implements OnInit{
   companySearch(keyword): void{  
     
     this.appService.getQuery('/opportunity/get-customer?company_name='+keyword).subscribe((data) => {
+      console.log("Company-name: ", data);
+      
       if(data['data'].length > 0){
         
         this.companies.splice(0, this.companies.length);

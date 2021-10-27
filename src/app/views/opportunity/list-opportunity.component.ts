@@ -26,6 +26,8 @@ export class ListOpportunityComponent implements OnInit{
 			this.opportunities = data['data']['data'] ?? data['data']['items'];
       		this.paginate = data['data']['links'];
 			console.log(data);
+			console.log("oppertunities-data: ", this.opportunities);
+			
 		})  
 
 	}

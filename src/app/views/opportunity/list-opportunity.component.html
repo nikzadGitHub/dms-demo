@@ -42,78 +42,124 @@
 	  </div>
 	</div>
   </div> -->
-  
-<p-table #dt [value]="opportunities" styleClass="p-datatable-opportunity" [rowHover]="true" [filterDelay]="0" [globalFilterFields]="['opportunity_code','topic','company_name']">
+
+<p-table
+  #dt
+  [value]="opportunities"
+  styleClass="p-datatable-opportunity"
+  [rowHover]="true"
+  [filterDelay]="0"
+  [globalFilterFields]="['opportunity_code', 'topic', 'company_name']"
+>
   <ng-template pTemplate="caption">
     <div class="table-header d-flex">
-        <div class="d-flex">
-          	<div>Opportunity Listing</div>
-		  	<div class="ml-2 mt-1"><a routerLink="/opportunity/new" routerLinkActive="router-link-active"><i class="icon-plus icons" style="color: #FFFFFF"></i></a></div>				
+      <div class="d-flex">
+        <div>Opportunity Listing</div>
+        <div class="ml-2 mt-1">
+          <a routerLink="/opportunity/new" routerLinkActive="router-link-active"
+            ><i class="icon-plus icons" style="color: #ffffff"></i
+          ></a>
         </div>
-        <div class="p-input-icon-left">
-            <i class="pi pi-search"></i>
-            <input type="text" pInputText placeholder="Global Search" [(ngModel)]="search_text" (input)="getAll()"/>
-        </div>
+      </div>
+      <div class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          type="text"
+          pInputText
+          placeholder="Global Search"
+          [(ngModel)]="search_text"
+          (input)="getAll()"
+        />
+      </div>
     </div>
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="created_date" class="text-center">
         <div class="p-d-flex p-jc-between p-ai-center">
-            Created Date
-            <p-sortIcon field="created_date"></p-sortIcon>
-            <p-columnFilter type="date" field="created_date" display="menu" class="p-ml-auto"></p-columnFilter>
+          Created Date
+          <p-sortIcon field="created_date"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="created_date"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="opportunity_code" class="text-center">
+      <th pSortableColumn="op_id" class="text-center">
         <div class="p-d-flex p-jc-between p-ai-center">
-            Opportunity ID
-            <p-sortIcon field="opportunity_code"></p-sortIcon>
-            <p-columnFilter type="text" field="opportunity_code" display="menu" class="p-ml-auto"></p-columnFilter>
+          Opportunity ID
+          <p-sortIcon field="op_id"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="op_id"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="topic" class="text-center">
         <div class="p-d-flex p-jc-between p-ai-center">
-            Topic
-            <p-sortIcon field="topic"></p-sortIcon>
-            <p-columnFilter type="text" field="topic" display="menu" class="p-ml-auto"></p-columnFilter>
+          Topic
+          <p-sortIcon field="topic"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="topic"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="company_name" class="text-center">
         <div class="p-d-flex p-jc-between p-ai-center">
-            Company Name
-            <p-sortIcon field="company_name"></p-sortIcon>
-            <p-columnFilter type="text" field="company_name" display="menu" class="p-ml-auto"></p-columnFilter>
+          Company Name
+          <p-sortIcon field="company_name"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="company_name"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="status_id" class="text-center">
         <div class="p-d-flex p-jc-between p-ai-center">
-            Status
-            <p-sortIcon field="status_id"></p-sortIcon>
-            <p-columnFilter type="text" field="status_id" display="menu" class="p-ml-auto"></p-columnFilter>
+          Status
+          <p-sortIcon field="status_id"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="status_id"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="amount" class="text-center">
         <div class="p-d-flex p-jc-between p-ai-center">
-            Amount (MYR)
-            <p-sortIcon field="amount"></p-sortIcon>
-            <p-columnFilter type="numeric" field="amount" display="menu" class="p-ml-auto"></p-columnFilter>
+          Amount (MYR)
+          <p-sortIcon field="amount"></p-sortIcon>
+          <p-columnFilter
+            type="numeric"
+            field="amount"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
         </div>
-      </th>      
-      
-      <th [style]="{'width':'5%'}">
       </th>
+
+      <th [style]="{ width: '5%' }"></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-opportunity>
     <tr class="p-selectable-row">
       <td class="text-center">
         <span class="p-column-title">Created Date</span>
-        {{ opportunity.created_at | date:'dd-MMM-yyyy' }}
+        {{ opportunity.created_date | date: "dd-MMM-yyyy" }}
       </td>
       <td class="text-center">
         <span class="p-column-title">Opportunity Code</span>
-        {{ opportunity.opportunity_code }}
+        {{ opportunity.op_id }}
       </td>
       <td class="text-center">
         <span class="p-column-title">Topic</span>
@@ -121,7 +167,7 @@
       </td>
       <td class="text-center">
         <span class="p-column-title">Company Name</span>
-        {{ opportunity.company_name }}
+        {{ opportunity.company }}
       </td>
       <td class="text-center">
         <span class="p-column-title">Status</span>
@@ -129,11 +175,26 @@
       </td>
       <td class="text-center">
         <span class="p-column-title">Amount (MYR)</span>
-        {{ opportunity.amount | currency: 'MYR' }}
-      </td>    
-	  <td><a [routerLink]="['/opportunity/edit/', opportunity.id]"><i class="icon-note icon"></i></a></td>  
+        {{ opportunity.amount | currency: "MYR" }}
+      </td>
+      <td>
+        <div class="row-icon">
+          <a [routerLink]="['/opportunity/edit/', opportunity.id]"
+            ><i class="icon-note icon"></i
+          ></a>
+          <i class="pi pi-copy copy-icon"></i>
+        </div>
+
+        <!-- <div> -->
+          <!-- <i class="pi pi-copy copy-icon"></i> -->
+        <!-- </div> -->
+      </td>
+      <!-- <td><i class="pi pi-copy"></i></td> -->
     </tr>
   </ng-template>
 </p-table>
-<p-paginator [rows]="pageItems" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
+<p-paginator
+  [rows]="pageItems"
+  [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
+>
 </p-paginator>
