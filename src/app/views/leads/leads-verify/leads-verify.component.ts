@@ -76,7 +76,7 @@ export class LeadsVerifyComponent implements OnInit {
   }
 
   CreateProspect() {
-    this.leadsService.createProspect({ lead_id: this.id }).subscribe((res) => {
+    this.leadsService.createProspect({ id: this.id }).subscribe((res) => {
       this.alertBody = res.message || "Created Prospect Successfully";
       this.successModal.show();
     });
