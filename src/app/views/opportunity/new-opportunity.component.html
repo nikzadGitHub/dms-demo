@@ -1,115 +1,116 @@
-<div class="animated fadeIn">
-  <div class="row">
-    <div class="col-sm-12 col-md-12">
-      <div class="card">
-        <div class="card-header d-flex b-btm-green">
-          <div class="chead">New Opportunity</div>
-        </div>
-        <div class="card-body p-0">
-          <div
-            class="d-flex justify-content-between p-125"
-            style="align-items: center; justify-content: center"
-          >
-            <div style="width: 260px">
-              <input
-                [hidden]="!company_is_from_lead"
-                class="form-control"
-                readonly
-                [(ngModel)]="company_name_from_lead"
-              />
-              <input
-                [hidden]="company_is_from_lead"
-                (input)="companySearch($event.target.value)"
-                type="text"
-                placeholder="Company Name..."
-                matInput
-                [formControl]="companyControl"
-                [matAutocomplete]="companyNameAutocomplete"
-                class="form-control"
-              />
-              <i
-                class="pi pi-search"
-                style="position: absolute; left: 251px; top: 106px"
-              ></i>
-              <mat-autocomplete
-                #companyNameAutocomplete="matAutocomplete"
-                [displayWith]="displayFn"
-                (optionSelected)="companySelected($event.option.value)"
-              >
-                <mat-option
-                  *ngFor="let company of filteredCompanies | async"
-                  [value]="company"
-                >
-                  {{ company.name }} | {{ company.data_area_id }} /
-                  {{ company.external_id }}
-                </mat-option>
-              </mat-autocomplete>
-            </div>
-            <div class="bg-opp text-white p-1">Opport. ID OP4449</div>
-            <div>
-              <mat-slide-toggle color="primary"
-                >Include in forecast</mat-slide-toggle
-              >
-            </div>
-            <div>
-              <label>Stages</label>
-              <select class="form-control">
-                <option>Negotiation & Procurement</option>
-              </select>
-            </div>
-            <div>
-              <label>Status</label>
-              <select class="form-control">
-                <option>In progress</option>
-              </select>
-            </div>
+<div class="main-content">
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <div class="card">
+          <div class="card-header d-flex b-btm-green">
+            <div class="chead">New Opportunity</div>
           </div>
-          <div
-            class="d-flex justify-content-between p-125"
-            style="background-color: #f6f6f6"
-          >
+          <div class="card-body p-0">
+            <div
+              class="d-flex justify-content-between p-125"
+              style="align-items: center; justify-content: center"
+            >
+              <div style="width: 260px">
+                <input
+                  [hidden]="!company_is_from_lead"
+                  class="form-control"
+                  readonly
+                  [(ngModel)]="company_name_from_lead"
+                />
+                <input
+                  [hidden]="company_is_from_lead"
+                  (input)="companySearch($event.target.value)"
+                  type="text"
+                  placeholder="Company Name..."
+                  matInput
+                  [formControl]="companyControl"
+                  [matAutocomplete]="companyNameAutocomplete"
+                  class="form-control"
+                />
+                <i
+                  class="pi pi-search"
+                  style="position: absolute; left: 251px; top: 106px"
+                ></i>
+                <mat-autocomplete
+                  #companyNameAutocomplete="matAutocomplete"
+                  [displayWith]="displayFn"
+                  (optionSelected)="companySelected($event.option.value)"
+                >
+                  <mat-option
+                    *ngFor="let company of filteredCompanies | async"
+                    [value]="company"
+                  >
+                    {{ company.name }} | {{ company.data_area_id }} /
+                    {{ company.external_id }}
+                  </mat-option>
+                </mat-autocomplete>
+              </div>
+              <div class="bg-opp text-white p-1">Opport. ID OP4449</div>
+              <div>
+                <mat-slide-toggle color="primary"
+                  >Include in forecast</mat-slide-toggle
+                >
+              </div>
+              <div>
+                <label>Stages</label>
+                <select class="form-control">
+                  <option>Negotiation & Procurement</option>
+                </select>
+              </div>
+              <div>
+                <label>Status</label>
+                <select class="form-control">
+                  <option>In progress</option>
+                </select>
+              </div>
+            </div>
             <div
               class="d-flex justify-content-between p-125"
               style="background-color: #f6f6f6"
             >
-              <div>
-                <input
-                  type="text"
-                  [(ngModel)]="topic"
-                  class="form-control"
-                  placeholder="Topic..."
-                />
+              <div
+                class="d-flex justify-content-between p-125"
+                style="background-color: #f6f6f6"
+              >
+                <div>
+                  <input
+                    type="text"
+                    [(ngModel)]="topic"
+                    class="form-control"
+                    placeholder="Topic..."
+                  />
+                </div>
               </div>
-            </div>
-            <div>
-              <label>Created Date</label>
-              <div></div>
-            </div>
-            <div>
-              <label>Primary Contact</label>
               <div>
-                <select class="form-control">
-                  <option value="">Please select...</option>
-                  <option></option>
-                </select>
+                <label>Created Date</label>
+                <div></div>
               </div>
-            </div>
-            <div>
-              <label>Other Contact</label>
               <div>
-                <select class="form-control">
-                  <option value="">Please select...</option>
-                  <option></option>
-                </select>
+                <label>Primary Contact</label>
+                <div>
+                  <select class="form-control">
+                    <option value="">Please select...</option>
+                    <option></option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div>
-              <label>Owner</label>
+              <div>
+                <label>Other Contact</label>
+                <div>
+                  <select class="form-control">
+                    <option value="">Please select...</option>
+                    <option></option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label>Owner</label>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- <div class="card-body p-0">
+          <!-- <div class="card-body p-0">
           <div class="d-flex justify-content-between p-125">
             <div style="width: 450px">
               <input
@@ -157,433 +158,744 @@
             </div>
           </div>
         </div> -->
+        </div>
       </div>
-    </div>
 
-    <div class="col-md-12 form-group">
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
-        <p-accordionTab>
-          <ng-template pTemplate="header">
-            <i class="pi pi-info-circle"></i>&nbsp;Details Info</ng-template
-          >
-          <form>
-            <div class="detail-table">
-              <!-- <div class="col-md-12"> -->
-              <table class="table m-0 no-outline">
-                <tbody>
-                  <tr>
-                    <td class="bg-lightgrey text-left w-25">Credit Term:</td>
-                    <td class="text-left w-25"></td>
-                    <td class="bg-lightgrey text-left">
-                      Hospital Bed (Exact Number)
-                    </td>
-
-                    <td class="text-left w-25">
-                      <a style="cursor: pointer; float: right"
-                        ><i class="icon-note icon"></i
-                      ></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="bg-lightgrey text-left">Credit Limit</td>
-                    <td></td>
-                    <td class="bg-lightgrey text-left">Geographical Zone</td>
-                    <td class="text-left w-25">
-                      <a style="cursor: pointer; float: right"
-                        ><i class="icon-note icon"></i
-                      ></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="bg-lightgrey text-left">Hospital Class</td>
-                    <td></td>
-                    <td class="bg-lightgrey text-left">Customer Tax Code</td>
-                    <td class="text-left w-25">
-                      <a style="cursor: pointer; float: right"
-                        ><i class="icon-note icon"></i
-                      ></a>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td class="bg-lightgrey text-left">Segmant</td>
-                    <td></td>
-                    <td class="bg-lightgrey text-left">Sold To</td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td class="bg-lightgrey text-left">Customer Category</td>
-                    <td></td>
-                    <td class="text-left">Ship To</td>
-                    <td class="text-left w-25">
-                      <a style="cursor: pointer; float: right"
-                        ><i class="icon-note icon"></i
-                      ></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="bg-lightgrey text-left">Customer SubCategory</td>
-                    <td></td>
-                    <td class="bg-lightgrey text-left">Bill To</td>
-                    <td class="text-left w-25">
-                      <a style="cursor: pointer; float: right"
-                        ><i class="icon-note icon"></i
-                      ></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="bg-lightgrey text-left">Hospital Bed (Range)</td>
-                    <td></td>
-                    <td class="bg-lightgrey text-left"></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              <!-- </div> -->
-            </div>
-          </form>
-        </p-accordionTab>
-        <!-- Tracking Info -->
-        <p-accordionTab header="">
-          <ng-template pTemplate="header"
-            ><i class="pi pi-info-circle"></i>&nbsp;Tracking Info</ng-template
-          >
-          <form>
-            <div class="tracking-table">
-              <!-- <div class="col-md-12"> -->
-              <table class="table m-0 no-outline">
-                <tbody>
-                  <tr>
-                    <td class="bg-lightgrey text-left w-25">
-                      Requested Delivery Date
-                    </td>
-                    <td class="text-left w-25">
-                      <input type="date" class="form-control" />
-                    </td>
-                    <td class="bg-lightgrey text-left">
-                      Estimated Delivery Date
-                    </td>
-                    <td class="text-left w-25">
-                      <input type="date" class="form-control" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="bg-lightgrey text-left">Estimated PO Date *</td>
-                    <td class="text-left w-25">
-                      <input type="date" class="form-control" />
-                    </td>
-                    <td class="bg-lightgrey text-left">
-                      Estimated Invoice Date
-                    </td>
-                    <td class="text-left w-25">
-                      <input type="date" class="form-control" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="bg-lightgrey text-left">Care Area</td>
-                    <td></td>
-                    <td class="bg-lightgrey text-left">Hospital Department</td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              <!-- </div> -->
-            </div>
-          </form>
-        </p-accordionTab>
-        <!-- Forecast -->
-        <p-accordionTab header="">
-          <ng-template pTemplate="header"
-            >Forecast &nbsp;&nbsp;&nbsp;<i class="pi pi-info-circle"></i
-          ></ng-template>
-          <form>
-            <div class="forecast-table">
-              <!-- <div class="col-md-12"> -->
-              <table class="table m-0 no-outline">
-                <tbody>
-                  <tr>
-                    <td class="bg-lightgrey text-left w-25">
-                      Preferred Vendor
-                    </td>
-                    <td class="text-left w-25">Neutral</td>
-                    <td class="bg-lightgrey text-left">Forcast Category</td>
-                    <td class="text-left w-25">-</td>
-                  </tr>
-                  <tr>
-                    <td class="bg-lightgrey text-left">Funding Status</td>
-                    <td class="text-left w-25">Unlikely</td>
-                    <td class="bg-lightgrey text-left">Reason for Loss</td>
-                    <td class="text-left w-25">-</td>
-                  </tr>
-                  <tr>
-                    <td class="bg-lightgrey text-left">Funding Source</td>
-                    <td class="text-left w-25">Fund</td>
-                    <td class="bg-lightgrey text-left">
-                      Lost to which competitor
-                    </td>
-                    <td class="bg-lightgrey text-left">-</td>
-                  </tr>
-                </tbody>
-              </table>
-              <!-- </div> -->
-            </div>
-          </form>
-        </p-accordionTab>
-      </p-accordion>
-    </div>
-
-    <!-- products -->
-    <div class="col-md-12 form-group">
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
-        <p-accordionTab>
-          <ng-template pTemplate="header">
-            <i class="pi pi-shopping-cart"></i>&nbsp;Products</ng-template
-          >
-
-          <tabset>
-            <tab class="p-0">
-              <ng-template tabHeading>
-                <div class="p-relative">
-                  <span class="btn-text"
-                    ><i class="icon icon-check mr-1"></i>Option</span
-                  >
-                  <button
-                    class="btn btn-icon btn-outline-primary btn-in-tab add-btn"
-                  >
-                    <!-- <i class="pi pi-plus"></i> -->
-                    <i class="cil-plus c-icon"></i>
-                  </button>
-                </div>
-              </ng-template>
-              <form>
+      <div class="col-md-12 form-group">
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <i class="pi pi-info-circle"></i>&nbsp;Details Info</ng-template
+            >
+            <form>
+              <div class="detail-table">
+                <!-- <div class="col-md-12"> -->
                 <table class="table m-0 no-outline">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th style="width: 180px">Product Name</th>
-                      <th>Medical License</th>
-                      <th>SKU ID</th>
-                      <th>Quantity</th>
-                      <th>Unit Price</th>
-                      <th>Total Price (RM)</th>
-                      <th>Discount (%)</th>
-                      <th>Net Amount (RM)</th>
-                    </tr>
-                  </thead>
                   <tbody>
                     <tr>
-                      <td>1</td>
-                      <td class="text-left">
-                        Product 1 &nbsp;<i class="pi pi-info-circle"></i>
+                      <td class="bg-lightgrey text-left w-25">Credit Term:</td>
+                      <td class="text-left w-25"></td>
+                      <td class="bg-lightgrey text-left">
+                        Hospital Bed (Exact Number)
                       </td>
-                      <td class="text-left">369694</td>
-                      <td class="text-left">ZY2332</td>
-                      <td class="text-left">1</td>
-                      <td class="text-left">80,000.00</td>
-                      <td class="text-left">80,000.00</td>
-                      <td class="text-left">0.00</td>
-                      <td class="text-left">80,000.00</td>
-                      <td style="width: 8%">
-                        <a style="cursor: pointer"
-                          ><i class="pi pi-copy"></i
-                        ></a>
-                        <a style="cursor: pointer; color: #386fa4"
+
+                      <td class="text-left w-25">
+                        <a style="cursor: pointer; float: right"
                           ><i class="icon-note icon"></i
-                        ></a>
-                        <a style="cursor: pointer"
-                          ><i class="pi pi-trash"></i
                         ></a>
                       </td>
                     </tr>
                     <tr>
+                      <td class="bg-lightgrey text-left">Credit Limit</td>
                       <td></td>
-                      <td>
-                        <input
-                          type="text"
-                          matInput
-                          [matAutocomplete]="productNameAutoComplete"
-                          class="form-control"
-                        />
-                        <mat-autocomplete
-                          #productNameAutoComplete="matAutocomplete"
-                        >
-                          <mat-option> </mat-option>
-                        </mat-autocomplete>
+                      <td class="bg-lightgrey text-left">Geographical Zone</td>
+                      <td class="text-left w-25">
+                        <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a>
                       </td>
-                      <td>
-                        <input type="text" class="form-control" readonly />
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">Hospital Class</td>
+                      <td></td>
+                      <td class="bg-lightgrey text-left">Customer Tax Code</td>
+                      <td class="text-left w-25">
+                        <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a>
                       </td>
-                      <td><input type="text" class="form-control" /></td>
-                      <td><input type="text" class="form-control" /></td>
-                      <td>
-                        <input type="text" class="form-control" readonly />
+                    </tr>
+
+                    <tr>
+                      <td class="bg-lightgrey text-left">Segmant</td>
+                      <td></td>
+                      <td class="bg-lightgrey text-left">Sold To</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">Customer Category</td>
+                      <td></td>
+                      <td class="text-left">Ship To</td>
+                      <td class="text-left w-25">
+                        <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a>
                       </td>
-                      <td><input type="text" class="form-control" /></td>
-                      <td>
-                        <input type="text" class="form-control" readonly />
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">
+                        Customer SubCategory
                       </td>
-                      <td>
-                        <input type="text" class="form-control" readonly />
+                      <td></td>
+                      <td class="bg-lightgrey text-left">Bill To</td>
+                      <td class="text-left w-25">
+                        <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a>
                       </td>
-                      <td>
-                        <button class="btn btn-icon btn-outline-primary">
-                          <i class="cil-plus c-icon"></i>
-                        </button>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">
+                        Hospital Bed (Range)
                       </td>
+                      <td></td>
+                      <td class="bg-lightgrey text-left"></td>
+                      <td></td>
                     </tr>
                   </tbody>
                 </table>
-              </form>
-              <div
-                class="d-flex justify-content-end form-group"
-                style="align-items: center; justify-content: center"
-              >
-                <!-- ml-3 w-100  -->
-                <div class="btn-list">
-                  <button class="btn btn-custom form-group">
-                    <i class="cil-heart c-icon"></i>
-                    SET PREFERED OPTION
-                  </button>
-                  <button class="btn btn-custom form-group">
-                    <i class="cil-trash c-icon"></i>
-                    <span>DELETE OPTION</span>
-                  </button>
-                  <button class="btn btn-custom form-group">
-                    <i class="cil-copy c-icon"></i>
-                    <span>CLONE OPTION</span>
-                  </button>
-                  <button class="btn btn-custom form-group">
-                    <i class="cil-notes c-icon"></i>
-                    <span>CONVERT TO QUOTE</span>
-                  </button>
-                  <button class="btn btn-custom form-group" data-toggle="modal">
-                    <i class="cil-plus c-icon"></i>
-                    <span>PRODUCT</span>
-                  </button>
-                </div>
-                <div class="slip-card" style="width: 330px">
-                  <div class="card total-amount-card">
-                    <div class="card-body">
-                      <div class="amount-slip">
-                        <label for="" class="amount-label"
-                          >Subtotal before tax</label
-                        >
-                        <p class="amount-value">RM 273,400.00</p>
-                      </div>
-                      <div class="amount-slip">
-                        <label for="" class="amount-label">tax (SST)</label>
-                        <p class="amount-value">RM 0.00</p>
-                      </div>
-                      <div class="amount-slip">
-                        <label for="" class="amount-label">Discount (%)</label>
-                        <p class="amount-value">RM 0.00</p>
-                      </div>
-                      <div class="amount-slip">
-                        <label for="" class="amount-label total-amount-label"
-                          >Total Amount</label
-                        >
-                        <p class="amount-value total-amount-value">
-                          RM 273,400.00
-                        </p>
+                <!-- </div> -->
+              </div>
+            </form>
+          </p-accordionTab>
+          <!-- Tracking Info -->
+          <p-accordionTab header="">
+            <ng-template pTemplate="header"
+              ><i class="pi pi-info-circle"></i>&nbsp;Tracking Info</ng-template
+            >
+            <form>
+              <div class="tracking-table">
+                <!-- <div class="col-md-12"> -->
+                <table class="table m-0 no-outline">
+                  <tbody>
+                    <tr>
+                      <td class="bg-lightgrey text-left w-25">
+                        Requested Delivery Date
+                      </td>
+                      <td class="text-left w-25">
+                        <input type="date" class="form-control" />
+                      </td>
+                      <td class="bg-lightgrey text-left">
+                        Estimated Delivery Date
+                      </td>
+                      <td class="text-left w-25">
+                        <input type="date" class="form-control" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">
+                        Estimated PO Date *
+                      </td>
+                      <td class="text-left w-25">
+                        <input type="date" class="form-control" />
+                      </td>
+                      <td class="bg-lightgrey text-left">
+                        Estimated Invoice Date
+                      </td>
+                      <td class="text-left w-25">
+                        <input type="date" class="form-control" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">Care Area</td>
+                      <td></td>
+                      <td class="bg-lightgrey text-left">
+                        Hospital Department
+                      </td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- </div> -->
+              </div>
+            </form>
+          </p-accordionTab>
+          <!-- Forecast -->
+          <p-accordionTab header="">
+            <ng-template pTemplate="header"
+              >Forecast &nbsp;&nbsp;&nbsp;<i class="pi pi-info-circle"></i
+            ></ng-template>
+            <form>
+              <div class="forecast-table">
+                <!-- <div class="col-md-12"> -->
+                <table class="table m-0 no-outline">
+                  <tbody>
+                    <tr>
+                      <td class="bg-lightgrey text-left w-25">
+                        Preferred Vendor
+                      </td>
+                      <td class="text-left w-25">Neutral</td>
+                      <td class="bg-lightgrey text-left">Forcast Category</td>
+                      <td class="text-left w-25">-</td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">Funding Status</td>
+                      <td class="text-left w-25">Unlikely</td>
+                      <td class="bg-lightgrey text-left">Reason for Loss</td>
+                      <td class="text-left w-25">-</td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">Funding Source</td>
+                      <td class="text-left w-25">Fund</td>
+                      <td class="bg-lightgrey text-left">
+                        Lost to which competitor
+                      </td>
+                      <td class="bg-lightgrey text-left">-</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- </div> -->
+              </div>
+            </form>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+
+      <!-- products -->
+      <div class="col-md-12 form-group">
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <i class="pi pi-shopping-cart"></i>&nbsp;Products</ng-template
+            >
+
+            <tabset>
+              <tab class="p-0" *ngFor="let tab of tabs; let i = index">
+                <ng-template tabHeading>
+                  <div class="p-relative">
+                    <span class="btn-active"
+                      ><i class="icon icon-check mr-1"></i>{{ tab }}
+                      {{ i + 1 }}</span
+                    >
+                    <button
+                      class="
+                        btn btn-icon btn-outline-primary btn-in-tab
+                        add-btn
+                      "
+                      (click)="addOption()"
+                      *ngIf="tabs.length == i + 1"
+                    >
+                      <i class="cil-plus c-icon"></i>
+                    </button>
+                  </div>
+                </ng-template>
+                <form>
+                  <table class="table m-0 no-outline">
+                    <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th style="width: 180px">Product Name</th>
+                        <th>Medical License</th>
+                        <th>SKU ID</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Total Price (RM)</th>
+                        <th>Discount (%)</th>
+                        <th>Net Amount (RM)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td class="text-left">
+                          Product 1 &nbsp;<i class="pi pi-info-circle"></i>
+                        </td>
+                        <td class="text-left">369694</td>
+                        <td class="text-left">ZY2332</td>
+                        <td class="text-left">1</td>
+                        <td class="text-left">80,000.00</td>
+                        <td class="text-left">80,000.00</td>
+                        <td class="text-left">0.00</td>
+                        <td class="text-left">80,000.00</td>
+                        <td style="width: 8%">
+                          <a style="cursor: pointer"
+                            ><i class="pi pi-copy"></i
+                          ></a>
+                          <a style="cursor: pointer; color: #386fa4"
+                            ><i class="icon-note icon"></i
+                          ></a>
+                          <a style="cursor: pointer"
+                            ><i class="pi pi-trash"></i
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <input
+                            type="text"
+                            matInput
+                            [matAutocomplete]="productNameAutoComplete"
+                            class="form-control"
+                          />
+                          <mat-autocomplete
+                            #productNameAutoComplete="matAutocomplete"
+                          >
+                            <mat-option> </mat-option>
+                          </mat-autocomplete>
+                        </td>
+                        <td>
+                          <input type="text" class="form-control" readonly />
+                        </td>
+                        <td><input type="text" class="form-control" /></td>
+                        <td><input type="text" class="form-control" /></td>
+                        <td>
+                          <input type="text" class="form-control" readonly />
+                        </td>
+                        <td><input type="text" class="form-control" /></td>
+                        <td>
+                          <input type="text" class="form-control" readonly />
+                        </td>
+                        <td>
+                          <input type="text" class="form-control" readonly />
+                        </td>
+                        <td>
+                          <button
+                            class="btn btn-icon btn-outline-primary"
+                            (click)="openAddProductModal(true)"
+                          >
+                            <i class="cil-plus c-icon"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </form>
+                <div
+                  class="d-flex justify-content-end form-group"
+                  style="align-items: center; justify-content: center"
+                >
+                  <div class="btn-list">
+                    <button class="btn btn-custom form-group">
+                      <i class="cil-heart c-icon"></i>
+                      SET PREFERED OPTION
+                    </button>
+                    <button class="btn btn-custom form-group">
+                      <i class="cil-trash c-icon"></i>
+                      <span>DELETE OPTION</span>
+                    </button>
+                    <button class="btn btn-custom form-group">
+                      <i class="cil-copy c-icon"></i>
+                      <span>CLONE OPTION</span>
+                    </button>
+                    <button class="btn btn-custom form-group">
+                      <i class="cil-notes c-icon"></i>
+                      <span>CONVERT TO QUOTE</span>
+                    </button>
+                    <button
+                      class="btn btn-custom form-group"
+                      data-toggle="modal"
+                      (click)="openAddProductModal(false)"
+                    >
+                      <i class="cil-plus c-icon"></i>
+                      <span>PRODUCT</span>
+                    </button>
+                  </div>
+                  <div class="slip-card" style="width: 330px">
+                    <div class="card total-amount-card">
+                      <div class="card-body">
+                        <div class="amount-slip">
+                          <label for="" class="amount-label"
+                            >Subtotal before tax</label
+                          >
+                          <p class="amount-value">RM 273,400.00</p>
+                        </div>
+                        <div class="amount-slip">
+                          <label for="" class="amount-label">tax (SST)</label>
+                          <p class="amount-value">RM 0.00</p>
+                        </div>
+                        <div class="amount-slip">
+                          <label for="" class="amount-label"
+                            >Discount (%)</label
+                          >
+                          <p class="amount-value">RM 0.00</p>
+                        </div>
+                        <div class="amount-slip">
+                          <label for="" class="amount-label total-amount-label"
+                            >Total Amount</label
+                          >
+                          <p class="amount-value total-amount-value">
+                            RM 273,400.00
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <!-- <div class="card border-primary m-3 w-50">
-                  <div class="card-body">
-                    <table class="table table-borderless table-price">
-                      <tr>
-                        <td class="text-left w-50">Subtotal Before Tax</td>
-                        <td class="text-left"></td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Tax (SST)</td>
-                        <td class="text-left"></td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Discount</td>
-                        <td class="text-left"></td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Total Amount</td>
-                        <td class="text-left"></td>
-                      </tr>
-                    </table>
-                  </div>
-                </div> -->
-              </div>
-            </tab>
-          </tabset>
-        </p-accordionTab>
-      </p-accordion>
-    </div>
+              </tab>
+            </tabset>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
 
-    <!-- Competitor List -->
-    <div class="col-md-12 form-group">
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
-        <p-accordionTab>
-          <ng-template pTemplate="header"
-            ><i class="cil-briefcase" style="font-size: 1rem"></i
-            >&nbsp;Competitor List
-          </ng-template>
-          <table class="table m-0 no-outline">
-            <thead>
-              <tr>
-                <th>Competitor Name</th>
-                <th>Amount (RM)</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="text-left">Medical Sdn bhd</td>
-                <td class="text-left">120,000.00</td>
-                <td style="width: 8%">
-                  <a style="cursor: pointer; color: #386fa4"
-                    ><i class="icon-note icon"></i
-                  ></a>
-                </td>
-              </tr>
-              <tr>
-                <td class="text-left">Resolution Sdn Bhd</td>
-                <td class="text-left">60,000.00</td>
-                <td style="width: 8%">
-                  <a style="cursor: pointer; color: #386fa4"
-                    ><i class="icon-note icon"></i
-                  ></a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input
-                    type="text"
-                    class="form-control"
-                    style="width: 262px"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="form-control"
-                    style="width: 119px"
-                  />
-                </td>
-                <td>
-                  <button class="btn btn-icon btn-outline-primary">
-                    <i class="cil-plus c-icon"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </p-accordionTab>
-      </p-accordion>
-    </div>
+      <!-- Competitor List -->
+      <div class="col-md-12 form-group">
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+          <p-accordionTab>
+            <ng-template pTemplate="header"
+              ><i class="cil-briefcase" style="font-size: 1rem"></i
+              >&nbsp;Competitor List
+            </ng-template>
+            <table class="table m-0 no-outline">
+              <thead>
+                <tr>
+                  <th>Competitor Name</th>
+                  <th>Amount (RM)</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Medical Sdn bhd</td>
+                  <td class="text-left">120,000.00</td>
+                  <td style="width: 8%">
+                    <a style="cursor: pointer; color: #386fa4"
+                      ><i class="icon-note icon"></i
+                    ></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-left">Resolution Sdn Bhd</td>
+                  <td class="text-left">60,000.00</td>
+                  <td style="width: 8%">
+                    <a style="cursor: pointer; color: #386fa4"
+                      ><i class="icon-note icon"></i
+                    ></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="width: 262px"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="width: 119px"
+                    />
+                  </td>
+                  <td>
+                    <button class="btn btn-icon btn-outline-primary">
+                      <i class="cil-plus c-icon"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
 
-    <div class="col-md-12" align="center">
-      <button class="btn btn-custom mr-1" (click)="createOpportunity()">
-        Add Opportunity
-      </button>
+      <div class="col-md-12" align="center">
+        <button class="btn btn-custom mr-1" (click)="createOpportunity()">
+          Add Opportunity
+        </button>
+      </div>
     </div>
   </div>
+  <div class="side-btns">
+    <button><i class="pi pi-info-circle"></i></button>
+    <button><i class="pi pi-shopping-cart"></i></button>
+    <button><img src="../../../assets/img/icons/bag.svg" alt=""></button>
+    <button><i class="pi pi-file-o"></i></button>
+    <button><i class="pi pi-calendar"></i></button>
+    <button><i class="pi pi-clock"></i></button>
+  </div>
+</div>
+<!-- Add Product popup -->
+<div
+  bsModal
+  #addProductModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Product</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="addProductModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- top-info -->
+        <div class="top-info">
+          <div class="row form-group top-info-1">
+            <div class="col-md-6 info-text">Product Principal</div>
+            <div class="col-md-6">
+              <input type="text" class="form-control" />
+            </div>
+          </div>
+          <div class="row form-group top-info-1">
+            <div class="col-md-6 info-text">Product Group</div>
+            <div class="col-md-6">
+              <select class="form-control">
+                <option value="0" style="display: none">--</option>
+                <option></option>
+              </select>
+            </div>
+          </div>
+          <div class="row form-group top-info-1">
+            <div class="col-md-6 info-text">Product Name</div>
+            <div class="col-md-6">
+              <input type="text" class="form-control" value="Oxy" />
+            </div>
+          </div>
+        </div>
+        <!-- top-info-btn -->
+        <div class="type-info-btn">
+          <div class="row form-group">
+            <div class="col-md-6"></div>
+            <div class="col-md-6" *ngIf="addLine == false">
+              <button class="btn btn-custom mr-1">
+                <i class="cil-magnifying-glass c-icon"></i>
+                Search
+              </button>
+              <button class="btn btn-custom mr-1">
+                <i class="cil-plus c-icon text-left"></i>
+                Dummy SKU
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button class="btn btn-custom mr-1" *ngIf="addLine == true">
+                <i class="cil-magnifying-glass c-icon"></i>
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <!-- table -->
+        <div class="table-div" *ngIf="addLine == true">
+          <ng-container>
+            <div class="row">
+              <div class="col-md-12" style="height: 200px">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Select</th>
+                      <th class="text-center">Name</th>
+                      <th class="text-center">SKU ID</th>
+                      <th class="text-center">Principle</th>
+                      <th class="text-center">Product Group</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="text-center"><input type="radio" /></td>
+                    <td class="text-center">Oxymeter</td>
+                    <td class="text-center">OX1123</td>
+                    <td class="text-center">Samsung</td>
+                    <td class="text-center">Equipment</td>
+                  </tr>
+                  <tr>
+                    <td class="text-center"><input type="radio" /></td>
+                    <td class="text-center">Oxymeter</td>
+                    <td class="text-center">OX1123</td>
+                    <td class="text-center">Samsung</td>
+                    <td class="text-center">Equipment</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #elseProductListEmptyTemplate>
+            <div class="row">
+              <div class="col-md-12" align="center">No product(s) found...</div>
+            </div>
+          </ng-template>
+          <hr />
+        </div>
+        <!-- ADD DUMMY SKU -->
+        <div class="modal-header" style="margin-left: -11px">
+          <h4 class="modal-title">ADD DUMMY SKU</h4>
+        </div>
+        <form>
+          <div class="dummy-sku-info">
+            <div class="row form-group dummy-info">
+              <div class="col-md-6 info-text">Product Name</div>
+              <div class="col-md-6" style="display: flex; flex-direction: row">
+                <input
+                  type="text"
+                  class="form-control"
+                  style="margin-right: 10px"
+                />
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="SKU ID"
+                />
+              </div>
+              <div class="col-md-12 cost-sheet-btn">
+                <button type="button" class="btn btn-danger">
+                  COSTING SHEET
+                </button>
+              </div>
+            </div>
+            <div class="row form-group dummy-info">
+              <div class="col-md-6 info-text">Quantity</div>
+              <div class="col-md-6">
+                <i class="pi pi-minus-circle" style="margin-right: 10px"></i>
+                1
+                <i
+                  class="pi pi-plus-circle"
+                  style="color: #007bff; margin-left: 10px"
+                ></i>
+                <!-- <input type="text" class="form-control"/> -->
+              </div>
+            </div>
+            <div class="row form-group dummy-info">
+              <div class="col-md-6 info-text">Item Discount (%)</div>
+              <div class="col-md-6">
+                <input type="text" class="form-control" value="10" />
+              </div>
+            </div>
+            <div class="row form-group dummy-info">
+              <div class="col-md-6 info-text">Cost & Quote Price</div>
+              <div class="col-md-6">
+                <input type="text" class="form-control" value="3,000" />
+              </div>
+            </div>
+            <div class="row form-group dummy-info">
+              <div class="col-md-6 info-text">Principle</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                />
+              </div>
+            </div>
+            <div class="row form-group dummy-info">
+              <div class="col-md-6 info-text">Floor Price</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                />
+              </div>
+            </div>
+            <div class="row form-group dummy-info">
+              <div class="col-md-6 info-text">Product Manager</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                />
+              </div>
+            </div>
+            <div class="row form-group dummy-info">
+              <div class="col-md-12 justification-btn-textarea">
+                <button type="button" class="btn btn-primary">
+                  JUSTIFICATION
+                </button>
+                <textarea
+                  name="comment"
+                  class="form-control"
+                  cols="30"
+                  rows="10"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <!-- For Equipment Product -->
+          <div class="modal-header" style="margin-left: -11px">
+            <h4 class="modal-title">FOR EQUIPMENT PRODUCT</h4>
+          </div>
+          <div class="equipment-product">
+            <div class="row form-group equipment-product-info">
+              <div class="col-md-6 info-text">Standard Warranty</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                />
+              </div>
+            </div>
+            <div class="row form-group equipment-product-info">
+              <div class="col-md-6 info-text">Extended Warranty</div>
+              <div class="col-md-6">
+                <select class="form-control">
+                  <option value="0" style="display: none">Please Select</option>
+                  <option></option>
+                </select>
+              </div>
+            </div>
+            <div class="row form-group equipment-product-info">
+              <div class="col-md-6 info-text">Tax Rate</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                />
+              </div>
+            </div>
+            <div class="row form-group equipment-product-info">
+              <div class="col-md-6 info-text">Customer Tax Code</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                />
+              </div>
+            </div>
+            <div class="row form-group equipment-product-info">
+              <div class="col-md-6 info-text">Tax Code</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                />
+              </div>
+            </div>
+          </div>
+          <hr />
+          <!-- Other Cost -->
+          <div class="modal-header" style="margin-left: -11px">
+            <h4 class="modal-title">OTHER COST</h4>
+          </div>
+          <div class="other-cost">
+            <div class="row form-group other-cost-info">
+              <div class="col-md-6 info-text">Category</div>
+              <div class="col-md-6">
+                <select class="form-control">
+                  <option value="0" style="display: none">Please Select</option>
+                  <option></option>
+                </select>
+              </div>
+            </div>
+            <div class="row form-group other-cost-info">
+              <div class="col-md-6 info-text">Local Distribution</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- OK Button -->
+          <div class="row form-group text-center">
+            <div class="col-md-12">
+              <button class="btn btn-custom" type="submit" style="width: 130px">
+                OK
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
 </div>

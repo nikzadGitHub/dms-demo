@@ -224,7 +224,7 @@ export class EditOpportunityComponent implements OnInit {
       .subscribe((data) => {
         console.log("product-list:");
         this.product_options = data["data"];
-        console.log(this.product_options);
+        console.log("product-data-->", this.product_options);
 
         // for(let i = 0; i < this.product_options.length; i++){
         // 	if(this.product_options[i].is_default == 0){

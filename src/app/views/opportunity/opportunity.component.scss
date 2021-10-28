@@ -1,3 +1,22 @@
+.main-content {
+  display: flex;
+  .side-btns {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+    button {
+      background-color: #ffd54e;
+      color: white;
+      width: 35px;
+      height: 80px;
+      border: none;
+      img {
+        color: white;
+      }
+    }
+  }
+}
+
 .card {
   border-radius: 0;
 }
@@ -298,12 +317,12 @@ tr:nth-child(even) {
   }
 }
 
-.standard-terms{
+.standard-terms {
   .table td {
     border-top: 0px solid #c8ced3;
   }
 }
-.biling-milestone{
+.biling-milestone {
   .table td {
     border-top: 0px solid #c8ced3;
   }
@@ -331,14 +350,14 @@ tr:nth-child(even) {
   }
 }
 
-.slip-info{
-  .slip-card{
+.slip-info {
+  .slip-card {
     background-color: lightgray;
   }
   .card {
     background-color: lightgray;
     border: 0px solid #c8ced3;
-    border: 0px solid rgba(0,0,0,.125);
+    border: 0px solid rgba(0, 0, 0, 0.125);
   }
   .amount-slip {
     display: flex;
@@ -348,6 +367,109 @@ tr:nth-child(even) {
   }
 }
 
+// Model CSS
+.modal-header {
+  border-bottom: 0px solid #c8ced3;
+  h4 {
+    color: #133c55;
+    text-transform: uppercase;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+  }
+}
+.info-text {
+  color: #133c55;
+}
+input::placeholder {
+  color: #9d9d9d;
+}
+.top-info {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  .top-info-1 {
+    margin-bottom: 2rem;
+  }
+}
+.type-info-btn {
+  margin: -23px 0px 0px 0px;
+  button {
+    width: 130px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+}
+
+.dummy-sku-info {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  .dummy-info {
+    margin-bottom: 2rem;
+    .cost-sheet-btn {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      margin-top: 10px;
+      button {
+        background: linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.2)
+          ),
+          #ff0000;
+      }
+    }
+    i {
+      cursor: pointer;
+    }
+    .justification-btn-textarea {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      button {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+.equipment-product {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  .equipment-product-info {
+    margin-bottom: 2rem;
+  }
+}
+
+.other-cost {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  .other-cost-info {
+    margin-bottom: 2rem;
+  }
+}
+
+.table-div {
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 1px solid #c8ced3;
+    border-top: 0px solid #c8ced3;
+    color: black;
+  }
+  .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 0px solid #c8ced3;
+    background-color: rgb(188 195 193 / 30%);
+    color: #133c55;
+  }
+}
 
 // @media screen and (max-width: 960px) {
 //   :host ::ng-deep {
