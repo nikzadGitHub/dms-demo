@@ -445,10 +445,10 @@
                       <th>Product Name</th>
                       <th>SKU ID</th>
                       <th>Quantity</th>
-                      <th>Unit Price ({{ detail.currency_code }})</th>
-                      <th>Total Price ({{ detail.currency_code }})</th>
+                      <th>Unit Price ({{ detail?.currency_code }})</th>
+                      <th>Total Price ({{ detail?.currency_code }})</th>
                       <th>Discount (%)</th>
-                      <th>Net Amount ({{ detail.currency_code }})</th>
+                      <th>Net Amount ({{ detail?.currency_code }})</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -1260,15 +1260,16 @@
       </div>
     </div>
   </div>
+  <div class="side-btns">
+    <button><i class="pi pi-info-circle"></i></button>
+    <button><i class="pi pi-shopping-cart"></i></button>
+    <button><img src="../../../assets/img/icons/bag.svg" alt="" /></button>
+    <button><i class="pi pi-file-o"></i></button>
+    <button><i class="pi pi-calendar"></i></button>
+    <button><i class="pi pi-clock"></i></button>
+  </div>
 </div>
-<div class="side-btns">
-  <button><i class="pi pi-info-circle"></i></button>
-  <button><i class="pi pi-shopping-cart"></i></button>
-  <button><img src="../../../assets/img/icons/bag.svg" alt="" /></button>
-  <button><i class="pi pi-file-o"></i></button>
-  <button><i class="pi pi-calendar"></i></button>
-  <button><i class="pi pi-clock"></i></button>
-</div>
+
 <div
   bsModal
   #addProductModal="bs-modal"

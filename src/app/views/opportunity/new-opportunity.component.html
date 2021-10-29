@@ -2,168 +2,132 @@
   <div class="animated fadeIn">
     <div class="row">
       <div class="col-sm-12 col-md-12">
-        <div class="card">
-          <div class="card-header d-flex b-btm-green">
-            <div class="chead">New Opportunity</div>
-          </div>
-          <div class="card-body p-0">
-            <div
-              class="d-flex justify-content-between p-125"
-              style="align-items: center; justify-content: center"
-            >
-              <div style="width: 260px">
-                <input
-                  [hidden]="!company_is_from_lead"
-                  class="form-control"
-                  readonly
-                  [(ngModel)]="company_name_from_lead"
-                />
-                <input
-                  [hidden]="company_is_from_lead"
-                  (input)="companySearch($event.target.value)"
-                  type="text"
-                  placeholder="Company Name..."
-                  matInput
-                  [formControl]="companyControl"
-                  [matAutocomplete]="companyNameAutocomplete"
-                  class="form-control"
-                />
-                <i
-                  class="pi pi-search"
-                  style="position: absolute; left: 251px; top: 106px"
-                ></i>
-                <mat-autocomplete
-                  #companyNameAutocomplete="matAutocomplete"
-                  [displayWith]="displayFn"
-                  (optionSelected)="companySelected($event.option.value)"
-                >
-                  <mat-option
-                    *ngFor="let company of filteredCompanies | async"
-                    [value]="company"
-                  >
-                    {{ company.name }} | {{ company.data_area_id }} /
-                    {{ company.external_id }}
-                  </mat-option>
-                </mat-autocomplete>
-              </div>
-              <div class="bg-opp text-white p-1">Opport. ID OP4449</div>
-              <div>
-                <mat-slide-toggle color="primary"
-                  >Include in forecast</mat-slide-toggle
-                >
-              </div>
-              <div>
-                <label>Stages</label>
-                <select class="form-control">
-                  <option>Negotiation & Procurement</option>
-                </select>
-              </div>
-              <div>
-                <label>Status</label>
-                <select class="form-control">
-                  <option>In progress</option>
-                </select>
-              </div>
+        <form [formGroup]="createOppertunityForm1">
+          <div class="card">
+            <div class="card-header d-flex b-btm-green">
+              <div class="chead">New Opportunity</div>
             </div>
-            <div
-              class="d-flex justify-content-between p-125"
-              style="background-color: #f6f6f6"
-            >
+            <div class="card-body p-0">
+              <div
+                class="d-flex justify-content-between p-125"
+                style="align-items: center; justify-content: center"
+              >
+                <div style="width: 260px">
+                  <!-- [(ngModel)]="company_name_from_lead" -->
+                  <input
+                    [hidden]="!company_is_from_lead"
+                    class="form-control"
+                    readonly
+                    formControlName="company_name_from_lead"
+        
+                  />
+                  <input
+                    [hidden]="company_is_from_lead"
+                    (input)="customerSearch($event.target.value)"
+                    type="text"
+                    placeholder="Customer Name..."
+                    matInput
+                    [formControl]="companyControl"
+                    [matAutocomplete]="companyNameAutocomplete"
+                    class="form-control"
+                  />
+                  <i
+                    class="pi pi-search"
+                    style="position: absolute; left: 251px; top: 106px"
+                  ></i>
+                  <mat-autocomplete
+                    #companyNameAutocomplete="matAutocomplete"
+                    [displayWith]="displayFn"
+                    (optionSelected)="companySelected($event.option.value)"
+                  >
+                    <mat-option
+                      *ngFor="let company of filteredCompanies | async"
+                      [value]="company"
+                    >
+                      {{ company.name }} | {{ company.data_area_id }} /
+                      {{ company.external_id }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </div>
+                <div class="bg-opp text-white p-1">Opport. ID OP4449</div>
+                <div>
+                  <mat-slide-toggle
+                  formControlName="include_in_forecast"
+                  color="primary"
+                    >Include in forecast</mat-slide-toggle
+                  >
+                </div>
+                <div>
+                  <label>Stages</label>
+                  <select class="form-control" >
+                    <option>
+                  Negotiation & Procurement
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <label>Status</label>
+                  <select class="form-control" formControlName="status_id">
+
+                    <option *ngFor="let status of statuses; let i = index"
+                    value="{{status.id}}">
+                    {{ status.title }}
+                  </option>
+                  </select>
+                </div>
+              </div>
               <div
                 class="d-flex justify-content-between p-125"
                 style="background-color: #f6f6f6"
               >
-                <div>
-                  <input
-                    type="text"
-                    [(ngModel)]="topic"
-                    class="form-control"
-                    placeholder="Topic..."
-                  />
-                </div>
-              </div>
-              <div>
-                <label>Created Date</label>
-                <div></div>
-              </div>
-              <div>
-                <label>Primary Contact</label>
-                <div>
-                  <select class="form-control">
-                    <option value="">Please select...</option>
-                    <option></option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label>Other Contact</label>
-                <div>
-                  <select class="form-control">
-                    <option value="">Please select...</option>
-                    <option></option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label>Owner</label>
-              </div>
-            </div>
-          </div>
-
-          <!-- <div class="card-body p-0">
-          <div class="d-flex justify-content-between p-125">
-            <div style="width: 450px">
-              <input
-                [hidden]="!company_is_from_lead"
-                class="form-control"
-                readonly
-                [(ngModel)]="company_name_from_lead"
-              />
-              <input
-                [hidden]="company_is_from_lead"
-                (input)="companySearch($event.target.value)"
-                type="text"
-                placeholder="Company Name..."
-                matInput
-                [formControl]="companyControl"
-                [matAutocomplete]="companyNameAutocomplete"
-                class="form-control"
-              />
-              <mat-autocomplete
-                #companyNameAutocomplete="matAutocomplete"
-                [displayWith]="displayFn"
-                (optionSelected)="companySelected($event.option.value)"
-              >
-                <mat-option
-                  *ngFor="let company of filteredCompanies | async"
-                  [value]="company"
+                <div
+                  class="d-flex justify-content-between p-125"
+                  style="background-color: #f6f6f6"
                 >
-                  {{ company.name }} | {{ company.data_area_id }} /
-                  {{ company.external_id }}
-                </mat-option>
-              </mat-autocomplete>
+                  <div>
+                    <input
+                      type="text"
+                      formControlName="topic"
+                      class="form-control"
+                      placeholder="Topic..."
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label>Created Date</label>
+                  <div>{{ detail?.created_at | date: "dd-MMM-yyyy" }}</div>
+                </div>
+                <div>
+                  <label>Primary Contact</label>
+                  <div>
+                    <select class="form-control" formControlName="customer_contact_id">
+                      <option value="">Please select...</option>
+                      <option></option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label>Other Contact</label>
+                  <div>
+                    <select class="form-control" formControlName="customer_contact2_id">
+                      <option value="">Please select...</option>
+                      <option></option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label>Owner</label>
+                </div>
+              </div>
             </div>
           </div>
-          <div
-            class="d-flex justify-content-between p-125"
-            style="background-color: #f6f6f6"
-          >
-            <div>
-              <input
-                type="text"
-                [(ngModel)]="topic"
-                class="form-control"
-                placeholder="Topic..."
-              />
-            </div>
-          </div>
-        </div> -->
-        </div>
+        </form>
       </div>
 
       <div class="col-md-12 form-group">
         <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
-          <p-accordionTab>
+          <div #target1>
+          <p-accordionTab >
             <ng-template pTemplate="header">
               <i class="pi pi-info-circle"></i>&nbsp;Details Info</ng-template
             >
@@ -248,12 +212,14 @@
               </div>
             </form>
           </p-accordionTab>
+        </div>
           <!-- Tracking Info -->
+          <div #target2>
           <p-accordionTab header="">
             <ng-template pTemplate="header"
               ><i class="pi pi-info-circle"></i>&nbsp;Tracking Info</ng-template
             >
-            <form>
+            <form [formGroup]="trackingInfoDetailForm">
               <div class="tracking-table">
                 <!-- <div class="col-md-12"> -->
                 <table class="table m-0 no-outline">
@@ -263,13 +229,13 @@
                         Requested Delivery Date
                       </td>
                       <td class="text-left w-25">
-                        <input type="date" class="form-control" />
+                        <input type="date" class="form-control" formControlName="request_delivery_date"/>
                       </td>
                       <td class="bg-lightgrey text-left">
                         Estimated Delivery Date
                       </td>
                       <td class="text-left w-25">
-                        <input type="date" class="form-control" />
+                        <input type="date" class="form-control" formControlName="estimated_delivery_date"/>
                       </td>
                     </tr>
                     <tr>
@@ -277,35 +243,55 @@
                         Estimated PO Date *
                       </td>
                       <td class="text-left w-25">
-                        <input type="date" class="form-control" />
+                        <input type="date" class="form-control" formControlName="estimated_po_date"/>
                       </td>
                       <td class="bg-lightgrey text-left">
                         Estimated Invoice Date
                       </td>
                       <td class="text-left w-25">
-                        <input type="date" class="form-control" />
+                        <input type="date" class="form-control" formControlName="estimated_invoice_date"/>
                       </td>
                     </tr>
                     <tr>
                       <td class="bg-lightgrey text-left">Care Area</td>
-                      <td></td>
+                      <td class="w-25">
+                        <select
+                        class="form-control"
+                        formControlName="care_area"
+                      >
+                        <option
+                          *ngFor="let care_area of care_areas; let i = index"
+                          value="{{ care_area.care_area_code }}"
+                        >
+                          {{ care_area.care_area_code }}
+                        </option>
+                      </select>
+                      </td>
                       <td class="bg-lightgrey text-left">
                         Hospital Department
                       </td>
-                      <td></td>
+                      <td class="w-25">
+                        <input
+                        type="text"
+                        class="form-control"
+                        formControlName="hospital_department"
+                      />
+                      </td>
                     </tr>
                   </tbody>
                 </table>
                 <!-- </div> -->
               </div>
             </form>
-          </p-accordionTab>
+          </p-accordionTab>            
+        </div>
           <!-- Forecast -->
-          <p-accordionTab header="">
+          <div #target3>
+          <p-accordionTab header="" >
             <ng-template pTemplate="header"
               >Forecast &nbsp;&nbsp;&nbsp;<i class="pi pi-info-circle"></i
             ></ng-template>
-            <form>
+            <form [formGroup]="forecastForm">
               <div class="forecast-table">
                 <!-- <div class="col-md-12"> -->
                 <table class="table m-0 no-outline">
@@ -314,23 +300,91 @@
                       <td class="bg-lightgrey text-left w-25">
                         Preferred Vendor
                       </td>
-                      <td class="text-left w-25">Neutral</td>
+                      <td class="text-left w-25">
+                        <select
+                        class="form-control"
+                        formControlName="preferred_vendor"
+                      >
+                        <option
+                          *ngFor="
+                            let type of preferred_vendor_types;
+                            let i = index
+                          "
+                          value="{{ type.id }}"
+                        >
+                          {{ type.title }}
+                        </option>
+                      </select>
+                      </td>
                       <td class="bg-lightgrey text-left">Forcast Category</td>
-                      <td class="text-left w-25">-</td>
+                      <td class="text-left w-25">
+                        <progressbar
+                        [value]="forecast_category"
+                        class="progress-striped active"
+                        [animate]="true"
+                        [striped]="true"
+                        >{{ forecast_category }}%</progressbar
+                      >
+                      </td>
                     </tr>
                     <tr>
                       <td class="bg-lightgrey text-left">Funding Status</td>
-                      <td class="text-left w-25">Unlikely</td>
+                      <td class="text-left w-25">
+                        <select
+                        class="form-control"
+                        formControlName="funding_status"
+                      >
+                        <option
+                          *ngFor="let status of funding_status; let i = index"
+                          value="{{ status.id }}"
+                        >
+                          {{ status.title }}
+                        </option>
+                      </select>
+                      </td>
                       <td class="bg-lightgrey text-left">Reason for Loss</td>
-                      <td class="text-left w-25">-</td>
+                      <td class="text-left w-25">
+                        <input
+                        type="text"
+                        class="form-control"
+                        formControlName="reason"
+                      />
+                      </td>
                     </tr>
                     <tr>
                       <td class="bg-lightgrey text-left">Funding Source</td>
-                      <td class="text-left w-25">Fund</td>
+                      <td class="text-left w-25">
+                        <select
+                        class="form-control"
+                        formControlName="funding_source"
+                      >
+                        <option
+                          *ngFor="let source of funding_source; let i = index"
+                          value="{{ source.id }}"
+                        >
+                          {{ source.title }}
+                        </option>
+                      </select>
+                      </td>
                       <td class="bg-lightgrey text-left">
                         Lost to which competitor
                       </td>
-                      <td class="bg-lightgrey text-left">-</td>
+                      <td class="bg-lightgrey text-left">
+                        <select
+                        class="form-control"
+                        formControlName="competitor_id"
+                      >
+                        <option
+                          *ngFor="
+                            let competitor of competitors;
+                            let i = index
+                          "
+                          value="{{ competitor.id }}"
+                        >
+                          {{ competitor.name }}
+                        </option>
+                      </select>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -338,11 +392,12 @@
               </div>
             </form>
           </p-accordionTab>
+        </div>
         </p-accordion>
       </div>
 
       <!-- products -->
-      <div class="col-md-12 form-group">
+      <div class="col-md-12 form-group" #target4>
         <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <p-accordionTab>
             <ng-template pTemplate="header">
@@ -519,7 +574,7 @@
       </div>
 
       <!-- Competitor List -->
-      <div class="col-md-12 form-group">
+      <div class="col-md-12 form-group" #target5>
         <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <p-accordionTab>
             <ng-template pTemplate="header"
@@ -588,12 +643,12 @@
     </div>
   </div>
   <div class="side-btns">
-    <button><i class="pi pi-info-circle"></i></button>
-    <button><i class="pi pi-shopping-cart"></i></button>
-    <button><img src="../../../assets/img/icons/bag.svg" alt=""></button>
-    <button><i class="pi pi-file-o"></i></button>
-    <button><i class="pi pi-calendar"></i></button>
-    <button><i class="pi pi-clock"></i></button>
+    <button (click)="scroll(target1)"><i class="pi pi-info-circle"></i></button>
+    <button (click)="scroll(target2)"><i class="pi pi-shopping-cart"></i></button>
+    <button (click)="scroll(target3)"><img src="../../../assets/img/icons/bag.svg" alt="" /></button>
+    <button (click)="scroll(target4)"><i class="pi pi-file-o"></i></button>
+    <button (click)="scroll(target5)"><i class="pi pi-calendar"></i></button>
+    <button (click)="scroll(target5)"><i class="pi pi-clock"></i></button>
   </div>
 </div>
 <!-- Add Product popup -->

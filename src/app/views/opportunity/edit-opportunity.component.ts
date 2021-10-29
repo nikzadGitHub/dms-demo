@@ -146,6 +146,7 @@ export class EditOpportunityComponent implements OnInit {
     competitor_id: "",
   });
 
+
   constructor(
     private appService: AppService,
     private router: Router,
@@ -171,7 +172,8 @@ export class EditOpportunityComponent implements OnInit {
       .subscribe((data: any) => {
         console.log("opportunity-detail:", data);
         this.detail = data["data"];
-
+        console.log("opportunity-detail:", this.detail);
+        // this.external_id = data["data"]["customer"]["external_id"]
         this.opportunityDetailForm1.patchValue({
           topic: data["data"]["topic"],
           customer_contact_id: data["data"]["customer_contact_id"],
@@ -190,12 +192,14 @@ export class EditOpportunityComponent implements OnInit {
 
         this.appService
           .getQuery(
-            "/opportunity/get-customer-contacts?data_area_id=" +
-              this.detail["data_area_id"],
-            null
+            "/opportunity/get-customer-contacts?data_area_id="+this.detail["data_area_id"]+"&&external_id="+
+              this.detail["customer"]["external_id"]
           )
           .subscribe((data) => {
+            console.log("customer-data---->",data);
+            
             this.customer_contacts = data["data"];
+            console.log("customer-data: ", this.customer_contacts);
             const newArr = [
               ...data["data"]?.contacts,
               ...Array(data["data"]?.primary_contact),
