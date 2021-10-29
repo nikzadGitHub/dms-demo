@@ -74,10 +74,33 @@
         </th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-bookingListRef>
+    <ng-template pTemplate="body" let-bookingItem>
       <tr class="p-selectable-row">
-
-      </tr>
+        <td class="text-center">
+            {{ bookingItem.booking_no }}
+        </td>
+        <td class="text-center">
+            {{ bookingItem.request_date }}
+        </td>
+        <td class="text-center">
+            {{ bookingItem.requester }}
+        </td>
+        <td class="text-center">
+            {{ bookingItem.sku }}
+        </td>
+        <td class="text-center">
+            {{ bookingItem.product_desc }}
+        </td>
+        <td class="text-center">
+            {{ bookingItem.customer }}
+        </td>
+        <td class="text-center">
+            {{ bookingItem.booking_reason }}
+        </td>
+        <td class="text-center">
+          {{ bookingItem.status }}
+        </td>
+    </tr>
     </ng-template>
   </p-table>
   <p-paginator [rows]="pageItems" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
