@@ -103,8 +103,8 @@ export const routes: Routes = [
         loadChildren: () => import('./views/opportunity/opportunity.module').then(m => m.OpportunityModule)
       },
       {
-        path: 'dms/bookings',
-        loadChildren: () => import('./views/dms/booking-table/booking-table.module').then(m => m.BookingTableModule)
+        path: 'dms',
+        loadChildren: () => import('./dms/dms.module').then(m => m.DmsModule),
       },
       {
         path: 'contact',

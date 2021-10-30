@@ -1,22 +1,20 @@
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BookingTableComponent } from './booking-table.component';
+import { DmsComponent } from './dms.component';
 
-describe('BookingTableComponent', () => {
-
-  let component: BookingTableComponent;
-  let fixture: ComponentFixture<BookingTableComponent>;
+describe('DmsComponent', () => {
+  let component: DmsComponent;
+  let fixture: ComponentFixture<DmsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BookingTableComponent ]
+      declarations: [ DmsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BookingTableComponent);
+    fixture = TestBed.createComponent(DmsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -24,5 +22,4 @@ describe('BookingTableComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
 });
