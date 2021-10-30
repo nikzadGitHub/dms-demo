@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./booking-form.component.scss']
 })
 export class BookingFormComponent implements OnInit{
-  curDate =  new Date(Date.now()).toLocaleDateString();
   constructor() { }
   ngOnInit(): void {}
 }
