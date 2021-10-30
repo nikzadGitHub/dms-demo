@@ -18,8 +18,8 @@ import { DmsComponent } from './dms.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { BookingFormComponent } from './components/bookings/booking-form/booking-form.component';
-import { FormComponent } from './components/bookings/booking-form/form/form.component';
-import { MainAssetComponent } from './components/bookings/booking-form/main-asset/main-asset.component';
+import { FormComponent } from './components/bookings/form/form.component';
+import { MainAssetComponent } from './components/bookings/main-asset/main-asset.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 
