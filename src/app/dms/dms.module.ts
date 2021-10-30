@@ -17,8 +17,10 @@ import { providersForEnvironment } from './services/providers';
 import { DmsComponent } from './dms.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
+import { BookingFormComponent } from './components/bookings/booking-form/booking-form.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     InventoryComponent,
     BookingsComponent,
     ApprovalsComponent,
-    CalendarComponent
+    CalendarComponent,
+    BookingFormComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +39,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     // Dependencies.
     PrimeNgModule,
     IconModule,
-    ModalModule
+    ModalModule,
   ],
   providers: [
     ...providersForEnvironment
