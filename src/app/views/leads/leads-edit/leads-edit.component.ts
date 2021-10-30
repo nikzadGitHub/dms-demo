@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { LeadsService } from '../leads.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-leads-edit',
@@ -10,6 +11,7 @@ import { LeadsService } from '../leads.service';
   styleUrls: ['./leads-edit.component.scss']
 })
 export class LeadsEditComponent implements OnInit {
+  moment: any = moment;
   public autoResize: boolean = true;
   @ViewChild('successModal') successModal : ModalDirective;
   id:any;
@@ -23,7 +25,7 @@ export class LeadsEditComponent implements OnInit {
 
   get form_controls() {
     // console.log(this.form.controls)
-    return this.form.controls; 
+    return this.form.controls;
   }
   get getLog() : FormArray {
     return this.form.get("modifiction_log") as FormArray
@@ -34,7 +36,7 @@ export class LeadsEditComponent implements OnInit {
     public leadsService: LeadsService,
     private route: ActivatedRoute,
     private router: Router
-  ) { 
+  ) {
     this.form =  this.formBuilder.group({
       id: '',
       created_at: '',
@@ -77,7 +79,7 @@ export class LeadsEditComponent implements OnInit {
     this.leadsService.find(id).subscribe((data)=>{
       this.form.patchValue(data.data);
       console.log(data);
-    })  
+    })
   }
 
   getModificationLog(id) {
