@@ -13,12 +13,12 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 // Local.
 //
 import { DmsRoutingModule } from './dms-routing.module';
+import { CalendarModule } from './components/calendar/calendar.module';
 import { providersForEnvironment } from './services/providers';
 import { DmsComponent } from './dms.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 
 
 @NgModule({
@@ -27,11 +27,11 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     InventoryComponent,
     BookingsComponent,
     ApprovalsComponent,
-    CalendarComponent
   ],
   imports: [
     CommonModule,
     DmsRoutingModule,
+    CalendarModule,
 
     // Dependencies.
     PrimeNgModule,

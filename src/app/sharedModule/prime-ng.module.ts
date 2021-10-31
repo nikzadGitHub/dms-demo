@@ -41,6 +41,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
     InputNumberModule
   ],
   exports: [
+    CommonModule,
     AutoCompleteModule,
     CalendarModule,
     AccordionModule,
