@@ -43,7 +43,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     // Dependencies.
     PrimeNgModule,
     IconModule,
-    ModalModule,
+    ModalModule
   ],
   providers: [
     ...providersForEnvironment
