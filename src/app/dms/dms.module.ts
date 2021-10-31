@@ -22,6 +22,7 @@ import { FormComponent } from './components/bookings/form/form.component';
 import { MainAssetComponent } from './components/bookings/main-asset/main-asset.component';
 import { BookingDemoComponent } from './components/bookings/booking-demo/booking-demo.component';
 import { BookingDetailComponent } from './components/bookings/booking-demo/booking-detail/booking-detail.component';
+import { StatusLogComponent } from './components/bookings/booking-demo/status-log/status-log.component';
 import { OpportunitySummaryComponent } from './components/bookings/opportunity-summary/opportunity-summary.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
@@ -40,7 +41,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     MainAssetComponent,
     BookingDemoComponent,
     BookingDetailComponent,
-    OpportunitySummaryComponent
+    OpportunitySummaryComponent,
+    StatusLogComponent
   ],
   imports: [
     CommonModule,
