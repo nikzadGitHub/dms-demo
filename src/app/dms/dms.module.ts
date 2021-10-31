@@ -22,6 +22,7 @@ import { FormComponent } from './components/bookings/form/form.component';
 import { MainAssetComponent } from './components/bookings/main-asset/main-asset.component';
 import { BookingDemoComponent } from './components/bookings/booking-demo/booking-demo.component';
 import { BookingDetailComponent } from './components/bookings/booking-demo/booking-detail/booking-detail.component';
+import { OpportunitySummaryComponent } from './components/bookings/opportunity-summary/opportunity-summary.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 
@@ -38,7 +39,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     FormComponent,
     MainAssetComponent,
     BookingDemoComponent,
-    BookingDetailComponent
+    BookingDetailComponent,
+    OpportunitySummaryComponent
   ],
   imports: [
     CommonModule,
