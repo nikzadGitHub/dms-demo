@@ -5,6 +5,7 @@ import { DmsComponent } from './dms.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { BookingFormComponent } from './components/bookings/booking-form/booking-form.component';
+import { BookingDemoComponent } from './components/bookings/booking-demo/booking-demo.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 
@@ -35,6 +36,13 @@ export const mainChildren = [
     component: BookingFormComponent,
     data: {
       title: 'Bookings Form',
+    },
+  },
+  {
+    path: 'bookings/:id',
+    component: BookingDemoComponent,
+    data: {
+      title: 'Bookings Demo',
     },
   },
   {
