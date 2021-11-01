@@ -13,6 +13,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 // Local.
 //
 import { DmsRoutingModule } from './dms-routing.module';
+import { CalendarModule } from './components/calendar/calendar.module';
 import { providersForEnvironment } from './services/providers';
 import { DmsComponent } from './dms.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
@@ -21,7 +22,6 @@ import { BookingFormComponent } from './components/bookings/booking-form/booking
 import { FormComponent } from './components/bookings/form/form.component';
 import { MainAssetComponent } from './components/bookings/main-asset/main-asset.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 
 
 
@@ -35,10 +35,12 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     BookingFormComponent,
     FormComponent,
     MainAssetComponent
+
   ],
   imports: [
     CommonModule,
     DmsRoutingModule,
+    CalendarModule,
 
     // Dependencies.
     PrimeNgModule,
