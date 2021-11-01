@@ -8,6 +8,7 @@ import { BookingFormComponent } from './components/bookings/booking-form/booking
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { BookingEntityComponent } from './components/bookings/booking-entity/booking-entity.component';
+t
 
 export const fallbackPath = 'inventory';
 
@@ -62,10 +63,8 @@ export const mainChildren: Routes = [
   },
   {
     path: 'calendar',
-    component: CalendarComponent,
-    data: {
-      title: 'Calendar',
-    },
+    loadChildren: () => import('./components/calendar/calendar.module')
+      .then(m => m.CalendarModule),
   },
   {
     path: '**',

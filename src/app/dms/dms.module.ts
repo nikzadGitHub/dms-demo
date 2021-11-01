@@ -13,6 +13,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 // Local.
 //
 import { DmsRoutingModule } from './dms-routing.module';
+import { CalendarModule } from './components/calendar/calendar.module';
 import { providersForEnvironment } from './services/providers';
 import { DmsComponent } from './dms.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
@@ -34,10 +35,12 @@ import { ExpandPanelComponent } from './components/widgets/expand-panel/expand-p
     ApprovalsComponent,
     CalendarComponent,
     ExpandPanelComponent
+
   ],
   imports: [
     CommonModule,
     DmsRoutingModule,
+    CalendarModule,
 
     // Dependencies.
     PrimeNgModule,
