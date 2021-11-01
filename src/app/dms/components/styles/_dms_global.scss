@@ -1,0 +1,39 @@
+app-dms {
+  .custom-footer{
+    height: 100px;
+
+    button {
+        margin: 10px;
+        height: 35px;
+        width: 100px;
+        font-size: 15px;
+        font-weight: 400;
+    }
+  }
+
+  .p-accordion {
+    .p-accordiontab:last-child {
+      .p-accordion-content {
+        padding-left: 0px;
+        padding-right: 0px;
+      }
+      .p-accordion-content:first-child {
+        padding-top: 0px;
+      }
+    }
+    .p-accordion-header{
+      .p-accordion-header-link {
+        text-decoration: none;
+      }
+      .p-accordion-toggle-icon {
+        margin-top: -8px;
+        position: absolute;
+        right: 0.5em;
+        top: 50%;
+      }
+    }
+    .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+      background-color: white;
+    }
+  }
+}
