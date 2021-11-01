@@ -6,7 +6,6 @@ import { InventoryComponent } from './components/inventory/inventory.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { BookingFormComponent } from './components/bookings/booking-form/booking-form.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 
 export const fallbackPath = 'inventory';
 
@@ -46,10 +45,8 @@ export const mainChildren = [
   },
   {
     path: 'calendar',
-    component: CalendarComponent,
-    data: {
-      title: 'Calendar',
-    },
+    loadChildren: () => import('./components/calendar/calendar.module')
+      .then(m => m.CalendarModule),
   },
   {
     path: '**',
