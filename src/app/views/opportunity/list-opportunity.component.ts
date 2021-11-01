@@ -11,7 +11,7 @@ export class ListOpportunityComponent implements OnInit{
 
 	opportunities: [];
 	paginate: [];
-	pageItems: number = 10;
+	pageItems: number = 200;
 	search_text: string = '';
 	icons = [];
 	listUrl = '/opportunity/list';

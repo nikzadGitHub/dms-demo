@@ -19,7 +19,6 @@
                     class="form-control"
                     readonly
                     formControlName="company_name_from_lead"
-        
                   />
                   <input
                     [hidden]="company_is_from_lead"
@@ -49,30 +48,29 @@
                     </mat-option>
                   </mat-autocomplete>
                 </div>
-                <div class="bg-opp text-white p-1">Opport. ID OP4449</div>
+                <div class="bg-opp text-white p-1">Opport. ID</div>
                 <div>
                   <mat-slide-toggle
-                  formControlName="include_in_forecast"
-                  color="primary"
+                    formControlName="include_in_forecast"
+                    color="primary"
                     >Include in forecast</mat-slide-toggle
                   >
                 </div>
                 <div>
                   <label>Stages</label>
-                  <select class="form-control" >
-                    <option>
-                  Negotiation & Procurement
-                    </option>
+                  <select class="form-control">
+                    <option>Negotiation & Procurement</option>
                   </select>
                 </div>
                 <div>
                   <label>Status</label>
                   <select class="form-control" formControlName="status_id">
-
-                    <option *ngFor="let status of statuses; let i = index"
-                    value="{{status.id}}">
-                    {{ status.title }}
-                  </option>
+                    <option
+                      *ngFor="let status of statuses; let i = index"
+                      value="{{ status.id }}"
+                    >
+                      {{ status.title }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -100,7 +98,10 @@
                 <div>
                   <label>Primary Contact</label>
                   <div>
-                    <select class="form-control" formControlName="customer_contact_id">
+                    <select
+                      class="form-control"
+                      formControlName="customer_contact_id"
+                    >
                       <option value="">Please select...</option>
                       <option></option>
                     </select>
@@ -109,7 +110,10 @@
                 <div>
                   <label>Other Contact</label>
                   <div>
-                    <select class="form-control" formControlName="customer_contact2_id">
+                    <select
+                      class="form-control"
+                      formControlName="customer_contact2_id"
+                    >
                       <option value="">Please select...</option>
                       <option></option>
                     </select>
@@ -127,272 +131,306 @@
       <div class="col-md-12 form-group">
         <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <div #target1>
-          <p-accordionTab >
-            <ng-template pTemplate="header">
-              <i class="pi pi-info-circle"></i>&nbsp;Details Info</ng-template
-            >
-            <form>
-              <div class="detail-table">
-                <!-- <div class="col-md-12"> -->
-                <table class="table m-0 no-outline">
-                  <tbody>
-                    <tr>
-                      <td class="bg-lightgrey text-left w-25">Credit Term:</td>
-                      <td class="text-left w-25"></td>
-                      <td class="bg-lightgrey text-left">
-                        Hospital Bed (Exact Number)
-                      </td>
+            <p-accordionTab>
+              <ng-template pTemplate="header">
+                <i class="pi pi-info-circle"></i>&nbsp;Details Info</ng-template
+              >
+              <form>
+                <div class="detail-table">
+                  <!-- <div class="col-md-12"> -->
+                  <table class="table m-0 no-outline">
+                    <tbody>
+                      <tr>
+                        <td class="bg-lightgrey text-left w-25">
+                          Credit Term:
+                        </td>
+                        <td class="text-left w-25"></td>
+                        <td class="bg-lightgrey text-left">
+                          Hospital Bed (Exact Number)
+                        </td>
 
-                      <td class="text-left w-25">
-                        <a style="cursor: pointer; float: right"
-                          ><i class="icon-note icon"></i
-                        ></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bg-lightgrey text-left">Credit Limit</td>
-                      <td></td>
-                      <td class="bg-lightgrey text-left">Geographical Zone</td>
-                      <td class="text-left w-25">
-                        <a style="cursor: pointer; float: right"
-                          ><i class="icon-note icon"></i
-                        ></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bg-lightgrey text-left">Hospital Class</td>
-                      <td></td>
-                      <td class="bg-lightgrey text-left">Customer Tax Code</td>
-                      <td class="text-left w-25">
-                        <a style="cursor: pointer; float: right"
-                          ><i class="icon-note icon"></i
-                        ></a>
-                      </td>
-                    </tr>
+                        <td class="text-left w-25">
+                          <a style="cursor: pointer; float: right"
+                            ><i class="icon-note icon"></i
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="bg-lightgrey text-left">Credit Limit</td>
+                        <td></td>
+                        <td class="bg-lightgrey text-left">
+                          Geographical Zone
+                        </td>
+                        <td class="text-left w-25">
+                          <a style="cursor: pointer; float: right"
+                            ><i class="icon-note icon"></i
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="bg-lightgrey text-left">Hospital Class</td>
+                        <td></td>
+                        <td class="bg-lightgrey text-left">
+                          Customer Tax Code
+                        </td>
+                        <td class="text-left w-25">
+                          <a style="cursor: pointer; float: right"
+                            ><i class="icon-note icon"></i
+                          ></a>
+                        </td>
+                      </tr>
 
-                    <tr>
-                      <td class="bg-lightgrey text-left">Segmant</td>
-                      <td></td>
-                      <td class="bg-lightgrey text-left">Sold To</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td class="bg-lightgrey text-left">Customer Category</td>
-                      <td></td>
-                      <td class="text-left">Ship To</td>
-                      <td class="text-left w-25">
-                        <a style="cursor: pointer; float: right"
-                          ><i class="icon-note icon"></i
-                        ></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bg-lightgrey text-left">
-                        Customer SubCategory
-                      </td>
-                      <td></td>
-                      <td class="bg-lightgrey text-left">Bill To</td>
-                      <td class="text-left w-25">
-                        <a style="cursor: pointer; float: right"
-                          ><i class="icon-note icon"></i
-                        ></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bg-lightgrey text-left">
-                        Hospital Bed (Range)
-                      </td>
-                      <td></td>
-                      <td class="bg-lightgrey text-left"></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
-                <!-- </div> -->
-              </div>
-            </form>
-          </p-accordionTab>
-        </div>
+                      <tr>
+                        <td class="bg-lightgrey text-left">Segmant</td>
+                        <td></td>
+                        <td class="bg-lightgrey text-left">Sold To</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="bg-lightgrey text-left">
+                          Customer Category
+                        </td>
+                        <td></td>
+                        <td class="text-left">Ship To</td>
+                        <td class="text-left w-25">
+                          <a style="cursor: pointer; float: right"
+                            ><i class="icon-note icon"></i
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="bg-lightgrey text-left">
+                          Customer SubCategory
+                        </td>
+                        <td></td>
+                        <td class="bg-lightgrey text-left">Bill To</td>
+                        <td class="text-left w-25">
+                          <a style="cursor: pointer; float: right"
+                            ><i class="icon-note icon"></i
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="bg-lightgrey text-left">
+                          Hospital Bed (Range)
+                        </td>
+                        <td></td>
+                        <td class="bg-lightgrey text-left"></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- </div> -->
+                </div>
+              </form>
+            </p-accordionTab>
+          </div>
           <!-- Tracking Info -->
           <div #target2>
-          <p-accordionTab header="">
-            <ng-template pTemplate="header"
-              ><i class="pi pi-info-circle"></i>&nbsp;Tracking Info</ng-template
-            >
-            <form [formGroup]="trackingInfoDetailForm">
-              <div class="tracking-table">
-                <!-- <div class="col-md-12"> -->
-                <table class="table m-0 no-outline">
-                  <tbody>
-                    <tr>
-                      <td class="bg-lightgrey text-left w-25">
-                        Requested Delivery Date
-                      </td>
-                      <td class="text-left w-25">
-                        <input type="date" class="form-control" formControlName="request_delivery_date"/>
-                      </td>
-                      <td class="bg-lightgrey text-left">
-                        Estimated Delivery Date
-                      </td>
-                      <td class="text-left w-25">
-                        <input type="date" class="form-control" formControlName="estimated_delivery_date"/>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bg-lightgrey text-left">
-                        Estimated PO Date *
-                      </td>
-                      <td class="text-left w-25">
-                        <input type="date" class="form-control" formControlName="estimated_po_date"/>
-                      </td>
-                      <td class="bg-lightgrey text-left">
-                        Estimated Invoice Date
-                      </td>
-                      <td class="text-left w-25">
-                        <input type="date" class="form-control" formControlName="estimated_invoice_date"/>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bg-lightgrey text-left">Care Area</td>
-                      <td class="w-25">
-                        <select
-                        class="form-control"
-                        formControlName="care_area"
-                      >
-                        <option
-                          *ngFor="let care_area of care_areas; let i = index"
-                          value="{{ care_area.care_area_code }}"
-                        >
-                          {{ care_area.care_area_code }}
-                        </option>
-                      </select>
-                      </td>
-                      <td class="bg-lightgrey text-left">
-                        Hospital Department
-                      </td>
-                      <td class="w-25">
-                        <input
-                        type="text"
-                        class="form-control"
-                        formControlName="hospital_department"
-                      />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <!-- </div> -->
-              </div>
-            </form>
-          </p-accordionTab>            
-        </div>
+            <p-accordionTab header="">
+              <ng-template pTemplate="header"
+                ><i class="pi pi-info-circle"></i>&nbsp;Tracking
+                Info</ng-template
+              >
+              <form [formGroup]="trackingInfoDetailForm">
+                <div class="tracking-table">
+                  <!-- <div class="col-md-12"> -->
+                  <table class="table m-0 no-outline">
+                    <tbody>
+                      <tr>
+                        <td class="bg-lightgrey text-left w-25">
+                          Requested Delivery Date
+                        </td>
+                        <td class="text-left w-25">
+                          <input
+                            type="date"
+                            class="form-control"
+                            formControlName="request_delivery_date"
+                          />
+                        </td>
+                        <td class="bg-lightgrey text-left">
+                          Estimated Delivery Date
+                        </td>
+                        <td class="text-left w-25">
+                          <input
+                            type="date"
+                            class="form-control"
+                            formControlName="estimated_delivery_date"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="bg-lightgrey text-left">
+                          Estimated PO Date *
+                        </td>
+                        <td class="text-left w-25">
+                          <input
+                            type="date"
+                            class="form-control"
+                            formControlName="estimated_po_date"
+                          />
+                        </td>
+                        <td class="bg-lightgrey text-left">
+                          Estimated Invoice Date
+                        </td>
+                        <td class="text-left w-25">
+                          <input
+                            type="date"
+                            class="form-control"
+                            formControlName="estimated_invoice_date"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="bg-lightgrey text-left">Care Area</td>
+                        <td class="w-25">
+                          <select
+                            class="form-control"
+                            formControlName="care_area"
+                          >
+                            <option
+                              *ngFor="
+                                let care_area of care_areas;
+                                let i = index
+                              "
+                              value="{{ care_area.care_area_code }}"
+                            >
+                              {{ care_area.care_area_code }}
+                            </option>
+                          </select>
+                        </td>
+                        <td class="bg-lightgrey text-left">
+                          Hospital Department
+                        </td>
+                        <td class="w-25">
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="hospital_department"
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- </div> -->
+                </div>
+              </form>
+            </p-accordionTab>
+          </div>
           <!-- Forecast -->
           <div #target3>
-          <p-accordionTab header="" >
-            <ng-template pTemplate="header"
-              >Forecast &nbsp;&nbsp;&nbsp;<i class="pi pi-info-circle"></i
-            ></ng-template>
-            <form [formGroup]="forecastForm">
-              <div class="forecast-table">
-                <!-- <div class="col-md-12"> -->
-                <table class="table m-0 no-outline">
-                  <tbody>
-                    <tr>
-                      <td class="bg-lightgrey text-left w-25">
-                        Preferred Vendor
-                      </td>
-                      <td class="text-left w-25">
-                        <select
-                        class="form-control"
-                        formControlName="preferred_vendor"
-                      >
-                        <option
-                          *ngFor="
-                            let type of preferred_vendor_types;
-                            let i = index
-                          "
-                          value="{{ type.id }}"
-                        >
-                          {{ type.title }}
-                        </option>
-                      </select>
-                      </td>
-                      <td class="bg-lightgrey text-left">Forcast Category</td>
-                      <td class="text-left w-25">
-                        <progressbar
-                        [value]="forecast_category"
-                        class="progress-striped active"
-                        [animate]="true"
-                        [striped]="true"
-                        >{{ forecast_category }}%</progressbar
-                      >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bg-lightgrey text-left">Funding Status</td>
-                      <td class="text-left w-25">
-                        <select
-                        class="form-control"
-                        formControlName="funding_status"
-                      >
-                        <option
-                          *ngFor="let status of funding_status; let i = index"
-                          value="{{ status.id }}"
-                        >
-                          {{ status.title }}
-                        </option>
-                      </select>
-                      </td>
-                      <td class="bg-lightgrey text-left">Reason for Loss</td>
-                      <td class="text-left w-25">
-                        <input
-                        type="text"
-                        class="form-control"
-                        formControlName="reason"
-                      />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bg-lightgrey text-left">Funding Source</td>
-                      <td class="text-left w-25">
-                        <select
-                        class="form-control"
-                        formControlName="funding_source"
-                      >
-                        <option
-                          *ngFor="let source of funding_source; let i = index"
-                          value="{{ source.id }}"
-                        >
-                          {{ source.title }}
-                        </option>
-                      </select>
-                      </td>
-                      <td class="bg-lightgrey text-left">
-                        Lost to which competitor
-                      </td>
-                      <td class="bg-lightgrey text-left">
-                        <select
-                        class="form-control"
-                        formControlName="competitor_id"
-                      >
-                        <option
-                          *ngFor="
-                            let competitor of competitors;
-                            let i = index
-                          "
-                          value="{{ competitor.id }}"
-                        >
-                          {{ competitor.name }}
-                        </option>
-                      </select>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <!-- </div> -->
-              </div>
-            </form>
-          </p-accordionTab>
-        </div>
+            <p-accordionTab header="">
+              <ng-template pTemplate="header"
+                >Forecast &nbsp;&nbsp;&nbsp;<i class="pi pi-info-circle"></i
+              ></ng-template>
+              <form [formGroup]="forecastForm">
+                <div class="forecast-table">
+                  <!-- <div class="col-md-12"> -->
+                  <table class="table m-0 no-outline">
+                    <tbody>
+                      <tr>
+                        <td class="bg-lightgrey text-left w-25">
+                          Preferred Vendor
+                        </td>
+                        <td class="text-left w-25">
+                          <select
+                            class="form-control"
+                            formControlName="preferred_vendor"
+                          >
+                            <option
+                              *ngFor="
+                                let type of preferred_vendor_types;
+                                let i = index
+                              "
+                              value="{{ type.id }}"
+                            >
+                              {{ type.title }}
+                            </option>
+                          </select>
+                        </td>
+                        <td class="bg-lightgrey text-left">Forcast Category</td>
+                        <td class="text-left w-25">
+                          <progressbar
+                            [value]="forecast_category"
+                            class="progress-striped active"
+                            [animate]="true"
+                            [striped]="true"
+                            >{{ forecast_category }}%</progressbar
+                          >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="bg-lightgrey text-left">Funding Status</td>
+                        <td class="text-left w-25">
+                          <select
+                            class="form-control"
+                            formControlName="funding_status"
+                          >
+                            <option
+                              *ngFor="
+                                let status of funding_status;
+                                let i = index
+                              "
+                              value="{{ status.id }}"
+                            >
+                              {{ status.title }}
+                            </option>
+                          </select>
+                        </td>
+                        <td class="bg-lightgrey text-left">Reason for Loss</td>
+                        <td class="text-left w-25">
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="reason"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="bg-lightgrey text-left">Funding Source</td>
+                        <td class="text-left w-25">
+                          <select
+                            class="form-control"
+                            formControlName="funding_source"
+                          >
+                            <option
+                              *ngFor="
+                                let source of funding_source;
+                                let i = index
+                              "
+                              value="{{ source.id }}"
+                            >
+                              {{ source.title }}
+                            </option>
+                          </select>
+                        </td>
+                        <td class="bg-lightgrey text-left">
+                          Lost to which competitor
+                        </td>
+                        <td class="bg-lightgrey text-left">
+                          <select
+                            class="form-control"
+                            formControlName="competitor_id"
+                          >
+                            <option
+                              *ngFor="
+                                let competitor of competitors;
+                                let i = index
+                              "
+                              value="{{ competitor.id }}"
+                            >
+                              {{ competitor.name }}
+                            </option>
+                          </select>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- </div> -->
+                </div>
+              </form>
+            </p-accordionTab>
+          </div>
         </p-accordion>
       </div>
 
@@ -480,19 +518,19 @@
                           </mat-autocomplete>
                         </td>
                         <td>
-                          <input type="text" class="form-control" readonly />
+                          <input type="text" class="form-control" />
                         </td>
                         <td><input type="text" class="form-control" /></td>
                         <td><input type="text" class="form-control" /></td>
                         <td>
-                          <input type="text" class="form-control" readonly />
+                          <input type="text" class="form-control" />
                         </td>
                         <td><input type="text" class="form-control" /></td>
                         <td>
-                          <input type="text" class="form-control" readonly />
+                          <input type="text" class="form-control" />
                         </td>
                         <td>
-                          <input type="text" class="form-control" readonly />
+                          <input type="text" class="form-control" />
                         </td>
                         <td>
                           <button
@@ -644,8 +682,12 @@
   </div>
   <div class="side-btns">
     <button (click)="scroll(target1)"><i class="pi pi-info-circle"></i></button>
-    <button (click)="scroll(target2)"><i class="pi pi-shopping-cart"></i></button>
-    <button (click)="scroll(target3)"><img src="../../../assets/img/icons/bag.svg" alt="" /></button>
+    <button (click)="scroll(target2)">
+      <i class="pi pi-shopping-cart"></i>
+    </button>
+    <button (click)="scroll(target3)">
+      <img src="../../../assets/img/icons/bag.svg" alt="" />
+    </button>
     <button (click)="scroll(target4)"><i class="pi pi-file-o"></i></button>
     <button (click)="scroll(target5)"><i class="pi pi-calendar"></i></button>
     <button (click)="scroll(target5)"><i class="pi pi-clock"></i></button>
@@ -792,13 +834,25 @@
             <div class="row form-group dummy-info">
               <div class="col-md-6 info-text">Quantity</div>
               <div class="col-md-6">
-                <i class="pi pi-minus-circle" style="margin-right: 10px"></i>
-                1
+                <i
+                  class="pi pi-minus-circle"
+                  [style.color]="productQuantity==-1 ? color: 'black'"
+                  style="margin-right: 10px"
+                  (click)="decrementProductQuantity()"
+                ></i>
+                {{ productQuantity }}
+                <!-- <input
+                  type="number"
+                  [value]="productQuantity"
+                  style="border: none; width: 39px"
+                /> -->
+                <!-- color: #007bff;  -->
                 <i
                   class="pi pi-plus-circle"
-                  style="color: #007bff; margin-left: 10px"
+                  [style.color]="productQuantity==1 ? color: 'black'"
+                  style="margin-left: 10px"
+                  (click)="increaseProductQuantity()"
                 ></i>
-                <!-- <input type="text" class="form-control"/> -->
               </div>
             </div>
             <div class="row form-group dummy-info">

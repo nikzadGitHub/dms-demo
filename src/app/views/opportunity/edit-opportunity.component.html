@@ -75,12 +75,17 @@
                       (change)="updateDetail()"
                     >
                       <option value="">Please select...</option>
-                      <option
+                      <option value="1">Contact-1</option>
+                      <option value="2">Contact-2</option>
+                      <option value="3">Contact-3</option>
+                      <option value="4">Contact-4</option>
+
+                      <!-- <option
                         *ngFor="let contact of customer_contacts; let i = index"
                         value="{{ contact.id }}"
                       >
                         {{ contact.name }}
-                      </option>
+                      </option> -->
                     </select>
                   </div>
                 </div>
@@ -92,13 +97,18 @@
                       formControlName="customer_contact2_id"
                       (change)="updateDetail()"
                     >
-                      <option value="">Please select...</option>
-                      <option
+                      <!-- <option value="">Please select...</option>
+                    <option value="5">Contact-1</option>
+                    <option value="6">Contact-2</option>
+                    <option value="7">Contact-3</option>
+                    <option value="8">Contact-4</option> -->
+
+                      <!-- <option
                         *ngFor="let contact of customer_contacts; let i = index"
                         value="{{ contact.id }}"
                       >
                         {{ contact.name }}
-                      </option>
+                      </option> -->
                     </select>
                   </div>
                 </div>
@@ -124,7 +134,207 @@
               Info</ng-template
             >
             <form [formGroup]="opportunityDetailForm2">
-              <div class="row">
+              <div class="detail-table">
+                <table class="table m-0 no-outline">
+                  <tbody>
+                    <tr>
+                      <td class="bg-lightgrey text-left w-25">Credit Term:</td>
+                      <td class="text-left w-25">
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="credit_term"
+                          [attr.disabled]="is_detail_editable"
+                        />
+                      </td>
+                      <td class="bg-lightgrey text-left">
+                        Hospital Bed (Exact Number)
+                      </td>
+
+                      <td class="text-left w-25">
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="hospital_bed_value"
+                          [attr.disabled]="is_detail_editable"
+                        />
+                        <!-- <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a> -->
+                      </td>
+                      <td>
+                        <a style="cursor: pointer; float: right"
+                        ><i class="icon-note icon"></i
+                      ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">Credit Limit</td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="credit_limit"
+                          [attr.disabled]="is_detail_editable"
+                        />
+                      </td>
+                      <td class="bg-lightgrey text-left">Geographical Zone</td>
+                      <td class="text-left w-25">
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="geographical_zone"
+                          [attr.disabled]="is_detail_editable"
+                        />
+                        <!-- <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a> -->
+                      </td>
+                      <td>
+                        <a style="cursor: pointer; float: right"
+                        ><i class="icon-note icon"></i
+                      ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">Hospital Class</td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="hospital_class_code"
+                          [attr.disabled]="is_detail_editable"
+                        />
+                      </td>
+                      <td class="bg-lightgrey text-left">Customer Tax Code</td>
+                      <td class="text-left w-25">
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="tax_code"
+                          [attr.disabled]="is_detail_editable"
+                        />
+                        <!-- <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a> -->
+                      </td>
+                      <td>
+                        <a style="cursor: pointer; float: right"
+                        ><i class="icon-note icon"></i
+                      ></a>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="bg-lightgrey text-left">Segmant</td>
+                      <td>
+                        <select class="form-control">
+                          <option>Government</option>
+                          <option>Semi Government</option>
+                          <option>Private</option>
+                        </select>
+                      </td>
+                      <td class="bg-lightgrey text-left">Sold To</td>
+                      <td>
+                        <div style="display: flex; align-items: center">
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="sold_to"
+                            [attr.disabled]="is_detail_editable"
+                          />
+                          <!-- <a style="cursor: pointer; float: right"
+                            ><i class="icon-note icon"></i
+                          ></a> -->
+                        </div>
+                      </td>
+                      <td>
+                        <a style="cursor: pointer; float: right"
+                        ><i class="icon-note icon"></i
+                      ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">Customer Category</td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="category_code"
+                          [attr.disabled]="is_detail_editable"
+                        />
+                      </td>
+                      <td class="text-left">Ship To</td>
+                      <td class="text-left w-25">
+                        <div style="display: flex; align-items: center">
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="ship_to"
+                            [attr.disabled]="is_detail_editable"
+                          />
+                          <!-- <a style="cursor: pointer; float: right"
+                            ><i class="icon-note icon"></i
+                          ></a> -->
+                        </div>
+                      </td>
+                      <td>
+                        <a style="cursor: pointer; float: right"
+                        ><i class="icon-note icon"></i
+                      ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">
+                        Customer SubCategory
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="subcategory_code"
+                          [attr.disabled]="is_detail_editable"
+                        />
+                      </td>
+                      <td class="bg-lightgrey text-left">Bill To</td>
+                      <td class="text-left w-25">
+                        <div style="display: flex; align-items: center">
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="bill_to"
+                            [attr.disabled]="is_detail_editable"
+                          />
+                          <!-- <a style="cursor: pointer; float: right"
+                            ><i class="icon-note icon"></i
+                          ></a> -->
+                        </div>
+                      </td>
+                      <td>
+                        <a style="cursor: pointer; float: right"
+                        ><i class="icon-note icon"></i
+                      ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">
+                        Hospital Bed (Range)
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="bed_range"
+                          [attr.disabled]="is_detail_editable"
+                        />
+                      </td>
+                      <td class="bg-lightgrey text-left"></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- <div class="row">
                 <div class="col-md-12">
                   <table class="table table-striped m-0 no-outline">
                     <tbody>
@@ -215,7 +425,7 @@
                     </tbody>
                   </table>
                 </div>
-              </div>
+              </div> -->
             </form>
           </p-accordionTab>
           <!-- Tracking Info -->
@@ -278,7 +488,7 @@
                         >
                           <option
                             *ngFor="let care_area of care_areas; let i = index"
-                            value="{{ care_area.care_area_code }}"
+                            value="{{ care_area.care_area }}"
                           >
                             {{ care_area.care_area_code }}
                           </option>
@@ -680,7 +890,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let competitor of competitors; let i = index">
-                  <td class="text-left">{{ competitor.name }}</td>
+                  <td class="text-left">{{ competitor.competitor_name }}</td>
                   <td class="text-left">{{ competitor.amount }}</td>
                   <td style="width: 8%">
                     <a style="cursor: pointer; color: #386fa4"
@@ -775,7 +985,7 @@
                 </form>
                 <!-- quote-product -->
                 <div style="margin-top: 10px">
-                  <p-accordionTab header="Products">
+                  <p-accordionTab header="Quotation ID">
                     <form class="product-form">
                       <div class="product-quotation-table">
                         <table class="table">

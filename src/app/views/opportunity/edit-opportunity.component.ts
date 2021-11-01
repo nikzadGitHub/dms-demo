@@ -5,6 +5,7 @@ import { FormArray, FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { Observable } from "rxjs";
 import { filter, map, startWith } from "rxjs/operators";
 import { AppService } from "./app.service";
+import { number } from "echarts";
 
 export interface Product {
   id: any;
@@ -79,7 +80,7 @@ export class EditOpportunityComponent implements OnInit {
   editing_product = 0;
   editing_product_index1 = 0;
   editing_product_index2 = 0;
-
+  is_detail_editable = true;
   active = 1;
   is_dummy_sku = 0;
 
@@ -130,6 +131,18 @@ export class EditOpportunityComponent implements OnInit {
   });
 
   opportunityDetailForm2 = this.formBuilder.group({
+    credit_term: 0,
+    credit_limit: 0,
+    hospital_bed_value: 0,
+    hospital_class_code: 0,
+    category_code: 0,
+    subcategory_code: 0,
+    geographical_zone: 0,
+    bed_range:0,
+    tax_code: 0,
+    sold_to: "",
+    ship_to: "",
+    bill_to: "",
     request_delivery_date: "",
     estimated_delivery_date: "",
     estimated_po_date: "",
@@ -145,7 +158,6 @@ export class EditOpportunityComponent implements OnInit {
     reason: "",
     competitor_id: "",
   });
-
 
   constructor(
     private appService: AppService,
@@ -164,6 +176,8 @@ export class EditOpportunityComponent implements OnInit {
     );
 
     this.route.params.subscribe((event) => {
+      console.log("opp_id:", event);
+
       this.opportunity_id = event.opportunityId;
     });
 
@@ -173,7 +187,7 @@ export class EditOpportunityComponent implements OnInit {
         console.log("opportunity-detail:", data);
         this.detail = data["data"];
         console.log("opportunity-detail:", this.detail);
-        // this.external_id = data["data"]["customer"]["external_id"]
+        this.is_detail_editable = true;
         this.opportunityDetailForm1.patchValue({
           topic: data["data"]["topic"],
           customer_contact_id: data["data"]["customer_contact_id"],
@@ -183,6 +197,18 @@ export class EditOpportunityComponent implements OnInit {
         });
 
         this.opportunityDetailForm2.patchValue({
+          credit_term: data["data"]["customer"]["credit_term"],
+          credit_limit: data["data"]["customer"]["credit_limit"],
+          hospital_bed_value: data["data"]["customer"]["hospital_bed_value"],
+          hospital_class_code: data["data"]["customer"]["hospital_class_code"],
+          category_code: data["data"]["customer"]["category_code"],
+          subcategory_code:data["data"]["customer"]["subcategory_code"],
+          geographical_zone: data["data"]["customer"]["geographical_zone"],
+          tax_code: data["data"]["customer"]["tax_code"],
+          bed_range:data["data"]["customer"]["range_code"],
+          sold_to: data["data"]["sold_to"]["address"],
+          ship_to: data["data"]["ship_to"]["address"],
+          bill_to: data["data"]["bill_to"]["address"],
           request_delivery_date: data["data"]["request_delivery_date"],
           estimated_delivery_date: data["data"]["estimated_delivery_date"],
           estimated_po_date: data["data"]["estimated_po_date"],
@@ -192,12 +218,14 @@ export class EditOpportunityComponent implements OnInit {
 
         this.appService
           .getQuery(
-            "/opportunity/get-customer-contacts?data_area_id="+this.detail["data_area_id"]+"&&external_id="+
+            "/opportunity/get-customer-contacts?data_area_id=" +
+              this.detail["data_area_id"] +
+              "&&external_id=" +
               this.detail["customer"]["external_id"]
           )
           .subscribe((data) => {
-            console.log("customer-data---->",data);
-            
+            console.log("customer-data---->", data);
+
             this.customer_contacts = data["data"];
             console.log("customer-data: ", this.customer_contacts);
             const newArr = [
@@ -207,7 +235,7 @@ export class EditOpportunityComponent implements OnInit {
             this.customer_contacts = newArr;
           });
       });
-
+    // Forecast
     this.appService
       .getQuery("/opportunity/forecast/" + this.opportunity_id, null)
       .subscribe((data) => {
@@ -223,10 +251,11 @@ export class EditOpportunityComponent implements OnInit {
         this.forecast_category = data["data"]["forecast_category"];
       });
 
+    // product-list
     this.appService
       .getQuery("/opportunity/product-list/" + this.opportunity_id, null)
       .subscribe((data) => {
-        console.log("product-list:");
+        console.log("product-list:", data);
         this.product_options = data["data"];
         console.log("product-data-->", this.product_options);
 
@@ -237,20 +266,21 @@ export class EditOpportunityComponent implements OnInit {
         // }
       });
 
+    // competitor
     this.appService
       .getQuery("/opportunity/competitor/" + this.opportunity_id, null)
       .subscribe((data) => {
-        console.log("competitors:");
-        console.log(data);
+        console.log("competitors:", data);
         this.competitors = data["data"];
       });
 
+    // status
     this.appService.getQuery("/opportunity-status", null).subscribe((data) => {
       console.log("statuses:");
       console.log(data);
       this.statuses = data["data"];
     });
-
+    // funding-source
     this.appService
       .getQuery("/opportunity-funding-source", null)
       .subscribe((data) => {
@@ -259,6 +289,7 @@ export class EditOpportunityComponent implements OnInit {
         this.funding_source = data["data"];
       });
 
+    // funding-status
     this.appService
       .getQuery("/opportunity-funding-status", null)
       .subscribe((data) => {
@@ -267,6 +298,7 @@ export class EditOpportunityComponent implements OnInit {
         this.funding_status = data["data"];
       });
 
+    // pre-vendor-type
     this.appService
       .getQuery("/opportunity-pre-vendor-type", null)
       .subscribe((data) => {
@@ -275,11 +307,11 @@ export class EditOpportunityComponent implements OnInit {
         this.preferred_vendor_types = data["data"];
       });
 
+    // active-list
     this.appService
       .getQuery("/care-area/active-list", null)
       .subscribe((data) => {
-        console.log("care area:");
-        console.log(data);
+        console.log("care area:", data);
         this.care_areas = data["data"];
       });
   }
@@ -603,6 +635,8 @@ export class EditOpportunityComponent implements OnInit {
   }
 
   addCompetitor() {
+    console.log("competitor-name: ", this.competitor_name);
+
     this.appService
       .postQuery("/opportunity/create-competitor", {
         opportunity_id: this.opportunity_id,
