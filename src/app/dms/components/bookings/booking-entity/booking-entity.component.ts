@@ -31,11 +31,15 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.routeListener = this.route.params.subscribe(params => {
+    this.routeListener = this.route.params.subscribe(paramList => {
       if (this.apiListener) {
         this.apiListener.unsubscribe();
       }
-      const id = BigInt(params['id']);
+      let param: string = paramList['id'] + '';
+      if (param.toLowerCase().startsWith('bk-')) {
+        param = param.substring(3);
+      }
+      const id = BigInt(param);
       this.bookingId = id;
       // Updates anything related to ID.
       if (id != BigInt(0)) {

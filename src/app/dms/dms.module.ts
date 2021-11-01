@@ -28,7 +28,6 @@ import { OpportunitySummaryComponent } from './components/bookings/opportunity-s
 import { BookingEntityComponent } from './components/bookings/booking-entity/booking-entity.component';
 import { BookingApprovalComponent } from './components/bookings/booking-approval/booking-approval.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 import { ExpandPanelComponent } from './components/widgets/expand-panel/expand-panel.component';
 
 
@@ -41,7 +40,6 @@ import { ExpandPanelComponent } from './components/widgets/expand-panel/expand-p
     BookingEntityComponent,
     BookingApprovalComponent,
     ApprovalsComponent,
-    CalendarComponent,
     BookingFormComponent,
     FormComponent,
     MainAssetComponent,

@@ -7,9 +7,7 @@ import { BookingsComponent } from './components/bookings/bookings.component';
 import { BookingFormComponent } from './components/bookings/booking-form/booking-form.component';
 import { BookingDemoComponent } from './components/bookings/booking-demo/booking-demo.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 import { BookingEntityComponent } from './components/bookings/booking-entity/booking-entity.component';
-t
 
 export const fallbackPath = 'inventory';
 

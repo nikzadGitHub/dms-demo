@@ -1,22 +1,22 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BookingFormComponent } from './booking-form.component';
+import { BookingDemoComponent } from './booking-demo.component';
 
-describe('BookingFormComponent', () => {
+describe('BookingDemoComponent', () => {
 
-  let component: BookingFormComponent;
-  let fixture: ComponentFixture<BookingFormComponent>;
+  let component: BookingDemoComponent;
+  let fixture: ComponentFixture<BookingDemoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BookingFormComponent ]
+      declarations: [ BookingDemoComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BookingFormComponent);
+    fixture = TestBed.createComponent(BookingDemoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -24,5 +24,5 @@ describe('BookingFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
+
 });
