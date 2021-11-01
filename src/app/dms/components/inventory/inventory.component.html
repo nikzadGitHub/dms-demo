@@ -1,3 +1,7 @@
+
+<p-tabMenu [model]="menuItems"
+    [activeItem]="activeItem"></p-tabMenu>
+
 <p-table #dt [value]="inventoryList" styleClass="p-datatable-table" [rowHover]="true" [filterDelay]="0"
     [globalFilterFields]="['serial_no','stock_keep_unit','product_name']">
     <ng-template pTemplate="caption">
@@ -20,14 +24,14 @@
                 <div class="p-d-flex p-jc-between p-ai-center">
                     Serial No
                     <p-sortIcon field="serial_no"></p-sortIcon>
-                    <p-columnFilter type="text" field="serial_no" display="menu" class="p-ml-auto"></p-columnFilter>
+                    <p-columnFilter type="numeric" field="serial_no" display="menu" class="p-ml-auto"></p-columnFilter>
                 </div>
             </th>
             <th pSortableColumn="stock_keep_unit" class="text-center">
                 <div class="p-d-flex p-jc-between p-ai-center">
                     SKU
                     <p-sortIcon field="stock_keep_unit"></p-sortIcon>
-                    <p-columnFilter type="date" field="stock_keep_unit" display="menu" class="p-ml-auto">
+                    <p-columnFilter type="text" field="stock_keep_unit" display="menu" class="p-ml-auto">
                     </p-columnFilter>
                 </div>
             </th>

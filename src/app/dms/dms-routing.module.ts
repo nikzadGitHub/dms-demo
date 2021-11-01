@@ -6,10 +6,35 @@ import { InventoryComponent } from './components/inventory/inventory.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { BookingFormComponent } from './components/bookings/booking-form/booking-form.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { BookingEntityComponent } from './components/bookings/booking-entity/booking-entity.component';
+t
 
 export const fallbackPath = 'inventory';
 
-export const mainChildren = [
+export const bookingsChildren: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    component: BookingsComponent,
+  },
+  {
+    path: 'new',
+    component: BookingFormComponent,
+    data: {
+      title: 'Bookings Form',
+    },
+  },
+  {
+    path: ':id',
+    component: BookingEntityComponent,
+    data: {
+      title: 'Booking view',
+    },
+  },
+];
+
+export const mainChildren: Routes = [
   {
     path: '',
     redirectTo: fallbackPath,
@@ -24,17 +49,10 @@ export const mainChildren = [
   },
   {
     path: 'bookings',
-    component: BookingsComponent,
     data: {
       title: 'Bookings',
     },
-  },
-  {
-    path: 'bookings/new',
-    component: BookingFormComponent,
-    data: {
-      title: 'Bookings Form',
-    },
+    children: bookingsChildren,
   },
   {
     path: 'approvals',
