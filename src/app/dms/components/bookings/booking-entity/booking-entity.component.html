@@ -1,0 +1,62 @@
+<dms-expand-panel title="Booking Details" [open]="true">
+    <p>TODO: Add Booking-entity details here...</p>
+</dms-expand-panel>
+
+<br>
+
+<dms-expand-panel title="Opportunity Summary">
+    <p>TODO: Add Opportunity Summary here...</p>
+</dms-expand-panel>
+
+<br>
+
+<dms-booking-approval
+    [statusText]="statusText"
+    [list]="approvalList"
+    [buttons]="approvalButtons"
+    (buttonAction)="onApprovalAction($event)">
+    <div *ngIf="isConfirmed" class="animated fadeIn card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    Main Asset Serial No
+                </div>
+                <div class="col-md-6">
+                    2
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label class="col-md-6" for="warehouse_from">
+                    From Warehouse
+                </label>
+                <div class="col-md-6">
+                    <input name="warehouse_from" type="text"/>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label class="col-md-6" for="warehouse_from">
+                    From Ward/ Department
+                </label>
+                <div class="col-md-6">
+                    <input name="ward_from" type="text"/>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label class="col-md-6" for="destination">
+                    To Ward / Department
+                </label>
+                <div class="col-md-6">
+                    <input name="destination" type="text"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</dms-booking-approval>
+
+<br>
+<br>
+
+TODO: Add footer here...

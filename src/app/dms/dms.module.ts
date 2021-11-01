@@ -13,6 +13,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 // Local.
 //
 import { DmsRoutingModule } from './dms-routing.module';
+import { CalendarModule } from './components/calendar/calendar.module';
 import { providersForEnvironment } from './services/providers';
 import { DmsComponent } from './dms.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
@@ -24,8 +25,11 @@ import { BookingDemoComponent } from './components/bookings/booking-demo/booking
 import { BookingDetailComponent } from './components/bookings/booking-demo/booking-detail/booking-detail.component';
 import { StatusLogComponent } from './components/bookings/booking-demo/status-log/status-log.component';
 import { OpportunitySummaryComponent } from './components/bookings/opportunity-summary/opportunity-summary.component';
+import { BookingEntityComponent } from './components/bookings/booking-entity/booking-entity.component';
+import { BookingApprovalComponent } from './components/bookings/booking-approval/booking-approval.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { ExpandPanelComponent } from './components/widgets/expand-panel/expand-panel.component';
 
 
 
@@ -34,6 +38,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     DmsComponent,
     InventoryComponent,
     BookingsComponent,
+    BookingEntityComponent,
+    BookingApprovalComponent,
     ApprovalsComponent,
     CalendarComponent,
     BookingFormComponent,
@@ -42,11 +48,15 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     BookingDemoComponent,
     BookingDetailComponent,
     OpportunitySummaryComponent,
-    StatusLogComponent
+    StatusLogComponent,
+    MainAssetComponent,
+    ExpandPanelComponent
+
   ],
   imports: [
     CommonModule,
     DmsRoutingModule,
+    CalendarModule,
 
     // Dependencies.
     PrimeNgModule,

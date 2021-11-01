@@ -8,10 +8,34 @@ import { BookingFormComponent } from './components/bookings/booking-form/booking
 import { BookingDemoComponent } from './components/bookings/booking-demo/booking-demo.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { BookingEntityComponent } from './components/bookings/booking-entity/booking-entity.component';
+t
 
 export const fallbackPath = 'inventory';
 
-export const mainChildren = [
+export const bookingsChildren: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    component: BookingsComponent,
+  },
+  {
+    path: 'new',
+    component: BookingFormComponent,
+    data: {
+      title: 'Bookings Form',
+    },
+  },
+  {
+    path: ':id',
+    component: BookingEntityComponent,
+    data: {
+      title: 'Booking view',
+    },
+  },
+];
+
+export const mainChildren: Routes = [
   {
     path: '',
     redirectTo: fallbackPath,
@@ -26,17 +50,10 @@ export const mainChildren = [
   },
   {
     path: 'bookings',
-    component: BookingsComponent,
     data: {
       title: 'Bookings',
     },
-  },
-  {
-    path: 'bookings/new',
-    component: BookingFormComponent,
-    data: {
-      title: 'Bookings Form',
-    },
+    children: bookingsChildren,
   },
   {
     path: 'bookings/:id',
@@ -54,10 +71,8 @@ export const mainChildren = [
   },
   {
     path: 'calendar',
-    component: CalendarComponent,
-    data: {
-      title: 'Calendar',
-    },
+    loadChildren: () => import('./components/calendar/calendar.module')
+      .then(m => m.CalendarModule),
   },
   {
     path: '**',

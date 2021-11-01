@@ -7,7 +7,7 @@ export interface InventoryItem {
   agency_name: string;
   description: string;
   status: string;
-  booking_id: number;
+  booking_id: BigInt;
 }
 
 export function bookingIdFormat(booking_id: number) : string {

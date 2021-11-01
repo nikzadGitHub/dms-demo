@@ -13,6 +13,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TabViewModule } from 'primeng/tabview';
+import { TabMenuModule } from 'primeng/tabmenu';
 import { CheckboxModule }  from 'primeng/checkbox';
 import { ProgressBarModule } from 'primeng/progressbar';;
 import { ChartModule } from 'primeng/chart';
@@ -35,12 +36,14 @@ import { InputNumberModule } from 'primeng/inputnumber';
     SplitButtonModule,
     RadioButtonModule,
     TabViewModule,
+    TabMenuModule,
     CheckboxModule,
     ProgressBarModule,
     ChartModule,
     InputNumberModule
   ],
   exports: [
+    CommonModule,
     AutoCompleteModule,
     CalendarModule,
     AccordionModule,
@@ -54,6 +57,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
     SplitButtonModule,
     RadioButtonModule,
     TabViewModule,
+    TabMenuModule,
     CheckboxModule,
     ProgressBarModule,
     ChartModule,
