@@ -66,7 +66,9 @@ describe('DMS: Routing', () => {
   });
 
   it('should contain route for /calendar', () => {
-    expectChild('calendar', CalendarComponent)
+    expectRoute(mainChildren, 'calendar', {
+      loadChildren: jasmine.any(Function),
+    });
   });
 
   it('should handle invalid route', () => {

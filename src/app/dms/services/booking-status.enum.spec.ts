@@ -10,14 +10,13 @@ describe('BookingStatus Enum', () => {
         fail('Invalid casing for: ' + text);
       }
     }
+    expect().nothing();
   });
 
   it('should have value with Lowercase keys', () => {
     const list = Object.keys(BookingStatus);
     for (const text in list) {
-      if (text != text.toLowerCase()) {
-        fail('Expected lowercase key for: ' + text);
-      }
+      expect(text).toEqual(text.toLowerCase());
     }
   });
 
@@ -32,6 +31,7 @@ describe('BookingStatus Enum', () => {
         }
       }
     }
+    expect().nothing();
   });
 });
 
