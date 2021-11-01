@@ -21,6 +21,10 @@ import { BookingsComponent } from './components/bookings/bookings.component';
 import { BookingFormComponent } from './components/bookings/booking-form/booking-form.component';
 import { FormComponent } from './components/bookings/form/form.component';
 import { MainAssetComponent } from './components/bookings/main-asset/main-asset.component';
+import { BookingDemoComponent } from './components/bookings/booking-demo/booking-demo.component';
+import { BookingDetailComponent } from './components/bookings/booking-demo/booking-detail/booking-detail.component';
+import { StatusLogComponent } from './components/bookings/booking-demo/status-log/status-log.component';
+import { OpportunitySummaryComponent } from './components/bookings/opportunity-summary/opportunity-summary.component';
 import { BookingEntityComponent } from './components/bookings/booking-entity/booking-entity.component';
 import { BookingApprovalComponent } from './components/bookings/booking-approval/booking-approval.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
@@ -40,7 +44,12 @@ import { ExpandPanelComponent } from './components/widgets/expand-panel/expand-p
     CalendarComponent,
     BookingFormComponent,
     FormComponent,
-    MainAssetComponent
+    MainAssetComponent,
+    BookingDemoComponent,
+    BookingDetailComponent,
+    OpportunitySummaryComponent,
+    StatusLogComponent,
+    MainAssetComponent,
     ExpandPanelComponent
 
   ],
