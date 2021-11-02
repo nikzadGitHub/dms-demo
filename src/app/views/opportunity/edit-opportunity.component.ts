@@ -470,7 +470,6 @@ export class EditOpportunityComponent implements OnInit {
 
   addProduct(index, option_id, check) {
     console.log("option_id", option_id);
-    this.addLine = check;
     this.appService
       .postQuery("/opportunity/create-product", {
         is_dummy_sku: this.is_dummy_sku,
@@ -571,8 +570,6 @@ export class EditOpportunityComponent implements OnInit {
     this.default_active_option_tab = index;
     this.productList.splice(0, this.productList.length); //clear search
     this.addProductModal.show();
-
-  this.productById(this.active_option_id);
     // this.addProduct(index, this.active_option_id , this.addLine);
    
   }
