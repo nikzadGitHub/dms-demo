@@ -144,7 +144,7 @@
                           type="text"
                           class="form-control"
                           formControlName="credit_term"
-                          [attr.disabled]="is_detail_editable"
+                          [attr.disabled]="detail_not_editable ? '' : null"
                         />
                       </td>
                       <td class="bg-lightgrey text-left">
@@ -156,7 +156,7 @@
                           type="text"
                           class="form-control"
                           formControlName="hospital_bed_value"
-                          [attr.disabled]="is_detail_editable"
+                          [attr.disabled]="detail_not_editable ? '' : null"
                         />
                         <!-- <a style="cursor: pointer; float: right"
                           ><i class="icon-note icon"></i
@@ -164,8 +164,8 @@
                       </td>
                       <td>
                         <a style="cursor: pointer; float: right"
-                        ><i class="icon-note icon"></i
-                      ></a>
+                          ><i class="icon-note icon"></i
+                        ></a>
                       </td>
                     </tr>
                     <tr>
@@ -175,7 +175,7 @@
                           type="text"
                           class="form-control"
                           formControlName="credit_limit"
-                          [attr.disabled]="is_detail_editable"
+                          [attr.disabled]="detail_not_editable ? '' : null"
                         />
                       </td>
                       <td class="bg-lightgrey text-left">Geographical Zone</td>
@@ -184,7 +184,7 @@
                           type="text"
                           class="form-control"
                           formControlName="geographical_zone"
-                          [attr.disabled]="is_detail_editable"
+                          [attr.disabled]="detail_not_editable ? '' : null"
                         />
                         <!-- <a style="cursor: pointer; float: right"
                           ><i class="icon-note icon"></i
@@ -192,8 +192,8 @@
                       </td>
                       <td>
                         <a style="cursor: pointer; float: right"
-                        ><i class="icon-note icon"></i
-                      ></a>
+                          ><i class="icon-note icon"></i
+                        ></a>
                       </td>
                     </tr>
                     <tr>
@@ -203,7 +203,7 @@
                           type="text"
                           class="form-control"
                           formControlName="hospital_class_code"
-                          [attr.disabled]="is_detail_editable"
+                          [attr.disabled]="detail_not_editable ? '' : null"
                         />
                       </td>
                       <td class="bg-lightgrey text-left">Customer Tax Code</td>
@@ -212,7 +212,7 @@
                           type="text"
                           class="form-control"
                           formControlName="tax_code"
-                          [attr.disabled]="is_detail_editable"
+                          [attr.disabled]="detail_not_editable ? '' : null"
                         />
                         <!-- <a style="cursor: pointer; float: right"
                           ><i class="icon-note icon"></i
@@ -220,13 +220,13 @@
                       </td>
                       <td>
                         <a style="cursor: pointer; float: right"
-                        ><i class="icon-note icon"></i
-                      ></a>
+                          ><i class="icon-note icon"></i
+                        ></a>
                       </td>
                     </tr>
 
                     <tr>
-                      <td class="bg-lightgrey text-left">Segmant</td>
+                      <td class="bg-lightgrey text-left">Segment</td>
                       <td>
                         <select class="form-control">
                           <option>Government</option>
@@ -241,7 +241,7 @@
                             type="text"
                             class="form-control"
                             formControlName="sold_to"
-                            [attr.disabled]="is_detail_editable"
+                            [attr.disabled]="detail_not_editable ? '' : null"
                           />
                           <!-- <a style="cursor: pointer; float: right"
                             ><i class="icon-note icon"></i
@@ -250,8 +250,8 @@
                       </td>
                       <td>
                         <a style="cursor: pointer; float: right"
-                        ><i class="icon-note icon"></i
-                      ></a>
+                          ><i class="icon-note icon"></i
+                        ></a>
                       </td>
                     </tr>
                     <tr>
@@ -261,7 +261,7 @@
                           type="text"
                           class="form-control"
                           formControlName="category_code"
-                          [attr.disabled]="is_detail_editable"
+                          [attr.disabled]="detail_not_editable ? '' : null"
                         />
                       </td>
                       <td class="text-left">Ship To</td>
@@ -271,7 +271,7 @@
                             type="text"
                             class="form-control"
                             formControlName="ship_to"
-                            [attr.disabled]="is_detail_editable"
+                            [attr.disabled]="detail_not_editable ? '' : null"
                           />
                           <!-- <a style="cursor: pointer; float: right"
                             ><i class="icon-note icon"></i
@@ -280,8 +280,8 @@
                       </td>
                       <td>
                         <a style="cursor: pointer; float: right"
-                        ><i class="icon-note icon"></i
-                      ></a>
+                          ><i class="icon-note icon"></i
+                        ></a>
                       </td>
                     </tr>
                     <tr>
@@ -293,7 +293,7 @@
                           type="text"
                           class="form-control"
                           formControlName="subcategory_code"
-                          [attr.disabled]="is_detail_editable"
+                          [attr.disabled]="detail_not_editable ? '' : null"
                         />
                       </td>
                       <td class="bg-lightgrey text-left">Bill To</td>
@@ -303,7 +303,7 @@
                             type="text"
                             class="form-control"
                             formControlName="bill_to"
-                            [attr.disabled]="is_detail_editable"
+                            [attr.disabled]="detail_not_editable ? '' : null"
                           />
                           <!-- <a style="cursor: pointer; float: right"
                             ><i class="icon-note icon"></i
@@ -312,8 +312,8 @@
                       </td>
                       <td>
                         <a style="cursor: pointer; float: right"
-                        ><i class="icon-note icon"></i
-                      ></a>
+                          ><i class="icon-note icon"></i
+                        ></a>
                       </td>
                     </tr>
                     <tr>
@@ -325,7 +325,7 @@
                           type="text"
                           class="form-control"
                           formControlName="bed_range"
-                          [attr.disabled]="is_detail_editable"
+                          [attr.disabled]="detail_not_editable ? '' : null"
                         />
                       </td>
                       <td class="bg-lightgrey text-left"></td>

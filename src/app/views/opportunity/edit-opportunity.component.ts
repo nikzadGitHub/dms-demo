@@ -80,7 +80,7 @@ export class EditOpportunityComponent implements OnInit {
   editing_product = 0;
   editing_product_index1 = 0;
   editing_product_index2 = 0;
-  is_detail_editable = true;
+  detail_not_editable = false;
   active = 1;
   is_dummy_sku = 0;
 
@@ -138,7 +138,7 @@ export class EditOpportunityComponent implements OnInit {
     category_code: 0,
     subcategory_code: 0,
     geographical_zone: 0,
-    bed_range:0,
+    bed_range: 0,
     tax_code: 0,
     sold_to: "",
     ship_to: "",
@@ -186,8 +186,7 @@ export class EditOpportunityComponent implements OnInit {
       .subscribe((data: any) => {
         console.log("opportunity-detail:", data);
         this.detail = data["data"];
-        console.log("opportunity-detail:", this.detail);
-        this.is_detail_editable = true;
+        console.log("opportunity-detail:", this.detail.customer);
         this.opportunityDetailForm1.patchValue({
           topic: data["data"]["topic"],
           customer_contact_id: data["data"]["customer_contact_id"],
@@ -195,27 +194,30 @@ export class EditOpportunityComponent implements OnInit {
           status_id: data["data"]["status_id"],
           is_include_in_forecast: data["data"]["is_include_in_forecast"],
         });
-
-        this.opportunityDetailForm2.patchValue({
-          credit_term: data["data"]["customer"]["credit_term"],
-          credit_limit: data["data"]["customer"]["credit_limit"],
-          hospital_bed_value: data["data"]["customer"]["hospital_bed_value"],
-          hospital_class_code: data["data"]["customer"]["hospital_class_code"],
-          category_code: data["data"]["customer"]["category_code"],
-          subcategory_code:data["data"]["customer"]["subcategory_code"],
-          geographical_zone: data["data"]["customer"]["geographical_zone"],
-          tax_code: data["data"]["customer"]["tax_code"],
-          bed_range:data["data"]["customer"]["range_code"],
-          sold_to: data["data"]["sold_to"]["address"],
-          ship_to: data["data"]["ship_to"]["address"],
-          bill_to: data["data"]["bill_to"]["address"],
-          request_delivery_date: data["data"]["request_delivery_date"],
-          estimated_delivery_date: data["data"]["estimated_delivery_date"],
-          estimated_po_date: data["data"]["estimated_po_date"],
-          estimated_invoice_date: data["data"]["estimated_invoice_date"],
-          care_area: data["data"]["care_area"],
-        });
-
+        if (this.detail.customer) {
+          this.detail_not_editable = true;
+          this.opportunityDetailForm2.patchValue({
+            credit_term: data["data"]["customer"]["credit_term"],
+            credit_limit: data["data"]["customer"]["credit_limit"],
+            hospital_bed_value: data["data"]["customer"]["hospital_bed_value"],
+            hospital_class_code:
+              data["data"]["customer"]["hospital_class_code"],
+            category_code: data["data"]["customer"]["category_code"],
+            subcategory_code: data["data"]["customer"]["subcategory_code"],
+            geographical_zone: data["data"]["customer"]["geographical_zone"],
+            tax_code: data["data"]["customer"]["tax_code"],
+            bed_range: data["data"]["customer"]["range_code"],
+            sold_to: data["data"]["sold_to"]["address"],
+            ship_to: data["data"]["ship_to"]["address"],
+            bill_to: data["data"]["bill_to"]["address"],
+            request_delivery_date: data["data"]["request_delivery_date"],
+            estimated_delivery_date: data["data"]["estimated_delivery_date"],
+            estimated_po_date: data["data"]["estimated_po_date"],
+            estimated_invoice_date: data["data"]["estimated_invoice_date"],
+            care_area: data["data"]["care_area"],
+          });
+        }
+        // customer-contacts
         this.appService
           .getQuery(
             "/opportunity/get-customer-contacts?data_area_id=" +
@@ -235,6 +237,7 @@ export class EditOpportunityComponent implements OnInit {
             this.customer_contacts = newArr;
           });
       });
+
     // Forecast
     this.appService
       .getQuery("/opportunity/forecast/" + this.opportunity_id, null)
