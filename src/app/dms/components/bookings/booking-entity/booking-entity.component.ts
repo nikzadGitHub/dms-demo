@@ -6,7 +6,7 @@ import { MockBookingEntityService } from '../../../services/mock-booking-entity.
 import {
   Button as ApprovalButton, ButtonEvent as ApprovalButtonEvent
 } from '../booking-approval/booking-approval.component';
-import { ApprovalList, BookingEntity } from '../../../services/booking-entity';
+import { ApprovalList, BookingDetail, BookingEntity } from '../../../services/booking-entity';
 import { BookingStatus, statusToNumber, statusFromNumber, statusToText, statusIncrement } from '../../../services/booking-status.enum';
 
 @Component({
@@ -24,6 +24,7 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
   approvalButtons: ApprovalButton[] = [];
   approvalList: ApprovalList = [];
   isConfirmed: boolean = false;
+  bookingDetailList: BookingDetail;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,6 +49,7 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
             if (response as BookingEntity) {
               this.status = response.status;
               this.approvalList = response.approvalList;
+              this.bookingDetailList = response.bookingDetailList
             }
             console.log('api: entity', this.bookingId, response);
           });

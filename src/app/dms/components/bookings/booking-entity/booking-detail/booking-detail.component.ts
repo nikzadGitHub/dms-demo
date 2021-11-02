@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 
+import { BookingDetail } from '../../../../services/booking-entity';
 
 @Component({
   selector: 'app-booking-detail',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./booking-detail.component.scss']
 })
 export class BookingDetailComponent implements OnInit{
-  constructor() { }
+  @Input() bookingDetailList: BookingDetail ;
+  constructor() {}
   ngOnInit(): void {}
 }
