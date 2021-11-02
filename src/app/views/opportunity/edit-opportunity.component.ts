@@ -62,7 +62,7 @@ export class EditOpportunityComponent implements OnInit {
   detail: OpportunityDetail;
   competitors = [];
   competitor_name = "";
-  competitor_amount = "";
+  competitor_amount = 0;
   active_option_id = 0;
   search_product_name = "";
   delete_option_id = 0;
@@ -92,6 +92,7 @@ export class EditOpportunityComponent implements OnInit {
     external_product_id: "",
     product_name: "",
     sku: "",
+    productQuantity: 1,
     quantity: "1",
     discount: "",
     list_price: "",
@@ -162,6 +163,7 @@ export class EditOpportunityComponent implements OnInit {
     reason: "",
     competitor_id: "",
   });
+  productId: any;
 
   constructor(
     private appService: AppService,
@@ -430,6 +432,15 @@ export class EditOpportunityComponent implements OnInit {
       local_distribution: "",
     });
   }
+  productSelected(value, index) {
+    this.productId = value.id;
+    console.log("productId:", this.productId);
+    console.log("product SELECTED:");
+    console.log(value);
+    this.sku[index] = value.sku;
+    this.product_name[index] = value.name;
+    this.external_product_id[index] = value.id;
+  }
 
   addOption() {
     this.appService
@@ -445,6 +456,7 @@ export class EditOpportunityComponent implements OnInit {
     this.appService
       .getQuery("/opportunity/get-opportunity-product?id=" + id)
       .subscribe((data) => {
+        console.log("product_data: ", data);
         console.log("product_by_id: ", data["data"]);
 
         this.editProductForm.patchValue({
@@ -496,7 +508,8 @@ export class EditOpportunityComponent implements OnInit {
         opportunity_product_group_id: this.active_option_id,
         name: this.addProductForm.value.product_name,
         sku: this.addProductForm.value.sku,
-        quantity: this.addProductForm.value.quantity,
+        quantity:this.addProductForm.value.productQuantity,
+        // quantity: this.addProductForm.value.quantity,
         unit_price: this.addProductForm.value.list_price,
         total_price:
           this.addProductForm.value.quantity *
@@ -554,24 +567,22 @@ export class EditOpportunityComponent implements OnInit {
       });
   }
 
-  productSelected(value, index) {
-    console.log("product SELECTED:");
-    console.log(value);
-    this.sku[index] = value.sku;
-    this.product_name[index] = value.name;
-    this.external_product_id[index] = value.id;
-  }
-
   openAddProductModal(option, index, check) {
     console.log("option_id:", option.id);
-    
+
     this.addLine = check;
     this.active_option_id = option.id;
     this.default_active_option_tab = index;
     this.productList.splice(0, this.productList.length); //clear search
-    this.addProductModal.show();
+
+    if (this.addLine == true && this.productId) {
+      console.log("working");
+      this.addProductModal.show();
+      this.productById(this.productId);
+    } else if (this.addLine == false) {
+      this.addProductModal.show();
+    }
     // this.addProduct(index, this.active_option_id , this.addLine);
-   
   }
 
   openEditProductModal(index1, index2, product_id) {
@@ -648,7 +659,21 @@ export class EditOpportunityComponent implements OnInit {
         console.log("addCompetitor: ", data);
 
         this.competitors.push(data["data"]);
-        this.competitor_name = this.competitor_amount = "";
+        // this.competitor_name = this.competitor_amount = "";
+      });
+  }
+  // opportunityCompetitorSpecificUpdate
+  editCompetitor(index, competitorAmount, competitorId) {
+    // this.competitor_amount = competitorAmount
+    this.appService
+      .putQuery(
+        "/opportunity-competitor/" + competitorId, 
+        {
+          amount: 400,
+        }
+      )
+      .subscribe((data) => {
+        console.log("competitor-edit-data: ", data);
       });
   }
 
@@ -696,54 +721,53 @@ export class EditOpportunityComponent implements OnInit {
       ((100 - (this.discount[index] ? this.discount[index] : 0)) / 100);
   }
 
-    //product filter functions
-    displayFn(product: Product): string {
-      return product && product.name ? product.name : "";
-    }
-  
-    //product filter functions
-    private _filter(name: string): Product[] {
-      const filterValue = name.toLowerCase();
-  
-      return this.productList.filter((option) =>
-        option.name.toLowerCase().includes(filterValue)
-      );
-    }
-  
-    //product filter functions
-    productSearch(keyword): void {
-      if (keyword.length >= 2) {
-        this.appService
-          .getQuery("/opportunity/get-product?product_name=" + keyword)
-          .subscribe((data) => {
-            if (data["data"].length > 0) {
-              this.productList.splice(0, this.productList.length);
-  
-              data["data"].forEach((value) => {
-                this.productList.push(value);
-              });
-            }
-          });
-      }
-    }
-  
-    productSearch2(): void {
+  //product filter functions
+  displayFn(product: Product): string {
+    return product && product.name ? product.name : "";
+  }
+
+  //product filter functions
+  private _filter(name: string): Product[] {
+    const filterValue = name.toLowerCase();
+
+    return this.productList.filter((option) =>
+      option.name.toLowerCase().includes(filterValue)
+    );
+  }
+
+  //product filter functions
+  productSearch(keyword): void {
+    if (keyword.length >= 2) {
       this.appService
-        .getQuery(
-          "/opportunity/get-product?product_name=" + this.search_product_name
-        )
+        .getQuery("/opportunity/get-product?product_name=" + keyword)
         .subscribe((data) => {
           if (data["data"].length > 0) {
             this.productList.splice(0, this.productList.length);
-  
+
             data["data"].forEach((value) => {
               this.productList.push(value);
             });
           }
         });
     }
-  
-   
+  }
+
+  productSearch2(): void {
+    this.appService
+      .getQuery(
+        "/opportunity/get-product?product_name=" + this.search_product_name
+      )
+      .subscribe((data) => {
+        if (data["data"].length > 0) {
+          this.productList.splice(0, this.productList.length);
+
+          data["data"].forEach((value) => {
+            this.productList.push(value);
+          });
+        }
+      });
+  }
+
   increaseProductQuantity() {
     this.productQuantity++;
   }
