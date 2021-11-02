@@ -145,18 +145,19 @@
                           class="form-control"
                           formControlName="credit_term"
                           [attr.disabled]="detail_not_editable ? '' : null"
+                          (change)="updateDetail()"
                         />
                       </td>
                       <td class="bg-lightgrey text-left">
                         Hospital Bed (Exact Number)
                       </td>
-
                       <td class="text-left w-25">
                         <input
                           type="text"
                           class="form-control"
                           formControlName="hospital_bed_value"
                           [attr.disabled]="detail_not_editable ? '' : null"
+                          (change)="updateDetail()"
                         />
                         <!-- <a style="cursor: pointer; float: right"
                           ><i class="icon-note icon"></i
@@ -176,6 +177,7 @@
                           class="form-control"
                           formControlName="credit_limit"
                           [attr.disabled]="detail_not_editable ? '' : null"
+                          (change)="updateDetail()"
                         />
                       </td>
                       <td class="bg-lightgrey text-left">Geographical Zone</td>
@@ -185,6 +187,7 @@
                           class="form-control"
                           formControlName="geographical_zone"
                           [attr.disabled]="detail_not_editable ? '' : null"
+                          (change)="updateDetail()"
                         />
                         <!-- <a style="cursor: pointer; float: right"
                           ><i class="icon-note icon"></i
@@ -204,6 +207,7 @@
                           class="form-control"
                           formControlName="hospital_class_code"
                           [attr.disabled]="detail_not_editable ? '' : null"
+                          (change)="updateDetail()"
                         />
                       </td>
                       <td class="bg-lightgrey text-left">Customer Tax Code</td>
@@ -213,6 +217,7 @@
                           class="form-control"
                           formControlName="tax_code"
                           [attr.disabled]="detail_not_editable ? '' : null"
+                          (change)="updateDetail()"
                         />
                         <!-- <a style="cursor: pointer; float: right"
                           ><i class="icon-note icon"></i
@@ -228,10 +233,10 @@
                     <tr>
                       <td class="bg-lightgrey text-left">Segment</td>
                       <td>
-                        <select class="form-control">
-                          <option>Government</option>
-                          <option>Semi Government</option>
-                          <option>Private</option>
+                        <select class="form-control" formControlName="segment_code">
+                          <option value="segment_code">Government</option>
+                          <option value="segment_code">Semi Government</option>
+                          <option value="segment_code">Private</option>
                         </select>
                       </td>
                       <td class="bg-lightgrey text-left">Sold To</td>
@@ -242,6 +247,7 @@
                             class="form-control"
                             formControlName="sold_to"
                             [attr.disabled]="detail_not_editable ? '' : null"
+                            (change)="updateDetail()"
                           />
                           <!-- <a style="cursor: pointer; float: right"
                             ><i class="icon-note icon"></i
@@ -262,6 +268,7 @@
                           class="form-control"
                           formControlName="category_code"
                           [attr.disabled]="detail_not_editable ? '' : null"
+                          (change)="updateDetail()"
                         />
                       </td>
                       <td class="text-left">Ship To</td>
@@ -272,6 +279,7 @@
                             class="form-control"
                             formControlName="ship_to"
                             [attr.disabled]="detail_not_editable ? '' : null"
+                            (change)="updateDetail()"
                           />
                           <!-- <a style="cursor: pointer; float: right"
                             ><i class="icon-note icon"></i
@@ -294,6 +302,7 @@
                           class="form-control"
                           formControlName="subcategory_code"
                           [attr.disabled]="detail_not_editable ? '' : null"
+                          (change)="updateDetail()"
                         />
                       </td>
                       <td class="bg-lightgrey text-left">Bill To</td>
@@ -304,6 +313,7 @@
                             class="form-control"
                             formControlName="bill_to"
                             [attr.disabled]="detail_not_editable ? '' : null"
+                            (change)="updateDetail()"
                           />
                           <!-- <a style="cursor: pointer; float: right"
                             ><i class="icon-note icon"></i
@@ -326,6 +336,7 @@
                           class="form-control"
                           formControlName="bed_range"
                           [attr.disabled]="detail_not_editable ? '' : null"
+                          (change)="updateDetail()"
                         />
                       </td>
                       <td class="bg-lightgrey text-left"></td>
@@ -783,9 +794,11 @@
                         />
                       </td>
                       <td>
+                        <!-- (click)="addProduct(i, option.id, true)" -->
+                        <!-- (click)="openAddProductModal(option, i, true)" -->
                         <button
                           class="btn btn-icon btn-outline-primary"
-                          (click)="addProduct(i, option.id)"
+                          (click)="addProduct(i, option.id, true)"
                         >
                           <i class="cil-plus c-icon"></i>
                         </button>
@@ -827,7 +840,7 @@
                     <button
                       class="btn btn-custom form-group"
                       data-toggle="modal"
-                      (click)="openAddProductModal(option, i)"
+                      (click)="openAddProductModal(option, i, false)"
                     >
                       <i class="cil-plus c-icon"></i>
                       <span>PRODUCT</span>
@@ -1480,6 +1493,7 @@
   </div>
 </div>
 
+<!-- Product-Model -->
 <div
   bsModal
   #addProductModal="bs-modal"
@@ -1504,250 +1518,326 @@
       </div>
 
       <div class="modal-body">
-        <div class="row form-group">
-          <div class="col-md-6">Product Principal</div>
-          <div class="col-md-6"><input type="text" class="form-control" /></div>
-        </div>
-        <div class="row form-group">
-          <div class="col-md-6">Product Group</div>
-          <div class="col-md-6"><input type="text" class="form-control" /></div>
-        </div>
-        <div class="row form-group">
-          <div class="col-md-6">Product Name</div>
-          <div class="col-md-6">
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="search_product_name"
-            />
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col-md-6"></div>
-          <div class="col-md-6">
-            <button class="btn btn-custom mr-1" (click)="productSearch2()">
-              <i class="cil-magnifying-glass c-icon"></i>
-              Search
-            </button>
-            <button class="btn btn-custom mr-1" (click)="setDummySku()">
-              <i class="cil-plus c-icon"></i>
-              Dummy SKU
-            </button>
-          </div>
-        </div>
-        <hr />
-        <ng-container
-          *ngIf="productList.length > 0; else elseProductListEmptyTemplate"
-        >
-          <div class="row">
-            <div class="col-md-12" style="height: 200px; overflow: scroll">
-              <table class="table">
-                <tr>
-                  <th>Select</th>
-                  <th>Name</th>
-                  <th>SKU ID</th>
-                  <th>Principle</th>
-                  <th>Product Group</th>
-                </tr>
-                <tr *ngFor="let product of productList; let i = index">
-                  <td>
-                    <input
-                      type="radio"
-                      [attr.id]="'p' + i"
-                      name="product[]"
-                      (click)="productSelectedRadio(product)"
-                    />
-                  </td>
-                  <td class="text-left">{{ product.name }}</td>
-                  <td class="text-left">{{ product.sku }}</td>
-                  <td class="text-left">{{ product.principle }}</td>
-                  <td class="text-left">{{ product.group }}</td>
-                </tr>
-              </table>
+        <!-- top-info -->
+        <div class="top-info">
+          <div class="row form-group top-info-1">
+            <div class="col-md-6 info-text">Product Principal</div>
+            <div class="col-md-6">
+              <input type="text" class="form-control" />
             </div>
           </div>
-        </ng-container>
-        <ng-template #elseProductListEmptyTemplate>
-          <div class="row">
-            <div class="col-md-12" align="center">No product(s) found...</div>
+          <div class="row form-group top-info-1">
+            <div class="col-md-6 info-text">Product Group</div>
+            <div class="col-md-6">
+              <select class="form-control">
+                <option value="0" style="display: none">--</option>
+                <option></option>
+              </select>
+            </div>
           </div>
-        </ng-template>
-
+          <div class="row form-group top-info-1">
+            <div class="col-md-6 info-text">Product Name</div>
+            <div class="col-md-6">
+              <input
+               type="text"
+                class="form-control"
+                [(ngModel)]="search_product_name"
+                 value="Oxy" />
+            </div>
+          </div>
+        </div>
+        <!-- top-info-btn -->
+        <div class="type-info-btn">
+          <div class="row form-group">
+            <div class="col-md-6"></div>
+            <div class="col-md-6" *ngIf="addLine == false">
+              <button class="btn btn-custom mr-1" (click)="productSearch2()">
+                <i class="cil-magnifying-glass c-icon"></i>
+                Search
+              </button>
+              <button class="btn btn-custom mr-1" (click)="setDummySku()">
+                <i class="cil-plus c-icon text-left"></i>
+                Dummy SKU
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button class="btn btn-custom mr-1" *ngIf="addLine == true">
+                <i class="cil-magnifying-glass c-icon"></i>
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
         <hr />
+        <!-- table -->
+        <div class="table-div" *ngIf="addLine == true">
+          <ng-container *ngIf="productList.length > 0; else elseProductListEmptyTemplate">
+            <div class="row">
+              <div class="col-md-12" style="height: 200px">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Select</th>
+                      <th class="text-center">Name</th>
+                      <th class="text-center">SKU ID</th>
+                      <th class="text-center">Principle</th>
+                      <th class="text-center">Product Group</th>
+                    </tr>
+                  </thead>
+                  <tr *ngFor="let product of productList; let i = index">
+                    <td class="text-center">
+                      <input
+                       type="radio"
+                       [attr.id]="'p' + i"
+                       name="product[]"
+                       (click)="productSelectedRadio(product)"
+                        />
+                    </td>
+                    <td class="text-center">{{ product.name }}</td>
+                    <td class="text-center">{{ product.sku }}</td>
+                    <td class="text-center">{{ product.principle }}</td>
+                    <td class="text-center">{{ product.group }}</td>
+                    <!-- <td class="text-center">Oxymeter</td>
+                    <td class="text-center">OX1123</td>
+                    <td class="text-center">Samsung</td>
+                    <td class="text-center">Equipment</td> -->
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #elseProductListEmptyTemplate>
+            <div class="row">
+              <div class="col-md-12" align="center">No product(s) found...</div>
+            </div>
+          </ng-template>
+          <hr />
+        </div>
+        <!-- ADD DUMMY SKU -->
+        <div class="modal-header" style="margin-left: -11px">
+          <h4 class="modal-title">ADD DUMMY SKU</h4>
+        </div>
         <form [formGroup]="addProductForm" (ngSubmit)="addFullProduct()">
-          <div class="row form-group">
-            <div class="col-md-6">Product Name</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="product_name"
-                [readonly]="!is_dummy_sku"
-              />
+          <div class="dummy-sku-info">
+            <div class="row form-group dummy-info">
+              <div class="col-md-6 info-text">Product Name</div>
+              <div class="col-md-6" style="display: flex; flex-direction: row">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="product_name"
+                  [readonly]="!is_dummy_sku"
+                  style="margin-right: 10px"
+                />
+                <div
+                class="col-md-6"
+                *ngIf="is_dummy_sku == 0; else elseDummySkuTemplate"
+              >
+                SKU ID
+              </div>
+              <ng-template #elseDummySkuTemplate>
+                <div class="col-md-6">Dummy SKU ID</div>
+              </ng-template>
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="SKU ID"
+                  formControlName="sku"
+                  [readonly]="!is_dummy_sku"
+                />
+              </div>
+              <div class="col-md-12 cost-sheet-btn">
+                <button type="button" class="btn btn-danger">
+                  COSTING SHEET
+                </button>
+              </div>
+            </div>
+            <div class="row form-group dummy-info">
+              <div class="col-md-6 info-text">Quantity</div>
+              <div class="col-md-6">
+                <i
+                  class="pi pi-minus-circle"
+                  [style.color]="productQuantity==-1 ? color: '#5c6873'"
+                  style="margin-right: 10px"
+                  (click)="decrementProductQuantity()"
+                ></i>
+                <!-- {{ productQuantity }} -->
+                <!-- [value]="productQuantity" -->
+                <input
+                  type=""
+                  formControlName="quantity"
+                  style="border: none; width: 35px"
+                />
+                <!-- color: #007bff;  -->
+                <i
+                  class="pi pi-plus-circle"
+                  [style.color]="productQuantity==1 ? color: '#5c6873'"
+                  style="margin-left: 10px"
+                  (click)="increaseProductQuantity()"
+                ></i>
+              </div>
+            </div>
+            <div class="row form-group dummy-info">
+              <div class="col-md-6 info-text">Item Discount (%)</div>
+              <div class="col-md-6">
+                <input
+                 type="text"
+                  class="form-control" value="10" formControlName="discount"/>
+              </div>
+            </div>
+            <div class="row form-group dummy-info" *ngIf="addLine== true">
+              <div class="col-md-6 info-text">List Price</div>
+              <div class="col-md-6">
+                <input type="text" class="form-control" value="3,000" formControlName="list_price"/>
+              </div>
+            </div>
+            <div class="row form-group dummy-info" *ngIf="addLine==false">
+              <div class="col-md-6 info-text">Cost & Quote Price</div>
+              <div class="col-md-6">
+                <input type="text" class="form-control" value="3,000" formControlName="list_price"/>
+              </div>
+            </div>
+            <div class="row form-group dummy-info">
+              <div class="col-md-6 info-text">Principle</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                  formControlName="principle"
+                />
+              </div>
+            </div>
+            <div class="row form-group dummy-info">
+              <div class="col-md-6 info-text">Floor Price</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                  formControlName="floor_price"
+                />
+              </div>
+            </div>
+            <div class="row form-group dummy-info">
+              <div class="col-md-6 info-text">Product Manager</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                  formControlName="product_manager"
+                />
+              </div>
+            </div>
+            <div class="row form-group dummy-info">
+              <div class="col-md-12 justification-btn-textarea">
+                <button type="button" class="btn btn-primary">
+                  JUSTIFICATION
+                </button>
+                <textarea
+                  name="comment"
+                  class="form-control"
+                  cols="30"
+                  rows="10"
+                ></textarea>
+              </div>
             </div>
           </div>
-          <div class="row form-group">
-            <div
-              class="col-md-6"
-              *ngIf="is_dummy_sku == 0; else elseDummySkuTemplate"
-            >
-              SKU ID
-            </div>
-            <ng-template #elseDummySkuTemplate>
-              <div class="col-md-6">Dummy SKU ID</div>
-            </ng-template>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="sku"
-                [readonly]="!is_dummy_sku"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Quantity</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="quantity"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Item Discount</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="discount"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">List Price</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="list_price"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Principle</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="principle"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Floor Price</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="floor_price"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Product Manager</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="product_manager"
-              />
-            </div>
-          </div>
-
           <hr />
-          <div class="row form-group">
-            <div class="col-md-6">For Equipment Product</div>
+          <!-- For Equipment Product -->
+          <div class="modal-header" style="margin-left: -11px" *ngIf="addLine== false">
+            <h4 class="modal-title">FOR EQUIPMENT PRODUCT</h4>
           </div>
-          <div class="row form-group">
-            <div class="col-md-6">Standard Warranty</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="standard_warranty"
-              />
+          <div class="equipment-product" *ngIf="addLine== false">
+            <div class="row form-group equipment-product-info">
+              <div class="col-md-6 info-text">Standard Warranty</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                  formControlName="standard_warranty"
+                />
+              </div>
+            </div>
+            <div class="row form-group equipment-product-info">
+              <div class="col-md-6 info-text">Extended Warranty</div>
+              <div class="col-md-6">
+                <select class="form-control" formControlName="extended_warranty">
+                  <option value="0" style="display: none">Please Select</option>
+                  <option></option>
+                </select>
+              </div>
+            </div>
+            <div class="row form-group equipment-product-info">
+              <div class="col-md-6 info-text">Tax Rate</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                  formControlName="tax_rate"
+                />
+              </div>
+            </div>
+            <div class="row form-group equipment-product-info">
+              <div class="col-md-6 info-text">Customer Tax Code</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                  formControlName="customer_tax_code"
+                />
+              </div>
+            </div>
+            <div class="row form-group equipment-product-info">
+              <div class="col-md-6 info-text">Tax Code</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                  formControlName="tax_code"
+                />
+              </div>
+            </div>
+            <hr />
+          </div>
+         
+          <!-- Other Cost -->
+          <div class="modal-header" style="margin-left: -11px">
+            <h4 class="modal-title">OTHER COST</h4>
+          </div>
+          <div class="other-cost">
+            <div class="row form-group other-cost-info">
+              <div class="col-md-6 info-text">Category</div>
+              <div class="col-md-6">
+                <select class="form-control" formControlName="category">
+                  <option value="0" style="display: none">Please Select</option>
+                  <option></option>
+                </select>
+              </div>
+            </div>
+            <div class="row form-group other-cost-info">
+              <div class="col-md-6 info-text">Local Distribution</div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Auto Populated"
+                  formControlName="local_distribution"
+                />
+              </div>
             </div>
           </div>
-          <div class="row form-group">
-            <div class="col-md-6">Extended Warranty</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="extended_warranty"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Tax Rate</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="tax_rate"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Customer Tax Code</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="customer_tax_code"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Tax Code</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="tax_code"
-              />
-            </div>
-          </div>
-
-          <hr />
-          <div class="row form-group">
-            <div class="col-md-6">Other Cost</div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Category</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="category"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Local Distribution</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="local_distribution"
-              />
-            </div>
-          </div>
+          <!-- OK Button -->
           <div class="row form-group text-center">
             <div class="col-md-12">
-              <button class="btn btn-custom" type="submit">Ok</button>
+              <button class="btn btn-custom" type="submit" style="width: 130px">
+                OK
+              </button>
             </div>
           </div>
         </form>
@@ -1759,6 +1849,7 @@
 </div>
 <!-- /.modal -->
 
+<!-- Edit-product-model -->
 <div
   bsModal
   #editProductModal="bs-modal"
@@ -1960,6 +2051,7 @@
 </div>
 <!-- /.modal -->
 
+<!-- Delete Option -->
 <div
   bsModal
   #deleteOptionModal="bs-modal"
@@ -2004,6 +2096,7 @@
 </div>
 <!-- /.modal -->
 
+<!-- Clone Option -->
 <div
   bsModal
   #cloneOptionModal="bs-modal"
@@ -2048,6 +2141,8 @@
 </div>
 <!-- /.modal -->
 
+
+<!-- Option has been set as the preferred option -->
 <div
   bsModal
   #setDefaultOptionSuccessModal="bs-modal"

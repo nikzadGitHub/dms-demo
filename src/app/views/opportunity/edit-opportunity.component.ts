@@ -41,6 +41,8 @@ export class EditOpportunityComponent implements OnInit {
   @ViewChild("setDefaultOptionSuccessModal")
   public setDefaultOptionSuccessModal: ModalDirective;
 
+  color = "#00538a";
+  productQuantity = 1;
   default_active_option_tab = 0;
   product_name: any[] = [];
   external_product_id: any[] = [];
@@ -81,6 +83,7 @@ export class EditOpportunityComponent implements OnInit {
   editing_product_index1 = 0;
   editing_product_index2 = 0;
   detail_not_editable = false;
+  addLine: boolean;
   active = 1;
   is_dummy_sku = 0;
 
@@ -89,7 +92,7 @@ export class EditOpportunityComponent implements OnInit {
     external_product_id: "",
     product_name: "",
     sku: "",
-    quantity: "",
+    quantity: "1",
     discount: "",
     list_price: "",
     floor_price: "",
@@ -138,6 +141,7 @@ export class EditOpportunityComponent implements OnInit {
     category_code: 0,
     subcategory_code: 0,
     geographical_zone: 0,
+    segment_code: 0,
     bed_range: 0,
     tax_code: 0,
     sold_to: "",
@@ -205,6 +209,7 @@ export class EditOpportunityComponent implements OnInit {
             category_code: data["data"]["customer"]["category_code"],
             subcategory_code: data["data"]["customer"]["subcategory_code"],
             geographical_zone: data["data"]["customer"]["geographical_zone"],
+            segment_code: data["data"]["customer"]["segment_code"],
             tax_code: data["data"]["customer"]["tax_code"],
             bed_range: data["data"]["customer"]["range_code"],
             sold_to: data["data"]["sold_to"]["address"],
@@ -323,6 +328,84 @@ export class EditOpportunityComponent implements OnInit {
     this.is_dummy_sku = 1;
   }
 
+  updateDetail() {
+    this.appService
+      .postQuery("/opportunity/update", {
+        id: this.opportunity_id,
+        topic: this.opportunityDetailForm1.value.topic,
+        customer_contact_id:
+          this.opportunityDetailForm1.value.customer_contact_id,
+        customer_contact2_id:
+          this.opportunityDetailForm1.value.customer_contact2_id,
+        status_id: this.opportunityDetailForm1.value.status_id,
+        is_include_in_forecast:
+          this.opportunityDetailForm1.value.is_include_in_forecast,
+        credit_term: this.opportunityDetailForm2.value.credit_term,
+        credit_limit: this.opportunityDetailForm2.value.credit_limit,
+        hospital_bed_value:
+          this.opportunityDetailForm2.value.hospital_bed_value,
+        hospital_class_code:
+          this.opportunityDetailForm2.value.hospital_class_code,
+        category_code: this.opportunityDetailForm2.value.category_code,
+        subcategory_code: this.opportunityDetailForm2.value.subcategory_code,
+        geographical_zone: this.opportunityDetailForm2.value.geographical_zone,
+        segment_code: this.opportunityDetailForm2.value.segment_code,
+        tax_code: this.opportunityDetailForm2.value.tax_code,
+        sold_to: this.opportunityDetailForm2.value.sold_to,
+        ship_to: this.opportunityDetailForm2.value.ship_to,
+        bill_to: this.opportunityDetailForm2.value.bill_to,
+        request_delivery_date:
+          this.opportunityDetailForm2.value.request_delivery_date,
+        estimated_delivery_date:
+          this.opportunityDetailForm2.value.estimated_delivery_date,
+        estimated_po_date: this.opportunityDetailForm2.value.estimated_po_date,
+        estimated_invoice_date:
+          this.opportunityDetailForm2.value.estimated_invoice_date,
+        care_area: this.opportunityDetailForm2.value.care_area,
+        hospital_department:
+          this.opportunityDetailForm2.value.hospital_department,
+      })
+      .subscribe((data) => {});
+  }
+
+  updateForecast() {
+    this.appService
+      .postQuery("/opportunity/forecast", {
+        opportunity_id: this.opportunity_id,
+        reason: this.forecastForm.value.reason,
+        preferred_vendor: this.forecastForm.value.preferred_vendor,
+        funding_status: this.forecastForm.value.funding_status,
+        funding_source: this.forecastForm.value.funding_source,
+        competitor_id: this.forecastForm.value.competitor_id,
+      })
+      .subscribe((data) => {
+        this.forecast_category = data["data"]["forecast_category"];
+      });
+  }
+
+  updateProduct() {
+    this.appService
+      .postQuery("/opportunity/update-product", {
+        opportunity_product_id: this.editing_product,
+        quantity: this.editProductForm.value.quantity,
+        discount: this.editProductForm.value.discount,
+        unit_price: this.editProductForm.value.list_price,
+        floor_price: this.editProductForm.value.floor_price,
+        principle: this.editProductForm.value.principle,
+        product_manager: this.editProductForm.value.product_manager,
+        standard_warranty: this.editProductForm.value.standard_warranty,
+        extended_warranty: this.editProductForm.value.extended_warranty,
+        tax_rate: this.editProductForm.value.tax_rate,
+        customer_tax_code: this.editProductForm.value.customer_tax_code,
+        tax_code: this.editProductForm.value.tax_code,
+        category: this.editProductForm.value.category,
+        local_distribution: this.editProductForm.value.local_distribution,
+      })
+      .subscribe((data) => {
+        this.editProductModal.hide();
+      });
+  }
+
   productSelectedRadio(product) {
     this.is_dummy_sku = 0;
     console.log("product SELECTED IN Radio:");
@@ -358,10 +441,39 @@ export class EditOpportunityComponent implements OnInit {
         this.product_options.push(data["data"]);
       });
   }
+  productById(id) {
+    this.appService
+      .getQuery("/opportunity/get-opportunity-product?id=" + id)
+      .subscribe((data) => {
+        console.log("product_by_id: ", data["data"]);
 
-  addProduct(index, option_id) {
+        this.editProductForm.patchValue({
+          product_name: data["data"][0]["name"],
+          sku: data["data"][0]["sku"],
+          quantity: data["data"][0]["quantity"],
+          discount: data["data"][0]["discount"],
+          list_price: data["data"][0]["unit_price"],
+          floor_price: data["data"][0]["floor_price"],
+          principle: data["data"][0]["principle"],
+          product_manager: data["data"][0]["product_manager"],
+          standard_warranty: data["data"][0]["standard_warranty"],
+          extended_warranty: data["data"][0]["extended_warranty"],
+          tax_rate: data["data"][0]["tax_rate"],
+
+          customer_tax_code: data["data"][0]["customer_tax_code"],
+          tax_code: data["data"][0]["tax_code"],
+          category: data["data"][0]["category"],
+          local_distribution: data["data"][0]["local_distribution"],
+        });
+      });
+  }
+
+  addProduct(index, option_id, check) {
+    console.log("option_id", option_id);
+    this.addLine = check;
     this.appService
       .postQuery("/opportunity/create-product", {
+        is_dummy_sku: this.is_dummy_sku,
         opportunity_product_group_id: option_id,
         name: this.product_name[index],
         sku: this.sku[index],
@@ -374,34 +486,6 @@ export class EditOpportunityComponent implements OnInit {
       })
       .subscribe((data) => {
         this.product_options[index].products.push(data["data"]);
-      });
-  }
-
-  cloneProduct(index, product_id) {
-    this.appService
-      .postQuery("/opportunity/clone-product", {
-        opportunity_product_id: product_id,
-      })
-      .subscribe((data) => {
-        this.product_options[index].products.push(data["data"]);
-        this.product_name[index] =
-          this.sku[index] =
-          this.quantity[index] =
-          this.unit_price[index] =
-          this.total_price[index] =
-          this.discount[index] =
-          this.amount[index] =
-            "";
-      });
-  }
-
-  deleteProduct(index1, index2, product_id) {
-    this.appService
-      .postQuery("/opportunity/delete-product", {
-        opportunity_product_id: product_id,
-      })
-      .subscribe((data) => {
-        this.product_options[index1].products.splice(index2, 1);
       });
   }
 
@@ -443,122 +527,32 @@ export class EditOpportunityComponent implements OnInit {
     console.log(this.addProductForm.value);
   }
 
-  //product filter functions
-  displayFn(product: Product): string {
-    return product && product.name ? product.name : "";
-  }
-
-  //product filter functions
-  private _filter(name: string): Product[] {
-    const filterValue = name.toLowerCase();
-
-    return this.productList.filter((option) =>
-      option.name.toLowerCase().includes(filterValue)
-    );
-  }
-
-  //product filter functions
-  productSearch(keyword): void {
-    if (keyword.length >= 2) {
-      this.appService
-        .getQuery("/opportunity/get-product?product_name=" + keyword)
-        .subscribe((data) => {
-          if (data["data"].length > 0) {
-            this.productList.splice(0, this.productList.length);
-
-            data["data"].forEach((value) => {
-              this.productList.push(value);
-            });
-          }
-        });
-    }
-  }
-
-  productSearch2(): void {
+  cloneProduct(index, product_id) {
     this.appService
-      .getQuery(
-        "/opportunity/get-product?product_name=" + this.search_product_name
-      )
+      .postQuery("/opportunity/clone-product", {
+        opportunity_product_id: product_id,
+      })
       .subscribe((data) => {
-        if (data["data"].length > 0) {
-          this.productList.splice(0, this.productList.length);
-
-          data["data"].forEach((value) => {
-            this.productList.push(value);
-          });
-        }
+        this.product_options[index].products.push(data["data"]);
+        this.product_name[index] =
+          this.sku[index] =
+          this.quantity[index] =
+          this.unit_price[index] =
+          this.total_price[index] =
+          this.discount[index] =
+          this.amount[index] =
+            "";
       });
   }
 
-  productById(id) {
+  deleteProduct(index1, index2, product_id) {
     this.appService
-      .getQuery("/opportunity/get-opportunity-product?id=" + id)
+      .postQuery("/opportunity/delete-product", {
+        opportunity_product_id: product_id,
+      })
       .subscribe((data) => {
-        console.log(data["data"]);
-
-        this.editProductForm.patchValue({
-          product_name: data["data"][0]["name"],
-          sku: data["data"][0]["sku"],
-          quantity: data["data"][0]["quantity"],
-          discount: data["data"][0]["discount"],
-          list_price: data["data"][0]["unit_price"],
-          floor_price: data["data"][0]["floor_price"],
-          principle: data["data"][0]["principle"],
-          product_manager: data["data"][0]["product_manager"],
-          standard_warranty: data["data"][0]["standard_warranty"],
-          extended_warranty: data["data"][0]["extended_warranty"],
-          tax_rate: data["data"][0]["tax_rate"],
-
-          customer_tax_code: data["data"][0]["customer_tax_code"],
-          tax_code: data["data"][0]["tax_code"],
-          category: data["data"][0]["category"],
-          local_distribution: data["data"][0]["local_distribution"],
-        });
+        this.product_options[index1].products.splice(index2, 1);
       });
-  }
-
-  calculateSubTotal(index) {
-    let sum = 0;
-
-    for (let i = 0; i < this.product_options[index].products.length; i++) {
-      sum += this.product_options[index].products[i].total_price;
-    }
-
-    return sum;
-  }
-
-  calculateDiscount(index) {
-    let sum = 0;
-
-    for (let i = 0; i < this.product_options[index].products.length; i++) {
-      sum +=
-        this.product_options[index].products[i].total_price *
-        (this.product_options[index].products[i].discount / 100);
-    }
-
-    return sum;
-  }
-
-  calculateNetAmount(index) {
-    let sum = 0;
-
-    for (let i = 0; i < this.product_options[index].products.length; i++) {
-      sum +=
-        this.product_options[index].products[i].total_price *
-        ((100 - this.product_options[index].products[i].discount) / 100);
-    }
-
-    return sum;
-  }
-
-  calculateAmount(index) {
-    this.total_price[index] =
-      (this.unit_price[index] ? this.unit_price[index] : 0) *
-      (this.quantity[index] ? this.quantity[index] : 0);
-    this.discount[index] = this.discount[index] ? this.discount[index] : 0;
-    this.amount[index] =
-      (this.total_price[index] ? this.total_price[index] : 0) *
-      ((100 - (this.discount[index] ? this.discount[index] : 0)) / 100);
   }
 
   productSelected(value, index) {
@@ -569,11 +563,18 @@ export class EditOpportunityComponent implements OnInit {
     this.external_product_id[index] = value.id;
   }
 
-  openAddProductModal(option, index) {
+  openAddProductModal(option, index, check) {
+    console.log("option_id:", option.id);
+    
+    this.addLine = check;
     this.active_option_id = option.id;
     this.default_active_option_tab = index;
     this.productList.splice(0, this.productList.length); //clear search
     this.addProductModal.show();
+
+  this.productById(this.active_option_id);
+    // this.addProduct(index, this.active_option_id , this.addLine);
+   
   }
 
   openEditProductModal(index1, index2, product_id) {
@@ -654,68 +655,102 @@ export class EditOpportunityComponent implements OnInit {
       });
   }
 
-  updateDetail() {
-    this.appService
-      .postQuery("/opportunity/update", {
-        id: this.opportunity_id,
-        topic: this.opportunityDetailForm1.value.topic,
-        customer_contact_id:
-          this.opportunityDetailForm1.value.customer_contact_id,
-        customer_contact2_id:
-          this.opportunityDetailForm1.value.customer_contact2_id,
-        status_id: this.opportunityDetailForm1.value.status_id,
-        is_include_in_forecast:
-          this.opportunityDetailForm1.value.is_include_in_forecast,
+  calculateSubTotal(index) {
+    let sum = 0;
 
-        request_delivery_date:
-          this.opportunityDetailForm2.value.request_delivery_date,
-        estimated_delivery_date:
-          this.opportunityDetailForm2.value.estimated_delivery_date,
-        estimated_po_date: this.opportunityDetailForm2.value.estimated_po_date,
-        estimated_invoice_date:
-          this.opportunityDetailForm2.value.estimated_invoice_date,
-        care_area: this.opportunityDetailForm2.value.care_area,
-        hospital_department:
-          this.opportunityDetailForm2.value.hospital_department,
-      })
-      .subscribe((data) => {});
+    for (let i = 0; i < this.product_options[index].products.length; i++) {
+      sum += this.product_options[index].products[i].total_price;
+    }
+
+    return sum;
   }
 
-  updateForecast() {
-    this.appService
-      .postQuery("/opportunity/forecast", {
-        opportunity_id: this.opportunity_id,
-        reason: this.forecastForm.value.reason,
-        preferred_vendor: this.forecastForm.value.preferred_vendor,
-        funding_status: this.forecastForm.value.funding_status,
-        funding_source: this.forecastForm.value.funding_source,
-        competitor_id: this.forecastForm.value.competitor_id,
-      })
-      .subscribe((data) => {
-        this.forecast_category = data["data"]["forecast_category"];
-      });
+  calculateDiscount(index) {
+    let sum = 0;
+
+    for (let i = 0; i < this.product_options[index].products.length; i++) {
+      sum +=
+        this.product_options[index].products[i].total_price *
+        (this.product_options[index].products[i].discount / 100);
+    }
+
+    return sum;
   }
 
-  updateProduct() {
-    this.appService
-      .postQuery("/opportunity/update-product", {
-        opportunity_product_id: this.editing_product,
-        quantity: this.editProductForm.value.quantity,
-        discount: this.editProductForm.value.discount,
-        unit_price: this.editProductForm.value.list_price,
-        floor_price: this.editProductForm.value.floor_price,
-        principle: this.editProductForm.value.principle,
-        product_manager: this.editProductForm.value.product_manager,
-        standard_warranty: this.editProductForm.value.standard_warranty,
-        extended_warranty: this.editProductForm.value.extended_warranty,
-        tax_rate: this.editProductForm.value.tax_rate,
-        customer_tax_code: this.editProductForm.value.customer_tax_code,
-        tax_code: this.editProductForm.value.tax_code,
-        category: this.editProductForm.value.category,
-        local_distribution: this.editProductForm.value.local_distribution,
-      })
-      .subscribe((data) => {
-        this.editProductModal.hide();
-      });
+  calculateNetAmount(index) {
+    let sum = 0;
+
+    for (let i = 0; i < this.product_options[index].products.length; i++) {
+      sum +=
+        this.product_options[index].products[i].total_price *
+        ((100 - this.product_options[index].products[i].discount) / 100);
+    }
+
+    return sum;
+  }
+
+  calculateAmount(index) {
+    this.total_price[index] =
+      (this.unit_price[index] ? this.unit_price[index] : 0) *
+      (this.quantity[index] ? this.quantity[index] : 0);
+    this.discount[index] = this.discount[index] ? this.discount[index] : 0;
+    this.amount[index] =
+      (this.total_price[index] ? this.total_price[index] : 0) *
+      ((100 - (this.discount[index] ? this.discount[index] : 0)) / 100);
+  }
+
+    //product filter functions
+    displayFn(product: Product): string {
+      return product && product.name ? product.name : "";
+    }
+  
+    //product filter functions
+    private _filter(name: string): Product[] {
+      const filterValue = name.toLowerCase();
+  
+      return this.productList.filter((option) =>
+        option.name.toLowerCase().includes(filterValue)
+      );
+    }
+  
+    //product filter functions
+    productSearch(keyword): void {
+      if (keyword.length >= 2) {
+        this.appService
+          .getQuery("/opportunity/get-product?product_name=" + keyword)
+          .subscribe((data) => {
+            if (data["data"].length > 0) {
+              this.productList.splice(0, this.productList.length);
+  
+              data["data"].forEach((value) => {
+                this.productList.push(value);
+              });
+            }
+          });
+      }
+    }
+  
+    productSearch2(): void {
+      this.appService
+        .getQuery(
+          "/opportunity/get-product?product_name=" + this.search_product_name
+        )
+        .subscribe((data) => {
+          if (data["data"].length > 0) {
+            this.productList.splice(0, this.productList.length);
+  
+            data["data"].forEach((value) => {
+              this.productList.push(value);
+            });
+          }
+        });
+    }
+  
+   
+  increaseProductQuantity() {
+    this.productQuantity++;
+  }
+  decrementProductQuantity() {
+    this.productQuantity--;
   }
 }

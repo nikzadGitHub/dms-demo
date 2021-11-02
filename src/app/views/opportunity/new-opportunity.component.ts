@@ -279,7 +279,7 @@ export class NewOpportunityComponent implements OnInit {
       })
       .subscribe((data) => {
         console.log("create-company:", data);
-          
+        this.router.navigate(["/opportunity/edit/" + data["data"].id]);
       });
   }
 
