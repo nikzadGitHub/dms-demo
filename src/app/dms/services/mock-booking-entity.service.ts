@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { ApprovalList, BookingEntityInterface, BookingEntity, BookingEntityList, BookingDetail } from './booking-entity';
+import { 
+  ApprovalList, BookingEntityInterface, BookingEntity, BookingEntityList,
+  BookingDetail, OpportunitySummary
+} from './booking-entity';
 import { BookingStatus } from './booking-status.enum';
 
 const mockApproval: ApprovalList = [
@@ -54,6 +57,15 @@ const mockBookingDetail: BookingDetail = {
     loan_end_date: "",
 };
 
+const mockOpportunitySummary: OpportunitySummary = {
+  customer: "Parkway Singapore",
+  opportunity_id: "00123456",
+  initiator: "Jane Doe (BK-0092)",
+  opportunity_amount: "35,000.00",
+  opportunity_no: "123567.01",
+  winning_probability: "65%",
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -62,7 +74,8 @@ export class MockBookingEntityService implements BookingEntityInterface {
     {
       status: BookingStatus.draft,
       approvalList: mockApproval,
-      bookingDetailList: mockBookingDetail
+      bookingDetailList: mockBookingDetail,
+      opportunitySummary: mockOpportunitySummary,
     }
   ];
 
@@ -73,15 +86,21 @@ export class MockBookingEntityService implements BookingEntityInterface {
     return of(data || this.mockData[0]);
   }
 
+  getApprovals(bookingId: BigInt): Observable<ApprovalList> {
+    return this.getEntity(bookingId).pipe(map((e) => {
+      return e.approvalList;
+    }));
+  }
+
   getBookingDetail(bookingId: BigInt): Observable<BookingDetail> {
     return this.getEntity(bookingId).pipe(map((e) => {
       return e.bookingDetailList;
     }));
   }
 
-  getApprovals(bookingId: BigInt): Observable<ApprovalList> {
+  getOpportunitySummary(bookingId: BigInt): Observable<OpportunitySummary> {
     return this.getEntity(bookingId).pipe(map((e) => {
-      return e.approvalList;
+      return e.opportunitySummary;
     }));
   }
 }

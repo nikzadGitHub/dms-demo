@@ -33,16 +33,27 @@ export interface BookingDetail {
   loan_end_date: string;
 }
 
+export interface OpportunitySummary {
+  customer: string;
+  opportunity_id: string;
+  initiator: string;
+  opportunity_amount: string;
+  opportunity_no: string;
+  winning_probability: string;
+}
+
 export interface BookingEntity {
   status: BookingStatus;
   approvalList: ApprovalList;
   bookingDetailList: BookingDetail;
+  opportunitySummary: OpportunitySummary;
 }
 
 export type BookingEntityList = BookingEntity[];
 
 export interface BookingEntityInterface {
   getEntity(bookingId: BigInt): Observable<BookingEntity>;
-  getBookingDetail(bookingId: BigInt): Observable<BookingDetail>;
   getApprovals(bookingId: BigInt): Observable<ApprovalList>;
+  getBookingDetail(bookingId: BigInt): Observable<BookingDetail>;
+  getOpportunitySummary(bookingId: BigInt): Observable<OpportunitySummary>;
 }

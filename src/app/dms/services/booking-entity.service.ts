@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { BookingEntityInterface, ApprovalList, BookingEntity, BookingDetail } from './booking-entity';
+import { BookingEntityInterface, ApprovalList, BookingEntity, BookingDetail, OpportunitySummary } from './booking-entity';
 import { ApiClient } from './api-client.service';
 
 
@@ -16,13 +16,17 @@ export class BookingEntityService implements BookingEntityInterface {
     return this.apiClient.get<BookingEntity>('bookings/' + bookingId.toString());
   }
 
-  getBookingDetail(bookingId: BigInt): Observable<BookingDetail> {
-    return this.apiClient.get<BookingDetail>('bookings/' + bookingId.toString());
-  }
-
   getApprovals(bookingId: BigInt): Observable<ApprovalList> {
     return this.apiClient.get<ApprovalList>('bookings/'
       + bookingId.toString()
       + '/approvals');
+  }
+
+  getBookingDetail(bookingId: BigInt): Observable<BookingDetail> {
+    return this.apiClient.get<BookingDetail>('bookings/' + bookingId.toString());
+  }
+
+  getOpportunitySummary(bookingId: BigInt): Observable<OpportunitySummary> {
+    return this.apiClient.get<OpportunitySummary>('bookings/' + bookingId.toString() + '/opportunitySummary');
   }
 }
