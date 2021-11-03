@@ -24,6 +24,8 @@ export class SalesTargetSetupComponent implements OnInit {
   copiedData: SalesTargetSetup;
   dimensionLevelArr: any[] = [];
   dimensionDescArr: any[] = [];
+  copiedDimensionLevelArr: any[] = [];
+  copiedDimensionDescArr: any[] = [];
   list: any[] = [];
   countryArr: any[] = [];
   unitArr: any[] = [];
@@ -33,8 +35,17 @@ export class SalesTargetSetupComponent implements OnInit {
   classArr: any[] = [];
   currencyArr: any[] = [];
   levelArr: any[] = [];
-  descArr: any[] = [];
-  rowCount: number = 0;
+  levelArr1: any[] = [];
+  levelArr2: any[] = [];
+  levelArr3: any[] = [];
+  levelArr4: any[] = [];
+  levelArr5: any[] = [];
+  descArr1: any[] = [];
+  descArr2: any[] = [];
+  descArr3: any[] = [];
+  descArr4: any[] = [];
+  descArr5: any[] = [];
+  rowCount: number = 1;
   dimensionRow: any[] = [];
   salesTargetData: any[];
   modalHeader: string = '';
@@ -44,6 +55,8 @@ export class SalesTargetSetupComponent implements OnInit {
   first: number = 0;
   rows: number = 5;
   dataLength: number = 0;
+  reloadData: boolean = false;
+  dataId: string = null;
 
   constructor (
     private _fb: FormBuilder,
@@ -62,7 +75,6 @@ export class SalesTargetSetupComponent implements OnInit {
     this.copiedData = new SalesTargetSetup ('','','','','','','','','','','','','','','','','','',null,null,null,null,null,null,null,null,null,null,null,null,null);
     this.fetchSalesTargetData();
     this.loadCountryArr();
-    this.onAddDimensionRow();
 
     let d = new Date();
     d.setMonth(2); //default Q1 start from April
@@ -76,6 +88,11 @@ export class SalesTargetSetupComponent implements OnInit {
     this._salesTargetSetupService.getSalesTargetData()
       .subscribe(res => {
         this.salesTargetData = res['data']['sales_targets'];
+
+        if (this.reloadData = true) {
+          this.loadSetupList(this.data.country_code);
+          this.reloadData = false;
+        }
     });
   }
 
@@ -126,15 +143,13 @@ export class SalesTargetSetupComponent implements OnInit {
     });
 
     this.dataLength = this.list.length;
-    console.log(this.dataLength);
-    console.log(this.fssArr);
   }
 
   onUnitChanged(countryCd, unitCd) {
     this._salesTargetSetupService.getFssList(countryCd, unitCd)
       .subscribe(res => {
         this.fssArr = res['data'];
-        console.log(res['data']);
+        console.log(this.fssArr)
     });
 
     this._salesTargetSetupService.getTeamLeadList(countryCd, unitCd)
@@ -157,29 +172,86 @@ export class SalesTargetSetupComponent implements OnInit {
   }
 
   loadLevelArr(countryCode) {
-    this.descArr = [];
+    this.descArr1 = [];
+    this.descArr2 = [];
+    this.descArr3 = [];
+    this.descArr4 = [];
+    this.descArr5 = [];
 
     this._salesTargetSetupService.getDimensionLevelList(countryCode)
       .subscribe(res => {
         this.levelArr = res['data'];
+        this.levelArr1 = res['data'];
+        this.levelArr2 = res['data'];
+        this.levelArr3 = res['data'];
+        this.levelArr4 = res['data'];
+        this.levelArr5 = res['data'];
     });
   }
 
-  onLevelChanges(level, countryCode) {
-    console.log(this.dimensionLevelArr);
-    this.descArr = [];
-    this._salesTargetSetupService.getDimensionDescList(countryCode, level)
-      .subscribe(res => {
-        this.descArr = res['data'];
-        console.log(this.descArr);
-    });
+  reloadLevel(e){
+    let level = e-1;
+    let value = this.dimensionLevelArr[level];
+
+    for (let i = 0; i < this.dimensionLevelArr.length; i ++) {
+      if (level !== i) {
+        if (this.dimensionLevelArr[i] == value) {
+          this.dimensionLevelArr[i] = null;
+          this.dimensionDescArr[i] = null;
+        }
+      }
+    }
+  }
+
+  onLevelChanges(e, level, countryCode) {
+    this.reloadLevel(e);
+    switch (e) {
+      case 1:
+        this.descArr1 = [];
+        this._salesTargetSetupService.getDimensionDescList(countryCode, level)
+          .subscribe(res => {
+            this.descArr1 = res['data'];
+        });
+        break;
+      case 2:
+        this.descArr2 = [];
+        this._salesTargetSetupService.getDimensionDescList(countryCode, level)
+          .subscribe(res => {
+            this.descArr2 = res['data'];
+        });
+        break;
+      case 3:
+        this.descArr3 = [];
+        this._salesTargetSetupService.getDimensionDescList(countryCode, level)
+          .subscribe(res => {
+            this.descArr3 = res['data'];
+        });
+        break;
+      case 4:
+        this.descArr4 = [];
+        this._salesTargetSetupService.getDimensionDescList(countryCode, level)
+          .subscribe(res => {
+            this.descArr4 = res['data'];
+        });
+        break;
+      case 5:
+        this.descArr1 = [];
+        this._salesTargetSetupService.getDimensionDescList(countryCode, level)
+          .subscribe(res => {
+            this.descArr5 = res['data'];
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   onAddDimensionRow() {
    this.rowCount ++;
-    if (this.rowCount <= 5) {
+  /*  if (this.rowCount <= 5) {
       this.dimensionRow.push(this.rowCount);
     }
+  */
   }
 
   loadQuarterMonth(countryCd, year) {
@@ -211,11 +283,13 @@ export class SalesTargetSetupComponent implements OnInit {
 
         this.successModal.show();
         this.mode = 'new';  //reset to new mode
+        this.reloadData = true;
+        this.fetchSalesTargetData();
     });
   }
 
-  updateSalesTargetSetup(data) {
-    this._salesTargetSetupService.updateSalesTargetSetupData(data.id, data)
+  updateSalesTargetSetup(id, data) {
+    this._salesTargetSetupService.updateSalesTargetSetupData(id, data)
       .subscribe(res => {
         this.modalBody = res.message || 'Updated Successfully';;
         this.successModal.show();
@@ -224,62 +298,64 @@ export class SalesTargetSetupComponent implements OnInit {
   }
 
   copyData(id) {
+    this.mode = 'copy';
     let temp: any;
     temp = this.salesTargetData.find(s => s.id == id);
-    this.mode = 'copy';
 
-    this.copiedData.title = temp.title;
-    this.copiedData.country_code = temp.country_code;
-    this.copiedData.unit_id = temp.unit.id;
-    this.copiedData.user_id = null;
-    this.copiedData.tl_user_id = null;
-    this.copiedData.opc_pic_user_id = null;
-    this.copiedData.class_id = temp.class;
-    this.copiedData.level_1_type = temp.level_1_type;
-    this.copiedData.level_1_value = temp.level_1_value;
-    this.copiedData.level_2_type = temp.level_2_type;
-    this.copiedData.level_2_value = temp.level_2_value;
-    this.copiedData.level_3_type = temp.level_3_type;
-    this.copiedData.level_3_value = temp.level_3_value;
-    this.copiedData.level_4_type = temp.level_4_type;
-    this.copiedData.level_4_value = temp.level_4_value;
-    this.copiedData.level_5_type = temp.level_5_type;
-    this.copiedData.level_5_value = temp.level_5_value;
-    this.copiedData.currency_code = temp.currency_code;
-    this.copiedData.year = temp.year;
-    this.copiedData.month_01_target = temp.month_01_target;
-    this.copiedData.month_02_target = temp.month_02_target;
-    this.copiedData.month_03_target = temp.month_03_target;
-    this.copiedData.month_04_target = temp.month_04_target;
-    this.copiedData.month_05_target = temp.month_05_target;
-    this.copiedData.month_06_target = temp.month_06_target;
-    this.copiedData.month_07_target = temp.month_07_target;
-    this.copiedData.month_08_target = temp.month_08_target;
-    this.copiedData.month_09_target = temp.month_09_target;
-    this.copiedData.month_10_target = temp.month_10_target;
-    this.copiedData.month_11_target = temp.month_11_target;
-    this.copiedData.month_12_target = temp.month_12_target;
+    this.loadData(temp, this.copiedData);
+
+    for(let i=1; i<=5; i++) {
+      let type = 'level_' + i + '_type';
+      let value = 'level_' + i + '_value';
+
+      if (temp[type]) {
+        this.copiedDimensionLevelArr[i-1] = temp[type];
+        this.onLevelChanges(i, temp[type], temp.country_code);
+        this.copiedDimensionDescArr[i-1] = temp[value] ? temp[value] : null;
+        this.rowCount++;
+      }
+    }
+
+    this.copiedData.level_1_type = this.copiedDimensionLevelArr[0];
+    this.copiedData.level_1_value = this.copiedDimensionDescArr[0];
+    this.copiedData.level_2_type = this.copiedDimensionLevelArr[1];
+    this.copiedData.level_2_value = this.copiedDimensionDescArr[1];
+    this.copiedData.level_3_type = this.copiedDimensionLevelArr[2];
+    this.copiedData.level_3_value = this.copiedDimensionDescArr[2];
+    this.copiedData.level_4_type = this.copiedDimensionLevelArr[3];
+    this.copiedData.level_4_value = this.copiedDimensionDescArr[3];
+    this.copiedData.level_5_type = this.copiedDimensionLevelArr[4];
+    this.copiedData.level_5_value = this.copiedDimensionDescArr[4];
 
     this.saveSalesTargetSetup(this.copiedData);
-    this.fetchSalesTargetData();
-    this.loadSetupList(this.data.country_code);
   }
 
   editData(id) {
+    this.mode = 'edit';
+    this.rowCount = 0;
+    this.reloadData = true;
+    this.dataId = id;
+
     let temp: any;
     temp = this.salesTargetData.find(s => s.id == id);
-    this.mode = 'edit';
-
-   // this.onCountryChanged(temp.country_code);
     this.onUnitChanged(temp.country_code, temp.unit.id);
     this.loadData(temp, this.data);
-    console.log(temp);
 
+    for(let i=1; i<=5; i++) {
+      let type = 'level_' + i + '_type';
+      let value = 'level_' + i + '_value';
 
+      if (temp[type]) {
+        this.dimensionLevelArr[i-1] = temp[type];
+        this.onLevelChanges(i, temp[type], temp.country_code);
+        this.dimensionDescArr[i-1] = temp[value] ? temp[value] : null;
+        this.rowCount++;
+      }
+    }
   }
 
   loadData(source, destination) {
-    let user = this.fssArr.find(s => s.uuid = source.user.id);
+    //let user = this.fssArr.find(s => s.uuid = source.user.id);
 
     destination.title = source.title;
     destination.country_code = source.country_code;
@@ -327,8 +403,8 @@ export class SalesTargetSetupComponent implements OnInit {
       .subscribe(res => {
         this.modalBody = res.message || 'Deleted Successfully';
         this.successModal.show();
+        this.reloadData = true;
         this.fetchSalesTargetData();
-        this.loadSetupList(this.data.country_code);
     });
   }
 
@@ -349,7 +425,7 @@ export class SalesTargetSetupComponent implements OnInit {
       this.saveSalesTargetSetup(data);
     }
     else if (this.mode == 'edit') {
-      this.updateSalesTargetSetup(data);
+      this.updateSalesTargetSetup(this.dataId, data);
     }
     this.resetForm(_frm);
   }
@@ -360,8 +436,7 @@ export class SalesTargetSetupComponent implements OnInit {
     this.data = new SalesTargetSetup ('','','','','','','','','','','','','','','','','','',null,null,null,null,null,null,null,null,null,null,null,null,null);
     this.copiedData = new SalesTargetSetup ('','','','','','','','','','','','','','','','','','',null,null,null,null,null,null,null,null,null,null,null,null,null);
     this.list = [];
-    this.rowCount = 0;
-    this.onAddDimensionRow();
+    this.rowCount = 1;
   }
 
   next() {
