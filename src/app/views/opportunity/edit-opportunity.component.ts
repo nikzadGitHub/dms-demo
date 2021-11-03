@@ -34,6 +34,9 @@ export interface OpportunityDetail {
   providers: [AppService],
 })
 export class EditOpportunityComponent implements OnInit {
+  @ViewChild("successModal") successModal: ModalDirective;
+  @ViewChild("dangerModal") dangerModal: ModalDirective;
+  // @ViewChild("foundModal") foundModal: ModalDirective;
   @ViewChild("addProductModal") public addProductModal: ModalDirective;
   @ViewChild("editProductModal") public editProductModal: ModalDirective;
   @ViewChild("deleteOptionModal") public deleteOptionModal: ModalDirective;
@@ -41,6 +44,9 @@ export class EditOpportunityComponent implements OnInit {
   @ViewChild("setDefaultOptionSuccessModal")
   public setDefaultOptionSuccessModal: ModalDirective;
 
+  alertBody: string;
+  alertHeader: string;
+  alretType: string;
   color = "#00538a";
   productQuantity = 1;
   default_active_option_tab = 0;
@@ -152,8 +158,8 @@ export class EditOpportunityComponent implements OnInit {
     estimated_delivery_date: "",
     estimated_po_date: "",
     estimated_invoice_date: "",
-    care_area: "",
-    hospital_department: "",
+    care_area: 0,
+    hospital_department: 0,
   });
 
   forecastForm = this.formBuilder.group({
@@ -163,7 +169,12 @@ export class EditOpportunityComponent implements OnInit {
     reason: "",
     competitor_id: "",
   });
+
   productId: any;
+  primaryContact: any[] = [];
+  primaryContactId: any;
+  is_edit_competitor: boolean;
+  competitor_id: any;
 
   constructor(
     private appService: AppService,
@@ -190,9 +201,10 @@ export class EditOpportunityComponent implements OnInit {
     this.appService
       .getQuery("/opportunity/detail/" + this.opportunity_id, null)
       .subscribe((data: any) => {
-        console.log("opportunity-detail:", data);
+        console.log("opportunity-detail-data:", data);
         this.detail = data["data"];
-        console.log("opportunity-detail:", this.detail.customer);
+        console.log("opportunity-detail:", this.detail);
+        console.log("opportunity-:detail-customer", this.detail.customer);
         this.opportunityDetailForm1.patchValue({
           topic: data["data"]["topic"],
           customer_contact_id: data["data"]["customer_contact_id"],
@@ -200,7 +212,12 @@ export class EditOpportunityComponent implements OnInit {
           status_id: data["data"]["status_id"],
           is_include_in_forecast: data["data"]["is_include_in_forecast"],
         });
-        if (this.detail.customer) {
+        if (
+          this.detail.customer &&
+          (data["data"]["sold_to"] != null ||
+            data["data"]["ship_to"]["address"] != null ||
+            data["data"]["bill_to"]["address"] != null)
+        ) {
           this.detail_not_editable = true;
           this.opportunityDetailForm2.patchValue({
             credit_term: data["data"]["customer"]["credit_term"],
@@ -222,6 +239,7 @@ export class EditOpportunityComponent implements OnInit {
             estimated_po_date: data["data"]["estimated_po_date"],
             estimated_invoice_date: data["data"]["estimated_invoice_date"],
             care_area: data["data"]["care_area"],
+            hospital_department: data["data"]["hospital_department"],
           });
         }
         // customer-contacts
@@ -235,13 +253,17 @@ export class EditOpportunityComponent implements OnInit {
           .subscribe((data) => {
             console.log("customer-data---->", data);
 
-            this.customer_contacts = data["data"];
-            console.log("customer-data: ", this.customer_contacts);
-            const newArr = [
-              ...data["data"]?.contacts,
-              ...Array(data["data"]?.primary_contact),
-            ];
-            this.customer_contacts = newArr;
+            this.primaryContact =
+              data["data"]["primary_contact"]["primary_customer"];
+            this.primaryContactId = data["data"]["primary_contact"]["id"];
+            this.customer_contacts = data["data"]["contacts"];
+            console.log("customer-data-contacts: ", this.customer_contacts);
+            // console.log("customer-data-primary: ", this.primaryContact);
+            // const newArr = [
+            //   ...data["data"]?.contacts,
+            //   ...Array(data["data"]?.primary_contact),
+            // ];
+            // this.customer_contacts = newArr;
           });
       });
 
@@ -265,10 +287,10 @@ export class EditOpportunityComponent implements OnInit {
     this.appService
       .getQuery("/opportunity/product-list/" + this.opportunity_id, null)
       .subscribe((data) => {
-        console.log("product-list:", data);
         this.product_options = data["data"];
+        let products = data["data"].products;
         console.log("product-data-->", this.product_options);
-
+        console.log("product-list:", products);
         // for(let i = 0; i < this.product_options.length; i++){
         // 	if(this.product_options[i].is_default == 0){
         // 		this.default_option = i;
@@ -277,12 +299,13 @@ export class EditOpportunityComponent implements OnInit {
       });
 
     // competitor
-    this.appService
-      .getQuery("/opportunity/competitor/" + this.opportunity_id, null)
-      .subscribe((data) => {
-        console.log("competitors:", data);
-        this.competitors = data["data"];
-      });
+    this.getCompetitorList();
+    // this.appService
+    //   .getQuery("/opportunity/competitor/" + this.opportunity_id, null)
+    //   .subscribe((data) => {
+    //     console.log("competitors:", data);
+    //     this.competitors = data["data"];
+    //   });
 
     // status
     this.appService.getQuery("/opportunity-status", null).subscribe((data) => {
@@ -303,8 +326,7 @@ export class EditOpportunityComponent implements OnInit {
     this.appService
       .getQuery("/opportunity-funding-status", null)
       .subscribe((data) => {
-        console.log("funding status:");
-        console.log(data);
+        console.log("funding status:", data);
         this.funding_status = data["data"];
       });
 
@@ -312,8 +334,7 @@ export class EditOpportunityComponent implements OnInit {
     this.appService
       .getQuery("/opportunity-pre-vendor-type", null)
       .subscribe((data) => {
-        console.log("funding status:");
-        console.log(data);
+        console.log("pre-vendor:", data);
         this.preferred_vendor_types = data["data"];
       });
 
@@ -323,6 +344,17 @@ export class EditOpportunityComponent implements OnInit {
       .subscribe((data) => {
         console.log("care area:", data);
         this.care_areas = data["data"];
+      });
+
+    //quotation-list
+    this.getOppertunityQuotationList();
+  }
+  getCompetitorList() {
+    this.appService
+      .getQuery("/opportunity/competitor/" + this.opportunity_id, null)
+      .subscribe((data) => {
+        console.log("competitors:", data);
+        this.competitors = data["data"];
       });
   }
 
@@ -482,22 +514,38 @@ export class EditOpportunityComponent implements OnInit {
 
   addProduct(index, option_id, check) {
     console.log("option_id", option_id);
-    this.appService
-      .postQuery("/opportunity/create-product", {
-        is_dummy_sku: this.is_dummy_sku,
-        opportunity_product_group_id: option_id,
-        name: this.product_name[index],
-        sku: this.sku[index],
-        product_id: this.external_product_id[index],
-        quantity: this.quantity[index],
-        unit_price: this.unit_price[index],
-        total_price: this.total_price[index],
-        discount: this.discount[index],
-        amount: this.amount[index],
-      })
-      .subscribe((data) => {
-        this.product_options[index].products.push(data["data"]);
-      });
+    if (
+      this.quantity[index] ||
+      this.unit_price[index] ||
+      this.discount[index]
+    ) {
+      this.appService
+        .postQuery("/opportunity/create-product", {
+          is_dummy_sku: this.is_dummy_sku,
+          opportunity_product_group_id: option_id,
+          name: this.product_name[index],
+          sku: this.sku[index],
+          product_id: this.external_product_id[index],
+          quantity: this.quantity[index],
+          unit_price: this.unit_price[index],
+          total_price: this.total_price[index],
+          discount: this.discount[index],
+          amount: this.amount[index],
+        })
+        .subscribe(
+          (data) => {
+            this.product_options[index].products.push(data["data"]);
+          },
+          (error) => {
+            console.log("Error: ", error);
+            this.alertBody = "Please enter required fields";
+            this.dangerModal.show();
+          }
+        );
+    } else {
+      this.alertBody = "Please enter required fields";
+      this.dangerModal.show();
+    }
   }
 
   addFullProduct() {
@@ -508,7 +556,7 @@ export class EditOpportunityComponent implements OnInit {
         opportunity_product_group_id: this.active_option_id,
         name: this.addProductForm.value.product_name,
         sku: this.addProductForm.value.sku,
-        quantity:this.addProductForm.value.productQuantity,
+        quantity: this.addProductForm.value.productQuantity,
         // quantity: this.addProductForm.value.quantity,
         unit_price: this.addProductForm.value.list_price,
         total_price:
@@ -569,20 +617,11 @@ export class EditOpportunityComponent implements OnInit {
 
   openAddProductModal(option, index, check) {
     console.log("option_id:", option.id);
-
     this.addLine = check;
     this.active_option_id = option.id;
     this.default_active_option_tab = index;
     this.productList.splice(0, this.productList.length); //clear search
-
-    if (this.addLine == true && this.productId) {
-      console.log("working");
-      this.addProductModal.show();
-      this.productById(this.productId);
-    } else if (this.addLine == false) {
-      this.addProductModal.show();
-    }
-    // this.addProduct(index, this.active_option_id , this.addLine);
+    this.addProductModal.show();
   }
 
   openEditProductModal(index1, index2, product_id) {
@@ -647,33 +686,77 @@ export class EditOpportunityComponent implements OnInit {
   }
 
   addCompetitor() {
-    console.log("competitor-name: ", this.competitor_name);
-
-    this.appService
-      .postQuery("/opportunity/create-competitor", {
-        opportunity_id: this.opportunity_id,
-        name: this.competitor_name,
-        amount: this.competitor_amount,
-      })
-      .subscribe((data) => {
-        console.log("addCompetitor: ", data);
-
-        this.competitors.push(data["data"]);
-        // this.competitor_name = this.competitor_amount = "";
-      });
+    if (this.is_edit_competitor == true) {
+      this.appService
+        .putQuery("/opportunity-competitor/" + this.competitor_id, {
+          amount: this.competitor_amount,
+        })
+        .subscribe((data: any) => {
+          console.log("competitor-edit-data: ", data);
+          this.alertBody = data.code;
+          this.successModal.show();
+          this.getCompetitorList();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.is_edit_competitor = false;
+            this.competitor_name = "";
+            this.competitor_amount = 0;
+          }, 2000);
+        });
+    } else {
+      this.appService
+        .postQuery("/opportunity/create-competitor", {
+          opportunity_id: this.opportunity_id,
+          name: this.competitor_name,
+          amount: this.competitor_amount,
+        })
+        .subscribe((data) => {
+          console.log("addCompetitor: ", data);
+          this.competitors.push(data["data"]);
+          // this.competitor_name = this.competitor_amount = "";
+        });
+    }
   }
   // opportunityCompetitorSpecificUpdate
-  editCompetitor(index, competitorAmount, competitorId) {
-    // this.competitor_amount = competitorAmount
+  editCompetitor(index, competitorAmount, competitorName, competitorId, check) {
+    this.is_edit_competitor = check;
+    this.competitor_amount = competitorAmount;
+    this.competitor_name = competitorName;
+    this.competitor_id = competitorId;
+    // this.appService
+    //   .putQuery(
+    //     "/opportunity-competitor/" + competitorId,
+    //     {
+    //       amount: 400,
+    //     }
+    //   )
+    //   .subscribe((data) => {
+    //     console.log("competitor-edit-data: ", data);
+    //   });
+  }
+
+  getOppertunityQuotationList() {
+    // /quote/get-opportunity-quotation-list
     this.appService
-      .putQuery(
-        "/opportunity-competitor/" + competitorId, 
-        {
-          amount: 400,
-        }
-      )
+      .getQuery("/quote/get-opportunity-quotation-list", {
+        id: this.opportunity_id,
+      })
       .subscribe((data) => {
-        console.log("competitor-edit-data: ", data);
+        console.log("quotation-list: ", data);
+      });
+  }
+
+  convertToQuotation(index, option_id) {
+    console.log("quotation-index:", index);
+    console.log("quotation-option_id:", option_id);
+    // this.delete_option_index = index;
+    // this.delete_option_id = option_id;
+    this.appService
+      .postQuery("/opportunity/convert-to-quote", {
+        products: this.product_options,
+      })
+      .subscribe((data) => {
+        console.log("convert-quotation: ", data);
       });
   }
 

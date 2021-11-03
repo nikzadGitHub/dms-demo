@@ -74,17 +74,14 @@
                       formControlName="customer_contact_id"
                       (change)="updateDetail()"
                     >
-                      <option value="">Please select...</option>
-                      <option value="1">Contact-1</option>
-                      <option value="2">Contact-2</option>
-                      <option value="3">Contact-3</option>
-                      <option value="4">Contact-4</option>
-
+                      <option value="{{ primaryContactId }}">
+                        {{ primaryContact }}
+                      </option>
                       <!-- <option
-                        *ngFor="let contact of customer_contacts; let i = index"
+                        *ngFor="let contact of primaryContact; let i = index"
                         value="{{ contact.id }}"
                       >
-                        {{ contact.name }}
+                        {{ contact }}
                       </option> -->
                     </select>
                   </div>
@@ -97,18 +94,12 @@
                       formControlName="customer_contact2_id"
                       (change)="updateDetail()"
                     >
-                      <!-- <option value="">Please select...</option>
-                    <option value="5">Contact-1</option>
-                    <option value="6">Contact-2</option>
-                    <option value="7">Contact-3</option>
-                    <option value="8">Contact-4</option> -->
-
-                      <!-- <option
+                      <option
                         *ngFor="let contact of customer_contacts; let i = index"
                         value="{{ contact.id }}"
                       >
-                        {{ contact.name }}
-                      </option> -->
+                        {{ contact.primary_customer }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -233,7 +224,10 @@
                     <tr>
                       <td class="bg-lightgrey text-left">Segment</td>
                       <td>
-                        <select class="form-control" formControlName="segment_code">
+                        <select
+                          class="form-control"
+                          formControlName="segment_code"
+                        >
                           <option value="segment_code">Government</option>
                           <option value="segment_code">Semi Government</option>
                           <option value="segment_code">Private</option>
@@ -242,13 +236,22 @@
                       <td class="bg-lightgrey text-left">Sold To</td>
                       <td>
                         <div style="display: flex; align-items: center">
-                          <input
+                          <textarea
+                            name=""
+                            id=""
+                            cols="30"
+                            rows="10"
+                            formControlName="sold_to"
+                            [attr.disabled]="detail_not_editable ? '' : null"
+                            (change)="updateDetail()"
+                          ></textarea>
+                          <!-- <input
                             type="text"
                             class="form-control"
                             formControlName="sold_to"
                             [attr.disabled]="detail_not_editable ? '' : null"
                             (change)="updateDetail()"
-                          />
+                          /> -->
                           <!-- <a style="cursor: pointer; float: right"
                             ><i class="icon-note icon"></i
                           ></a> -->
@@ -492,26 +495,32 @@
                     <tr>
                       <td class="text-left">Care Area</td>
                       <td class="w-25">
-                        <select
+                        <input
+                          type=""
+                          class="form-control"
+                          formControlName="care_area"
+                          (input)="updateDetail()"
+                        />
+                        <!-- <select
                           class="form-control"
                           formControlName="care_area"
                           (change)="updateDetail()"
                         >
                           <option
                             *ngFor="let care_area of care_areas; let i = index"
-                            value="{{ care_area.care_area }}"
+                            value="{{ care_area.care_area_code }}"
                           >
-                            {{ care_area.care_area_code }}
+                            {{ care_area.care_area }}
                           </option>
-                        </select>
+                        </select> -->
                       </td>
-                      <td class="text-left">Department</td>
+                      <td class="text-left">Hospital Department</td>
                       <td class="w-25">
                         <input
                           type="text"
                           class="form-control"
                           formControlName="hospital_department"
-                          (change)="updateDetail()"
+                          (input)="updateDetail()"
                         />
                       </td>
                     </tr>
@@ -581,7 +590,7 @@
                         <input
                           type="text"
                           class="form-control"
-                          (change)="updateForecast()"
+                          (input)="updateForecast()"
                           formControlName="reason"
                         />
                       </td>
@@ -616,7 +625,7 @@
                             "
                             value="{{ competitor.id }}"
                           >
-                            {{ competitor.name }}
+                            {{ competitor.competitor_name }}
                           </option>
                         </select>
                       </td>
@@ -798,7 +807,7 @@
                         <!-- (click)="openAddProductModal(option, i, true)" -->
                         <button
                           class="btn btn-icon btn-outline-primary"
-                          (click)="openAddProductModal(option, i, true)" 
+                          (click)="addProduct(i, option.id, true)"
                         >
                           <i class="cil-plus c-icon"></i>
                         </button>
@@ -833,7 +842,7 @@
                       <i class="cil-copy c-icon"></i>
                       <span>CLONE OPTION</span>
                     </button>
-                    <button class="btn btn-custom mr-1 form-group">
+                    <button class="btn btn-custom mr-1 form-group" (click)="convertToQuotation(i, option.id)">
                       <i class="cil-notes c-icon"></i>
                       <span>CONVERT TO QUOTE</span>
                     </button>
@@ -911,7 +920,7 @@
                     [value]="competitor.competitor_name"
                     readonly
                   /> -->
-                    </td>
+                  </td>
                   <td class="text-left">
                     {{ competitor.amount }}
                     <!-- <input
@@ -920,10 +929,21 @@
                     [value]="competitor.amount"
                     readonly
                   /> -->
-                   </td>
+                  </td>
                   <td style="width: 8%">
                     <a style="cursor: pointer; color: #386fa4"
-                      ><i class="icon-note icon" (click)="editCompetitor(i, competitor.amount,competitor.id)"></i
+                      ><i
+                        class="icon-note icon"
+                        (click)="
+                          editCompetitor(
+                            i,
+                            competitor.amount,
+                            competitor.competitor_name,
+                            competitor.id,
+                            true
+                          )
+                        "
+                      ></i
                     ></a>
                   </td>
                 </tr>
@@ -932,6 +952,7 @@
                     <input
                       type="text"
                       class="form-control"
+                      [attr.disabled]="is_edit_competitor ? '' : null"
                       [(ngModel)]="competitor_name"
                     />
                   </td>
@@ -939,6 +960,7 @@
                     <input
                       type="text"
                       class="form-control"
+                      [value]="competitor_amount"
                       [(ngModel)]="competitor_amount"
                     />
                   </td>
@@ -1156,7 +1178,7 @@
                     <ng-template pTemplate="header">
                       <img
                         src="../../../assets/img/icons/group_add.svg"
-                        style="position: relative; left: 845px; width: 30px"
+                        style="position: relative; width: 30px; left: 50.5rem"
                     /></ng-template>
                     <form class="biling-milestone-form">
                       <div class="biling-milestone">
@@ -1245,7 +1267,7 @@
                     <ng-template pTemplate="header">
                       <img
                         src="../../../assets/img/icons/group_add.svg"
-                        style="position: relative; left: 816px; width: 30px"
+                        style="position: relative; width: 30px; left: 48.5rem"
                     /></ng-template>
                     <form class="payment-schedule-form">
                       <div class="payment-schedule">
@@ -1342,7 +1364,7 @@
                     <ng-template pTemplate="header">
                       <img
                         src="../../../assets/img/icons/group_add.svg"
-                        style="position: relative; left: 856px; width: 30px"
+                        style="position: relative; width: 30px; left: 51rem"
                     /></ng-template>
                     <form class="absorbed-cost-form">
                       <div class="absorbed-cost">
@@ -1522,8 +1544,8 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" *ngIf="addLine== false">Add Product</h4>
-        <h4 class="modal-title" *ngIf="addLine== true">Add Product Line</h4>
+        <h4 class="modal-title" *ngIf="addLine == false">Add Product</h4>
+        <h4 class="modal-title" *ngIf="addLine == true">Add Product Line</h4>
         <button
           type="button"
           class="close"
@@ -1556,10 +1578,11 @@
             <div class="col-md-6 info-text">Product Name</div>
             <div class="col-md-6">
               <input
-               type="text"
+                type="text"
                 class="form-control"
                 [(ngModel)]="search_product_name"
-                 value="Oxy" />
+                value="Oxy"
+              />
             </div>
           </div>
         </div>
@@ -1588,7 +1611,9 @@
         <hr />
         <!-- table -->
         <div class="table-div" *ngIf="addLine == true">
-          <ng-container *ngIf="productList.length > 0; else elseProductListEmptyTemplate">
+          <ng-container
+            *ngIf="productList.length > 0; else elseProductListEmptyTemplate"
+          >
             <div class="row">
               <div class="col-md-12" style="height: 200px">
                 <table class="table">
@@ -1604,11 +1629,11 @@
                   <tr *ngFor="let product of productList; let i = index">
                     <td class="text-center">
                       <input
-                       type="radio"
-                       [attr.id]="'p' + i"
-                       name="product[]"
-                       (click)="productSelectedRadio(product)"
-                        />
+                        type="radio"
+                        [attr.id]="'p' + i"
+                        name="product[]"
+                        (click)="productSelectedRadio(product)"
+                      />
                     </td>
                     <td class="text-center">{{ product.name }}</td>
                     <td class="text-center">{{ product.sku }}</td>
@@ -1646,14 +1671,14 @@
                   style="margin-right: 10px"
                 />
                 <div
-                class="col-md-6"
-                *ngIf="is_dummy_sku == 0; else elseDummySkuTemplate"
-              >
-                SKU ID
-              </div>
-              <ng-template #elseDummySkuTemplate>
-                <div class="col-md-6">Dummy SKU ID</div>
-              </ng-template>
+                  class="col-md-6"
+                  *ngIf="is_dummy_sku == 0; else elseDummySkuTemplate"
+                >
+                  SKU ID
+                </div>
+                <ng-template #elseDummySkuTemplate>
+                  <div class="col-md-6">Dummy SKU ID</div>
+                </ng-template>
                 <input
                   type="number"
                   class="form-control"
@@ -1672,7 +1697,7 @@
               <div class="col-md-6">
                 <i
                   class="pi pi-minus-circle"
-                  [style.color]="productQuantity==-1 ? color: '#5c6873'"
+                  [style.color]="productQuantity == -1 ? color : '#5c6873'"
                   style="margin-right: 10px"
                   (click)="decrementProductQuantity()"
                 ></i>
@@ -1688,7 +1713,7 @@
                 <!-- color: #007bff;  -->
                 <i
                   class="pi pi-plus-circle"
-                  [style.color]="productQuantity==1 ? color: '#5c6873'"
+                  [style.color]="productQuantity == 1 ? color : '#5c6873'"
                   style="margin-left: 10px"
                   (click)="increaseProductQuantity()"
                 ></i>
@@ -1698,20 +1723,33 @@
               <div class="col-md-6 info-text">Item Discount (%)</div>
               <div class="col-md-6">
                 <input
-                 type="text"
-                  class="form-control" value="10" formControlName="discount"/>
+                  type="text"
+                  class="form-control"
+                  value="10"
+                  formControlName="discount"
+                />
               </div>
             </div>
-            <div class="row form-group dummy-info" *ngIf="addLine== true">
+            <div class="row form-group dummy-info" *ngIf="addLine == true">
               <div class="col-md-6 info-text">List Price</div>
               <div class="col-md-6">
-                <input type="text" class="form-control" value="3,000" formControlName="list_price"/>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="3,000"
+                  formControlName="list_price"
+                />
               </div>
             </div>
-            <div class="row form-group dummy-info" *ngIf="addLine==false">
+            <div class="row form-group dummy-info" *ngIf="addLine == false">
               <div class="col-md-6 info-text">Cost & Quote Price</div>
               <div class="col-md-6">
-                <input type="text" class="form-control" value="3,000" formControlName="list_price"/>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="3,000"
+                  formControlName="list_price"
+                />
               </div>
             </div>
             <div class="row form-group dummy-info">
@@ -1763,10 +1801,14 @@
           </div>
           <hr />
           <!-- For Equipment Product -->
-          <div class="modal-header" style="margin-left: -11px" *ngIf="addLine== false">
+          <div
+            class="modal-header"
+            style="margin-left: -11px"
+            *ngIf="addLine == false"
+          >
             <h4 class="modal-title">FOR EQUIPMENT PRODUCT</h4>
           </div>
-          <div class="equipment-product" *ngIf="addLine== false">
+          <div class="equipment-product" *ngIf="addLine == false">
             <div class="row form-group equipment-product-info">
               <div class="col-md-6 info-text">Standard Warranty</div>
               <div class="col-md-6">
@@ -1781,7 +1823,10 @@
             <div class="row form-group equipment-product-info">
               <div class="col-md-6 info-text">Extended Warranty</div>
               <div class="col-md-6">
-                <select class="form-control" formControlName="extended_warranty">
+                <select
+                  class="form-control"
+                  formControlName="extended_warranty"
+                >
                   <option value="0" style="display: none">Please Select</option>
                   <option></option>
                 </select>
@@ -1822,7 +1867,7 @@
             </div>
             <hr />
           </div>
-         
+
           <!-- Other Cost -->
           <div class="modal-header" style="margin-left: -11px">
             <h4 class="modal-title">OTHER COST</h4>
@@ -2158,7 +2203,6 @@
 </div>
 <!-- /.modal -->
 
-
 <!-- Option has been set as the preferred option -->
 <div
   bsModal
@@ -2200,3 +2244,66 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!-- Success-model -->
+<div
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="color: #f8f9fa; font-size: 20px">
+          Success
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- error-model -->
+<div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="color: #f8f9fa; font-size: 20px">
+          Error
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="dangerModal.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
