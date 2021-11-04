@@ -145,7 +145,7 @@
                                           [showClear]="true" [style]="{ width: '100%' }"
                                           [options]="levelArr1" optionLabel="name" optionValue="code"
                                           [(ngModel)]="dimensionLevelArr[0]"
-                                          (onChange)="onLevelChanges(1, dimensionLevelArr[0], data.country_code)">
+                                          (onChange)="onLevelChanged(1, dimensionLevelArr[0], data.country_code)">
                                       </p-dropdown>
                                     </div>
                                 </div>
@@ -178,7 +178,7 @@
                                             [showClear]="true" [style]="{ width: '100%' }"
                                             [options]="levelArr2" optionLabel="name" optionValue="code"
                                             [(ngModel)]="dimensionLevelArr[1]"
-                                            (onChange)="onLevelChanges(2, dimensionLevelArr[1], data.country_code)">
+                                            (onChange)="onLevelChanged(2, dimensionLevelArr[1], data.country_code)">
                                         </p-dropdown>
                                     </div>
                                 </div>
@@ -209,7 +209,7 @@
                                             [showClear]="true" [style]="{ width: '100%' }"
                                             [options]="levelArr3" optionLabel="name" optionValue="code"
                                             [(ngModel)]="dimensionLevelArr[2]"
-                                            (onChange)="onLevelChanges(3, dimensionLevelArr[2], data.country_code)">
+                                            (onChange)="onLevelChanged(3, dimensionLevelArr[2], data.country_code)">
                                         </p-dropdown>
                                     </div>
                                 </div>
@@ -240,7 +240,7 @@
                                             [showClear]="true" [style]="{ width: '100%' }"
                                             [options]="levelArr4" optionLabel="name" optionValue="code"
                                             [(ngModel)]="dimensionLevelArr[3]"
-                                            (onChange)="onLevelChanges(4, dimensionLevelArr[3], data.country_code)">
+                                            (onChange)="onLevelChanged(4, dimensionLevelArr[3], data.country_code)">
                                         </p-dropdown>
                                     </div>
                                 </div>
@@ -271,7 +271,7 @@
                                         [showClear]="true" [style]="{ width: '100%' }"
                                         [options]="levelArr5" optionLabel="name" optionValue="code"
                                         [(ngModel)]="dimensionLevelArr[4]"
-                                        (onChange)="onLevelChanges(5, dimensionLevelArr[4], data.country_code)">
+                                        (onChange)="onLevelChanged(5, dimensionLevelArr[4], data.country_code)">
                                     </p-dropdown>
                                 </div>
                             </div>
@@ -304,7 +304,7 @@
                                             [showClear]="true" [style]="{ width: '100%' }"
                                             [options]="levelArr" optionLabel="name" optionValue="code"
                                             [(ngModel)]="dimensionLevelArr[i]" [dataKey]="dimensionLevelArr[i]"
-                                            (onChange)="onLevelChanges(dimensionLevelArr[i], data.country_code)">
+                                            (onChange)="onLevelChanged(dimensionLevelArr[i], data.country_code)">
                                         </p-dropdown>
                                     </div>
                                 </div>

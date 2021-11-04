@@ -203,7 +203,7 @@ export class SalesTargetSetupComponent implements OnInit {
     }
   }
 
-  onLevelChanges(e, level, countryCode) {
+  onLevelChanged(e, level, countryCode) {
     this.reloadLevel(e);
     switch (e) {
       case 1:
@@ -310,7 +310,7 @@ export class SalesTargetSetupComponent implements OnInit {
 
       if (temp[type]) {
         this.copiedDimensionLevelArr[i-1] = temp[type];
-        this.onLevelChanges(i, temp[type], temp.country_code);
+        this.onLevelChanged(i, temp[type], temp.country_code);
         this.copiedDimensionDescArr[i-1] = temp[value] ? temp[value] : null;
         this.rowCount++;
       }
@@ -347,7 +347,7 @@ export class SalesTargetSetupComponent implements OnInit {
 
       if (temp[type]) {
         this.dimensionLevelArr[i-1] = temp[type];
-        this.onLevelChanges(i, temp[type], temp.country_code);
+        this.onLevelChanged(i, temp[type], temp.country_code);
         this.dimensionDescArr[i-1] = temp[value] ? temp[value] : null;
         this.rowCount++;
       }
