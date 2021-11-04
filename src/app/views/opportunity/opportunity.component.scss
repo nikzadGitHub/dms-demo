@@ -69,6 +69,29 @@ tr:nth-child(even) {
   background-color: rgba(221, 225, 224, 0.3);
   // background-color: #f7f7f7;
 }
+.no-outline {
+  color: #333333;
+}
+.quotation-table .table td {
+  color: #333333;
+}
+.product-form .product-quotation-table .table td {
+  color: #333333;
+}
+.standard-terms .table td {
+  color: #333333;
+}
+
+.biling-milestone .table td {
+  color: #333333;
+}
+.payment-schedule .table td {
+  color: #333333;
+}
+
+.absorbed-cost .table td {
+  color: #333333;
+}
 
 .no-outline tr:first-child td {
   border-top: none !important;
@@ -471,6 +494,33 @@ input::placeholder {
   }
 }
 
+.form-control {
+  color: #333333;
+}
+.form-control:disabled,
+.form-control[readonly] {
+  background-color: #f8f9fa;
+  background: none;
+  opacity: 1;
+  border: 0px solid #e4e7ea;
+}
+textarea {
+  border: none;
+  color: #333333;
+  background: none;
+}
+
+// input[type="date"].form-control,
+// input[type="datetime-local"].form-control,
+// input[type="month"].form-control,
+// input[type="time"].form-control {
+//   -webkit-appearance: none;
+//   -moz-appearance: none;
+//   appearance: none;
+//   border: 0px solid #e4e7ea;
+//   color: #212529;
+// }
+
 // @media screen and (max-width: 960px) {
 //   :host ::ng-deep {
 //     .p-datatable {
@@ -531,6 +581,7 @@ input::placeholder {
           td {
             font-size: 8px;
             padding: 3px 0px 0px 5px;
+            color: black;
             // overflow-x: auto;
           }
         }
@@ -543,6 +594,7 @@ input::placeholder {
           td {
             font-size: 8px;
             padding: 3px 0px 0px 5px;
+            color: black;
             // overflow-x: auto;
           }
         }
@@ -555,6 +607,7 @@ input::placeholder {
           td {
             font-size: 8px;
             padding: 5px 0px 3px 5px;
+            color: black;
           }
         }
       }
@@ -579,6 +632,7 @@ input::placeholder {
           td {
             font-size: 8px;
             padding: 0px 20px 0px 0px;
+            color: black;
             // i{
             //   font-size: 8px;
             // }
@@ -628,6 +682,7 @@ input::placeholder {
           td {
             padding: 0.75rem;
             font-size: 16px;
+            color: black;
           }
         }
       }
@@ -639,6 +694,7 @@ input::placeholder {
           td {
             padding: 0.75rem;
             font-size: 16px;
+            color: black;
           }
         }
       }
@@ -650,6 +706,7 @@ input::placeholder {
           td {
             font-size: 16px;
             padding: 0.75rem;
+            color: black;
           }
         }
       }
@@ -673,6 +730,7 @@ input::placeholder {
           td {
             font-size: 16px;
             padding: 0.75rem;
+            color: black;
           }
         }
       }

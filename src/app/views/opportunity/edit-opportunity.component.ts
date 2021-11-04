@@ -175,6 +175,9 @@ export class EditOpportunityComponent implements OnInit {
   primaryContactId: any;
   is_edit_competitor: boolean;
   competitor_id: any;
+  data_area_id: any;
+  company_name: any;
+  external_id: any;
 
   constructor(
     private appService: AppService,
@@ -205,6 +208,17 @@ export class EditOpportunityComponent implements OnInit {
         this.detail = data["data"];
         console.log("opportunity-detail:", this.detail);
         console.log("opportunity-:detail-customer", this.detail.customer);
+        console.log(
+          "opportunity-detail-external_id:",
+          this.detail.customer.external_id
+        );
+        console.log(
+          "opportunity-detail-data_area_id:",
+          this.detail.customer.data_area_id
+        );
+        this.external_id = this.detail.customer.external_id;
+        this.data_area_id = this.detail.customer.data_area_id;
+        this.company_name = this.detail.customer.company_name;
         this.opportunityDetailForm1.patchValue({
           topic: data["data"]["topic"],
           customer_contact_id: data["data"]["customer_contact_id"],
@@ -288,9 +302,9 @@ export class EditOpportunityComponent implements OnInit {
       .getQuery("/opportunity/product-list/" + this.opportunity_id, null)
       .subscribe((data) => {
         this.product_options = data["data"];
-        let products = data["data"].products;
+        // let products = data["data"].products;
         console.log("product-data-->", this.product_options);
-        console.log("product-list:", products);
+        // console.log("product-list:", products);
         // for(let i = 0; i < this.product_options.length; i++){
         // 	if(this.product_options[i].is_default == 0){
         // 		this.default_option = i;
@@ -586,6 +600,28 @@ export class EditOpportunityComponent implements OnInit {
 
     console.log(this.addProductForm.value);
   }
+  convertToQuotation(index, option_id) {
+    // /convert-product-to-quote
+    // /opportunity/convert-to-quote
+    // /quote/convert-to-quote
+    // this.active_option_id
+    console.log("quotation-index:", index);
+    this.active_option_id = option_id;
+    let group_id = option_id
+    console.log("quotation-option_id:", option_id);
+    
+    this.appService
+      .postQuery("/convert-product-to-quote", {
+        group_id: group_id,
+        opportunity_id: this.opportunity_id,
+        company: this.company_name,
+        external_id: this.external_id,
+        data_area_id: this.data_area_id,
+      })
+      .subscribe((data) => {
+        console.log("convert-quotation: ", data);
+      });
+  }
 
   cloneProduct(index, product_id) {
     this.appService
@@ -743,20 +779,6 @@ export class EditOpportunityComponent implements OnInit {
       })
       .subscribe((data) => {
         console.log("quotation-list: ", data);
-      });
-  }
-
-  convertToQuotation(index, option_id) {
-    console.log("quotation-index:", index);
-    console.log("quotation-option_id:", option_id);
-    // this.delete_option_index = index;
-    // this.delete_option_id = option_id;
-    this.appService
-      .postQuery("/opportunity/convert-to-quote", {
-        products: this.product_options,
-      })
-      .subscribe((data) => {
-        console.log("convert-quotation: ", data);
       });
   }
 

@@ -129,8 +129,8 @@
                 <table class="table m-0 no-outline">
                   <tbody>
                     <tr>
-                      <td class="bg-lightgrey text-left w-25">Credit Term:</td>
-                      <td class="text-left w-25">
+                      <td class="bg-lightgrey text-left">Credit Term:</td>
+                      <td>
                         <input
                           type="text"
                           class="form-control"
@@ -142,7 +142,7 @@
                       <td class="bg-lightgrey text-left">
                         Hospital Bed (Exact Number)
                       </td>
-                      <td class="text-left w-25">
+                      <td class="text-left">
                         <input
                           type="text"
                           class="form-control"
@@ -172,7 +172,7 @@
                         />
                       </td>
                       <td class="bg-lightgrey text-left">Geographical Zone</td>
-                      <td class="text-left w-25">
+                      <td class="text-left">
                         <input
                           type="text"
                           class="form-control"
@@ -202,7 +202,7 @@
                         />
                       </td>
                       <td class="bg-lightgrey text-left">Customer Tax Code</td>
-                      <td class="text-left w-25">
+                      <td class="text-left">
                         <input
                           type="text"
                           class="form-control"
@@ -239,19 +239,12 @@
                           <textarea
                             name=""
                             id=""
-                            cols="30"
-                            rows="10"
+                            cols="50"
+                            rows="5"
                             formControlName="sold_to"
                             [attr.disabled]="detail_not_editable ? '' : null"
                             (change)="updateDetail()"
                           ></textarea>
-                          <!-- <input
-                            type="text"
-                            class="form-control"
-                            formControlName="sold_to"
-                            [attr.disabled]="detail_not_editable ? '' : null"
-                            (change)="updateDetail()"
-                          /> -->
                           <!-- <a style="cursor: pointer; float: right"
                             ><i class="icon-note icon"></i
                           ></a> -->
@@ -275,15 +268,24 @@
                         />
                       </td>
                       <td class="text-left">Ship To</td>
-                      <td class="text-left w-25">
+                      <td class="text-left">
                         <div style="display: flex; align-items: center">
-                          <input
+                          <textarea
+                            name=""
+                            id=""
+                            cols="50"
+                            rows="5"
+                            formControlName="ship_to"
+                            [attr.disabled]="detail_not_editable ? '' : null"
+                            (change)="updateDetail()"
+                          ></textarea>
+                          <!-- <input
                             type="text"
                             class="form-control"
                             formControlName="ship_to"
                             [attr.disabled]="detail_not_editable ? '' : null"
                             (change)="updateDetail()"
-                          />
+                          /> -->
                           <!-- <a style="cursor: pointer; float: right"
                             ><i class="icon-note icon"></i
                           ></a> -->
@@ -309,15 +311,24 @@
                         />
                       </td>
                       <td class="bg-lightgrey text-left">Bill To</td>
-                      <td class="text-left w-25">
+                      <td class="text-left">
                         <div style="display: flex; align-items: center">
-                          <input
+                          <textarea
+                            name=""
+                            id=""
+                            cols="50"
+                            rows="5"
+                            formControlName="bill_to"
+                            [attr.disabled]="detail_not_editable ? '' : null"
+                            (change)="updateDetail()"
+                          ></textarea>
+                          <!-- <input
                             type="text"
                             class="form-control"
                             formControlName="bill_to"
                             [attr.disabled]="detail_not_editable ? '' : null"
                             (change)="updateDetail()"
-                          />
+                          /> -->
                           <!-- <a style="cursor: pointer; float: right"
                             ><i class="icon-note icon"></i
                           ></a> -->
@@ -348,98 +359,6 @@
                   </tbody>
                 </table>
               </div>
-              <!-- <div class="row">
-                <div class="col-md-12">
-                  <table class="table table-striped m-0 no-outline">
-                    <tbody>
-                      <tr>
-                        <td class="bg-lightgrey text-left w-25">Credit Term</td>
-                        <td class="w-25"></td>
-                        <td class="bg-lightgrey text-left w-25">
-                          Hospital Bed (Exact Number)
-                        </td>
-                        <td class="text-left w-25">
-                          <a style="cursor: pointer; float: right"
-                            ><i class="icon-note icon"></i
-                          ></a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="bg-lightgrey text-left">Credit Limit</td>
-                        <td></td>
-                        <td class="bg-lightgrey text-left">
-                          Geographical Zone
-                        </td>
-                        <td class="text-left w-25">
-                          <a style="cursor: pointer; float: right"
-                            ><i class="icon-note icon"></i
-                          ></a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="bg-lightgrey text-left">Hospital Class</td>
-                        <td></td>
-                        <td class="bg-lightgrey text-left">
-                          Customer Tax Code
-                        </td>
-                        <td class="text-left w-25">
-                          <a style="cursor: pointer; float: right"
-                            ><i class="icon-note icon"></i
-                          ></a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="bg-lightgrey text-left">Segment</td>
-                        <td>
-                          <select class="form-control">
-                            <option>Government</option>
-                            <option>Semi Government</option>
-                            <option>Private</option>
-                          </select>
-                        </td>
-                        <td class="bg-lightgrey text-left">Sold To</td>
-                        <td class="text-left w-25">
-                          <a style="cursor: pointer; float: right"
-                            ><i class="icon-note icon"></i
-                          ></a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="bg-lightgrey text-left">
-                          Customer Category
-                        </td>
-                        <td></td>
-                        <td class="bg-lightgrey text-left">Ship To</td>
-                        <td class="text-left w-25">
-                          <a style="cursor: pointer; float: right"
-                            ><i class="icon-note icon"></i
-                          ></a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="bg-lightgrey text-left">
-                          Customer Subcategory
-                        </td>
-                        <td></td>
-                        <td class="bg-lightgrey text-left">Bill To</td>
-                        <td class="text-left w-25">
-                          <a style="cursor: pointer; float: right"
-                            ><i class="icon-note icon"></i
-                          ></a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="bg-lightgrey text-left">
-                          Hospital Bed (Range)
-                        </td>
-                        <td></td>
-                        <td class="bg-lightgrey text-left"></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div> -->
             </form>
           </p-accordionTab>
           <!-- Tracking Info -->
@@ -842,7 +761,10 @@
                       <i class="cil-copy c-icon"></i>
                       <span>CLONE OPTION</span>
                     </button>
-                    <button class="btn btn-custom mr-1 form-group" (click)="convertToQuotation(i, option.id)">
+                    <button
+                      class="btn btn-custom mr-1 form-group"
+                      (click)="convertToQuotation(i, option.id)"
+                    >
                       <i class="cil-notes c-icon"></i>
                       <span>CONVERT TO QUOTE</span>
                     </button>
