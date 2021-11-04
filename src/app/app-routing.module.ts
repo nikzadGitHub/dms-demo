@@ -126,6 +126,10 @@ export const routes: Routes = [
         path: 'managerview',
         loadChildren: () => import('./views/manager-view/manager-view.module').then(m => m.ManagerViewModule)
       },
+      {
+        path: 'systemadmin',
+        loadChildren: () => import('./system-admin/system-admin.module').then(m => m.SystemAdminModule)
+      },
     ]
   },
   { path: '**', component: P404Component }

@@ -78,7 +78,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
 import { ManagerViewModule } from './views/manager-view/manager-view.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SystemAdminModule } from './system-admin/system-admin.module';
 
 @NgModule({
   imports: [
@@ -128,7 +129,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
     }),
     ManagerViewModule,
     NgbModule,
-    InputTextModule
+    InputTextModule,
+    SystemAdminModule
   ],
   declarations: [
     AppComponent,

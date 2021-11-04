@@ -1,0 +1,94 @@
+<div class="animated fadeIn">
+  <form name="systemAdminForm" #systemAdminForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="col-md-12">
+      <div class="row header">
+        <div class="col-lg-9 col-md-9 col-sm-9 pt-3 pb-3">
+          <h4 class="title text-dark"><b>SYSTEM ADMIN</b></h4>
+        </div>
+      </div>
+      <div class="card-header row" style="background-color: #F6F6F6;">
+        <i class="pi pi-pencil"></i>
+        <span class="ml-2">System Admin Setup</span>
+      </div>
+      <div class="pt-5 pb-5">
+        <table class="mt-4" style="width:100%;" class="table table-bordered">
+          <thead>
+            <tr style="background-color:#F6F6F6;">
+              <th colspan="6" style="padding:10px 20px;">Admin Setup</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td width="50%"></td>
+              <td class="text-center" width="10%">All</td>
+              <td class="text-center" width="10%">Create</td>
+              <td class="text-center" width="10%">Edit</td>
+              <td class="text-center" width="10%">Delete</td>
+              <td class="text-center" width="10%">Approve</td>
+            </tr>
+            <tr>
+              <td width="50%">Admin Profile</td>
+              <td class="text-center" width="10%">
+                <input class="check-box" type="checkbox" name="profile_all"/>
+              </td>
+              <td class="text-center" width="10%">
+                <input class="check-box" type="checkbox" name="profile_create"/>
+              </td>
+              <td class="text-center" width="10%">
+                <input class="check-box" type="checkbox" name="profile_edit"/>
+              </td>
+              <td class="text-center" width="10%">
+                <input class="check-box" type="checkbox" name="profile_delete"/>
+              </td>
+              <td class="text-center" width="10%">
+                <input class="check-box" type="checkbox" name="profile_approve"/>
+              </td>
+            </tr>
+            <tr>
+              <td width="50%">Admin Access</td>
+              <td class="text-center" width="10%">
+                <input class="check-box" type="checkbox" name="access_all"/>
+              </td>
+              <td class="text-center" width="10%">
+                <input class="check-box" type="checkbox" name="access_create"/>
+              </td>
+              <td class="text-center" width="10%">
+                <input class="check-box" type="checkbox" name="access_edit"/>
+              </td>
+              <td class="text-center" width="10%">
+                <input class="check-box" type="checkbox" name="access_delete"/>
+              </td>
+              <td class="text-center" width="10%">
+                <input class="check-box" type="checkbox" name="access_approve"/>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="6">
+                <input class="check-box mr-3" type="checkbox" name="reset_password"/>
+                <label for="reset_password">Reset Password</label>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="6">
+                <input class="check-box mr-3" type="checkbox" name="web_app"/>
+                <label for="web_app">Web Application</label>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="6">
+                <input class="check-box mr-3" type="checkbox" name="mobile_app"/>
+                <label for="mobile_app">Mobile Application</label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-lg-12 submit-button mt-5" align=center>
+        <div class="form-group">
+            <button class="btn btn-light mr-2 px-4" type="reset" (click)="resetForm()">CANCEL</button>
+            <button class="btn btn-primary px-5" type="submit">SAVE</button>
+        </div>
+    </div>
+    </div>
+  </form>
+</div>
