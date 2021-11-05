@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SystemAdminRoutingModule } from './system-admin-routing.module';
-import { SystemAdminComponent } from './admin/system-admin.component';
+import { SystemAdminComponent } from './system-admin.component';
 
 
 @NgModule({
@@ -12,6 +12,8 @@ import { SystemAdminComponent } from './admin/system-admin.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [ SystemAdminComponent ]
+  declarations: [
+    SystemAdminComponent
+  ]
 })
 export class SystemAdminModule { }

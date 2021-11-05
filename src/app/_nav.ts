@@ -122,27 +122,26 @@ export const navItems: INavData[] = [
     url: '/systemadmin',
     icon: 'cil-settings',
   },
-  /*
   {
-    name: 'USER ACCESS SETUP',
-    url: '/accesssetup',
+    name: 'User Access Setup',
+    url: '/useraccess',
     icon: 'cil-user-plus',
   },
   {
-    name: 'USER',
+    name: 'User',
     url: '/user',
     icon: 'cil-voice-over-record',
     children: [
       {
         name: 'Add User',
-        url: '/user/adduser',
+        url: '/user',
       },
       {
         name: 'User LOA',
         url: '/user/userloa',
       },
     ]
-  },
+  },/*
   {
     name: 'UNIT SETUP',
     url: '/unitsetup',

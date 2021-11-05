@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 
 export class SystemAdminComponent implements OnInit {
   test: any;
+  selectedValues: any;
 
   constructor (
 
@@ -23,6 +24,10 @@ export class SystemAdminComponent implements OnInit {
   }
 
   onSubmit() {
+
+  }
+
+  resetForm() {
 
   }
 

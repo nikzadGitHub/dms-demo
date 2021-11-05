@@ -79,7 +79,9 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
 import { ManagerViewModule } from './views/manager-view/manager-view.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SystemAdminModule } from './system-admin/system-admin.module';
+import { SystemAdminModule } from './system-admin/admin/system-admin.module';
+import { userAccessModule } from './system-admin/user-access/user-access.module';
+import { UserModule } from './system-admin/user/user.module';
 
 @NgModule({
   imports: [
@@ -130,7 +132,9 @@ import { SystemAdminModule } from './system-admin/system-admin.module';
     ManagerViewModule,
     NgbModule,
     InputTextModule,
-    SystemAdminModule
+    SystemAdminModule,
+    userAccessModule, 
+    UserModule
   ],
   declarations: [
     AppComponent,

@@ -128,7 +128,15 @@ export const routes: Routes = [
       },
       {
         path: 'systemadmin',
-        loadChildren: () => import('./system-admin/system-admin.module').then(m => m.SystemAdminModule)
+        loadChildren: () => import('./system-admin/admin/system-admin.module').then(m => m.SystemAdminModule)
+      },
+      {
+        path: 'useraccess',
+        loadChildren: () => import('./system-admin/user-access/user-access.module').then(m => m.userAccessModule)
+      },
+      {
+        path: 'user',
+        loadChildren: () => import('./system-admin/user/user.module').then(m => m.UserModule)
       },
     ]
   },

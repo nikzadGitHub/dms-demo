@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SystemAdminComponent } from './admin/system-admin.component';
+import { SystemAdminComponent } from './system-admin.component';
 
 const routes: Routes = [
-  { path: 'systemadmin', component: SystemAdminComponent },
-  { path: '**', redirectTo: 'systemadmin' }
+  {
+    path: '', component: SystemAdminComponent,
+    data: {
+      title: 'System Admin'
+    }
+  },
 ];
 
 @NgModule({
