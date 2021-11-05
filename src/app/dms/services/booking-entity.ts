@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { BookingStatus } from './booking-status.enum';
+import { MainAsset } from './main-asset-service/main-asset-entity';
 
 
 export interface UserInfo {
@@ -47,6 +48,7 @@ export interface BookingEntity {
   approvalList: ApprovalList;
   bookingDetailList: BookingDetail;
   opportunitySummary: OpportunitySummary;
+  mainAsset: MainAsset
 }
 
 export type BookingEntityList = BookingEntity[];
@@ -56,4 +58,5 @@ export interface BookingEntityInterface {
   getApprovals(bookingId: BigInt): Observable<ApprovalList>;
   getBookingDetail(bookingId: BigInt): Observable<BookingDetail>;
   getOpportunitySummary(bookingId: BigInt): Observable<OpportunitySummary>;
+  getMainAsset(bookingId: BigInt): Observable<MainAsset>;
 }

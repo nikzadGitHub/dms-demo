@@ -11,12 +11,29 @@ app-dms {
     }
   }
 
+  .button-style {
+    font-size: 15px;
+    font-weight: 400;
+    padding: 1px 25px;
+  }
+
+  table{
+    font-size: 15px;
+    color: #2F4C58;
+  }
+
+  .bold-header {
+    margin: 10px 0px;
+  }
+
   .accordion-header, .bold-header {
     font-weight: bold;
     font-size: 20px;
     padding-left: 5px;
   }
-
+  .asset-part{
+    margin: 0px 0px 50px 0px;
+  }
   .p-accordion {
     .p-accordiontab:last-child {
       .p-accordion-content {

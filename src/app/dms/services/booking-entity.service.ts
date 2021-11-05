@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 
 import { BookingEntityInterface, ApprovalList, BookingEntity, BookingDetail, OpportunitySummary } from './booking-entity';
 import { ApiClient } from './api-client.service';
+import { MainAsset } from './main-asset-service/main-asset-entity';
 
 
 @Injectable({
@@ -29,4 +30,9 @@ export class BookingEntityService implements BookingEntityInterface {
   getOpportunitySummary(bookingId: BigInt): Observable<OpportunitySummary> {
     return this.apiClient.get<OpportunitySummary>('bookings/' + bookingId.toString() + '/opportunitySummary');
   }
+
+  getMainAsset(bookingId: BigInt): Observable<MainAsset> {
+    return this.apiClient.get<MainAsset>('bookings/' + bookingId.toString() + '/mainAsset');
+  }
+
 }
