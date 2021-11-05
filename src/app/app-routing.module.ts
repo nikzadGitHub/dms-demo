@@ -103,6 +103,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/opportunity/opportunity.module').then(m => m.OpportunityModule)
       },
       {
+        path: 'dms',
+        loadChildren: () => import('./dms/dms.module').then(m => m.DmsModule),
+      },
+      {
         path: 'contact',
         loadChildren: () => import('./views/contact/contact.module').then(m => m.ContactModule)
       },
