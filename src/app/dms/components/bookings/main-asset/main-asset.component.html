@@ -37,8 +37,11 @@
                       </tr>
                   </tbody>
               </table>
-              <div *ngIf="(mainAsset.addBtn && !mainAsset.main)" class="custom-footer d-flex justify-content-center">
-                <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> ADD</button>
+              <div *ngIf="(mainAsset.addBtn && !mainAsset.main)" class="custom-footer">
+                    <dms-identify title='Demo Asset' name='main' [show]="show" (buttonAction)="onShow($event)"></dms-identify>
+                    <div class="d-flex justify-content-center" *ngIf="show != 'main' ">
+                      <button type="button" class="btn btn-sm btn-primary" (click)="onShow('main')"><i class="fa fa-plus"></i> ADD</button>
+                    </div>
               </div>
           </div>
           <div *ngIf="mainAsset.compatibleAccessories !== false" class="asset-part">
@@ -74,8 +77,11 @@
                     </tr>
                 </tbody>
             </table>
-            <div *ngIf="(mainAsset.addBtn)" class="custom-footer d-flex justify-content-center">
-                <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> ADD</button>
+            <div *ngIf="(mainAsset.addBtn)" class="custom-footer">
+                <dms-identify title='Compatible Accessories' name='compatibleAccessory' [show]="show" (buttonAction)="onShow($event)"></dms-identify>
+                <div class="d-flex justify-content-center" *ngIf="show != 'compatibleAccessory' ">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="onShow('compatibleAccessory')"><i class="fa fa-plus"></i> ADD</button>
+                </div>
             </div>
         </div>
         <div *ngIf="mainAsset.peripheralAccessories !== false" class="asset-part">
@@ -108,8 +114,11 @@
                     </tr>
                 </tbody>
             </table>
-            <div *ngIf="(mainAsset.addBtn)" class="custom-footer d-flex justify-content-center">
-              <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> ADD</button>
+            <div *ngIf="(mainAsset.addBtn)" class="custom-footer">
+                <dms-identify title='Peripheral Accessories' name='peripheralAccessory' [show]="show" (buttonAction)="onShow($event)"></dms-identify>
+                <div class="d-flex justify-content-center" *ngIf="show != 'peripheralAccessory' ">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="onShow('peripheralAccessory')"><i class="fa fa-plus"></i> ADD</button>
+                </div>
             </div>
         </div>
         <div *ngIf="mainAsset.consumables !== false" class="asset-part">
@@ -142,8 +151,11 @@
                     </tr>
                 </tbody>
             </table>
-            <div *ngIf="(mainAsset.addBtn)" class="custom-footer d-flex justify-content-center">
-              <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> ADD</button>
+            <div *ngIf="(mainAsset.addBtn)" class="custom-footer">
+                <dms-identify title='Consumables' name='consumable' [show]="show" (buttonAction)="onShow($event)"></dms-identify>
+                <div class="d-flex justify-content-center" *ngIf="show != 'consumable' ">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="onShow('consumable')"><i class="fa fa-plus"></i> ADD</button>
+                </div>
             </div>
         </div>
         <div *ngIf="mainAsset.packingDuringShipment !== false" class="asset-part">
@@ -176,8 +188,11 @@
                     </tr>
                 </tbody>
             </table>
-            <div *ngIf="(mainAsset.addBtn)" class="custom-footer d-flex justify-content-center">
-              <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> ADD</button>
+            <div *ngIf="(mainAsset.addBtn)" class="custom-footer">
+                <dms-identify title='Packing during shipment' name='packing' [show]="show" (buttonAction)="onShow($event)"></dms-identify>
+                <div class="d-flex justify-content-center" *ngIf="show != 'packing' ">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="onShow('packing')"><i class="fa fa-plus"></i> ADD</button>
+                </div>
             </div>
         </div>
         <div *ngIf="mainAsset.accessoriesList !== false" class="asset-part">
@@ -210,8 +225,11 @@
                     </tr>
                 </tbody>
             </table>
-            <div *ngIf="(mainAsset.addBtn)" class="custom-footer d-flex justify-content-center">
-              <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> ADD</button>
+            <div *ngIf="(mainAsset.addBtn)" class="custom-footer">
+                <dms-identify title='Accessories / Consumables' name='accessories' [show]="show" (buttonAction)="onShow($event)"></dms-identify>
+                <div class="d-flex justify-content-center" *ngIf="show != 'accessories' ">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="onShow('accessories')"><i class="fa fa-plus"></i> ADD</button>
+                </div>
             </div>
         </div>
       </p-accordionTab>

@@ -21,6 +21,7 @@ import { BookingsComponent } from './components/bookings/bookings.component';
 import { BookingFormComponent } from './components/bookings/booking-form/booking-form.component';
 import { FormComponent } from './components/bookings/form/form.component';
 import { MainAssetComponent } from './components/bookings/main-asset/main-asset.component';
+import { IdentifyComponent } from './components/bookings/main-asset/identify/identify.component';
 import { BookingDetailComponent } from './components/bookings/booking-entity/booking-detail/booking-detail.component';
 import { StatusLogComponent } from './components/bookings/booking-entity/status-log/status-log.component';
 import { OpportunitySummaryComponent } from './components/bookings/opportunity-summary/opportunity-summary.component';
@@ -46,7 +47,8 @@ import { ExpandPanelComponent } from './components/widgets/expand-panel/expand-p
     OpportunitySummaryComponent,
     StatusLogComponent,
     MainAssetComponent,
-    ExpandPanelComponent
+    ExpandPanelComponent,
+    IdentifyComponent
 
   ],
   imports: [

@@ -1,6 +1,6 @@
 app-dms {
   .custom-footer{
-    height: 100px;
+    padding-bottom: 45px;
 
     button {
         margin: 10px;
@@ -11,9 +11,10 @@ app-dms {
     }
   }
 
-  .button-style {
+  button.button-style {
     font-size: 15px;
     font-weight: 400;
+    width: fit-content;
     padding: 1px 25px;
   }
 
