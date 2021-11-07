@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { BookingEntityInterface, ApprovalList, BookingEntity } from './booking-entity';
+import { BookingEntityInterface, ApprovalList, BookingEntity, BookingDetail, OpportunitySummary } from './booking-entity';
 import { ApiClient } from './api-client.service';
+import { MainAsset } from './main-asset-service/main-asset-entity';
 
 
 @Injectable({
@@ -21,4 +22,17 @@ export class BookingEntityService implements BookingEntityInterface {
       + bookingId.toString()
       + '/approvals');
   }
+
+  getBookingDetail(bookingId: BigInt): Observable<BookingDetail> {
+    return this.apiClient.get<BookingDetail>('bookings/' + bookingId.toString());
+  }
+
+  getOpportunitySummary(bookingId: BigInt): Observable<OpportunitySummary> {
+    return this.apiClient.get<OpportunitySummary>('bookings/' + bookingId.toString() + '/opportunitySummary');
+  }
+
+  getMainAsset(bookingId: BigInt): Observable<MainAsset> {
+    return this.apiClient.get<MainAsset>('bookings/' + bookingId.toString() + '/mainAsset');
+  }
+
 }

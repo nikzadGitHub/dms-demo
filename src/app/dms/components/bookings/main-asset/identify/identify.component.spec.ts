@@ -1,22 +1,22 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BookingDemoComponent } from './booking-demo.component';
+import { IdentifyComponent } from './identify.component';
 
-describe('BookingDemoComponent', () => {
+describe('BookingFormComponent', () => {
 
-  let component: BookingDemoComponent;
-  let fixture: ComponentFixture<BookingDemoComponent>;
+  let component: IdentifyComponent;
+  let fixture: ComponentFixture<IdentifyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BookingDemoComponent ]
+      declarations: [ IdentifyComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BookingDemoComponent);
+    fixture = TestBed.createComponent(IdentifyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -24,5 +24,5 @@ describe('BookingDemoComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
+  
 });

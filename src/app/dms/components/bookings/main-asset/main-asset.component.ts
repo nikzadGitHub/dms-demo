@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { MainAsset } from '../../../services/main-asset-service/main-asset-entity';
 
 
 @Component({
@@ -7,6 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-asset.component.scss']
 })
 export class MainAssetComponent implements OnInit{
+  @Input() mainAsset: MainAsset ;
+  show = "none";
   constructor() { }
   ngOnInit(): void {}
+  onShow(name: string) {
+    this.show = name;
+  }
 }

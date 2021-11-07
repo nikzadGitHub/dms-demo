@@ -13,21 +13,21 @@
                       <tbody>
                         <tr>
                           <td>Customer & Code</td>
-                          <td>Parkway Singapore</td>
+                          <td>{{ opportunitySummary.customer }}</td>
                           <td>Opportunity Amount (RM)</td>
-                          <td>35,000.00</td>
+                          <td>{{ opportunitySummary.opportunity_amount }}</td>
                         </tr>
                         <tr>
                             <td>Opportunity ID</td>
-                            <td>00123456</td>
+                            <td>{{ opportunitySummary.opportunity_id }}</td>
                             <td>Opportunity no.-Version</td>
-                            <td>123567.01</td>
+                            <td>{{ opportunitySummary.opportunity_no }}</td>
                           </tr>
                         <tr>
                           <td>Initiator</td>
-                          <td>Jane Doe (BK-0092)</td>
+                          <td>{{ opportunitySummary.initiator }}</td>
                           <td>Winning Probability</td>
-                          <td>65%</td>
+                          <td>{{ opportunitySummary.winning_probability }}</td>
                         </tr>
                       </tbody>
                     </table>

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { OpportunitySummary } from '../../../services/booking-entity';
 
 
 @Component({
@@ -7,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./opportunity-summary.component.scss']
 })
 export class OpportunitySummaryComponent implements OnInit{
+  @Input() opportunitySummary: OpportunitySummary ;
   constructor() { }
   ngOnInit(): void {}
 }

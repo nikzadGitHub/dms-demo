@@ -6,8 +6,9 @@ import { MockBookingEntityService } from '../../../services/mock-booking-entity.
 import {
   Button as ApprovalButton, ButtonEvent as ApprovalButtonEvent
 } from '../booking-approval/booking-approval.component';
-import { ApprovalList, BookingEntity } from '../../../services/booking-entity';
+import { ApprovalList, BookingDetail, BookingEntity, OpportunitySummary } from '../../../services/booking-entity';
 import { BookingStatus, statusToNumber, statusFromNumber, statusToText, statusIncrement } from '../../../services/booking-status.enum';
+import { MainAsset } from '../../../services/main-asset-service/main-asset-entity';
 
 @Component({
   selector: 'dms-booking-entity',
@@ -24,6 +25,10 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
   approvalButtons: ApprovalButton[] = [];
   approvalList: ApprovalList = [];
   isConfirmed: boolean = false;
+  bookingDetailList: BookingDetail;
+  opportunitySummary: OpportunitySummary;
+  mainAsset: MainAsset;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -48,6 +53,9 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
             if (response as BookingEntity) {
               this.status = response.status;
               this.approvalList = response.approvalList;
+              this.bookingDetailList = response.bookingDetailList;
+              this.opportunitySummary = response.opportunitySummary;
+              this.mainAsset = response.mainAsset;
             }
             console.log('api: entity', this.bookingId, response);
           });
