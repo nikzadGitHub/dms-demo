@@ -1,0 +1,43 @@
+.p-header{
+    padding: 1rem;
+    text-align: left;
+    font-size: 1.5rem;
+    background-color: #898485;
+    color: white;
+}
+.p-input-icon-left{
+    position: absolute;
+    right: 150px;
+    font-size: smaller;
+    .search{
+        border: none;
+        border-radius: 5px;
+        font-size: smaller;
+        margin-right: 30px;
+    }
+}
+.data-table{
+    width: 100%;
+    border: 1px lightgray;
+}
+.filter-icon{
+    position: absolute;
+    right: 140px;
+    top: 99px;
+    font-size: 20px;
+    font-weight: 300;
+}
+.file-excel-icon{
+    position: absolute;
+    right: 105px;
+    top: 99px;
+    font-size: 20px;
+    font-weight: 300;
+}
+.pause-icon{
+    position: absolute;
+    right: 72px;
+    top: 99px;
+    font-size: 20px;
+    font-weight: 300;
+}
