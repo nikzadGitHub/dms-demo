@@ -48,6 +48,13 @@ Build for production with minification, like:
 ng build
 ```
 
+## Deploy Documentation
+The documentation for the App is auto-generated, like:
+```
+npm run build-docs
+```
+>Creates `documentation` directory, open `index.html` file (from generated dir).
+
 ## What's included
 
 Within the download you'll find the following directories and files, logically grouping common assets. You'll see something like this:

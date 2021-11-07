@@ -1,27 +1,25 @@
 {
-  "name": "@coreui/coreui-free-angular-admin-template",
-  "version": "2.11.2",
-  "description": "CoreUI Free Angular 11 Admin Template",
+  "name": "@lajwardco/idsmed-frontend",
+  "version": "1.0.0",
+  "description": "idsMED Web Frontend",
   "author": {
-    "name": "Łukasz Holeczek",
-    "url": "http://holeczek.pl",
-    "github": "https://github.com/mrholek",
-    "twitter": "https://twitter.com/lukaszholeczek"
+    "name": "LajwardCo",
+    "github": "https://github.com/LajwardCo"
   },
   "contributors": [
     {
-      "name": "Andrzej Kopański",
-      "url": "https://github.com/xidedix"
+      "name": "Ehsan Yaqubi",
+      "url": "https://github.com/ehsan-yaqubi"
     }
   ],
-  "homepage": "https://coreui.io/angular",
-  "copyright": "Copyright 2021 creativeLabs Łukasz Holeczek",
+  "homepage": "https://github.com/LajwardCo/iDSMED-frontend",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
     "postinstall": "ngcc --properties es2015 browser module main --first-only",
     "start": "ng serve",
     "build": "ng build --prod --aot --build-optimizer --common-chunk --vendor-chunk --optimization --progress",
+    "build-docs": "npx compodoc -p tsconfig.doc.json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -82,6 +80,7 @@
     "@angular/cli": "^11.2.4",
     "@angular/compiler-cli": "^11.2.5",
     "@angular/language-service": "^11.2.5",
+    "@compodoc/compodoc": "^1.1.15",
     "@types/jasmine": "^3.6.6",
     "@types/jasminewd2": "^2.0.8",
     "@types/node": "^14.14.33",
