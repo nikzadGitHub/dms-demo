@@ -8,6 +8,11 @@ import { OpportunitySummary } from '../../../services/booking-entity';
   templateUrl: './opportunity-summary.component.html',
   styleUrls: ['./opportunity-summary.component.scss']
 })
+
+/**
+ *This class is used for the opportunity list component
+ * @class
+ */
 export class OpportunitySummaryComponent implements OnInit{
   @Input() opportunitySummary: OpportunitySummary ;
   constructor() { }
