@@ -8,7 +8,8 @@
           </button>
         </div>
         <div class="modal-body">
-          <form [formGroup]="form" (ngSubmit)="submit()">
+          <!-- (ngSubmit)="submit()" -->
+          <form [formGroup]="form">
             <div class="row">
                 <div class="col-lg-4">
                   <label for="quote_id">Quotation Reference No: </label>
@@ -74,6 +75,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="createModal.hide()">Close</button>
+          <!-- (click)="submit()" -->
           <button type="button" class="btn btn-primary" (click)="submit()">Save changes</button>
         </div>
       </div><!-- /.modal-content -->
