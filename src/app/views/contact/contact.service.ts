@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, retry, tap } from 'rxjs/operators';
 import { settings } from '../../../environments/environment';
 
 @Injectable({
@@ -20,6 +20,9 @@ export class ContactService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getAllContactData(): Observable<any[]>{
+    return this.httpClient.get<any[]>(this.apiURL + '/contacts', this.httpOptions)
+  }
   getAll(pageItems,search_text): Observable<any[]> {
     let query = '/contacts?page_items=' + pageItems + '&search_text=' + search_text;
     return this.httpClient.get<any[]>(this.apiURL + query, this.httpOptions)
@@ -36,15 +39,17 @@ export class ContactService {
   }
 
   store(data): Observable<any> {
-    console.log(data);
     return this.httpClient.post(this.apiURL + '/contacts', data, this.httpOptions)
     .pipe(
       tap((response: any) => {
-        console.log(response);
     }),
       catchError(this.errorHandler)
     )
   }
+
+  
+  
+  
 
   update(data, id): Observable<any> {
     return this.httpClient.put(this.apiURL + '/contacts/' + id, JSON.stringify(data), this.httpOptions)
@@ -66,6 +71,17 @@ export class ContactService {
       catchError(this.errorHandler)
     )
   }
+ 
+
+
+
+  // getSolution(): Observable<any> {
+  //   return this.httpClient.get(this.apiURL+'/contacts/dropdown/solution')
+  //   .pipe(
+  //     catchError(this.errorHandler)
+  //   )
+  // }
+  
 
   getCareAreas(): Observable<any> {
     return this.httpClient.get(this.apiURL+'/contacts/dropdown/care-area')

@@ -10,6 +10,7 @@ import { ContactService } from '../contact.service';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
+  
   @ViewChild('successModal') successModal : ModalDirective;
 
   submitted:any = false;
@@ -73,6 +74,7 @@ export class CreateComponent implements OnInit {
     this.contactType();
   }
 
+  
   redirectPage(){
     this.router.navigateByUrl('contact/index');
   }
@@ -110,7 +112,6 @@ export class CreateComponent implements OnInit {
   searchCust(event){
     let filtered: any[] = [];
     let query = event.query;
-    //here change to api
     for (let i = 0; i < this.items.length; i++) {
       let data = this.items[i];
       if (data.label.toLowerCase().indexOf(query.toLowerCase()) == 0) {
@@ -123,7 +124,6 @@ export class CreateComponent implements OnInit {
   searchName(event) {
     let filtered: any[] = [];
     let query = event.query;
-    //here change to api
     for (let i = 0; i < this.items.length; i++) {
       let data = this.items[i];
       if (data.label.toLowerCase().indexOf(query.toLowerCase()) == 0) {
