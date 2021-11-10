@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CustomersService } from '../customers.service';
+import { LazyLoadEvent } from 'primeng/api';
+
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -7,13 +13,68 @@ import { CustomersService } from '../customers.service';
 })
 export class IndexComponent implements OnInit {
   pageItems: number = 10;
+  customerData:any
+  stepperId:any=2
+  totalRecords:number;
+  datasource:any;
+  search_text: string = '';
+  pages: any [];
+  sort: any;
 
-  constructor(private customerService:CustomersService) { }
+  private ngUnsubscribe = new Subject;
+
+  @ViewChild("successModal") successModal: ModalDirective;
+  modalData: any;
+  constructor(private customerService: CustomersService) { }
 
   ngOnInit(): void {
-    this.customerService.getCustomerData().subscribe(data =>{
-      console.log(data)
-    })
+    this.getList();
   }
 
+  openModel(data:any){
+    this.modalData=data.primary_contact
+    this.successModal.show();
+  }
+  closeModel(){
+    this.successModal.hide()
+  }
+  stepperClick(id){
+    this.stepperId=id
+  }
+  paginate(event){
+    this.pageItems = event.rows;
+    this.onClick((event.page) + 1);
+  }
+
+  onClick(pageNo){
+    let url=this.pages[pageNo].url
+    this.customerService.getPage(url,this.pageItems,this.search_text)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe((data)=>{
+      this.datasource = data['data']['data'];
+      this.pages = data['data']['links'];
+    })  
+  }
+
+  getList() {
+      this.customerService.getAll(this.pageItems,this.search_text, this.sort).subscribe(data => {
+      this.datasource = data['data']['data'];
+      this.pages = data['data']['links'];
+      this.totalRecords = data['data']['total'];
+    });
+  }
+
+  getAll(){
+    this.customerService.getAll(this.pageItems,this.search_text,this.sort)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe((data)=>{
+      this.datasource = data['data']['data'];
+      this.pages = data['data']['links'];
+      this.totalRecords = data['data']['total'];
+    })  
+  }
+  SortColumn(event: LazyLoadEvent){
+    this.sort = {'field':event['sortField'],'order':event['sortOrder']}
+    this.getList();
+  }
 }

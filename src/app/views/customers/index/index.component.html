@@ -1,137 +1,343 @@
-<div class="mt-2 ml-4 mr-4 mb-2" >
-    <div class="p-header">
-         <span>Account Listing</span>
-        <span class="p-input-icon-left" >
-            <i class="pi pi-search"></i>
-            <input type="text" pInputText placeholder="       Search"  
-            [(ngModel)]="search_text"  class="search"/>
-        </span> 
-        <span class="pi pi-filter filter-icon" ></span>
-        <span class="pi pi-file-excel file-excel-icon"></span>
-        <span class="pi pi-pause pause-icon"></span>
+<div class="mt-2 ml-4 mr-4 mb-2">
+  <div class="p-header">
+    <span>Account Listing</span>
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input
+      type="text"
+      pInputText
+      class="p-component p-inputtext search"
+      placeholder="Search"
+      (input)="getAll()"
+      [(ngModel)]="search_text"
+    />
+    </span>
+    <span class="pi pi-filter filter-icon"></span>
+    <span class="pi pi-file-excel file-excel-icon"></span>
+    <span class="pi pi-pause pause-icon"></span>
+  </div>
+  <div class="data-table">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Created Date</th>
+          <th scope="col">Customer Id</th>
+          <th scope="col">Company Name</th>
+          <th scope="col">Contact Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let datasource of datasource" (click)="openModel(datasource)">
+          <th scope="row">{{datasource.created_at | date: 'mediumDate'}}</th>
+          <td> {{datasource.id}}</td>
+          <td> {{datasource.company_name}}</td>
+          <td>{{datasource.owner}}</td>
+          <td> abc@gmail.com</td>
+          <td>{{datasource.company_phone_number}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p-paginator
+      (onPageChange)="paginate($event)"
+      [rows]="pageItems"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]">
+    </p-paginator>
+  </div>
+</div>
+
+<div
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+<div class="modal-dialog" role="document" style="color: black;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-"><b>PANTAI HOSPITAL,BANGSAR</b></h4>
+      <i class="pi pi-times close-icon" (click)='closeModel()'></i>
     </div>
-    <div class="data-table">
-        <table class="table table-striped">
+    <div class="modal-body" style="padding:0">
+      <table class="table">
+        <thead class="text-dark">
+          <tr>
+            <th scope="col">Account Id</th>
+            <th scope="col">Indviual Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Owner</th>
+          </tr>
+        </thead>
+        <tbody class="">
+          <tr>
+            <td style="text-align: center;">{{modalData?.id}}</td>
+            <td style="text-align: center;">{{modalData?.full_name}}</td>
+            <td style="text-align: center;">{{modalData?.email}}</td>
+            <td style="text-align: center;"><a href="#">{{modalData?.mobile_phone}}</a></td>
+            <td style="text-align: center;">{{modalData?.owner}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+      <div class="stepper">
+        <div (click)="stepperClick(1)" [ngClass]="{active:stepperId == 1}"><span>Details</span></div>
+        <div (click)="stepperClick(2)" [ngClass]="{active:stepperId == 2}"><span>Related</span></div>
+        <div (click)="stepperClick(3)" [ngClass]="{active:stepperId == 3}"><span>Activities</span></div>
+      </div>
+      <div class="row" *ngIf="stepperId == 1">
+        <div class="col">
+          <div class="tabs" style="padding: 3%;margin: auto;">
+            <div class="tab">
+              <input type="checkbox" id="chck1">
+              <label class="tab-label" for="chck1" style="color:black; font-weight: bold;">Information</label>
+              <div class="tab-content text-dark">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>Created Date</td>
+                      <td>{{modalData.created_at}}</td>
+                    </tr>
+                    <tr>
+                      <td>Billing Address</td>
+                      <td>{{modalData.address}}</td>
+                    </tr>
+                    <tr>
+                      <td>Shipping Address</td>
+                      <td>{{modalData.address}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div> 
+            </div>
+            <div class="tab">
+              <input type="checkbox" id="chck2">
+              <label class="tab-label" for="chck2" style="color:black; font-weight: bold;">Contact</label>
+              <div class="tab-content text-dark">
+                <table>
+                  <thead>
+                    <tr>
+                      <td></td>
+                      <td>Name</td>
+                      <td>title</td>
+                      <td>Phone</td>
+                      <td>Email</td>
+                      <td>Department</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><input class="checkbox_position" type="radio"></td>
+                      <td>Aron Aziz</td>
+                      <td>Sales manager</td>
+                      <td>34534234234</td>
+                      <td>abc@gmail.com</td>
+                      <td>Sales</td>
+                    </tr>
+                    <tr>
+                      <td><input class="checkbox_position" type="radio"></td>
+                      <td>Aron Aziz</td>
+                      <td>Sales manager</td>
+                      <td>34534234234</td>
+                      <td>abc@gmail.com</td>
+                      <td>Sales</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div  *ngIf="stepperId == 2">
+        <div class="row card-row">
+          <div class="card blue">
+            <div>OPPORTNITIES</div>
+            <div>1</div>
+          </div>
+          <div class="card yellow">
+            <div>QUOTES</div>
+            <div>2</div>
+          </div>
+          <div class="card green">
+            <div>SOCI</div>
+            <div>3</div>
+          </div>
+        </div>
+
+        <div class="tabs relative-tabs">
+          <div class="tab">
+            <input type="checkbox" id="chck1">
+            <label class="tab-label" for="chck1" style="color:black; font-weight: bold;">Opportunities</label>
+            <div class="tab-content text-dark">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Opportunity Id</th>
+                    <th>Product</th>
+                    <th>Status</th>
+                    <th>Amount (RM)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>15-jun-2021</td>
+                    <td>OP1234</td>
+                    <td>X-ray and Spare Part</td>
+                    <td>Pending</td>
+                    <td>150,000</td>
+                  </tr>
+                  <tr>
+                    <td>15-jun-2021</td>
+                    <td>OP1234</td>
+                    <td>X-ray and Spare Part</td>
+                    <td>Pending</td>
+                    <td>150,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> 
+          </div>
+          <div class="tab">
+            <input type="checkbox" id="chck2">
+            <label class="tab-label" for="chck2" style="color:black; font-weight: bold;">Quotes</label>
+            <div class="tab-content text-dark">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Quotes Id</th>
+                    <th>Product</th>
+                    <th>Status</th>
+                    <th>Amount (RM)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>15-jun-2021</td>
+                    <td>OP1234</td>
+                    <td>X-ray and Spare Part</td>
+                    <td>Pending</td>
+                    <td>150,000</td>
+                  </tr>
+                  <tr>
+                    <td>15-jun-2021</td>
+                    <td>OP1234</td>
+                    <td>X-ray and Spare Part</td>
+                    <td>Pending</td>
+                    <td>150,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab">
+            <input type="checkbox" id="chck3">
+            <label class="tab-label" for="chck3" style="color:black; font-weight: bold;">SOCI</label>
+            <div class="tab-content text-dark">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>SOCI Number</th>
+                    <th>PO Number</th>
+                    <th>Status</th>
+                    <th>Amount (RM)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>15-jun-2021</td>
+                    <td>QUO1234</td>
+                    <td>PO123123</td>
+                    <td>Pending</td>
+                    <td>150,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> 
+          </div>
+          <div class="tab">
+            <input type="checkbox" id="chck4">
+            <label class="tab-label" for="chck4" style="color:black; font-weight: bold;">Attachments</label>
+            <div class="tab-content text-dark">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>File Type</th>
+                    <th>File Size</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>15-jun-2021</td>
+                    <td>CT scan Part</td>
+                    <td>jpg</td>
+                    <td>500kb</td>
+                    <td>
+                      <i class="pi pi-eye"></i>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>19-jun-2021</td>
+                    <td>CT scan Part</td>
+                    <td>jpg</td>
+                    <td>500kb</td>
+                    <td>
+                      <i class="pi pi-eye"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> 
+          </div>
+        </div>
+      </div>
+      <div *ngIf="stepperId == 3"> 
+        <div class="button">
+          <button class="open">Open</button>
+          <button class="open close">Close</button>
+        </div>
+        <div class="table-content text-dark">
+          <table class="activities-table">
             <thead>
               <tr>
-                <th scope="col">Created Date</th>
-                <th scope="col">Customer Id</th>
-                <th scope="col">Company Name</th>
-                <th scope="col">Contact Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone</th>
+                <th>Due Date</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Contact Person</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <th scope="row">14-10-2021</th>
-                <td><a href="#"> 12345</a></td>
-                <td><a href="#"> Company Abc</a></td>
-                <td>Aron Aziz</td>
-                <td><a href="">abc@gmail.com</a></td>
-                <td><a href="">1234234123</a></td>
+                <td>12-jul-2021</td>
+                <td>Meeting the Client</td>
+                <td>Meeting</td>
+                <td>In Progress</td>
+                <td>Alax Tan</td>
               </tr>
               <tr>
-                <th scope="row">14-10-2021</th>
-                <td><a href="#"> 12345</a></td>
-                <td><a href="#"> Company Abc</a></td>
-                <td>Aron Aziz</td>
-                <td><a href="">abc@gmail.com</a></td>
-                <td><a href="">1234234123</a></td>
+                <td>12-jul-2021</td>
+                <td>Meeting the Client</td>
+                <td>Meeting</td>
+                <td>In Progress</td>
+                <td>Alax Tan</td>
               </tr>
-              <tr>
-                <th scope="row">14-10-2021</th>
-                <td><a href="#"> 12345</a></td>
-                <td><a href="#"> Company Abc</a></td>
-                <td>Aron Aziz</td>
-                <td><a href="">abc@gmail.com</a></td>
-                <td><a href="">1234234123</a></td>
-              </tr>
-              <tr>
-                <th scope="row">14-10-2021</th>
-                <td><a href="#"> 12345</a></td>
-                <td><a href="#"> Company Abc</a></td>
-                <td>Aron Aziz</td>
-                <td><a href="">abc@gmail.com</a></td>
-                <td><a href="">1234234123</a></td>
-              </tr>
-              <tr>
-                <th scope="row">14-10-2021</th>
-                <td><a href="#"> 12345</a></td>
-                <td><a href="#"> Company Abc</a></td>
-                <td>Aron Aziz</td>
-                <td><a href="">abc@gmail.com</a></td>
-                <td><a href="">1234234123</a></td>
-              </tr>
-              <tr>
-                <th scope="row">14-10-2021</th>
-                <td><a href="#"> 12345</a></td>
-                <td><a href="#"> Company Abc</a></td>
-                <td>Aron Aziz</td>
-                <td><a href="">abc@gmail.com</a></td>
-                <td><a href="">1234234123</a></td>
-              </tr>
-              <tr>
-                <th scope="row">14-10-2021</th>
-                <td><a href="#"> 12345</a></td>
-                <td><a href="#"> Company Abc</a></td>
-                <td>Aron Aziz</td>
-                <td><a href="">abc@gmail.com</a></td>
-                <td><a href="">1234234123</a></td>
-              </tr>
-              <tr>
-                <th scope="row">14-10-2021</th>
-                <td><a href="#"> 12345</a></td>
-                <td><a href="#"> Company Abc</a></td>
-                <td>Aron Aziz</td>
-                <td><a href="">abc@gmail.com</a></td>
-                <td><a href="">1234234123</a></td>
-              </tr>
-              
-              <tr>
-                <th scope="row">14-10-2021</th>
-                <td><a href="#"> 12345</a></td>
-                <td><a href="#"> Company Abc</a></td>
-                <td>Aron Aziz</td>
-                <td><a href="">abc@gmail.com</a></td>
-                <td><a href="">1234234123</a></td>
-              </tr>
-              <tr>
-                <th scope="row">14-10-2021</th>
-                <td><a href="#"> 12345</a></td>
-                <td><a href="#"> Company Abc</a></td>
-                <td>Aron Aziz</td>
-                <td><a href="">abc@gmail.com</a></td>
-                <td><a href="">1234234123</a></td>
-              </tr>
-              <tr>
-                <th scope="row">14-10-2021</th>
-                <td><a href="#"> 12345</a></td>
-                <td><a href="#"> Company Abc</a></td>
-                <td>Aron Aziz</td>
-                <td><a href="">abc@gmail.com</a></td>
-                <td><a href="">1234234123</a></td>
-              </tr>
-              <tr>
-                <th scope="row">14-10-2021</th>
-                <td><a href="#"> 12345</a></td>
-                <td><a href="#"> Company Abc</a></td>
-                <td>Aron Aziz</td>
-                <td><a href="">abc@gmail.com</a></td>
-                <td><a href="">1234234123</a></td>
-              </tr>
-              <tr>
-                <th scope="row">14-10-2021</th>
-                <td><a href="#"> 12345</a></td>
-                <td><a href="#"> Company Abc</a></td>
-                <td>Aron Aziz</td>
-                <td><a href="">abc@gmail.com</a></td>
-                <td><a href="">1234234123</a></td>
-              </tr>
-           
             </tbody>
           </table>
-          <p-paginator [rows]="pageItems" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
-        </p-paginator>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

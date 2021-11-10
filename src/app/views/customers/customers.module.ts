@@ -6,6 +6,8 @@ import { EditComponent } from './edit/edit.component';
 import { CustomerRoutingModule } from './customer-routing.module';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { InputTextModule } from 'primeng/inputtext';
     CommonModule,
     CustomerRoutingModule,
     PaginatorModule,
-    InputTextModule
+    InputTextModule,
+    ModalModule,
+    TableModule
   ]
 })
 export class CustomersModule { }
