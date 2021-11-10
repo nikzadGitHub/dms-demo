@@ -29,7 +29,8 @@ import { BookingEntityComponent } from './components/bookings/booking-entity/boo
 import { BookingApprovalComponent } from './components/bookings/booking-approval/booking-approval.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { ExpandPanelComponent } from './components/widgets/expand-panel/expand-panel.component';
-
+import { OpportunityBookingFormComponent } from './components/bookings/opportunity-booking-form/opportunity-booking-form.component';
+import { OpportunityFormComponent } from './components/bookings/opportunity-booking-form/opportunity-form/opportunity-form.component';
 
 
 @NgModule({
@@ -48,7 +49,9 @@ import { ExpandPanelComponent } from './components/widgets/expand-panel/expand-p
     StatusLogComponent,
     MainAssetComponent,
     ExpandPanelComponent,
-    IdentifyComponent
+    IdentifyComponent,
+    OpportunityBookingFormComponent,
+    OpportunityFormComponent
 
   ],
   imports: [
