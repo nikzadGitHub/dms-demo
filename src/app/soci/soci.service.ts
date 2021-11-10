@@ -32,24 +32,32 @@ export class SociService {
       catchError(this.errorHandler)
     )
   }
+  getPage(url,pageItems,search_text){
+    let query = '&page_items=' + pageItems + '&search_text=' + search_text;
+    return this.httpClient.get(url + query,this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
 
   getFilteredQuote(filter){
     filter = filter == '' ? 0 : filter; 
-    return this.httpClient.get(this.apiURL + '/soci/filtered/' + filter,this.httpOptions)
+    return this.httpClient.get(this.apiURL + '/soci/filtered?quote_id=' + filter,this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
   }
 
   store(formData:any){
-    // return this.httpClient.post(this.apiURL + '/soci', formData,{headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' })})
-    return this.httpClient.post(this.apiURL + '/soci', formData,{headers: new HttpHeaders({ 'Content-Type': 'file', 'Accept': 'file' })})
+    // multipart/form-data
+    // return this.httpClient.put(this.apiURL + '/soci/create', formData,{headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' })})
+    return this.httpClient.post(this.apiURL + '/soci/create', formData,{headers: new HttpHeaders({ 'Content-Type': 'file', 'Accept': 'file' })})
     .pipe(
       catchError(this.errorHandler)
     )
   }
 
-  edit(id:number){
+  getSpecificSoci(id:number){
     return this.httpClient.get(this.apiURL + '/soci/' + id + '/edit',this.httpOptions)
     .pipe(
       catchError(this.errorHandler)

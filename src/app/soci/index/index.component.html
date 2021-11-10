@@ -104,7 +104,6 @@
         <a
           [routerLink]=""
           routerLinkActive="router-link-active"
-          (click)="createModal.showModal()"
         >
           <i class="icon-plus icons" style="color: white"></i>
         </a>
@@ -142,6 +141,18 @@
           <p-columnFilter
             type="text"
             field="soci_id"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="company_name" class="text-center">
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Companu Name
+          <p-sortIcon field="company_name"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="company_name"
             display="menu"
             class="p-ml-auto"
           ></p-columnFilter>
@@ -231,8 +242,16 @@
         {{ soci.created_at | date: "dd-MMM-yyyy" }}
       </td>
       <td class="text-center">
-        <span class="p-column-title"> Soci Id</span>
-        {{ soci.soci_id }}
+        <a href="/#/soci/index">
+          <span class="p-column-title"> Soci Id</span>
+          {{ soci.soci_id }}
+        </a>
+      </td>
+      <td class="text-center">
+        <a href="/#/soci/index">
+          <span class="p-column-title"> Company Name</span>
+          {{ soci.customer.company_name }}
+        </a>
       </td>
       <td class="text-center">
         <span class="p-column-title">Quote Id</span>
@@ -247,18 +266,26 @@
         {{ soci.po_amount }}
       </td>
       <td class="text-center">
+        <a
+        [routerLink]=""
+        routerLinkActive="router-link-active"
+        *ngIf="soci.po_no==null"
+        (click)="createModal.addPo(soci.id)"
+      >
+      Add Po
+      </a>
+      <div *ngIf="soci.po_no">
         <span class="p-column-title">Po no</span>
         {{ soci.po_no }}
+      </div>
+   
       </td>
       <td class="text-center">
         <span class="p-column-title">Po. date</span>
-        {{ soci.po_date }}
+        {{ soci.po_date | date: "dd-MMM-yyyy"}}
       </td>
+      <td class="text-center">{{soci.status_desc}}</td>
       <td class="text-center">
-        <span class="p-column-title"></span>
-        {{ soci.status_desc }}
-      </td>
-      <td>
         <div class="row-icon">
           <a
             href="#"
@@ -271,7 +298,9 @@
   </ng-template>
 </p-table>
 <p-paginator
+  (onPageChange)="paginate($event)"
   [rows]="pageItems"
+  [totalRecords]="totalRecords"
   [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
 >
 </p-paginator>

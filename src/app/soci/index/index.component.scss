@@ -127,6 +127,23 @@ tr {
     }
 }
 
+.add_po_btn {
+    background: none;
+    border: none;
+    color: #386FA4;
+}
+.add_po_btn:hover {
+    text-decoration: underline;
+}
+.add_po_value {
+    background: none;
+    border: none;
+    color: black;
+}
+.add_po_value:hover {
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 960px) {
     :host ::ng-deep {
         .p-datatable {
