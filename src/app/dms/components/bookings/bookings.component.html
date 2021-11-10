@@ -77,7 +77,7 @@
     <ng-template pTemplate="body" let-bookingItem>
       <tr class="p-selectable-row">
         <td class="text-center">
-            {{ bookingItem.booking_no }}
+            <a routerLink="{{ bookingItem.booking_no }}" routerLinkActive="router-link-active">{{ bookingItem.booking_no }}</a>
         </td>
         <td class="text-center">
             {{ bookingItem.request_date }}

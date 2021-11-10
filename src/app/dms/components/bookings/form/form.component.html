@@ -1,0 +1,109 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label">Status</label>
+                <div class="col-md-9">
+                  <p class="form-control-static">DRAFT</p>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="booking-reason">Booking reason</label>
+                <div class="col-md-4">
+                  <select id="booking-reason" name="booking-reason" class="form-control">
+                    <option value="0">Please select</option>
+                    <option value="1">Events</option>
+                    <option value="2">Training</option>
+                    <option value="3">Contigencies</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label">Request Date</label>
+                <div class="col-md-9">
+                  <p class="form-control-static">{{ curDate }}</p>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label">Customer</label>
+                <div class="col-md-9">
+                  <p class="form-control-static">Parkway Singapore  (P001)</p>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="branch">Branch/site</label>
+                <div class="col-md-4">
+                  <input type="text" id="branch" name="branch" class="form-control">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="date-of-delivery">Preferred Date of Delivery </label>
+                        <div class="col-md-4">
+                          <input class="form-control" id="date-of-delivery" type="datetime-local" name="date-of-delivery">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="date-of-collection">Preferred Date of Collection </label>
+                        <div class="col-md-6">
+                          <input class="form-control" id="date-of-collection" type="datetime-local" name="date-of-collection">
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="demo-duration">Demo Duration *</label>
+                <div class="col-md-2">
+                  <input type="number" id="demo-duration" name="demo-duration" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    months
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="department">Ship-to Department/ Warde</label>
+                <div class="col-md-4">
+                  <input type="text" id="department" name="department" class="form-control" >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="contact-name">Ship to Contact Name </label>
+                        <div class="col-md-8">
+                          <input class="form-control" id="contact-name" type="text" name="contact-name">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="contact-number">Ship-To Contact Number </label>
+                        <div class="col-md-6">
+                          <input class="form-control" id="contact-number" type="text" name="contact-number">
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="remarks">Remarks</label>
+                <div class="col-md-9">
+                  <textarea id="remarks" name="remarks" rows="9" class="form-control"></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="custom-footer d-flex justify-content-center">
+            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Save</button>
+          </div>
+        </div>
+      </div>
+    </div><!--/.row-->
+  </div>
+
+  
