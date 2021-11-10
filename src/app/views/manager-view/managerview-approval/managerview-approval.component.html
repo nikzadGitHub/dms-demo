@@ -1,0 +1,26 @@
+
+<div class="card-header row" style="background-color: #898485; color: white;">
+    <div style="padding-left: 20px;">
+        <h2>Pending Quotation</h2>
+    </div>
+   
+    <div class="col-lg col-sm-4;" align='right'>
+        <input [(ngModel)]="search_text" style="width: 20%;" class="form-control" placeholder="Search" type="text" (keyup)='getAll()'>
+    </div>
+</div>
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+                  <th>Created date</th>
+                  <th>FSS Name</th>
+                  <th>Qutation ID</th>
+                  <th>Company Name</th>
+                  <th>Validity Date</th>
+                  <th>Reason</th>
+                  <th>Amount (RM)</th>
+                  
+          
+        </tr>
+    </thead>
+</table>

@@ -91,6 +91,7 @@ export class SalesTargetSetupComponent implements OnInit {
     this._salesTargetSetupService.getUnitList(code)
       .subscribe(res => {
         this.unitArr = res['data']['units'];
+        
     });
 
     let inputYear = this.currYear;

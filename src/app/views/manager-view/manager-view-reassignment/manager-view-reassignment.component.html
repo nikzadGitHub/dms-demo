@@ -1,0 +1,34 @@
+<div class="card-header row" style="background-color: #898485; color: white;">
+    <div style="padding-left: 20px;">
+        <h2>Reassignment</h2>
+    </div>
+</div>
+<br>
+<div class="row mb-2">
+    <div class="col-6">
+        <div class="row">
+            <div class="col-2 mt-2">
+                <label for="currency">
+                  from:Fss Name
+                </label>
+            </div>
+            <div class="col-9">
+             
+                <input  type="text" name="currencyCd" pInputText [(ngModel)]="currency" style="background-color: white;" class="form-control" type="input" [readonly]="true"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="row">
+            <div class="col-2 mt-2">
+                <label for="year">
+                  to:FSS Name
+                </label>
+            </div>
+            <div class="col-9">
+                <input id="year" pInputText class="form-control" placeholder="" type="input">
+              
+            </div>
+        </div>
+    </div>
+</div>
