@@ -143,7 +143,7 @@
       </p-accordion>
       <br />
       <!-- Billing Milestone -->
-      <p-accordion styleClass="customColor">
+      <p-accordion styleClass="customColor" activeIndex="0">
         <p-accordionTab header="Billing Milestones">
           <div class="row">
             <!-- formArrayName="billings" -->
@@ -152,24 +152,57 @@
                 <tr>
                   <th>Billing ID</th>
                   <th>Stage</th>
-                  <th>Percentage</th>
+                  <th>Percentage %</th>
                   <th>Amount (MYR)</th>
-                  <th>Status</th>
                   <th>Notes</th>
+                  <th></th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
+                <tr
+                  align="center"
+                  *ngFor="let billing of billing_milestone; let i = index"
+                >
+                  <td class="text-center">{{ billing.billing_id }}</td>
+                  <td class="text-center">{{ billing.stage }}</td>
+                  <td class="text-center">{{ billing.percentage }}</td>
+                  <td class="text-center">{{ billing.amount }}</td>
+                  <td class="text-center">{{ billing.remarks }}</td>
+                  <td class="text-center"></td>
+                  <td class="text-center td-actions" style="width: 10%">
+                    <div class="action-icon">
+                      <!-- (click)="
+                            disableEditMethod(billing, 'billing');
+                            addBillingMilestone()
+                          "
+                          *ngIf="enableEdit['billing'] && controller == billing" -->
+                      <!-- <a [routerLink]="" routerLinkActive="router-link-active"
+                        ><i class="cil-check-circle"></i
+                      ></a> -->
+                      <!-- *ngIf="!enableEdit['billing']"
+                          (click)="enableEditMethod(billing, 'billing')" -->
+                      <a [routerLink]="" routerLinkActive="router-link-active">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      &nbsp;
+                      <!-- (click)="removeBillings(i)" -->
+                      <a [routerLink]="" routerLinkActive="router-link-active"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
                 <!-- *ngFor="let billing of billings().controls; let i = index"
                 [formGroupName]="i" -->
-                <tr align="center" *ngFor="let billing of billing_milestone">
+                <tr align="center">
                   <td style="width: 15%">
-                    <input
+                    <!-- <input
                       formControlName="billing_id"
                       class="form-control"
                       placeholder="ABC123"
                       type="text"
-                    />
+                    /> -->
                   </td>
                   <td style="width: 15%">
                     <input
@@ -203,7 +236,7 @@
                       step=".01"
                     />
                   </td>
-                  <td>
+                  <!-- <td>
                     <input
                       formControlName="status"
                       class="form-control"
@@ -211,7 +244,7 @@
                       placeholder="Deposit"
                       type="input"
                     />
-                  </td>
+                  </td> -->
                   <td style="width: 15%">
                     <!-- (focus)="billingRemarkModalOpen(i)" -->
                     <textarea
@@ -222,36 +255,16 @@
                       rows="1"
                     ></textarea>
                   </td>
-                  <td class="td-actions" style="width: 10%">
-                    <div class="row">
-                      <!-- (click)="
-                        disableEditMethod(billing, 'billing');
-                        addBillingMilestone()
-                      "
-                      *ngIf="enableEdit['billing'] && controller == billing" -->
-                      <a [routerLink]="" routerLinkActive="router-link-active"
-                        ><i class="cil-check-circle"></i
-                      ></a>
-                      <!-- *ngIf="!enableEdit['billing']"
-                      (click)="enableEditMethod(billing, 'billing')" -->
-                      <a
-                        [routerLink]=""
-                        routerLinkActive="router-link-active"
-                      
-                      >
-                        <i class="fa fa-edit"></i>
-                      </a>
-                      &nbsp;
-                      <!-- (click)="removeBillings(i)" -->
-                      <a [routerLink]="" routerLinkActive="router-link-active"
-                        ><i class="fa fa-trash"></i
-                      ></a>
-                    </div>
+                  <td class="text-center"></td>
+                        <!-- (click)="addBillings()" -->
+                  <td class="td-actions" colspan="9" align="center">
+                    <a [routerLink]="" routerLinkActive="router-link-active">
+                      <i class="icon-plus icons"></i>
+                    </a>
                   </td>
                 </tr>
               </tbody>
-              <tfoot align="center">
-                <!-- (click)="addBillings()" -->
+              <!-- <tfoot align="center">
                 <tr>
                   <td class="td-actions" colspan="9" align="center">
                     <a [routerLink]="" routerLinkActive="router-link-active">
@@ -259,7 +272,7 @@
                     </a>
                   </td>
                 </tr>
-              </tfoot>
+              </tfoot> -->
             </table>
           </div>
         </p-accordionTab>
