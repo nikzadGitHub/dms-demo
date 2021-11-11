@@ -75,7 +75,9 @@ export class SalesTargetSetupComponent implements OnInit {
   fetchSalesTargetData () {
     this._salesTargetSetupService.getSalesTargetData()
       .subscribe(res => {
+        this.fssArr = res['data']['sales_targets'];
         this.salesTargetData = res['data']['sales_targets'];
+        
     });
   }
 
@@ -83,6 +85,7 @@ export class SalesTargetSetupComponent implements OnInit {
     this._salesTargetSetupService.getCountryList()
       .subscribe(res => {
         this.countryArr = res['data']['countries'];
+        
     });
   }
 
@@ -90,7 +93,6 @@ export class SalesTargetSetupComponent implements OnInit {
     this.currency = this.countryArr.find(x => x.code == code).currency_code;
     this._salesTargetSetupService.getUnitList(code)
       .subscribe(res => {
-        this.unitArr = res['data']['units'];
         
     });
 
@@ -134,8 +136,11 @@ export class SalesTargetSetupComponent implements OnInit {
   onUnitChanged(countryCd, unitCd) {
     this._salesTargetSetupService.getFssList(countryCd, unitCd)
       .subscribe(res => {
-        this.fssArr = res['data'];
-        console.log(res['data']);
+        if(res){
+          this.fssArr = res.data.sales_targets;
+        }
+    },err =>{
+      console.log("Error ", err)
     });
 
     this._salesTargetSetupService.getTeamLeadList(countryCd, unitCd)
