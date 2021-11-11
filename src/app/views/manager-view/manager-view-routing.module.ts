@@ -16,8 +16,6 @@ const routes: Routes = [
   
   {path: 'reassignment', component:ManagerViewReassignmentComponent},
   {path: 'active', component:ManagerViewActiveComponent}
-
-
 ];
 
 @NgModule({

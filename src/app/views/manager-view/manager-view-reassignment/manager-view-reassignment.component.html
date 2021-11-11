@@ -13,8 +13,7 @@
                 </label>
             </div>
             <div class="col-9">
-             
-                <input  type="text" name="currencyCd" pInputText [(ngModel)]="currency" style="background-color: white;" class="form-control" type="input" [readonly]="true"/>
+                <input  type="text" name="currencyCd" pInputText [(ngModel)]="currency" placeholder="Jack Lee" style="background-color: white;" class="form-control" type="input"/>
             </div>
         </div>
     </div>
@@ -26,9 +25,61 @@
                 </label>
             </div>
             <div class="col-9">
-                <input id="year" pInputText class="form-control" placeholder="" type="input">
+                <input id="year" pInputText class="form-control" placeholder="May Tan" type="input">
               
             </div>
         </div>
     </div>
 </div>
+
+      <p-accordionTab>
+
+        <div class="card-header row" style=" color: black;">
+            <div style="padding-left: 20px;">
+                <h2>Lead Listing</h2>
+            </div>
+        </div>
+       
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                          <th>Created date</th>
+                          <th>Lead ID</th>
+                          <th>Company Name</th>
+                          <th>Individual Name</th>
+                          <th>Email</th>
+                          <th>Phone</th>
+                          <th>Status</th>
+                          
+                </tr>
+            </thead>
+        </table>
+      </p-accordionTab>
+      <p-accordionTab>
+
+
+        <div class="card-header row" style=" color: black;">
+            <div style="padding-left: 20px;">
+                <h2>Opportunity Listing</h2>
+            </div>
+        </div>
+       
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                          <th>Created date</th>
+                          <th>FSS Name</th>
+                          <th>Qutation ID</th>
+                          <th>Company Name</th>
+                          <th>Validity Date</th>
+                          <th>Reason</th>
+                          <th>Amount (RM)</th>
+                          
+                  
+                </tr>
+            </thead>
+        </table>
+      </p-accordionTab>
+      
+  
+
