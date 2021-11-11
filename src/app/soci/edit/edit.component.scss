@@ -1,81 +1,96 @@
-.rcorners{
-    border-radius: 10px;
-    overflow: hidden;
+.rcorners {
+  border-radius: 10px;
+  overflow: hidden;
 }
 .bg-opp {
-    background-color: #5dbec0;
+  background-color: #5dbec0;
+}
+.chead {
+  font-family: "Lato";
+  font-size: 24px;
+  line-height: 34px;
+  font-style: normal;
+  font-weight: 200;
+}
+
+.purple {
+  background-color: #424562;
+  color: white;
+}
+
+.white {
+  background-color: white;
+}
+
+.grey {
+  background-color: rgb(245, 245, 245);
+}
+
+.customBorder {
+  border-color: #70acf4;
+}
+
+.card {
+  padding: 0%;
+}
+
+.card-header {
+  border: none;
+}
+
+.customCardHeight {
+  height: 10px;
+}
+
+thead {
+  text-align: center;
+  border: none;
+  border-top: gray;
+  border-bottom: gray;
+  background-color: rgb(245, 245, 245);
+}
+
+input {
+  width: 70%;
+}
+
+input:disabled {
+  background: white;
+  border: none;
+  text-align: center;
+}
+
+.td-actions {
+  font-size: 1.5em;
+  .action-icon {
+    font-size: 19px;
   }
-  .chead {
-    font-family: "Lato";
-    font-size: 24px;
-    line-height: 34px;
-    font-style: normal;
-    font-weight: 200;
-  }  
-
-.purple{
-    background-color: #424562;
-    color: white;
+}
+input:disabled {
+  border: 1px solid #e4e7ea;
 }
 
-.white{
-    background-color: white;
-}
-
-.grey{
-    background-color: rgb(245, 245, 245);
-}
-
-.customBorder{
-    border-color: #70ACF4;
-}
-
-.card{
-    padding: 0%;
-}
-
-.card-header{
-    border: none;
-}
-
-.customCardHeight{
-    height: 10px;
-}
-
-thead{
-    text-align: center;
-    border: none;
-    border-top: gray;
-    border-bottom: gray;
-    background-color: rgb(245, 245, 245);
-}
-
-input{
-    width: 70%;
-}
-
-input:disabled{
-    background: white;
-    border: none;
-    text-align: center;
-}
-
-.td-actions{
-    font-size: 1.5em;
-    .action-icon {
-        font-size: 19px;
-    }
+.charges {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  white-space: break-spaces;
+  input {
+    width: 230px;
+    margin: 10px;
+  }
 }
 
 .scroll {
-    direction: rtl;
-    max-height: 300px;
-    overflow-y: auto;
-    overflow-x: hidden;
+  direction: rtl;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .scroll > * {
-    direction: ltr;
+  direction: ltr;
 }
 
 input::-webkit-outer-spin-button,
@@ -84,37 +99,37 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-.purple{
-    background-color: #424562;
-    color: white;
+.purple {
+  background-color: #424562;
+  color: white;
 }
 .no-border {
-    border: 0;
-    box-shadow: none;
+  border: 0;
+  box-shadow: none;
 }
 :host ::ng-deep .customColor.p-accordion {
-    .p-accordion-header {
-      font-size: 24px;
-      font-weight: bolder;
-      background: white;
-      span.pi {
-        margin-top: -8px;
-        position: absolute;
-        right: 0.5em;
-        top: 50%;
-      }
-      .p-accordion-header-link {
-        background: white;
-      }
+  .p-accordion-header {
+    font-size: 24px;
+    font-weight: bolder;
+    background: white;
+    span.pi {
+      margin-top: -8px;
+      position: absolute;
+      right: 0.5em;
+      top: 50%;
     }
-    .p-accordion-content {
-      padding: 0px;
-      overflow-x: hidden;
+    .p-accordion-header-link {
+      background: white;
     }
   }
+  .p-accordion-content {
+    padding: 0px;
+    overflow-x: hidden;
+  }
+}
 // :host ::ng-deep .customColor.p-accordion {
 //     .p-accordion-header {
-//         font-size: 1.5em; 
+//         font-size: 1.5em;
 //         font-weight: bolder;
 //         background: white;
 //         // border: none;
@@ -135,7 +150,6 @@ input::-webkit-inner-spin-button {
 //     }
 // }
 
-.row{
-    padding: 10px;
+.row {
+  padding: 10px;
 }
-
