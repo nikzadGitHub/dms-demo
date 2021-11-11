@@ -49,7 +49,7 @@ export class EditComponent implements OnInit {
   soci_data: any;
   standerd_payment_term: any;
   is_payment_term_eidt = false;
-  is_delivery_payment_term_eidt = false
+  is_delivery_payment_term_eidt = false;
   standard_term: any;
   default_delivery_term_from: Date;
   default_delivery_term_to: Date;
@@ -59,6 +59,10 @@ export class EditComponent implements OnInit {
   delivery_term_from: Date;
   default_delivery_term = 0;
   billing_milestone: any[] = [];
+  payment_schedules: any[] = [];
+  additional_costs: any[] = [];
+  billing_instruction: any;
+  product: any[]=[];
 
   constructor(
     private route: ActivatedRoute,
@@ -76,6 +80,7 @@ export class EditComponent implements OnInit {
       stage: "",
       percentage: "",
       amount: "",
+      quantity: 0,
       status: "",
       remarks: "",
       schedule: "",
@@ -110,6 +115,7 @@ export class EditComponent implements OnInit {
     this.sociService.getSpecificSoci(soci_id).subscribe((res) => {
       console.log("res:", res);
       this.soci_data = res["data"];
+      // standard_term
       this.standard_term = res["data"]["standard_terms"];
       this.standerd_payment_term =
         res["data"]["standard_terms"]["payment_term"];
@@ -117,17 +123,27 @@ export class EditComponent implements OnInit {
         res["data"]["standard_terms"]["payment_term_from"];
       this.default_payment_term_from =
         res["data"]["standard_terms"]["default_payment_term_from"];
-        this.default_delivery_term = res["data"]["standard_terms"]["default_delivery_term"];
+      this.default_delivery_term =
+        res["data"]["standard_terms"]["default_delivery_term"];
       this.default_delivery_term_from =
         res["data"]["standard_terms"]["default_delivery_term_from"];
-        this.delivery_term_from = res["data"]["standard_terms"]["delivery_term_from"];
+      this.delivery_term_from =
+        res["data"]["standard_terms"]["delivery_term_from"];
       this.standard_delivery_term =
         res["data"]["standard_terms"]["delivery_term"];
-        this.billing_milestone = res["data"]["billing_milestones"];
+        // billing_milestone
+      this.billing_milestone = res["data"]["billing_milestones"];
+      // payment_schedules
+      this.payment_schedules = res["data"]["payment_schedules"];
+      // additional_costs
+      this.additional_costs = res["data"]["additional_costs"];
+      // billing_instruction
+      this.billing_instruction = res["data"]["billing_instruction"];
+      // products
+      this.product = res["data"]["products"]
       this.form.patchValue({
         standard_payment_term: this.standerd_payment_term,
         standard_delivery_term: this.standard_delivery_term,
- 
       });
       // this.quotations = res["data"]["quotes"];
       // this.setInitialValue();
@@ -137,8 +153,8 @@ export class EditComponent implements OnInit {
   editPaymentTerm() {
     this.is_payment_term_eidt = true;
   }
-  editDefaultPaymentTerm(){
-    this.is_delivery_payment_term_eidt = true
+  editDefaultPaymentTerm() {
+    this.is_delivery_payment_term_eidt = true;
   }
   get form_controls() {
     // console.log(this.form.controls)

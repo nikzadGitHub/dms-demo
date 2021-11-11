@@ -32,7 +32,7 @@
       <div class="card-footer"></div>
     </div>
     <form [formGroup]="form" (ngSubmit)="submit()">
-      <p-accordion [multiple]="true" styleClass="customColor">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <!-- Standard Term Accordion -->
         <p-accordionTab header="Standard Terms">
           <div class="row grey">
@@ -143,7 +143,7 @@
       </p-accordion>
       <br />
       <!-- Billing Milestone -->
-      <p-accordion styleClass="customColor" activeIndex="0">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="Billing Milestones">
           <div class="row">
             <!-- formArrayName="billings" -->
@@ -156,7 +156,7 @@
                   <th>Amount (MYR)</th>
                   <th>Notes</th>
                   <th></th>
-                  <th></th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -256,7 +256,7 @@
                     ></textarea>
                   </td>
                   <td class="text-center"></td>
-                        <!-- (click)="addBillings()" -->
+                  <!-- (click)="addBillings()" -->
                   <td class="td-actions" colspan="9" align="center">
                     <a [routerLink]="" routerLinkActive="router-link-active">
                       <i class="icon-plus icons"></i>
@@ -280,36 +280,68 @@
       <br />
 
       <!-- Payment Schedules Accordion -->
-      <!-- <p-accordion styleClass="customColor">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="Payment Schedules">
           <div class="row">
-            <table class="table table-borderless" formArrayName="payments">
+            <!-- formArrayName="payments" -->
+            <table class="table table-borderless">
               <thead>
                 <tr>
                   <th>Billing ID</th>
-                  <th>Percentage</th>
+                  <th>Percentage %</th>
                   <th>Schedule</th>
                   <th>SOC Payment Terms</th>
                   <th>Status</th>
                   <th>Amount (MYR)</th>
                   <th>Notes</th>
-                  <th></th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr
-                  *ngFor="let payment of payments().controls; let i = index"
-                  [formGroupName]="i"
                   align="center"
+                  *ngFor="let payment of payment_schedules; let i = index"
                 >
+                  <td>{{ payment.billing_id }}</td>
+                  <td>{{ payment.percentage }}</td>
+                  <td>{{ payment.schedule | date: "dd-MMM-yyyy" }}</td>
+                  <td></td>
+                  <td></td>
+                  <td>{{ payment.amount }}</td>
+                  <td>{{ payment.remarks }}</td>
+                  <td class="td-actions" style="width: 10%; padding: none">
+                    <!-- (click)="disableEditMethod(payment, 'payment')"
+                        *ngIf="enableEdit['payment'] && controller == payment" -->
+                    <div class="action-icon">
+                      <!-- <a [routerLink]="" routerLinkActive="router-link-active"
+                        ><i class="cil-check-circle"></i
+                      ></a> -->
+                      <!-- (click)="enableEditMethod(payment, 'payment')" -->
+                      <!-- *ngIf="!enableEdit['payment']" -->
+                      <a [routerLink]="" routerLinkActive="router-link-active">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      &nbsp;
+                      <!-- (click)="removePayments(i)" -->
+                      <a [routerLink]="" routerLinkActive="router-link-active"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
+                <!-- *ngFor="let payment of payments().controls; let i = index"
+                [formGroupName]="i" -->
+                <tr align="center">
                   <td style="width: 15%; padding: 6px">
                     <select
                       formControlName="billing_id"
                       class="form-control"
                       style="width: 70%"
                     >
+                      <!-- *ngFor="let bill of billingList"
+                    value="{{ bill.billing_id }}" -->
                       <option
-                        *ngFor="let bill of billingList"
+                        *ngFor="let bill of billing_milestone; let i = index"
                         value="{{ bill.billing_id }}"
                       >
                         {{ bill.billing_id }}
@@ -317,6 +349,7 @@
                     </select>
                   </td>
                   <td style="width: 10%; padding: 6px">
+                    <!-- (keyup)="changePaymentPercent(i)" -->
                     <input
                       class="form-control"
                       formControlName="percentage"
@@ -326,7 +359,6 @@
                       min="0"
                       max="100.00"
                       step=".01"
-                      (keyup)="changePaymentPercent(i)"
                     />
                   </td>
                   <td style="width: 20%; padding: 6px">
@@ -355,6 +387,7 @@
                     />
                   </td>
                   <td style="width: 10%; padding: 6px">
+                    <!-- (keyup)="changePaymentValue(i)" -->
                     <input
                       class="form-control"
                       formControlName="amount"
@@ -363,71 +396,46 @@
                       type="number"
                       min="0"
                       step=".01"
-                      (keyup)="changePaymentValue(i)"
                     />
                   </td>
                   <td style="width: 10%; padding: 6px">
-                    <input
+                    <!-- (focus)="paymentRemarkModalOpen(i)" -->
+                    <textarea
+                      formControlName="remarks"
+                      class="form-control"
+                      placeholder="Remarks"
+                      id=""
+                      cols="30"
+                      rows="1"
+                    ></textarea>
+                    <!-- <input
                       class="form-control"
                       formControlName="remarks"
                       size="1"
                       placeholder="Remarks"
                       type="text"
-                      (focus)="paymentRemarkModalOpen(i)"
-                    />
+                    /> -->
                   </td>
-                  <td class="td-actions" style="width: 10%; padding: none">
-                    <div class="row">
-                      <a
-                        [routerLink]=""
-                        routerLinkActive="router-link-active"
-                        (click)="disableEditMethod(payment, 'payment')"
-                        *ngIf="enableEdit['payment'] && controller == payment"
-                        ><i class="cil-check-circle"></i
-                      ></a>
-                      <a
-                        [routerLink]=""
-                        routerLinkActive="router-link-active"
-                        *ngIf="!enableEdit['payment']"
-                        (click)="enableEditMethod(payment, 'payment')"
-                      >
-                        <i class="fa fa-edit"></i>
-                      </a>
-                      &nbsp;
-                      <a
-                        [routerLink]=""
-                        (click)="removePayments(i)"
-                        routerLinkActive="router-link-active"
-                        ><i class="fa fa-trash"></i
-                      ></a>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-              <tfoot align="center">
-                <tr>
                   <td class="td-actions" colspan="9" align="center">
-                    <a
-                      [routerLink]=""
-                      (click)="addPayments()"
-                      routerLinkActive="router-link-active"
-                    >
+                    <!-- (click)="addPayments()" -->
+                    <a [routerLink]="" routerLinkActive="router-link-active">
                       <i class="icon-plus icons"></i>
                     </a>
                   </td>
                 </tr>
-              </tfoot>
+              </tbody>
             </table>
           </div>
         </p-accordionTab>
-      </p-accordion> -->
+      </p-accordion>
       <!-- End of Payment Schedules Accordion -->
       <br />
       <!-- Additional Costs Accordion -->
-      <!-- <p-accordion styleClass="customColor">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="Additional Costs">
           <div class="row">
-            <table class="table table-borderless" formArrayName="addCosts">
+            <!-- formArrayName="addCosts" -->
+            <table class="table table-borderless">
               <thead>
                 <tr>
                   <th>Description</th>
@@ -436,14 +444,44 @@
                   <th>Total Price (MYR)</th>
                   <th>Notes</th>
                   <th></th>
+                  <th></th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  *ngFor="let cost of addCosts().controls; let i = index"
-                  [formGroupName]="i"
-                  align="center"
-                >
+                <tr align="center" *ngFor="let cost of additional_costs">
+                  <td class="text-center">{{ cost.description }}</td>
+                  <td class="text-center">{{ cost.quantity }}</td>
+                  <td class="text-center">{{ cost.unit_price }}</td>
+                  <td class="text-center">{{ cost.total_price }}</td>
+                  <td class="text-center">{{ cost.remarks }}</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="td-actions" style="width: 10%">
+                    <div class="action-icon">
+                      <!-- (click)="disableEditMethod(cost, 'addCost')"
+                            *ngIf="enableEdit['addCost'] && controller == cost" -->
+                      <!-- <a
+                            [routerLink]=""
+                            routerLinkActive="router-link-active"
+                            ><i class="cil-check-circle"></i
+                          ></a> -->
+                      <!-- *ngIf="!enableEdit['addCost']"
+                          (click)="enableEditMethod(cost, 'addCost')" -->
+                      <a [routerLink]="" routerLinkActive="router-link-active">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      &nbsp;
+                      <!-- (click)="removeAddCosts(i)" -->
+                      <a [routerLink]="" routerLinkActive="router-link-active"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
+                <!-- *ngFor="let cost of addCosts().controls; let i = index"
+                [formGroupName]="i" -->
+                <tr align="center">
                   <td style="width: 15%">
                     <input
                       formControlName="description"
@@ -453,30 +491,30 @@
                     />
                   </td>
                   <td style="width: 15%">
+                    <!-- (keyup)="allTotal(cost['controls'], addCosts().controls)" -->
                     <input
                       formControlName="quantity"
                       class="form-control"
                       size="1"
                       placeholder="1"
-                      (keyup)="allTotal(cost['controls'], addCosts().controls)"
                       type="number"
                       min="0"
                     />
                   </td>
                   <td style="width: 10%">
+                    <!-- (keyup)="allTotal(cost['controls'], addCosts().controls)" -->
                     <input
                       formControlName="unit_price"
                       class="form-control"
                       size="1"
                       placeholder="300"
-                      (keyup)="allTotal(cost['controls'], addCosts().controls)"
                       type="number"
                       min="0"
                       step=".01"
                     />
                   </td>
                   <td style="width: 20%">
-                    <input
+                    <!-- <input
                       formControlName="total_price"
                       class="form-control"
                       size="1"
@@ -484,74 +522,736 @@
                       type="number"
                       min="0"
                       step=".01"
-                    />
+                    /> -->
                   </td>
                   <td style="width: 15%">
-                    <input
+                    <textarea
                       formControlName="remarks"
                       class="form-control"
-                      size="1"
                       placeholder="Remarks"
-                      type="text"
-                    />
+                      id=""
+                      cols="30"
+                      rows="1"
+                    ></textarea>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td class="td-actions" colspan="9" align="center">
+                    <!-- (click)="addAddCosts()" -->
+                    <a [routerLink]="" routerLinkActive="router-link-active">
+                      <i class="icon-plus icons"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="col-lg-9" align="right">
+              <div class="form-group">
+                <!-- {{ sub_total | number: "1.2-2" }} -->
+                <b>SUB TOTAL: MYR </b>
+              </div>
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End of Additional Costs Accordion -->
+      <br />
+
+      <!-- Billing Instruction Accordion -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Billing Instruction">
+          <div class="row">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>Schedule</th>
+                  <th>Percentage %</th>
+                  <th>Amount (RM)</th>
+                  <th>SOC Payment Terms</th>
+                  <th>Status</th>
+                  <th>Note</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr align="center">
+                  <td class="text-center">
+                    {{ billing_instruction?.schedule }}
+                  </td>
+                  <td class="text-center">
+                    {{ billing_instruction?.percentage }}
+                  </td>
+                  <td class="text-center">{{ billing_instruction?.amount }}</td>
+                  <td class="text-center">
+                    {{ billing_instruction?.soc_payment }}
+                  </td>
+                  <td class="text-center"></td>
+                  <td class="text-center">
+                    {{ billing_instruction?.remarks }}
                   </td>
                   <td class="td-actions" style="width: 10%">
-                    <div class="row">
-                      <a
-                        [routerLink]=""
-                        routerLinkActive="router-link-active"
-                        (click)="disableEditMethod(cost, 'addCost')"
-                        *ngIf="enableEdit['addCost'] && controller == cost"
-                        ><i class="cil-check-circle"></i
-                      ></a>
-                      <a
-                        [routerLink]=""
-                        routerLinkActive="router-link-active"
-                        *ngIf="!enableEdit['addCost']"
-                        (click)="enableEditMethod(cost, 'addCost')"
-                      >
+                    <div class="action-icon">
+                      <a [routerLink]="" routerLinkActive="router-link-active">
                         <i class="fa fa-edit"></i>
                       </a>
                       &nbsp;
-                      <a
-                        [routerLink]=""
-                        (click)="removeAddCosts(i)"
-                        routerLinkActive="router-link-active"
+                      <!-- (click)="removeAddCosts(i)" -->
+                      <a [routerLink]="" routerLinkActive="router-link-active"
                         ><i class="fa fa-trash"></i
                       ></a>
                     </div>
                   </td>
                 </tr>
-              </tbody>
-              <tfoot align="center">
-                <tr>
+                <tr align="center">
+                  <td>
+                    <input
+                      formControlName="schedule"
+                      class="form-control"
+                      placeholder="schedule"
+                      type="text"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      formControlName="percentage"
+                      class="form-control"
+                      placeholder="0"
+                      type="text"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      formControlName="amount"
+                      class="form-control"
+                      placeholder="0"
+                      type="text"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      formControlName="soc_payment_term"
+                      class="form-control"
+                      placeholder="payment terms"
+                      type="text"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      formControlName="status"
+                      class="form-control"
+                      placeholder="status"
+                      type="text"
+                    />
+                  </td>
+                  <td>
+                    <textarea
+                      formControlName="remarks"
+                      class="form-control"
+                      placeholder="Remarks"
+                      id=""
+                      cols="30"
+                      rows="1"
+                    ></textarea>
+                    <!-- <input
+                      formControlName="remarks"
+                      class="form-control"
+                      placeholder="remarks"
+                      type="text"
+                    /> -->
+                  </td>
                   <td class="td-actions" colspan="9" align="center">
-                    <a
-                      [routerLink]=""
-                      (click)="addAddCosts()"
-                      routerLinkActive="router-link-active"
-                    >
+                    <!-- (click)="addAddCosts()" -->
+                    <a [routerLink]="" routerLinkActive="router-link-active">
                       <i class="icon-plus icons"></i>
                     </a>
                   </td>
                 </tr>
-              </tfoot>
+              </tbody>
             </table>
-            <div class="col-lg-9" align="right">
-              <div class="form-group">
-                <b>SUB TOTAL: MYR {{ sub_total | number: "1.2-2" }}</b>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End of Billing Instruction Accordion -->
+      <br />
+
+      <!-- Additional Instruction and Information Accordion -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Additional Instruction and Information">
+          <!-- Heading -->
+          <div class="row grey">
+            <div class="col-md-3">
+              <div class="row">
+                <div class="col-md-5"><b>SOCI</b></div>
+              </div>
+            </div>
+            <div class="col-lg-6" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Description</b>
+              </div>
+            </div>
+          </div>
+          <!-- bil to -->
+          <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 200px"
+                      type="text"
+                      value="Bill To"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 700px"
+                      type="text"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="action-icon">
+                    <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ship to -->
+          <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 200px"
+                      type="text"
+                      value="Ship To"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 700px"
+                      type="text"
+                      placeholder="Description"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="action-icon">
+                    <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tender -->
+          <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 200px"
+                      type="text"
+                      value="Tender / Contract No "
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 700px"
+                      type="text"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="action-icon">
+                    <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Contract Start -->
+          <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 200px"
+                      type="text"
+                      value="Contract Start Date"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 700px"
+                      type="text"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="action-icon">
+                    <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Contract Expiry Date  -->
+          <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 200px"
+                      type="text"
+                      value="Contract Expiry Date"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 700px"
+                      type="text"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="action-icon">
+                    <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </p-accordionTab>
-      </p-accordion> -->
-      <!-- End of Additional Costs Accordion -->
+      </p-accordion>
+      <!-- End of Additional Instruction and Information -->
+      <br />
+
+      <!-- Additional/Reduction Charges -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Additional/Reduction Charges">
+          <!-- Heading -->
+          <div class="row grey">
+            <div class="col-md-3" style="text-align: middle">
+              <div class="row">
+                <div class="col-md-5"><b>Cost Item</b></div>
+              </div>
+            </div>
+            <div class="col-lg-4" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Description</b>
+              </div>
+            </div>
+            <div class="col-lg-1" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Quantity</b>
+              </div>
+            </div>
+            <div class="col-lg-1" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Unit (RM)</b>
+              </div>
+            </div>
+            <div class="col-lg-2" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Amount (RM)</b>
+              </div>
+            </div>
+            <div class="col-lg-1" style="text-align: middle">
+              <div class="">
+                <b> Action</b>
+              </div>
+            </div>
+          </div>
+          <!-- Training -->
+          <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 200px"
+                      type="text"
+                      value="Training"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- Description -->
+              <div class="col-md-4">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 336px"
+                      type="text"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- qty -->
+              <div class="col-md-1">
+                <div class="qty">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="number"
+                      placeholder="0"
+                      style="width: 75px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- unit -->
+              <div class="col-md-1">
+                <div class="unit">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="text"
+                      placeholder="0"
+                      style="width: 75px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Amount -->
+              <div class="col-md-2">
+                <div class="amount">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="text"
+                      placeholder="0.0"
+                      style="width: 100px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- action -->
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="action-icon">
+                    <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Installation -->
+          <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 200px"
+                      type="text"
+                      value="Installation"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- Description -->
+              <div class="col-md-4">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 336px"
+                      type="text"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- qty -->
+              <div class="col-md-1">
+                <div class="qty">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="number"
+                      placeholder="0"
+                      style="width: 75px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- unit -->
+              <div class="col-md-1">
+                <div class="unit">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="text"
+                      placeholder="0"
+                      style="width: 75px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Amount -->
+              <div class="col-md-2">
+                <div class="amount">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="text"
+                      placeholder="0.0"
+                      style="width: 100px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="action-icon">
+                    <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Taxation -->
+          <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 200px"
+                      type="text"
+                      value="Taxation"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- Description -->
+              <div class="col-md-4">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 336px"
+                      type="text"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- qty -->
+              <div class="col-md-1">
+                <div class="qty">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="number"
+                      placeholder="0"
+                      style="width: 75px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- unit -->
+              <div class="col-md-1">
+                <div class="unit">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="text"
+                      placeholder="0"
+                      style="width: 75px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Amount -->
+              <div class="col-md-2">
+                <div class="amount">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="text"
+                      placeholder="0.0"
+                      style="width: 100px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="action-icon">
+                    <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12" align="right">
+            <div class="form-group charges">
+              <b>TotaL </b> IDR<input type="text" class="form-control" />
+              <!-- {{ sub_total | number: "1.2-2" }} -->
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End Additional/Reduction Charges -->
       <br />
       <!-- Product -->
-      <!-- <p-accordion styleClass="customColor">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
         <p-accordionTab header="Products">
           <div class="row">
-            <table class="table table-borderless" formArrayName="products">
+            <!-- formArrayName="products" -->
+            <table class="table table-borderless">
               <thead>
                 <tr>
                   <th>No.</th>
@@ -560,22 +1260,49 @@
                   <th>Quantity</th>
                   <th>Unit Price(MYR)</th>
                   <th>Total Price(MYR)</th>
-                  <th>Discount</th>
+                  <th>Discount %</th>
                   <th>Net Amount(MYR)</th>
-                  <th></th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  *ngFor="let productC of products().controls; let i = index"
-                  [formGroupName]="i"
-                  align="center"
-                >
-                  <td>{{ i + 1 }}</td>
+                <tr align="center" *ngFor="let item of product; let i = index">
+                  <td class="text-center">{{ i + 1 }}</td>
+                  <td class="text-center">{{ item.name }}</td>
+                  <td class="text-center">{{ item.soci_id }}</td>
+                  <td class="text-center">{{ item.quantity }}</td>
+                  <td class="text-center">{{ item.unit_price }}</td>
+                  <td class="text-center">{{ item.total_price }}</td>
+                  <td class="text-center">{{ item.discount }}</td>
+                  <td class="text-center">{{ item.amount }}</td>
+                  <td class="td-actions" style="width: 5%">
+                    <div class="action-icon">
+                      <!-- (click)="disableEditMethod(productC, 'product')"
+                            *ngIf="enableEdit['product'] && controller == productC" -->
+                      <!-- <a [routerLink]="" routerLinkActive="router-link-active"
+                        ><i class="cil-check-circle"></i
+                      ></a> -->
+                      <!-- *ngIf="!enableEdit['product']"
+                          (click)="enableEditMethod(productC, 'product')" -->
+                      <a [routerLink]="" routerLinkActive="router-link-active">
+                        <i class="fa fa-edit"></i> </a
+                      >&nbsp;
+                      <!-- (click)="removeProduct(i)" -->
+                      <a [routerLink]="" routerLinkActive="router-link-active"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
+                <!-- *ngFor="let productC of products().controls; let i = index"
+                [formGroupName]="i" -->
+                <tr align="center">
+                  <!-- {{ i + 1 }} -->
+                  <td></td>
                   <td style="size: 20%">
+                    <!-- [(ngModel)]="selectedProductAdvanced[i]" -->
                     <p-autoComplete
                       formControlName="name"
-                      [(ngModel)]="selectedProductAdvanced[i]"
                       [suggestions]="filteredProducts"
                       (completeMethod)="filterProduct($event)"
                       field="name"
@@ -584,13 +1311,8 @@
                       [inputStyle]="{ width: '100%' }"
                     >
                       <ng-template let-product pTemplate="item">
-                        <div
-                          class="product-item"
-                          (click)="
-                            productDetails(product, productC);
-                            countNetAmount(productC)
-                          "
-                        >
+                        <!-- (click)="productDetails(product, productC);countNetAmount(productC)" -->
+                        <div class="product-item">
                           <div>{{ product.name }}</div>
                         </div>
                       </ng-template>
@@ -604,12 +1326,12 @@
                     />
                   </td>
                   <td>
+                    <!-- (keyup)="countNetAmount(productC)" -->
                     <input
                       class="form-control"
                       formControlName="quantity"
                       type="number"
                       step=".01"
-                      (keyup)="countNetAmount(productC)"
                     />
                   </td>
                   <td>
@@ -629,11 +1351,11 @@
                     />
                   </td>
                   <td>
+                    <!-- (keyup)="countNetAmount(productC)" -->
                     <input
                       class="form-control"
                       formControlName="discount"
                       type="number"
-                      (keyup)="countNetAmount(productC)"
                       step=".01"
                     />
                   </td>
@@ -645,46 +1367,14 @@
                       step=".01"
                     />
                   </td>
-                  <td class="td-actions" style="width: 5%">
-                    <div class="row">
-                      <a
-                        [routerLink]=""
-                        routerLinkActive="router-link-active"
-                        (click)="disableEditMethod(productC, 'product')"
-                        *ngIf="enableEdit['product'] && controller == productC"
-                        ><i class="cil-check-circle"></i
-                      ></a>
-                      <a
-                        [routerLink]=""
-                        routerLinkActive="router-link-active"
-                        *ngIf="!enableEdit['product']"
-                        (click)="enableEditMethod(productC, 'product')"
-                      >
-                        <i class="fa fa-edit"></i> </a
-                      >&nbsp;
-                      <a
-                        [routerLink]=""
-                        (click)="removeProduct(i)"
-                        routerLinkActive="router-link-active"
-                        ><i class="fa fa-trash"></i
-                      ></a>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-              <tfoot align="center">
-                <tr>
-                  <td colspan="9" align="center">
-                    <a
-                      [routerLink]=""
-                      (click)="addNewProduct()"
-                      routerLinkActive="router-link-active"
-                    >
+                  <td class="td-actions" colspan="9" align="center">
+                    <!-- (click)="addAddCosts()" -->
+                    <a [routerLink]="" routerLinkActive="router-link-active">
                       <i class="icon-plus icons"></i>
                     </a>
                   </td>
                 </tr>
-              </tfoot>
+              </tbody>
             </table>
           </div>
           <div class="row">
@@ -693,47 +1383,9 @@
             </div>
           </div>
         </p-accordionTab>
-      
-      </p-accordion> -->
+      </p-accordion>
       <!-- End of Products Accordion -->
       <br />
-      <!-- Billing Instruction Accordion -->
-      <!-- <p-accordion styleClass="customColor">
-        <p-accordionTab header="Billing Instruction">
-          <div class="row">
-            <table class="table table-borderless">
-              <thead>
-                <tr>
-                  <th>Schedule</th>
-                  <th>Percentage</th>
-                  <th>Amount</th>
-                  <th>SOC Payment Terms</th>
-                  <th>Amount</th>
-                  <th>Note</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr align="center">
-                  <td>By Month</td>
-                  <td>50%</td>
-                  <td>80,000</td>
-                  <td>Before Delivery</td>
-                  <td>Deposit</td>
-                  <td>No remarks</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </p-accordionTab>
-      </p-accordion> -->
-      <!-- End of Billing Instruction Accordion -->
-      <br />
-      <!-- Additional Instruction and Information Accordion -->
-      <!-- <p-accordion styleClass="customColor">
-        <p-accordionTab header="Additional Instruction and Information">
-        </p-accordionTab>
-      </p-accordion> -->
-      <!-- End of Additional Instruction and Information -->
     </form>
   </div>
 </div>
