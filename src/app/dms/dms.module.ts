@@ -30,6 +30,8 @@ import { BookingApprovalComponent } from './components/bookings/booking-approval
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { ExpandPanelComponent } from './components/widgets/expand-panel/expand-panel.component';
 import { EquipmentTableComponent } from './components/bookings/main-asset/equipment-table/equipment-table.component';
+import { OpportunityBookingFormComponent } from './components/bookings/opportunity-booking-form/opportunity-booking-form.component';
+import { OpportunityFormComponent } from './components/bookings/opportunity-booking-form/opportunity-form/opportunity-form.component';
 
 
 
@@ -50,7 +52,9 @@ import { EquipmentTableComponent } from './components/bookings/main-asset/equipm
     MainAssetComponent,
     ExpandPanelComponent,
     EquipmentTableComponent,
-    IdentifyComponent
+    IdentifyComponent,
+    OpportunityBookingFormComponent,
+    OpportunityFormComponent
 
   ],
   imports: [

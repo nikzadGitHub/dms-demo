@@ -9,6 +9,11 @@ import { MainAsset } from '../../../services/asset-entity';
   templateUrl: './main-asset.component.html',
   styleUrls: ['./main-asset.component.scss']
 })
+
+/**
+ * This class is used to add the main asset to different parts of DMS
+ * @class
+ */
 export class MainAssetComponent implements OnInit{
   @Input() mainAsset: MainAsset;
   @Input() isAddable: boolean = false;

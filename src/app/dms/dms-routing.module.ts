@@ -7,6 +7,7 @@ import { BookingsComponent } from './components/bookings/bookings.component';
 import { BookingFormComponent } from './components/bookings/booking-form/booking-form.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { BookingEntityComponent } from './components/bookings/booking-entity/booking-entity.component';
+import { OpportunityBookingFormComponent } from './components/bookings/opportunity-booking-form/opportunity-booking-form.component';
 
 export const fallbackPath = 'inventory';
 
@@ -21,6 +22,13 @@ export const bookingsChildren: Routes = [
     component: BookingFormComponent,
     data: {
       title: 'Bookings Form',
+    },
+  },
+  {
+    path: 'opportunity',
+    component: OpportunityBookingFormComponent,
+    data: {
+      title: 'Booking Opportunity Booking',
     },
   },
   {
