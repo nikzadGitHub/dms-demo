@@ -4,10 +4,12 @@ import {CreateComponent} from './create/create.component';
 import { IndexComponent } from './index/index.component';
 import { EditComponent } from './edit/edit.component';
 import { CustomerRoutingModule } from './customer-routing.module';
+import { AccordionModule } from 'primeng/accordion';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TableModule } from 'primeng/table';
+import {TabViewModule} from 'primeng/tabview';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { TableModule } from 'primeng/table';
     PaginatorModule,
     InputTextModule,
     ModalModule,
-    TableModule
+    TableModule,
+    AccordionModule,
+    TabViewModule
   ]
 })
 export class CustomersModule { }

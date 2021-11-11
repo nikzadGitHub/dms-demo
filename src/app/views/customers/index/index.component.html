@@ -12,9 +12,12 @@
       [(ngModel)]="search_text"
     />
     </span>
-    <span class="pi pi-filter filter-icon"></span>
+    <!-- <span class="pi pi-filter filter-icon"></span>
     <span class="pi pi-file-excel file-excel-icon"></span>
-    <span class="pi pi-pause pause-icon"></span>
+    <span class="pi pi-pause pause-icon"></span> -->
+    <img class="vertcalLinesImg" src="../../../../assets/img/icons/vertcalLines.svg" alt="">
+    <img class="filterImg" src="../../../../assets/img/icons/filter.svg" alt="">
+    <img class="excelImg" src="../../../../assets/img/icons/excel.svg" alt="">
   </div>
   <div class="data-table">
     <table class="table table-striped">
@@ -61,13 +64,13 @@
 <div class="modal-dialog" role="document" style="color: black;">
   <div class="modal-content">
     <div class="modal-header">
-      <h4 class="modal-"><b>PANTAI HOSPITAL,BANGSAR</b></h4>
+      <h4 class="modal-"><b>PANTAI HOSPITAL, BANGSAR</b></h4>
       <i class="pi pi-times close-icon" (click)='closeModel()'></i>
     </div>
     <div class="modal-body" style="padding:0">
-      <table class="table">
+      <table class="customerPopupTable">
         <thead class="text-dark">
-          <tr>
+          <tr style="border-bottom:hidden; border-top: 1px solid #C8CED3;">
             <th scope="col">Account Id</th>
             <th scope="col">Indviual Name</th>
             <th scope="col">Email</th>
@@ -76,7 +79,7 @@
           </tr>
         </thead>
         <tbody class="">
-          <tr>
+          <tr style="border-bottom:1px solid #C8CED3">
             <td style="text-align: center;">{{modalData?.id}}</td>
             <td style="text-align: center;">{{modalData?.full_name}}</td>
             <td style="text-align: center;">{{modalData?.email}}</td>
@@ -85,14 +88,85 @@
           </tr>
         </tbody>
       </table>
-      <hr>
+      <!-- <hr> -->
       <div class="stepper">
         <div (click)="stepperClick(1)" [ngClass]="{active:stepperId == 1}"><span>Details</span></div>
         <div (click)="stepperClick(2)" [ngClass]="{active:stepperId == 2}"><span>Related</span></div>
         <div (click)="stepperClick(3)" [ngClass]="{active:stepperId == 3}"><span>Activities</span></div>
       </div>
-      <div class="row" *ngIf="stepperId == 1">
-        <div class="col">
+      <div class="relatedTab" *ngIf="stepperId == 1">
+        <div class="relativeTabs">
+          <div class="accordianMain form-group col-md-12 form-group">
+            <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0,1">
+              <p-accordionTab class="accordianTab">
+                <ng-template pTemplate="header"
+                  >&nbsp;&nbsp;Information</ng-template>
+                
+                  <div class="tab-content">
+                    <table class="table m-0 no-outline">
+                      <tbody>
+                        <tr>
+                          <td>Created Date</td>
+                          <td>{{modalData.created_at}}</td>
+                        </tr>
+                        <tr>
+                          <td>Billing Address</td>
+                          <td>{{modalData.address}}</td>
+                        </tr>
+                        <tr>
+                          <td>Shipping Address</td>
+                          <td>{{modalData.address}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </p-accordionTab>
+
+
+              <p-accordionTab class="accordianTab">
+                <ng-template pTemplate="header"
+                  >&nbsp;&nbsp;Contact</ng-template>
+                
+                  <div class="tab-content">
+                    <table class="table m-0 no-outline">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>Name</th>
+                          <th>title</th>
+                          <th>Phone</th>
+                          <th>Email</th>
+                          <th>Department</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><input class="checkbox_position" type="radio"></td>
+                          <td>Aron Aziz</td>
+                          <td>Sales manager</td>
+                          <td>34534234234</td>
+                          <td>abc@gmail.com</td>
+                          <td>Sales</td>
+                        </tr>
+                        <tr>
+                          <td><input class="checkbox_position" type="radio"></td>
+                          <td>Aron Aziz</td>
+                          <td>Sales manager</td>
+                          <td>34534234234</td>
+                          <td>abc@gmail.com</td>
+                          <td>Sales</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </p-accordionTab>
+
+            </p-accordion>
+          </div>
+        </div>
+      </div>
+        
+        <!-- <div class="col">
           <div class="tabs" style="padding: 3%;margin: auto;">
             <div class="tab">
               <input type="checkbox" id="chck1">
@@ -116,7 +190,8 @@
                 </table>
               </div> 
             </div>
-            <div class="tab">
+            
+            <div class="tab" [ngClass]="{cssClass: collapse}">
               <input type="checkbox" id="chck2">
               <label class="tab-label" for="chck2" style="color:black; font-weight: bold;">Contact</label>
               <div class="tab-content text-dark">
@@ -153,163 +228,186 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
-      <div  *ngIf="stepperId == 2">
+      <div  class="relatedTab" *ngIf="stepperId == 2">
         <div class="row card-row">
           <div class="card blue">
-            <div>OPPORTNITIES</div>
-            <div>1</div>
+            <div class="cardTitle">Opportunities</div>
+            <div class="cardNumber">1</div>
           </div>
           <div class="card yellow">
-            <div>QUOTES</div>
-            <div>2</div>
+            <div class="cardTitle">Quotes</div>
+            <div class="cardNumber">2</div>
           </div>
           <div class="card green">
-            <div>SOCI</div>
-            <div>3</div>
+            <div class="cardTitle">SOCI</div>
+            <div class="cardNumber">3</div>
           </div>
         </div>
 
-        <div class="tabs relative-tabs">
-          <div class="tab">
-            <input type="checkbox" id="chck1">
-            <label class="tab-label" for="chck1" style="color:black; font-weight: bold;">Opportunities</label>
-            <div class="tab-content text-dark">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Opportunity Id</th>
-                    <th>Product</th>
-                    <th>Status</th>
-                    <th>Amount (RM)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>15-jun-2021</td>
-                    <td>OP1234</td>
-                    <td>X-ray and Spare Part</td>
-                    <td>Pending</td>
-                    <td>150,000</td>
-                  </tr>
-                  <tr>
-                    <td>15-jun-2021</td>
-                    <td>OP1234</td>
-                    <td>X-ray and Spare Part</td>
-                    <td>Pending</td>
-                    <td>150,000</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div> 
-          </div>
-          <div class="tab">
-            <input type="checkbox" id="chck2">
-            <label class="tab-label" for="chck2" style="color:black; font-weight: bold;">Quotes</label>
-            <div class="tab-content text-dark">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Quotes Id</th>
-                    <th>Product</th>
-                    <th>Status</th>
-                    <th>Amount (RM)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>15-jun-2021</td>
-                    <td>OP1234</td>
-                    <td>X-ray and Spare Part</td>
-                    <td>Pending</td>
-                    <td>150,000</td>
-                  </tr>
-                  <tr>
-                    <td>15-jun-2021</td>
-                    <td>OP1234</td>
-                    <td>X-ray and Spare Part</td>
-                    <td>Pending</td>
-                    <td>150,000</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="tab">
-            <input type="checkbox" id="chck3">
-            <label class="tab-label" for="chck3" style="color:black; font-weight: bold;">SOCI</label>
-            <div class="tab-content text-dark">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>SOCI Number</th>
-                    <th>PO Number</th>
-                    <th>Status</th>
-                    <th>Amount (RM)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>15-jun-2021</td>
-                    <td>QUO1234</td>
-                    <td>PO123123</td>
-                    <td>Pending</td>
-                    <td>150,000</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div> 
-          </div>
-          <div class="tab">
-            <input type="checkbox" id="chck4">
-            <label class="tab-label" for="chck4" style="color:black; font-weight: bold;">Attachments</label>
-            <div class="tab-content text-dark">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Name</th>
-                    <th>File Type</th>
-                    <th>File Size</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>15-jun-2021</td>
-                    <td>CT scan Part</td>
-                    <td>jpg</td>
-                    <td>500kb</td>
-                    <td>
-                      <i class="pi pi-eye"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>19-jun-2021</td>
-                    <td>CT scan Part</td>
-                    <td>jpg</td>
-                    <td>500kb</td>
-                    <td>
-                      <i class="pi pi-eye"></i>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div> 
+        <div class="relativeTabs">
+          <div class="accordianMain form-group col-md-12 form-group">
+            <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0,1,2,3">
+              <p-accordionTab class="accordianTab">
+                <ng-template pTemplate="header"
+                  >&nbsp;&nbsp;Opportunities</ng-template>
+                
+                  <div class="tab-content">
+                    <table class="table m-0 no-outline">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Opportunity Id</th>
+                          <th>Product</th>
+                          <th>Status</th>
+                          <th>Amount (RM)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>15-jun-2021</td>
+                          <td>OP1234</td>
+                          <td>X-ray and Spare Part</td>
+                          <td>Pending</td>
+                          <td>150,000</td>
+                        </tr>
+                        <tr>
+                          <td>15-jun-2021</td>
+                          <td>OP1234</td>
+                          <td>X-ray and Spare Part</td>
+                          <td>Pending</td>
+                          <td>150,000</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </p-accordionTab>
+
+
+              <p-accordionTab class="accordianTab">
+                <ng-template pTemplate="header"
+                  >&nbsp;&nbsp;Quotes</ng-template>
+                
+                  <div class="tab-content">
+                    <table class="table m-0 no-outline">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Quotes Id</th>
+                          <th>Product</th>
+                          <th>Status</th>
+                          <th>Amount (RM)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>15-jun-2021</td>
+                          <td>OP1234</td>
+                          <td>X-ray and Spare Part</td>
+                          <td>Pending</td>
+                          <td>150,000</td>
+                        </tr>
+                        <tr>
+                          <td>15-jun-2021</td>
+                          <td>OP1234</td>
+                          <td>X-ray and Spare Part</td>
+                          <td>Pending</td>
+                          <td>150,000</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </p-accordionTab>
+
+              <p-accordionTab class="accordianTab">
+                <ng-template pTemplate="header"
+                  >&nbsp;&nbsp;SOCI</ng-template>
+                
+                  <div class="tab-content">
+                    <table class="table m-0 no-outline">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>SOCI Number</th>
+                          <th>PO Number</th>
+                          <th>Status</th>
+                          <th>Amount (RM)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>16-jun-2021</td>
+                          <td>Sj01234</td>
+                          <td>PO143343</td>
+                          <td>Pending</td>
+                          <td>150,000</td>
+                        </tr>
+                        <tr>
+                          <td>15-jun-2021</td>
+                          <td>QUO1234</td>
+                          <td>PO123123</td>
+                          <td>Progress</td>
+                          <td>270,000</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </p-accordionTab>
+
+
+              <p-accordionTab class="accordianTab">
+                <ng-template pTemplate="header"
+                  >&nbsp;&nbsp;Attachments</ng-template>
+                
+                  <div class="tab-content">
+                    <table class="table m-0 no-outline">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Name</th>
+                          <th>File Type</th>
+                          <th>File Size</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>15-jun-2021</td>
+                          <td>CT scan Part</td>
+                          <td>jpg</td>
+                          <td>500kb</td>
+                          <td>
+                            <i class="pi pi-eye"></i>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>19-jun-2021</td>
+                          <td>CT scan Part</td>
+                          <td>jpg</td>
+                          <td>500kb</td>
+                          <td>
+                            <i class="pi pi-eye"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </p-accordionTab>
+
+
+            </p-accordion>
           </div>
         </div>
       </div>
+
       <div *ngIf="stepperId == 3"> 
         <div class="button">
           <button class="open">Open</button>
           <button class="open close">Close</button>
         </div>
         <div class="table-content text-dark">
-          <table class="activities-table">
+          <table class="activities-table table-striped">
             <thead>
               <tr>
                 <th>Due Date</th>

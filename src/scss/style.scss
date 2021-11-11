@@ -65,3 +65,34 @@ $ng-theme: mat-light-theme(
 
 // If you want to add something do it here
 @import "custom";
+
+.p-accordion {
+
+  .p-accordion-tab {
+    margin-bottom: 5px !important;
+    border-bottom: 2px solid lightgray;
+  }
+  .p-accordion-content {
+  // border-radius: 0;
+  min-height: 150px !important;
+  height: auto;
+  padding: 0px !important;
+}
+.p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem transparent !important; 
+}
+
+}
+.p-accordion-header{
+  a:hover{
+    text-decoration: unset !important;
+    // color: transparent !important;
+  }
+  .p-accordion-header-link .p-accordion-toggle-icon {
+    margin-right: 0.5rem;
+    position: absolute;
+    right: 25px;
+  }
+}
