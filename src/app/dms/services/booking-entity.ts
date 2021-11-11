@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { BookingStatus } from './booking-status.enum';
-import { MainAsset } from './main-asset-service/main-asset-entity';
+import { MainAsset } from './asset-entity';
 
 
 export interface UserInfo {
@@ -15,6 +15,7 @@ export interface ApprovalEntity {
   user_list: UserInfo[];
 }
 export type ApprovalList = ApprovalEntity[];
+
 export interface BookingDetail {
   status: string;
   status_request_date: string;

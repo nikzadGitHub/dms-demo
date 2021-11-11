@@ -18,7 +18,7 @@ export class ApiClient {
 
   constructor(private httpClient: HttpClient) { }
 
-  get<T>(path: string|String) : Observable<T> {
+  get<T>(path: string|String): Observable<T> {
     return this.httpClient.get<T>(this.baseUrl + path, this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
