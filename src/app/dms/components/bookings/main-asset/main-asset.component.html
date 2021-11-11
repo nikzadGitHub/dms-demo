@@ -1,18 +1,20 @@
 <div class="form-group">
   <p-accordion class="p-accordion">
-    <p-accordionTab class="p-accordionTab" [selected]="true">
+    <p-accordionTab class="p-accordionTab row" [selected]="true">
       <p-header class="p-header">
         <i class="cil-cart"></i>
         <span class="accordion-header">Main Demo Asset</span>
       </p-header>
-      <div *ngFor="let entry of mainAsset | keyvalue:onSortIgnore">
-        <dms-asset-table
-          *ngIf="entry.value; let value"
+      <div *ngFor="let entry of mainAsset | keyvalue:onSortIgnore; let i=index">
+        <dms-equipment-table
+          *ngIf="entry.value"
+          class="col-12"
           [kind]="entry.key"
-          [data]="value"
-          [isAddable]="isAddable"
+          [(data)]="entry.value"
+          [isAddable]="isAddable && (i > 0 || mainAsset.main.length == 0)"
+          [isRemovable]="isAddable"
           [isAssignable]="isAssignable">
-        </dms-asset-table>
+        </dms-equipment-table>
       </div>
     </p-accordionTab>
   </p-accordion>

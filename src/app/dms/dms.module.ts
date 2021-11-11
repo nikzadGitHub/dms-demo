@@ -29,7 +29,7 @@ import { BookingEntityComponent } from './components/bookings/booking-entity/boo
 import { BookingApprovalComponent } from './components/bookings/booking-approval/booking-approval.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { ExpandPanelComponent } from './components/widgets/expand-panel/expand-panel.component';
-import { AssetTableComponent } from './components/bookings/main-asset/asset-table/asset-table.component';
+import { EquipmentTableComponent } from './components/bookings/main-asset/equipment-table/equipment-table.component';
 
 
 
@@ -49,7 +49,7 @@ import { AssetTableComponent } from './components/bookings/main-asset/asset-tabl
     StatusLogComponent,
     MainAssetComponent,
     ExpandPanelComponent,
-    AssetTableComponent,
+    EquipmentTableComponent,
     IdentifyComponent
 
   ],
