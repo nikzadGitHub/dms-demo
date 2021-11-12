@@ -1,5 +1,5 @@
 .rcorners {
-  border-radius: 10px;
+  border-radius: 0;
   overflow: hidden;
 }
 .bg-opp {
@@ -14,7 +14,8 @@
 }
 
 .purple {
-  background-color: #424562;
+  // background-color: #424562;
+  background-color: #898485;
   color: white;
 }
 
@@ -38,6 +39,19 @@
   border: none;
 }
 
+.card-body {
+  padding-top: 35px;
+}
+.status {
+  position: relative;
+  bottom: 33px;
+}
+.footer-data {
+  color: black;
+  label {
+    font-weight: 600;
+  }
+}
 .customCardHeight {
   height: 10px;
 }
@@ -100,7 +114,7 @@ input::-webkit-inner-spin-button {
 }
 
 .purple {
-  background-color: #424562;
+  background-color: #898485;
   color: white;
 }
 .no-border {

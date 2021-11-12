@@ -1,7 +1,9 @@
 <div class="animated fadeIn">
   <div class="col-lg col-md-6">
     <div class="card rcorners">
-      <div class="card-header purple"><h2>Quote Details</h2></div>
+      <div class="card-header d-flex b-btm-green purple">
+        <h2 class="chead">Quote Details</h2>
+      </div>
       <div class="card-body">
         <div class="row">
           <div class="col-lg-4">
@@ -26,10 +28,49 @@
             <div class="bg-opp text-white p-1">Opport ID</div>
             <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
           </div>
+          <div class="col-lg-2">
+            <div class="text-center status">
+              <label style="color: black"><b>Stages</b></label>
+              <input
+                type="text"
+                class="form-control"
+                value=""
+                readonly
+                style="width: 150px"
+              />
+            </div>
+          </div>
           <!-- <div class="col-lg" align='right'><b>Status</b><br><p>{{f.status.value}}</p></div> -->
         </div>
       </div>
-      <div class="card-footer"></div>
+      <div class="card-footer">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="text-center footer-data">
+              <label><b>Create Date</b></label>
+              <p>{{soci_data?.created_at | date: "dd-MMM-yyyy"}}</p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="text-center footer-data">
+              <label><b>Contact Name</b></label>
+              <p>{{soci_data?.contact_name}}</p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="text-center footer-data">
+              <label><b>Email</b></label>
+              <p>{{soci_data?.contact_email}}</p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="text-center footer-data">
+              <label><b>Owner</b></label>
+              <p></p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <form [formGroup]="form" (ngSubmit)="submit()">
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">

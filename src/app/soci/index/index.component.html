@@ -104,6 +104,7 @@
         <a
           [routerLink]=""
           routerLinkActive="router-link-active"
+          (click)="createModal.createSoci()"
         >
           <i class="icon-plus icons" style="color: white"></i>
         </a>
@@ -270,7 +271,7 @@
         [routerLink]=""
         routerLinkActive="router-link-active"
         *ngIf="soci.po_no==null"
-        (click)="createModal.addPo(soci.id)"
+        (click)="createModal.addPo(soci.quote_full_id)"
       >
       Add Po
       </a>

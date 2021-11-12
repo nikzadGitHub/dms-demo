@@ -24,7 +24,8 @@ export class CreateComponent implements OnInit {
   selectedQuoteAdvanced: Quote;
   file: any;
   alertBody: string;
-  soci_id: any;
+  quote_full_id: any;
+  is_quote_id_found: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,13 +44,18 @@ export class CreateComponent implements OnInit {
     });
   }
 
-  addPo(sociId) {
-    this.soci_id = sociId
+  addPo(quote_full_id) {
+    this.quote_full_id = quote_full_id;
+    // this.is_quote_id_found = true
+    this.form.patchValue({
+      quote_id: this.quote_full_id,
+    });
     this.modal.show();
   }
-  // showModal(){
-  //   this.modal.show();
-  // }
+  createSoci() {
+    this.form.reset();
+    this.modal.show();
+  }
 
   filterQuote(event) {
     console.log("event: ", event);
@@ -68,7 +74,7 @@ export class CreateComponent implements OnInit {
 
   getFile(event) {
     console.log("file:", event);
-    
+
     this.file = event.target.files[0];
     console.log("file-->:", this.file);
   }
@@ -76,7 +82,7 @@ export class CreateComponent implements OnInit {
   submit() {
     console.log(this.form.controls);
     const formData = new FormData();
-    formData.append("quote_id", this.form.controls["quote_id"].value['id']);
+    formData.append("quote_id", this.form.controls["quote_id"].value["id"]);
     formData.append("po_no", this.form.controls["po_no"].value);
     formData.append("po_date", this.form.controls["po_date"].value);
     formData.append("po_value", this.form.controls["po_value"].value);
@@ -95,8 +101,12 @@ export class CreateComponent implements OnInit {
         this.successModal.show();
       });
   }
-
+  resetForm() {
+    this.quote_full_id = null;
+    console.log("working value-->", this.quote_full_id);
+  }
   redirectPage() {
+    this.form.reset();
     this.router.navigateByUrl("soci/index");
   }
 
