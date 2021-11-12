@@ -23,22 +23,102 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">Created Date</th>
-          <th scope="col">Customer Id</th>
-          <th scope="col">Company Name</th>
-          <th scope="col">Contact Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Phone</th>
+          <th scope="col">
+            Created Date
+          <!-- <div class="p-d-flex p-jc-between p-ai-center">
+          Topic
+          <p-sortIcon field="topic"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="topic"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
+        </div> -->
+          </th>
+          <th scope="col">
+            Customer Id
+          <!-- <div class="p-d-flex p-jc-between p-ai-center">
+          Topic
+          <p-sortIcon field="topic"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="topic"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
+        </div> -->
+          </th>
+          <th scope="col">
+            Company Name
+          <!-- <div class="p-d-flex p-jc-between p-ai-center">
+          Topic
+          <p-sortIcon field="topic"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="topic"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
+        </div> -->
+          </th>
+          <th scope="col">
+            Contact Name
+          <!-- <div class="p-d-flex p-jc-between p-ai-center">
+          Topic
+          <p-sortIcon field="topic"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="topic"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
+        </div> -->
+          </th>
+          <th scope="col">
+            Email
+          <!-- <div class="p-d-flex p-jc-between p-ai-center">
+          Topic
+          <p-sortIcon field="topic"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="topic"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
+        </div> -->
+          </th>
+          <th scope="col">
+            Phone
+          <!-- <div class="p-d-flex p-jc-between p-ai-center">
+          Topic
+          <p-sortIcon field="topic"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="topic"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
+        </div> -->
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let datasource of datasource" (click)="openModel(datasource)">
+        <tr *ngFor="let datasource of datasource">
           <th scope="row">{{datasource.created_at | date: 'mediumDate'}}</th>
           <td> {{datasource.id}}</td>
           <td> {{datasource.company_name}}</td>
           <td>{{datasource.owner}}</td>
           <td> abc@gmail.com</td>
           <td>{{datasource.company_phone_number}}</td>
+          <td>
+            <div class="row-icon">
+              <a>
+                <i class="icon-note icon" (click)="openModel(datasource)"></i>
+              </a>
+              <i class="pi pi-copy copy-icon"></i>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -140,22 +220,22 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
+                        <tr *ngFor="let data of detailsTab">
+                          <td><input class="checkbox_position" type="radio"></td>
+                          <td>{{data.full_name}}</td>
+                          <td>{{data.job_title}}</td>
+                          <td>{{data.mobile_phone}}</td>
+                          <td>{{data.email}}</td>
+                          <td>{{data.department}}</td>
+                        </tr>
+                        <!-- <tr>
                           <td><input class="checkbox_position" type="radio"></td>
                           <td>Aron Aziz</td>
                           <td>Sales manager</td>
                           <td>34534234234</td>
                           <td>abc@gmail.com</td>
                           <td>Sales</td>
-                        </tr>
-                        <tr>
-                          <td><input class="checkbox_position" type="radio"></td>
-                          <td>Aron Aziz</td>
-                          <td>Sales manager</td>
-                          <td>34534234234</td>
-                          <td>abc@gmail.com</td>
-                          <td>Sales</td>
-                        </tr>
+                        </tr> -->
                       </tbody>
                     </table>
                   </div>

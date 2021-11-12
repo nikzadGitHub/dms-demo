@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CustomersService } from '../customers.service';
 import { LazyLoadEvent } from 'primeng/api';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-index',
@@ -25,6 +26,8 @@ export class IndexComponent implements OnInit {
 
   @ViewChild("successModal") successModal: ModalDirective;
   modalData: any;
+  selectedCustomerData: any;
+  detailsTab: Array<any>;
   constructor(private customerService: CustomersService) { }
 
   ngOnInit(): void {
@@ -34,12 +37,18 @@ export class IndexComponent implements OnInit {
   openModel(data:any){
     this.modalData=data.primary_contact
     this.successModal.show();
+    this.selectedCustomerData = data
+    this.customerDetails()
+
   }
   closeModel(){
     this.successModal.hide()
   }
   stepperClick(id){
     this.stepperId=id
+    if(id == 1){
+      this.customerDetails()
+    }
   }
   paginate(event){
     this.pageItems = event.rows;
@@ -76,5 +85,13 @@ export class IndexComponent implements OnInit {
   SortColumn(event: LazyLoadEvent){
     this.sort = {'field':event['sortField'],'order':event['sortOrder']}
     this.getList();
+  }
+
+  customerDetails(){
+    let data = this.selectedCustomerData
+    this.customerService.getCustomerDetails(data.id).subscribe((state:any)=>{
+      this.detailsTab = state.data.contacts
+      console.log('id',data.id,"selected Customer",this.detailsTab)
+    })
   }
 }

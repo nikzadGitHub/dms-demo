@@ -44,4 +44,12 @@ export class CustomersService {
     }
     return throwError(errorMessage);
  }
+
+ getCustomerDetails(id): Observable<any[]> {
+  let query = '/customer/' + id;
+  return this.http.get<any[]>(this.apiUrl + query,this.httpOptions)
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
 }
