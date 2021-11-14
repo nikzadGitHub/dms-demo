@@ -25,6 +25,13 @@ export class ApiClient {
     );
   }
 
+  post<T>(path: string|String, data: any) : Observable<T> {
+    return this.httpClient.post<T>(this.baseUrl + path, data, this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    );
+  }
+
   errorHandler(response) {
     let errorMessage = '';
     if (response.error instanceof ErrorEvent) {

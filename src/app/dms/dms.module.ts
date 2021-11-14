@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { PrimeNgModule } from '../sharedModule/prime-ng.module';
 import { IconModule } from '@coreui/icons-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Local.
 //
@@ -62,7 +63,9 @@ import { OpportunityFormComponent } from './components/bookings/opportunity-book
     // Dependencies.
     PrimeNgModule,
     IconModule,
-    ModalModule
+    ModalModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     ...providersForEnvironment
