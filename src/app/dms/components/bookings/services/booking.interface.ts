@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 export interface BookingItem {
-  booking_no: string;
+  code: string;
   request_date: string;
   requester: string;
   sku: string;

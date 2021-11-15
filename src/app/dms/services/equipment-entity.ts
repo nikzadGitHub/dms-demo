@@ -39,13 +39,13 @@ export interface RawEquipmentEntity {
 
 export interface EquipmentEntity {
   id: BigInt;
-  product_name: string;
-  sku_id: string;
+  name: string;
+  sku: string;
   quantity: IntegerOrNull;
   uom: string;
   availability: string;
-  expected_sales_price: MoneyOrNull;
-  available_qty: IntegerOrNull;
+  expected_sale_price: MoneyOrNull;
+  available_quantity: IntegerOrNull;
   cost: MoneyOrNull;
   serial_no?: null | string;
 }

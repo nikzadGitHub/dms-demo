@@ -4,7 +4,7 @@ import { EquipmentList } from './equipment-entity';
 import {EquipmentPurpose} from './equipment-purpose.enum';
 
 export interface EquipmentQuery {
-  filter: string;
+  search_text: string;
   purposes: EquipmentPurpose[];
 }
 

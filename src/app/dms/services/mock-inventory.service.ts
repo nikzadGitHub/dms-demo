@@ -3,9 +3,7 @@ import { Observable, of } from 'rxjs';
 
 import { InventoryList, InventoryInterface } from './inventory';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class MockInventoryService implements InventoryInterface {
   private mockData: InventoryList = [
     {

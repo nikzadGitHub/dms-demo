@@ -19,19 +19,19 @@
     <tbody>
     <tr *ngFor="let asset of data; let i = index">
       <td>{{ asset.id }}</td>
-      <td> {{ asset.product_name }} </td>
-      <td> {{ asset.sku_id }} </td>
+      <td> {{ asset.name }} </td>
+      <td> {{ asset.sku }} </td>
       <td> {{ asset.quantity }} </td>
       <td> {{ asset.uom }} </td>
       <td> {{ asset.availability }} </td>
-      <td> {{ asset.expected_sales_price }} </td>
+      <td> {{ asset.expected_sale_price }} </td>
       <td *ngIf="isMain">
         <div *ngIf="asset.serial_no">{{ asset.serial_no }}</div>
         <div *ngIf=" ! asset.serial_no">
           <button class="btn btn-assign btn-primary">Assign</button>
         </div>
       </td>
-      <td> {{ asset.available_qty }} </td>
+      <td> {{ asset.available_quantity }} </td>
       <td> {{ asset.cost }} </td>
       <td *ngIf="isRemovable">
         <button type="button" class="btn btn-sm btn-primary"
