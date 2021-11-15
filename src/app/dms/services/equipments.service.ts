@@ -9,15 +9,13 @@ import {
 import {EquipmentList} from './equipment-entity';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class EquipmentsService implements EquipmentsInterface {
 
   constructor(private apiClient: ApiClient) {
   }
 
   findEquipments(query: EquipmentQuery): Observable<EquipmentList> {
-    return this.apiClient.get<EquipmentList>('equipments?' + parameterize(query));
+    return this.apiClient.get<EquipmentList>('equipments/search?' + parameterize(query));
   }
 }

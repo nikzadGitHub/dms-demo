@@ -19,7 +19,7 @@ export type ApprovalList = ApprovalEntity[];
 export interface BookingDetail {
   status: string;
   status_request_date: string;
-  booking_no: string;
+  code: string;
   branch: string;
   booking_reason: string;
   request_date: string;

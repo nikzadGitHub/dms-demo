@@ -1,4 +1,4 @@
-<p-table #dt [value]="bookingList" styleClass="p-datatable-table" [rowHover]="true" [filterDelay]="0" [globalFilterFields]="['booking_no','request_date','requester']">
+<p-table #dt [value]="bookingList" styleClass="p-datatable-table" [rowHover]="true" [filterDelay]="0" [globalFilterFields]="['code','request_date','requester']">
     <ng-template pTemplate="caption">
       <div class="table-header d-flex">
           <div class="d-flex">
@@ -15,11 +15,11 @@
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="booking_no" class="text-center">
+        <th pSortableColumn="code" class="text-center">
             <div class="p-d-flex p-jc-between p-ai-center">
                 Booking No
-                <p-sortIcon field="booking_no"></p-sortIcon>
-                <p-columnFilter type="text" field="booking_no" display="menu" class="p-ml-auto"></p-columnFilter>
+                <p-sortIcon field="code"></p-sortIcon>
+                <p-columnFilter type="text" field="code" display="menu" class="p-ml-auto"></p-columnFilter>
             </div>
           </th>
         <th pSortableColumn="request_date" class="text-center">
@@ -79,7 +79,7 @@
     <ng-template pTemplate="body" let-bookingItem>
       <tr class="p-selectable-row">
         <td class="text-center">
-            <a routerLink="{{ bookingItem.booking_no }}" routerLinkActive="router-link-active">{{ bookingItem.code }}</a>
+            <a routerLink="{{ bookingItem.code }}" routerLinkActive="router-link-active">{{ bookingItem.code }}</a>
         </td>
         <td class="text-center">
             {{ bookingItem.requested_at }}

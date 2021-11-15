@@ -21,7 +21,7 @@ export class BookingsComponent implements OnInit {
   ngOnInit(): void {
     this.api.getList().subscribe((response) => {
       // if (response as BookingList) {
-        this.bookingList = response['data'];
+        this.bookingList = response;
       // }
 			console.log(response);
 		});

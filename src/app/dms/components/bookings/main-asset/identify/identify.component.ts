@@ -105,7 +105,7 @@ export class IdentifyComponent implements OnInit, OnDestroy {
     console.log('searching for:', this.filter);
     // Actual search.
     const query: EquipmentQuery = {
-      filter: this.filter,
+      search_text: this.filter,
       purposes: this.isMain ? [
         EquipmentPurpose.demo, EquipmentPurpose.loan
       ] : []
