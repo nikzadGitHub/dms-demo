@@ -9,7 +9,10 @@ import {ApiJsonResponse} from './api-client';
 /**
  * Manages requests to Backend's API.
  */
-@Injectable()
+@Injectable({
+  // FIXME: not even a single module-service should be provided directly in Root-App.
+  providedIn: 'root'
+})
 export class ApiClient {
   private baseUrl = settings.apiBaseUrl + '/dms/';
   private httpOptions = {

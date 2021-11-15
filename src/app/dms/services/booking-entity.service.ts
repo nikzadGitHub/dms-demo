@@ -6,7 +6,9 @@ import { BookingEntityInterface, ApprovalList, BookingEntity, BookingDetail, Opp
 import { MainAsset } from './asset-entity';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class BookingEntityService implements BookingEntityInterface {
 
   constructor(private apiClient: ApiClient) { }
