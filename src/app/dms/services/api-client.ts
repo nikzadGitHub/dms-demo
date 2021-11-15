@@ -16,6 +16,17 @@ export function parameterize(obj: object): string {
 }
 
 /**
+ * API response structure with JSON.
+ */
+export interface ApiJsonResponse {
+  success: boolean;
+  code: number;
+  locale: string;
+  message: string;
+  data: any;
+}
+
+/**
  * Handle like Money-Decimal (as TypeScript has no type for Decimal).
  */
 export type Money = number;

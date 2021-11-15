@@ -14,7 +14,7 @@ import {EquipmentEntity, EquipmentList} from '../../../../services/equipment-ent
  */
 export function applyEdit(edit: EquipmentWithEdit, entity: EquipmentEntity) {
   if (edit.newSku !== '') {
-    entity.sku_id = edit.newSku;
+    entity.sku = edit.newSku;
   }
 }
 

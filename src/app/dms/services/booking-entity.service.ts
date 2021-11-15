@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { BookingEntityInterface, ApprovalList, BookingEntity, BookingDetail, OpportunitySummary } from './booking-entity';
 import { ApiClient } from './api-client.service';
+import { BookingEntityInterface, ApprovalList, BookingEntity, BookingDetail, OpportunitySummary } from './booking-entity';
 import { MainAsset } from './asset-entity';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class BookingEntityService implements BookingEntityInterface {
 
   constructor(private apiClient: ApiClient) { }

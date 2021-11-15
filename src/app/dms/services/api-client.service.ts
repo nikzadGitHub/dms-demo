@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 
 import { settings } from '../../../environments/environment';
+import {ApiJsonResponse} from './api-client';
 
-@Injectable({
-  providedIn: 'root'
-})
+/**
+ * Manages requests to Backend's API.
+ */
+@Injectable()
 export class ApiClient {
   private baseUrl = settings.apiBaseUrl + '/dms/';
   private httpOptions = {
@@ -18,14 +20,33 @@ export class ApiClient {
 
   constructor(private httpClient: HttpClient) { }
 
+  /**
+   * Sends a GET-method request to Backend's API.
+   *
+   * @param path URL-encoded (Sub-route and optional parameters).
+   */
   get<T>(path: string|String): Observable<T> {
-    return this.httpClient.get<T>(this.baseUrl + path, this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
+    return this.map<T>(
+      this.httpClient.get<ApiJsonResponse>(this.baseUrl + path, this.httpOptions)
     );
   }
 
-  errorHandler(response) {
+  /**
+   * Casts input {@link ApiJsonResponse} to given type {@link T}.
+   */
+  map<T>(json: Observable<ApiJsonResponse>): Observable<T> {
+    return json.pipe(
+      catchError(this.errorHandler),
+      map((e) => {
+        return e.data;
+      })
+    );
+  }
+
+  /**
+   * Handler for any {@link HttpClient} failures.
+   */
+  errorHandler = (response) => {
     let errorMessage = '';
     if (response.error instanceof ErrorEvent) {
       errorMessage = response.error.message;
