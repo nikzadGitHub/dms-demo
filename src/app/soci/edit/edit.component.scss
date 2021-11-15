@@ -166,6 +166,15 @@ input::-webkit-inner-spin-button {
     overflow-x: hidden;
   }
 }
+
+:host ::ng-deep .customColor.p-accordion {
+  .p-accordion-header {
+    background: #f8f9fa;
+    .p-accordion-header-link {
+      background: #f8f9fa;
+    }
+  }
+}
 // :host ::ng-deep .customColor.p-accordion {
 //     .p-accordion-header {
 //         font-size: 1.5em;

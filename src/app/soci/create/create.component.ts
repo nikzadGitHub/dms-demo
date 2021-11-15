@@ -60,32 +60,23 @@ export class CreateComponent implements OnInit {
   }
 
   filterQuote(event) {
-    console.log("event: ", event);
     var query = event.query;
-    console.log("event-query: ", query);
 
     this.sociService
       .getFilteredQuote(query.toString())
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((data: any) => {
-        console.log("filter_data:", data);
         this.filteredQuotes = data["data"];
-        console.log(this.filteredQuotes);
       });
   }
 
   getFile(event) {
-    console.log("file:", event);
-
     this.file = event.target.files[0];
-    console.log("file-->:", this.file);
   }
 
   submit() {
-    console.log(this.form.controls);
     const formData = new FormData();
 
-    console.log("quote_id: ", this.form.controls["quote_id"].value);
     formData.append("quote_id", this.form.controls["quote_id"].value["id"]);
     formData.append("po_no", this.form.controls["po_no"].value);
     formData.append("po_date", this.form.controls["po_date"].value);
@@ -99,15 +90,12 @@ export class CreateComponent implements OnInit {
       this.sociService
         .updatePODetail(this.soci_id, formData)
         .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe((res) => {
-          console.log("update SOCI:", res);
-        });
+        .subscribe((res) => {});
     } else {
       this.sociService
         .store(formData)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((res) => {
-          console.log(res);
           this.modal.hide();
           this.alertBody = res["message"];
           this.successModal.show();
@@ -116,7 +104,6 @@ export class CreateComponent implements OnInit {
   }
   resetForm() {
     this.quote_full_id = null;
-    console.log("working value-->", this.quote_full_id);
   }
   redirectPage() {
     this.form.reset();

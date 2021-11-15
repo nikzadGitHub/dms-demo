@@ -73,6 +73,100 @@
       </div>
     </div>
     <form [formGroup]="form" (ngSubmit)="submit()">
+      <!-- PO details -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+        <p-accordionTab header="PO Details">
+          <div class="row">
+            <!-- formArrayName="addCosts" -->
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>PO No</th>
+                  <th>PO date</th>
+                  <th>PO Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr align="center">
+                  <td class="text-center">{{ soci_data?.po_no }}</td>
+                  <td class="text-center">
+                    {{ soci_data?.po_date | date: "dd-MMM-yyyy" }}
+                  </td>
+                  <td class="text-center">{{ soci_data?.po_amount }}</td>
+                </tr>
+                <!-- <tr align="center">
+                  <td style="width: 15%">
+                    <input
+                      formControlName="description"
+                      class="form-control"
+                      placeholder="Training"
+                      type="text"
+                    />
+                  </td>
+                  <td style="width: 15%">
+                    <input
+                      formControlName="quantity"
+                      class="form-control"
+                      size="1"
+                      placeholder="1"
+                      type="number"
+                      min="0"
+                    />
+                  </td>
+                  <td style="width: 18%">
+
+                    <input
+                      formControlName="unit_price"
+                      class="form-control"
+                      size="1"
+                      placeholder="300"
+                      type="text"
+                      min="0"
+                      step=".01"
+                      (input)="costUnitValue()"
+                    />
+                  </td>
+                  <td style="width: 18%">
+                    <input
+                      formControlName="total_price"
+                      class="form-control"
+                      size="1"
+                      placeholder="300"
+                      readonly
+                      type="text"
+                      min="0"
+                      step=".01"
+                    />
+                  </td>
+                  <td style="width: 15%">
+                    <textarea
+                      formControlName="remarks"
+                      class="form-control"
+                      placeholder="Remarks"
+                      id=""
+                      cols="30"
+                      rows="1"
+                    ></textarea>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td class="td-actions" colspan="9" align="center">
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addAdditionalCost()"
+                    >
+                      <i class="icon-plus icons"></i>
+                    </a>
+                  </td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End PO details -->
+      <br />
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <!-- Standard Term Accordion -->
         <p-accordionTab header="Standard Terms">
@@ -560,7 +654,7 @@
                       type="text"
                       min="0"
                       step=".01"
-                      (input)="unitValue()"
+                      (input)="costUnitValue()"
                     />
                   </td>
                   <td style="width: 18%">
@@ -600,10 +694,15 @@
                 </tr>
               </tbody>
             </table>
-            <div class="col-lg-9" align="right">
-              <div class="form-group">
+            <div class="col-lg-12" align="right">
+              <div class="form-group charges">
+                <b>TotaL </b> IDR<input
+                  type="text"
+                  class="form-control"
+                  readonly
+                  value=" {{ total_additional_costs_amount }}"
+                />
                 <!-- {{ sub_total | number: "1.2-2" }} -->
-                <b>Total IDR {{ total_additional_cost }}</b>
               </div>
             </div>
           </div>
@@ -735,7 +834,7 @@
       <br />
 
       <!-- Additional Instruction and Information Accordion -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="Additional Instruction and Information">
           <!-- Heading -->
           <div class="row grey">
@@ -1030,9 +1129,8 @@
               </div>
             </div>
           </div>
-          <!-- Training -->
           <div>
-            <div class="row">
+            <div class="row" *ngFor="let item of additional_charges">
               <div class="col-md-3">
                 <div class="">
                   <div class="col-md-10">
@@ -1040,8 +1138,7 @@
                       class="text-left form-control"
                       style="width: 200px"
                       type="text"
-                      value="Training"
-                      disabled
+                      [value]="item.code_item"
                     />
                   </div>
                 </div>
@@ -1054,6 +1151,7 @@
                       class="text-left form-control"
                       style="width: 336px"
                       type="text"
+                      [value]="item.description"
                       placeholder="Description"
                     />
                   </div>
@@ -1067,6 +1165,7 @@
                       class="text-left form-control"
                       type="number"
                       placeholder="0"
+                      [value]="item.quantity"
                       style="width: 75px"
                     />
                   </div>
@@ -1081,6 +1180,7 @@
                       class="text-left form-control"
                       type="text"
                       placeholder="0"
+                      [value]="item.unit_price"
                       style="width: 75px"
                     />
                   </div>
@@ -1095,6 +1195,7 @@
                       class="text-left form-control"
                       type="text"
                       placeholder="0.0"
+                      [value]="item.total_price"
                       style="width: 100px"
                     />
                   </div>
@@ -1125,23 +1226,31 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="">
+                  <!-- formControlName="" -->
                   <div class="col-md-10">
-                    <input
-                      class="text-left form-control"
+                    <select
+                      class="form-control"
+                      formControlName="cost_item_id"
                       style="width: 200px"
-                      type="text"
-                      value="Installation"
-                      disabled
-                    />
+                    >
+                      <!-- let i = index -->
+                      <option value="" disabled selected>Select Item</option>
+                      <option
+                        *ngFor="let item of additional_costs; let i = index"
+                        value="{{ item.id }}"
+                      >
+                        {{ item.description }}
+                      </option>
+                    </select>
                   </div>
                 </div>
               </div>
-              <!-- Description -->
               <div class="col-md-4">
                 <div class="">
                   <div class="col-md-10">
                     <input
                       class="text-left form-control"
+                      formControlName="description"
                       style="width: 336px"
                       type="text"
                       placeholder="Description"
@@ -1149,12 +1258,12 @@
                   </div>
                 </div>
               </div>
-              <!-- qty -->
               <div class="col-md-1">
                 <div class="qty">
                   <div class="col-md-10">
                     <input
                       class="text-left form-control"
+                      formControlName="quantity"
                       type="number"
                       placeholder="0"
                       style="width: 75px"
@@ -1162,27 +1271,26 @@
                   </div>
                 </div>
               </div>
-
-              <!-- unit -->
               <div class="col-md-1">
                 <div class="unit">
                   <div class="col-md-10">
                     <input
                       class="text-left form-control"
+                      formControlName="unit_price"
                       type="text"
                       placeholder="0"
+                      (input)="chargesUnitValue()"
                       style="width: 75px"
                     />
                   </div>
                 </div>
               </div>
-
-              <!-- Amount -->
               <div class="col-md-2">
                 <div class="amount">
                   <div class="col-md-10">
                     <input
                       class="text-left form-control"
+                      formControlName="amount"
                       type="text"
                       placeholder="0.0"
                       style="width: 100px"
@@ -1193,16 +1301,13 @@
 
               <div class="col-md-1" style="text-align: right">
                 <div class="row">
-                  <div class="action-icon">
-                    <a [routerLink]="" routerLinkActive="router-link-active"
-                      ><i class="cil-check-circle"></i
-                    ></a>
-                    &nbsp;
+                  <div class="text-center action-icon">
                     <a
                       [routerLink]=""
                       routerLinkActive="router-link-active"
                       style="font-size: 20px"
-                      ><i class="fa fa-trash"></i
+                      (click)="addAdditionalCharges()"
+                      ><i class="icon-plus icons"></i
                     ></a>
                   </div>
                 </div>
@@ -1210,7 +1315,7 @@
             </div>
           </div>
           <!-- Taxation -->
-          <div>
+          <!-- <div>
             <div class="row">
               <div class="col-md-3">
                 <div class="">
@@ -1225,7 +1330,6 @@
                   </div>
                 </div>
               </div>
-              <!-- Description -->
               <div class="col-md-4">
                 <div class="">
                   <div class="col-md-10">
@@ -1238,7 +1342,6 @@
                   </div>
                 </div>
               </div>
-              <!-- qty -->
               <div class="col-md-1">
                 <div class="qty">
                   <div class="col-md-10">
@@ -1251,8 +1354,6 @@
                   </div>
                 </div>
               </div>
-
-              <!-- unit -->
               <div class="col-md-1">
                 <div class="unit">
                   <div class="col-md-10">
@@ -1265,8 +1366,6 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Amount -->
               <div class="col-md-2">
                 <div class="amount">
                   <div class="col-md-10">
@@ -1297,11 +1396,16 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="col-lg-12" align="right">
             <div class="form-group charges">
-              <b>TotaL </b> IDR<input type="text" class="form-control" />
+              <b>TotaL </b> IDR<input
+                type="text"
+                class="form-control"
+                readonly
+                value=" {{ total_additional_charges_amount }}"
+              />
               <!-- {{ sub_total | number: "1.2-2" }} -->
             </div>
           </div>
@@ -1375,7 +1479,10 @@
                     >
                       <ng-template let-product pTemplate="item">
                         <!-- (click)="productDetails(product, productC);countNetAmount(productC)" -->
-                        <div class="product-item">
+                        <div
+                          class="product-item"
+                          (click)="productDetails(product)"
+                        >
                           <div>{{ product.name }}</div>
                         </div>
                       </ng-template>
@@ -1386,6 +1493,7 @@
                       class="form-control"
                       formControlName="sku"
                       type="text"
+                      readonly
                     />
                   </td>
                   <td>
@@ -1431,8 +1539,11 @@
                     />
                   </td>
                   <td class="td-actions" colspan="9" align="center">
-                    <!-- (click)="addAddCosts()" -->
-                    <a [routerLink]="" routerLinkActive="router-link-active">
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addPrductData()"
+                    >
                       <i class="icon-plus icons"></i>
                     </a>
                   </td>
@@ -1440,15 +1551,81 @@
               </tbody>
             </table>
           </div>
-          <div class="row">
+          <div
+            class="card border-primary m-3"
+            style="float: right; width: 370px; border-radius: 15px"
+          >
+            <div class="card-body">
+              <table class="table table-borderless table-price">
+                <tr>
+                  <td class="text-left">Subtotal Before Tax</td>
+                  <td class="text-right">19816.00</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Tax (SST)</td>
+                  <td class="text-right">0.000</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Discount Value</td>
+                  <td class="text-right">5000.76</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Total Amount</td>
+                  <td class="text-right">13927.56</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <!-- <div class="row">
             <div class="card">
               <div class=""></div>
             </div>
-          </div>
+          </div> -->
         </p-accordionTab>
       </p-accordion>
       <!-- End of Products Accordion -->
       <br />
+      <!-- SOCI Detail -->
+      <div
+        style="
+          margin-top: 10px;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+        "
+      >
+        <p-accordion
+          [multiple]="true"
+          styleClass="customColor"
+          activeIndex="0"
+          style="width: 372px"
+        >
+          <p-accordionTab header="SOCI Details">
+            <table class="table table-borderless table-price">
+              <tr>
+                <td class="text-left">Subtotal Before Tax</td>
+                <td class="text-right">19816.00</td>
+              </tr>
+              <tr>
+                <td class="text-left">Discount Value</td>
+                <td class="text-right">5000.76</td>
+              </tr>
+              <tr>
+                <td class="text-left">SST (Dynamic) Tax</td>
+                <td class="text-right">0.000</td>
+              </tr>
+              <tr>
+                <td class="text-left">Additional Cost & Charges</td>
+                <td class="text-right">13927.56</td>
+              </tr>
+              <tr>
+                <td class="text-left">Total Cost</td>
+                <td class="text-right">13927.56</td>
+              </tr>
+            </table>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
     </form>
   </div>
 </div>

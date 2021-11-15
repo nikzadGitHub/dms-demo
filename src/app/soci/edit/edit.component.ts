@@ -67,6 +67,10 @@ export class EditComponent implements OnInit {
   billing_instruction: any[] = [];
   product: any[] = [];
   additional_instructions: any[] = [];
+  additional_charges: any[] = [];
+  product_id: any;
+  total_additional_charges_amount = 0;
+  total_additional_costs_amount = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -93,11 +97,13 @@ export class EditComponent implements OnInit {
       unit_price: "",
       total_price: "",
       discount: "",
-      bill_to: '',
-      ship_to: '',
-      tender:'',
-      contract_start_date:'',
-      contract_cxpiry_date: '',
+      bill_to: "",
+      ship_to: "",
+      tender: "",
+      cost_item: "",
+      cost_item_id: "",
+      contract_start_date: "",
+      contract_cxpiry_date: "",
       sku: "",
       name: "",
     });
@@ -123,6 +129,7 @@ export class EditComponent implements OnInit {
   getSociData(soci_id) {
     this.sociService.getSpecificSoci(soci_id).subscribe((res) => {
       console.log("res:", res);
+       //PO Details
       this.soci_data = res["data"];
       // standard_term
       this.standard_term = res["data"]["standard_terms"];
@@ -146,10 +153,18 @@ export class EditComponent implements OnInit {
       this.payment_schedules = res["data"]["payment_schedules"];
       // additional_costs
       this.additional_costs = res["data"]["additional_costs"];
+      this.additional_costs.forEach((values) => {
+        this.total_additional_costs_amount += values["total_price"];
+      });
       // billing_instruction
       this.billing_instruction.push(res["data"]["billing_instruction"]);
       // additional_instruction
-      this.additional_instructions = res["data"]["additional_instructions"]
+      this.additional_instructions = res["data"]["additional_instructions"];
+      // additional_charges
+      this.additional_charges = res["data"]["additional_charges"];
+      this.additional_charges.forEach((values) => {
+        this.total_additional_charges_amount += values["total_price"];
+      });
       // products
       this.product = res["data"]["products"];
       this.form.patchValue({
@@ -175,7 +190,6 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          console.log("milestone-Data:", data["data"]);
           this.billing_milestone.push(data["data"]);
           this.alertBody = data.message;
           this.successModal.show();
@@ -189,7 +203,6 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
-            this.form.reset();
           }, 2000);
         }
       );
@@ -210,7 +223,6 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          console.log("payment_schedule: ", data);
           this.payment_schedules.push(data["data"]);
           this.alertBody = data.message;
           this.successModal.show();
@@ -224,7 +236,6 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
-            this.form.reset();
           }, 2000);
         }
       );
@@ -243,8 +254,8 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          console.log("additional-cost:", data);
           this.additional_costs.push(data["data"]);
+          this.total_additional_costs_amount += data["data"]["total_price"];
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -257,17 +268,16 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
-            this.form.reset();
           }, 2000);
         }
       );
   }
-  unitValue() {
-    console.log("unit-value:", this.form.value.unit_price);
-    this.form.patchValue({
-      total_price: this.form.value.unit_price,
-    });
-    console.log("total-value:", this.form.value.total_price);
+  costUnitValue() {
+    if (this.form.value.quantity) {
+      this.form.patchValue({
+        total_price: this.form.value.unit_price * this.form.value.quantity,
+      });
+    }
     // this.form.setValue
   }
 
@@ -285,7 +295,6 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          console.log("BillingInstruction:", data["data"]);
           this.billing_instruction.push(data["data"]);
           this.alertBody = data.message;
           this.successModal.show();
@@ -299,24 +308,102 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
-            this.form.reset();
           }, 2000);
         }
       );
   }
 
   // ADD Additional Instruction
-  addAdditionalInstruction(){
-    this.sociService.postQuery("/soci/additional-instruction", {
-      // soci_id: this.soci_id,
-      // soci: 
-      // description: 
-    }).subscribe((data:any) => {
-      console.log("Additional-Instruction:", data["data"]);
-      
-    })
+  addAdditionalInstruction() {
+    this.sociService
+      .postQuery("/soci/additional-instruction", {
+        // soci_id: this.soci_id,
+        // soci:
+        // description:
+      })
+      .subscribe((data: any) => {
+
+      });
   }
 
+  // ADD additional charges
+
+  addAdditionalCharges() {
+    this.sociService
+      .postQuery("/soci/additional-charges", {
+        soci_id: this.soci_id,
+        cost_item_id: this.form.value.cost_item_id,
+        description: this.form.value.description,
+        quantity: this.form.value.quantity,
+        unit_price: this.form.value.unit_price,
+        total_price: this.form.value.amount,
+      })
+      .subscribe(
+        (data: any) => {
+
+          this.additional_charges.push(data["data"]);
+
+          this.total_additional_charges_amount += data["data"]["total_price"];
+
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.form.reset();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+  }
+
+  chargesUnitValue() {
+    if (this.form.value.quantity) {
+      this.form.patchValue({
+        // total_price: this.form.value.unit_price,
+        amount: this.form.value.unit_price * this.form.value.quantity,
+      });
+    }
+  }
+
+  // ADD Product
+  addPrductData() {
+    this.sociService
+      .postQuery("/soci/product", {
+        external_product_number: "",
+        data_area_id: "",
+        soci_id: this.soci_id,
+        quantity: this.form.value.quantity,
+        cost: this.form.value.quantity.cost_item,
+        margin: "",
+        total_price: this.form.value.quantity.total_price,
+        product_id: this.product_id,
+        discount: this.form.value.quantity.discount,
+        amount: this.form.value.quantity.amount,
+        // external_product_number: "",
+        // data_area_id: "",
+        // soci_id: this.soci_id,
+        // quantity: this.form.value.quantity,
+        // margin: "",
+        // product_id: this.product_id,
+        // amount: this.form.value.quantity.amount,
+      })
+      .subscribe((data) => {});
+  }
+
+  productDetails(product) {
+
+    this.product_id = product["id"];
+    this.form.patchValue({
+      sku: product["sku"],
+      amount: product["amount"],
+    });
+  }
   // totalAdditionalCost() {
   //   this.total_additional_cost = this.form.value
   // }
@@ -327,7 +414,6 @@ export class EditComponent implements OnInit {
     this.is_delivery_payment_term_eidt = true;
   }
   get form_controls() {
-    // console.log(this.form.controls)
     return this.form.controls;
   }
 
@@ -656,7 +742,6 @@ export class EditComponent implements OnInit {
   }
 
   enableEditMethod(control, type) {
-    console.log(type);
     this.controller = control;
     this.enableEdit[type] = true;
     if (type == "product") {
@@ -680,10 +765,10 @@ export class EditComponent implements OnInit {
     }
   }
 
-  productDetails(product, productControl) {
-    productControl.controls.sku.setValue(product["sku"]);
-    productControl.controls.unit_price.setValue(product["amount"]);
-  }
+  // productDetails(product, productControl) {
+  //   productControl.controls.sku.setValue(product["sku"]);
+  //   productControl.controls.unit_price.setValue(product["amount"]);
+  // }
 
   countNetAmount(product) {
     let quantity = product.controls.quantity.value;
@@ -698,9 +783,8 @@ export class EditComponent implements OnInit {
 
   filterProduct(event) {
     let query = event.query;
-    console.log(query);
+
     this.quoteService.getFilteredProducts(query).subscribe((data) => {
-      console.log(data);
       this.filteredProducts = data["data"];
     });
   }
@@ -858,7 +942,6 @@ export class EditComponent implements OnInit {
 
     filteredPayments.forEach((payment) => {
       fullAmount -= parseFloat(payment["controls"].amount.value);
-      console.log(fullAmount);
       if (fullAmount < 0) {
         payment["controls"].amount.setValue(
           parseFloat(payment["controls"].amount.value) + fullAmount
@@ -875,7 +958,6 @@ export class EditComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.form.value);
   }
 
   get f() {
