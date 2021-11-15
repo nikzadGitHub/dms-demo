@@ -1,0 +1,66 @@
+
+import {IntegerOrNull, MoneyOrNull} from './api-client';
+
+/**
+ * Raw-Database Structure of an {@link EquipmentEntity}
+ * ```
+ * sku: string;
+ * quantity: number;
+ * availability: string;
+ * available_qty: number;
+ * cost: number;
+ * ```
+ */
+export interface RawEquipmentEntity {
+  id: BigInt;
+  /** Product/Equipment name. */
+  name: string;
+  manufacturer: string;
+  description: string;
+  uom: string;
+
+  expected_sale_price: MoneyOrNull;
+  /**
+   * Expected time of demo asset sale (probably in Months).
+   */
+  expected_sale_time: IntegerOrNull;
+
+  /** Demo asset life (probably in Month). */
+  life: IntegerOrNull;
+  useful_life: IntegerOrNull;
+  pdi_duration: IntegerOrNull;
+  /** Truthy if has Testing & Commissioning. */
+  has_installation_tnc: boolean | null;
+  installation_duration: IntegerOrNull;
+  decommissioning_duration: IntegerOrNull;
+  warehouse_post_deployment_qa_duration: IntegerOrNull;
+  training_duration: IntegerOrNull;
+}
+
+export interface EquipmentEntity {
+  id: BigInt;
+  product_name: string;
+  sku_id: string;
+  quantity: IntegerOrNull;
+  uom: string;
+  availability: string;
+  expected_sales_price: MoneyOrNull;
+  available_qty: IntegerOrNull;
+  cost: MoneyOrNull;
+  serial_no?: null | string;
+}
+
+export type MainEquipmentEntity = EquipmentEntity & {
+  serial_no: null | string;
+};
+
+export type EquipmentList = EquipmentEntity[];
+
+export interface EquipmentBundle {
+  main: MainEquipmentEntity[];
+  compatibles: EquipmentList | null;
+  peripherals: EquipmentList | null;
+  consumables: EquipmentList | null;
+  packing: EquipmentList | null;
+  accessories: EquipmentList | null;
+}

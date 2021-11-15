@@ -27,4 +27,7 @@ export class BookingsComponent implements OnInit {
 		});
   }
 
+  onSearch() {
+    console.log('searching for:', this.search_text);
+  }
 }

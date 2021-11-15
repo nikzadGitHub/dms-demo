@@ -6,8 +6,10 @@
                 <div class="ml-2 mt-1"><a routerLink="new" routerLinkActive="router-link-active"><i class="icon-plus icons" style="color: #FFFFFF"></i></a></div>
           </div>
           <div class="p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input type="text" pInputText placeholder="Global Search" [(ngModel)]="search_text" (input)="getAll()"/>
+              <label for="search-input"><i class="pi pi-search"></i></label>
+              <input id="search-input" type="text" pInputText placeholder="Global Search"
+                     [(ngModel)]="search_text"
+                     (input)="onSearch()"/>
           </div>
       </div>
     </ng-template>
