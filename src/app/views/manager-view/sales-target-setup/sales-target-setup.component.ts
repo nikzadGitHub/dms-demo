@@ -172,16 +172,19 @@ export class SalesTargetSetupComponent implements OnInit {
   }
 
   onLevelChanges(level, countryCode) {
-    console.log(this.dimensionLevelArr);
+
+    console.log(this.dimensionLevelArr, this.dimensionDescArr, this.descArr);
     this.descArr = [];
     this._salesTargetSetupService.getDimensionDescList(countryCode, level)
       .subscribe(res => {
         this.descArr = res['data'];
-        console.log(this.descArr);
+        this.dimensionLevelArr[0] = this.descArr[0].code
+        console.log("level-chnage---->", this.descArr);
     });
   }
 
   onAddDimensionRow() {
+    
    this.rowCount ++;
     if (this.rowCount <= 5) {
       this.dimensionRow.push(this.rowCount);
@@ -339,6 +342,34 @@ export class SalesTargetSetupComponent implements OnInit {
   }
 
   onSubmit(_frm, data): void {
+    console.log('this is data',data)
+    const payload = {
+      description: data.title,
+      country_code: data.country_code,
+      unit_id: 'KU-101',
+      // unit_id: data.unit_id,
+      user_id: data.user_id,
+      team_lead: data.team_lead,
+      opc_pic_user_id: data.opc_pic_user_id,
+      class_id: data.class_id,
+      dimensions: data.dimensions,
+      // currency_code: data.currency_code,
+      currency_code: "USD",
+      year: data.year,
+      target_01: data.month_01_target,
+      target_02: data.month_02_target,
+      target_03: data.month_03_target,
+      target_04: data.month_04_target,
+      target_05: data.month_05_target,
+      target_06: data.month_06_target,
+      target_07: data.month_07_target,
+      target_08: data.month_08_target,
+      target_09: data.month_09_target,
+      target_10: data.month_10_target,
+      target_11: data.month_11_target,
+      target_12: data.month_12_targets,
+    };
+    console.log(payload)
     data.level_1_type = this.dimensionLevelArr[0];
     data.level_1_value = this.dimensionDescArr[0];
     data.level_2_type = this.dimensionLevelArr[1];
@@ -352,10 +383,10 @@ export class SalesTargetSetupComponent implements OnInit {
     data.currency_code = this.currency;
 
     if (this.mode == 'new') {
-      this.saveSalesTargetSetup(data);
+      this.saveSalesTargetSetup(payload);
     }
     else if (this.mode == 'edit') {
-      this.updateSalesTargetSetup(data);
+      this.updateSalesTargetSetup(payload);
     }
     this.resetForm(_frm);
   }
