@@ -23,8 +23,10 @@ import { SociService } from "../soci.service";
 export class EditComponent implements OnInit {
   @ViewChild("billingRemarkModal") billingRemarkModal: ModalDirective;
   @ViewChild("paymentRemarkModal") paymentRemarkModal: ModalDirective;
+  @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
 
+  alertBody: string;
   paymentCurrentIndex: number;
   billingRemarks: string;
   paymentRemarks: string;
@@ -51,6 +53,7 @@ export class EditComponent implements OnInit {
   is_payment_term_eidt = false;
   is_delivery_payment_term_eidt = false;
   standard_term: any;
+  total_additional_cost: any;
   default_delivery_term_from: Date;
   default_delivery_term_to: Date;
   standard_delivery_term: any;
@@ -61,8 +64,9 @@ export class EditComponent implements OnInit {
   billing_milestone: any[] = [];
   payment_schedules: any[] = [];
   additional_costs: any[] = [];
-  billing_instruction: any;
-  product: any[]=[];
+  billing_instruction: any[] = [];
+  product: any[] = [];
+  additional_instructions: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -79,7 +83,7 @@ export class EditComponent implements OnInit {
       billing_id: "",
       stage: "",
       percentage: "",
-      amount: "",
+      amount: 0,
       quantity: 0,
       status: "",
       remarks: "",
@@ -89,6 +93,11 @@ export class EditComponent implements OnInit {
       unit_price: "",
       total_price: "",
       discount: "",
+      bill_to: '',
+      ship_to: '',
+      tender:'',
+      contract_start_date:'',
+      contract_cxpiry_date: '',
       sku: "",
       name: "",
     });
@@ -131,16 +140,18 @@ export class EditComponent implements OnInit {
         res["data"]["standard_terms"]["delivery_term_from"];
       this.standard_delivery_term =
         res["data"]["standard_terms"]["delivery_term"];
-        // billing_milestone
+      // billing_milestone
       this.billing_milestone = res["data"]["billing_milestones"];
       // payment_schedules
       this.payment_schedules = res["data"]["payment_schedules"];
       // additional_costs
       this.additional_costs = res["data"]["additional_costs"];
       // billing_instruction
-      this.billing_instruction = res["data"]["billing_instruction"];
+      this.billing_instruction.push(res["data"]["billing_instruction"]);
+      // additional_instruction
+      this.additional_instructions = res["data"]["additional_instructions"]
       // products
-      this.product = res["data"]["products"]
+      this.product = res["data"]["products"];
       this.form.patchValue({
         standard_payment_term: this.standerd_payment_term,
         standard_delivery_term: this.standard_delivery_term,
@@ -150,6 +161,165 @@ export class EditComponent implements OnInit {
       // this.initData();
     });
   }
+
+  // ADD Billing_Milestone
+  addBillingMileStone() {
+    this.sociService
+      .postQuery("/soci/billing-milestone", {
+        soci_id: this.soci_id,
+        billing_id: this.form.value.billing_id,
+        stage: this.form.value.stage,
+        percentage: this.form.value.percentage,
+        amount: this.form.value.amount,
+        remarks: this.form.value.remarks,
+      })
+      .subscribe(
+        (data: any) => {
+          console.log("milestone-Data:", data["data"]);
+          this.billing_milestone.push(data["data"]);
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.form.reset();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+            this.form.reset();
+          }, 2000);
+        }
+      );
+  }
+
+  // ADD payment_schedule
+  addPaymentSchedule() {
+    this.sociService
+      .postQuery("/soci/payment-schedule", {
+        soci_id: this.soci_id,
+        billing_id: this.form.value.billing_id,
+        percentage: this.form.value.percentage,
+        schedule: this.form.value.schedule,
+        soc_payment_term: this.form.value.soc_payment_term,
+        status: this.form.value.status,
+        amount: this.form.value.amount,
+        remarks: this.form.value.remarks,
+      })
+      .subscribe(
+        (data: any) => {
+          console.log("payment_schedule: ", data);
+          this.payment_schedules.push(data["data"]);
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.form.reset();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+            this.form.reset();
+          }, 2000);
+        }
+      );
+  }
+
+  // ADD additional_cost
+  addAdditionalCost() {
+    this.sociService
+      .postQuery("/soci/additional-cost", {
+        soci_id: this.soci_id,
+        description: this.form.value.description,
+        quantity: this.form.value.quantity,
+        unit_price: this.form.value.unit_price,
+        total_price: this.form.value.total_price,
+        remarks: this.form.value.remarks,
+      })
+      .subscribe(
+        (data: any) => {
+          console.log("additional-cost:", data);
+          this.additional_costs.push(data["data"]);
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.form.reset();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+            this.form.reset();
+          }, 2000);
+        }
+      );
+  }
+  unitValue() {
+    console.log("unit-value:", this.form.value.unit_price);
+    this.form.patchValue({
+      total_price: this.form.value.unit_price,
+    });
+    console.log("total-value:", this.form.value.total_price);
+    // this.form.setValue
+  }
+
+  // ADD Billing Instruction
+  addBillingInstruction() {
+    this.sociService
+      .postQuery("/soci/billing-instruction", {
+        soci_id: this.soci_id,
+        schedule: this.form.value.schedule,
+        percentage: this.form.value.percentage,
+        amount: this.form.value.amount,
+        remarks: this.form.value.remarks,
+        soc_payment_term: this.form.value.soc_payment_term,
+        status: this.form.value.status,
+      })
+      .subscribe(
+        (data: any) => {
+          console.log("BillingInstruction:", data["data"]);
+          this.billing_instruction.push(data["data"]);
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.form.reset();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+            this.form.reset();
+          }, 2000);
+        }
+      );
+  }
+
+  // ADD Additional Instruction
+  addAdditionalInstruction(){
+    this.sociService.postQuery("/soci/additional-instruction", {
+      // soci_id: this.soci_id,
+      // soci: 
+      // description: 
+    }).subscribe((data:any) => {
+      console.log("Additional-Instruction:", data["data"]);
+      
+    })
+  }
+
+  // totalAdditionalCost() {
+  //   this.total_additional_cost = this.form.value
+  // }
   editPaymentTerm() {
     this.is_payment_term_eidt = true;
   }
@@ -229,40 +399,36 @@ export class EditComponent implements OnInit {
     });
   }
 
-  newBillings(): FormGroup {
-    return this.formBuilder.group({
-      billing_id: [{ value: "", disabled: true }],
-      stage: [{ value: "", disabled: true }],
-      percentage: [{ value: "", disabled: true }],
-      amount: [{ value: "", disabled: true }],
-      status: [{ value: "", disabled: true }],
-      remarks: [{ value: "", disabled: true }],
-    });
-  }
-
-  addBillings() {
-    this.billings().push(this.newBillings());
-  }
+  // newBillings(): FormGroup {
+  //   return this.formBuilder.group({
+  //     billing_id: [{ value: "", disabled: true }],
+  //     stage: [{ value: "", disabled: true }],
+  //     percentage: [{ value: "", disabled: true }],
+  //     amount: [{ value: "", disabled: true }],
+  //     status: [{ value: "", disabled: true }],
+  //     remarks: [{ value: "", disabled: true }],
+  //   });
+  // }
 
   removeBillings(i: number) {
     this.billings().removeAt(i);
   }
 
-  addBillingMilestone() {
-    var billing_id = this.billings().controls;
-    this.billingList = [];
-    billing_id.forEach((test) => {
-      // var data = test['controls']['billing_id'].value;
-      let bill = new BillingList();
-      bill["billing_id"] = test["controls"]["billing_id"].value;
-      bill["amount"] = test["controls"]["amount"].value;
-      this.billingList.push(bill);
-    });
+  // addBillingMilestone() {
+  //   var billing_id = this.billings().controls;
+  //   this.billingList = [];
+  //   billing_id.forEach((test) => {
+  //     // var data = test['controls']['billing_id'].value;
+  //     let bill = new BillingList();
+  //     bill["billing_id"] = test["controls"]["billing_id"].value;
+  //     bill["amount"] = test["controls"]["amount"].value;
+  //     this.billingList.push(bill);
+  //   });
 
-    this.billingList = this.billingList
-      .map((item) => item)
-      .filter((item, index, self) => self.indexOf(item) === index);
-  }
+  //   this.billingList = this.billingList
+  //     .map((item) => item)
+  //     .filter((item, index, self) => self.indexOf(item) === index);
+  // }
 
   //---------------- End of Billings Milestone -------------------
 

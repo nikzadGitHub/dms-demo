@@ -48,19 +48,19 @@
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Create Date</b></label>
-              <p>{{soci_data?.created_at | date: "dd-MMM-yyyy"}}</p>
+              <p>{{ soci_data?.created_at | date: "dd-MMM-yyyy" }}</p>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Contact Name</b></label>
-              <p>{{soci_data?.contact_name}}</p>
+              <p>{{ soci_data?.contact_name }}</p>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Email</b></label>
-              <p>{{soci_data?.contact_email}}</p>
+              <p>{{ soci_data?.contact_email }}</p>
             </div>
           </div>
           <div class="col-lg-3">
@@ -238,12 +238,12 @@
                 [formGroupName]="i" -->
                 <tr align="center">
                   <td style="width: 15%">
-                    <!-- <input
+                    <input
                       formControlName="billing_id"
                       class="form-control"
                       placeholder="ABC123"
                       type="text"
-                    /> -->
+                    />
                   </td>
                   <td style="width: 15%">
                     <input
@@ -299,7 +299,11 @@
                   <td class="text-center"></td>
                   <!-- (click)="addBillings()" -->
                   <td class="td-actions" colspan="9" align="center">
-                    <a [routerLink]="" routerLinkActive="router-link-active">
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addBillingMileStone()"
+                    >
                       <i class="icon-plus icons"></i>
                     </a>
                   </td>
@@ -459,7 +463,11 @@
                   </td>
                   <td class="td-actions" colspan="9" align="center">
                     <!-- (click)="addPayments()" -->
-                    <a [routerLink]="" routerLinkActive="router-link-active">
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addPaymentSchedule()"
+                    >
                       <i class="icon-plus icons"></i>
                     </a>
                   </td>
@@ -542,28 +550,30 @@
                       min="0"
                     />
                   </td>
-                  <td style="width: 10%">
+                  <td style="width: 18%">
                     <!-- (keyup)="allTotal(cost['controls'], addCosts().controls)" -->
                     <input
                       formControlName="unit_price"
                       class="form-control"
                       size="1"
                       placeholder="300"
-                      type="number"
+                      type="text"
                       min="0"
                       step=".01"
+                      (input)="unitValue()"
                     />
                   </td>
-                  <td style="width: 20%">
-                    <!-- <input
+                  <td style="width: 18%">
+                    <input
                       formControlName="total_price"
                       class="form-control"
                       size="1"
                       placeholder="300"
-                      type="number"
+                      readonly
+                      type="text"
                       min="0"
                       step=".01"
-                    /> -->
+                    />
                   </td>
                   <td style="width: 15%">
                     <textarea
@@ -579,7 +589,11 @@
                   <td></td>
                   <td class="td-actions" colspan="9" align="center">
                     <!-- (click)="addAddCosts()" -->
-                    <a [routerLink]="" routerLinkActive="router-link-active">
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addAdditionalCost()"
+                    >
                       <i class="icon-plus icons"></i>
                     </a>
                   </td>
@@ -589,7 +603,7 @@
             <div class="col-lg-9" align="right">
               <div class="form-group">
                 <!-- {{ sub_total | number: "1.2-2" }} -->
-                <b>SUB TOTAL: MYR </b>
+                <b>Total IDR {{ total_additional_cost }}</b>
               </div>
             </div>
           </div>
@@ -615,20 +629,20 @@
                 </tr>
               </thead>
               <tbody>
-                <tr align="center">
+                <tr align="center" *ngFor="let item of billing_instruction">
                   <td class="text-center">
-                    {{ billing_instruction?.schedule }}
+                    {{ item.schedule }}
                   </td>
                   <td class="text-center">
-                    {{ billing_instruction?.percentage }}
+                    {{ item.percentage }}
                   </td>
-                  <td class="text-center">{{ billing_instruction?.amount }}</td>
+                  <td class="text-center">{{ item.amount }}</td>
                   <td class="text-center">
-                    {{ billing_instruction?.soc_payment }}
+                    {{ item.soc_payment }}
                   </td>
                   <td class="text-center"></td>
                   <td class="text-center">
-                    {{ billing_instruction?.remarks }}
+                    {{ item.remarks }}
                   </td>
                   <td class="td-actions" style="width: 10%">
                     <div class="action-icon">
@@ -649,7 +663,8 @@
                       formControlName="schedule"
                       class="form-control"
                       placeholder="schedule"
-                      type="text"
+                      type="date"
+                      style="width: 89%"
                     />
                   </td>
                   <td>
@@ -665,7 +680,7 @@
                       formControlName="amount"
                       class="form-control"
                       placeholder="0"
-                      type="text"
+                      type="number"
                     />
                   </td>
                   <td>
@@ -702,7 +717,11 @@
                   </td>
                   <td class="td-actions" colspan="9" align="center">
                     <!-- (click)="addAddCosts()" -->
-                    <a [routerLink]="" routerLinkActive="router-link-active">
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addBillingInstruction()"
+                    >
                       <i class="icon-plus icons"></i>
                     </a>
                   </td>
@@ -716,13 +735,13 @@
       <br />
 
       <!-- Additional Instruction and Information Accordion -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
         <p-accordionTab header="Additional Instruction and Information">
           <!-- Heading -->
           <div class="row grey">
             <div class="col-md-3">
               <div class="row">
-                <div class="col-md-5"><b>SOCI</b></div>
+                <div class="col-md-5"><b>Title</b></div>
               </div>
             </div>
             <div class="col-lg-6" style="text-align: middle">
@@ -741,8 +760,8 @@
                       class="text-left form-control"
                       style="width: 200px"
                       type="text"
-                      value="Bill To"
-                      disabled
+                      formControlName="bill_to"
+                      placeholder="Bill To"
                     />
                   </div>
                 </div>
@@ -754,6 +773,7 @@
                       class="text-left form-control"
                       style="width: 700px"
                       type="text"
+                      formControlName="description"
                       placeholder="Description"
                     />
                   </div>
@@ -788,8 +808,8 @@
                       class="text-left form-control"
                       style="width: 200px"
                       type="text"
-                      value="Ship To"
-                      disabled
+                      formControlName="ship_to"
+                      placeholder="Ship To"
                     />
                   </div>
                 </div>
@@ -801,8 +821,8 @@
                       class="text-left form-control"
                       style="width: 700px"
                       type="text"
+                      formControlName="description"
                       placeholder="Description"
-                      disabled
                     />
                   </div>
                 </div>
@@ -836,8 +856,8 @@
                       class="text-left form-control"
                       style="width: 200px"
                       type="text"
-                      value="Tender / Contract No "
-                      disabled
+                      formControlName="tender"
+                      placeholder="Tender / Contract No "
                     />
                   </div>
                 </div>
@@ -849,6 +869,7 @@
                       class="text-left form-control"
                       style="width: 700px"
                       type="text"
+                      formControlName="description"
                       placeholder="Description"
                     />
                   </div>
@@ -883,8 +904,8 @@
                       class="text-left form-control"
                       style="width: 200px"
                       type="text"
-                      value="Contract Start Date"
-                      disabled
+                      formControlName="contract_start_date"
+                      placeholder="Contract Start Date"
                     />
                   </div>
                 </div>
@@ -896,6 +917,7 @@
                       class="text-left form-control"
                       style="width: 700px"
                       type="text"
+                      formControlName="description"
                       placeholder="Description"
                     />
                   </div>
@@ -930,8 +952,8 @@
                       class="text-left form-control"
                       style="width: 200px"
                       type="text"
-                      value="Contract Expiry Date"
-                      disabled
+                      formControlName="contract_cxpiry_date"
+                      placeholder="Contract Expiry Date"
                     />
                   </div>
                 </div>
@@ -1288,7 +1310,7 @@
       <!-- End Additional/Reduction Charges -->
       <br />
       <!-- Product -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="Products">
           <div class="row">
             <!-- formArrayName="products" -->
@@ -1431,7 +1453,10 @@
   </div>
 </div>
 
-<div class="row"></div>
+<div class="action-btns">
+  <button class="cancel-btn">Cancel</button>
+  <button class="request-btn">REQUEST APPROVAL</button>
+</div>
 <!-- Empty row to give some space at the bottom -->
 <div class="row"></div>
 
@@ -1447,56 +1472,10 @@
   <div class="modal-dialog modal-danger" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Warning</h4>
+        <h4 class="modal-title">Error</h4>
       </div>
       <div class="modal-body">
-        <p>{{ dangerBody }}</p>
-      </div>
-      <div class="modal-footer" *ngIf="modal_type == 'paymentPercentage'">
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="dangerModal.hide()"
-        >
-          Keep Changes
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="setPaymentAutoAssignPercentage(); dangerModal.hide()"
-        >
-          Auto-Assign
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="setDefaultPayment(); dangerModal.hide()"
-        >
-          Revert Default
-        </button>
-      </div>
-      <div class="modal-footer" *ngIf="modal_type == 'paymentValue'">
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="dangerModal.hide()"
-        >
-          Keep Changes
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="setPaymentAutoAssignValue(); dangerModal.hide()"
-        >
-          Auto-Assign
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="setDefaultPayment(); dangerModal.hide()"
-        >
-          Revert Default
-        </button>
+        <p>{{ alertBody }}</p>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -1602,3 +1581,28 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!-- Success-Model -->
+<div
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

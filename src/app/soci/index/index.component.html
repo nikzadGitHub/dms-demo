@@ -271,7 +271,7 @@
         [routerLink]=""
         routerLinkActive="router-link-active"
         *ngIf="soci.po_no==null"
-        (click)="createModal.addPo(soci.quote_full_id)"
+        (click)="createModal.addPo(soci.quote_full_id, soci.id)"
       >
       Add Po
       </a>

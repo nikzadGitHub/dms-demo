@@ -42,12 +42,17 @@
               />
               <!-- <p-autoComplete
                 formControlName="quote_id"
+                field="quote_id"
                 [(ngModel)]="selectedQuoteAdvanced"
                 *ngIf="quote_full_id"
-                readonly
                 [style]="{ width: '100%' }"
                 [inputStyle]="{ width: '100%' }"
               >
+                <ng-template let-quote pTemplate="item">
+                  <div class="quote-item">
+                    <div>{{ quote.quote_id }}</div>
+                  </div>
+                </ng-template>
               </p-autoComplete> -->
 
               <!-- For create -->

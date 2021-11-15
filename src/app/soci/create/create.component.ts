@@ -26,6 +26,7 @@ export class CreateComponent implements OnInit {
   alertBody: string;
   quote_full_id: any;
   is_quote_id_found: boolean;
+  soci_id: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,7 +45,8 @@ export class CreateComponent implements OnInit {
     });
   }
 
-  addPo(quote_full_id) {
+  addPo(quote_full_id, sociId) {
+    this.soci_id = sociId;
     this.quote_full_id = quote_full_id;
     // this.is_quote_id_found = true
     this.form.patchValue({
@@ -82,6 +84,8 @@ export class CreateComponent implements OnInit {
   submit() {
     console.log(this.form.controls);
     const formData = new FormData();
+
+    console.log("quote_id: ", this.form.controls["quote_id"].value);
     formData.append("quote_id", this.form.controls["quote_id"].value["id"]);
     formData.append("po_no", this.form.controls["po_no"].value);
     formData.append("po_date", this.form.controls["po_date"].value);
@@ -91,15 +95,24 @@ export class CreateComponent implements OnInit {
       this.form.controls["receive_po_date"].value
     );
     formData.append("file", this.file);
-    this.sociService
-      .store(formData)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((res) => {
-        console.log(res);
-        this.modal.hide();
-        this.alertBody = res["message"];
-        this.successModal.show();
-      });
+    if (this.quote_full_id) {
+      this.sociService
+        .updatePODetail(this.soci_id, formData)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((res) => {
+          console.log("update SOCI:", res);
+        });
+    } else {
+      this.sociService
+        .store(formData)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((res) => {
+          console.log(res);
+          this.modal.hide();
+          this.alertBody = res["message"];
+          this.successModal.show();
+        });
+    }
   }
   resetForm() {
     this.quote_full_id = null;
