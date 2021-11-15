@@ -77,10 +77,10 @@
     <ng-template pTemplate="body" let-bookingItem>
       <tr class="p-selectable-row">
         <td class="text-center">
-            <a routerLink="{{ bookingItem.booking_no }}" routerLinkActive="router-link-active">{{ bookingItem.booking_no }}</a>
+            <a routerLink="{{ bookingItem.booking_no }}" routerLinkActive="router-link-active">{{ bookingItem.code }}</a>
         </td>
         <td class="text-center">
-            {{ bookingItem.request_date }}
+            {{ bookingItem.requested_at }}
         </td>
         <td class="text-center">
             {{ bookingItem.requester }}
@@ -92,10 +92,10 @@
             {{ bookingItem.product_desc }}
         </td>
         <td class="text-center">
-            {{ bookingItem.customer }}
+            {{ bookingItem.customer_id }}
         </td>
         <td class="text-center">
-            {{ bookingItem.booking_reason }}
+            {{ bookingItem.reason }}
         </td>
         <td class="text-center">
           {{ bookingItem.status }}
