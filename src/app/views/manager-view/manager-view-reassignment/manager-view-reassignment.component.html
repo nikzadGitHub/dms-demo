@@ -1,0 +1,91 @@
+<div class="card-header row" style="background-color: #898485; color: white;">
+    <div style="padding-left: 20px;">
+        <h2>Reassignment</h2>
+    </div>
+</div>
+<br>
+<div class="row mb-2">
+    <div class="col-6">
+        <div class="row">
+            <div class="col-2 mt-2">
+                <label for="currency">
+                  from:Fss Name
+                </label>
+            </div>
+            <div class="col-9">
+                <input  type="text" name="currencyCd" pInputText [(ngModel)]="currency" placeholder="Jack Lee" style="background-color: white;" class="form-control" type="input"/>
+                <!-- <i class="pi pi-search"></i> -->
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="row">
+            <div class="col-2 mt-2">
+                <label for="year">
+                  to:FSS Name
+                </label>
+            </div>
+            <div class="col-9">
+                <input id="year" pInputText class="form-control" placeholder="May Tan" type="input">
+                  <!-- <i class="pi pi-search"></i> -->
+                </div>
+        </div>
+    </div>
+</div>
+
+      <p-accordionTab>
+
+        <div class="card-header row" style=" color: black;">
+            <div style="padding-left: 20px;">
+                <h2>Lead Listing</h2>
+            </div>
+        </div>
+       
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                          <th>Created date</th>
+                          <th>Lead ID</th>
+                          <th>Company Name</th>
+                          <th>Individual Name</th>
+                          <th>Email</th>
+                          <th>Phone</th>
+                          <th>Status</th>
+                          
+                </tr>
+            </thead>
+        </table>
+      </p-accordionTab>
+      <p-accordionTab>
+
+
+        <div class="card-header row" style=" color: black;">
+            <div style="padding-left: 20px;">
+                <h2>Opportunity Listing</h2>
+            </div>
+        </div>
+       
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                          <th>Created date</th>
+                          <th>FSS Name</th>
+                          <th>Qutation ID</th>
+                          <th>Company Name</th>
+                          <th>Validity Date</th>
+                          <th>Reason</th>
+                          <th>Amount (RM)</th>
+                          
+                  
+                </tr>
+            </thead>
+        </table>
+      </p-accordionTab>
+
+
+      <div class="form-group">
+        <button class="btn btn-light mr-2 px-4" type="reset"><i class="pi pi-arrow-left mr-2"></i>CANCEL</button>
+        <button class="btn btn-primary px-5" type="submit" >
+            <i class="pi pi-save mr-2"></i>SAVE</button>
+    </div>
+

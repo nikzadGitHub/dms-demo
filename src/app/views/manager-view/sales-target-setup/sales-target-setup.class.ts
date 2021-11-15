@@ -8,7 +8,7 @@ export class SalesTargetSetup {
     public tl_user_id: String,
     public opc_pic_user_id: String,
     public class_id: String,
-    public level_1_type: String,
+    public level_1_type: String,  
     public level_1_value: String,
     public level_2_type: String,
     public level_2_value: String,

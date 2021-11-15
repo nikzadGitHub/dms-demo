@@ -27,4 +27,8 @@ export class BookingsComponent implements OnInit {
 		});
   }
 
+  getAll(){
+    
+  }
+
 }
