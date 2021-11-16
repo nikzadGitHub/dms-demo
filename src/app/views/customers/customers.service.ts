@@ -52,4 +52,31 @@ export class CustomersService {
     catchError(this.errorHandler)
   )
 }
+
+getCustomerActivities(id): Observable<any[]> {
+  let query = '/activity/?customer_id=' + id;
+  return this.http.get<any[]>(this.apiUrl + query,this.httpOptions)
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
+
+getCustomerRelatedOpportunities(pageItems,company): Observable<any[]> {
+  let query = '/opportunity/list?page='+ 1 + '&page_items='+ pageItems + '&company=' + 'PT. BORNEO MEDICAL SERVICES';
+  // let query = '/opportunity/list?page='+ 1 + '&page_items='+ pageItems + '&company=' + company;
+  return this.http.get<any[]>(this.apiUrl + query,this.httpOptions)
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
+
+getCustomerRelatedQuotes(pageItems,company): Observable<any[]> {
+  let query = '/quote/?page='+ 1 + '&page_items='+ pageItems + '&company=' + 'PT. PELITA ANUGERAH';
+  // let query = '/opportunity/list?page='+ 1 + '&page_items='+ pageItems + '&company=' + company;
+  return this.http.get<any[]>(this.apiUrl + query,this.httpOptions)
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
+
 }

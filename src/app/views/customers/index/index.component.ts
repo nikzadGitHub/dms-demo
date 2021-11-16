@@ -28,6 +28,9 @@ export class IndexComponent implements OnInit {
   modalData: any;
   selectedCustomerData: any;
   detailsTab: Array<any>;
+  customerActivities: any;
+  customerOpportunities: any;
+  customerQuotes: any;
   constructor(private customerService: CustomersService) { }
 
   ngOnInit(): void {
@@ -39,6 +42,9 @@ export class IndexComponent implements OnInit {
     this.successModal.show();
     this.selectedCustomerData = data
     this.customerDetails()
+    this.getCustomerActivities()
+    this.getCustomerOpportunities()
+    this.getCustomerQuotes()
 
   }
   closeModel(){
@@ -48,6 +54,11 @@ export class IndexComponent implements OnInit {
     this.stepperId=id
     if(id == 1){
       this.customerDetails()
+    } else if(id ==2){
+      this.getCustomerOpportunities()
+    } else if(id ==3){
+      this.getCustomerActivities()
+      this.getCustomerQuotes()
     }
   }
   paginate(event){
@@ -91,7 +102,27 @@ export class IndexComponent implements OnInit {
     let data = this.selectedCustomerData
     this.customerService.getCustomerDetails(data.id).subscribe((state:any)=>{
       this.detailsTab = state.data.contacts
-      console.log('id',data.id,"selected Customer",this.detailsTab)
+    })
+  }
+
+  getCustomerActivities(){
+    let data = this.selectedCustomerData
+    this.customerService.getCustomerActivities(data.id).subscribe((state:any)=>{
+      this.customerActivities = state.data
+    })
+  }
+
+  getCustomerOpportunities(){
+    let data = this.selectedCustomerData
+    this.customerService.getCustomerRelatedOpportunities(this.pageItems,data.company_name).subscribe((state:any)=>{
+      this.customerOpportunities = state['data']['data'];
+    })
+  }
+
+  getCustomerQuotes(){
+    let data = this.selectedCustomerData
+    this.customerService.getCustomerRelatedQuotes(this.pageItems,data.company_name).subscribe((state:any)=>{
+      this.customerQuotes = state['data']['quotes']['data'];
     })
   }
 }
