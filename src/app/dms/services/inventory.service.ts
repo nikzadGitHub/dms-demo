@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { InventoryInterface, InventoryList } from './inventory.interface';
+import { InventoryInterface, InventoryList } from './inventory';
 import { ApiClient } from './api-client.service';
 import { Observable } from 'rxjs';
 

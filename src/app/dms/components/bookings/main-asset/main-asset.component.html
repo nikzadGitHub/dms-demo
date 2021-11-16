@@ -1,0 +1,237 @@
+<div class="form-group">
+  <p-accordion class="p-accordion">
+      <p-accordionTab class="p-accordionTab" [selected]="true">
+          <p-header class="p-header">
+              <i class="cil-cart"></i>
+              <span class="accordion-header">Main Demo Asset</span>
+          </p-header>
+          <div *ngIf="mainAsset.main !== false" class="asset-part">
+              <table class="table table-striped">
+                  <thead class="grey">
+                      <tr>
+                          <th>No.</th>
+                          <th>Product Name</th>
+                          <th>SKU ID</th>
+                          <th>Quantity</th>
+                          <th >UOM</th>
+                          <th>Availability</th>
+                          <th >Expected Sales Price (RM)</th>
+                          <th>Serial No</th>
+                          <th >Available Qty</th>
+                          <th>Cost (RM)</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngIf="mainAsset.main; let main">
+                        <td>{{ main.no }}</td>
+                        <td> {{ main.product_name }} </td>
+                        <td> {{ main.sku_id }} </td>
+                        <td> {{ main.quantity }} </td>
+                        <td> {{ main.uom }} </td>
+                        <td> {{ main.availability }} </td>
+                        <td> {{ main.expected_sales_price }} </td>
+                        <td *ngIf="main.serial_no != null" >{{ main.serial_no }} </td>
+                        <td *ngIf="main.serial_no == null"><button class="btn button-style btn-primary">Assign</button></td>
+                        <td> {{ main.available_qty }} </td>
+                        <td> {{ main.cost }} </td>
+                      </tr>
+                  </tbody>
+              </table>
+              <div *ngIf="(mainAsset.addBtn && !mainAsset.main)" class="custom-footer">
+                    <dms-identify title='Demo Asset' name='main' [show]="show" (buttonAction)="onShow($event)"></dms-identify>
+                    <div class="d-flex justify-content-center" *ngIf="show != 'main' ">
+                      <button type="button" class="btn btn-sm btn-primary" (click)="onShow('main')"><i class="fa fa-plus"></i> ADD</button>
+                    </div>
+              </div>
+          </div>
+          <div *ngIf="mainAsset.compatibleAccessories !== false" class="asset-part">
+            <div class="bold-header">Compatible Accessories</div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Product Name</th>
+                        <th>SKU ID</th>
+                        <th>Quantity</th>
+                        <th >UOM</th>
+                        <th>Availability</th>
+                        <th >Expected Sales Price (RM)</th>
+                        <th>Serial No</th>
+                        <th >Available Qty</th>
+                        <th>Cost (RM)</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="mainAsset.compatibleAccessories; let compatibleAccessories">
+                    <tr *ngFor="let compatibleAccessory of compatibleAccessories">
+                        <td> {{ compatibleAccessory.no }} </td>
+                        <td> {{ compatibleAccessory.product_name }} </td>
+                        <td> {{ compatibleAccessory.sku_id }} </td>
+                        <td> {{ compatibleAccessory.quantity }} </td>
+                        <td> {{ compatibleAccessory.uom }} </td>
+                        <td> {{ compatibleAccessory.availability }} </td>
+                        <td> {{ compatibleAccessory.expected_sales_price }} </td>
+                        <td *ngIf="compatibleAccessory.serial_no != null" >{{ compatibleAccessory.serial_no }} </td>
+                        <td *ngIf="compatibleAccessory.serial_no == null"><button class="btn button-style btn-primary">Assign</button></td>
+                        <td> {{ compatibleAccessory.available_qty }} </td>
+                        <td> {{ compatibleAccessory.cost }} </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="(mainAsset.addBtn)" class="custom-footer">
+                <dms-identify title='Compatible Accessories' name='compatibleAccessory' [show]="show" (buttonAction)="onShow($event)"></dms-identify>
+                <div class="d-flex justify-content-center" *ngIf="show != 'compatibleAccessory' ">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="onShow('compatibleAccessory')"><i class="fa fa-plus"></i> ADD</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="mainAsset.peripheralAccessories !== false" class="asset-part">
+            <div class="bold-header">Peripheral Accessories</div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Product Name</th>
+                        <th>SKU ID</th>
+                        <th>Quantity</th>
+                        <th >UOM</th>
+                        <th>Availability</th>
+                        <th >Expected Sales Price (RM)</th>
+                        <th >Available Qty</th>
+                        <th>Cost (RM)</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="mainAsset.peripheralAccessories; let peripheralAccessories">
+                    <tr *ngFor="let peripheralAccessory of peripheralAccessories">
+                        <td> {{ peripheralAccessory.no }} </td>
+                        <td> {{ peripheralAccessory.product_name }} </td>
+                        <td> {{ peripheralAccessory.sku_id }} </td>
+                        <td> {{ peripheralAccessory.quantity }} </td>
+                        <td> {{ peripheralAccessory.uom }} </td>
+                        <td> {{ peripheralAccessory.availability }} </td>
+                        <td> {{ peripheralAccessory.expected_sales_price }} </td>
+                        <td> {{ peripheralAccessory.available_qty }} </td>
+                        <td> {{ peripheralAccessory.cost }} </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="(mainAsset.addBtn)" class="custom-footer">
+                <dms-identify title='Peripheral Accessories' name='peripheralAccessory' [show]="show" (buttonAction)="onShow($event)"></dms-identify>
+                <div class="d-flex justify-content-center" *ngIf="show != 'peripheralAccessory' ">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="onShow('peripheralAccessory')"><i class="fa fa-plus"></i> ADD</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="mainAsset.consumables !== false" class="asset-part">
+            <div class="bold-header">Consumables</div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Product Name</th>
+                        <th>SKU ID</th>
+                        <th>Quantity</th>
+                        <th >UOM</th>
+                        <th>Availability</th>
+                        <th >Expected Sales Price (RM)</th>
+                        <th >Available Qty</th>
+                        <th>Cost (RM)</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="mainAsset.consumables; let consumables">
+                    <tr *ngFor="let consumable of consumables">
+                        <td> {{ consumable.no }} </td>
+                        <td> {{ consumable.product_name }} </td>
+                        <td> {{ consumable.sku_id }} </td>
+                        <td> {{ consumable.quantity }} </td>
+                        <td> {{ consumable.uom }} </td>
+                        <td> {{ consumable.availability }} </td>
+                        <td> {{ consumable.expected_sales_price }} </td>
+                        <td> {{ consumable.available_qty }} </td>
+                        <td> {{ consumable.cost }} </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="(mainAsset.addBtn)" class="custom-footer">
+                <dms-identify title='Consumables' name='consumable' [show]="show" (buttonAction)="onShow($event)"></dms-identify>
+                <div class="d-flex justify-content-center" *ngIf="show != 'consumable' ">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="onShow('consumable')"><i class="fa fa-plus"></i> ADD</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="mainAsset.packingDuringShipment !== false" class="asset-part">
+            <div class="bold-header">Packing during shipment</div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Product Name</th>
+                        <th>SKU ID</th>
+                        <th>Quantity</th>
+                        <th >UOM</th>
+                        <th>Availability</th>
+                        <th >Expected Sales Price (RM)</th>
+                        <th >Available Qty</th>
+                        <th>Cost (RM)</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="mainAsset.packingDuringShipment; let packingDuringShipment">
+                    <tr *ngFor="let packing of packingDuringShipment">
+                        <td> {{ packing.no }} </td>
+                        <td> {{ packing.product_name }} </td>
+                        <td> {{ packing.sku_id }} </td>
+                        <td> {{ packing.quantity }} </td>
+                        <td> {{ packing.uom }} </td>
+                        <td> {{ packing.availability }} </td>
+                        <td> {{ packing.expected_sales_price }} </td>
+                        <td> {{ packing.available_qty }} </td>
+                        <td> {{ packing.cost }} </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="(mainAsset.addBtn)" class="custom-footer">
+                <dms-identify title='Packing during shipment' name='packing' [show]="show" (buttonAction)="onShow($event)"></dms-identify>
+                <div class="d-flex justify-content-center" *ngIf="show != 'packing' ">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="onShow('packing')"><i class="fa fa-plus"></i> ADD</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="mainAsset.accessoriesList !== false" class="asset-part">
+            <div class="bold-header">Accessories / Consumables</div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Product Name</th>
+                        <th>SKU ID</th>
+                        <th>Quantity</th>
+                        <th >UOM</th>
+                        <th>Availability</th>
+                        <th >Expected Sales Price (RM)</th>
+                        <th >Available Qty</th>
+                        <th>Cost (RM)</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="mainAsset.accessoriesList; let accessoriesList">
+                    <tr *ngFor="let accessories of accessoriesList">
+                        <td> {{ accessories.no }} </td>
+                        <td> {{ accessories.product_name }} </td>
+                        <td> {{ accessories.sku_id }} </td>
+                        <td> {{ accessories.quantity }} </td>
+                        <td> {{ accessories.uom }} </td>
+                        <td> {{ accessories.availability }} </td>
+                        <td> {{ accessories.expected_sales_price }} </td>
+                        <td> {{ accessories.available_qty }} </td>
+                        <td> {{ accessories.cost }} </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="(mainAsset.addBtn)" class="custom-footer">
+                <dms-identify title='Accessories / Consumables' name='accessories' [show]="show" (buttonAction)="onShow($event)"></dms-identify>
+                <div class="d-flex justify-content-center" *ngIf="show != 'accessories' ">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="onShow('accessories')"><i class="fa fa-plus"></i> ADD</button>
+                </div>
+            </div>
+        </div>
+      </p-accordionTab>
+  </p-accordion>
+</div>
