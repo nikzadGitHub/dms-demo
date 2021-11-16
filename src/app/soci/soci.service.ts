@@ -51,9 +51,9 @@ export class SociService {
 
   updatePODetail(soci_id, data) {
     console.log("Data:", data);
-    
+
     return this.httpClient
-      .put(this.apiURL + "/soci/" + soci_id, data, {
+      .post(this.apiURL + "/soci/" + soci_id, data, {
         headers: new HttpHeaders({ "Content-Type": "file", Accept: "file" }),
       })
       .pipe(catchError(this.errorHandler));

@@ -1,8 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
+import { NavigationExtras, Router } from "@angular/router";
 import { LazyLoadEvent } from "primeng/api";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { Column } from "../column";
+import { CreateComponent } from "../create/create.component";
 import { Soci } from "../soci";
 import { SociService } from "../soci.service";
 
@@ -13,15 +15,15 @@ import { SociService } from "../soci.service";
 })
 export class IndexComponent implements OnInit {
   private ngUnsubscribe = new Subject();
-
   sort: any;
   search_text: string = "";
-  pageItems: number = 10;
+  pageItems: number = 25;
   totalRecords: number;
   datasource: any;
   pages: any[];
   socis: Soci[] = [];
   is_po_added = false;
+  is_preview_check: boolean;
   // columns: Column[] = [];
   // defaultColumns: Column[] = [
   //   {'header':'Created Date','field':'created_at','type':'date'},
@@ -34,7 +36,7 @@ export class IndexComponent implements OnInit {
   //   {'header':'Status','field':'status','type':'text'},
   // ];
 
-  constructor(public sociService: SociService) {}
+  constructor(public sociService: SociService, private router: Router) {}
 
   ngOnInit(): void {
     this.sociService
@@ -89,6 +91,21 @@ export class IndexComponent implements OnInit {
         this.socis = data["data"]["soci"]["data"];
         this.pages = data["data"]["soci"]["links"];
       });
+  }
+  previewSOCI(soci_id) {
+    console.log("soci_id", soci_id);
+    this.is_preview_check = true;
+    let navigate: NavigationExtras = {
+      queryParams: {
+        is_preview_check: true,
+      },
+    };
+    this.router.navigate(["/soci/", soci_id, "edit"], navigate);
+  }
+
+  receiveSociData($event){
+    console.log("SOCI-event--->", $event);
+    this.socis.unshift( $event.data)
   }
 
   // SortColumn(event: LazyLoadEvent){

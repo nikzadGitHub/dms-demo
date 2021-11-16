@@ -69,6 +69,7 @@
   button {
     border-radius: 5px;
     border: 1px solid #386fa4;
+    line-height: 30px;
   }
   .cancel-btn {
     background: #ffffff;
@@ -173,6 +174,27 @@ input::-webkit-inner-spin-button {
     .p-accordion-header-link {
       background: #f8f9fa;
     }
+  }
+}
+:host ::ng-deep .custom.p-accordion {
+  width: 372px;
+  .p-accordion-header {
+    font-size: 24px;
+    font-weight: bolder;
+    background: #f8f9fa;
+    span.pi {
+      margin-top: -8px;
+      position: absolute;
+      right: 0.5em;
+      top: 50%;
+    }
+    .p-accordion-header-link {
+      background: #f8f9fa;
+    }
+  }
+  .p-accordion-content {
+    padding: 0px;
+    overflow-x: hidden;
   }
 }
 // :host ::ng-deep .customColor.p-accordion {

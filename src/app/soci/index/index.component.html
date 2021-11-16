@@ -268,26 +268,35 @@
       </td>
       <td class="text-center">
         <a
-        [routerLink]=""
-        routerLinkActive="router-link-active"
-        *ngIf="soci.po_no==null"
-        (click)="createModal.addPo(soci.quote_full_id, soci.id)"
-      >
-      Add Po
-      </a>
-      <div *ngIf="soci.po_no">
-        <span class="p-column-title">Po no</span>
-        {{ soci.po_no }}
-      </div>
-   
+          [routerLink]=""
+          routerLinkActive="router-link-active"
+          *ngIf="soci.po_no == null"
+          (click)="createModal.addPo(soci.quote_full_id, soci.id)"
+        >
+          Add Po
+        </a>
+        <div *ngIf="soci.po_no">
+          <span class="p-column-title">Po no</span>
+          {{ soci.po_no }}
+        </div>
       </td>
       <td class="text-center">
         <span class="p-column-title">Po. date</span>
-        {{ soci.po_date | date: "dd-MMM-yyyy"}}
+        {{ soci.po_date | date: "dd-MMM-yyyy" }}
       </td>
-      <td class="text-center">{{soci.status_desc}}</td>
+      <td class="text-center">{{ soci.status_desc }}</td>
       <td class="text-center">
         <div class="row-icon">
+          <!-- <button
+            class="fa fa-eye"
+            [routerLink]="['/soci/', soci.id, 'edit']"
+          ></button> -->
+          <a
+          href="#"
+          (click)="previewSOCI(soci.id)"
+          [routerLink]=""
+          class="fa fa-eye"
+        ></a>
           <a
             href="#"
             [routerLink]="['/soci/', soci.id, 'edit']"
@@ -306,4 +315,4 @@
 >
 </p-paginator>
 
-<app-create #createModal></app-create>
+<app-create #createModal (sociDataEvent)="receiveSociData($event)"></app-create>

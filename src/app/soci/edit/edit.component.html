@@ -74,7 +74,7 @@
     </div>
     <form [formGroup]="form" (ngSubmit)="submit()">
       <!-- PO details -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="PO Details">
           <div class="row">
             <!-- formArrayName="addCosts" -->
@@ -167,7 +167,7 @@
       </p-accordion>
       <!-- End PO details -->
       <br />
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
         <!-- Standard Term Accordion -->
         <p-accordionTab header="Standard Terms">
           <div class="row grey">
@@ -299,6 +299,56 @@
                   align="center"
                   *ngFor="let billing of billing_milestone; let i = index"
                 >
+                  <!-- <td style="width: 15%">
+                    <input
+                      formControlName="billing_id"
+                      [value]="billing.billing_id"
+                      class="form-control"
+                      placeholder="SOCI123_1"
+                      type="text"
+                    />
+                  </td>
+                  <td style="width: 15%">
+                    <input
+                      formControlName="stage"
+                      class="form-control"
+                      size="1"
+                      placeholder="Deploy"
+                      type="text"
+                    />
+                  </td>
+                  <td style="width: 10%">
+                    <input
+                      formControlName="percentage"
+                      class="form-control"
+                      size="1"
+                      placeholder="50"
+                      type="number"
+                      min="0"
+                      max="100.00"
+                      step=".01"
+                    />
+                  </td>
+                  <td style="width: 20%">
+                    <input
+                      formControlName="amount"
+                      class="form-control"
+                      size="1"
+                      placeholder="300"
+                      type="number"
+                      min="0"
+                      step=".01"
+                    />
+                  </td>
+                  <td style="width: 15%">
+                    <textarea
+                      formControlName="remarks"
+                      class="form-control"
+                      id=""
+                      cols="30"
+                      rows="1"
+                    ></textarea>
+                  </td> -->
                   <td class="text-center">{{ billing.billing_id }}</td>
                   <td class="text-center">{{ billing.stage }}</td>
                   <td class="text-center">{{ billing.percentage }}</td>
@@ -312,12 +362,16 @@
                             addBillingMilestone()
                           "
                           *ngIf="enableEdit['billing'] && controller == billing" -->
-                      <!-- <a [routerLink]="" routerLinkActive="router-link-active"
+                      <a [routerLink]="" routerLinkActive="router-link-active"
                         ><i class="cil-check-circle"></i
-                      ></a> -->
+                      ></a>
                       <!-- *ngIf="!enableEdit['billing']"
                           (click)="enableEditMethod(billing, 'billing')" -->
-                      <a [routerLink]="" routerLinkActive="router-link-active">
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="enableEditMethod(billing, 'billing')"
+                      >
                         <i class="fa fa-edit"></i>
                       </a>
                       &nbsp;
@@ -333,10 +387,11 @@
                 <tr align="center">
                   <td style="width: 15%">
                     <input
-                      formControlName="billing_id"
+                      formControlName="new_billing_id"
                       class="form-control"
                       placeholder="ABC123"
                       type="text"
+                      readonly
                     />
                   </td>
                   <td style="width: 15%">
@@ -641,6 +696,7 @@
                       size="1"
                       placeholder="1"
                       type="number"
+                      (input)="changeQuantity()"
                       min="0"
                     />
                   </td>
@@ -850,54 +906,56 @@
             </div>
           </div>
           <!-- bil to -->
-          <div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="">
-                  <div class="col-md-10">
-                    <input
-                      class="text-left form-control"
-                      style="width: 200px"
-                      type="text"
-                      formControlName="bill_to"
-                      placeholder="Bill To"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-8">
-                <div class="">
-                  <div class="col-md-10">
-                    <input
-                      class="text-left form-control"
-                      style="width: 700px"
-                      type="text"
-                      formControlName="description"
-                      placeholder="Description"
-                    />
-                  </div>
-                </div>
-              </div>
 
-              <div class="col-md-1" style="text-align: right">
-                <div class="row">
-                  <div class="action-icon">
-                    <a [routerLink]="" routerLinkActive="router-link-active"
-                      ><i class="cil-check-circle"></i
-                    ></a>
-                    &nbsp;
-                    <a
-                      [routerLink]=""
-                      routerLinkActive="router-link-active"
-                      style="font-size: 20px"
-                      ><i class="fa fa-trash"></i
-                    ></a>
-                  </div>
+          <div class="row" *ngFor="let item of additional_instructions">
+            <div class="col-md-3">
+              <div class="col-md-10">
+                <input
+                  class="text-left form-control"
+                  style="width: 200px"
+                  type="text"
+                  [value]="item.soci"
+                  readonly
+                  placeholder="title..."
+                />
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="col-md-10">
+                <input
+                  class="text-left form-control"
+                  style="width: 700px"
+                  type="text"
+                  [value]="item.description"
+                  readonly
+                  placeholder="Description"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-1" style="text-align: right">
+              <div class="row">
+                <div class="action-icon">
+                  <!-- <a [routerLink]="" routerLinkActive="router-link-active"
+                    ><i class="cil-check-circle"></i
+                  ></a>
+                  &nbsp; -->
+                  <a [routerLink]="" routerLinkActive="router-link-active">
+                    <i class="fa fa-edit"></i
+                  ></a>
+                  &nbsp;
+                  <a
+                    [routerLink]=""
+                    routerLinkActive="router-link-active"
+                    style="font-size: 20px"
+                    ><i class="fa fa-trash"></i
+                  ></a>
                 </div>
               </div>
             </div>
           </div>
-          <!-- ship to -->
+
+          <!-- Add additional_instruction -->
           <div>
             <div class="row">
               <div class="col-md-3">
@@ -907,8 +965,8 @@
                       class="text-left form-control"
                       style="width: 200px"
                       type="text"
-                      formControlName="ship_to"
-                      placeholder="Ship To"
+                      formControlName="soci_title"
+                      placeholder="title..."
                     />
                   </div>
                 </div>
@@ -930,15 +988,17 @@
               <div class="col-md-1" style="text-align: right">
                 <div class="row">
                   <div class="action-icon">
-                    <a [routerLink]="" routerLinkActive="router-link-active"
+                    <!-- <a [routerLink]="" routerLinkActive="router-link-active"
                       ><i class="cil-check-circle"></i
                     ></a>
-                    &nbsp;
+                    &nbsp; -->
                     <a
                       [routerLink]=""
                       routerLinkActive="router-link-active"
                       style="font-size: 20px"
-                      ><i class="fa fa-trash"></i
+                      (click)="addAdditionalInstruction()"
+                    >
+                      <i class="icon-plus icons"></i
                     ></a>
                   </div>
                 </div>
@@ -946,7 +1006,7 @@
             </div>
           </div>
           <!-- Tender -->
-          <div>
+          <!-- <div>
             <div class="row">
               <div class="col-md-3">
                 <div class="">
@@ -992,9 +1052,9 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <!-- Contract Start -->
-          <div>
+          <!-- <div>
             <div class="row">
               <div class="col-md-3">
                 <div class="">
@@ -1040,9 +1100,9 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <!-- Contract Expiry Date  -->
-          <div>
+          <!-- <div>
             <div class="row">
               <div class="col-md-3">
                 <div class="">
@@ -1087,7 +1147,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </p-accordionTab>
       </p-accordion>
       <!-- End of Additional Instruction and Information -->
@@ -1138,6 +1198,7 @@
                       class="text-left form-control"
                       style="width: 200px"
                       type="text"
+                      disabled
                       [value]="item.code_item"
                     />
                   </div>
@@ -1151,6 +1212,7 @@
                       class="text-left form-control"
                       style="width: 336px"
                       type="text"
+                      disabled
                       [value]="item.description"
                       placeholder="Description"
                     />
@@ -1165,6 +1227,7 @@
                       class="text-left form-control"
                       type="number"
                       placeholder="0"
+                      disabled
                       [value]="item.quantity"
                       style="width: 75px"
                     />
@@ -1180,6 +1243,7 @@
                       class="text-left form-control"
                       type="text"
                       placeholder="0"
+                      disabled
                       [value]="item.unit_price"
                       style="width: 75px"
                     />
@@ -1195,6 +1259,7 @@
                       class="text-left form-control"
                       type="text"
                       placeholder="0.0"
+                      disabled
                       [value]="item.total_price"
                       style="width: 100px"
                     />
@@ -1206,8 +1271,12 @@
               <div class="col-md-1" style="text-align: right">
                 <div class="row">
                   <div class="action-icon">
-                    <a [routerLink]="" routerLinkActive="router-link-active"
+                    <!-- <a [routerLink]="" routerLinkActive="router-link-active"
                       ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp; -->
+                    <a [routerLink]="" routerLinkActive="router-link-active">
+                      <i class="fa fa-edit"></i
                     ></a>
                     &nbsp;
                     <a
@@ -1264,6 +1333,7 @@
                     <input
                       class="text-left form-control"
                       formControlName="quantity"
+                      (input)="changeQuantity()"
                       type="number"
                       placeholder="0"
                       style="width: 75px"
@@ -1414,7 +1484,7 @@
       <!-- End Additional/Reduction Charges -->
       <br />
       <!-- Product -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
         <p-accordionTab header="Products">
           <div class="row">
             <!-- formArrayName="products" -->
@@ -1436,7 +1506,7 @@
                 <tr align="center" *ngFor="let item of product; let i = index">
                   <td class="text-center">{{ i + 1 }}</td>
                   <td class="text-center">{{ item.name }}</td>
-                  <td class="text-center">{{ item.soci_id }}</td>
+                  <td class="text-center">{{ item.sku }}</td>
                   <td class="text-center">{{ item.quantity }}</td>
                   <td class="text-center">{{ item.unit_price }}</td>
                   <td class="text-center">{{ item.total_price }}</td>
@@ -1488,7 +1558,7 @@
                       </ng-template>
                     </p-autoComplete>
                   </td>
-                  <td>
+                  <td style="width: 14%;">
                     <input
                       class="form-control"
                       formControlName="sku"
@@ -1503,6 +1573,8 @@
                       formControlName="quantity"
                       type="number"
                       step=".01"
+                      placeholder="0"
+                      (input) = "addProductQuantity()"
                     />
                   </td>
                   <td>
@@ -1511,6 +1583,7 @@
                       formControlName="unit_price"
                       type="number"
                       step=".01"
+                      readonly
                     />
                   </td>
                   <td>
@@ -1519,6 +1592,7 @@
                       formControlName="total_price"
                       type="number"
                       step=".01"
+                      readonly
                     />
                   </td>
                   <td>
@@ -1528,6 +1602,7 @@
                       formControlName="discount"
                       type="number"
                       step=".01"
+                      (input) = "addDiscount()"
                     />
                   </td>
                   <td>
@@ -1536,6 +1611,7 @@
                       formControlName="amount"
                       type="number"
                       step=".01"
+                      readonly
                     />
                   </td>
                   <td class="td-actions" colspan="9" align="center">
@@ -1594,12 +1670,7 @@
           justify-content: flex-end;
         "
       >
-        <p-accordion
-          [multiple]="true"
-          styleClass="customColor"
-          activeIndex="0"
-          style="width: 372px"
-        >
+        <p-accordion [multiple]="true" styleClass="custom" activeIndex="0">
           <p-accordionTab header="SOCI Details">
             <table class="table table-borderless table-price">
               <tr>

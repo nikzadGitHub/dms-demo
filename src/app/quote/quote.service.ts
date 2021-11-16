@@ -101,7 +101,9 @@ export class QuoteService {
 
   getFilteredProducts(filter){
     filter = filter == '' ? 0 : filter; 
-    return this.httpClient.get(this.apiURL + '/quote/products/filtered/' + filter,this.httpOptions)
+    // /opportunity/get-all-products
+    return this.httpClient.get(this.apiURL + '/opportunity/get-all-products?search_text=' + filter,this.httpOptions)
+    // return this.httpClient.get(this.apiURL + '/quote/products/filtered/' + filter,this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
