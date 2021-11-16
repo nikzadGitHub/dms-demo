@@ -15,11 +15,16 @@ import { BookingService } from '../services/booking.service';
 export class FormComponent implements OnInit{
   formBooking : FormGroup;
   curDate =  new Date(Date.now()).toLocaleDateString();
+  customers: [];
   constructor(private fb: FormBuilder, private bookingService: BookingService) {}
   ngOnInit(): void {
+    this.bookingService.getCustomerList().subscribe((response) => {
+      this.customers = response;
+      console.log(response)
+    });
     this.formBooking = this.fb.group({
       status: "Draft",
-      customer: "1",
+      customer: new FormControl(''),
       booking_reason: new FormControl(''),
       branch: new FormControl(''),
       date_of_delivery: new FormControl(''),
@@ -28,13 +33,13 @@ export class FormComponent implements OnInit{
       department: new FormControl(''),
       contact_name: new FormControl(''),
       contact_number: new FormControl(''),
-      remarks:new FormControl('')
+      remarks:new FormControl(''),
     });
   }
   onSave(): void {
     this.bookingService.saveBooking({
       status: "Draft",
-      customer: 1,
+      customer: this.formBooking.get("customer").value + "",
       curDate: this.curDate,
       booking_reason: this.formBooking.get("booking_reason").value + "",
       branch: this.formBooking.get("branch").value + "",
