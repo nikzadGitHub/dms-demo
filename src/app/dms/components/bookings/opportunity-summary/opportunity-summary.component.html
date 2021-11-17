@@ -1,0 +1,37 @@
+<!--/.col-->
+
+  <!--/.col-->
+  <div class="form-group">
+    <p-accordion class="p-accordion">
+        <p-accordionTab class="p-accordionTab" [selected]="true">
+            <p-header class="p-header">
+                <i class="cil-info"></i>
+                <span class="accordion-header">Opportunity Summary</span>
+            </p-header>
+                  <div>
+                    <table class="table table-borderless">
+                      <tbody>
+                        <tr>
+                          <td>Customer & Code</td>
+                          <td>{{ opportunitySummary.customer }}</td>
+                          <td>Opportunity Amount (RM)</td>
+                          <td>{{ opportunitySummary.opportunity_amount }}</td>
+                        </tr>
+                        <tr>
+                            <td>Opportunity ID</td>
+                            <td>{{ opportunitySummary.opportunity_id }}</td>
+                            <td>Opportunity no.-Version</td>
+                            <td>{{ opportunitySummary.opportunity_no }}</td>
+                          </tr>
+                        <tr>
+                          <td>Initiator</td>
+                          <td>{{ opportunitySummary.initiator }}</td>
+                          <td>Winning Probability</td>
+                          <td>{{ opportunitySummary.winning_probability }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+        </p-accordionTab>
+    </p-accordion>
+  </div>
