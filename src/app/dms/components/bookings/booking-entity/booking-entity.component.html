@@ -1,4 +1,6 @@
-<app-booking-detail [bookingDetailList]="bookingDetailList"></app-booking-detail>
+<app-booking-detail
+  [bookingDetailList]="bookingDetailList">
+</app-booking-detail>
 
 <br>
 
@@ -7,53 +9,15 @@
 <br>
 
 <dms-booking-approval
-    [statusText]="statusText"
-    [list]="approvalList"
-    [buttons]="approvalButtons"
-    (buttonAction)="onApprovalAction($event)">
-    <div *ngIf="isConfirmed" class="animated fadeIn card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    Main Asset Serial No
-                </div>
-                <div class="col-md-6">
-                    2
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <label class="col-md-6" for="warehouse_from">
-                    From Warehouse
-                </label>
-                <div class="col-md-6">
-                    <input name="warehouse_from" type="text"/>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <label class="col-md-6" for="warehouse_from">
-                    From Ward/ Department
-                </label>
-                <div class="col-md-6">
-                    <input name="ward_from" type="text"/>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <label class="col-md-6" for="destination">
-                    To Ward / Department
-                </label>
-                <div class="col-md-6">
-                    <input name="destination" type="text"/>
-                </div>
-            </div>
-        </div>
-    </div>
+  [status]="status"
+  [list]="approvalList"
+  (buttonAction)="onApprovalAction($event)">
 </dms-booking-approval>
 
 <br>
 
-<app-booking-form-main-asset [mainAsset]="mainAsset"></app-booking-form-main-asset>
+<app-booking-form-main-asset
+  [mainAsset]="mainAsset">
+</app-booking-form-main-asset>
 <br>
 <app-status-log></app-status-log>

@@ -1,5 +1,5 @@
   .custom-footer{
-    padding-bottom: 45px;
+    padding-bottom: 25px;
 
     button {
         margin: 10px;
@@ -61,12 +61,14 @@
     .table>tbody>tr:nth-child(odd)>td{
       background-color: white;
     }
-    
+
     .table>tbody tr td:nth-child(odd){
         background-color: #fbfbfb;
     }
-    
+
     .table>tbody>tr:nth-child(even)>td{
         background-color: #F6F6F6;
     }
   }
+
+@import '../widgets/expand-panel/global';

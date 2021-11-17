@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MainAsset } from '../../../services/main-asset-service/main-asset-entity';
+import { MainAsset } from '../../../services/asset-entity';
 
 
 @Component({
@@ -12,13 +12,12 @@ export class BookingFormComponent implements OnInit{
   constructor() { }
   ngOnInit(): void {
     this.mainAsset = {
-      main: null,
-      compatibleAccessories: false,
-      peripheralAccessories: false,
-      consumables: false,
-      packingDuringShipment: false,
-      accessoriesList: null,
-      addBtn: true
-    }
+      main: [],
+      compatibles: null,
+      peripherals: null,
+      consumables: null,
+      packing: null,
+      accessories: []
+    };
   }
 }

@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BookingService implements BookingInterface {
-  httpClient: any;
 
   constructor(private apiClient: ApiClient) { }
 
