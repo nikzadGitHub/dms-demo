@@ -56,7 +56,7 @@
                                     <div class="col-9">
                                         <p-dropdown id="unit" name="unitList" [options]="salesTargetData" optionLabel="unit.title" optionValue="unit.id"
                                             placeholder="Select Unit" [style]="{ width: '100%' }" [required]="true"
-                                            [(ngModel)]="data.code" (onChange)="onUnitChanged(data.country_code, data.unit_id)">
+                                            [(ngModel)]="data.id" (onChange)="onUnitChanged(data.country_code, data.unit_id)">
                                         </p-dropdown>       
                                     </div>
                                 </div>

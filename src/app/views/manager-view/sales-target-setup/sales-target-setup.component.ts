@@ -342,19 +342,19 @@ export class SalesTargetSetupComponent implements OnInit {
   }
 
   onSubmit(_frm, data): void {
+    
     console.log('this is data',data)
     const payload = {
       description: data.title,
       country_code: data.country_code,
-      unit_id: 'KU-101',
-      // unit_id: data.unit_id,
-      user_id: 1,
+       unit_id: data.unit_id,
+      // user_id: 1,
 
-      // user_id: data.user_id,
+      user_id: data.user_id,
       team_lead: data.team_lead,
       opc_pic_user_id: data.opc_pic_user_id,
       class_id: data.class_id,
-      dimensions: data.dimensions,
+      dimensions:this.dimensionLevelArr[0],
       currency_code: data.currency_code,
 
       //  currency_code: data.currency_code,
@@ -383,7 +383,7 @@ export class SalesTargetSetupComponent implements OnInit {
       target_09: Number(data.month_09_target.toFixed(2)),
       target_10: Number(data.month_10_target.toFixed(2)),
       target_11: Number(data.month_11_target.toFixed(2)),
-      // target_12: data.month_12_targets.toFixed(2),
+     target_12: Number(data.month_12_target.toFixed(2))
     };
     console.log(payload)
     data.level_1_type = this.dimensionLevelArr[0];
