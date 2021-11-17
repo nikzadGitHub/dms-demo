@@ -20,9 +20,9 @@ export class BookingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.api.getList().subscribe((response) => {
-      // if (response as BookingList) {
+      if (response as BookingList) {
         this.bookingList = response;
-      // }
+      }
 			console.log(response);
 		});
   }
