@@ -72,7 +72,7 @@
         </div>
       </div>
     </div>
-    <form [formGroup]="form" (ngSubmit)="submit()">
+    <form [formGroup]="form">
       <!-- PO details -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="PO Details">
@@ -94,72 +94,6 @@
                   </td>
                   <td class="text-center">{{ soci_data?.po_amount }}</td>
                 </tr>
-                <!-- <tr align="center">
-                  <td style="width: 15%">
-                    <input
-                      formControlName="description"
-                      class="form-control"
-                      placeholder="Training"
-                      type="text"
-                    />
-                  </td>
-                  <td style="width: 15%">
-                    <input
-                      formControlName="quantity"
-                      class="form-control"
-                      size="1"
-                      placeholder="1"
-                      type="number"
-                      min="0"
-                    />
-                  </td>
-                  <td style="width: 18%">
-
-                    <input
-                      formControlName="unit_price"
-                      class="form-control"
-                      size="1"
-                      placeholder="300"
-                      type="text"
-                      min="0"
-                      step=".01"
-                      (input)="costUnitValue()"
-                    />
-                  </td>
-                  <td style="width: 18%">
-                    <input
-                      formControlName="total_price"
-                      class="form-control"
-                      size="1"
-                      placeholder="300"
-                      readonly
-                      type="text"
-                      min="0"
-                      step=".01"
-                    />
-                  </td>
-                  <td style="width: 15%">
-                    <textarea
-                      formControlName="remarks"
-                      class="form-control"
-                      placeholder="Remarks"
-                      id=""
-                      cols="30"
-                      rows="1"
-                    ></textarea>
-                  </td>
-                  <td></td>
-                  <td></td>
-                  <td class="td-actions" colspan="9" align="center">
-                    <a
-                      [routerLink]=""
-                      routerLinkActive="router-link-active"
-                      (click)="addAdditionalCost()"
-                    >
-                      <i class="icon-plus icons"></i>
-                    </a>
-                  </td>
-                </tr> -->
               </tbody>
             </table>
           </div>
@@ -474,7 +408,7 @@
       <br />
 
       <!-- Payment Schedules Accordion -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
         <p-accordionTab header="Payment Schedules">
           <div class="row">
             <!-- formArrayName="payments" -->
@@ -496,13 +430,58 @@
                   align="center"
                   *ngFor="let payment of payment_schedules; let i = index"
                 >
-                  <td>{{ payment.billing_id }}</td>
-                  <td>{{ payment.percentage }}</td>
-                  <td>{{ payment.schedule | date: "dd-MMM-yyyy" }}</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="payment.billing_id"
+                      [ngModelOptions]="{ standalone: true }"
+                      (input)="changePaymnetvalue('billing_id', payment.billing_id)"
+                    />
+                    <!-- {{ payment.billing_id }} -->
+                  </td>
+                  <td>
+                    <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="payment.percentage"
+                    [ngModelOptions]="{ standalone: true }"
+                    (input)="changePaymnetvalue('percentage', payment.percentage)"
+                  />
+                    <!-- {{ payment.percentage }} -->
+                  </td>
+                  <td>
+                    <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="payment.schedule"
+                    [ngModelOptions]="{ standalone: true }"
+                    (input)="changePaymnetvalue('schedule', payment.schedule)"
+                  />
+                    <!-- {{ payment.schedule | date: "dd-MMM-yyyy" }} -->
+                  </td>
                   <td></td>
                   <td></td>
-                  <td>{{ payment.amount }}</td>
-                  <td>{{ payment.remarks }}</td>
+                  <td>
+                    <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="payment.amount"
+                    [ngModelOptions]="{ standalone: true }"
+                    (input)="changePaymnetvalue('amount', payment.amount)"
+                  />
+                    <!-- {{ payment.amount }} -->
+                  </td>
+                  <td>
+                    <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="payment.remarks"
+                    [ngModelOptions]="{ standalone: true }"
+                    (input)="changePaymnetvalue('remarks', payment.remarks)"
+                  />
+                    <!-- {{ payment.remarks }} -->
+                  </td>
                   <td class="td-actions" style="width: 10%; padding: none">
                     <!-- (click)="disableEditMethod(payment, 'payment')"
                         *ngIf="enableEdit['payment'] && controller == payment" -->
@@ -512,12 +491,19 @@
                       ></a> -->
                       <!-- (click)="enableEditMethod(payment, 'payment')" -->
                       <!-- *ngIf="!enableEdit['payment']" -->
-                      <a [routerLink]="" routerLinkActive="router-link-active">
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="updatePaymentSchdule(i, payment.id)"
+                      >
                         <i class="fa fa-edit"></i>
                       </a>
                       &nbsp;
                       <!-- (click)="removePayments(i)" -->
-                      <a [routerLink]="" routerLinkActive="router-link-active"
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="deletePaymentSchdule(i, payment.id)"
                         ><i class="fa fa-trash"></i
                       ></a>
                     </div>
@@ -647,7 +633,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr align="center" *ngFor="let cost of additional_costs">
+                <tr
+                  align="center"
+                  *ngFor="let cost of additional_costs; let i = index"
+                >
                   <td class="text-center">{{ cost.description }}</td>
                   <td class="text-center">{{ cost.quantity }}</td>
                   <td class="text-center">{{ cost.unit_price }}</td>
@@ -671,7 +660,10 @@
                       </a>
                       &nbsp;
                       <!-- (click)="removeAddCosts(i)" -->
-                      <a [routerLink]="" routerLinkActive="router-link-active"
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="deleteAdditionalCost(i, cost.id)"
                         ><i class="fa fa-trash"></i
                       ></a>
                     </div>
@@ -784,7 +776,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr align="center" *ngFor="let item of billing_instruction">
+                <tr
+                  align="center"
+                  *ngFor="let item of billing_instruction; let i = index"
+                >
                   <td class="text-center">
                     {{ item.schedule }}
                   </td>
@@ -806,7 +801,10 @@
                       </a>
                       &nbsp;
                       <!-- (click)="removeAddCosts(i)" -->
-                      <a [routerLink]="" routerLinkActive="router-link-active"
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="deleteBillingInstruction(i, item.id)"
                         ><i class="fa fa-trash"></i
                       ></a>
                     </div>
@@ -907,7 +905,10 @@
           </div>
           <!-- bil to -->
 
-          <div class="row" *ngFor="let item of additional_instructions">
+          <div
+            class="row"
+            *ngFor="let item of additional_instructions; let i = index"
+          >
             <div class="col-md-3">
               <div class="col-md-10">
                 <input
@@ -948,6 +949,7 @@
                     [routerLink]=""
                     routerLinkActive="router-link-active"
                     style="font-size: 20px"
+                    (click)="deleteAdditionalInstruction(i, item.id)"
                     ><i class="fa fa-trash"></i
                   ></a>
                 </div>
@@ -1190,7 +1192,10 @@
             </div>
           </div>
           <div>
-            <div class="row" *ngFor="let item of additional_charges">
+            <div
+              class="row"
+              *ngFor="let item of additional_charges; let i = index"
+            >
               <div class="col-md-3">
                 <div class="">
                   <div class="col-md-10">
@@ -1283,6 +1288,7 @@
                       [routerLink]=""
                       routerLinkActive="router-link-active"
                       style="font-size: 20px"
+                      (click)="deleteAdditionalCharges(i, item.id)"
                       ><i class="fa fa-trash"></i
                     ></a>
                   </div>
@@ -1484,7 +1490,7 @@
       <!-- End Additional/Reduction Charges -->
       <br />
       <!-- Product -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="Products">
           <div class="row">
             <!-- formArrayName="products" -->
@@ -1525,7 +1531,10 @@
                         <i class="fa fa-edit"></i> </a
                       >&nbsp;
                       <!-- (click)="removeProduct(i)" -->
-                      <a [routerLink]="" routerLinkActive="router-link-active"
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="deleteProduct(i, item.id)"
                         ><i class="fa fa-trash"></i
                       ></a>
                     </div>
@@ -1558,7 +1567,7 @@
                       </ng-template>
                     </p-autoComplete>
                   </td>
-                  <td style="width: 14%;">
+                  <td style="width: 14%">
                     <input
                       class="form-control"
                       formControlName="sku"
@@ -1574,7 +1583,7 @@
                       type="number"
                       step=".01"
                       placeholder="0"
-                      (input) = "addProductQuantity()"
+                      (input)="addProductQuantity()"
                     />
                   </td>
                   <td>
@@ -1602,7 +1611,7 @@
                       formControlName="discount"
                       type="number"
                       step=".01"
-                      (input) = "addDiscount()"
+                      (input)="addDiscount()"
                     />
                   </td>
                   <td>
@@ -1629,25 +1638,31 @@
           </div>
           <div
             class="card border-primary m-3"
-            style="float: right; width: 370px; border-radius: 15px"
+            style="float: right; width: 435px; border-radius: 15px"
           >
             <div class="card-body">
               <table class="table table-borderless table-price">
                 <tr>
-                  <td class="text-left">Subtotal Before Tax</td>
-                  <td class="text-right">19816.00</td>
+                  <td class="text-left"><b> Subtotal Before Tax</b></td>
+                  <td class="text-right">
+                    {{ product_subtotal_before_tax | number: "1.2" }}
+                  </td>
                 </tr>
                 <tr>
-                  <td class="text-left">Tax (SST)</td>
-                  <td class="text-right">0.000</td>
+                  <td class="text-left"><b>Tax (SST)</b></td>
+                  <td class="text-right">{{ tax_rate | number: "1.2" }}</td>
                 </tr>
                 <tr>
-                  <td class="text-left">Discount Value</td>
-                  <td class="text-right">5000.76</td>
+                  <td class="text-left"><b>Discount Value</b></td>
+                  <td class="text-right">
+                    {{ products_total_discount_values | number: "1.2" }}
+                  </td>
                 </tr>
                 <tr>
-                  <td class="text-left">Total Amount</td>
-                  <td class="text-right">13927.56</td>
+                  <td class="text-left"><b>Total Amount</b></td>
+                  <td class="text-right">
+                    {{ product_total_net_amount | number: "1.2" }}
+                  </td>
                 </tr>
               </table>
             </div>
@@ -1671,15 +1686,17 @@
         "
       >
         <p-accordion [multiple]="true" styleClass="custom" activeIndex="0">
-          <p-accordionTab header="SOCI Details">
+          <p-accordionTab header="Summary">
             <table class="table table-borderless table-price">
               <tr>
                 <td class="text-left">Subtotal Before Tax</td>
-                <td class="text-right">19816.00</td>
+                <td class="text-right">{{ product_subtotal_before_tax }}</td>
               </tr>
               <tr>
                 <td class="text-left">Discount Value</td>
-                <td class="text-right">5000.76</td>
+                <td class="text-right">
+                  {{ products_total_discount_values | number: "1.2" }}
+                </td>
               </tr>
               <tr>
                 <td class="text-left">SST (Dynamic) Tax</td>
@@ -1687,11 +1704,11 @@
               </tr>
               <tr>
                 <td class="text-left">Additional Cost & Charges</td>
-                <td class="text-right">13927.56</td>
+                <td class="text-right">{{ additional_cost_and_charges }}</td>
               </tr>
               <tr>
                 <td class="text-left">Total Cost</td>
-                <td class="text-right">13927.56</td>
+                <td class="text-right">{{ total_cost | number: "1.2" }}</td>
               </tr>
             </table>
           </p-accordionTab>
@@ -1702,8 +1719,17 @@
 </div>
 
 <div class="action-btns">
-  <button class="cancel-btn">Cancel</button>
-  <button class="request-btn">REQUEST APPROVAL</button>
+  <button class="cancel-btn">
+    <i class="pi pi-arrow-left"></i>
+    Cancel
+  </button>
+  <button
+    class="request-btn"
+    *ngIf="request_approval == false"
+    (click)="confirmationModal.show()"
+  >
+    REQUEST APPROVAL
+  </button>
 </div>
 <!-- Empty row to give some space at the bottom -->
 <div class="row"></div>
@@ -1765,13 +1791,7 @@
         ></textarea>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          (click)="paymentRemarkModalClose()"
-        >
-          Confirm
-        </button>
+        <button type="button" class="btn btn-secondary">Confirm</button>
         <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
       </div>
     </div>
@@ -1781,53 +1801,91 @@
 </div>
 <!-- /.modal -->
 
+<!-- confermation-model -->
 <div
+  id="success"
   bsModal
-  #billingRemarkModal="bs-modal"
+  #confirmationModal="bs-modal"
   class="modal fade"
   tabindex="-1"
   role="dialog"
   aria-labelledby="myModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-info" role="document">
+  <div class="modal-dialog modal-success" role="document">
+    <!-- <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmationModal</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+       
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-danger">
+          Delete
+        </button>
+      </div>
+    </div> -->
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Cancellation Remarks</h4>
+        <h4 class="modal-title">confirmation</h4>
         <button
           type="button"
           class="close"
-          (click)="billingRemarkModal.hide()"
+          (click)="confirmationModal.hide()"
           aria-label="Close"
         >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <textarea
-          name="bformRemarks"
-          id="bformRemarks"
-          cols="60"
-          placeholder="remarks"
-          rows="10"
-          [(ngModel)]="billingRemarks"
-        ></textarea>
+        Are you sure to REQUEST the SOCI
+        <!-- <textarea name="cancel_remarks" id="cancel_remarks" cols="60" placeholder="Reason of cancellation"
+                rows="10" ></textarea> -->
       </div>
       <div class="modal-footer">
         <button
           type="button"
           class="btn btn-secondary"
-          (click)="billingRemarkModalClose()"
+          (click)="confirmationModal.hide()"
         >
-          Confirm
+          Cancel
         </button>
-        <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
+        <button type="button" class="btn btn-info" (click)="applyForApproval()">
+          Yes
+        </button>
       </div>
     </div>
-    <!-- /.modal-content -->
   </div>
-  <!-- /.modal-dialog -->
 </div>
+<!-- <div bsModal #confirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">confirmation</h4>
+                <button type="button" class="close" (click)="confirmationModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea name="cancel_remarks" id="cancel_remarks" cols="60" placeholder="Reason of cancellation"
+                    rows="10" >Are you sure to REQUEST the SOCI</textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="confirmationModal.hide()">Close</button>
+                <button type="button" class="btn btn-info" (click)="applyForApproval()">Cancel Quote</button>
+            </div>
+        </div>
+    </div>
+</div> -->
 <!-- /.modal -->
 
 <!-- Success-Model -->

@@ -71,6 +71,12 @@
     border: 1px solid #386fa4;
     line-height: 30px;
   }
+  i {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 4px;
+
+  }
   .cancel-btn {
     background: #ffffff;
     color: #386fa4;
@@ -179,7 +185,7 @@ input::-webkit-inner-spin-button {
 :host ::ng-deep .custom.p-accordion {
   width: 372px;
   .p-accordion-header {
-    font-size: 24px;
+    font-size: 16px;
     font-weight: bolder;
     background: #f8f9fa;
     span.pi {

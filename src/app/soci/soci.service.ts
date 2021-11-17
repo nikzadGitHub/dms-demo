@@ -41,7 +41,14 @@ export class SociService {
       .get(url + query, this.httpOptions)
       .pipe(catchError(this.errorHandler));
   }
-
+  getFilteredProducts(filter){
+    filter = filter == '' ? 0 : filter; 
+    return this.httpClient.get(this.apiURL + '/opportunity/get-all-products?search_text=' + filter,this.httpOptions)
+    // return this.httpClient.get(this.apiURL + '/quote/products/filtered/' + filter,this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
   getFilteredQuote(filter) {
     filter = filter == "" ? 0 : filter;
     return this.httpClient
@@ -80,6 +87,24 @@ export class SociService {
     // this.httpOptions.headers.set('Access-Control-Allow-Origin', 'http://localhost:4200');
 
     return this.httpClient.post(
+      this.apiURL + query,
+      JSON.stringify(req),
+      this.httpOptions
+    );
+  }
+
+  deleteQuery(url): Observable<object> {
+    let query = url;
+    return this.httpClient.delete(
+      this.apiURL + query,
+      // JSON.stringify(req),
+      this.httpOptions
+    );
+  }
+
+  putQuery(url, req): Observable<object> {
+    let query = url;
+    return this.httpClient.put(
       this.apiURL + query,
       JSON.stringify(req),
       this.httpOptions
