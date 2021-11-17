@@ -68,7 +68,6 @@
           pInputText
           placeholder="Global Search"
           [(ngModel)]="search_text"
-          (input)="getAll()"
         />
       </div>
     </div>
@@ -174,8 +173,9 @@
         {{ opportunity.status }}
       </td>
       <td class="text-center">
+        <!-- | currency: "MYR" -->
         <span class="p-column-title">Amount (MYR)</span>
-        {{ opportunity.amount | currency: "MYR" }}
+        {{ opportunity.est_value }}
       </td>
       <td>
         <div class="row-icon">

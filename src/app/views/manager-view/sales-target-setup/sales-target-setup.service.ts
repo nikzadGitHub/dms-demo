@@ -108,7 +108,7 @@ export class SalesTargetSetupService {
   }
 
   saveSalesTargetSetupData(data) {
-    let query = '/sales-target';
+    let query = '/sales-target/add';
 
     return this.httpClient.post<any[]>(this.apiURL + query, data, this.httpOptions)
       .pipe(

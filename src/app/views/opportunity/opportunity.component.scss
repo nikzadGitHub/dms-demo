@@ -1,11 +1,27 @@
-.opp-opportunity-booking {
-  width: 100%;
-}
 opp-opportunity-booking {
   width: 100%;
 }
 .card{
   border-radius:0;
+}
+
+.main-content {
+  display: flex;
+  .side-btns {
+    display: flex;
+    flex-direction: column;
+    margin-left: 3px;
+    button {
+      background-color: #ffd54e;
+      color: white;
+      width: 35px;
+      height: 80px;
+      border: none;
+      img {
+        color: white;
+      }
+    }
+  }
 }
 
 .card-header {
@@ -55,6 +71,29 @@ td {
 tr:nth-child(even) {
   background-color: rgba(221, 225, 224, 0.3);
   // background-color: #f7f7f7;
+}
+.no-outline {
+  color: #333333;
+}
+.quotation-table .table td {
+  color: #333333;
+}
+.product-form .product-quotation-table .table td {
+  color: #333333;
+}
+.standard-terms .table td {
+  color: #333333;
+}
+
+.biling-milestone .table td {
+  color: #333333;
+}
+.payment-schedule .table td {
+  color: #333333;
+}
+
+.absorbed-cost .table td {
+  color: #333333;
 }
 
 .no-outline tr:first-child td {
@@ -304,12 +343,12 @@ tr:nth-child(even) {
   }
 }
 
-.standard-terms{
+.standard-terms {
   .table td {
     border-top: 0px solid #c8ced3;
   }
 }
-.biling-milestone{
+.biling-milestone {
   .table td {
     border-top: 0px solid #c8ced3;
   }
@@ -337,14 +376,14 @@ tr:nth-child(even) {
   }
 }
 
-.slip-info{
-  .slip-card{
+.slip-info {
+  .slip-card {
     background-color: lightgray;
   }
   .card {
     background-color: lightgray;
     border: 0px solid #c8ced3;
-    border: 0px solid rgba(0,0,0,.125);
+    border: 0px solid rgba(0, 0, 0, 0.125);
   }
   .amount-slip {
     display: flex;
@@ -354,6 +393,136 @@ tr:nth-child(even) {
   }
 }
 
+// Model CSS
+.modal-header {
+  border-bottom: 0px solid #c8ced3;
+  h4 {
+    color: #133c55;
+    text-transform: uppercase;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+  }
+}
+.info-text {
+  color: #133c55;
+}
+input::placeholder {
+  color: #9d9d9d;
+}
+.top-info {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  .top-info-1 {
+    margin-bottom: 2rem;
+  }
+}
+.type-info-btn {
+  margin: -23px 0px 0px 0px;
+  button {
+    width: 130px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+}
+
+.dummy-sku-info {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  .dummy-info {
+    margin-bottom: 2rem;
+    .cost-sheet-btn {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      margin-top: 10px;
+      button {
+        background: linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.2)
+          ),
+          #ff0000;
+      }
+    }
+    i {
+      cursor: pointer;
+    }
+    .justification-btn-textarea {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      button {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+.equipment-product {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  .equipment-product-info {
+    margin-bottom: 2rem;
+  }
+}
+
+.other-cost {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  .other-cost-info {
+    margin-bottom: 2rem;
+  }
+}
+
+.table-div {
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 1px solid #c8ced3;
+    border-top: 0px solid #c8ced3;
+    color: black;
+  }
+  .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 0px solid #c8ced3;
+    background-color: rgb(188 195 193 / 30%);
+    color: #133c55;
+  }
+}
+
+.form-control {
+  color: #333333;
+}
+.form-control:disabled,
+.form-control[readonly] {
+  background-color: #f8f9fa;
+  background: none;
+  opacity: 1;
+  border: 0px solid #e4e7ea;
+}
+textarea {
+  border: none;
+  color: #333333;
+  background: none;
+}
+
+// input[type="date"].form-control,
+// input[type="datetime-local"].form-control,
+// input[type="month"].form-control,
+// input[type="time"].form-control {
+//   -webkit-appearance: none;
+//   -moz-appearance: none;
+//   appearance: none;
+//   border: 0px solid #e4e7ea;
+//   color: #212529;
+// }
 
 // @media screen and (max-width: 960px) {
 //   :host ::ng-deep {
@@ -415,6 +584,7 @@ tr:nth-child(even) {
           td {
             font-size: 8px;
             padding: 3px 0px 0px 5px;
+            color: black;
             // overflow-x: auto;
           }
         }
@@ -427,6 +597,7 @@ tr:nth-child(even) {
           td {
             font-size: 8px;
             padding: 3px 0px 0px 5px;
+            color: black;
             // overflow-x: auto;
           }
         }
@@ -439,6 +610,7 @@ tr:nth-child(even) {
           td {
             font-size: 8px;
             padding: 5px 0px 3px 5px;
+            color: black;
           }
         }
       }
@@ -463,6 +635,7 @@ tr:nth-child(even) {
           td {
             font-size: 8px;
             padding: 0px 20px 0px 0px;
+            color: black;
             // i{
             //   font-size: 8px;
             // }
@@ -512,6 +685,7 @@ tr:nth-child(even) {
           td {
             padding: 0.75rem;
             font-size: 16px;
+            color: black;
           }
         }
       }
@@ -523,6 +697,7 @@ tr:nth-child(even) {
           td {
             padding: 0.75rem;
             font-size: 16px;
+            color: black;
           }
         }
       }
@@ -534,6 +709,7 @@ tr:nth-child(even) {
           td {
             font-size: 16px;
             padding: 0.75rem;
+            color: black;
           }
         }
       }
@@ -557,6 +733,7 @@ tr:nth-child(even) {
           td {
             font-size: 16px;
             padding: 0.75rem;
+            color: black;
           }
         }
       }
