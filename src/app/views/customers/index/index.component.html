@@ -183,19 +183,19 @@
                 <ng-template pTemplate="header"
                   >&nbsp;&nbsp;Information</ng-template>
                 
-                  <div class="tab-content">
+                  <div class="InformationTable">
                     <table class="table m-0 no-outline">
                       <tbody>
                         <tr>
-                          <td>Created Date</td>
-                          <td>{{modalData.created_at}}</td>
+                          <td class="InformationTd">Created Date</td>
+                          <td>{{modalData.created_at | date: 'mediumDate'}}</td>
                         </tr>
                         <tr>
-                          <td>Billing Address</td>
+                          <td class="InformationTd">Billing Address</td>
                           <td>{{modalData.address}}</td>
                         </tr>
                         <tr>
-                          <td>Shipping Address</td>
+                          <td class="InformationTd">Shipping Address</td>
                           <td>{{modalData.address}}</td>
                         </tr>
                       </tbody>
@@ -403,20 +403,21 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>16-jun-2021</td>
-                          <td>Sj01234</td>
-                          <td>PO143343</td>
-                          <td>Pending</td>
-                          <td>150,000</td>
+                        <tr *ngFor="let data of customerSOCI">
+                          <td> {{data.created_at | date: 'mediumDate'}} </td>
+                          <td>{{data.soci_id}}</td>
+                          <td>{{data.po_no}}</td>
+                          <td>{{data.status_desc}}</td>
+                          <td> Awaiting </td>
+                          <!-- <td>{{data.po_amount}}</td> -->
                         </tr>
-                        <tr>
+                        <!-- <tr>
                           <td>15-jun-2021</td>
                           <td>QUO1234</td>
                           <td>PO123123</td>
                           <td>Progress</td>
                           <td>270,000</td>
-                        </tr>
+                        </tr> -->
                       </tbody>
                     </table>
                   </div>
@@ -485,20 +486,20 @@
               </tr>
             </thead>
             <tbody>
-              <!-- <tr *ngFor="let activity of customerActivities">
-                <td> {{activity.due_date}} </td>
+              <tr *ngFor="let activity of customerActivities">
+                <td> {{activity.due_date | date: 'mediumDate'}} </td>
                 <td> {{activity.description}} </td>
                 <td> {{activity.activity_type}} </td>
                 <td> {{activity.status}} </td>
                 <td> {{activity.completion_date}} </td>
-              </tr> -->
-              <tr>
+              </tr>
+              <!-- <tr>
                 <td>12-jul-2021</td>
                 <td>Meeting the Client</td>
                 <td>Meeting</td>
                 <td>In Progress</td>
                 <td>Alax Tan</td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>

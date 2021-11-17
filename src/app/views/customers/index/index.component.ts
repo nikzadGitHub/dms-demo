@@ -31,6 +31,7 @@ export class IndexComponent implements OnInit {
   customerActivities: any;
   customerOpportunities: any;
   customerQuotes: any;
+  customerSOCI: any;
   constructor(private customerService: CustomersService) { }
 
   ngOnInit(): void {
@@ -45,6 +46,8 @@ export class IndexComponent implements OnInit {
     this.getCustomerActivities()
     this.getCustomerOpportunities()
     this.getCustomerQuotes()
+    this.getCustomerSOCI()
+    this.getCustomerAttachments()
 
   }
   closeModel(){
@@ -59,6 +62,8 @@ export class IndexComponent implements OnInit {
     } else if(id ==3){
       this.getCustomerActivities()
       this.getCustomerQuotes()
+      this.getCustomerSOCI()
+      this.getCustomerAttachments()
     }
   }
   paginate(event){
@@ -108,7 +113,7 @@ export class IndexComponent implements OnInit {
   getCustomerActivities(){
     let data = this.selectedCustomerData
     this.customerService.getCustomerActivities(data.id).subscribe((state:any)=>{
-      this.customerActivities = state.data
+      this.customerActivities = state['data']
     })
   }
 
@@ -123,6 +128,20 @@ export class IndexComponent implements OnInit {
     let data = this.selectedCustomerData
     this.customerService.getCustomerRelatedQuotes(this.pageItems,data.company_name).subscribe((state:any)=>{
       this.customerQuotes = state['data']['quotes']['data'];
+    })
+  }
+
+  getCustomerSOCI(){
+    let data = this.selectedCustomerData
+    this.customerService.getCustomerRelatedSOCI(this.pageItems,data.company_name).subscribe((state:any)=>{
+      this.customerSOCI = state['data']['soci'];
+    })
+  }
+
+  getCustomerAttachments(){
+    let data = this.selectedCustomerData
+    this.customerService.getCustomerRelatedAttachments(data.id).subscribe((state:any)=>{
+      // this.customerSOCI = state['data']['soci'];
     })
   }
 }

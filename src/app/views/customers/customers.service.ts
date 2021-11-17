@@ -72,11 +72,27 @@ getCustomerRelatedOpportunities(pageItems,company): Observable<any[]> {
 
 getCustomerRelatedQuotes(pageItems,company): Observable<any[]> {
   let query = '/quote/?page='+ 1 + '&page_items='+ pageItems + '&company=' + 'PT. PELITA ANUGERAH';
-  // let query = '/opportunity/list?page='+ 1 + '&page_items='+ pageItems + '&company=' + company;
+  // let query = '/quote/?page='+ 1 + '&page_items='+ pageItems + '&company=' + company;
   return this.http.get<any[]>(this.apiUrl + query,this.httpOptions)
   .pipe(
     catchError(this.errorHandler)
   )
 }
 
+getCustomerRelatedSOCI(pageItems,company): Observable<any[]> {
+  let query = '/soci/?page='+ 1 + '&page_items='+ pageItems + '&company=' + 'RUMAH SAKIT KHUSUS DAERAH DADI PROVINSI SULAWESI SELATAN';
+  // let query = '/soci/?page='+ 1 + '&page_items='+ pageItems + '&company=' + company;
+  return this.http.get<any[]>(this.apiUrl + query,this.httpOptions)
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
+
+getCustomerRelatedAttachments(id): Observable<any[]> {
+  let query = '/customer/attachments/' + id;
+  return this.http.get<any[]>(this.apiUrl + query,this.httpOptions)
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
 }
