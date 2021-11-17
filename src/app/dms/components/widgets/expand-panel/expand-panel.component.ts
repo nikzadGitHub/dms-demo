@@ -6,7 +6,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./expand-panel.component.scss']
 })
 export class ExpandPanelComponent implements OnInit {
-  @Input() title: string;
+  @Input() title: string = '';
+  @Input() icon: string = 'cil-cart';
   @Input() open: boolean = false;
 
   constructor() { }

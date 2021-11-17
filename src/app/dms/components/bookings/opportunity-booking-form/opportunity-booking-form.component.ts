@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OpportunitySummary } from '../../../services/booking-entity';
-import { MainAsset } from '../../../services/main-asset-service/main-asset-entity';
+import { MainAsset } from '../../../services/asset-entity';
 
 
 @Component({
@@ -14,14 +14,13 @@ export class OpportunityBookingFormComponent implements OnInit{
   constructor() { }
   ngOnInit(): void {
     this.mainAsset = {
-      main: null,
-      compatibleAccessories: null,
-      peripheralAccessories: null,
-      consumables: null,
-      packingDuringShipment: null,
-      accessoriesList: null,
-      addBtn: true
-    }
+      main: [],
+      compatibles: [],
+      peripherals: [],
+      consumables: [],
+      packing: [],
+      accessories: []
+    };
     this.opportunitySummary = {
         customer: "test",
         opportunity_id: "test",

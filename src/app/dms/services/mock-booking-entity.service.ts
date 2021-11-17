@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Header } from 'primeng/api';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { 
+import {
   ApprovalList, BookingEntityInterface, BookingEntity, BookingEntityList,
   BookingDetail, OpportunitySummary
 } from './booking-entity';
 import { BookingStatus } from './booking-status.enum';
-import { CompatibleAccessories, Consumables, Main, MainAsset, PackingDuringShipment, PeripheralAccessories } from './main-asset-service/main-asset-entity';
+import { CompatibleAccessories, Consumables, Main, MainAsset, PackingDuringShipment, PeripheralAccessories } from './asset-entity';
+
 
 const mockApproval: ApprovalList = [
   {
@@ -43,7 +43,7 @@ const mockApproval: ApprovalList = [
 const mockBookingDetail: BookingDetail = {
     status: "2 Raising Booking Request - Submitted",
     status_request_date: "10/1/2021",
-    booking_no: "BK-00992",
+    code: 'BK-00992',
     branch: "XXXX",
     booking_reason: "Demo",
     request_date: "9/3/2021",
@@ -68,91 +68,90 @@ const mockOpportunitySummary: OpportunitySummary = {
   winning_probability: "65%"
 };
 
-const mockMain: Main = {
-  no: "1",
-  product_name: "Product 1",
-  sku_id: "ZY2332",
-  quantity: "1",
-  uom: "pc",
-  availability: "-",
-  expected_sales_price: "80,000.00",
-  serial_no: null,
-  available_qty: "1",
-  cost: "80,000.00"
-}
+const mockMain: Main[] = [
+  {
+    id: BigInt(1),
+    name: 'Product 1',
+    sku: 'ZY2332',
+    quantity: 1,
+    uom: 'pc',
+    availability: '-',
+    expected_sale_price: 80000.00,
+    serial_no: null,
+    available_quantity: 1,
+    cost: 80000.00
+  }
+];
 
 const mockCompatibleAccessories: CompatibleAccessories = [
   {
-    no: "1",
-    product_name: "Product 1",
-    sku_id: "ZY2332",
-    quantity: "1",
-    uom: "pc",
-    availability: "-",
-    expected_sales_price: "80,000.00",
+    id: BigInt(1),
+    name: 'Product 1',
+    sku: 'ZY2332',
+    quantity: 1,
+    uom: 'pc',
+    availability: '-',
+    expected_sale_price: 80000.00,
     serial_no: null,
-    available_qty: "1",
-    cost: "80,000.00"
+    available_quantity: 1,
+    cost: 80000.00
   }
-]
+];
 
 const mockPeripheralAccessories: PeripheralAccessories = [
   {
-    no: "1",
-    product_name: "Product 1",
-    sku_id: "ZY2332",
-    quantity: "1",
-    uom: "pc",
-    availability: "-",
-    expected_sales_price: "80,000.00",
-    available_qty: "1",
-    cost: "80,000.00"
+    id: BigInt(1),
+    name: 'Product 1',
+    sku: 'ZY2332',
+    quantity: 1,
+    uom: 'pc',
+    availability: '-',
+    expected_sale_price: 80000.00,
+    available_quantity: 1,
+    cost: 80000.00
   }
-]
+];
 
 const mockConsumables: Consumables = [
   {
-    no: "1",
-    product_name: "Product 1",
-    sku_id: "ZY2332",
-    quantity: "1",
-    uom: "pc",
-    availability: "-",
-    expected_sales_price: "80,000.00",
-    available_qty: "1",
-    cost: "80,000.00"
+    id: BigInt(1),
+    name: 'Product 1',
+    sku: 'ZY2332',
+    quantity: 1,
+    uom: 'pc',
+    availability: '-',
+    expected_sale_price: 80000.00,
+    available_quantity: 1,
+    cost: 80000.00
   }
-]
+];
 
 const mockPackingDuringShipment: PackingDuringShipment = [
   {
-    no: "1",
-    product_name: "Product 1",
-    sku_id: "ZY2332",
-    quantity: "1",
-    uom: "pc",
-    availability: "-",
-    expected_sales_price: "80,000.00",
-    available_qty: "1",
-    cost: "80,000.00"
+    id: BigInt(1),
+    name: 'Product 1',
+    sku: 'ZY2332',
+    quantity: 1,
+    uom: 'pc',
+    availability: '-',
+    expected_sale_price: 80000.00,
+    available_quantity: 1,
+    cost: 80000.00
   }
-]
+];
 
 
 const mockMainAsset: MainAsset = {
   main: mockMain,
-  compatibleAccessories: mockCompatibleAccessories,
-  peripheralAccessories: mockPeripheralAccessories,
+  compatibles: mockCompatibleAccessories,
+  peripherals: mockPeripheralAccessories,
   consumables: mockConsumables,
-  packingDuringShipment: mockPackingDuringShipment,
-  accessoriesList: false,
-  addBtn: false
-}
+  packing: mockPackingDuringShipment,
+  accessories: null
+};
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class MockBookingEntityService implements BookingEntityInterface {
   public mockData: BookingEntityList = [
     {
