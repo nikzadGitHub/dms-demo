@@ -189,6 +189,22 @@ input::-webkit-inner-spin-button {
   .p-accordion-content {
     padding: 0px;
     overflow-x: hidden;
+    .costItemMain{
+      display: flex;
+      justify-content: center;
+    }
+    .stdTermTable{
+      margin-top: 15px;
+    }
+    .action-icon{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 115px;
+      a{
+        padding-right: 15px;
+      }
+    }
   }
 }
 
@@ -246,4 +262,72 @@ input::-webkit-inner-spin-button {
 
 .row {
   padding: 10px;
+}
+
+@media screen and (max-width: 576px) {
+  .bg-opp{margin-bottom: 5px;}
+  .form-control{margin-top: 5px;}
+  .stdTermTable{
+    display: flex;
+  }
+  .action-btns{
+    margin-top: 10px;
+    .cancel-btn{
+      margin-left: 350px;
+    }
+  }
+  :host ::ng-deep .customColor.p-accordion {
+    .p-accordion-content{
+      overflow-x: scroll !important;
+      // .row{
+      //   display: flex;
+      // }
+      .descriptionTitle{
+        input{
+          width: 150px !important;
+        }
+        width: 150px
+      }
+      .description{
+        input{
+          width: 150px !important;
+        }
+        width: 150px
+      }
+      .action-icon{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 0px !important;
+        a{
+          padding-right: 10px;
+        }
+      }
+      .additionalInputDesc{
+        .descriptionTitle{
+          input{
+            width: 150px !important;
+          }
+          width: 150px
+        }
+        .description{
+          input{
+            width: 150px !important;
+          }
+          width: 150px
+        }
+      }
+      
+    }
+  }
+
+  :host ::ng-deep .custom.p-accordion {
+    .p-accordion-tab{
+      width: 285px;
+      float: right;
+    }
+    .p-accordion-content{
+      overflow-x: scroll !important;
+    }
+  }
 }
