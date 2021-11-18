@@ -1,441 +1,1914 @@
 <div class="animated fadeIn">
-    <div class="col-lg col-md-6">
-        <div class="card rcorners">
-            <div class="card-header purple"><h2>Quote Details</h2></div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <label class="form-control no-border"><h2><b>{{company_details['company_name']}}</b></h2></label>
-                    </div>
-                    <div class="col-lg-2">
-                        <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label>
-                    </div>
-                    <!-- <div class="col-lg" align='right'><b>Status</b><br><p>{{f.status.value}}</p></div> -->
-                </div>
+  <div class="col-lg col-md-6">
+    <div class="card rcorners">
+      <div class="card-header d-flex b-btm-green purple">
+        <h2 class="chead">Quote Details</h2>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="chead">
+              {{ soci_data?.company_name }}
             </div>
-            <div class="card-footer">
-        
+            <!-- <label class="form-control no-border"><h2><b>{{company_details['company_name']}}</b></h2></label> -->
+          </div>
+          <div class="col-lg-2">
+            <div class="bg-opp text-white p-1">
+              SOCI ID <span>{{ soci_data?.soci_id }}</span>
             </div>
+            <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
+          </div>
+          <div class="col-lg-2">
+            <div class="bg-opp text-white p-1">
+              Quote ID {{ soci_data?.quote_id }}
+            </div>
+            <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
+          </div>
+          <div class="col-lg-2">
+            <div class="bg-opp text-white p-1">Opport ID</div>
+            <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
+          </div>
+          <div class="col-lg-2">
+            <div class="text-center status">
+              <label style="color: black"><b>Stages</b></label>
+              <input
+                type="text"
+                class="form-control"
+                value=""
+                readonly
+                style="width: 150px"
+              />
+            </div>
+          </div>
+          <!-- <div class="col-lg" align='right'><b>Status</b><br><p>{{f.status.value}}</p></div> -->
         </div>
-        <form [formGroup]="form" (ngSubmit)="submit()">
-            <p-accordion [multiple]="true" styleClass="customColor">
-                <!-- Standard Term Accordion -->
-                <p-accordionTab header="Standard Terms">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Payment Terms:
-                                </div> 
-                                <div class="col-md-4">
-                                    <select formControlName="standard_payment_term" (change)="termSelect(f.standard_payment_term.value);dateChange()"
-                                    name="standard_terms" class="form-control">
-                                        <option>--- Select Term ---</option>
-                                        <option *ngFor="let term of terms" value="{{term.id}}">{{term.description}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-5" style="text-align: middle;">
-                            Quotation Validity: {{termSelected}} Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
-                        </div>
-                        <div class="col-lg-1" style="text-align: right;">
-                            <div (click)="show=!show">
-                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show"><i class="cil-check-circle"></i></a>
-                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i class="fa fa-edit"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row grey">
-                        <div class="col-md-3">
-                        <b>(As Default)</b> Payment Terms: 30 Days
-                        </div>
-                        <div class="col-lg-5" style="text-align: right">
-                            Quotation Validity: 30 Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
-                        </div>
-                        <div class="col-lg-1" style="text-align: right;"></div>
-                    </div>
-                </p-accordionTab>
-                <!-- End of Standard Term Accordion -->
-
-                <p-accordionTab header="Billing Milestones">
-                    <div class="row">
-                        <table class="table table-borderless" formArrayName="billings">
-                            <thead>
-                                <tr>
-                                    <th>Billing ID</th>
-                                    <th>Stage</th>
-                                    <th>Percentage</th>
-                                    <th>Amount (MYR)</th>
-                                    <th>Status</th>
-                                    <th>Notes</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let billing of billings().controls; let i=index" [formGroupName]="i" align="center">
-                                    <td style="width: 15%;">
-                                        <input formControlName="billing_id" class="form-control" placeholder="ABC123" type="text">
-                                    </td>
-                                    <td style="width: 15%;">
-                                        <input formControlName="stage" class="form-control" size="1" placeholder="Deploy" type="text">
-                                    </td>
-                                    <td style="width: 10%;">
-                                        <input formControlName="percentage" class="form-control" size="1" placeholder="50" type="number" min="0" max="100.00" step=".01">
-                                    </td>
-                                    <td style="width: 20%;">
-                                        <input formControlName="amount" class="form-control" size="1" placeholder="300" type="number" min="0" step=".01">
-                                    </td>
-                                    <td>
-                                        <input formControlName="status" class="form-control" size="1" placeholder="Deposit" type="input">
-                                    </td>
-                                    <td style="width: 15%;">
-                                        <textarea formControlName="remarks" class="form-control" id="" cols="30" rows="1" (focus)='billingRemarkModalOpen(i)'></textarea>
-                                        <!-- <input formControlName="remarks" class="form-control" size="1" placeholder="Remarks" type="text"> -->
-                                    </td>
-                                    <td class="td-actions" style="width: 10%;">
-                                        <div class="row">
-                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="disableEditMethod(billing,'billing');addBillingMilestone()"  
-                                            *ngIf="enableEdit['billing'] && controller == billing"><i class="cil-check-circle"></i></a>
-                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!enableEdit['billing']" 
-                                            (click)="enableEditMethod(billing,'billing')">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            &nbsp;
-                                            <a [routerLink]="" (click)="removeBillings(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot align="center">
-                                <tr>
-                                    <td class="td-actions" colspan="9" align="center">
-                                        <a [routerLink]="" (click)="addBillings()" routerLinkActive="router-link-active" >
-                                            <i class="icon-plus icons"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </p-accordionTab>
-
-                <!-- Payment Schedules Accordion -->
-                <p-accordionTab header="Payment Schedules">
-                    <div class="row">
-                        <table class="table table-borderless" formArrayName="payments">
-                            <thead>
-                                <tr>
-                                    <th>Billing ID</th>
-                                    <th>Percentage</th>
-                                    <th>Schedule</th>
-                                    <th>SOC Payment Terms</th>
-                                    <th>Status</th>
-                                    <th>Amount (MYR)</th>
-                                    <th>Notes</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let payment of payments().controls; let i=index" [formGroupName]="i" align="center">
-                                    <td style="width: 15%; padding:6px">
-                                        <select formControlName="billing_id" class="form-control" style="width: 70%;">
-                                            <option *ngFor="let bill of billingList" value="{{bill.billing_id}}">{{bill.billing_id}}</option>
-                                        </select>
-                                    </td>
-                                    <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="percentage" size="1" placeholder="50" 
-                                        type="number" min="0" max="100.00" step=".01" (keyup)="changePaymentPercent(i)">
-                                    </td>
-                                    <td style="width: 20%; padding:6px">
-                                        <input class="form-control" formControlName="schedule" size="1" type="date"></td>
-                                    <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="soc_payment_term" placeholder="30 Days" type="number">
-                                    </td>
-                                    <td style=" padding:6px;">
-                                        <input class="form-control" formControlName="status" size="1" placeholder="Deposit" type="input">
-                                    </td>
-                                    <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="amount" size="1" placeholder="300" 
-                                        type="number" min="0" step=".01" (keyup)="changePaymentValue(i)">
-                                    </td>
-                                    <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="remarks" size="1" placeholder="Remarks" type="text" 
-                                        (focus)="paymentRemarkModalOpen(i)">
-                                    </td>
-                                    <td class="td-actions" style="width: 10%; padding:none">
-                                        <div class="row">
-                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="disableEditMethod(payment,'payment')"  
-                                            *ngIf="enableEdit['payment'] && controller == payment"><i class="cil-check-circle"></i></a>
-                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!enableEdit['payment']" 
-                                            (click)="enableEditMethod(payment,'payment')">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            &nbsp;
-                                            <a [routerLink]="" (click)="removePayments(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot align="center">
-                                <tr>
-                                    <td class="td-actions" colspan="9" align="center">
-                                        <a [routerLink]="" (click)="addPayments()" routerLinkActive="router-link-active" >
-                                            <i class="icon-plus icons"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </p-accordionTab>
-                <!-- End of Payment Schedules Accordion -->
-
-                <!-- Additional Costs Accordion -->
-                <p-accordionTab header="Additional Costs">
-                    <div class="row">
-                        <table class="table table-borderless" formArrayName="addCosts">
-                            <thead>
-                                <tr>
-                                    <th>Description</th>
-                                    <th>Quantity</th>
-                                    <th>Unit Price (MYR)</th>
-                                    <th>Total Price (MYR)</th>
-                                    <th>Notes</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let cost of addCosts().controls; let i=index" [formGroupName]="i" align="center">
-                                    <td style="width: 15%;">
-                                        <input formControlName="description" class="form-control" placeholder="Training" type="text">
-                                    </td>
-                                    <td style="width: 15%;">
-                                        <input formControlName="quantity" class="form-control" size="1" placeholder="1" 
-                                        (keyup)="allTotal(cost['controls'],addCosts().controls)"
-                                        type="number" min="0">
-                                    </td>
-                                    <td style="width: 10%;">
-                                        <input formControlName="unit_price" class="form-control" size="1" placeholder="300"
-                                        (keyup)="allTotal(cost['controls'],addCosts().controls)"
-                                        type="number" min="0" step=".01">
-                                    </td>
-                                    <td style="width: 20%;">
-                                        <input formControlName="total_price" class="form-control" size="1" placeholder="300"
-                                        type="number" min="0" step=".01">
-                                    </td>
-                                    <td style="width: 15%;">
-                                        <input formControlName="remarks" class="form-control" size="1" placeholder="Remarks" type="text">
-                                    </td>
-                                    <td class="td-actions" style="width: 10%;">
-                                        <div class="row">
-                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="disableEditMethod(cost,'addCost')"  
-                                            *ngIf="enableEdit['addCost'] && controller == cost"><i class="cil-check-circle"></i></a>
-                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!enableEdit['addCost']" 
-                                            (click)="enableEditMethod(cost,'addCost')">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            &nbsp;
-                                            <a [routerLink]="" (click)="removeAddCosts(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot align="center">
-                                <tr>
-                                    <td class="td-actions" colspan="9" align="center">
-                                        <a [routerLink]="" (click)="addAddCosts()" routerLinkActive="router-link-active" >
-                                            <i class="icon-plus icons"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                        <div class="col-lg-9" align="right">
-                            <div class="form-group">
-                                <b>SUB TOTAL: MYR {{sub_total | number : '1.2-2'}}</b>
-                            </div>
-                        </div>
-                    </div>
-                </p-accordionTab>
-                <!-- End of Additional Costs Accordion -->
-            </p-accordion>
-            <br>
-            <p-accordion styleClass="customColor">
-                 <!-- Products Accordion -->
-                 <p-accordionTab header="Products">
-                    <div class="row">
-                        <table class="table table-borderless" formArrayName="products">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Product Name</th>
-                                    <th>SKU ID</th>
-                                    <th>Quantity</th>
-                                    <th>Unit Price(MYR)</th>
-                                    <th>Total Price(MYR)</th>
-                                    <th>Discount</th>
-                                    <th>Net Amount(MYR)</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let productC of products().controls; let i=index;" [formGroupName]="i" align="center">
-                                    <td>{{ i+1 }}</td>
-                                    <td style="size: 20%;">
-                                        <p-autoComplete formControlName="name" [(ngModel)]="selectedProductAdvanced[i]" [suggestions]="filteredProducts" 
-                                        (completeMethod)="filterProduct($event)" field="name" [dropdown]="true" 
-                                        [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
-                                            <ng-template let-product pTemplate="item">
-                                                <div class="product-item" (click)='productDetails(product,productC);countNetAmount(productC)'>
-                                                    <div>{{product.name}}</div>
-                                                </div>
-                                            </ng-template>
-                                        </p-autoComplete> 
-                                    </td>
-                                    <td><input class="form-control" formControlName="sku" type="text"></td>
-                                    <td><input class="form-control" formControlName="quantity" type="number" step=".01" (keyup)='countNetAmount(productC)'></td>
-                                    <td><input class="form-control" formControlName="unit_price" type="number" step=".01"></td>
-                                    <td><input class="form-control" formControlName="total_price" type="number" step=".01"></td>
-                                    <td><input class="form-control" formControlName="discount" type="number" (keyup)='countNetAmount(productC)' step=".01"></td>
-                                    <td><input class="form-control" formControlName="amount" type="number" step=".01"></td>
-                                    <td class="td-actions" style="width: 5%;">
-                                        <div class="row">
-                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="disableEditMethod(productC,'product')"
-                                            *ngIf="enableEdit['product'] && controller == productC"><i class="cil-check-circle"></i></a>
-                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!enableEdit['product']" 
-                                            (click)="enableEditMethod(productC,'product')">
-                                                <i class="fa fa-edit"></i>
-                                            </a>&nbsp;
-                                            <a [routerLink]="" (click)="removeProduct(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot align="center">
-                                <tr>
-                                    <td colspan="9" align="center">
-                                        <a [routerLink]="" (click)="addNewProduct()" routerLinkActive="router-link-active" >
-                                            <i class="icon-plus icons"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="card">
-                            <div class=""></div>
-                        </div>
-                    </div>
-                </p-accordionTab>
-                <!-- End of Products Accordion -->
-            </p-accordion>
-
-            <!-- Billing Instruction Accordion -->
-            <p-accordion styleClass="customColor">
-                <p-accordionTab header="Billing Instruction">
-                    <div class="row">
-                        <table class="table table-borderless">
-                            <thead>
-                                <tr>
-                                    <th>Schedule</th>
-                                    <th>Percentage</th>
-                                    <th>Amount</th>
-                                    <th>SOC Payment Terms</th>
-                                    <th>Amount</th>
-                                    <th>Note</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr align="center">
-                                    <td>By Month</td>
-                                    <td>50%</td>
-                                    <td>80,000</td>
-                                    <td>Before Delivery</td>
-                                    <td>Deposit</td>
-                                    <td>No remarks</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </p-accordionTab>
-            </p-accordion>
-            <!-- End of Billing Instruction Accordion -->
-
-            <!-- Additional Instruction and Information Accordion -->
-            <p-accordion styleClass="customColor">
-                <p-accordionTab header="Additional Instruction and Information">
-                </p-accordionTab>
-            </p-accordion>
-            <!-- End of Additional Instruction and Information -->
-        </form>
-
+      </div>
+      <div class="card-footer">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="text-center footer-data">
+              <label><b>Create Date</b></label>
+              <p>{{ soci_data?.created_at | date: "dd-MMM-yyyy" }}</p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="text-center footer-data">
+              <label><b>Contact Name</b></label>
+              <p>{{ soci_data?.contact_name }}</p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="text-center footer-data">
+              <label><b>Email</b></label>
+              <p>{{ soci_data?.contact_email }}</p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="text-center footer-data">
+              <label><b>Owner</b></label>
+              <p></p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <form [formGroup]="form">
+      <!-- PO details -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="PO Details">
+          <div class="row">
+            <!-- formArrayName="addCosts" -->
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>PO No</th>
+                  <th>PO date</th>
+                  <th>PO Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr align="center">
+                  <td class="text-center">{{ soci_data?.po_no }}</td>
+                  <td class="text-center">
+                    {{ soci_data?.po_date | date: "dd-MMM-yyyy" }}
+                  </td>
+                  <td class="text-center">{{ soci_data?.po_amount }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End PO details -->
+      <br />
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+        <!-- Standard Term Accordion -->
+        <p-accordionTab header="Standard Terms">
+          <div class="row grey">
+            <div class="col-md-5">
+              <div class="row">
+                <div class="col-md-5"><b>Payment Terms:</b></div>
+                <div class="col-md-4">
+                  <input
+                    type="number"
+                    class="form-control"
+                    [attr.disabled]="is_payment_term_eidt ? null : ''"
+                    formControlName="standard_payment_term"
+                  />
+                  <!-- <select
+                    formControlName="standard_payment_term"
+                    (change)="
+                      termSelect(f.standard_payment_term.value); dateChange()
+                    "
+                    name="standard_terms"
+                    class="form-control"
+                  >
+                    <option>--- Select Term ---</option>
+                    <option *ngFor="let term of terms" value="{{ term.id }}">
+                      {{ term.description }}
+                    </option>
+                  </select> -->
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6" style="text-align: middle">
+              <div class="col-md-8">
+                Quotation Validity: From
+                <u>{{ payment_term_from | date: "dd-MMM-yyyy" }}</u> To
+                <u>{{ toDate | date: "dd-MMM-yyyy" }}</u>
+              </div>
+
+              <!-- <u>{{ fromDate | date: "dd-MMM-yyyy" }}</u> To
+              <u>{{ toDate | date: "dd-MMM-yyyy" }}</u> -->
+            </div>
+            <div class="col-lg-1" style="text-align: right">
+              <div>
+                <a
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="editPaymentTerm()"
+                  ><i class="fa fa-edit"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5">
+              <b>(As Default) Payment Terms:</b>
+              {{ standard_term?.default_payment_term + " Days" }}
+            </div>
+            <div class="col-md-6">
+              Quotation Validity: From
+              <u>{{ default_payment_term_from | date: "dd-MMM-yyyy" }}</u> To
+              <u>{{ toDate | date: "dd-MMM-yyyy" }}</u>
+            </div>
+            <div class="col-lg-1" style="text-align: right"></div>
+          </div>
+
+          <div class="row grey">
+            <div class="col-md-5">
+              <div class="row">
+                <div class="col-md-5"><b>Delivery Terms:</b></div>
+                <div class="col-md-4">
+                  <input
+                    type="number"
+                    class="form-control"
+                    [attr.disabled]="is_delivery_payment_term_eidt ? null : ''"
+                    formControlName="standard_delivery_term"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6" style="text-align: middle">
+              <div class="col-md-8">
+                Quotation Validity: From
+                <u>{{ delivery_term_from | date: "dd-MMM-yyyy" }}</u>
+              </div>
+            </div>
+            <div class="col-lg-1" style="text-align: right">
+              <div>
+                <a
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="editDefaultPaymentTerm()"
+                  ><i class="fa fa-edit"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5">
+              <b>(As Default) Delivery Terms:</b>
+              {{ standard_term?.default_delivery_term + " Days" }}
+            </div>
+            <div class="col-md-6">
+              Quotation Validity: From
+              <u>{{ default_delivery_term_from | date: "dd-MMM-yyyy" }}</u>
+            </div>
+            <div class="col-lg-1" style="text-align: right"></div>
+          </div>
+        </p-accordionTab>
+        <!-- End of Standard Term Accordion -->
+      </p-accordion>
+      <br />
+      <!-- Billing Milestone -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Billing Milestones">
+          <div class="row">
+            <!-- formArrayName="billings" -->
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>Billing ID</th>
+                  <th>Stage</th>
+                  <th>Percentage %</th>
+                  <th>Amount (MYR)</th>
+                  <th>Notes</th>
+                  <th></th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  align="center"
+                  *ngFor="let billing of billing_milestone; let i = index"
+                >
+                  <!-- <td style="width: 15%">
+                    <input
+                      formControlName="billing_id"
+                      [value]="billing.billing_id"
+                      class="form-control"
+                      placeholder="SOCI123_1"
+                      type="text"
+                    />
+                  </td>
+                  <td style="width: 15%">
+                    <input
+                      formControlName="stage"
+                      class="form-control"
+                      size="1"
+                      placeholder="Deploy"
+                      type="text"
+                    />
+                  </td>
+                  <td style="width: 10%">
+                    <input
+                      formControlName="percentage"
+                      class="form-control"
+                      size="1"
+                      placeholder="50"
+                      type="number"
+                      min="0"
+                      max="100.00"
+                      step=".01"
+                    />
+                  </td>
+                  <td style="width: 20%">
+                    <input
+                      formControlName="amount"
+                      class="form-control"
+                      size="1"
+                      placeholder="300"
+                      type="number"
+                      min="0"
+                      step=".01"
+                    />
+                  </td>
+                  <td style="width: 15%">
+                    <textarea
+                      formControlName="remarks"
+                      class="form-control"
+                      id=""
+                      cols="30"
+                      rows="1"
+                    ></textarea>
+                  </td> -->
+                  <td class="text-center">{{ billing.billing_id }}</td>
+                  <td class="text-center">{{ billing.stage }}</td>
+                  <td class="text-center">{{ billing.percentage }}</td>
+                  <td class="text-center">{{ billing.amount }}</td>
+                  <td class="text-center">{{ billing.remarks }}</td>
+                  <td class="text-center"></td>
+                  <td class="text-center td-actions" style="width: 10%">
+                    <div class="action-icon">
+                      <!-- (click)="
+                            disableEditMethod(billing, 'billing');
+                            addBillingMilestone()
+                          "
+                          *ngIf="enableEdit['billing'] && controller == billing" -->
+                      <a [routerLink]="" routerLinkActive="router-link-active"
+                        ><i class="cil-check-circle"></i
+                      ></a>
+                      <!-- *ngIf="!enableEdit['billing']"
+                          (click)="enableEditMethod(billing, 'billing')" -->
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="enableEditMethod(billing, 'billing')"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      &nbsp;
+                      <!-- (click)="removeBillings(i)" -->
+                      <a [routerLink]="" routerLinkActive="router-link-active"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
+                <!-- *ngFor="let billing of billings().controls; let i = index"
+                [formGroupName]="i" -->
+                <tr align="center">
+                  <td style="width: 15%">
+                    <input
+                      formControlName="new_billing_id"
+                      class="form-control"
+                      placeholder="ABC123"
+                      type="text"
+                      readonly
+                    />
+                  </td>
+                  <td style="width: 15%">
+                    <input
+                      formControlName="stage"
+                      class="form-control"
+                      size="1"
+                      placeholder="Deploy"
+                      type="text"
+                    />
+                  </td>
+                  <td style="width: 10%">
+                    <input
+                      formControlName="percentage"
+                      class="form-control"
+                      size="1"
+                      placeholder="50"
+                      type="number"
+                      min="0"
+                      max="100.00"
+                      step=".01"
+                    />
+                  </td>
+                  <td style="width: 20%">
+                    <input
+                      formControlName="amount"
+                      class="form-control"
+                      size="1"
+                      placeholder="300"
+                      type="number"
+                      min="0"
+                      step=".01"
+                    />
+                  </td>
+                  <!-- <td>
+                    <input
+                      formControlName="status"
+                      class="form-control"
+                      size="1"
+                      placeholder="Deposit"
+                      type="input"
+                    />
+                  </td> -->
+                  <td style="width: 15%">
+                    <!-- (focus)="billingRemarkModalOpen(i)" -->
+                    <textarea
+                      formControlName="remarks"
+                      class="form-control"
+                      id=""
+                      cols="30"
+                      rows="1"
+                    ></textarea>
+                  </td>
+                  <td class="text-center"></td>
+                  <!-- (click)="addBillings()" -->
+                  <td class="td-actions" colspan="9" align="center">
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addBillingMileStone()"
+                    >
+                      <i class="icon-plus icons"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+              <!-- <tfoot align="center">
+                <tr>
+                  <td class="td-actions" colspan="9" align="center">
+                    <a [routerLink]="" routerLinkActive="router-link-active">
+                      <i class="icon-plus icons"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tfoot> -->
+            </table>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <br />
+
+      <!-- Payment Schedules Accordion -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+        <p-accordionTab header="Payment Schedules">
+          <div class="row">
+            <!-- formArrayName="payments" -->
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>Billing ID</th>
+                  <th>Percentage %</th>
+                  <th>Schedule</th>
+                  <th>SOC Payment Terms</th>
+                  <th>Status</th>
+                  <th>Amount (MYR)</th>
+                  <th>Notes</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  align="center"
+                  *ngFor="let payment of payment_schedules; let i = index"
+                >
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="payment.billing_id"
+                      [ngModelOptions]="{ standalone: true }"
+                      (input)="changePaymnetvalue('billing_id', payment.billing_id)"
+                    />
+                    <!-- {{ payment.billing_id }} -->
+                  </td>
+                  <td>
+                    <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="payment.percentage"
+                    [ngModelOptions]="{ standalone: true }"
+                    (input)="changePaymnetvalue('percentage', payment.percentage)"
+                  />
+                    <!-- {{ payment.percentage }} -->
+                  </td>
+                  <td>
+                    <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="payment.schedule"
+                    [ngModelOptions]="{ standalone: true }"
+                    (input)="changePaymnetvalue('schedule', payment.schedule)"
+                  />
+                    <!-- {{ payment.schedule | date: "dd-MMM-yyyy" }} -->
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="payment.amount"
+                    [ngModelOptions]="{ standalone: true }"
+                    (input)="changePaymnetvalue('amount', payment.amount)"
+                  />
+                    <!-- {{ payment.amount }} -->
+                  </td>
+                  <td>
+                    <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="payment.remarks"
+                    [ngModelOptions]="{ standalone: true }"
+                    (input)="changePaymnetvalue('remarks', payment.remarks)"
+                  />
+                    <!-- {{ payment.remarks }} -->
+                  </td>
+                  <td class="td-actions" style="width: 10%; padding: none">
+                    <!-- (click)="disableEditMethod(payment, 'payment')"
+                        *ngIf="enableEdit['payment'] && controller == payment" -->
+                    <div class="action-icon">
+                      <!-- <a [routerLink]="" routerLinkActive="router-link-active"
+                        ><i class="cil-check-circle"></i
+                      ></a> -->
+                      <!-- (click)="enableEditMethod(payment, 'payment')" -->
+                      <!-- *ngIf="!enableEdit['payment']" -->
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="updatePaymentSchdule(i, payment.id)"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      &nbsp;
+                      <!-- (click)="removePayments(i)" -->
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="deletePaymentSchdule(i, payment.id)"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
+                <!-- *ngFor="let payment of payments().controls; let i = index"
+                [formGroupName]="i" -->
+                <tr align="center">
+                  <td style="width: 15%; padding: 6px">
+                    <select
+                      formControlName="billing_id"
+                      class="form-control"
+                      style="width: 70%"
+                    >
+                      <!-- *ngFor="let bill of billingList"
+                    value="{{ bill.billing_id }}" -->
+                      <option
+                        *ngFor="let bill of billing_milestone; let i = index"
+                        value="{{ bill.billing_id }}"
+                      >
+                        {{ bill.billing_id }}
+                      </option>
+                    </select>
+                  </td>
+                  <td style="width: 10%; padding: 6px">
+                    <!-- (keyup)="changePaymentPercent(i)" -->
+                    <input
+                      class="form-control"
+                      formControlName="percentage"
+                      size="1"
+                      placeholder="50"
+                      type="number"
+                      min="0"
+                      max="100.00"
+                      step=".01"
+                    />
+                  </td>
+                  <td style="width: 20%; padding: 6px">
+                    <input
+                      class="form-control"
+                      formControlName="schedule"
+                      size="1"
+                      type="date"
+                    />
+                  </td>
+                  <td style="width: 10%; padding: 6px">
+                    <input
+                      class="form-control"
+                      formControlName="soc_payment_term"
+                      placeholder="30 Days"
+                      type="number"
+                    />
+                  </td>
+                  <td style="padding: 6px">
+                    <input
+                      class="form-control"
+                      formControlName="status"
+                      size="1"
+                      placeholder="Deposit"
+                      type="input"
+                    />
+                  </td>
+                  <td style="width: 10%; padding: 6px">
+                    <!-- (keyup)="changePaymentValue(i)" -->
+                    <input
+                      class="form-control"
+                      formControlName="amount"
+                      size="1"
+                      placeholder="300"
+                      type="number"
+                      min="0"
+                      step=".01"
+                    />
+                  </td>
+                  <td style="width: 10%; padding: 6px">
+                    <!-- (focus)="paymentRemarkModalOpen(i)" -->
+                    <textarea
+                      formControlName="remarks"
+                      class="form-control"
+                      placeholder="Remarks"
+                      id=""
+                      cols="30"
+                      rows="1"
+                    ></textarea>
+                    <!-- <input
+                      class="form-control"
+                      formControlName="remarks"
+                      size="1"
+                      placeholder="Remarks"
+                      type="text"
+                    /> -->
+                  </td>
+                  <td class="td-actions" colspan="9" align="center">
+                    <!-- (click)="addPayments()" -->
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addPaymentSchedule()"
+                    >
+                      <i class="icon-plus icons"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End of Payment Schedules Accordion -->
+      <br />
+      <!-- Additional Costs Accordion -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Additional Costs">
+          <div class="row">
+            <!-- formArrayName="addCosts" -->
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                  <th>Unit Price (MYR)</th>
+                  <th>Total Price (MYR)</th>
+                  <th>Notes</th>
+                  <th></th>
+                  <th></th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  align="center"
+                  *ngFor="let cost of additional_costs; let i = index"
+                >
+                  <td class="text-center">{{ cost.description }}</td>
+                  <td class="text-center">{{ cost.quantity }}</td>
+                  <td class="text-center">{{ cost.unit_price }}</td>
+                  <td class="text-center">{{ cost.total_price }}</td>
+                  <td class="text-center">{{ cost.remarks }}</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="td-actions" style="width: 10%">
+                    <div class="action-icon">
+                      <!-- (click)="disableEditMethod(cost, 'addCost')"
+                            *ngIf="enableEdit['addCost'] && controller == cost" -->
+                      <!-- <a
+                            [routerLink]=""
+                            routerLinkActive="router-link-active"
+                            ><i class="cil-check-circle"></i
+                          ></a> -->
+                      <!-- *ngIf="!enableEdit['addCost']"
+                          (click)="enableEditMethod(cost, 'addCost')" -->
+                      <a [routerLink]="" routerLinkActive="router-link-active">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      &nbsp;
+                      <!-- (click)="removeAddCosts(i)" -->
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="deleteAdditionalCost(i, cost.id)"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
+                <!-- *ngFor="let cost of addCosts().controls; let i = index"
+                [formGroupName]="i" -->
+                <tr align="center">
+                  <td style="width: 15%">
+                    <input
+                      formControlName="description"
+                      class="form-control"
+                      placeholder="Training"
+                      type="text"
+                    />
+                  </td>
+                  <td style="width: 15%">
+                    <!-- (keyup)="allTotal(cost['controls'], addCosts().controls)" -->
+                    <input
+                      formControlName="quantity"
+                      class="form-control"
+                      size="1"
+                      placeholder="1"
+                      type="number"
+                      (input)="changeQuantity()"
+                      min="0"
+                    />
+                  </td>
+                  <td style="width: 18%">
+                    <!-- (keyup)="allTotal(cost['controls'], addCosts().controls)" -->
+                    <input
+                      formControlName="unit_price"
+                      class="form-control"
+                      size="1"
+                      placeholder="300"
+                      type="text"
+                      min="0"
+                      step=".01"
+                      (input)="costUnitValue()"
+                    />
+                  </td>
+                  <td style="width: 18%">
+                    <input
+                      formControlName="total_price"
+                      class="form-control"
+                      size="1"
+                      placeholder="300"
+                      readonly
+                      type="text"
+                      min="0"
+                      step=".01"
+                    />
+                  </td>
+                  <td style="width: 15%">
+                    <textarea
+                      formControlName="remarks"
+                      class="form-control"
+                      placeholder="Remarks"
+                      id=""
+                      cols="30"
+                      rows="1"
+                    ></textarea>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td class="td-actions" colspan="9" align="center">
+                    <!-- (click)="addAddCosts()" -->
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addAdditionalCost()"
+                    >
+                      <i class="icon-plus icons"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="col-lg-12" align="right">
+              <div class="form-group charges">
+                <b>TotaL </b> IDR<input
+                  type="text"
+                  class="form-control"
+                  readonly
+                  value=" {{ total_additional_costs_amount }}"
+                />
+                <!-- {{ sub_total | number: "1.2-2" }} -->
+              </div>
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End of Additional Costs Accordion -->
+      <br />
+
+      <!-- Billing Instruction Accordion -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Billing Instruction">
+          <div class="row">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>Schedule</th>
+                  <th>Percentage %</th>
+                  <th>Amount (RM)</th>
+                  <th>SOC Payment Terms</th>
+                  <th>Status</th>
+                  <th>Note</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  align="center"
+                  *ngFor="let item of billing_instruction; let i = index"
+                >
+                  <td class="text-center">
+                    {{ item.schedule }}
+                  </td>
+                  <td class="text-center">
+                    {{ item.percentage }}
+                  </td>
+                  <td class="text-center">{{ item.amount }}</td>
+                  <td class="text-center">
+                    {{ item.soc_payment }}
+                  </td>
+                  <td class="text-center"></td>
+                  <td class="text-center">
+                    {{ item.remarks }}
+                  </td>
+                  <td class="td-actions" style="width: 10%">
+                    <div class="action-icon">
+                      <a [routerLink]="" routerLinkActive="router-link-active">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      &nbsp;
+                      <!-- (click)="removeAddCosts(i)" -->
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="deleteBillingInstruction(i, item.id)"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
+                <tr align="center">
+                  <td>
+                    <input
+                      formControlName="schedule"
+                      class="form-control"
+                      placeholder="schedule"
+                      type="date"
+                      style="width: 89%"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      formControlName="percentage"
+                      class="form-control"
+                      placeholder="0"
+                      type="text"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      formControlName="amount"
+                      class="form-control"
+                      placeholder="0"
+                      type="number"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      formControlName="soc_payment_term"
+                      class="form-control"
+                      placeholder="payment terms"
+                      type="text"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      formControlName="status"
+                      class="form-control"
+                      placeholder="status"
+                      type="text"
+                    />
+                  </td>
+                  <td>
+                    <textarea
+                      formControlName="remarks"
+                      class="form-control"
+                      placeholder="Remarks"
+                      id=""
+                      cols="30"
+                      rows="1"
+                    ></textarea>
+                    <!-- <input
+                      formControlName="remarks"
+                      class="form-control"
+                      placeholder="remarks"
+                      type="text"
+                    /> -->
+                  </td>
+                  <td class="td-actions" colspan="9" align="center">
+                    <!-- (click)="addAddCosts()" -->
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addBillingInstruction()"
+                    >
+                      <i class="icon-plus icons"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End of Billing Instruction Accordion -->
+      <br />
+
+      <!-- Additional Instruction and Information Accordion -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Additional Instruction and Information">
+          <!-- Heading -->
+          <div class="row grey">
+            <div class="col-md-3">
+              <div class="row">
+                <div class="col-md-5"><b>Title</b></div>
+              </div>
+            </div>
+            <div class="col-lg-6" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Description</b>
+              </div>
+            </div>
+          </div>
+          <!-- bil to -->
+
+          <div
+            class="row"
+            *ngFor="let item of additional_instructions; let i = index"
+          >
+            <div class="col-md-3">
+              <div class="col-md-10">
+                <input
+                  class="text-left form-control"
+                  style="width: 200px"
+                  type="text"
+                  [value]="item.soci"
+                  readonly
+                  placeholder="title..."
+                />
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="col-md-10">
+                <input
+                  class="text-left form-control"
+                  style="width: 700px"
+                  type="text"
+                  [value]="item.description"
+                  readonly
+                  placeholder="Description"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-1" style="text-align: right">
+              <div class="row">
+                <div class="action-icon">
+                  <!-- <a [routerLink]="" routerLinkActive="router-link-active"
+                    ><i class="cil-check-circle"></i
+                  ></a>
+                  &nbsp; -->
+                  <a [routerLink]="" routerLinkActive="router-link-active">
+                    <i class="fa fa-edit"></i
+                  ></a>
+                  &nbsp;
+                  <a
+                    [routerLink]=""
+                    routerLinkActive="router-link-active"
+                    style="font-size: 20px"
+                    (click)="deleteAdditionalInstruction(i, item.id)"
+                    ><i class="fa fa-trash"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add additional_instruction -->
+          <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 200px"
+                      type="text"
+                      formControlName="soci_title"
+                      placeholder="title..."
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 700px"
+                      type="text"
+                      formControlName="description"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="action-icon">
+                    <!-- <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp; -->
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      (click)="addAdditionalInstruction()"
+                    >
+                      <i class="icon-plus icons"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tender -->
+          <!-- <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 200px"
+                      type="text"
+                      formControlName="tender"
+                      placeholder="Tender / Contract No "
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 700px"
+                      type="text"
+                      formControlName="description"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="action-icon">
+                    <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!-- Contract Start -->
+          <!-- <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 200px"
+                      type="text"
+                      formControlName="contract_start_date"
+                      placeholder="Contract Start Date"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 700px"
+                      type="text"
+                      formControlName="description"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="action-icon">
+                    <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!-- Contract Expiry Date  -->
+          <!-- <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 200px"
+                      type="text"
+                      formControlName="contract_cxpiry_date"
+                      placeholder="Contract Expiry Date"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 700px"
+                      type="text"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="action-icon">
+                    <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End of Additional Instruction and Information -->
+      <br />
+
+      <!-- Additional/Reduction Charges -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Additional/Reduction Charges">
+          <!-- Heading -->
+          <div class="row grey">
+            <div class="col-md-3" style="text-align: middle">
+              <div class="row">
+                <div class="col-md-5"><b>Cost Item</b></div>
+              </div>
+            </div>
+            <div class="col-lg-4" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Description</b>
+              </div>
+            </div>
+            <div class="col-lg-1" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Quantity</b>
+              </div>
+            </div>
+            <div class="col-lg-1" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Unit (RM)</b>
+              </div>
+            </div>
+            <div class="col-lg-2" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Amount (RM)</b>
+              </div>
+            </div>
+            <div class="col-lg-1" style="text-align: middle">
+              <div class="">
+                <b> Action</b>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="row"
+              *ngFor="let item of additional_charges; let i = index"
+            >
+              <div class="col-md-3">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 200px"
+                      type="text"
+                      disabled
+                      [value]="item.code_item"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- Description -->
+              <div class="col-md-4">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 336px"
+                      type="text"
+                      disabled
+                      [value]="item.description"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- qty -->
+              <div class="col-md-1">
+                <div class="qty">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="number"
+                      placeholder="0"
+                      disabled
+                      [value]="item.quantity"
+                      style="width: 75px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- unit -->
+              <div class="col-md-1">
+                <div class="unit">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="text"
+                      placeholder="0"
+                      disabled
+                      [value]="item.unit_price"
+                      style="width: 75px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Amount -->
+              <div class="col-md-2">
+                <div class="amount">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="text"
+                      placeholder="0.0"
+                      disabled
+                      [value]="item.total_price"
+                      style="width: 100px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- action -->
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="action-icon">
+                    <!-- <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp; -->
+                    <a [routerLink]="" routerLinkActive="router-link-active">
+                      <i class="fa fa-edit"></i
+                    ></a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      (click)="deleteAdditionalCharges(i, item.id)"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Installation -->
+          <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="">
+                  <!-- formControlName="" -->
+                  <div class="col-md-10">
+                    <select
+                      class="form-control"
+                      formControlName="cost_item_id"
+                      style="width: 200px"
+                    >
+                      <!-- let i = index -->
+                      <option value="" disabled selected>Select Item</option>
+                      <option
+                        *ngFor="let item of additional_costs; let i = index"
+                        value="{{ item.id }}"
+                      >
+                        {{ item.description }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      formControlName="description"
+                      style="width: 336px"
+                      type="text"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div class="qty">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      formControlName="quantity"
+                      (input)="changeQuantity()"
+                      type="number"
+                      placeholder="0"
+                      style="width: 75px"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div class="unit">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      formControlName="unit_price"
+                      type="text"
+                      placeholder="0"
+                      (input)="chargesUnitValue()"
+                      style="width: 75px"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="amount">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      formControlName="amount"
+                      type="text"
+                      placeholder="0.0"
+                      style="width: 100px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="text-center action-icon">
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      (click)="addAdditionalCharges()"
+                      ><i class="icon-plus icons"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Taxation -->
+          <!-- <div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 200px"
+                      type="text"
+                      value="Taxation"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 336px"
+                      type="text"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div class="qty">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="number"
+                      placeholder="0"
+                      style="width: 75px"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div class="unit">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="text"
+                      placeholder="0"
+                      style="width: 75px"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="amount">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="text"
+                      placeholder="0.0"
+                      style="width: 100px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-1" style="text-align: right">
+                <div class="row">
+                  <div class="action-icon">
+                    <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="col-lg-12" align="right">
+            <div class="form-group charges">
+              <b>TotaL </b> IDR<input
+                type="text"
+                class="form-control"
+                readonly
+                value=" {{ total_additional_charges_amount }}"
+              />
+              <!-- {{ sub_total | number: "1.2-2" }} -->
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End Additional/Reduction Charges -->
+      <br />
+      <!-- Product -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Products">
+          <div class="row">
+            <!-- formArrayName="products" -->
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Product Name</th>
+                  <th>SKU ID</th>
+                  <th>Quantity</th>
+                  <th>Unit Price(MYR)</th>
+                  <th>Total Price(MYR)</th>
+                  <th>Discount %</th>
+                  <th>Net Amount(MYR)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr align="center" *ngFor="let item of product; let i = index">
+                  <td class="text-center">{{ i + 1 }}</td>
+                  <td class="text-center">{{ item.name }}</td>
+                  <td class="text-center">{{ item.sku }}</td>
+                  <td class="text-center">{{ item.quantity }}</td>
+                  <td class="text-center">{{ item.unit_price }}</td>
+                  <td class="text-center">{{ item.total_price }}</td>
+                  <td class="text-center">{{ item.discount }}</td>
+                  <td class="text-center">{{ item.amount }}</td>
+                  <td class="td-actions" style="width: 5%">
+                    <div class="action-icon">
+                      <!-- (click)="disableEditMethod(productC, 'product')"
+                            *ngIf="enableEdit['product'] && controller == productC" -->
+                      <!-- <a [routerLink]="" routerLinkActive="router-link-active"
+                        ><i class="cil-check-circle"></i
+                      ></a> -->
+                      <!-- *ngIf="!enableEdit['product']"
+                          (click)="enableEditMethod(productC, 'product')" -->
+                      <a [routerLink]="" routerLinkActive="router-link-active">
+                        <i class="fa fa-edit"></i> </a
+                      >&nbsp;
+                      <!-- (click)="removeProduct(i)" -->
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="deleteProduct(i, item.id)"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
+                <!-- *ngFor="let productC of products().controls; let i = index"
+                [formGroupName]="i" -->
+                <tr align="center">
+                  <!-- {{ i + 1 }} -->
+                  <td></td>
+                  <td style="size: 20%">
+                    <!-- [(ngModel)]="selectedProductAdvanced[i]" -->
+                    <p-autoComplete
+                      formControlName="name"
+                      [suggestions]="filteredProducts"
+                      (completeMethod)="filterProduct($event)"
+                      field="name"
+                      [dropdown]="true"
+                      [style]="{ width: '100%' }"
+                      [inputStyle]="{ width: '100%' }"
+                    >
+                      <ng-template let-product pTemplate="item">
+                        <!-- (click)="productDetails(product, productC);countNetAmount(productC)" -->
+                        <div
+                          class="product-item"
+                          (click)="productDetails(product)"
+                        >
+                          <div>{{ product.name }}</div>
+                        </div>
+                      </ng-template>
+                    </p-autoComplete>
+                  </td>
+                  <td style="width: 14%">
+                    <input
+                      class="form-control"
+                      formControlName="sku"
+                      type="text"
+                      readonly
+                    />
+                  </td>
+                  <td>
+                    <!-- (keyup)="countNetAmount(productC)" -->
+                    <input
+                      class="form-control"
+                      formControlName="quantity"
+                      type="number"
+                      step=".01"
+                      placeholder="0"
+                      (input)="addProductQuantity()"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      class="form-control"
+                      formControlName="unit_price"
+                      type="number"
+                      step=".01"
+                      readonly
+                    />
+                  </td>
+                  <td>
+                    <input
+                      class="form-control"
+                      formControlName="total_price"
+                      type="number"
+                      step=".01"
+                      readonly
+                    />
+                  </td>
+                  <td>
+                    <!-- (keyup)="countNetAmount(productC)" -->
+                    <input
+                      class="form-control"
+                      formControlName="discount"
+                      type="number"
+                      step=".01"
+                      (input)="addDiscount()"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      class="form-control"
+                      formControlName="amount"
+                      type="number"
+                      step=".01"
+                      readonly
+                    />
+                  </td>
+                  <td class="td-actions" colspan="9" align="center">
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addPrductData()"
+                    >
+                      <i class="icon-plus icons"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            class="card border-primary m-3"
+            style="float: right; width: 435px; border-radius: 15px"
+          >
+            <div class="card-body">
+              <table class="table table-borderless table-price">
+                <tr>
+                  <td class="text-left"><b> Subtotal Before Tax</b></td>
+                  <td class="text-right">
+                    {{ product_subtotal_before_tax | number: "1.2" }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-left"><b>Tax (SST)</b></td>
+                  <td class="text-right">{{ tax_rate | number: "1.2" }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left"><b>Discount Value</b></td>
+                  <td class="text-right">
+                    {{ products_total_discount_values | number: "1.2" }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-left"><b>Total Amount</b></td>
+                  <td class="text-right">
+                    {{ product_total_net_amount | number: "1.2" }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="card">
+              <div class=""></div>
+            </div>
+          </div> -->
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End of Products Accordion -->
+      <br />
+      <!-- SOCI Detail -->
+      <div
+        style="
+          margin-top: 10px;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+        "
+      >
+        <p-accordion [multiple]="true" styleClass="custom" activeIndex="0">
+          <p-accordionTab header="Summary">
+            <table class="table table-borderless table-price">
+              <tr>
+                <td class="text-left">Subtotal Before Tax</td>
+                <td class="text-right">{{ product_subtotal_before_tax }}</td>
+              </tr>
+              <tr>
+                <td class="text-left">Discount Value</td>
+                <td class="text-right">
+                  {{ products_total_discount_values | number: "1.2" }}
+                </td>
+              </tr>
+              <tr>
+                <td class="text-left">SST (Dynamic) Tax</td>
+                <td class="text-right">0.000</td>
+              </tr>
+              <tr>
+                <td class="text-left">Additional Cost & Charges</td>
+                <td class="text-right">{{ additional_cost_and_charges }}</td>
+              </tr>
+              <tr>
+                <td class="text-left">Total Cost</td>
+                <td class="text-right">{{ total_cost | number: "1.2" }}</td>
+              </tr>
+            </table>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+    </form>
+  </div>
 </div>
 
-<div class="row"></div> <!-- Empty row to give some space at the bottom -->
+<div class="action-btns">
+  <button class="cancel-btn">
+    <i class="pi pi-arrow-left"></i>
+    Cancel
+  </button>
+  <button
+    class="request-btn"
+    *ngIf="request_approval == false"
+    (click)="confirmationModal.show()"
+  >
+    REQUEST APPROVAL
+  </button>
+</div>
+<!-- Empty row to give some space at the bottom -->
 <div class="row"></div>
 
-<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-danger" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Warning</h4>
-        </div>
-        <div class="modal-body">
-          <p>{{dangerBody}}</p>
-        </div>
-        <div class="modal-footer" *ngIf="modal_type == 'paymentPercentage'">
-            <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Keep Changes</button>
-            <button type="button" class="btn btn-primary" (click)="setPaymentAutoAssignPercentage();dangerModal.hide()">Auto-Assign</button>
-            <button type="button" class="btn btn-primary" (click)="setDefaultPayment();dangerModal.hide()">Revert Default</button>
-        </div>
-        <div class="modal-footer" *ngIf="modal_type == 'paymentValue'">
-            <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Keep Changes</button>
-            <button type="button" class="btn btn-primary" (click)="setPaymentAutoAssignValue();dangerModal.hide()">Auto-Assign</button>
-            <button type="button" class="btn btn-primary" (click)="setDefaultPayment();dangerModal.hide()">Revert Default</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
-<div bsModal #paymentRemarkModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-info" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Remarks</h4>
-          <button type="button" class="close" (click)="paymentRemarkModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <textarea name="pformRemarks" id="pformRemarks" cols="60" placeholder="remarks" rows="10" [(ngModel)]="paymentRemarks"></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="paymentRemarkModalClose()">Confirm</button>
-          <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<div
+  bsModal
+  #paymentRemarkModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Remarks</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="paymentRemarkModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea
+          name="pformRemarks"
+          id="pformRemarks"
+          cols="60"
+          placeholder="remarks"
+          rows="10"
+          [(ngModel)]="paymentRemarks"
+        ></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary">Confirm</button>
+        <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
-<div bsModal #billingRemarkModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- confermation-model -->
+<div
+  id="success"
+  bsModal
+  #confirmationModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <!-- <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmationModal</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+       
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-danger">
+          Delete
+        </button>
+      </div>
+    </div> -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure to REQUEST the SOCI
+        <!-- <textarea name="cancel_remarks" id="cancel_remarks" cols="60" placeholder="Reason of cancellation"
+                rows="10" ></textarea> -->
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationModal.hide()"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-info" (click)="applyForApproval()">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div bsModal #confirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-info" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Cancellation Remarks</h4>
-          <button type="button" class="close" (click)="billingRemarkModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">confirmation</h4>
+                <button type="button" class="close" (click)="confirmationModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea name="cancel_remarks" id="cancel_remarks" cols="60" placeholder="Reason of cancellation"
+                    rows="10" >Are you sure to REQUEST the SOCI</textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="confirmationModal.hide()">Close</button>
+                <button type="button" class="btn btn-info" (click)="applyForApproval()">Cancel Quote</button>
+            </div>
         </div>
-        <div class="modal-body">
-          <textarea name="bformRemarks" id="bformRemarks" cols="60" placeholder="remarks" rows="10" [(ngModel)]="billingRemarks"></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="billingRemarkModalClose()">Confirm</button>
-          <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+</div> -->
+<!-- /.modal -->
+
+<!-- Success-Model -->
+<div
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

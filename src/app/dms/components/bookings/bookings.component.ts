@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { MockBookingService } from './services/mock-booking.service';
 import { BookingList } from './services/booking.interface';
+import { BookingService } from './services/booking.service';
 
 @Component({
   selector: 'app-bookings',
@@ -9,25 +10,24 @@ import { BookingList } from './services/booking.interface';
   styleUrls: ['./bookings.component.scss']
 })
 export class BookingsComponent implements OnInit {
-  bookingList: BookingList;
+  bookingList: any;
 	paginate: [];
 	pageItems: number = 10;
 	search_text: string = '';
 	icons = [];
 
-  constructor(private api: MockBookingService) { }
+  constructor(private api: BookingService) { }
 
   ngOnInit(): void {
     this.api.getList().subscribe((response) => {
-      if (response as BookingList) {
+      // if (response as BookingList) {
         this.bookingList = response;
-      }
+      // }
 			console.log(response);
 		});
   }
 
-  getAll(){
-    
+  onSearch() {
+    console.log('searching for:', this.search_text);
   }
-
 }

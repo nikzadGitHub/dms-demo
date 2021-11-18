@@ -1,0 +1,58 @@
+<div class="table-responsive">
+  <div *ngIf=" ! isRoot" class="bold-header pl-3">{{ title }}</div>
+  <table class="table table-striped">
+    <thead class="grey">
+    <tr>
+      <th>No.</th>
+      <th>Product Name</th>
+      <th>SKU ID</th>
+      <th>Quantity</th>
+      <th>UOM</th>
+      <th>Availability</th>
+      <th>Expected Sales Price (RM)</th>
+      <th *ngIf="isMain">Serial No</th>
+      <th>Available Qty</th>
+      <th>Cost (RM)</th>
+      <th *ngIf="isRemovable"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let asset of data; let i = index">
+      <td>{{ asset.id }}</td>
+      <td> {{ asset.name }} </td>
+      <td> {{ asset.sku }} </td>
+      <td> {{ asset.quantity }} </td>
+      <td> {{ asset.uom }} </td>
+      <td> {{ asset.availability }} </td>
+      <td> {{ asset.expected_sale_price }} </td>
+      <td *ngIf="isMain">
+        <div *ngIf="asset.serial_no">{{ asset.serial_no }}</div>
+        <div *ngIf=" ! asset.serial_no">
+          <button class="btn btn-assign btn-primary">Assign</button>
+        </div>
+      </td>
+      <td> {{ asset.available_quantity }} </td>
+      <td> {{ asset.cost }} </td>
+      <td *ngIf="isRemovable">
+        <button type="button" class="btn btn-sm btn-primary"
+                (click)="onRemove(i)"><i class="fa fa-minus"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="isAddable" class="custom-footer">
+    <dms-identify
+      *ngIf="isAdding"
+      [kind]="kind" [title]="title"
+      [maxPick]="maxPick"
+      (bySave)="onSave($event)"
+      (byClose)="isAdding = false">
+    </dms-identify>
+    <div *ngIf="!isAdding && !isLimitReached" class="d-flex justify-content-center">
+      <button type="button" class="btn btn-sm btn-primary" (click)="isAdding = true"><i
+        class="fa fa-plus"></i> ADD
+      </button>
+    </div>
+  </div>
+</div>

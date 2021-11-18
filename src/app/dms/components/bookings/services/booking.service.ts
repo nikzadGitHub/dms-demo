@@ -15,4 +15,8 @@ export class BookingService implements BookingInterface {
   getList(): Observable<BookingList> {
     return this.apiClient.get<BookingList>('booking');
   }
+
+  saveBooking(data): Observable<any> {
+    return this.apiClient.post('booking/store', data);
+  }
 }

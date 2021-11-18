@@ -1,0 +1,74 @@
+  .custom-footer{
+    padding-bottom: 25px;
+
+    button {
+        margin: 10px;
+        height: 35px;
+        width: 100px;
+        font-size: 15px;
+        font-weight: 400;
+    }
+  }
+
+  button.button-style {
+    font-size: 15px;
+    font-weight: 400;
+    width: fit-content;
+    padding: 1px 25px;
+  }
+
+  table{
+    font-size: 15px;
+    color: #2F4C58;
+  }
+
+  .bold-header {
+    margin: 10px 0px;
+  }
+
+  .accordion-header, .bold-header {
+    font-weight: bold;
+    font-size: 20px;
+    padding-left: 5px;
+  }
+  .asset-part{
+    margin: 0px 0px 50px 0px;
+  }
+  .p-accordion {
+    .p-accordiontab:last-child {
+      .p-accordion-content {
+        padding-left: 0px;
+        padding-right: 0px;
+      }
+      .p-accordion-content:first-child {
+        padding-top: 0px;
+      }
+    }
+    .p-accordion-header{
+      .p-accordion-header-link {
+        text-decoration: none;
+      }
+      .p-accordion-toggle-icon {
+        margin-top: -8px;
+        position: absolute;
+        right: 0.5em;
+        top: 50%;
+      }
+    }
+    .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+      background-color: white;
+    }
+    .table>tbody>tr:nth-child(odd)>td{
+      background-color: white;
+    }
+
+    .table>tbody tr td:nth-child(odd){
+        background-color: #fbfbfb;
+    }
+
+    .table>tbody>tr:nth-child(even)>td{
+        background-color: #F6F6F6;
+    }
+  }
+
+@import '../widgets/expand-panel/global';
