@@ -40,6 +40,7 @@ export class EditComponent implements OnInit {
   controller: any;
   selectedProductAdvanced: Product[] = [];
   enableEdit: boolean[] = [];
+  readonly: any;
   termSelected: number;
   quotations: Quote[];
   terms: Term[];
@@ -73,7 +74,7 @@ export class EditComponent implements OnInit {
   product_id: any;
   total_additional_charges_amount = 0;
   total_additional_costs_amount = 0;
-  is_preview_check = false;
+  is_preview_check: boolean;
   billing_id: any;
   external_product_number: any;
   product_data_area_id: any;
@@ -93,6 +94,8 @@ export class EditComponent implements OnInit {
     amount: "",
     remarks: "",
   };
+  editableRowIndex: any;
+  selectedId: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -267,17 +270,7 @@ export class EditComponent implements OnInit {
         billin_id_array[0] + "_" + (parseInt(billin_id_array[1]) + 1),
     });
   }
-  enableEditMethod(control, type) {
-    // this.controller = control;
-    // this.enableEdit[type] = true;
-    // if (type == "product") {
-    //   control["controls"]["name"].enable();
-    //   control["controls"]["quantity"].enable();
-    //   control["controls"]["discount"].enable();
-    // } else {
-    //   control.enable();
-    // }
-  }
+
   // End billing milestone
 
   // ADD payment_schedule
@@ -313,16 +306,34 @@ export class EditComponent implements OnInit {
         }
       );
   }
-  changePaymnetvalue(column, value) {
-    this.payemntData[column] = value;
-  }
+
   updatePaymentSchdule(index, payment_schedule_id) {
+    //  let oldData = this.payment_schedules[index]
+    //   this.payemntData.billing_id = oldData.billing_id
     this.sociService
       .putQuery(
         "/soci/payment-schedule/" + payment_schedule_id,
-        this.payemntData
+        this.controller
       )
-      .subscribe((data) => {});
+      .subscribe(
+        (data: any) => {
+          this.payment_schedules[index] = data["data"];
+          this.editableRowIndex = null;
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.form.reset();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
   }
   deletePaymentSchdule(index, payment_schedule_id) {
     this.sociService
@@ -390,6 +401,43 @@ export class EditComponent implements OnInit {
     // this.form.setValue
   }
 
+  changeCostvalues(value) {
+    console.log("cost-values: ", value);
+    value.total_price = value.quantity * value.unit_price;
+    console.log("total_price: ", value.total_price);
+
+    // this.form.patchValue({
+    //   total_price: value.quantity * value.unit_price,
+    // });
+    // this.payemntData[column] = value;
+  }
+
+  updateAdditionalCost(index, additiona_cost_id) {
+    this.sociService
+      .putQuery("/soci/additional-cost/" + additiona_cost_id, this.controller)
+      .subscribe(
+        (data: any) => {
+          this.additional_costs[index] = data["data"];
+          this.total_additional_costs_amount += data["data"]["total_price"];
+          this.additional_cost_and_charges += data["data"]["total_price"];
+          this.total_cost += data["data"]["total_price"];
+          this.editableRowIndex = null;
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.form.reset();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+  }
   deleteAdditionalCost(index, additional_cost_id) {
     this.sociService
       .deleteQuery("/soci/additional-cost/" + additional_cost_id)
@@ -432,6 +480,34 @@ export class EditComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.billing_instruction.push(data["data"]);
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.form.reset();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+  }
+
+  updateBillingInstruction(index, billing_instruction_id) {
+    // /soci/billing-instruction/
+    this.sociService
+      .putQuery(
+        "/soci/billing-instruction/" + billing_instruction_id,
+        this.controller
+      )
+      .subscribe(
+        (data: any) => {
+          this.billing_instruction[index] = data["data"];
+          this.editableRowIndex = null;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -501,6 +577,32 @@ export class EditComponent implements OnInit {
       );
   }
 
+  updateAdditionalInstruction(index, additional_instruction_id) {
+    this.sociService
+      .putQuery(
+        "/soci/additional-instruction/" + additional_instruction_id,
+        this.controller
+      )
+      .subscribe(
+        (data: any) => {
+          this.additional_instructions[index] = data["data"];
+          this.editableRowIndex = null;
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.form.reset();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+  }
   deleteAdditionalInstruction(index, addiitonal_instruction_id) {
     this.sociService
       .deleteQuery("/soci/additional-instruction/" + addiitonal_instruction_id)
@@ -535,7 +637,7 @@ export class EditComponent implements OnInit {
         description: this.form.value.description,
         quantity: this.form.value.quantity,
         unit_price: this.form.value.unit_price,
-        total_price: this.form.value.amount,
+        total_price: this.form.value.total_price,
       })
       .subscribe(
         (data: any) => {
@@ -572,9 +674,39 @@ export class EditComponent implements OnInit {
     if (this.form.value.quantity) {
       this.form.patchValue({
         // total_price: this.form.value.unit_price,
-        amount: this.form.value.unit_price * this.form.value.quantity,
+        total_price: this.form.value.unit_price * this.form.value.quantity,
       });
     }
+  }
+
+  updateAdditionalCharges(index, additional_charges_id) {
+    this.sociService
+      .putQuery(
+        "/soci/additional-charges/" + additional_charges_id,
+        this.controller
+      )
+      .subscribe(
+        (data: any) => {
+          this.additional_charges[index] = data["data"];
+          this.total_additional_charges_amount += data["data"]["total_price"];
+          this.additional_cost_and_charges += data["data"]["total_price"];
+          this.total_cost += data["data"]["total_price"];
+          this.editableRowIndex = null;
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.form.reset();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
   }
 
   deleteAdditionalCharges(index, additional_charges_id) {
@@ -716,7 +848,41 @@ export class EditComponent implements OnInit {
       });
     }
   }
-
+  updateProduct(index, product_id) {
+    this.sociService
+      .putQuery("/soci/product/" + product_id, {
+        data_area_id: this.controller.data_area_id,
+        external_product_number: this.controller.external_product_number,
+        soci_id: this.soci_id
+      })
+      .subscribe(
+        (data: any) => {
+          this.product[index] = data["data"];
+          this.product_subtotal_before_tax += data["data"]["total_price"];
+          this.product_total_net_amount += data["data"]["amount"];
+          this.products_discount_values += data["data"]["discount"];
+          this.products_total_discount_values =
+            (this.products_discount_values / 100) *
+            this.product_subtotal_before_tax;
+          this.total_cost +=
+            data["data"]["discount"] + data["data"]["total_price"];
+          this.editableRowIndex = null;
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.form.reset();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+  }
   deleteProduct(index, id) {
     this.sociService.deleteQuery("/soci/product/" + id).subscribe(
       (data: any) => {
@@ -772,6 +938,26 @@ export class EditComponent implements OnInit {
           }, 2000);
         }
       );
+  }
+
+  enableEditMethod(index, control, type) {
+    // && selectedId !== payment.id
+    console.log("control: ", control);
+    console.log("control_id: ", control.id);
+    console.log("type: ", type);
+    delete control["laravel_through_key"];
+
+    delete control["code_item_id"];
+    delete control["code_item"];
+    this.selectedId = type;
+    this.controller = control;
+    this.enableEdit[type] = true;
+    this.editableRowIndex = index;
+  }
+  disableEditMethod(control, type) {
+    this.controller = control;
+    this.enableEdit[type] = false;
+    this.editableRowIndex = null;
   }
 
   editPaymentTerm() {
