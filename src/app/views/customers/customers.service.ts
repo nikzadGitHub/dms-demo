@@ -90,6 +90,7 @@ getCustomerRelatedSOCI(pageItems,company): Observable<any[]> {
 
 getCustomerRelatedAttachments(id): Observable<any[]> {
   let query = '/customer/attachments/' + id;
+  // let query = '/customer/attachments/' + 2673;
   return this.http.get<any[]>(this.apiUrl + query,this.httpOptions)
   .pipe(
     catchError(this.errorHandler)

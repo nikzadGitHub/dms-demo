@@ -32,6 +32,7 @@ export class IndexComponent implements OnInit {
   customerOpportunities: any;
   customerQuotes: any;
   customerSOCI: any;
+  customerAttachments: any;
   constructor(private customerService: CustomersService) { }
 
   ngOnInit(): void {
@@ -141,7 +142,7 @@ export class IndexComponent implements OnInit {
   getCustomerAttachments(){
     let data = this.selectedCustomerData
     this.customerService.getCustomerRelatedAttachments(data.id).subscribe((state:any)=>{
-      // this.customerSOCI = state['data']['soci'];
+      this.customerAttachments = state['data'];
     })
   }
 }
