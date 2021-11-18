@@ -31,6 +31,14 @@ export class LeadsService {
     )
   }
 
+  getPage(url,pageItems,search_text){
+    let query = '&page_items=' + pageItems + '&search_text=' + search_text;
+    return this.httpClient.get(url + query,this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   store(data): Observable<any> {
     return this.httpClient.post(this.apiURL + '/lead', data, this.httpOptions)
     .pipe(
@@ -80,13 +88,7 @@ export class LeadsService {
     )
   }
 
-  getPage(url,pageItems,search_text){
-    let query = '&page_items=' + pageItems + '&search_text=' + search_text;
-    return this.httpClient.get(url + query,this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    )
-  }
+
 
   searchContact(contact): Observable<any> {
     console.log(contact);

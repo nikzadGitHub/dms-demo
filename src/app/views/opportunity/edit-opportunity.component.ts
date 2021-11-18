@@ -26,6 +26,7 @@ export interface OpportunityDetail {
   created_at: any;
   currency_code: any;
   customer: any;
+  data_area_id;
 }
 
 @Component({
@@ -137,6 +138,7 @@ export class EditOpportunityComponent implements OnInit {
     customer_contact_id: "",
     customer_contact2_id: "",
     status_id: "",
+    stages_id: "",
     is_include_in_forecast: "",
   });
 
@@ -178,6 +180,19 @@ export class EditOpportunityComponent implements OnInit {
   data_area_id: any;
   company_name: any;
   external_id: any;
+  quote_id: any;
+  quotation_detail: any;
+  quotations: any[] = [];
+  is_quotation_id_selected: boolean;
+  quotation_product: any[] = [];
+  sub_total: any;
+  quotation_product_tax: any;
+  quotation_product_discount: any;
+  quotation_total: any;
+  terms: any;
+  quotation_mile_stone: any[] = [];
+  quotation_payment_schedules: any[] = [];
+  quotation_additional_costs: any;
 
   constructor(
     private appService: AppService,
@@ -196,34 +211,23 @@ export class EditOpportunityComponent implements OnInit {
     );
 
     this.route.params.subscribe((event) => {
-      console.log("opp_id:", event);
-
       this.opportunity_id = event.opportunityId;
     });
 
     this.appService
       .getQuery("/opportunity/detail/" + this.opportunity_id, null)
       .subscribe((data: any) => {
-        console.log("opportunity-detail-data:", data);
         this.detail = data["data"];
-        console.log("opportunity-detail:", this.detail);
-        console.log("opportunity-:detail-customer", this.detail.customer);
-        console.log(
-          "opportunity-detail-external_id:",
-          this.detail.customer.external_id
-        );
-        console.log(
-          "opportunity-detail-data_area_id:",
-          this.detail.customer.data_area_id
-        );
         this.external_id = this.detail.customer.external_id;
-        this.data_area_id = this.detail.customer.data_area_id;
+        this.data_area_id = this.detail.data_area_id;
+        // this.data_area_id = this.detail.customer.data_area_id;
         this.company_name = this.detail.customer.company_name;
         this.opportunityDetailForm1.patchValue({
           topic: data["data"]["topic"],
           customer_contact_id: data["data"]["customer_contact_id"],
           customer_contact2_id: data["data"]["customer_contact2_id"],
           status_id: data["data"]["status_id"],
+          stages_id: data["data"]["stage_id"],
           is_include_in_forecast: data["data"]["is_include_in_forecast"],
         });
         if (
@@ -256,28 +260,25 @@ export class EditOpportunityComponent implements OnInit {
             hospital_department: data["data"]["hospital_department"],
           });
         }
+
         // customer-contacts
         this.appService
+          // company_name
+          // this.detail["data_area_id"]
+          // external_id=" +
+          //       this.detail["customer"]["external_id"]
           .getQuery(
             "/opportunity/get-customer-contacts?data_area_id=" +
               this.detail["data_area_id"] +
               "&&external_id=" +
-              this.detail["customer"]["external_id"]
+              this.detail["customer"]["external_id"],
+            null
           )
           .subscribe((data) => {
-            console.log("customer-data---->", data);
-
             this.primaryContact =
               data["data"]["primary_contact"]["primary_customer"];
             this.primaryContactId = data["data"]["primary_contact"]["id"];
             this.customer_contacts = data["data"]["contacts"];
-            console.log("customer-data-contacts: ", this.customer_contacts);
-            // console.log("customer-data-primary: ", this.primaryContact);
-            // const newArr = [
-            //   ...data["data"]?.contacts,
-            //   ...Array(data["data"]?.primary_contact),
-            // ];
-            // this.customer_contacts = newArr;
           });
       });
 
@@ -285,8 +286,6 @@ export class EditOpportunityComponent implements OnInit {
     this.appService
       .getQuery("/opportunity/forecast/" + this.opportunity_id, null)
       .subscribe((data) => {
-        console.log("forecast:");
-        console.log(data);
         this.forecastForm.patchValue({
           preferred_vendor: data["data"]["preferred_vendor"],
           funding_status: data["data"]["funding_status"],
@@ -303,36 +302,23 @@ export class EditOpportunityComponent implements OnInit {
       .subscribe((data) => {
         this.product_options = data["data"];
         // let products = data["data"].products;
-        console.log("product-data-->", this.product_options);
-        // console.log("product-list:", products);
-        // for(let i = 0; i < this.product_options.length; i++){
-        // 	if(this.product_options[i].is_default == 0){
-        // 		this.default_option = i;
-        // 	}
-        // }
       });
 
     // competitor
     this.getCompetitorList();
-    // this.appService
-    //   .getQuery("/opportunity/competitor/" + this.opportunity_id, null)
-    //   .subscribe((data) => {
-    //     console.log("competitors:", data);
-    //     this.competitors = data["data"];
-    //   });
 
     // status
     this.appService.getQuery("/opportunity-status", null).subscribe((data) => {
-      console.log("statuses:");
-      console.log(data);
       this.statuses = data["data"];
+    });
+    //stages
+    this.appService.getQuery("/opportunity/stages", null).subscribe((data) => {
+      this.stages = data["data"];
     });
     // funding-source
     this.appService
       .getQuery("/opportunity-funding-source", null)
       .subscribe((data) => {
-        console.log("funding source:");
-        console.log(data);
         this.funding_source = data["data"];
       });
 
@@ -340,7 +326,6 @@ export class EditOpportunityComponent implements OnInit {
     this.appService
       .getQuery("/opportunity-funding-status", null)
       .subscribe((data) => {
-        console.log("funding status:", data);
         this.funding_status = data["data"];
       });
 
@@ -348,7 +333,6 @@ export class EditOpportunityComponent implements OnInit {
     this.appService
       .getQuery("/opportunity-pre-vendor-type", null)
       .subscribe((data) => {
-        console.log("pre-vendor:", data);
         this.preferred_vendor_types = data["data"];
       });
 
@@ -356,18 +340,19 @@ export class EditOpportunityComponent implements OnInit {
     this.appService
       .getQuery("/care-area/active-list", null)
       .subscribe((data) => {
-        console.log("care area:", data);
         this.care_areas = data["data"];
       });
 
     //quotation-list
-    this.getOppertunityQuotationList();
+    // if (this.quote_id) {
+    this.getOppertunityQuotationList(this.opportunity_id);
+    // this.getOppertunityQuotationList(9);
+    // }
   }
   getCompetitorList() {
     this.appService
       .getQuery("/opportunity/competitor/" + this.opportunity_id, null)
       .subscribe((data) => {
-        console.log("competitors:", data);
         this.competitors = data["data"];
       });
   }
@@ -386,6 +371,7 @@ export class EditOpportunityComponent implements OnInit {
         customer_contact2_id:
           this.opportunityDetailForm1.value.customer_contact2_id,
         status_id: this.opportunityDetailForm1.value.status_id,
+        stages_id: this.opportunityDetailForm1.value.stages_id,
         is_include_in_forecast:
           this.opportunityDetailForm1.value.is_include_in_forecast,
         credit_term: this.opportunityDetailForm2.value.credit_term,
@@ -456,8 +442,7 @@ export class EditOpportunityComponent implements OnInit {
 
   productSelectedRadio(product) {
     this.is_dummy_sku = 0;
-    console.log("product SELECTED IN Radio:");
-    console.log(product);
+
     this.addProductForm.patchValue({
       is_dummy_sku: this.is_dummy_sku,
       external_product_id: product.id,
@@ -480,9 +465,6 @@ export class EditOpportunityComponent implements OnInit {
   }
   productSelected(value, index) {
     this.productId = value.id;
-    console.log("productId:", this.productId);
-    console.log("product SELECTED:");
-    console.log(value);
     this.sku[index] = value.sku;
     this.product_name[index] = value.name;
     this.external_product_id[index] = value.id;
@@ -494,7 +476,6 @@ export class EditOpportunityComponent implements OnInit {
         opportunity_id: this.opportunity_id,
       })
       .subscribe((data) => {
-        console.log(data);
         this.product_options.push(data["data"]);
       });
   }
@@ -502,9 +483,6 @@ export class EditOpportunityComponent implements OnInit {
     this.appService
       .getQuery("/opportunity/get-opportunity-product?id=" + id)
       .subscribe((data) => {
-        console.log("product_data: ", data);
-        console.log("product_by_id: ", data["data"]);
-
         this.editProductForm.patchValue({
           product_name: data["data"][0]["name"],
           sku: data["data"][0]["sku"],
@@ -527,7 +505,6 @@ export class EditOpportunityComponent implements OnInit {
   }
 
   addProduct(index, option_id, check) {
-    console.log("option_id", option_id);
     if (
       this.quantity[index] ||
       this.unit_price[index] ||
@@ -551,7 +528,6 @@ export class EditOpportunityComponent implements OnInit {
             this.product_options[index].products.push(data["data"]);
           },
           (error) => {
-            console.log("Error: ", error);
             this.alertBody = "Please enter required fields";
             this.dangerModal.show();
           }
@@ -597,29 +573,28 @@ export class EditOpportunityComponent implements OnInit {
         this.addProductForm.reset();
         this.addProductModal.hide();
       });
-
-    console.log(this.addProductForm.value);
   }
   convertToQuotation(index, option_id) {
-    // /convert-product-to-quote
-    // /opportunity/convert-to-quote
-    // /quote/convert-to-quote
-    // this.active_option_id
-    console.log("quotation-index:", index);
+    // company: this.company_name,
+    // external_id: this.external_id,
+    // data_area_id: this.data_area_id,
+
     this.active_option_id = option_id;
-    let group_id = option_id
-    console.log("quotation-option_id:", option_id);
-    
+    // let group_id = option_id
+
     this.appService
-      .postQuery("/convert-product-to-quote", {
-        group_id: group_id,
-        opportunity_id: this.opportunity_id,
-        company: this.company_name,
+      .postQuery("/opportunity/convert-product-to-quote", {
+        company_name: this.company_name,
         external_id: this.external_id,
         data_area_id: this.data_area_id,
+        opportunity_id: this.opportunity_id,
+        product_option_id: this.active_option_id,
       })
       .subscribe((data) => {
-        console.log("convert-quotation: ", data);
+        this.quote_id = data["data"]["quote_id"];
+
+        this.getOppertunityQuotationList(this.quote_id);
+        // this.getOppertunityQuotationList(this.quote_id);
       });
   }
 
@@ -652,7 +627,6 @@ export class EditOpportunityComponent implements OnInit {
   }
 
   openAddProductModal(option, index, check) {
-    console.log("option_id:", option.id);
     this.addLine = check;
     this.active_option_id = option.id;
     this.default_active_option_tab = index;
@@ -667,7 +641,6 @@ export class EditOpportunityComponent implements OnInit {
     this.editing_product_index2 = index2;
 
     this.productById(product_id);
-    console.log("edit product: " + product_id);
   }
 
   openDeleteOptionModal(index, option_id) {
@@ -687,7 +660,6 @@ export class EditOpportunityComponent implements OnInit {
         id: this.clone_option_id,
       })
       .subscribe((data) => {
-        console.log(data);
         this.product_options.push(data["data"]);
         this.cloneOptionModal.hide();
       });
@@ -699,7 +671,6 @@ export class EditOpportunityComponent implements OnInit {
         id: option_id,
       })
       .subscribe((data) => {
-        console.log(data["data"]);
         this.setDefaultOptionSuccessModal.show();
 
         for (let i = 0; i < this.product_options.length; i++) {
@@ -728,7 +699,6 @@ export class EditOpportunityComponent implements OnInit {
           amount: this.competitor_amount,
         })
         .subscribe((data: any) => {
-          console.log("competitor-edit-data: ", data);
           this.alertBody = data.code;
           this.successModal.show();
           this.getCompetitorList();
@@ -747,7 +717,6 @@ export class EditOpportunityComponent implements OnInit {
           amount: this.competitor_amount,
         })
         .subscribe((data) => {
-          console.log("addCompetitor: ", data);
           this.competitors.push(data["data"]);
           // this.competitor_name = this.competitor_amount = "";
         });
@@ -759,26 +728,40 @@ export class EditOpportunityComponent implements OnInit {
     this.competitor_amount = competitorAmount;
     this.competitor_name = competitorName;
     this.competitor_id = competitorId;
-    // this.appService
-    //   .putQuery(
-    //     "/opportunity-competitor/" + competitorId,
-    //     {
-    //       amount: 400,
-    //     }
-    //   )
-    //   .subscribe((data) => {
-    //     console.log("competitor-edit-data: ", data);
-    //   });
   }
 
-  getOppertunityQuotationList() {
-    // /quote/get-opportunity-quotation-list
+  getOppertunityQuotationList(quotation_id) {
     this.appService
-      .getQuery("/quote/get-opportunity-quotation-list", {
-        id: this.opportunity_id,
+      .getQuery("/quote/" + quotation_id + "/edit")
+      .subscribe((data) => {
+        this.quotation_detail = data["data"]["quotation"];
+
+        this.quotation_product = data["data"]["quotation"]["products"];
+
+        this.quotation_product.forEach((value) => {
+          this.sub_total = value.amount;
+          this.quotation_product_tax = value.tax_rate;
+          this.quotation_product_discount = value.discount;
+          this.quotation_total = value.amount;
+          this.terms = value.terms_and_conditions;
+        });
+        this.quotation_mile_stone =
+          data["data"]["quotation"]["billing_milestones"];
+
+        this.quotation_payment_schedules =
+          data["data"]["quotation"]["payment_schedules"];
+
+        this.quotation_additional_costs =
+          data["data"]["quotation"]["additional_costs"];
+      });
+  }
+  requestQuotationApproval() {
+    this.appService
+      .postQuery("/quote/request-approval/", {
+        id: 9,
       })
       .subscribe((data) => {
-        console.log("quotation-list: ", data);
+        console.log("approval-data: ", data);
       });
   }
 
