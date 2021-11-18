@@ -43,6 +43,7 @@ export class SalesTargetSetupComponent implements OnInit {
   mode: string = 'new';
   first: number = 0;
   rows: number = 5;
+  
   dataLength: number = 0;
 
   constructor (
@@ -58,8 +59,8 @@ export class SalesTargetSetupComponent implements OnInit {
 
   ngOnInit(): void {
     this.currYear = new Date().getFullYear();
-    this.data = new SalesTargetSetup ('','','','','','','','','','','','','','','','','','',null,null,null,null,null,null,null,null,null,null,null,null,null);
-    this.copiedData = new SalesTargetSetup ('','','','','','','','','','','','','','','','','','',null,null,null,null,null,null,null,null,null,null,null,null,null);
+    this.data = new SalesTargetSetup ("",'','','','','','','','','','','','','','','','','','',null,null,null,null,null,null,null,null,null,null,null,null,null);
+    this.copiedData = new SalesTargetSetup ("",'','','','','','','','','','','','','','','','','','',null,null,null,null,null,null,null,null,null,null,null,null,null);
     this.fetchSalesTargetData();
     this.loadCountryArr();
     this.onAddDimensionRow();
@@ -136,6 +137,8 @@ export class SalesTargetSetupComponent implements OnInit {
   onUnitChanged(countryCd, unitCd) {
     this._salesTargetSetupService.getFssList(countryCd, unitCd)
       .subscribe(res => {
+        console.log("unit-res: ", res);
+        
         if(res){
           this.fssArr = res.data.sales_targets;
         }
@@ -144,7 +147,7 @@ export class SalesTargetSetupComponent implements OnInit {
     });
 
     this._salesTargetSetupService.getTeamLeadList(countryCd, unitCd)
-      .subscribe(res => {
+      .subscribe(res => {        
         this.teamLeadArr = res['data'];
     });
 
@@ -342,22 +345,54 @@ export class SalesTargetSetupComponent implements OnInit {
   }
 
   onSubmit(_frm, data): void {
-    
-    console.log('this is data',data)
+
+    data.level_1_type = this.dimensionLevelArr[0];
+    data.level_1_value = this.dimensionDescArr[0];
+    data.level_2_type = this.dimensionLevelArr[1];
+    data.level_2_value = this.dimensionDescArr[1];
+    data.level_3_type = this.dimensionLevelArr[2];
+    data.level_3_value = this.dimensionDescArr[2];
+    data.level_4_type = this.dimensionLevelArr[3];
+    data.level_4_value = this.dimensionDescArr[3];
+    data.level_5_type = this.dimensionLevelArr[4];
+    data.level_5_value = this.dimensionDescArr[4];
+    data.currency_code = this.currency;
+
+    var new_dimen = [
+      {
+        level_1_type: data.level_1_type,
+        level_1_value: data.level_1_value
+      },
+      {
+        level_2_type: data.level_2_type,
+        level_2_value: data.level_2_value
+      },
+      {
+        level_3_type: data.level_3_type,
+        level_3_value: data.level_3_value
+      },
+      {
+        level_4_type: data.level_4_type,
+        level_4_value: data.level_4_value
+      },
+      {
+        level_5_type: data.level_5_type,
+        level_5_value: data.level_5_value
+      },
+    ]
+
     const payload = {
       description: data.title,
       country_code: data.country_code,
-       unit_id: data.unit_id,
-      // user_id: 1,
+      unit_id: data.id,
 
       user_id: data.user_id,
       team_lead: data.team_lead,
       opc_pic_user_id: data.opc_pic_user_id,
       class_id: data.class_id,
-      dimensions:this.dimensionLevelArr[0],
+      dimensions: new_dimen,
       currency_code: data.currency_code,
-
-      //  currency_code: data.currency_code,
+      
       
       year: data.year,
       // target_01: 22.0,
@@ -376,28 +411,17 @@ export class SalesTargetSetupComponent implements OnInit {
       target_02: Number (data.month_02_target.toFixed(2)),
       target_03: Number(data.month_03_target.toFixed(2)),
       target_04: Number (data.month_04_target.toFixed(2)),
-      target_05:Number (data.month_05_target.toFixed(2)),
-      target_06:Number (data.month_06_target.toFixed(2)),
-      target_07:Number (data.month_07_target.toFixed(2)),
-      target_08:Number (data.month_08_target.toFixed(2)),
+      target_05: Number (data.month_05_target.toFixed(2)),
+      target_06: Number (data.month_06_target.toFixed(2)),
+      target_07: Number (data.month_07_target.toFixed(2)),
+      target_08: Number (data.month_08_target.toFixed(2)),
       target_09: Number(data.month_09_target.toFixed(2)),
       target_10: Number(data.month_10_target.toFixed(2)),
       target_11: Number(data.month_11_target.toFixed(2)),
-     target_12: Number(data.month_12_target.toFixed(2))
+      target_12: Number(data.month_12_target.toFixed(2))
     };
-    console.log(payload)
-    data.level_1_type = this.dimensionLevelArr[0];
-    data.level_1_value = this.dimensionDescArr[0];
-    data.level_2_type = this.dimensionLevelArr[1];
-    data.level_2_value = this.dimensionDescArr[1];
-    data.level_3_type = this.dimensionLevelArr[2];
-    data.level_3_value = this.dimensionDescArr[2];
-    data.level_4_type = this.dimensionLevelArr[3];
-    data.level_4_value = this.dimensionDescArr[3];
-    data.level_5_type = this.dimensionLevelArr[4];
-    data.level_5_value = this.dimensionDescArr[4];
-    data.currency_code = this.currency;
 
+    
     if (this.mode == 'new') {
       this.saveSalesTargetSetup(payload);
     }
@@ -410,8 +434,8 @@ export class SalesTargetSetupComponent implements OnInit {
   resetForm(_frm) {
     this.mode = 'new';
     _frm.reset();
-    this.data = new SalesTargetSetup ('','','','','','','','','','','','','','','','','','',null,null,null,null,null,null,null,null,null,null,null,null,null);
-    this.copiedData = new SalesTargetSetup ('','','','','','','','','','','','','','','','','','',null,null,null,null,null,null,null,null,null,null,null,null,null);
+    this.data = new SalesTargetSetup ("",'','','','','','','','','','','','','','','','','','',null,null,null,null,null,null,null,null,null,null,null,null,null);
+    this.copiedData = new SalesTargetSetup ("",'','','','','','','','','','','','','','','','','','',null,null,null,null,null,null,null,null,null,null,null,null,null);
     this.list = [];
     this.rowCount = 0;
     this.onAddDimensionRow();

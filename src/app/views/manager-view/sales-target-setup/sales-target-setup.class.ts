@@ -4,6 +4,7 @@ export class SalesTargetSetup {
     public title: String,
     public country_code: String,
     public unit_id: String,
+    public id: String,
     public user_id: String,
     public tl_user_id: String,
     public opc_pic_user_id: String,
@@ -40,5 +41,6 @@ export class SalesTargetData {
     public q2: Number;
     public q3: Number;
     public q4: Number;
-    public total: Number
+    public total: Number;
+    public id: Number;
 }
