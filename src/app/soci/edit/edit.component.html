@@ -132,7 +132,7 @@
               </div>
             </div>
             <div class="col-lg-6" style="text-align: middle">
-              <div class="col-md-8">
+              <div class="col-md-8 stdTermTable">
                 Quotation Validity: From
                 <u>{{ payment_term_from | date: "dd-MMM-yyyy" }}</u> To
                 <u>{{ toDate | date: "dd-MMM-yyyy" }}</u>
@@ -157,7 +157,7 @@
               <b>(As Default) Payment Terms:</b>
               {{ standard_term?.default_payment_term + " Days" }}
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 stdTermTable">
               Quotation Validity: From
               <u>{{ default_payment_term_from | date: "dd-MMM-yyyy" }}</u> To
               <u>{{ toDate | date: "dd-MMM-yyyy" }}</u>
@@ -180,7 +180,7 @@
               </div>
             </div>
             <div class="col-lg-6" style="text-align: middle">
-              <div class="col-md-8">
+              <div class="col-md-8 stdTermTable">
                 Quotation Validity: From
                 <u>{{ delivery_term_from | date: "dd-MMM-yyyy" }}</u>
               </div>
@@ -197,11 +197,11 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-5 stdTermTable">
               <b>(As Default) Delivery Terms:</b>
               {{ standard_term?.default_delivery_term + " Days" }}
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 stdTermTable">
               Quotation Validity: From
               <u>{{ default_delivery_term_from | date: "dd-MMM-yyyy" }}</u>
             </div>
@@ -892,14 +892,14 @@
         <p-accordionTab header="Additional Instruction and Information">
           <!-- Heading -->
           <div class="row grey">
-            <div class="col-md-3">
+            <div class="col-3">
               <div class="row">
-                <div class="col-md-5"><b>Title</b></div>
+                <div class="col-5"><b>Title</b></div>
               </div>
             </div>
-            <div class="col-lg-6" style="text-align: middle">
-              <div class="col-md-8">
-                <b> Description</b>
+            <div class="col-6" style="text-align: center">
+              <div class="row">
+                <div class="col-6"><b>Description</b></div>
               </div>
             </div>
           </div>
@@ -909,8 +909,8 @@
             class="row"
             *ngFor="let item of additional_instructions; let i = index"
           >
-            <div class="col-md-3">
-              <div class="col-md-10">
+            <div class="col-4">
+              <div class="col-md-5 descriptionTitle">
                 <input
                   class="text-left form-control"
                   style="width: 200px"
@@ -921,11 +921,11 @@
                 />
               </div>
             </div>
-            <div class="col-md-8">
-              <div class="col-md-10">
+            <div class="col-6">
+              <div class="col-md-5 description">
                 <input
                   class="text-left form-control"
-                  style="width: 700px"
+                  style="width: 500px"
                   type="text"
                   [value]="item.description"
                   readonly
@@ -934,9 +934,9 @@
               </div>
             </div>
 
-            <div class="col-md-1" style="text-align: right">
-              <div class="row">
-                <div class="action-icon">
+            <div class="col-2" style="text-align: right">
+              <!-- <div class="row"> -->
+                <div class="col-md-2 action-icon">
                   <!-- <a [routerLink]="" routerLinkActive="router-link-active"
                     ><i class="cil-check-circle"></i
                   ></a>
@@ -952,17 +952,17 @@
                     (click)="deleteAdditionalInstruction(i, item.id)"
                     ><i class="fa fa-trash"></i
                   ></a>
-                </div>
+                <!-- </div> -->
               </div>
             </div>
           </div>
 
           <!-- Add additional_instruction -->
           <div>
-            <div class="row">
-              <div class="col-md-3">
+            <div class="row additionalInputDesc">
+              <div class="col-4">
                 <div class="">
-                  <div class="col-md-10">
+                  <div class="col-md-6 descriptionTitle">
                     <input
                       class="text-left form-control"
                       style="width: 200px"
@@ -973,12 +973,12 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-8">
+              <div class="col-6">
                 <div class="">
-                  <div class="col-md-10">
+                  <div class="col-md-6 description">
                     <input
                       class="text-left form-control"
-                      style="width: 700px"
+                      style="width: 500px"
                       type="text"
                       formControlName="description"
                       placeholder="Description"
@@ -987,7 +987,7 @@
                 </div>
               </div>
 
-              <div class="col-md-1" style="text-align: right">
+              <div class="col-2" style="text-align: right">
                 <div class="row">
                   <div class="action-icon">
                     <!-- <a [routerLink]="" routerLinkActive="router-link-active"
@@ -1159,41 +1159,43 @@
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="Additional/Reduction Charges">
           <!-- Heading -->
-          <div class="row grey">
-            <div class="col-md-3" style="text-align: middle">
-              <div class="row">
-                <div class="col-md-5"><b>Cost Item</b></div>
+          <div class="grey">
+            <div class="costItemMain">
+              <div class="col-md-3" style="text-align: middle">
+                <!-- <div class="row"> -->
+                  <div class="col-md-5"><b>Cost Item</b></div>
+                <!-- </div> -->
               </div>
-            </div>
-            <div class="col-lg-4" style="text-align: middle">
-              <div class="col-md-8">
-                <b> Description</b>
+              <div class="col-lg-4" style="text-align: middle">
+                <div class="col-md-8">
+                  <b> Description</b>
+                </div>
               </div>
-            </div>
-            <div class="col-lg-1" style="text-align: middle">
-              <div class="col-md-8">
-                <b> Quantity</b>
+              <div class="col-lg-1" style="text-align: middle">
+                <div class="col-md-8">
+                  <b> Quantity</b>
+                </div>
               </div>
-            </div>
-            <div class="col-lg-1" style="text-align: middle">
-              <div class="col-md-8">
-                <b> Unit (RM)</b>
+              <div class="col-lg-1" style="text-align: middle">
+                <div class="col-md-8">
+                  <b> Unit (RM)</b>
+                </div>
               </div>
-            </div>
-            <div class="col-lg-2" style="text-align: middle">
-              <div class="col-md-8">
-                <b> Amount (RM)</b>
+              <div class="col-lg-2" style="text-align: middle">
+                <div class="col-md-8">
+                  <b> Amount (RM)</b>
+                </div>
               </div>
-            </div>
-            <div class="col-lg-1" style="text-align: middle">
-              <div class="">
-                <b> Action</b>
+              <div class="col-lg-1" style="text-align: middle">
+                <div class="">
+                  <b> Action</b>
+                </div>
               </div>
             </div>
           </div>
           <div>
             <div
-              class="row"
+              class=""
               *ngFor="let item of additional_charges; let i = index"
             >
               <div class="col-md-3">
@@ -1333,7 +1335,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-1">
+              <div class="col-2">
                 <div class="qty">
                   <div class="col-md-10">
                     <input
@@ -1347,7 +1349,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-1">
+              <div class="col-2">
                 <div class="unit">
                   <div class="col-md-10">
                     <input
@@ -1375,7 +1377,7 @@
                 </div>
               </div>
 
-              <div class="col-md-1" style="text-align: right">
+              <div class="col--1" style="text-align: right">
                 <div class="row">
                   <div class="text-center action-icon">
                     <a
