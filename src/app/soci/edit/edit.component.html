@@ -1198,101 +1198,103 @@
               class=""
               *ngFor="let item of additional_charges; let i = index"
             >
-              <div class="col-md-3">
-                <div class="">
-                  <div class="col-md-10">
-                    <input
-                      class="text-left form-control"
-                      style="width: 200px"
-                      type="text"
-                      disabled
-                      [value]="item.code_item"
-                    />
+              <div class="row">
+                <div class="col-3">
+                  <div class="">
+                    <div class="col-md-4">
+                      <input
+                        class="text-left form-control"
+                        style="width: 200px"
+                        type="text"
+                        disabled
+                        [value]="item.code_item"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <!-- Description -->
-              <div class="col-md-4">
-                <div class="">
-                  <div class="col-md-10">
-                    <input
-                      class="text-left form-control"
-                      style="width: 336px"
-                      type="text"
-                      disabled
-                      [value]="item.description"
-                      placeholder="Description"
-                    />
+                <!-- Description -->
+                <div class="col-3">
+                  <div class="">
+                    <div class="col-md-4">
+                      <input
+                        class="text-left form-control"
+                        style="width: 336px"
+                        type="text"
+                        disabled
+                        [value]="item.description"
+                        placeholder="Description"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <!-- qty -->
-              <div class="col-md-1">
-                <div class="qty">
-                  <div class="col-md-10">
-                    <input
-                      class="text-left form-control"
-                      type="number"
-                      placeholder="0"
-                      disabled
-                      [value]="item.quantity"
-                      style="width: 75px"
-                    />
+                <!-- qty -->
+                <div class="col-2">
+                  <div class="qty">
+                    <div class="col-md-4">
+                      <input
+                        class="text-left form-control"
+                        type="number"
+                        placeholder="0"
+                        disabled
+                        [value]="item.quantity"
+                        style="width: 75px"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <!-- unit -->
-              <div class="col-md-1">
-                <div class="unit">
-                  <div class="col-md-10">
-                    <input
-                      class="text-left form-control"
-                      type="text"
-                      placeholder="0"
-                      disabled
-                      [value]="item.unit_price"
-                      style="width: 75px"
-                    />
+  
+                <!-- unit -->
+                <div class="col-2">
+                  <div class="unit">
+                    <div class="col-md-4">
+                      <input
+                        class="text-left form-control"
+                        type="text"
+                        placeholder="0"
+                        disabled
+                        [value]="item.unit_price"
+                        style="width: 75px"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <!-- Amount -->
-              <div class="col-md-2">
-                <div class="amount">
-                  <div class="col-md-10">
-                    <input
-                      class="text-left form-control"
-                      type="text"
-                      placeholder="0.0"
-                      disabled
-                      [value]="item.total_price"
-                      style="width: 100px"
-                    />
+  
+                <!-- Amount -->
+                <div class="col-2">
+                  <div class="amount">
+                    <div class="col-md-4">
+                      <input
+                        class="text-left form-control"
+                        type="text"
+                        placeholder="0.0"
+                        disabled
+                        [value]="item.total_price"
+                        style="width: 100px"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <!-- action -->
-              <div class="col-md-1" style="text-align: right">
-                <div class="row">
-                  <div class="action-icon">
-                    <!-- <a [routerLink]="" routerLinkActive="router-link-active"
-                      ><i class="cil-check-circle"></i
-                    ></a>
-                    &nbsp; -->
-                    <a [routerLink]="" routerLinkActive="router-link-active">
-                      <i class="fa fa-edit"></i
-                    ></a>
-                    &nbsp;
-                    <a
-                      [routerLink]=""
-                      routerLinkActive="router-link-active"
-                      style="font-size: 20px"
-                      (click)="deleteAdditionalCharges(i, item.id)"
-                      ><i class="fa fa-trash"></i
-                    ></a>
+  
+                <!-- action -->
+                <div class="col-1" style="text-align: right">
+                  <div class="row">
+                    <div class="action-icon">
+                      <!-- <a [routerLink]="" routerLinkActive="router-link-active"
+                        ><i class="cil-check-circle"></i
+                      ></a>
+                      &nbsp; -->
+                      <a [routerLink]="" routerLinkActive="router-link-active">
+                        <i class="fa fa-edit"></i
+                      ></a>
+                      &nbsp;
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        style="font-size: 20px"
+                        (click)="deleteAdditionalCharges(i, item.id)"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
                   </div>
                 </div>
               </div>
