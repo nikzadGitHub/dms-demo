@@ -12,7 +12,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ManagerviewApprovalComponent } from './managerview-approval/managerview-approval.component';
 import { ManagerViewReassignmentComponent } from './manager-view-reassignment/manager-view-reassignment.component';
 import { ManagerViewActiveComponent } from './manager-view-active/manager-view-active.component';
-
+import {TabViewModule} from 'primeng/tabview';
+import { AccordionModule } from 'primeng/accordion';
 @NgModule({
   imports: [
     CommonModule,
@@ -24,6 +25,8 @@ import { ManagerViewActiveComponent } from './manager-view-active/manager-view-a
     ButtonModule,
     InputTextModule,
     InputNumberModule,
+    TabViewModule,
+    AccordionModule,
     ModalModule
   ],
   declarations: [ SalesTargetSetupComponent, ManagerviewApprovalComponent, ManagerViewReassignmentComponent, ManagerViewActiveComponent,  ]
