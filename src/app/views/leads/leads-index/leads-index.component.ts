@@ -17,7 +17,7 @@ export class LeadsIndexComponent implements OnInit {
   search_text: string = '';
   pageItems: number = 10;
   datasource:any;
-  pages: [];
+  pages: any[];
   totalRecords:number;
   columns: Column[] = [
     {'header':'Created Date','field':'created_date','type':'date'},
@@ -41,6 +41,7 @@ export class LeadsIndexComponent implements OnInit {
       this.datasource = data['data']['data'];
       this.pages = data['data']['links'];
       this.totalRecords = data['data']['total'];
+      console.log("total-->", this.totalRecords);
     });
   }
 
@@ -54,10 +55,10 @@ export class LeadsIndexComponent implements OnInit {
     })  
   }
 
-  SortColumn(event: LazyLoadEvent){
-    this.sort = {'field':event['sortField'],'order':event['sortOrder']}
-    this.getList();
-  }
+  // SortColumn(event: LazyLoadEvent){
+  //   this.sort = {'field':event['sortField'],'order':event['sortOrder']}
+  //   this.getList();
+  // }
 
   paginate(event){
     this.pageItems = event.rows;
@@ -65,7 +66,8 @@ export class LeadsIndexComponent implements OnInit {
   }
 
   onClick(pageNo){
-    this.leadService.getPage(pageNo,this.pageItems,this.search_text)
+    let url =this.pages[pageNo].url
+    this.leadService.getPage(url,this.pageItems,this.search_text)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((data)=>{
       this.datasource = data['data']['data'];
