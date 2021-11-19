@@ -78,8 +78,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
 import { ManagerViewModule } from './views/manager-view/manager-view.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CreateComponent } from './views/customers/create/create.component';
+import { IndexComponent } from './views/customers/index/index.component';
+import { EditComponent } from './views/customers/edit/edit.component';
+import { CustomersModule } from './views/customers/customers.module';
 @NgModule({
   imports: [
     FormsModule,
@@ -128,7 +131,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
     }),
     ManagerViewModule,
     NgbModule,
-    InputTextModule
+    InputTextModule,
+    CustomersModule
   ],
   declarations: [
     AppComponent,
@@ -137,7 +141,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
     P500Component,
     LoginComponent,
     RegisterComponent,
-    DialogComponent
+    DialogComponent,
+    // CreateComponent,
+    // IndexComponent,
+    // EditComponent,
   ],
   providers: [
     {
