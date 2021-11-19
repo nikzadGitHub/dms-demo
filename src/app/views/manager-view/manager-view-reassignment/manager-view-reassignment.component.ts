@@ -12,9 +12,10 @@ export class ManagerViewReassignmentComponent implements OnInit {
   ngOnInit(): void {
     
     
-     // this.contactService.getAllContactData().subscribe((data) => {
+    //  this.managerviewreassignment.getAllContactData().subscribe((data) => {
     //   this.tableData = data["data"];
     // });
+
   }
   // getAlReassignment(){
   //   this.managerviewreassignment.getAlReassignment().subscribe(data => {
