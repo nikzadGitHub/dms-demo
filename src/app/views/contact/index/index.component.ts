@@ -25,13 +25,15 @@ export class IndexComponent implements OnInit {
   pageItems: number = 10;
   search_text: string = '';
   contact_detail: any[]= [];
-
+  isLoading = false;
   constructor(
     public contactService: ContactService,
   ) { }
 
   ngOnInit(): void {    
     this.contactService.getAll(this.pageItems,this.search_text).subscribe((data)=>{
+      // this.isLoading = true;
+      // setTimeout( () => this.isLoading = false, 2000 );
       this.tableData = data['data']['data'];
       this.paginate = data['data']['links'];
       

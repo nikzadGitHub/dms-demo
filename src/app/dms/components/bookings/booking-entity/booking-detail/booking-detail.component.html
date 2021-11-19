@@ -1,0 +1,79 @@
+<!--/.col-->
+
+  <!--/.col-->
+  <div class="form-group">
+    <p-accordion class="p-accordion">
+        <p-accordionTab class="p-accordionTab" [selected]="true">
+            <p-header class="p-header">
+                <i class="cil-info"></i>
+                <span class="accordion-header">Booking Details</span>
+            </p-header>
+                  <div>
+                    <table class="table table-borderless">
+                      <tbody>
+                        <tr>
+                          <td>Status</td>
+                          <td>{{ bookingDetailList.status }}</td>
+                          <td>Request Date</td>
+                          <td>{{ bookingDetailList.status_request_date }}</td>
+                        </tr>
+                        <tr>
+                            <td>Booking No</td>
+                            <td>{{ bookingDetailList.code }}</td>
+                            <td>Branch/ Site</td>
+                            <td>{{ bookingDetailList.branch }}</td>
+                          </tr>
+                        <tr>
+                          <td>Booking Reason</td>
+                          <td>{{ bookingDetailList.booking_reason }}</td>
+                          <td>Request Date</td>
+                          <td>{{ bookingDetailList.request_date }}</td>
+                        </tr>
+                        <tr>
+                            <td>Customer</td>
+                            <td>{{ bookingDetailList.customer }}</td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>Preferred Date of Delivery </td>
+                            <td>{{ bookingDetailList.preferred_date_of_elivery }}</td>
+                            <td>Preferred Date of Collection </td>
+                            <td>{{ bookingDetailList.preferred_date_of_collection }}</td>
+                          </tr>
+                          <tr>
+                            <td>Demo Duration</td>
+                            <td>{{ bookingDetailList.demo_duration }}</td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>Ship-to Department/ Ward</td>
+                            <td>{{ bookingDetailList.department }}</td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>Shipment to Contact Name</td>
+                            <td>{{ bookingDetailList.shipment_to_contact_name }}</td>
+                            <td>Ship to Contact Number</td>
+                            <td>{{ bookingDetailList.ship_to_contact_number }}</td>
+                          </tr>
+                          <tr>
+                            <td>Remarks</td>
+                            <td>{{ bookingDetailList.remarks }}</td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>Loan start date</td>
+                            <td>{{ bookingDetailList.loan_start_date }}</td>
+                            <td>Loan end date</td>
+                            <td>{{ bookingDetailList.loan_end_date }}</td>
+                          </tr>
+                      </tbody>
+                    </table>
+                  </div>
+        </p-accordionTab>
+    </p-accordion>
+  </div>

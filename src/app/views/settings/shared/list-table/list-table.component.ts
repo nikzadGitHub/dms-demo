@@ -12,13 +12,13 @@ export class ListTableComponent implements OnInit {
   @Input() tableData: any;
   @Input() path: any;
   @Input() key: any;
-
+// isLoading = false;
   constructor(private contactService: ContactService) {}
 
   ngOnInit(): void {
-    this.contactService.getAllContactData().subscribe((data) => {
-      this.tableData = data["data"];
-    });
+    // this.contactService.getAllContactData().subscribe((data) => {
+    //   this.tableData = data["data"];
+    // });
   }
 
   deleteData(value) {

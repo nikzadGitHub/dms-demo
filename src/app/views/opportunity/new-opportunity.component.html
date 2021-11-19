@@ -1012,280 +1012,49 @@
 
 
 
-<!-- <div
-  bsModal
-  #addProductModal="bs-modal"
-  class="modal fade"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="myModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Add Product</h4>
-        <button
-          type="button"
-          class="close"
-          (click)="addProductModal.hide()"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <div class="modal-body">
-        <div class="row form-group">
-          <div class="col-md-6">Product Principal</div>
-          <div class="col-md-6"><input type="text" class="form-control" /></div>
+    <div class="col-sm-12 col-md-12">
+        <div class="card border-primary">
+            <div class="card-header">
+              Details Info
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped m-0 no-outline">
+                    <tbody>
+                        <tr>
+                            <td class="bg-lightgrey text-left w-25">Credit Term</td>
+                            <td class="w-25"></td>
+                            <td class="bg-lightgrey text-left w-25">Customer Category</td>
+                            <td class="w-25"></td>
+                        </tr>
+                        <tr>
+                            <td class="bg-lightgrey text-left">Hospital Class</td>
+                            <td></td>
+                            <td class="bg-lightgrey text-left">Hospital Bed (Range)</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="bg-lightgrey text-left">Credit Limit</td>
+                            <td></td>
+                            <td class="bg-lightgrey text-left">Hospital Bed (Exact Number)</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="bg-lightgrey text-left">Segmant</td>
+                            <td></td>
+                            <td class="bg-lightgrey text-left">Geographical Zone</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="bg-lightgrey text-left">Customer Category</td>
+                            <td></td>
+                            <td class="bg-lightgrey text-left">Customer Tax Code</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="row form-group">
-          <div class="col-md-6">Product Group</div>
-          <div class="col-md-6"><input type="text" class="form-control" /></div>
-        </div>
-        <div class="row form-group">
-          <div class="col-md-6">Product Name</div>
-          <div class="col-md-6">
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="search_product_name"
-            />
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col-md-6"></div>
-          <div class="col-md-6">
-            <button class="btn btn-custom mr-1" (click)="productSearch2()">
-              <i class="cil-magnifying-glass c-icon"></i>
-              Search
-            </button>
-            <button class="btn btn-custom mr-1" (click)="setDummySku()">
-              <i class="cil-plus c-icon"></i>
-              Dummy SKU
-            </button>
-          </div>
-        </div>
-        <hr />
-        <ng-container
-          *ngIf="productList.length > 0; else elseProductListEmptyTemplate"
-        >
-          <div class="row">
-            <div class="col-md-12" style="height: 200px; overflow: scroll">
-              <table class="table">
-                <tr>
-                  <th>Select</th>
-                  <th>Name</th>
-                  <th>SKU ID</th>
-                  <th>Principle</th>
-                  <th>Product Group</th>
-                </tr>
-                <tr *ngFor="let product of productList; let i = index">
-                  <td>
-                    <input
-                      type="radio"
-                      [attr.id]="'p' + i"
-                      name="product[]"
-                      (click)="productSelectedRadio(product)"
-                    />
-                  </td>
-                  <td class="text-left">{{ product.name }}</td>
-                  <td class="text-left">{{ product.sku }}</td>
-                  <td class="text-left">{{ product.principle }}</td>
-                  <td class="text-left">{{ product.group }}</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </ng-container>
-        <ng-template #elseProductListEmptyTemplate>
-          <div class="row">
-            <div class="col-md-12" align="center">No product(s) found...</div>
-          </div>
-        </ng-template>
-
-        <hr />
-        <form [formGroup]="addProductForm" (ngSubmit)="addFullProduct()">
-          <div class="row form-group">
-            <div class="col-md-6">Product Name</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="product_name"
-                [readonly]="!is_dummy_sku"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div
-              class="col-md-6"
-              *ngIf="is_dummy_sku == 0; else elseDummySkuTemplate"
-            >
-              SKU ID
-            </div>
-            <ng-template #elseDummySkuTemplate>
-              <div class="col-md-6">Dummy SKU ID</div>
-            </ng-template>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="sku"
-                [readonly]="!is_dummy_sku"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Quantity</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="quantity"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Item Discount</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="discount"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">List Price</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="list_price"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Principle</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="principle"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Floor Price</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="floor_price"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Product Manager</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="product_manager"
-              />
-            </div>
-          </div>
-
-          <hr />
-          <div class="row form-group">
-            <div class="col-md-6">For Equipment Product</div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Standard Warranty</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="standard_warranty"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Extended Warranty</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="extended_warranty"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Tax Rate</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="tax_rate"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Customer Tax Code</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="customer_tax_code"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Tax Code</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="tax_code"
-              />
-            </div>
-          </div>
-
-          <hr />
-          <div class="row form-group">
-            <div class="col-md-6">Other Cost</div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Category</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="category"
-              />
-            </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-md-6">Local Distribution</div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="local_distribution"
-              />
-            </div>
-          </div>
-          <div class="row form-group text-center">
-            <div class="col-md-12">
-              <button class="btn btn-custom" type="submit">Ok</button>
-            </div>
-          </div>
-        </form>
-      </div>
     </div>
+    <br/><br/><br/>
 
-  </div>
-
-</div> -->
+    <opp-opportunity-booking></opp-opportunity-booking>

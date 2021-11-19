@@ -189,22 +189,22 @@ input::-webkit-inner-spin-button {
   .p-accordion-content {
     padding: 0px;
     overflow-x: hidden;
-    .costItemMain{
-      display: flex;
-      justify-content: center;
-    }
-    .stdTermTable{
-      margin-top: 15px;
-    }
-    .action-icon{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-left: 115px;
-      a{
-        padding-right: 15px;
-      }
-    }
+    // .costItemMain{
+    //   display: flex;
+    //   justify-content: center;
+    // }
+    // .stdTermTable{
+    //   margin-top: 15px;
+    // }
+    // .action-icon{
+    //   display: flex;
+    //   justify-content: center;
+    //   align-items: center;
+    //   margin-left: 115px;
+    //   a{
+    //     padding-right: 15px;
+    //   }
+    // }
   }
 }
 
@@ -318,13 +318,13 @@ input::-webkit-inner-spin-button {
     }
   }
 
-  :host ::ng-deep .custom.p-accordion {
-    .p-accordion-tab{
-      width: 285px;
-      float: right;
-    }
-    .p-accordion-content{
-      overflow-x: scroll !important;
-    }
-  }
+  // :host ::ng-deep .custom.p-accordion {
+  //   .p-accordion-tab{
+  //     width: 285px;
+  //     float: right;
+  //   }
+  //   .p-accordion-content{
+  //     overflow-x: scroll !important;
+  //   }
+  // }
 }

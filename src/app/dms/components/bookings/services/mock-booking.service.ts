@@ -9,7 +9,7 @@ import { BookingList, BookingInterface } from './booking.interface';
 export class MockBookingService implements BookingInterface {
   private mockData: BookingList = [
     {
-      booking_no: 'BK-0092',
+      code: 'BK-0092',
       request_date: '9/3/2021',
       requester: 'trxt',
       sku: 'ZY2332',
@@ -17,9 +17,9 @@ export class MockBookingService implements BookingInterface {
       customer: 'Parkway Singapore  (P001)',
       booking_reason: 'Demo',
       status: 'Approved',
-    }, 
+    },
     {
-      booking_no: 'BK-0292',
+      code: 'BK-0292',
       request_date: '13/3/2021',
       requester: 'trxt',
       sku: 'CX32312',
@@ -29,7 +29,7 @@ export class MockBookingService implements BookingInterface {
       status: 'Pending Approva',
     },
     {
-      booking_no: 'BK-0192',
+      code: 'BK-0192',
       request_date: '9/3/2021',
       requester: 'trxt',
       sku: 'ZY2332',
@@ -37,9 +37,9 @@ export class MockBookingService implements BookingInterface {
       customer: 'Parkway Singapore  (P001)',
       booking_reason: 'Event',
       status: 'In Progress',
-    }, 
+    },
     {
-      booking_no: 'BK-0692',
+      code: 'BK-0692',
       request_date: '13/3/2021',
       requester: 'trxt',
       sku: 'CX32312',

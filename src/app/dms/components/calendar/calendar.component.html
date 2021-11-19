@@ -1,1 +1,31 @@
-<p>calendar works!</p>
+<div class="card">
+    <div class="card-body row">
+        <div class="col-md-12">
+            <label for="search">
+                <h5>Assign Asset for SKU 0000</h5>
+            </label>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+            <div class="col-md-4 container">
+                <input class="filler control" type="text" name="search"/>
+            </div>
+            <div class="col-md-4 pt-1 pb-1">
+                <b>From</b>
+                <span>10/11/2021</span>
+                <b>To</b>
+                <span>20/11/2021</span>
+            </div>
+            <div class="col-md-4">
+                <input type="button" class="btn btn-primary" value="TOGGLE LIST VIEW"/>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='main-container'>
+    <div class='calendar-view'>
+        <full-calendar [options]='calendarOptions'></full-calendar>
+    </div>
+</div>

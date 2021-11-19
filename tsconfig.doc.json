@@ -1,0 +1,10 @@
+{
+  "include": [
+    "src/app/dms/**/*.ts"
+  ],
+  "exclude": [
+    "src/test.ts",
+    "src/polyfills.ts",
+    "src/**/*.spec.ts"
+  ]
+}

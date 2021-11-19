@@ -43,30 +43,39 @@ export class CreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.form =  this.formBuilder.group({
-      primary_customer: 'aa',
+      primary_customer: '2',
       other_accounts: '',
-      solution: 'aa',
-      full_name: ['aa', Validators.required],
-      nickname: 'aa',
-      job_title: 'aa',
+      solution: '',
+      full_name: ['Test name', Validators.required],
+      nickname: '',
+      job_title: 'Test Job ',
       department: '',
-      specialization: 'aa',
-      email: ['abc@hotmail.com', Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
-      business_phone: 'aa',
-      mobile_phone: 'aa',
-      fax: 'aa',
-      address_1: 'aa',
-      address_2: 'aa',
-      address_3: 'aa',
-      city: 'aa',
-      state: 'aa',
-      country: 'aa',
-      zipcode: 'aa',
-      contact_category: 'aa',
+      specialization: '',
+      email: ['test@test.com', Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
+      business_phone: '12345678',
+      mobile_phone: '',
+      fax: '',
+      address_1: '',
+      address_2: '',
+      address_3: '',
+      city: '',
+      state: '',
+      country: '',
+      zipcode: '',
+      contact_category: '',
+      care_area_code: 'care111',
       care_areas: '',
       contact_preferences: '',
       contact_type: '',
-      owner: 'aa'
+      owner: '',
+      external_id:"",
+      // care_areas:  [
+      //   "care area 1",
+      //   "care area 22"]
+       
+       
+    
+  
     });
     this.contactPreferences();
     this.department();
@@ -87,21 +96,22 @@ export class CreateComponent implements OnInit {
         return item['value'];
       });
     } else {
-      data.care_areas = [];
+      data.care_areas = ['aesthetic care','Test'];
     }
     if (data.contact_preferences.length > 0 && data.contact_preferences instanceof Array) {
       data.contact_preferences = data.contact_preferences.map(function(item) {
         return item['value'];
       });
     } else {
-      data.contact_preferences = [];
+      data.contact_preferences = ['email','bulk email'];
     }
     if (data.other_accounts.length > 0 && data.other_accounts instanceof Array) {
       data.other_accounts = data.other_accounts.map(function(item) {
         return item['label'];
-      }).join(",");
+      })
+      // .join(",");
     } else {
-      data.other_accounts = [];
+      data.other_accounts = [1,2];
     }
     this.Service.store(data).subscribe(res => {
         this.alertBody = res.message || 'Created Successfully';
