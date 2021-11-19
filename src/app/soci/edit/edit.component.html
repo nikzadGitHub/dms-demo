@@ -132,7 +132,7 @@
               </div>
             </div>
             <div class="col-lg-6" style="text-align: middle">
-              <div class="col-md-8 stdTermTable">
+              <div class="col-md-8">
                 Quotation Validity: From
                 <u>{{ payment_term_from | date: "dd-MMM-yyyy" }}</u> To
                 <u>{{ toDate | date: "dd-MMM-yyyy" }}</u>
@@ -161,7 +161,7 @@
               <b>(As Default) Payment Terms:</b>
               {{ standard_term?.default_payment_term + " Days" }}
             </div>
-            <div class="col-md-6 stdTermTable">
+            <div class="col-md-6">
               Quotation Validity: From
               <u>{{ default_payment_term_from | date: "dd-MMM-yyyy" }}</u> To
               <u>{{ toDate | date: "dd-MMM-yyyy" }}</u>
@@ -184,7 +184,7 @@
               </div>
             </div>
             <div class="col-lg-6" style="text-align: middle">
-              <div class="col-md-8 stdTermTable">
+              <div class="col-md-8">
                 Quotation Validity: From
                 <u>{{ delivery_term_from | date: "dd-MMM-yyyy" }}</u>
               </div>
@@ -205,11 +205,11 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-5 stdTermTable">
+            <div class="col-md-5">
               <b>(As Default) Delivery Terms:</b>
               {{ standard_term?.default_delivery_term + " Days" }}
             </div>
-            <div class="col-md-6 stdTermTable">
+            <div class="col-md-6">
               Quotation Validity: From
               <u>{{ default_delivery_term_from | date: "dd-MMM-yyyy" }}</u>
             </div>
@@ -1158,9 +1158,9 @@
                 <div class="col-5"><b>Title</b></div>
               </div>
             </div>
-            <div class="col-6" style="text-align: center">
-              <div class="row">
-                <div class="col-6"><b>Description</b></div>
+            <div class="col-lg-6" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Description</b>
               </div>
             </div>
           </div>
@@ -1188,11 +1188,11 @@
                 />
               </div>
             </div>
-            <div class="col-6">
-              <div class="col-md-5 description">
+            <div class="col-md-8">
+              <div class="col-md-10">
                 <input
                   class="text-left form-control"
-                  style="width: 500px"
+                  style="width: 700px"
                   type="text"
                   [(ngModel)]="item.description"
                   [attr.disabled]="
@@ -1212,28 +1212,13 @@
               *ngIf="!is_preview_check"
             >
               <div class="row">
-                <!-- <div class="action-icon">
-                  <a [routerLink]="" routerLinkActive="router-link-active">
-                    <i class="fa fa-edit"></i
-                  ></a>
-                  &nbsp;
-                  <a
-                    [routerLink]=""
-                    routerLinkActive="router-link-active"
-                    style="font-size: 20px"
-                    (click)="deleteAdditionalInstruction(i, item.id)"
-                    ><i class="fa fa-trash"></i
-                  ></a>
-                </div> -->
-
                 <!-- //action -->
                 <div class="action-icon">
                   <a
                     [routerLink]=""
                     routerLinkActive="router-link-active"
                     (click)="updateAdditionalInstruction(i, item.id)"
-                    *ngIf="
-                    "
+                    *ngIf=""
                     ><i class="cil-check-circle"></i
                   ></a>
                   &nbsp;
@@ -1277,55 +1262,55 @@
           <!-- Add additional_instruction -->
 
           <div *ngIf="!is_preview_check">
-          <div>
-            <div class="row additionalInputDesc">
-              <div class="col-4">
-                <div class="">
-                  <div class="col-md-6 descriptionTitle">
-                    <input
-                      class="text-left form-control"
-                      style="width: 200px"
-                      type="text"
-                      formControlName="soci_title"
-                      placeholder="title..."
-                    />
+            <div>
+              <div class="row">
+                <div class="col-md-3">  
+                  <div class="">
+                    <div class="col-md-10">
+                      <input
+                        class="text-left form-control"
+                        style="width: 200px"
+                        type="text"
+                        formControlName="soci_title"
+                        placeholder="title..."
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-6">
-                <div class="">
-                  <div class="col-md-6 description">
-                    <input
-                      class="text-left form-control"
-                      style="width: 500px"
-                      type="text"
-                      formControlName="description"
-                      placeholder="Description"
-                    />
+                <div class="col-md-8">
+                  <div class="">
+                    <div class="col-md-10">
+                      <input
+                        class="text-left form-control"
+                        style="width: 700px"
+                        type="text"
+                        formControlName="description"
+                        placeholder="Description"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div class="col-2" style="text-align: right">
-                <div class="row">
-                  <div class="action-icon">
-                    <!-- <a [routerLink]="" routerLinkActive="router-link-active"
+                <div class="col-md-1" style="text-align: right">
+                  <div class="row">
+                    <div class="action-icon">
+                      <!-- <a [routerLink]="" routerLinkActive="router-link-active"
                       ><i class="cil-check-circle"></i
                     ></a>
                     &nbsp; -->
-                    <a
-                      [routerLink]=""
-                      routerLinkActive="router-link-active"
-                      style="font-size: 20px"
-                      (click)="addAdditionalInstruction()"
-                    >
-                      <i class="icon-plus icons"></i
-                    ></a>
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        style="font-size: 20px"
+                        (click)="addAdditionalInstruction()"
+                      >
+                        <i class="icon-plus icons"></i
+                      ></a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </p-accordionTab>
       </p-accordion>
@@ -1346,20 +1331,20 @@
               <div class="col-md-8">
                 <b> Description</b>
               </div>
-              <div class="col-lg-1" style="text-align: middle">
-                <div class="col-md-8">
-                  <b> Quantity</b>
-                </div>
+            </div>
+            <div class="col-lg-1" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Quantity</b>
               </div>
-              <div class="col-lg-1" style="text-align: middle">
-                <div class="col-md-8">
-                  <b> Unit (RM)</b>
-                </div>
+            </div>
+            <div class="col-lg-1" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Unit (RM)</b>
               </div>
-              <div class="col-lg-2" style="text-align: middle">
-                <div class="col-md-8">
-                  <b> Amount (RM)</b>
-                </div>
+            </div>
+            <div class="col-lg-2" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Amount (RM)</b>
               </div>
             </div>
             <div
@@ -1374,7 +1359,7 @@
           </div>
           <div>
             <div
-              class=""
+            class="row"
               *ngFor="let item of additional_charges; let i = index"
             >
               <div class="col-md-3">
@@ -1388,8 +1373,8 @@
                         selectedId == 'additionalCharges'
                       "
                     >
-                    <!-- value="{{ item.id }}" -->
-                    <!-- [(ngModel)]="item.id"
+                      <!-- value="{{ item.id }}" -->
+                      <!-- [(ngModel)]="item.id"
                     [ngModelOptions]="{ standalone: true }" -->
                       <option value="" disabled selected>Select Item</option>
                       <option
@@ -1504,19 +1489,10 @@
                 </div>
               </div>
               <!-- action -->
-              <div
-                class="col-md-1"
-                style="text-align: right"
+              <div class="col-md-1" style="text-align: right"
                 *ngIf="!is_preview_check"
               >
                 <div class="row">
-                  <!-- <div class="action-icon">
-                      routerLinkActive="router-link-active"
-                      style="font-size: 20px"
-                      (click)="deleteAdditionalCharges(i, item.id)"
-                      ><i class="fa fa-trash"></i
-                    ></a>
-                  </div> -->
                   <!-- //action -->
                   <div class="action-icon">
                     <a
@@ -1603,7 +1579,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-2">
+              <div class="col-md-1">
                 <div class="qty">
                   <div class="col-md-10">
                     <input
@@ -1617,7 +1593,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-2">
+              <div class="col-md-1">
                 <div class="unit">
                   <div class="col-md-10">
                     <input
@@ -1645,7 +1621,7 @@
                 </div>
               </div>
 
-              <div class="col--1" style="text-align: right">
+              <div class="col-md-1" style="text-align: right">
                 <div class="row">
                   <div class="text-center action-icon">
                     <a
@@ -1700,86 +1676,121 @@
                   <td class="text-center">{{ i + 1 }}</td>
                   <td class="text-center">
                     <input
-                    class="text-left form-control"
-                    type="text"
-                    [(ngModel)]="item.name"
-                    *ngIf="editableRowIndex !== i || selectedId !== 'additionalCharges'"
-                    [attr.disabled]="enableEdit['product'] && controller == item? null: ''"
-                    [ngModelOptions]="{ standalone: true }"
-                    placeholder="Enter Item"
-                  />
+                      class="text-left form-control"
+                      type="text"
+                      [(ngModel)]="item.name"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      [attr.disabled]="
+                        enableEdit['product'] && controller == item ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Enter Item"
+                    />
                     <!-- {{ item.name }} -->
                   </td>
                   <td class="text-center">
                     <input
-                    class="text-left form-control"
-                    type="text"
-                    [(ngModel)]="item.sku"
-                    *ngIf="editableRowIndex !== i || selectedId !== 'additionalCharges'"
-                    [attr.disabled]="enableEdit['product'] && controller == item? null: ''"
-                    [ngModelOptions]="{ standalone: true }"
-                    placeholder="Enter Item"
-                  />
+                      class="text-left form-control"
+                      type="text"
+                      [(ngModel)]="item.sku"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      [attr.disabled]="
+                        enableEdit['product'] && controller == item ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Enter Item"
+                    />
                     <!-- {{ item.sku }} -->
                   </td>
                   <td class="text-center">
                     <input
-                    class="text-left form-control"
-                    type="text"
-                    [(ngModel)]="item.quantity"
-                    *ngIf="editableRowIndex !== i || selectedId !== 'additionalCharges'"
-                    [attr.disabled]="enableEdit['product'] && controller == item? null: ''"
-                    [ngModelOptions]="{ standalone: true }"
-                    placeholder="Enter Item"
-                  />
+                      class="text-left form-control"
+                      type="text"
+                      [(ngModel)]="item.quantity"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      [attr.disabled]="
+                        enableEdit['product'] && controller == item ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Enter Item"
+                    />
                     <!-- {{ item.quantity }} -->
                   </td>
                   <td class="text-center">
                     <input
-                    class="text-left form-control"
-                    type="text"
-                    [(ngModel)]="item.unit_price"
-                    *ngIf="editableRowIndex !== i || selectedId !== 'additionalCharges'"
-                    [attr.disabled]="enableEdit['product'] && controller == item? null: ''"
-                    [ngModelOptions]="{ standalone: true }"
-                    placeholder="Enter Item"
-                  />
+                      class="text-left form-control"
+                      type="text"
+                      [(ngModel)]="item.unit_price"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      [attr.disabled]="
+                        enableEdit['product'] && controller == item ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Enter Item"
+                    />
                     <!-- {{ item.unit_price }} -->
                   </td>
                   <td class="text-center">
                     <input
-                    class="text-left form-control"
-                    type="text"
-                    [(ngModel)]="item.total_price"
-                    *ngIf="editableRowIndex !== i || selectedId !== 'additionalCharges'"
-                    [attr.disabled]="enableEdit['product'] && controller == item? null: ''"
-                    [ngModelOptions]="{ standalone: true }"
-                    placeholder="Enter Item"
-                  />
+                      class="text-left form-control"
+                      type="text"
+                      [(ngModel)]="item.total_price"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      [attr.disabled]="
+                        enableEdit['product'] && controller == item ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Enter Item"
+                    />
                     <!-- {{ item.total_price }} -->
                   </td>
                   <td class="text-center">
                     <input
-                    class="text-left form-control"
-                    type="text"
-                    [(ngModel)]="item.discount"
-                    *ngIf="editableRowIndex !== i || selectedId !== 'additionalCharges'"
-                    [attr.disabled]="enableEdit['product'] && controller == item? null: ''"
-                    [ngModelOptions]="{ standalone: true }"
-                    placeholder="Enter Item"
-                  />
+                      class="text-left form-control"
+                      type="text"
+                      [(ngModel)]="item.discount"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      [attr.disabled]="
+                        enableEdit['product'] && controller == item ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Enter Item"
+                    />
                     <!-- {{ item.discount }} -->
                   </td>
                   <td class="text-center">
                     <input
-                    class="text-left form-control"
-                    type="text"
-                    [(ngModel)]="item.amount"
-                    *ngIf="editableRowIndex !== i || selectedId !== 'additionalCharges'"
-                    [attr.disabled]="enableEdit['product'] && controller == item? null: ''"
-                    [ngModelOptions]="{ standalone: true }"
-                    placeholder="Enter Item"
-                  />
+                      class="text-left form-control"
+                      type="text"
+                      [(ngModel)]="item.amount"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      [attr.disabled]="
+                        enableEdit['product'] && controller == item ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Enter Item"
+                    />
                     <!-- {{ item.amount }} -->
                   </td>
                   <td
@@ -1799,14 +1810,12 @@
                       ></a>
                     </div> -->
                     <!-- //action -->
-                    <div class="action-icon" style="display: flex;">
+                    <div class="action-icon" style="display: flex">
                       <a
                         [routerLink]=""
                         routerLinkActive="router-link-active"
                         (click)="updateProduct(i, item.id)"
-                        *ngIf="
-                          enableEdit['product'] && controller == item
-                        "
+                        *ngIf="enableEdit['product'] && controller == item"
                         ><i class="cil-check-circle"></i
                       ></a>
                       &nbsp;
@@ -1814,9 +1823,7 @@
                         [routerLink]=""
                         routerLinkActive="router-link-active"
                         (click)="disableEditMethod(item, 'product')"
-                        *ngIf="
-                          enableEdit['product'] && controller == item
-                        "
+                        *ngIf="enableEdit['product'] && controller == item"
                       >
                         <i class="pi pi-times"></i>
                       </a>
@@ -1824,8 +1831,7 @@
                         [routerLink]=""
                         routerLinkActive="router-link-active"
                         *ngIf="
-                          editableRowIndex !== i ||
-                          selectedId !== 'product'
+                          editableRowIndex !== i || selectedId !== 'product'
                         "
                         (click)="enableEditMethod(i, item, 'product')"
                       >
@@ -1836,8 +1842,7 @@
                         [routerLink]=""
                         routerLinkActive="router-link-active"
                         *ngIf="
-                          editableRowIndex !== i ||
-                          selectedId !== 'product'
+                          editableRowIndex !== i || selectedId !== 'product'
                         "
                         (click)="deleteProduct(i, item.id)"
                         ><i class="fa fa-trash"></i
