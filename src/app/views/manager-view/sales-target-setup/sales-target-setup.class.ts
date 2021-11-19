@@ -36,10 +36,10 @@ export class SalesTargetSetup {
 }
 
 export class SalesTargetData {
-  public q1: Number;
-  public q2: Number;
-  public q3: Number;
-  public q4: Number;
-  public total: Number;
-  public id: Number;
+    public q1: Number;
+    public q2: Number;
+    public q3: Number;
+    public q4: Number;
+    public total: Number;
+    public id: Number;
 }
