@@ -11,8 +11,16 @@ export class DefaultLayoutComponent {
   public sidebarMinimized = false;
   public navItems = navItems;
   showSideBar = true;
+  userFullname:any;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {
+
+    this.authService.getUserSession().then((res) => {
+      if (res.fullname) {
+        this.userFullname=  res.fullname || '';
+      }
+    });
+  }
 
   toggleMinimize(e) {
     this.sidebarMinimized = e;
