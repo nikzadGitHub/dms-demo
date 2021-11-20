@@ -27,7 +27,11 @@ export class EditComponent implements OnInit {
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("confirmationModal") confirmationModal: ModalDirective;
+  @ViewChild("addStandardTermModal")
+  public addStandardTermModal: ModalDirective;
+  @ViewChild("updateProductModal") public updateProductModal: ModalDirective;
 
+  cost_item_id: any;
   alertBody: string;
   paymentCurrentIndex: number;
   billingRemarks: string;
@@ -47,23 +51,27 @@ export class EditComponent implements OnInit {
   soci_id: number;
   company_details: string[] = [];
   fromDate: Date;
-  toDate: Date;
   form: FormGroup;
   billingList: BillingList[] = [];
   sub_total: number;
   soci_data: any;
   standerd_payment_term: any;
   is_payment_term_eidt = false;
-  is_delivery_payment_term_eidt = false;
+  is_delivery_term_eidt = false;
   standard_term: any;
   total_additional_cost: any;
   default_delivery_term_from: Date;
   default_delivery_term_to: Date;
   standard_delivery_term: any;
+  payment_term_to: Date;
   payment_term_from: Date;
+  default_payment_term: any;
   default_payment_term_from: Date;
   delivery_term_from: Date;
-  default_delivery_term = 0;
+  delivery_term_to: Date;
+  default_delivery_term: any;
+  quotation_validity_delivery_term_to: Date;
+  quotation_validity_payment_term_to: Date;
   billing_milestone: any[] = [];
   payment_schedules: any[] = [];
   additional_costs: any[] = [];
@@ -96,6 +104,8 @@ export class EditComponent implements OnInit {
   };
   editableRowIndex: any;
   selectedId: any;
+  product_index: any;
+  product_amount: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -133,6 +143,22 @@ export class EditComponent implements OnInit {
       contract_cxpiry_date: "",
       sku: "",
       name: "",
+      days: "",
+      fromDate: "",
+      delivery_days: "",
+      delivery_fromDate: "",
+      productName: "",
+      floorPrice: "",
+      otherCostCategory: "",
+      listPrice: "",
+      justification: "",
+      principal: "",
+      productManager: "",
+      extendedWarranty: "",
+      taxRate: "",
+      taxCode: "",
+      customerTaxRate: "",
+      standardWarranty: "",
     });
   }
 
@@ -143,16 +169,6 @@ export class EditComponent implements OnInit {
     this.route.params.subscribe((event) => {
       this.soci_id = event.sociId;
       this.getSociData(this.soci_id);
-      // this.form = this.formBuilder.group({
-      //   standard_payment_term: this.termSelected,
-      //   fromDate: this.fromDate,
-      //   toDate: this.toDate,
-      //   billings: this.formBuilder.array([]),
-      //   payments: this.formBuilder.array([]),
-      //   addCosts: this.formBuilder.array([]),
-      //   products: this.formBuilder.array([]),
-      // });
-      // this.form.get("products").disable();
     });
   }
 
@@ -166,16 +182,44 @@ export class EditComponent implements OnInit {
         res["data"]["standard_terms"]["payment_term"];
       this.payment_term_from =
         res["data"]["standard_terms"]["payment_term_from"];
+      // quotation_validity_payment_term_to
+      this.payment_term_to = new Date(this.payment_term_from);
+      this.payment_term_to.setDate(
+        this.payment_term_to.getDate() + this.standerd_payment_term
+      );
       this.default_payment_term_from =
         res["data"]["standard_terms"]["default_payment_term_from"];
+      this.default_payment_term =
+        res["data"]["standard_terms"]["default_payment_term"];
+      this.quotation_validity_payment_term_to = new Date(
+        this.default_payment_term_from
+      );
+      this.quotation_validity_payment_term_to.setDate(
+        this.quotation_validity_payment_term_to.getDate() +
+          this.default_payment_term
+      );
+      // Delivery_terms
       this.default_delivery_term =
         res["data"]["standard_terms"]["default_delivery_term"];
       this.default_delivery_term_from =
         res["data"]["standard_terms"]["default_delivery_term_from"];
       this.delivery_term_from =
         res["data"]["standard_terms"]["delivery_term_from"];
+      this.delivery_term_to = new Date(this.delivery_term_from);
+      this.delivery_term_to.setDate(
+        this.delivery_term_to.getDate() + this.default_delivery_term
+      );
       this.standard_delivery_term =
         res["data"]["standard_terms"]["delivery_term"];
+
+      // quotation_validity_delivery_term_to
+      this.quotation_validity_delivery_term_to = new Date(
+        this.default_delivery_term_from
+      );
+      this.quotation_validity_delivery_term_to.setDate(
+        this.quotation_validity_delivery_term_to.getDate() +
+          this.default_delivery_term
+      );
       // billing_milestone
       this.billing_milestone = res["data"]["billing_milestones"];
       this.billing_milestone.forEach((values) => {
@@ -232,6 +276,90 @@ export class EditComponent implements OnInit {
     });
   }
 
+  // Standard Term
+
+  editStandardPaymentTerm() {
+    this.is_payment_term_eidt = true;
+    if ((this.is_payment_term_eidt = true)) {
+      this.addStandardTermModal.show();
+      console.log("delivery_term_from: ", this.payment_term_from);
+      let date = new Date(this.payment_term_from).toISOString().split("T")[0];
+      this.form.patchValue({
+        days: this.standerd_payment_term,
+        fromDate: date,
+      });
+    }
+  }
+
+  editStandardDeliveryTerm() {
+    this.is_delivery_term_eidt = true;
+    if (this.is_delivery_term_eidt) {
+      this.addStandardTermModal.show();
+      let date = new Date(this.delivery_term_from).toISOString().split("T")[0];
+      this.form.patchValue({
+        delivery_days: this.default_delivery_term,
+        delivery_fromDate: date,
+      });
+    }
+  }
+
+  updatePaymentTerms() {
+    this.sociService
+      .postQuery("/soci/update-payment-term", {
+        standard_payment_term: this.form.value.days,
+        standard_payment_term_from: this.form.value.fromDate,
+        is_edited: this.is_payment_term_eidt,
+      })
+      .subscribe(
+        (data: any) => {
+          console.log("Data---->", data);
+          this.addStandardTermModal.hide();
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+  }
+  updateDeliveryTerms() {
+    this.sociService
+      .postQuery("/soci/update-delivery-term", {
+        delivery_term: this.form.value.delivery_days,
+        delivery_term_from: this.form.value.delivery_fromDate,
+        is_edited: this.is_delivery_term_eidt,
+      })
+      .subscribe(
+        (data: any) => {
+          this.addStandardTermModal.hide();
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+  }
+  setTermsConditions() {
+    this.is_payment_term_eidt = false;
+    this.is_delivery_term_eidt = false;
+  }
+  // End Standard Term
+
   // ADD Billing_Milestone
   addBillingMileStone() {
     this.sociService
@@ -251,7 +379,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            // this.form.reset();
+            // this.form.reset(this.form.value.billing_id);
           }, 2000);
         },
         (error) => {
@@ -264,13 +392,68 @@ export class EditComponent implements OnInit {
       );
   }
   autoIncreaseBillingId(billing_id) {
+    console.log("billing_id:", billing_id);
+
     var billin_id_array = billing_id.split("_");
     this.form.patchValue({
-      new_billing_id:
-        billin_id_array[0] + "_" + (parseInt(billin_id_array[1]) + 1),
+      billing_id: billin_id_array[0] + "_" + (parseInt(billin_id_array[1]) + 1),
     });
+    console.log(
+      "Iddd--->",
+      billin_id_array[0] + "_" + (parseInt(billin_id_array[1]) + 1)
+    );
   }
 
+  updateBillingMilestone(index, billing_instruction_id) {
+    this.sociService
+      .putQuery(
+        "/soci/billing-milestone/" + billing_instruction_id,
+        this.controller
+      )
+      .subscribe(
+        (data: any) => {
+          this.billing_milestone[index] = data["data"];
+          this.autoIncreaseBillingId(data["data"]["billing_id"]);
+          this.editableRowIndex = null;
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+  }
+
+  deleteBillingMilestone(index, billing_milestone_id) {
+    this.sociService
+      .deleteQuery("/soci/billing-milestone/" + billing_milestone_id)
+      .subscribe(
+        (data: any) => {
+          console.log("Data:", data["data"]["billing_id"]);
+          this.autoIncreaseBillingId(data["data"]["billing_id"]);
+          this.billing_milestone.splice(index, 1);
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+  }
   // End billing milestone
 
   // ADD payment_schedule
@@ -403,13 +586,13 @@ export class EditComponent implements OnInit {
 
   changeCostvalues(value) {
     console.log("cost-values: ", value);
-    value.total_price = value.quantity * value.unit_price;
-    console.log("total_price: ", value.total_price);
+    if (value.quantity && value.unit_price) {
+      value.total_price = value.quantity * value.unit_price;
+    } else {
+      value.total_price = 0;
+    }
 
-    // this.form.patchValue({
-    //   total_price: value.quantity * value.unit_price,
-    // });
-    // this.payemntData[column] = value;
+    console.log("total_price: ", value.total_price);
   }
 
   updateAdditionalCost(index, additiona_cost_id) {
@@ -678,7 +861,17 @@ export class EditComponent implements OnInit {
       });
     }
   }
-
+  updateChargesQuantity(value) {
+    console.log("charges-values: ", value);
+    if (value.quantity) {
+      value.total_price = value.unit_price * value.quantity;
+    }
+  }
+  updateChargesUnitPrice(value) {
+    if (value.quantity && value.unit_price) {
+      value.total_price = value.unit_price * value.quantity;
+    }
+  }
   updateAdditionalCharges(index, additional_charges_id) {
     this.sociService
       .putQuery(
@@ -790,19 +983,35 @@ export class EditComponent implements OnInit {
       );
   }
 
-  productDetails(product) {
+  productDetails(product, check) {
+    console.log("selected-product: ", product);
+
     this.external_product_number = product.external_product_number;
     this.product_data_area_id = product.data_area_id;
     this.product_id = product.id;
     this.product_cost = product.cost;
-    // this.product_id = product["id"];
+    if(check == 'add_product'){
     this.form.patchValue({
       sku: product["sku"],
       unit_price: product["amount"],
-      // total_price: product["amount"],
-      // product["amount"]
       amount: 0.0,
     });
+    }
+    else{
+        this.form.patchValue({
+          name: product.name,
+          sku: product.sku,
+          quantity: product.quantity,
+          discount: product.discount,
+          listPrice: 0.0,
+          unit_price: product.unit_price,
+          floorPrice: 0.0,
+          principal: product.principle,
+          taxRate: product.tax_rate,
+          standardWarranty: product.std_warranty,
+          amount: product.amount,
+        })
+      }
   }
   addProductQuantity() {
     if (this.form.value.quantity && this.form.value.discount) {
@@ -848,16 +1057,59 @@ export class EditComponent implements OnInit {
       });
     }
   }
-  updateProduct(index, product_id) {
+  openUpdateProductModal(index, product) {
+    this.controller = product;
+    this.product_index = index;
+    this.product_data_area_id = product.data_area_id;
+    this.external_product_number = product.external_product_number;
+    this.product_id = product.id;
+    this.product_amount = product.amount;
+    console.log("product_index: ", this.product_index);
+    console.log("Product: ", product);
+    this.updateProductModal.show();
+    this.form.patchValue({
+      name: product.name,
+      sku: product.sku,
+      quantity: product.quantity,
+      discount: product.discount,
+      listPrice: 0.0,
+      unit_price: product.unit_price,
+      floorPrice: 0.0,
+      principal: product.principle,
+      taxRate: product.tax_rate,
+      standardWarranty: product.std_warranty,
+      amount: product.amount,
+    });
+  }
+  updateProduct() {
     this.sociService
-      .putQuery("/soci/product/" + product_id, {
-        data_area_id: this.controller.data_area_id,
-        external_product_number: this.controller.external_product_number,
-        soci_id: this.soci_id
+      .putQuery("/soci/product/" + this.product_id, {
+        external_product_number: this.external_product_number,
+        data_area_id: this.product_data_area_id,
+        product_id: this.product_id,
+        soci_id: this.soci_id,
+        quantity: this.form.value.quantity,
+        cost: this.product_cost,
+        margin: 12,
+        total_price: this.form.value.quantity.total_price,
+        discount: this.form.value.discount,
+        amount: this.form.value.amount,
+        // listPrice:this.form.value.listPrice,
+        // unit_price:this.form.value.unit_price,
+        // floorPrice:this.form.value.floorPrice,
+        // justification:this.form.value.justification,
+        // principal:this.form.value.principal,
+        // productManager:this.form.value.productManager,
+        // standardWarranty:this.form.value.standardWarranty,
+        // extendedWarranty:this.form.value.extendedWarranty,
+        // taxRate:this.form.value.taxRate,
+        // customerTaxRate:this.form.value.customerTaxRate,
+        // taxCode:this.form.value.taxCode,
+        // otherCostCategory:this.form.value.otherCostCategory,
       })
       .subscribe(
         (data: any) => {
-          this.product[index] = data["data"];
+          this.product[this.product_index] = data["data"];
           this.product_subtotal_before_tax += data["data"]["total_price"];
           this.product_total_net_amount += data["data"]["amount"];
           this.products_discount_values += data["data"]["discount"];
@@ -867,6 +1119,7 @@ export class EditComponent implements OnInit {
           this.total_cost +=
             data["data"]["discount"] + data["data"]["total_price"];
           this.editableRowIndex = null;
+          this.updateProductModal.hide();
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -946,9 +1199,6 @@ export class EditComponent implements OnInit {
     console.log("control_id: ", control.id);
     console.log("type: ", type);
     delete control["laravel_through_key"];
-
-    delete control["code_item_id"];
-    delete control["code_item"];
     this.selectedId = type;
     this.controller = control;
     this.enableEdit[type] = true;
@@ -960,12 +1210,12 @@ export class EditComponent implements OnInit {
     this.editableRowIndex = null;
   }
 
-  editPaymentTerm() {
-    this.is_payment_term_eidt = true;
-  }
-  editDefaultPaymentTerm() {
-    this.is_delivery_payment_term_eidt = true;
-  }
+  // editPaymentTerm() {
+  //   this.is_payment_term_eidt = true;
+  // }
+  // editDefaultPaymentTerm() {
+  //   this.is_delivery_payment_term_eidt = true;
+  // }
   get form_controls() {
     return this.form.controls;
   }

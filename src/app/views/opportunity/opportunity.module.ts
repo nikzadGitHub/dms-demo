@@ -35,6 +35,7 @@ import { OpportunityBookingComponent } from './opportunity-booking/opportunity-b
     MatAutocompleteModule,
     ProgressbarModule,
     MatSlideToggleModule,
+
     TabViewModule
   
   ],

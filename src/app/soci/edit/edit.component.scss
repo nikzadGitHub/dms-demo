@@ -237,6 +237,276 @@ input::-webkit-inner-spin-button {
     overflow-x: hidden;
   }
 }
+.payment-form {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  .days-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    color: black;
+    font-size: medium;
+    font-family: "Lato";
+    input {
+      width: 84px;
+      margin-left: 14px;
+    }
+  }
+  .date-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    color: black;
+    font-size: medium;
+    font-family: "Lato";
+
+    input {
+      width: 160px;
+      margin-left: 14px;
+    }
+  }
+}
+.update-term-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 23px;
+  button {
+    border-radius: 5px;
+    border: 1px solid #386fa4;
+    line-height: 30px;
+    color: white;
+    background-color: #386fa4;
+    width: 102px;
+  }
+}
+label {
+  color: black;
+}
+h4 {
+  color: black;
+}
+//edit prodcut model
+.search-product {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  p-autoComplete {
+    width: 75%;
+  }
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  input {
+    width: 573px;
+    height: 40px;
+  }
+  .product-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .product-sku {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .product-quantity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .item-discount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .list-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .unit-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .floor-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .justification {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+    label {
+      color: #386fa4;
+    }
+    textarea {
+      width: 576px;
+    }
+  }
+  .principal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .product-manager {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+}
+
+.equipment-info {
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    font-size: x-large;
+    font-weight: bold;
+    color: black;
+  }
+  input {
+    width: 573px;
+    height: 40px;
+  }
+  select {
+    width: 573px;
+    height: 40px;
+  }
+  .standard-warranty {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+    margin-top: 25px;
+  }
+  .extended-warranty {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .tax-rate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .cutomer-tax {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .tax-code {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+}
+
+.other-cost {
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    font-size: x-large;
+    font-weight: bold;
+    color: black;
+  }
+  .category {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    select {
+      width: 573px;
+      height: 40px;
+    }
+  }
+}
+
+.total {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-size: medium;
+  font-weight: bold;
+  font-family: "Lato";
+  align-items: center;
+
+  margin-bottom: 20px;
+
+  input{
+    width: 125px;
+    height: 38px;
+    margin-left: 10px;
+  }
+}
+
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 20px;
+  button {
+    border-radius: 5px;
+    border: 1px solid #386fa4;
+    line-height: 30px;
+    width: 100px;
+  }
+  .cancel-btn {
+    background: #ffffff;
+    color: #386fa4;
+    margin-right: 10px;
+  }
+  .save-btn {
+    background: #386fa4;
+    color: #ffffff;
+  }
+}
+
 // :host ::ng-deep .customColor.p-accordion {
 //     .p-accordion-header {
 //         font-size: 1.5em;
@@ -265,56 +535,59 @@ input::-webkit-inner-spin-button {
 }
 
 @media screen and (max-width: 576px) {
-  .bg-opp{margin-bottom: 5px;}
-  .form-control{margin-top: 5px;}
-  .stdTermTable{
+  .bg-opp {
+    margin-bottom: 5px;
+  }
+  .form-control {
+    margin-top: 5px;
+  }
+  .stdTermTable {
     display: flex;
   }
-  .action-btns{
+  .action-btns {
     margin-top: 10px;
-    .cancel-btn{
+    .cancel-btn {
       margin-left: 350px;
     }
   }
   :host ::ng-deep .customColor.p-accordion {
-    .p-accordion-content{
+    .p-accordion-content {
       overflow-x: scroll !important;
-      .descriptionTitle{
-        input{
+      .descriptionTitle {
+        input {
           width: 150px !important;
         }
-        width: 150px
+        width: 150px;
       }
-      .description{
-        input{
+      .description {
+        input {
           width: 150px !important;
         }
-        width: 150px
+        width: 150px;
       }
-      .action-icon{
+      .action-icon {
         display: flex;
         justify-content: center;
         align-items: center;
         margin-left: 0px !important;
-        a{
+        a {
           padding-right: 10px;
         }
       }
-      .additionalInputDesc{
-        .descriptionTitle{
-          input{
+      .additionalInputDesc {
+        .descriptionTitle {
+          input {
             width: 150px !important;
           }
-          width: 150px
+          width: 150px;
         }
-        .description{
-          input{
+        .description {
+          input {
             width: 150px !important;
           }
-          width: 150px
+          width: 150px;
         }
       }
-      
     }
   }
 
