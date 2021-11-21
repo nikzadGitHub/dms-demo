@@ -24,17 +24,9 @@ export class IndexComponent implements OnInit {
   socis: Soci[] = [];
   is_po_added = false;
   is_preview_check: boolean;
-  // columns: Column[] = [];
-  // defaultColumns: Column[] = [
-  //   {'header':'Created Date','field':'created_at','type':'date'},
-  //   {'header':'SOCI ID','field':'soci_id','type':'text'},
-  //   {'header':'Quotation ID','field':'quote_full_id','type':'text'},
-  //   {'header':'Quote Date','field':'quote_date','type':'date | date "dd-MM-yy"'},
-  //   {'header':'Amount (MYR)','field':'po_amount','type':'number'},
-  //   {'header':'PO No','field':'po_no','type':'text'},
-  //   {'header':'PO Date','field':'po_date','type':'date'},
-  //   {'header':'Status','field':'status','type':'text'},
-  // ];
+  rolesPermission: any[] = [];
+  user_json: any;
+  isPermission:boolean;
 
   constructor(public sociService: SociService, private router: Router) {}
 
@@ -46,13 +38,7 @@ export class IndexComponent implements OnInit {
         this.socis = data["data"]["soci"]["data"];
         this.pages = data["data"]["soci"]["links"];
         this.totalRecords = data["data"]["soci"]["total"];
-        console.log("total-->", this.totalRecords);
-
-        // if(data['data']['columnOrder'] == null){
-        //   this.columns = JSON.parse(JSON.stringify(this.defaultColumns));
-        // } else {
-        //   this.columns = JSON.parse(data['data']['columnOrder']['column_order']);
-        // }
+        this.checkPermission();
       });
   }
 
@@ -60,7 +46,6 @@ export class IndexComponent implements OnInit {
     this.sociService
       .getAll(this.pageItems, this.search_text, this.sort)
       .subscribe((data) => {
-        console.log(data);
         this.socis = data["data"]["soci"]["data"];
         this.totalRecords = data["data"]["soci"]["total"];
         // if(data['data']['columnOrder'] == null){
@@ -81,19 +66,15 @@ export class IndexComponent implements OnInit {
 
   onClick(pageNo) {
     let url = this.pages[pageNo].url;
-    console.log("pages:", this.pages);
     this.sociService
       .getPage(url, this.pageItems, this.search_text)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((data) => {
-        console.log("page-data-->", data);
-
         this.socis = data["data"]["soci"]["data"];
         this.pages = data["data"]["soci"]["links"];
       });
   }
   previewSOCI(soci_id) {
-    console.log("soci_id", soci_id);
     this.is_preview_check = true;
     let navigate: NavigationExtras = {
       queryParams: {
@@ -103,25 +84,20 @@ export class IndexComponent implements OnInit {
     this.router.navigate(["/soci/", soci_id, "edit"], navigate);
   }
 
-  receiveSociData($event){
-    console.log("SOCI-event--->", $event);
-    this.socis.unshift( $event.data)
+  receiveSociData($event) {
+    this.socis.unshift($event.data);
   }
 
-  // SortColumn(event: LazyLoadEvent){
-  //   console.log(event)
-  //   this.sort = {'field':event['sortField'],'order':event['sortOrder']}
-  //   this.ngOnInit()
-  // }
-
-  // columnOrder(event){
-  //   this.sociService.saveColumnOrder(event.columns,'soci')
-  //   .pipe(takeUntil(this.ngUnsubscribe))
-  //   .subscribe()
-  // }
-
-  // ngOnDestroy() {
-  //   this.ngUnsubscribe.next();
-  //   this.ngUnsubscribe.complete();
-  // }
+  checkPermission() {
+    this.user_json = JSON.parse(localStorage.getItem("user-json"));
+    this.rolesPermission = this.user_json.permissions;
+    this.rolesPermission.forEach((value) => {
+      if(value.name == "Create SOCI" || value.slug == "create_soci"){
+        this.isPermission = true
+      }
+      else{
+        this.isPermission = false
+      }
+    });
+  }
 }

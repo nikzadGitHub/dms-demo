@@ -128,7 +128,7 @@
             <div
               class="col-lg-1"
               style="text-align: right"
-              *ngIf="!is_preview_check"
+              *ngIf="!is_preview_check && sociSataus == 1"
             >
               <div>
                 <a
@@ -180,7 +180,7 @@
             <div
               class="col-lg-1"
               style="text-align: right"
-              *ngIf="!is_preview_check"
+              *ngIf="!is_preview_check && sociSataus == 1"
             >
               <div>
                 <a
@@ -226,7 +226,7 @@
                   <th>Notes</th>
                   <th></th>
                   <th *ngIf="is_preview_check"></th>
-                  <th *ngIf="!is_preview_check">Action</th>
+                  <th *ngIf="!is_preview_check && sociSataus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -309,7 +309,7 @@
                   <td
                     class="text-center td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check"
+                    *ngIf="!is_preview_check && sociSataus == 1"
                   >
                     <!-- <div class="action-icon">
                       <a [routerLink]="" routerLinkActive="router-link-active"
@@ -381,7 +381,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check">
+                <tr align="center" *ngIf="!is_preview_check && sociSataus == 1">
                   <td style="width: 15%">
                     <input
                       formControlName="billing_id"
@@ -467,7 +467,7 @@
                   <th>Amount (MYR)</th>
                   <th>Notes</th>
                   <th *ngIf="is_preview_check"></th>
-                  <th *ngIf="!is_preview_check">Action</th>
+                  <th *ngIf="!is_preview_check && sociSataus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -546,7 +546,7 @@
                   <td
                     class="td-actions"
                     style="width: 10%; padding: none"
-                    *ngIf="!is_preview_check"
+                    *ngIf="!is_preview_check && sociSataus == 1"
                   >
                     <div class="action-icon">
                       <a
@@ -594,7 +594,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check">
+                <tr align="center" *ngIf="!is_preview_check && sociSataus == 1">
                   <td style="width: 15%; padding: 6px">
                     <select
                       formControlName="billing_id"
@@ -711,7 +711,7 @@
                   <th>Notes</th>
                   <th></th>
                   <th></th>
-                  <th *ngIf="!is_preview_check">Action</th>
+                  <th *ngIf="!is_preview_check && sociSataus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -789,7 +789,7 @@
                   <td
                     class="td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check"
+                    *ngIf="!is_preview_check && sociSataus == 1"
                   >
                     <div class="action-icon">
                       <!-- (click)="disableEditMethod(cost, 'addCost')"
@@ -838,7 +838,7 @@
                 </tr>
                 <!-- *ngFor="let cost of addCosts().controls; let i = index"
                 [formGroupName]="i" -->
-                <tr align="center" *ngIf="!is_preview_check">
+                <tr align="center" *ngIf="!is_preview_check && sociSataus == 1">
                   <td style="width: 15%">
                     <input
                       formControlName="description"
@@ -940,7 +940,7 @@
                   <th>Status</th>
                   <th>Note</th>
                   <th></th>
-                  <th *ngIf="!is_preview_check">Action</th>
+                  <th *ngIf="!is_preview_check && sociSataus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -1036,7 +1036,7 @@
                   <td
                     class="td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check"
+                    *ngIf="!is_preview_check && sociSataus == 1"
                   >
                     <!-- <div class="action-icon">
                       <a [routerLink]="" routerLinkActive="router-link-active">
@@ -1099,7 +1099,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check">
+                <tr align="center" *ngIf="!is_preview_check && sociSataus == 1">
                   <td>
                     <input
                       formControlName="schedule"
@@ -1237,7 +1237,7 @@
             <div
               class="col-md-1"
               style="text-align: right"
-              *ngIf="!is_preview_check"
+              *ngIf="!is_preview_check && sociSataus == 1"
             >
               <div class="row">
                 <!-- //action -->
@@ -1289,7 +1289,7 @@
 
           <!-- Add additional_instruction -->
 
-          <div *ngIf="!is_preview_check">
+          <div *ngIf="!is_preview_check && sociSataus == 1">
             <div>
               <div class="row">
                 <div class="col-md-3">
@@ -1378,7 +1378,7 @@
             <div
               class="col-lg-1"
               style="text-align: middle"
-              *ngIf="!is_preview_check"
+              *ngIf="!is_preview_check && sociSataus == 1"
             >
               <div class="">
                 <b> Action</b>
@@ -1520,7 +1520,7 @@
               <div
                 class="col-md-1"
                 style="text-align: right"
-                *ngIf="!is_preview_check"
+                *ngIf="!is_preview_check && sociSataus == 1"
               >
                 <div class="row">
                   <!-- //action -->
@@ -1573,7 +1573,7 @@
             </div>
           </div>
           <!-- Installation -->
-          <div *ngIf="!is_preview_check">
+          <div *ngIf="!is_preview_check && sociSataus == 1">
             <div class="row">
               <div class="col-md-3">
                 <div class="">
@@ -1683,7 +1683,7 @@
       <!-- End Additional/Reduction Charges -->
       <br />
       <!-- Product -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="Products">
           <div class="row">
             <!-- formArrayName="products" -->
@@ -1698,7 +1698,7 @@
                   <th>Total Price(MYR)</th>
                   <th>Discount %</th>
                   <th>Net Amount(MYR)</th>
-                  <th *ngIf="!is_preview_check">Action</th>
+                  <th *ngIf="!is_preview_check && sociSataus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -1826,14 +1826,14 @@
                   <td
                     class="td-actions"
                     style="width: 5%"
-                    *ngIf="!is_preview_check"
+                    *ngIf="!is_preview_check && sociSataus == 1"
                   >
                     <!-- //action -->
                     <div class="action-icon" style="display: flex">
                       <a
                         [routerLink]=""
                         routerLinkActive="router-link-active"
-                        (click)="openUpdateProductModal(i,item)"
+                        (click)="openUpdateProductModal(i, item)"
                       >
                         <i class="fa fa-edit"></i>
                       </a>
@@ -1850,7 +1850,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check">
+                <tr align="center" *ngIf="!is_preview_check && sociSataus == 1">
                   <!-- {{ i + 1 }} -->
                   <td></td>
                   <td style="size: 20%">
@@ -1978,6 +1978,25 @@
       </p-accordion>
       <!-- End of Products Accordion -->
       <br />
+      <!-- Customer PO Attachments -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+        <p-accordionTab header="Customer PO Attachments">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Global Order ID</th>
+                <th>FO SO No.</th>
+                <th>Customer PO</th>
+                <th>File Name</th>
+                <th>File Type</th>
+                <th>Download</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </p-accordionTab>
+      </p-accordion>
+      <br />
       <!-- SOCI Detail -->
       <div
         style="
@@ -2025,7 +2044,11 @@
     <i class="pi pi-arrow-left"></i>
     Cancel
   </button>
-  <button class="request-btn" (click)="confirmationModal.show()">
+  <button
+    class="request-btn"
+    (click)="confirmationModal.show()"
+    *ngIf="sociSataus == 1"
+  >
     REQUEST APPROVAL
   </button>
 </div>
@@ -2057,131 +2080,215 @@
         </button>
       </div>
       <form [formGroup]="form">
-      <div class="modal-body">
-        <label for="">Please search product or add dummy sku.</label>
+        <div class="modal-body">
+          <label for="">Please search product or add dummy sku.</label>
 
-        <!-- product-search -->
-        <div class="search-product">
-          <label for="">Product Name</label>
-          <p-autoComplete
-            formControlName="name"
-            [suggestions]="filteredProducts"
-            (completeMethod)="filterProduct($event)"
-            field="name"
-            [dropdown]="true"
-            [style]="{ width: '100%' }"
-            [inputStyle]="{ width: '100%' }"
-          >
-            <ng-template let-product pTemplate="item">
-              <div class="product-item" (click)="productDetails(product, 'update_product')">
-                <div>{{ product.name }}</div>
-              </div>
-            </ng-template>
-          </p-autoComplete>
-        </div>
-        <hr>
-        <!-- product-data -->
-        <div class="product-info">
-          <div class="product-name">
-            <label>Product Name</label>
-          <input type="text" class="form-control" readonly formControlName="name" required>
+          <!-- product-search -->
+          <div class="search-product">
+            <label for="">Product Name</label>
+            <p-autoComplete
+              formControlName="name"
+              [suggestions]="filteredProducts"
+              (completeMethod)="filterProduct($event)"
+              field="name"
+              [dropdown]="true"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+            >
+              <ng-template let-product pTemplate="item">
+                <div
+                  class="product-item"
+                  (click)="productDetails(product, 'update_product')"
+                >
+                  <div>{{ product.name }}</div>
+                </div>
+              </ng-template>
+            </p-autoComplete>
           </div>
-          <div class="product-sku">
-            <label>SKU ID</label>
-            <input type="text" class="form-control" readonly formControlName="sku" required>
+          <hr />
+          <!-- product-data -->
+          <div class="product-info">
+            <div class="product-name">
+              <label>Product Name</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                formControlName="name"
+                required
+              />
+            </div>
+            <div class="product-sku">
+              <label>SKU ID</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                formControlName="sku"
+                required
+              />
+            </div>
+            <div class="product-quantity">
+              <label for="">Quantity</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="quantity"
+                (input)="addProductQuantity()"
+                required
+              />
+            </div>
+            <div class="item-discount">
+              <label for="">Item Discount</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="0.0"
+                formControlName="discount"
+                (input)="addDiscount()"
+                required
+              />
+            </div>
+            <div class="list-price">
+              <label for="">List price</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                formControlName="listPrice"
+                required
+              />
+            </div>
+            <div class="unit-price">
+              <label for="">Unit Price</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                placeholder="0.0"
+                formControlName="unit_price"
+                required
+              />
+            </div>
+            <div class="floor-price">
+              <label for="">Floor Price</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="0.0"
+                formControlName="floorPrice"
+              />
+            </div>
+            <div class="justification">
+              <label for="">CAS Justification</label>
+              <textarea
+                name=""
+                class="form-control"
+                formControlName="justification"
+              ></textarea>
+            </div>
+            <div class="principal">
+              <label for="">Principal</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="principal"
+              />
+            </div>
+            <div class="product-manager">
+              <label for="">Product Manager</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="productManager"
+              />
+            </div>
           </div>
-          <div class="product-quantity">
-            <label for="">Quantity</label>
-            <input type="text" class="form-control" formControlName="quantity" (input)="addProductQuantity()" required>
+          <hr />
+          <!-- For Equipment -->
+          <div class="equipment-info">
+            <h3>For Equipment</h3>
+            <div class="standard-warranty">
+              <label>Standard Warranty</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="standardWarranty"
+              />
+            </div>
+            <div class="extended-warranty">
+              <label>Extended Warranty</label>
+              <select class="form-control" formControlName="extendedWarranty">
+                <option display="none">Please select...</option>
+                <option value="180 DAYS">180 DAYS</option>
+                <option value="120 DAYS">120 DAYS</option>
+                <option value="1 YEAR">1 YEAR</option>
+                <option value="5 DAYS">5 DAYS</option>
+                <option value="60 DAYS">60 DAYS</option>
+              </select>
+            </div>
+            <div class="tax-rate">
+              <label>Tax Rate</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="0.0"
+                formControlName="taxRate"
+              />
+            </div>
+            <div class="cutomer-tax">
+              <label>Customer Tax Code</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="customerTaxRate"
+              />
+            </div>
+            <div class="tax-code">
+              <label>Tax Code</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="taxCode"
+              />
+            </div>
           </div>
-          <div class="item-discount">
-            <label for="">Item Discount</label>
-            <input type="text" class="form-control" placeholder="0.0" formControlName="discount" (input)="addDiscount()" required>
-          </div>
-          <div class="list-price">
-            <label for="">List price</label>
-            <input type="text" class="form-control" readonly formControlName="listPrice" required>
-          </div>
-          <div class="unit-price">
-            <label for="">Unit Price</label>
-            <input type="text" class="form-control" readonly placeholder="0.0" formControlName="unit_price" required>
-          </div>
-          <div class="floor-price">
-            <label for="">Floor Price</label>
-            <input type="text" class="form-control" placeholder="0.0" formControlName="floorPrice">
-          </div>
-          <div class="justification">
-            <label for="">CAS Justification</label>
-            <textarea name="" class="form-control" formControlName="justification"></textarea>
-          </div>
-          <div class="principal">
-            <label for="">Principal</label>
-            <input type="text" class="form-control" formControlName="principal">
-          </div>
-          <div class="product-manager">
-            <label for="">Product Manager</label>
-            <input type="text" class="form-control" formControlName="productManager">
-          </div>
-        </div>
-        <hr>
-        <!-- For Equipment -->
-        <div class="equipment-info">
-          <h3>For Equipment</h3>
-          <div class="standard-warranty">
-            <label>Standard Warranty</label>
-            <input type="text" class="form-control" formControlName="standardWarranty">
-          </div>
-          <div class="extended-warranty">
-            <label>Extended Warranty</label>
-            <select class="form-control" formControlName="extendedWarranty">
-              <option display="none">Please select...</option>
-              <option value="180 DAYS">180 DAYS</option>
-              <option value="120 DAYS">120 DAYS</option>
-              <option value="1 YEAR">1 YEAR</option>
-              <option value="5 DAYS">5 DAYS</option>
-              <option value="60 DAYS">60 DAYS</option>
-            </select>
-          </div>
-          <div class="tax-rate">
-            <label>Tax Rate</label>
-            <input type="text" class="form-control" placeholder="0.0" formControlName="taxRate">
-          </div>
-          <div class="cutomer-tax">
-            <label>Customer Tax Code</label>
-            <input type="text" class="form-control" formControlName="customerTaxRate">
-          </div>
-          <div class="tax-code">
-            <label>Tax Code</label>
-            <input type="text" class="form-control" formControlName="taxCode">
-          </div>
-        </div>
 
-        <!-- other Cost -->
-        <div class="other-cost">
-          <h3>Other Cost</h3>
-          <div class="category">
-            <label> Category</label>
-            <select class="form-control" formControlName="otherCostCategory">
-              <option display="none">Please select...</option>
-              <option value="Dental Supplies">Dental Supplies</option>
-              <option value="Patient Care">Patient Care</option>
-              <option value="Diabetic Product/Service">Diabetic Product/Service</option>
-              <option value="Implantable">Implantable</option>
-            </select>
+          <!-- other Cost -->
+          <div class="other-cost">
+            <h3>Other Cost</h3>
+            <div class="category">
+              <label> Category</label>
+              <select class="form-control" formControlName="otherCostCategory">
+                <option display="none">Please select...</option>
+                <option value="Dental Supplies">Dental Supplies</option>
+                <option value="Patient Care">Patient Care</option>
+                <option value="Diabetic Product/Service">
+                  Diabetic Product/Service
+                </option>
+                <option value="Implantable">Implantable</option>
+              </select>
+            </div>
+          </div>
+          <!-- total -->
+          <div class="total">
+            <label for="">Total</label>
+            <input
+              type="text"
+              class="form-control"
+              readonly
+              formControlName="amount"
+            />
+          </div>
+
+          <div class="submit-btn">
+            <button class="cancel-btn" (click)="updateProductModal.hide()">
+              Cancel
+            </button>
+            <button class="save-btn" (click)="updateProduct()">Save</button>
           </div>
         </div>
-        <!-- total -->
-        <div class="total">
-          <label for="">Total</label>
-          <input type="text" class="form-control" readonly formControlName="amount">
-        </div>
-
-        <div class="submit-btn">
-          <button class="cancel-btn" (click)="updateProductModal.hide()">Cancel</button>
-          <button class="save-btn" (click)=" updateProduct()">Save</button>
-        </div>
-      </div>
-    </form>
+      </form>
     </div>
     <!-- /.modal-content -->
   </div>
@@ -2432,5 +2539,3 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
-
-

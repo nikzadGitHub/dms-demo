@@ -106,6 +106,7 @@ export class EditComponent implements OnInit {
   selectedId: any;
   product_index: any;
   product_amount: any;
+  sociSataus: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -113,9 +114,6 @@ export class EditComponent implements OnInit {
     private sociService: SociService,
     private formBuilder: FormBuilder
   ) {
-    // this.quoteService.create("3630").subscribe((data) => {
-    //   this.terms = data["data"];
-    // });
     this.form = this.formBuilder.group({
       standard_payment_term: 0,
       standard_delivery_term: 0,
@@ -176,6 +174,9 @@ export class EditComponent implements OnInit {
     this.sociService.getSpecificSoci(soci_id).subscribe((res) => {
       //PO Details
       this.soci_data = res["data"];
+      this.sociSataus = res["data"]["status"]
+      console.log("SOCI_status:", this.sociSataus);
+      
       // standard_term
       this.standard_term = res["data"]["standard_terms"];
       this.standerd_payment_term =

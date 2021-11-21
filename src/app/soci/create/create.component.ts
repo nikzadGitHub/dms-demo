@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, EventEmitter, Output } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  EventEmitter,
+  Output,
+} from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ModalDirective } from "ngx-bootstrap/modal";
@@ -29,14 +35,9 @@ export class CreateComponent implements OnInit {
   is_quote_id_found: boolean;
   soci_id: any;
   soci_data: Object;
-  //
-  // sort: any;
-  // search_text: string = "";
-  // pageItems: number = 10;
-  // totalRecords: number;
-  // datasource: any;
-  // pages: any[];
-  // socis: Soci[] = [];
+  // rolesPermission: any[] = [];
+  // user_json: any;
+  // checkPermission: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -66,7 +67,25 @@ export class CreateComponent implements OnInit {
   }
   createSoci() {
     this.form.reset();
-    this.modal.show();
+    // let nameChack;
+    // let slugCheck;
+    // this.user_json = JSON.parse(localStorage.getItem("user-json"));
+    // console.log("Roles:", this.user_json.roles);
+    // this.rolesPermission = this.user_json.roles;
+    // this.rolesPermission.forEach((value) => {
+    //   this.checkPermission = value.permissions;
+    //   console.log("checkpermissions: ", this.checkPermission);
+    // }); 
+    // this.checkPermission.forEach((value) => {
+    //   nameChack = value.name;
+    //   slugCheck = value.slug;
+    //   console.log("nameChack: ", nameChack);
+    //   console.log("slugCheck: ", slugCheck);
+    //   if (nameChack == "Create SOCI" || slugCheck == "create_soci") {
+    //     this.modal.show();
+    //   }
+    // });
+    this.modal.show()
   }
 
   filterQuote(event) {
@@ -103,8 +122,8 @@ export class CreateComponent implements OnInit {
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((res) => {
           console.log("update-soci-res: ", res);
-          this.soci_data = res
-          this.sendSociData(this.soci_data)
+          this.soci_data = res;
+          this.sendSociData(this.soci_data);
           this.modal.hide();
           this.alertBody = res["message"];
           this.successModal.show();
@@ -115,8 +134,8 @@ export class CreateComponent implements OnInit {
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((res) => {
           console.log("create-soci-res: ", res);
-          this.soci_data = res
-          this.sendSociData(this.soci_data)
+          this.soci_data = res;
+          this.sendSociData(this.soci_data);
           this.modal.hide();
           this.alertBody = res["message"];
           this.successModal.show();
@@ -138,7 +157,7 @@ export class CreateComponent implements OnInit {
 
   sendSociData(soci_data) {
     console.log("SOCI-data:-------->", soci_data);
-    
-    this.sociDataEvent.emit(soci_data)
+
+    this.sociDataEvent.emit(soci_data);
   }
 }
