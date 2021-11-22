@@ -373,9 +373,6 @@ export class EditComponent implements OnInit {
 
   // ADD Billing_Milestone
   addBillingMileStone() {
-    // this.billing_milestone.forEach((values) => {
-    //   this.billing_percentage += values.percentage;
-    // });
     this.sociService
       .postQuery("/soci/billing-milestone", {
         soci_id: this.soci_id,
@@ -969,7 +966,7 @@ export class EditComponent implements OnInit {
         unit_price: this.form.value.unit_price,
         quantity: this.form.value.quantity,
         cost: this.product_cost,
-        margin: 1,
+        margin: 2,
         total_price: this.form.value.quantity.total_price,
         product_id: this.product_id,
         discount: this.form.value.discount,
@@ -1078,12 +1075,17 @@ export class EditComponent implements OnInit {
     }
   }
   openUpdateProductModal(index, product) {
+    console.log("product: ", product);
+
     this.controller = product;
     this.product_index = index;
     this.product_data_area_id = product.data_area_id;
     this.external_product_number = product.external_product_number;
+    this.product_data_area_id = product.data_area_id;
     this.product_id = product.id;
     this.product_amount = product.amount;
+    this.product_cost = product.cost;
+    this.productType = product.product_type;
     this.updateProductModal.show();
     this.form.patchValue({
       name: product.name,
@@ -1102,28 +1104,18 @@ export class EditComponent implements OnInit {
   updateProduct() {
     this.sociService
       .putQuery("/soci/product/" + this.product_id, {
+        cost_price: this.productCostprice,
         external_product_number: this.external_product_number,
+        discount: this.form.value.discount,
+        unit_price: this.form.value.unit_price,
         data_area_id: this.product_data_area_id,
-        product_id: this.product_id,
         soci_id: this.soci_id,
         quantity: this.form.value.quantity,
         cost: this.product_cost,
-        margin: 12.0,
+        margin: 1,
         total_price: this.form.value.quantity.total_price,
-        discount: this.form.value.discount,
+        product_id: this.product_id,
         amount: this.form.value.amount,
-        // listPrice:this.form.value.listPrice,
-        // unit_price:this.form.value.unit_price,
-        // floorPrice:this.form.value.floorPrice,
-        // justification:this.form.value.justification,
-        // principal:this.form.value.principal,
-        // productManager:this.form.value.productManager,
-        // standardWarranty:this.form.value.standardWarranty,
-        // extendedWarranty:this.form.value.extendedWarranty,
-        // taxRate:this.form.value.taxRate,
-        // customerTaxRate:this.form.value.customerTaxRate,
-        // taxCode:this.form.value.taxCode,
-        // otherCostCategory:this.form.value.otherCostCategory,
       })
       .subscribe(
         (data: any) => {
@@ -1289,6 +1281,10 @@ export class EditComponent implements OnInit {
 
   enableEditMethod(index, control, type) {
     delete control["laravel_through_key"];
+    if (type == "additionalCharges") {
+      delete control["code_item"];
+      delete control["code_item_id"];
+    }
     this.selectedId = type;
     this.controller = control;
     this.enableEdit[type] = true;

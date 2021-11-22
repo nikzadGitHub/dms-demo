@@ -212,7 +212,7 @@
       </p-accordion>
       <br />
       <!-- Billing Milestone -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="Billing Milestones">
           <div class="row">
             <!-- formArrayName="billings" -->
@@ -1245,7 +1245,7 @@
                     [routerLink]=""
                     routerLinkActive="router-link-active"
                     (click)="updateAdditionalInstruction(i, item.id)"
-                    *ngIf=""
+                    *ngIf="enableEdit['additionalInstruction'] && controller == item"
                     ><i class="cil-check-circle"></i
                   ></a>
                   &nbsp;
@@ -1393,7 +1393,7 @@
                 <div class="">
                   <!-- formControlName="cost_item_id" -->
                   <div class="col-md-10">
-                    <select
+                    <!-- <select
                       [(ngModel)]="cost_item_id"
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control"
@@ -1407,18 +1407,14 @@
                       >
                         {{ item.description }}
                       </option>
-                    </select>
-
+                    </select> -->
+                    <!-- *ngIf="editableRowIndex !== i || selectedId !== 'additionalCharges'" -->
                     <input
                       class="text-left form-control"
                       style="width: 200px"
                       type="text"
                       [(ngModel)]="item.code_item"
                       readonly
-                      *ngIf="
-                        editableRowIndex !== i ||
-                        selectedId !== 'additionalCharges'
-                      "
                       [attr.disabled]="
                         enableEdit['additionalCharges'] && controller == item
                           ? null
@@ -2054,13 +2050,13 @@
     REQUEST APPROVAL
   </button>
   <button
-  class="request-btn"
-  (click)="confirmationReleaseModal.show()"
-  *ngIf="sociStataus == 4"
->
-<i class="pi pi-check"></i>
-  RELEASE
-</button>
+    class="request-btn"
+    (click)="confirmationReleaseModal.show()"
+    *ngIf="sociStataus == 4"
+  >
+    <i class="pi pi-check"></i>
+    RELEASE
+  </button>
 </div>
 <div class="request-btns" *ngIf="sociStataus == 2 && is_approval_view_check">
   <button class="cancel-btn" (click)="escalateSCOI()">
