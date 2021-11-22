@@ -61,3 +61,10 @@ export interface BookingEntityInterface {
   getOpportunitySummary(bookingId: BigInt): Observable<OpportunitySummary>;
   getMainAsset(bookingId: BigInt): Observable<MainAsset>;
 }
+
+export interface CustomerList {
+  id: string;
+  company_name: string;
+}
+
+export type CustomersList = CustomerList[];

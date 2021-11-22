@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ModalDirective } from "ngx-bootstrap/modal";
+import { CustomersList } from '../../../../services/booking-entity';
 import { BookingService } from '../../services/booking.service';
 
 
@@ -18,7 +19,7 @@ export class OpportunityFormComponent implements OnInit{
   alertHeader: string;
   formBooking : FormGroup;
   curDate =  new Date(Date.now()).toLocaleDateString();
-  customers: [];
+  customers: CustomersList;
   constructor(private fb: FormBuilder, private bookingService: BookingService) {}
   ngOnInit(): void {
     this.bookingService.getCustomerList().subscribe((response) => {

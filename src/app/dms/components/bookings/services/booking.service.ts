@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BookingInterface, BookingList } from './booking.interface';
 import { ApiClient } from '../../../services/api-client.service';
 import { Observable } from 'rxjs';
+import { CustomersList } from '../../../services/booking-entity';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class BookingService implements BookingInterface {
     return this.apiClient.post('booking/store', data);
   }
 
-  getCustomerList(): Observable<[]> {
-    return this.apiClient.get<[]>('customer-list');
+  getCustomerList(): Observable<CustomersList> {
+    return this.apiClient.get<CustomersList>('customer-list');
   }
 }
