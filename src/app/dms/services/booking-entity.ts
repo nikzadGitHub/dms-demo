@@ -44,6 +44,15 @@ export interface OpportunitySummary {
   winning_probability: string;
 }
 
+export const emptyOpportunitySummary: OpportunitySummary = {
+  customer: 'Unknown',
+  opportunity_id: '',
+  initiator: '',
+  opportunity_amount: '',
+  opportunity_no: '0',
+  winning_probability: '',
+};
+
 export interface BookingEntity {
   status: BookingStatus;
   approvalList: ApprovalList;

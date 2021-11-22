@@ -66,7 +66,7 @@ import { OpportunityFormComponent } from './components/bookings/opportunity-book
     // Dependencies.
     PrimeNgModule,
     IconModule,
-    ModalModule,
+    ModalModule.forRoot(),
     FormsModule,
     ReactiveFormsModule
   ],

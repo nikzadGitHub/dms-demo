@@ -14,6 +14,12 @@ export interface BookingItem {
 
 export type BookingList = BookingItem[];
 
+export interface SaveResult {
+  id: any;
+}
+
 export interface BookingInterface {
   getList(): Observable<BookingList>;
+
+  saveBooking(form: any): Observable<SaveResult>;
 }
