@@ -137,19 +137,59 @@
             </div>
           </div>
           <br />
-          <div class="row">
+          <div class="row" >
             <div class="col-lg-4">
               <label for="attachment">Attachment: </label>
             </div>
-            <div class="col-lg-6">
-              <input
+            <!-- <div class="col-lg-3">
+              <input type="text" class="form-control" formControlName="fileLabel" placeholder="Add label" />
+            </div> -->
+            <div class="col-lg-2">
+              <!-- <input
                 formControlName="file"
                 class="form-control"
                 type="file"
                 name="myFile"
                 (change)="getFile($event)"
+              /> -->
+
+              <input
+                type="file"
+                class="file-input"
+                (change)="getFile($event)"
+                #fileUpload
               />
+              <div class="file-upload">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  role="button"
+                  rel="nofollow"
+                  target="_blank"
+                  (click)="fileUpload.click()"
+                >
+                  Upload File
+                  <input
+                    #fileInput
+                    type="file"
+                    style="display: none"
+                  />
+                </button>
+              </div>
+              <div class="selected-file">
+                {{ fileName || "No file selected..." }}
+              </div>
             </div>
+            <!-- <div class="col-lg-2">
+              <a
+              [routerLink]=""
+              routerLinkActive="router-link-active"
+              class="add-icon"
+              (click)="addMultiFile()"
+            >
+              <i class="icon-plus icons"></i>
+            </a>
+            </div> -->
           </div>
         </form>
       </div>

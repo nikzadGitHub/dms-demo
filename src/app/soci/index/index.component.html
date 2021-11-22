@@ -101,10 +101,11 @@
     <div class="table-header">
       <span>
         SOCI Listing
+        <!-- *ngIf="isPermission" -->
         <a
           [routerLink]=""
           routerLinkActive="router-link-active"
-          *ngIf="isPermission"
+          
           (click)="createModal.createSoci()"
         >
           <i class="icon-plus icons" style="color: white"></i>

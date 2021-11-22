@@ -128,7 +128,7 @@
             <div
               class="col-lg-1"
               style="text-align: right"
-              *ngIf="!is_preview_check && sociSataus == 1"
+              *ngIf="!is_preview_check && sociStataus == 1"
             >
               <div>
                 <a
@@ -180,7 +180,7 @@
             <div
               class="col-lg-1"
               style="text-align: right"
-              *ngIf="!is_preview_check && sociSataus == 1"
+              *ngIf="!is_preview_check && sociStataus == 1"
             >
               <div>
                 <a
@@ -212,7 +212,7 @@
       </p-accordion>
       <br />
       <!-- Billing Milestone -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
         <p-accordionTab header="Billing Milestones">
           <div class="row">
             <!-- formArrayName="billings" -->
@@ -226,7 +226,7 @@
                   <th>Notes</th>
                   <th></th>
                   <th *ngIf="is_preview_check"></th>
-                  <th *ngIf="!is_preview_check && sociSataus == 1">Action</th>
+                  <th *ngIf="!is_preview_check && sociStataus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -309,7 +309,7 @@
                   <td
                     class="text-center td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && sociSataus == 1"
+                    *ngIf="!is_preview_check && sociStataus == 1"
                   >
                     <!-- <div class="action-icon">
                       <a [routerLink]="" routerLinkActive="router-link-active"
@@ -381,7 +381,10 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check && sociSataus == 1">
+                <tr
+                  align="center"
+                  *ngIf="!is_preview_check && sociStataus == 1"
+                >
                   <td style="width: 15%">
                     <input
                       formControlName="billing_id"
@@ -405,7 +408,7 @@
                       formControlName="percentage"
                       class="form-control"
                       size="1"
-                      placeholder="50"
+                      placeholder="0"
                       type="number"
                       min="0"
                       max="100.00"
@@ -467,7 +470,7 @@
                   <th>Amount (MYR)</th>
                   <th>Notes</th>
                   <th *ngIf="is_preview_check"></th>
-                  <th *ngIf="!is_preview_check && sociSataus == 1">Action</th>
+                  <th *ngIf="!is_preview_check && sociStataus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -546,7 +549,7 @@
                   <td
                     class="td-actions"
                     style="width: 10%; padding: none"
-                    *ngIf="!is_preview_check && sociSataus == 1"
+                    *ngIf="!is_preview_check && sociStataus == 1"
                   >
                     <div class="action-icon">
                       <a
@@ -594,7 +597,10 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check && sociSataus == 1">
+                <tr
+                  align="center"
+                  *ngIf="!is_preview_check && sociStataus == 1"
+                >
                   <td style="width: 15%; padding: 6px">
                     <select
                       formControlName="billing_id"
@@ -711,7 +717,7 @@
                   <th>Notes</th>
                   <th></th>
                   <th></th>
-                  <th *ngIf="!is_preview_check && sociSataus == 1">Action</th>
+                  <th *ngIf="!is_preview_check && sociStataus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -789,7 +795,7 @@
                   <td
                     class="td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && sociSataus == 1"
+                    *ngIf="!is_preview_check && sociStataus == 1"
                   >
                     <div class="action-icon">
                       <!-- (click)="disableEditMethod(cost, 'addCost')"
@@ -838,7 +844,10 @@
                 </tr>
                 <!-- *ngFor="let cost of addCosts().controls; let i = index"
                 [formGroupName]="i" -->
-                <tr align="center" *ngIf="!is_preview_check && sociSataus == 1">
+                <tr
+                  align="center"
+                  *ngIf="!is_preview_check && sociStataus == 1"
+                >
                   <td style="width: 15%">
                     <input
                       formControlName="description"
@@ -940,7 +949,7 @@
                   <th>Status</th>
                   <th>Note</th>
                   <th></th>
-                  <th *ngIf="!is_preview_check && sociSataus == 1">Action</th>
+                  <th *ngIf="!is_preview_check && sociStataus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -1036,21 +1045,8 @@
                   <td
                     class="td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && sociSataus == 1"
+                    *ngIf="!is_preview_check && sociStataus == 1"
                   >
-                    <!-- <div class="action-icon">
-                      <a [routerLink]="" routerLinkActive="router-link-active">
-                        <i class="fa fa-edit"></i>
-                      </a>
-                      &nbsp;
-                      <a
-                        [routerLink]=""
-                        routerLinkActive="router-link-active"
-                        (click)="deleteBillingInstruction(i, item.id)"
-                        ><i class="fa fa-trash"></i
-                      ></a>
-                    </div> -->
-                    <!-- new -->
                     <div class="action-icon">
                       <a
                         [routerLink]=""
@@ -1099,7 +1095,10 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check && sociSataus == 1">
+                <tr
+                  align="center"
+                  *ngIf="!is_preview_check && sociStataus == 1"
+                >
                   <td>
                     <input
                       formControlName="schedule"
@@ -1237,7 +1236,7 @@
             <div
               class="col-md-1"
               style="text-align: right"
-              *ngIf="!is_preview_check && sociSataus == 1"
+              *ngIf="!is_preview_check && sociStataus == 1"
             >
               <div class="row">
                 <!-- //action -->
@@ -1289,7 +1288,7 @@
 
           <!-- Add additional_instruction -->
 
-          <div *ngIf="!is_preview_check && sociSataus == 1">
+          <div *ngIf="!is_preview_check && sociStataus == 1">
             <div>
               <div class="row">
                 <div class="col-md-3">
@@ -1378,7 +1377,7 @@
             <div
               class="col-lg-1"
               style="text-align: middle"
-              *ngIf="!is_preview_check && sociSataus == 1"
+              *ngIf="!is_preview_check && sociStataus == 1"
             >
               <div class="">
                 <b> Action</b>
@@ -1520,7 +1519,7 @@
               <div
                 class="col-md-1"
                 style="text-align: right"
-                *ngIf="!is_preview_check && sociSataus == 1"
+                *ngIf="!is_preview_check && sociStataus == 1"
               >
                 <div class="row">
                   <!-- //action -->
@@ -1573,7 +1572,7 @@
             </div>
           </div>
           <!-- Installation -->
-          <div *ngIf="!is_preview_check && sociSataus == 1">
+          <div *ngIf="!is_preview_check && sociStataus == 1">
             <div class="row">
               <div class="col-md-3">
                 <div class="">
@@ -1698,7 +1697,7 @@
                   <th>Total Price(MYR)</th>
                   <th>Discount %</th>
                   <th>Net Amount(MYR)</th>
-                  <th *ngIf="!is_preview_check && sociSataus == 1">Action</th>
+                  <th *ngIf="!is_preview_check && sociStataus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -1826,7 +1825,7 @@
                   <td
                     class="td-actions"
                     style="width: 5%"
-                    *ngIf="!is_preview_check && sociSataus == 1"
+                    *ngIf="!is_preview_check && sociStataus == 1"
                   >
                     <!-- //action -->
                     <div class="action-icon" style="display: flex">
@@ -1850,7 +1849,10 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check && sociSataus == 1">
+                <tr
+                  align="center"
+                  *ngIf="!is_preview_check && sociStataus == 1"
+                >
                   <!-- {{ i + 1 }} -->
                   <td></td>
                   <td style="size: 20%">
@@ -2039,19 +2041,42 @@
   </div>
 </div>
 
-<div class="request-btns">
-  <button class="cancel-btn">
+<div class="request-btns" *ngIf="!is_approval_view_check">
+  <button class="cancel-btn" (click)="back()">
     <i class="pi pi-arrow-left"></i>
     Cancel
   </button>
   <button
-    class="request-btn"
+    class="request-approval-btn"
     (click)="confirmationModal.show()"
-    *ngIf="sociSataus == 1"
+    *ngIf="sociStataus == 1"
   >
     REQUEST APPROVAL
   </button>
+  <button
+  class="request-btn"
+  (click)="confirmationReleaseModal.show()"
+  *ngIf="sociStataus == 4"
+>
+<i class="pi pi-check"></i>
+  RELEASE
+</button>
 </div>
+<div class="request-btns" *ngIf="sociStataus == 2 && is_approval_view_check">
+  <button class="cancel-btn" (click)="escalateSCOI()">
+    <i class="pi pi-arrow-up"></i>
+    ESCALATE
+  </button>
+  <button class="reject-btn" (click)="back()">
+    <i class="pi pi-times-circle"></i>
+    REJECT
+  </button>
+  <button class="request-btn" (click)="approveSOCI()">
+    <i class="pi pi-check"></i>
+    APPROVAE
+  </button>
+</div>
+
 <!-- Empty row to give some space at the bottom -->
 <div class="row"></div>
 
@@ -2362,7 +2387,7 @@
 </div>
 <!-- /.modal -->
 
-<!-- confermation-model -->
+<!-- confermation-approval-model -->
 <div
   id="success"
   bsModal
@@ -2374,26 +2399,6 @@
   aria-hidden="true"
 >
   <div class="modal-dialog modal-success" role="document">
-    <!-- <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">confirmationModal</h4>
-      </div>
-      <div class="modal-body">
-        <p>{{ alertBody }}</p>
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-       
-        >
-          Close
-        </button>
-        <button type="button" class="btn btn-danger">
-          Delete
-        </button>
-      </div>
-    </div> -->
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">confirmation</h4>
@@ -2406,11 +2411,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        Are you sure to REQUEST the SOCI
-        <!-- <textarea name="cancel_remarks" id="cancel_remarks" cols="60" placeholder="Reason of cancellation"
-                rows="10" ></textarea> -->
-      </div>
+      <div class="modal-body">Are you sure to REQUEST the SOCI ?</div>
       <div class="modal-footer">
         <button
           type="button"
@@ -2427,6 +2428,47 @@
   </div>
 </div>
 <!-- /.modal -->
+
+<!-- confermation-release-model -->
+<div
+  id="success"
+  bsModal
+  #confirmationReleaseModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationReleaseModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">Are you sure to RELEASE the SOCI ?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationReleaseModal.hide()"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-info" (click)="applyForRelease()">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Success-Model -->
 <div

@@ -30,11 +30,13 @@ export class CreateComponent implements OnInit {
   filteredQuotes: Quote[];
   selectedQuoteAdvanced: Quote;
   file: any;
+  fileName = "";
   alertBody: string;
   quote_full_id: any;
   is_quote_id_found: boolean;
   soci_id: any;
   soci_data: Object;
+  addMultipleFiles: any[] = [];
   // rolesPermission: any[] = [];
   // user_json: any;
   // checkPermission: any[] = [];
@@ -53,6 +55,7 @@ export class CreateComponent implements OnInit {
       po_date: "",
       receive_po_date: "",
       file: null,
+      fileLabel: "",
     });
   }
 
@@ -67,25 +70,7 @@ export class CreateComponent implements OnInit {
   }
   createSoci() {
     this.form.reset();
-    // let nameChack;
-    // let slugCheck;
-    // this.user_json = JSON.parse(localStorage.getItem("user-json"));
-    // console.log("Roles:", this.user_json.roles);
-    // this.rolesPermission = this.user_json.roles;
-    // this.rolesPermission.forEach((value) => {
-    //   this.checkPermission = value.permissions;
-    //   console.log("checkpermissions: ", this.checkPermission);
-    // }); 
-    // this.checkPermission.forEach((value) => {
-    //   nameChack = value.name;
-    //   slugCheck = value.slug;
-    //   console.log("nameChack: ", nameChack);
-    //   console.log("slugCheck: ", slugCheck);
-    //   if (nameChack == "Create SOCI" || slugCheck == "create_soci") {
-    //     this.modal.show();
-    //   }
-    // });
-    this.modal.show()
+    this.modal.show();
   }
 
   filterQuote(event) {
@@ -101,6 +86,11 @@ export class CreateComponent implements OnInit {
 
   getFile(event) {
     this.file = event.target.files[0];
+    this.fileName = this.file.name;
+  }
+
+  addMultiFile() {
+    this.addMultipleFiles.push(this.form.value.fileLabel, this.form.value.file);
   }
 
   submit() {
@@ -116,12 +106,12 @@ export class CreateComponent implements OnInit {
       this.form.controls["receive_po_date"].value
     );
     formData.append("file", this.file);
+
     if (this.quote_full_id) {
       this.sociService
         .updatePODetail(this.soci_id, formData)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((res) => {
-          console.log("update-soci-res: ", res);
           this.soci_data = res;
           this.sendSociData(this.soci_data);
           this.modal.hide();
@@ -133,7 +123,6 @@ export class CreateComponent implements OnInit {
         .store(formData)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((res) => {
-          console.log("create-soci-res: ", res);
           this.soci_data = res;
           this.sendSociData(this.soci_data);
           this.modal.hide();
@@ -156,8 +145,6 @@ export class CreateComponent implements OnInit {
   }
 
   sendSociData(soci_data) {
-    console.log("SOCI-data:-------->", soci_data);
-
     this.sociDataEvent.emit(soci_data);
   }
 }

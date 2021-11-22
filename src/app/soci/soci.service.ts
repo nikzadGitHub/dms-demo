@@ -57,8 +57,6 @@ export class SociService {
   }
 
   updatePODetail(soci_id, data) {
-    console.log("Data:", data);
-
     return this.httpClient
       .post(this.apiURL + "/soci/" + soci_id, data, {
         headers: new HttpHeaders({ "Content-Type": "file", Accept: "file" }),
@@ -81,6 +79,15 @@ export class SociService {
       .pipe(catchError(this.errorHandler));
   }
 
+  getQuery(url, pageItems = null): Observable<object> {
+    let query = url;
+
+    if (pageItems != null) {
+      query += "?page_items=" + pageItems;
+    }
+
+    return this.httpClient.get(this.apiURL + query, this.httpOptions);
+  }
   postQuery(url, req): Observable<object> {
     let query = url;
 

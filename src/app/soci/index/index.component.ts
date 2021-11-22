@@ -34,7 +34,6 @@ export class IndexComponent implements OnInit {
     this.sociService
       .getAll(this.pageItems, this.search_text, this.sort)
       .subscribe((data) => {
-        console.log("Soci-list", data);
         this.socis = data["data"]["soci"]["data"];
         this.pages = data["data"]["soci"]["links"];
         this.totalRecords = data["data"]["soci"]["total"];
@@ -48,11 +47,6 @@ export class IndexComponent implements OnInit {
       .subscribe((data) => {
         this.socis = data["data"]["soci"]["data"];
         this.totalRecords = data["data"]["soci"]["total"];
-        // if(data['data']['columnOrder'] == null){
-        //   this.columns = JSON.parse(JSON.stringify(this.defaultColumns));
-        // } else {
-        //   this.columns = JSON.parse(data['data']['columnOrder']['column_order']);
-        // }
       });
   }
   addPo(check) {

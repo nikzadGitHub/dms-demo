@@ -84,11 +84,12 @@
   font-weight: bold;
   font-size: 15px;
   line-height: 24px;
+  margin-top: 30px;
   i {
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
     letter-spacing: 4px;
-    margin-top: 5px;
+    margin-top: 9px;
   }
   button {
     border-radius: 5px;
@@ -98,11 +99,24 @@
   .cancel-btn {
     background: #ffffff;
     color: #386fa4;
+    margin-right: 10px;
+    width: 120px;
+  }
+  .reject-btn {
+    border-color: red;
+    color: red;
+    width: 120px;
+  }
+  .request-approval-btn {
+    background: #386fa4;
+    color: #ffffff;
+    margin-left: 10px;
   }
   .request-btn {
     background: #386fa4;
     color: #ffffff;
-    margin: 10px;
+    margin-left: 10px;
+    width: 120px;
   }
 }
 
@@ -474,7 +488,7 @@ h4 {
 
   margin-bottom: 20px;
 
-  input{
+  input {
     width: 125px;
     height: 38px;
     margin-left: 10px;
