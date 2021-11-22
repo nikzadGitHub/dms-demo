@@ -8,7 +8,7 @@ import { settings } from "../../../environments/environment";
 @Injectable({
   providedIn: "root",
 })
-export class ManagerViewServiceService {
+export class ManagerViewService {
   private apiURL = settings.apiBaseUrl;
 
   httpOptions = {

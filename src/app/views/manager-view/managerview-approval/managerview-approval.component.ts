@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
 import { SociService } from "../../../soci/soci.service";
-import { ManagerViewServiceService } from "../manager-view-service.service";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { ManagerViewService } from "../manager-view.service";
 
 @Component({
   selector: "app-managerview-approval",
@@ -21,7 +21,7 @@ export class ManagerviewApprovalComponent implements OnInit {
   // is_approval_view_check: boolean;
   constructor(
     private sociService: SociService,
-    private managerView: ManagerViewServiceService,
+    private managerView: ManagerViewService,
     private router: Router
   ) {}
 
