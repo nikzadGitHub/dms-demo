@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ModalDirective } from "ngx-bootstrap/modal";
-import { BookingService } from '../services/booking.service';
+import {MockBookingService} from '../services/mock-booking.service';
+import {CustomerList} from '../../../services/customers/customer-entity';
+import {MockCustomersService} from '../../../services/customers/mock-customers.service';
 
 /**
  * For submit the booking form
@@ -20,10 +22,16 @@ export class FormComponent implements OnInit{
   alertHeader: string;
   formBooking : FormGroup;
   curDate =  new Date(Date.now()).toLocaleDateString();
-  customers: [];
-  constructor(private fb: FormBuilder, private bookingService: BookingService) {}
+  customers: CustomerList;
+
+  constructor(
+    private fb: FormBuilder,
+    private bookingService: MockBookingService,
+    private apiCustomers: MockCustomersService,
+  ) {}
+
   ngOnInit(): void {
-    this.bookingService.getCustomerList().subscribe((response) => {
+    this.apiCustomers.getList(0).subscribe((response) => {
       this.customers = response;
       console.log(response)
     });

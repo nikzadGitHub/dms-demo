@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OpportunitySummary } from '../../../services/booking-entity';
+import {emptyOpportunitySummary, OpportunitySummary} from '../../../services/booking-entity';
 import { MainAsset } from '../../../services/asset-entity';
 
 
@@ -9,7 +9,7 @@ import { MainAsset } from '../../../services/asset-entity';
   styleUrls: ['./opportunity-booking-form.component.scss']
 })
 export class OpportunityBookingFormComponent implements OnInit{
-  opportunitySummary: OpportunitySummary;
+  opportunitySummary: OpportunitySummary = emptyOpportunitySummary;
   mainAsset: MainAsset;
   constructor() { }
   ngOnInit(): void {

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { MockBookingService } from './services/mock-booking.service';
 import { BookingList } from './services/booking.interface';
-import { BookingService } from './services/booking.service';
 
 @Component({
   selector: 'app-bookings',
@@ -16,7 +15,7 @@ export class BookingsComponent implements OnInit {
 	search_text: string = '';
 	icons = [];
 
-  constructor(private api: BookingService) { }
+  constructor(private api: MockBookingService) { }
 
   ngOnInit(): void {
     this.api.getList().subscribe((response) => {

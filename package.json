@@ -21,6 +21,7 @@
     "build": "ng build --prod --aot --build-optimizer --common-chunk --vendor-chunk --optimization --progress",
     "build-docs": "npx compodoc -p tsconfig.doc.json",
     "test": "ng test",
+    "test-dms": "npx ng test --include=**/dms/**/*.spec.ts --include=**/dms/*.spec.ts",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

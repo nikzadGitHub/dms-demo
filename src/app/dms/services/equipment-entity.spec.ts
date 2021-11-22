@@ -23,8 +23,9 @@ describe('Equipment Bundle', () => {
     for (let i = 0; i < list.length; ++i) {
       const current = list[i];
       for (let j = i + 1; j < list.length; ++j) {
-        expect(list[j]).withContext('Key was duplicated for: ' + current)
-          .toBe(current);
+        expect(list[j] === current)
+          .withContext('Key was duplicated for: ' + current)
+          .toBeFalse();
       }
     }
   });
