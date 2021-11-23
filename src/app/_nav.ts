@@ -88,32 +88,7 @@ export const navItems: INavData[] = [
     url: '/contact/index',
     icon: 'cil-address-book',
   },
-  {
-    divider: true,
-  },
-  {
-    name: 'Manager View',
-    url: '/managerview',
-    icon: 'cil-group',
-    children: [
-      {
-        name: 'Approval',
-        url: '/managerview/approval',
-      },
-      {
-        name: 'Reassignment',
-        url: '/managerview/reassignment',
-      },
-      {
-        name: 'Deactivate/Active',
-        url: '/managerview/active',
-      },
-      {
-        name: 'Sales Target Setup',
-        url: '/managerview/salestargetsetup',
-      },
-    ]
-  },
+  
   {
     divider: true,
   },
