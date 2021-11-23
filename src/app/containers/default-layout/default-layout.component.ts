@@ -12,15 +12,20 @@ export class DefaultLayoutComponent {
   public navItems = navItems;
   showSideBar = true;
   userFullname:any;
+  userRoleName: any;
 
   constructor(private router: Router, private authService: AuthService) {
-    let userRole = localStorage.getItem('userRole')
+    let userRole = JSON.parse(localStorage.getItem('userRole'))
+    console.log('userRole.get=>',userRole)
+    console.log('userRole Name>',userRole.roles[0].name)
+    this.userRoleName = userRole.roles[0].name
     this.authService.getUserSession().then((res) => {
       if (res.fullname) {
         this.userFullname = res.fullname || '';
+        console.log("res => ",res)
       }
     });
-    if(userRole == 'false'){
+    if(userRole.is_fss == false || userRole.is_director == true || userRole.is_manager == true || userRole.is_md == true || userRole.is_product_manager == true || userRole.is_product_specialist == true || userRole.is_project_director == true){
       var index = this.navItems.findIndex(p => p.name == "Contact");
       var index1 = this.navItems.findIndex(p => p.name == "Manager View");
       if(index1 > 0 ){
@@ -52,12 +57,18 @@ export class DefaultLayoutComponent {
           },
         ]
       },);
-    }else{
+    }else if(userRole.is_fss == true && userRole.is_director == false && userRole.is_manager == false && userRole.is_md == false && userRole.is_product_manager == false && userRole.is_product_specialist == false && userRole.is_project_director == false){
       var index1 = this.navItems.findIndex(p => p.name == "Manager View");
       if(index1 > 0 ){
         this.navItems.splice(index1,1)
       }
     }
+    // else{
+    //   var index1 = this.navItems.findIndex(p => p.name == "Manager View");
+    //   if(index1 > 0 ){
+    //     this.navItems.splice(index1,1)
+    //   }
+    // }
   }
 
   toggleMinimize(e) {

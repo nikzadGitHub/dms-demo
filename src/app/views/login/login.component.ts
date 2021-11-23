@@ -67,7 +67,7 @@ export class LoginComponent {
           // this.errorMessage = res.message;
           // this.dangerModal.show();
         } else {
-          localStorage.setItem('userRole',res.data.is_fss)
+          localStorage.setItem('userRole',JSON.stringify(res.data))
           await this.authService.setAuthorizationToken(res.data.access_token);
           await this.authService.saveUserSession(JSON.stringify(res.data.user));
           await this.authService.getUserSession();
