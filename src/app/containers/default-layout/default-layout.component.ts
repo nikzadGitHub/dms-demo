@@ -16,13 +16,10 @@ export class DefaultLayoutComponent {
 
   constructor(private router: Router, private authService: AuthService) {
     let userRole = JSON.parse(localStorage.getItem('userRole'))
-    console.log('userRole.get=>',userRole)
-    console.log('userRole Name>',userRole.roles[0].name)
-    this.userRoleName = userRole.roles[0].name
+    if(userRole){    this.userRoleName = userRole.roles[0].name    }
     this.authService.getUserSession().then((res) => {
       if (res.fullname) {
         this.userFullname = res.fullname || '';
-        console.log("res => ",res)
       }
     });
     if(userRole.is_fss == false || userRole.is_director == true || userRole.is_manager == true || userRole.is_md == true || userRole.is_product_manager == true || userRole.is_product_specialist == true || userRole.is_project_director == true){

@@ -114,6 +114,10 @@ export class EditComponent implements OnInit {
   productCostprice: any;
   productType: any;
   billing_percentage = 0;
+  is_edited = false;
+  is_released: boolean;
+  external_id: any;
+  productCheck: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -186,7 +190,9 @@ export class EditComponent implements OnInit {
       //PO Details
       this.soci_data = res["data"];
       this.sociStataus = res["data"]["status"];
-
+      this.is_edited = res["data"]["is_edited"];
+      this.is_released = res["data"]["is_released"];
+      this.external_id = res["data"]["external_id"];
       // standard_term
       this.standard_term = res["data"]["standard_terms"];
       this.standerd_payment_term =
@@ -325,6 +331,7 @@ export class EditComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.addStandardTermModal.hide();
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -350,6 +357,7 @@ export class EditComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.addStandardTermModal.hide();
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -387,8 +395,8 @@ export class EditComponent implements OnInit {
           this.billing_percentage += this.form.value.percentage;
           this.calculateBillingPercentage();
           this.autoIncreaseBillingId(data["data"]["billing_id"]);
-
           this.billing_milestone.push(data["data"]);
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -435,6 +443,7 @@ export class EditComponent implements OnInit {
           this.billing_milestone[index] = data["data"];
           this.autoIncreaseBillingId(data["data"]["billing_id"]);
           this.editableRowIndex = null;
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -462,6 +471,7 @@ export class EditComponent implements OnInit {
             billing_id: data["data"]["billing_id"],
           });
           this.billing_milestone.splice(index, 1);
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -496,6 +506,7 @@ export class EditComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.payment_schedules.push(data["data"]);
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -514,8 +525,6 @@ export class EditComponent implements OnInit {
   }
 
   updatePaymentSchdule(index, payment_schedule_id) {
-    //  let oldData = this.payment_schedules[index]
-    //   this.payemntData.billing_id = oldData.billing_id
     this.sociService
       .putQuery(
         "/soci/payment-schedule/" + payment_schedule_id,
@@ -525,6 +534,7 @@ export class EditComponent implements OnInit {
         (data: any) => {
           this.payment_schedules[index] = data["data"];
           this.editableRowIndex = null;
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -547,6 +557,7 @@ export class EditComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.payment_schedules.splice(index, 1);
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -582,6 +593,7 @@ export class EditComponent implements OnInit {
           this.total_additional_costs_amount += data["data"]["total_price"];
           this.additional_cost_and_charges += data["data"]["total_price"];
           this.total_cost += data["data"]["total_price"];
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -625,6 +637,7 @@ export class EditComponent implements OnInit {
           this.additional_cost_and_charges += data["data"]["total_price"];
           this.total_cost += data["data"]["total_price"];
           this.editableRowIndex = null;
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -650,6 +663,7 @@ export class EditComponent implements OnInit {
           this.total_additional_costs_amount -= data["data"]["total_price"];
           this.additional_cost_and_charges -= data["data"]["total_price"];
           this.total_cost -= data["data"]["total_price"];
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -683,6 +697,7 @@ export class EditComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.billing_instruction.push(data["data"]);
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -701,7 +716,6 @@ export class EditComponent implements OnInit {
   }
 
   updateBillingInstruction(index, billing_instruction_id) {
-    // /soci/billing-instruction/
     this.sociService
       .putQuery(
         "/soci/billing-instruction/" + billing_instruction_id,
@@ -711,6 +725,7 @@ export class EditComponent implements OnInit {
         (data: any) => {
           this.billing_instruction[index] = data["data"];
           this.editableRowIndex = null;
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -734,6 +749,7 @@ export class EditComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.billing_instruction.splice(index, 1);
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -763,6 +779,7 @@ export class EditComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.additional_instructions.push(data["data"]);
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -790,6 +807,7 @@ export class EditComponent implements OnInit {
         (data: any) => {
           this.additional_instructions[index] = data["data"];
           this.editableRowIndex = null;
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -812,6 +830,7 @@ export class EditComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.additional_instructions.splice(index, 1);
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -849,6 +868,7 @@ export class EditComponent implements OnInit {
           this.total_additional_charges_amount += data["data"]["total_price"];
           this.additional_cost_and_charges += data["data"]["total_price"];
           this.total_cost += data["data"]["total_price"];
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -904,6 +924,7 @@ export class EditComponent implements OnInit {
           this.additional_cost_and_charges += data["data"]["total_price"];
           this.total_cost += data["data"]["total_price"];
           this.editableRowIndex = null;
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -930,6 +951,7 @@ export class EditComponent implements OnInit {
           this.total_additional_charges_amount -= data["data"]["total_price"];
           this.additional_cost_and_charges -= data["data"]["total_price"];
           this.total_cost -= data["data"]["total_price"];
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -951,9 +973,11 @@ export class EditComponent implements OnInit {
   // ADD Product
   filterProduct(event) {
     let query = event.query;
-    this.sociService.getFilteredProducts(query).subscribe((data) => {
-      this.filteredProducts = data["data"];
-    });
+    this.sociService
+      .getFilteredProducts(query, this.external_id)
+      .subscribe((data) => {
+        this.filteredProducts = data["data"];
+      });
   }
 
   addPrductData() {
@@ -984,6 +1008,7 @@ export class EditComponent implements OnInit {
             this.product_subtotal_before_tax;
           this.total_cost +=
             data["data"]["discount"] + data["data"]["total_price"];
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -1002,26 +1027,31 @@ export class EditComponent implements OnInit {
   }
 
   productDetails(product, check) {
+    console.log("prouct:-->", product);
+    console.log("check-->:", check);
+    this.productCheck = check
     this.external_product_number = product.external_product_number;
     this.product_data_area_id = product.data_area_id;
     this.product_id = product.id;
     this.product_cost = product.cost;
-    this.productCostprice = product.cost_price;
+    // this.productCostprice = product.cost_price;
     this.productType = product.product_type;
     if (check == "add_product") {
+      this.productCostprice = product.cost_price;
       this.form.patchValue({
         sku: product["sku"],
         unit_price: product["amount"],
         amount: 0.0,
       });
     } else {
+      this.productCostprice = product.cost_price;
       this.form.patchValue({
         name: product.name,
         sku: product.sku,
         quantity: product.quantity,
         discount: product.discount,
         listPrice: 0.0,
-        unit_price: product.unit_price,
+        unit_price: product.amount,
         floorPrice: 0.0,
         principal: product.principle,
         taxRate: product.tax_rate,
@@ -1075,17 +1105,20 @@ export class EditComponent implements OnInit {
     }
   }
   openUpdateProductModal(index, product) {
-    console.log("product: ", product);
-
     this.controller = product;
     this.product_index = index;
+    this.product_cost = product.cost
     this.product_data_area_id = product.data_area_id;
     this.external_product_number = product.external_product_number;
     this.product_data_area_id = product.data_area_id;
     this.product_id = product.id;
     this.product_amount = product.amount;
-    this.product_cost = product.cost;
-    this.productType = product.product_type;
+    // product.product_typ?this.productType = product.product_type:this.productType='';
+    if (product.product_type) {
+      this.productType = product.product_type;
+    } else {
+      this.productType = "";
+    }
     this.updateProductModal.show();
     this.form.patchValue({
       name: product.name,
@@ -1102,6 +1135,9 @@ export class EditComponent implements OnInit {
     });
   }
   updateProduct() {
+    console.log("selected-product-type:", this.productType);
+    console.log("cost_price:", this);
+    
     this.sociService
       .putQuery("/soci/product/" + this.product_id, {
         cost_price: this.productCostprice,
@@ -1111,11 +1147,12 @@ export class EditComponent implements OnInit {
         data_area_id: this.product_data_area_id,
         soci_id: this.soci_id,
         quantity: this.form.value.quantity,
-        cost: this.product_cost,
-        margin: 1,
+        cost: this.productCheck == "update_product" ? parseFloat(this.productCostprice) : this.product_cost,
+        margin: 12.0,
         total_price: this.form.value.quantity.total_price,
         product_id: this.product_id,
         amount: this.form.value.amount,
+        product_type: this.productType,
       })
       .subscribe(
         (data: any) => {
@@ -1129,6 +1166,7 @@ export class EditComponent implements OnInit {
           this.total_cost +=
             data["data"]["discount"] + data["data"]["total_price"];
           this.editableRowIndex = null;
+          this.is_edited = true;
           this.updateProductModal.hide();
           this.alertBody = data.message;
           this.successModal.show();
@@ -1137,7 +1175,7 @@ export class EditComponent implements OnInit {
             this.form.reset();
           }, 2000);
         },
-        (error) => {
+        (error: any) => {
           this.alertBody = "Please enter required fields";
           this.dangerModal.show();
           setTimeout(() => {
@@ -1158,6 +1196,7 @@ export class EditComponent implements OnInit {
           this.product_subtotal_before_tax;
         this.total_cost -=
           data["data"]["discount"] + data["data"]["total_price"];
+        this.is_edited = true;
         this.alertBody = data.message;
         this.successModal.show();
         setTimeout(() => {
@@ -1186,11 +1225,14 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
+          this.is_edited = false;
+          this.confirmationModal.hide();
           this.alertBody = data.message;
+          this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
             this.request_approval = true;
-            this.router.navigate(["/managerview/approval"]);
+            this.router.navigate(["/soci/index"]);
           }, 2000);
         },
         (error) => {
@@ -1211,11 +1253,14 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
+          this.confirmationReleaseModal.hide();
           this.alertBody = data.message;
+          this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
             this.request_approval = true;
             this.router.navigate(["/soci/index"]);
+            this.is_released = false;
           }, 2000);
         },
         (error) => {
