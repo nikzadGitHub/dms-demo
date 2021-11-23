@@ -128,7 +128,7 @@
             <div
               class="col-lg-1"
               style="text-align: right"
-              *ngIf="!is_preview_check && sociStataus == 1"
+              *ngIf="!is_preview_check && sociStatus == 1"
             >
               <div>
                 <a
@@ -180,7 +180,7 @@
             <div
               class="col-lg-1"
               style="text-align: right"
-              *ngIf="!is_preview_check && sociStataus == 1"
+              *ngIf="!is_preview_check && sociStatus == 1"
             >
               <div>
                 <a
@@ -226,7 +226,7 @@
                   <th>Notes</th>
                   <th></th>
                   <th *ngIf="is_preview_check"></th>
-                  <th *ngIf="!is_preview_check && sociStataus == 1">Action</th>
+                  <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -309,7 +309,7 @@
                   <td
                     class="text-center td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && sociStataus == 1"
+                    *ngIf="!is_preview_check && sociStatus == 1"
                   >
                     <!-- <div class="action-icon">
                       <a [routerLink]="" routerLinkActive="router-link-active"
@@ -383,7 +383,7 @@
                 </tr>
                 <tr
                   align="center"
-                  *ngIf="!is_preview_check && sociStataus == 1"
+                  *ngIf="!is_preview_check && sociStatus == 1"
                 >
                   <td style="width: 15%">
                     <input
@@ -470,7 +470,7 @@
                   <th>Amount (MYR)</th>
                   <th>Notes</th>
                   <th *ngIf="is_preview_check"></th>
-                  <th *ngIf="!is_preview_check && sociStataus == 1">Action</th>
+                  <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -549,7 +549,7 @@
                   <td
                     class="td-actions"
                     style="width: 10%; padding: none"
-                    *ngIf="!is_preview_check && sociStataus == 1"
+                    *ngIf="!is_preview_check && sociStatus == 1"
                   >
                     <div class="action-icon">
                       <a
@@ -599,7 +599,7 @@
                 </tr>
                 <tr
                   align="center"
-                  *ngIf="!is_preview_check && sociStataus == 1"
+                  *ngIf="!is_preview_check && sociStatus == 1"
                 >
                   <td style="width: 15%; padding: 6px">
                     <select
@@ -717,7 +717,7 @@
                   <th>Notes</th>
                   <th></th>
                   <th></th>
-                  <th *ngIf="!is_preview_check && sociStataus == 1">Action</th>
+                  <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -795,7 +795,7 @@
                   <td
                     class="td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && sociStataus == 1"
+                    *ngIf="!is_preview_check && sociStatus == 1"
                   >
                     <div class="action-icon">
                       <!-- (click)="disableEditMethod(cost, 'addCost')"
@@ -846,7 +846,7 @@
                 [formGroupName]="i" -->
                 <tr
                   align="center"
-                  *ngIf="!is_preview_check && sociStataus == 1"
+                  *ngIf="!is_preview_check && sociStatus == 1"
                 >
                   <td style="width: 15%">
                     <input
@@ -949,7 +949,7 @@
                   <th>Status</th>
                   <th>Note</th>
                   <th></th>
-                  <th *ngIf="!is_preview_check && sociStataus == 1">Action</th>
+                  <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -1045,7 +1045,7 @@
                   <td
                     class="td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && sociStataus == 1"
+                    *ngIf="!is_preview_check && sociStatus == 1"
                   >
                     <div class="action-icon">
                       <a
@@ -1097,7 +1097,7 @@
                 </tr>
                 <tr
                   align="center"
-                  *ngIf="!is_preview_check && sociStataus == 1"
+                  *ngIf="!is_preview_check && sociStatus == 1"
                 >
                   <td>
                     <input
@@ -1236,7 +1236,7 @@
             <div
               class="col-md-1"
               style="text-align: right"
-              *ngIf="!is_preview_check && sociStataus == 1"
+              *ngIf="!is_preview_check && sociStatus == 1"
             >
               <div class="row">
                 <!-- //action -->
@@ -1288,7 +1288,7 @@
 
           <!-- Add additional_instruction -->
 
-          <div *ngIf="!is_preview_check && sociStataus == 1">
+          <div *ngIf="!is_preview_check && sociStatus == 1">
             <div>
               <div class="row">
                 <div class="col-md-3">
@@ -1377,7 +1377,7 @@
             <div
               class="col-lg-1"
               style="text-align: middle"
-              *ngIf="!is_preview_check && sociStataus == 1"
+              *ngIf="!is_preview_check && sociStatus == 1"
             >
               <div class="">
                 <b> Action</b>
@@ -1515,7 +1515,7 @@
               <div
                 class="col-md-1"
                 style="text-align: right"
-                *ngIf="!is_preview_check && sociStataus == 1"
+                *ngIf="!is_preview_check && sociStatus == 1"
               >
                 <div class="row">
                   <!-- //action -->
@@ -1568,7 +1568,7 @@
             </div>
           </div>
           <!-- Installation -->
-          <div *ngIf="!is_preview_check && sociStataus == 1">
+          <div *ngIf="!is_preview_check && sociStatus == 1">
             <div class="row">
               <div class="col-md-3">
                 <div class="">
@@ -1693,7 +1693,7 @@
                   <th>Total Price(MYR)</th>
                   <th>Discount %</th>
                   <th>Net Amount(MYR)</th>
-                  <th *ngIf="!is_preview_check && sociStataus == 1">Action</th>
+                  <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -1828,7 +1828,7 @@
                   <td
                     class="td-actions"
                     style="width: 5%"
-                    *ngIf="!is_preview_check && sociStataus == 1"
+                    *ngIf="!is_preview_check && sociStatus == 1"
                   >
                     <!-- //action -->
                     <div class="action-icon" style="display: flex">
@@ -1854,7 +1854,7 @@
                 </tr>
                 <tr
                   align="center"
-                  *ngIf="!is_preview_check && sociStataus == 1"
+                  *ngIf="!is_preview_check && sociStatus == 1"
                 >
                   <!-- {{ i + 1 }} -->
                   <td></td>
@@ -2052,20 +2052,20 @@
   <button
     class="request-approval-btn"
     (click)="confirmationModal.show()"
-    *ngIf="sociStataus == 1 && is_edited && !is_released"
+    *ngIf="sociStatus == 1 && is_edited"
   >
     REQUEST APPROVAL
   </button>
   <button
   class="request-btn"
   (click)="confirmationReleaseModal.show()"
-  *ngIf="sociStataus == 4 || !is_released && !is_edited"
+  *ngIf="sociStatus == 4 && !is_released && !is_edited"
 >
 <i class="pi pi-check"></i>
   RELEASE
 </button>
 </div>
-<div class="request-btns" *ngIf="sociStataus == 2 && is_approval_view_check">
+<div class="request-btns" *ngIf="sociStatus == 2 && is_approval_view_check">
   <button class="cancel-btn" (click)="escalateSCOI()">
     <i class="pi pi-arrow-up"></i>
     ESCALATE
@@ -2109,10 +2109,10 @@
       </div>
       <form [formGroup]="form">
         <div class="modal-body">
-          <!-- <label for="">Please search product or add dummy sku.</label> -->
+          <label for="">Please search product or add dummy sku.</label>
 
           <!-- product-search -->
-          <!-- <div class="search-product">
+          <div class="search-product">
             <label for="">Product Name</label>
             <p-autoComplete
               formControlName="name"
@@ -2132,8 +2132,8 @@
                 </div>
               </ng-template>
             </p-autoComplete>
-          </div> -->
-          <!-- <hr /> -->
+          </div>
+          <hr />
           <!-- product-data -->
           <div class="product-info">
             <div class="product-name">
@@ -2142,7 +2142,7 @@
                 type="text"
                 class="form-control"
                 readonly
-                formControlName="name"
+                formControlName="productName"
                 required
               />
             </div>
