@@ -44,6 +44,15 @@ export interface OpportunitySummary {
   winning_probability: string;
 }
 
+export const emptyOpportunitySummary: OpportunitySummary = {
+  customer: 'Unknown',
+  opportunity_id: '',
+  initiator: '',
+  opportunity_amount: '',
+  opportunity_no: '0',
+  winning_probability: '',
+};
+
 export interface BookingEntity {
   status: BookingStatus;
   approvalList: ApprovalList;
@@ -61,10 +70,3 @@ export interface BookingEntityInterface {
   getOpportunitySummary(bookingId: BigInt): Observable<OpportunitySummary>;
   getMainAsset(bookingId: BigInt): Observable<MainAsset>;
 }
-
-export interface CustomerList {
-  id: string;
-  company_name: string;
-}
-
-export type CustomersList = CustomerList[];

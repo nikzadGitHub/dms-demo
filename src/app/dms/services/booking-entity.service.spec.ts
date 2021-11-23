@@ -9,7 +9,8 @@ describe('BookingEntityService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule]
+      imports: [HttpClientModule],
+      providers: [BookingEntityService]
     });
     service = TestBed.inject(BookingEntityService);
   });

@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ModalDirective } from "ngx-bootstrap/modal";
-import { CustomersList } from '../../../../services/booking-entity';
 import { BookingService } from '../../services/booking.service';
+import { CustomersService } from '../../../../services/customers/customers.service';
+import { CustomerList } from '../../../../services/customers/customer-entity';
 
 
 
@@ -19,12 +20,15 @@ export class OpportunityFormComponent implements OnInit{
   alertHeader: string;
   formBooking : FormGroup;
   curDate =  new Date(Date.now()).toLocaleDateString();
-  customers: CustomersList;
-  constructor(private fb: FormBuilder, private bookingService: BookingService) {}
+  customers: CustomerList;
+  constructor(
+    private fb: FormBuilder,
+    private bookingService: BookingService,
+    private apiCustomers: CustomersService,
+  ) {}
   ngOnInit(): void {
-    this.bookingService.getCustomerList().subscribe((response) => {
+    this.apiCustomers.getList().subscribe((response) => {
       this.customers = response;
-      console.log(response)
     });
     this.formBooking = this.fb.group({
       status: "Draft",
