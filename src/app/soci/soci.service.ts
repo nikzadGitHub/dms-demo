@@ -41,13 +41,21 @@ export class SociService {
       .get(url + query, this.httpOptions)
       .pipe(catchError(this.errorHandler));
   }
-  getFilteredProducts(filter){
-    filter = filter == '' ? 0 : filter; 
-    return this.httpClient.get(this.apiURL + '/opportunity/get-all-products?search_text=' + filter,this.httpOptions)
-    // return this.httpClient.get(this.apiURL + '/quote/products/filtered/' + filter,this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    )
+  getFilteredProducts(filter, external_id) {
+    filter = filter == "" ? 0 : filter;
+    return (
+      this.httpClient
+        .get(
+          this.apiURL +
+            "/opportunity/get-all-products?search_text=" +
+            filter +
+            "&external_id=" +
+            external_id,
+          this.httpOptions
+        )
+        // return this.httpClient.get(this.apiURL + '/quote/products/filtered/' + filter,this.httpOptions)
+        .pipe(catchError(this.errorHandler))
+    );
   }
   getFilteredQuote(filter) {
     filter = filter == "" ? 0 : filter;

@@ -1684,9 +1684,9 @@
       <!-- Product -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="Products">
-          <div class="row">
+          <div class="row ">
             <!-- formArrayName="products" -->
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped ">
               <thead>
                 <tr>
                   <th>No.</th>
@@ -1701,12 +1701,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr align="center" *ngFor="let item of product; let i = index">
+                <tr align="center" class="prod" *ngFor="let item of product; let i = index">
                   <td class="text-center">{{ i + 1 }}</td>
                   <td class="text-center">
                     <input
                       class="text-left form-control"
                       type="text"
+                      readonly
                       [(ngModel)]="item.name"
                       *ngIf="
                         editableRowIndex !== i ||
@@ -1724,6 +1725,7 @@
                     <input
                       class="text-left form-control"
                       type="text"
+                      readonly
                       [(ngModel)]="item.sku"
                       *ngIf="
                         editableRowIndex !== i ||
@@ -1741,6 +1743,7 @@
                     <input
                       class="text-left form-control"
                       type="text"
+                      readonly
                       [(ngModel)]="item.quantity"
                       *ngIf="
                         editableRowIndex !== i ||
@@ -1758,6 +1761,7 @@
                     <input
                       class="text-left form-control"
                       type="text"
+                      readonly
                       [(ngModel)]="item.unit_price"
                       *ngIf="
                         editableRowIndex !== i ||
@@ -1775,6 +1779,7 @@
                     <input
                       class="text-left form-control"
                       type="text"
+                      readonly
                       [(ngModel)]="item.total_price"
                       *ngIf="
                         editableRowIndex !== i ||
@@ -1792,6 +1797,7 @@
                     <input
                       class="text-left form-control"
                       type="text"
+                      readonly
                       [(ngModel)]="item.discount"
                       *ngIf="
                         editableRowIndex !== i ||
@@ -1809,6 +1815,7 @@
                     <input
                       class="text-left form-control"
                       type="text"
+                      readonly
                       [(ngModel)]="item.amount"
                       *ngIf="
                         editableRowIndex !== i ||
@@ -2049,14 +2056,14 @@
   <button
     class="request-approval-btn"
     (click)="confirmationModal.show()"
-    *ngIf="sociStataus == 1"
+    *ngIf="sociStataus == 1 && is_edited && !is_released"
   >
     REQUEST APPROVAL
   </button>
   <button
   class="request-btn"
   (click)="confirmationReleaseModal.show()"
-  *ngIf="sociStataus == 4"
+  *ngIf="sociStataus == 4 || !is_released && !is_edited"
 >
 <i class="pi pi-check"></i>
   RELEASE
@@ -2073,7 +2080,7 @@
   </button>
   <button class="request-btn" (click)="approveSOCI()">
     <i class="pi pi-check"></i>
-    APPROVAE
+    APPROVE
   </button>
 </div>
 
@@ -2106,10 +2113,10 @@
       </div>
       <form [formGroup]="form">
         <div class="modal-body">
-          <label for="">Please search product or add dummy sku.</label>
+          <!-- <label for="">Please search product or add dummy sku.</label> -->
 
           <!-- product-search -->
-          <div class="search-product">
+          <!-- <div class="search-product">
             <label for="">Product Name</label>
             <p-autoComplete
               formControlName="name"
@@ -2129,8 +2136,8 @@
                 </div>
               </ng-template>
             </p-autoComplete>
-          </div>
-          <hr />
+          </div> -->
+          <!-- <hr /> -->
           <!-- product-data -->
           <div class="product-info">
             <div class="product-name">

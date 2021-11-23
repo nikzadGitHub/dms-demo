@@ -95,16 +95,11 @@ export class CreateComponent implements OnInit {
 
   submit() {
     const formData = new FormData();
-
-    // formData.append("quote_id", this.form.controls["quote_id"].value["id"]);
-    formData.append("quote_id", this.form.controls["quote_id"].value["id"]);
-    formData.append("po_no", this.form.controls["po_no"].value);
-    formData.append("po_date", this.form.controls["po_date"].value);
-    formData.append("po_amount", this.form.controls["po_amount"].value);
-    formData.append(
-      "receive_po_date",
-      this.form.controls["receive_po_date"].value
-    );
+    this.form.controls["quote_id"].value? formData.append("quote_id", this.form.controls["quote_id"].value["id"]):'';
+    this.form.controls["po_no"].value ? formData.append("po_no", this.form.controls["po_no"].value): '';
+    this.form.controls["po_date"].value? formData.append("po_date", this.form.controls["po_date"].value):'';
+    this.form.controls["po_amount"].value? formData.append("po_amount", this.form.controls["po_amount"].value):'';
+    this.form.controls["receive_po_date"].value? formData.append("receive_po_date",this.form.controls["receive_po_date"].value): '';
     formData.append("file", this.file);
 
     if (this.quote_full_id) {
@@ -117,6 +112,9 @@ export class CreateComponent implements OnInit {
           this.modal.hide();
           this.alertBody = res["message"];
           this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+          }, 2000);
         });
     } else {
       this.sociService
