@@ -1,8 +1,7 @@
 
 
 export interface CustomerEntity {
-  id: any;
-  name: string;
+  id: bigint;
   company_name: string;
 }
 

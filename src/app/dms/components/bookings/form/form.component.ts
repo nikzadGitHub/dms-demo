@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ModalDirective } from "ngx-bootstrap/modal";
 import {MockBookingService} from '../services/mock-booking.service';
 import {CustomerList} from '../../../services/customers/customer-entity';
 import {MockCustomersService} from '../../../services/customers/mock-customers.service';
+import { BookingService } from '../services/booking.service';
+import { CustomersService } from '../../../services/customers/customers.service';
 
 /**
  * For submit the booking form
@@ -26,14 +28,13 @@ export class FormComponent implements OnInit{
 
   constructor(
     private fb: FormBuilder,
-    private bookingService: MockBookingService,
-    private apiCustomers: MockCustomersService,
+    private bookingService: BookingService,
+    private apiCustomers: CustomersService,
   ) {}
 
   ngOnInit(): void {
-    this.apiCustomers.getList(0).subscribe((response) => {
+    this.apiCustomers.getList().subscribe((response) => {
       this.customers = response;
-      console.log(response)
     });
     this.formBooking = this.fb.group({
       status: "Draft",

@@ -12,7 +12,7 @@ export class CustomersService implements CustomersInterface {
 
   constructor(private apiClient: ApiClient) { }
 
-  getList(page: number): Observable<CustomerList> {
-    return this.apiClient.get<CustomerList>('customer-list?page=' + page);
+  getList(): Observable<CustomerList> {
+    return this.apiClient.get<CustomerList>('customer-list');
   }
 }
