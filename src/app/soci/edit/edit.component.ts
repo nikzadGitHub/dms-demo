@@ -109,7 +109,7 @@ export class EditComponent implements OnInit {
   selectedId: any;
   product_index: any;
   product_amount: any;
-  sociStataus: any;
+  sociStatus: any;
   is_approval_view_check = false;
   productCostprice: any;
   productType: any;
@@ -189,7 +189,7 @@ export class EditComponent implements OnInit {
     this.sociService.getSpecificSoci(soci_id).subscribe((res) => {
       //PO Details
       this.soci_data = res["data"];
-      this.sociStataus = res["data"]["status"];
+      this.sociStatus = res["data"]["status"];
       this.is_edited = res["data"]["is_edited"];
       this.is_released = res["data"]["is_released"];
       this.external_id = res["data"]["external_id"];
@@ -1035,12 +1035,12 @@ export class EditComponent implements OnInit {
     this.productCheck = check
     this.external_product_number = product.external_product_number;
     this.product_data_area_id = product.data_area_id;
-    this.product_id = product.id;
     this.product_cost = product.cost;
     // this.productCostprice = product.cost_price;
     this.productType = product.product_type;
     if (check == "add_product") {
       this.productCostprice = product.cost_price;
+      this.product_id = product.id;
       this.form.patchValue({
         sku: product["sku"],
         unit_price: product["amount"],
@@ -1049,7 +1049,8 @@ export class EditComponent implements OnInit {
     } else {
       this.productCostprice = product.cost_price;
       this.form.patchValue({
-        name: product.name,
+        // name: product.name,
+        productName:  product.name,
         sku: product.sku,
         quantity: product.quantity,
         discount: product.discount,
@@ -1108,8 +1109,7 @@ export class EditComponent implements OnInit {
     }
   }
   openUpdateProductModal(index, product) {
-    console.log("product_type>>>>>:", product);
-    console.log("product_type:", product.product_type);
+
     this.controller = product;
     this.product_index = index;
     this.product_cost = product.cost
@@ -1117,7 +1117,6 @@ export class EditComponent implements OnInit {
     this.external_product_number = product.external_product_number;
     this.product_id = product.id;
     this.product_amount = product.amount;
-    // product.product_typ?this.productType = product.product_type:this.productType='';
     if (product.product_type) {
       this.productType = product.product_type;
     } else {
@@ -1125,7 +1124,8 @@ export class EditComponent implements OnInit {
     }
     this.updateProductModal.show();
     this.form.patchValue({
-      name: product.name,
+      // name: product.name,
+      productName:  product.name,
       sku: product.sku,
       quantity: product.quantity,
       discount: product.discount,
@@ -1139,14 +1139,12 @@ export class EditComponent implements OnInit {
     });
   }
   updateProduct() {
-    console.log("selected-product-type:", this.productType);
-    console.log("cost_price:", this);
-    
     this.sociService
       .putQuery("/soci/product/" + this.product_id, {
         external_product_number: this.external_product_number,
         data_area_id: this.product_data_area_id,
         product_id: this.product_id,
+        // name: this.form.value.productName,
         soci_id: this.soci_id,
         quantity: this.form.value.quantity,
         cost: this.productCheck == "update_product" ? parseFloat(this.productCostprice) : this.product_cost,
