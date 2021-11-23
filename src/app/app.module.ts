@@ -83,6 +83,8 @@ import { CreateComponent } from './views/customers/create/create.component';
 import { IndexComponent } from './views/customers/index/index.component';
 import { EditComponent } from './views/customers/edit/edit.component';
 import { CustomersModule } from './views/customers/customers.module';
+
+
 @NgModule({
   imports: [
     FormsModule,
@@ -145,6 +147,7 @@ import { CustomersModule } from './views/customers/customers.module';
     // CreateComponent,
     // IndexComponent,
     // EditComponent,
+    // LogoutComponent
   ],
   providers: [
     {

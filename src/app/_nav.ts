@@ -123,7 +123,7 @@ export const navItems: INavData[] = [
     icon: 'cil-user'
   },
   {
-    name: 'Logout',
+    name: 'Logouts',
     url: '/logout',
     icon: 'cil-account-logout'
   },
