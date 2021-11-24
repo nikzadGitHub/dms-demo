@@ -11,6 +11,7 @@ import { settings } from '../../../environments/environment';
 export class LeadsService {
 
   private apiURL = settings.apiBaseUrl;
+  public static leadErrorMessage = '';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -108,6 +109,8 @@ export class LeadsService {
 
   errorHandler(error) {
     let errorMessage = '';
+    LeadsService.leadErrorMessage = '';
+    LeadsService.leadErrorMessage = error?.error?.message || '';     
     if(error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
     } else {
