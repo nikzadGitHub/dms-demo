@@ -78,7 +78,12 @@ export class DefaultLayoutComponent {
       .toPromise()
       .then(() => {
         this.router.navigateByUrl("/login", { replaceUrl: true });
+
       });
+
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("user-json");
+      localStorage.removeItem("auth-token");
 
     return false;
   }
