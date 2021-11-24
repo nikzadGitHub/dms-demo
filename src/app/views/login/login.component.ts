@@ -8,6 +8,9 @@ import { AuthService } from '../../auth/auth.service';
 import { DialogService } from '../../common/dialog/dialog.service';
 import { SystemConfig } from '../../config/system-config';
 
+import { AuthenticationResult } from '@azure/msal-browser';
+import { MsalService } from '@azure/msal-angular';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: 'login.component.html'
@@ -25,6 +28,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private azureAuthService : MsalService,
     private dialogService: DialogService,
     // private dialog: MatDialog
   ) { }
@@ -45,6 +49,11 @@ export class LoginComponent {
         Validators.maxLength(128)
       ])
     });
+    this.azureAuthService.instance.handleRedirectPromise().then( res => {
+      if (res != null && res.account != null) {
+        this.azureAuthService.instance.setActiveAccount(res.account)
+      }
+    })
   }
 
   onFormSubmit(): void {
@@ -107,5 +116,28 @@ export class LoginComponent {
 
   resetForm() { 
     this.formLogin.reset();
+  }
+  loginUsingAzure(){
+  // this.authService.loginRedirect();
+  this.azureAuthService.loginPopup()
+  .subscribe(async (response: AuthenticationResult) => {
+    console.log(response);
+    let user :any = {
+      fullName :  response.account.name || '',
+      id: response.account.tenantId, 
+      isLocked: false,
+      isActive: false,
+      email: response.account.username,
+      language: 'en'
+    }
+    console.log('user',user);
+    
+    localStorage.setItem('userRole',JSON.stringify(user))
+    await this.authService.saveUserSession(JSON.stringify(user));
+    this.azureAuthService.instance.setActiveAccount(response.account);
+    await this.authService.setAuthorizationToken(response.accessToken);
+    this.router.navigateByUrl("/dashboard", {replaceUrl: true});
+
+  });
   }
 }

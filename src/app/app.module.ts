@@ -25,6 +25,8 @@ import { RegisterComponent } from './views/register/register.component';
 
 // Modal Component
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { MsalModule, MsalService, MSAL_INSTANCE } from '@azure/msal-angular';
+
 
 const APP_CONTAINERS = [
   DefaultLayoutComponent
@@ -36,6 +38,7 @@ import {
   AppHeaderModule,
   AppFooterModule,
   AppSidebarModule,
+  
 } from '@coreui/angular';
 
 // Import routing module
@@ -83,6 +86,18 @@ import { CreateComponent } from './views/customers/create/create.component';
 import { IndexComponent } from './views/customers/index/index.component';
 import { EditComponent } from './views/customers/edit/edit.component';
 import { CustomersModule } from './views/customers/customers.module';
+import { IPublicClientApplication, PublicClientApplication } from '@azure/msal-browser';
+import { environment } from '../environments/environment';
+import { SystemConfig } from './config/system-config';
+
+export function MSALInstanceFactory(): IPublicClientApplication {
+  return new PublicClientApplication({
+    auth: {
+      clientId: environment.clientUri,
+      redirectUri: SystemConfig.apiBaseUrl
+    }
+  });
+}
 
 
 @NgModule({
@@ -134,7 +149,8 @@ import { CustomersModule } from './views/customers/customers.module';
     ManagerViewModule,
     NgbModule,
     InputTextModule,
-    CustomersModule
+    CustomersModule,
+    MsalModule
   ],
   declarations: [
     AppComponent,
@@ -161,6 +177,11 @@ import { CustomersModule } from './views/customers/customers.module';
     },
     IconSetService,
     DatePipe,
+    {
+      provide: MSAL_INSTANCE,
+      useFactory: MSALInstanceFactory
+    },
+    MsalService
   ],
   bootstrap: [ AppComponent ]
 })
