@@ -18,6 +18,7 @@ export class LeadsImportComponent implements OnInit {
     'Prospect',
     'Source'
   ];
+  
   displayData: any = 0;
   successCreate: any = 0;
   danger: any = 0;
