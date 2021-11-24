@@ -33,7 +33,10 @@ export class EditComponent implements OnInit {
   @ViewChild("updateProductModal") public updateProductModal: ModalDirective;
   @ViewChild("confirmationReleaseModal")
   public confirmationReleaseModal: ModalDirective;
-
+  @ViewChild("confirmationApproveModal")
+  public confirmationApproveModal: ModalDirective;
+  @ViewChild("confirmationEscalateModal") public confirmationEscalateModal: ModalDirective;
+  
   cost_item_id: any;
   alertBody: string;
   paymentCurrentIndex: number;
@@ -1032,7 +1035,7 @@ export class EditComponent implements OnInit {
   productDetails(product, check) {
     console.log("prouct:-->", product);
     console.log("check-->:", check);
-    this.productCheck = check
+    this.productCheck = check;
     this.external_product_number = product.external_product_number;
     this.product_data_area_id = product.data_area_id;
     this.product_cost = product.cost;
@@ -1050,7 +1053,7 @@ export class EditComponent implements OnInit {
       this.productCostprice = product.cost_price;
       this.form.patchValue({
         // name: product.name,
-        productName:  product.name,
+        productName: product.name,
         sku: product.sku,
         quantity: product.quantity,
         discount: product.discount,
@@ -1109,10 +1112,9 @@ export class EditComponent implements OnInit {
     }
   }
   openUpdateProductModal(index, product) {
-
     this.controller = product;
     this.product_index = index;
-    this.product_cost = product.cost
+    this.product_cost = product.cost;
     this.product_data_area_id = product.data_area_id;
     this.external_product_number = product.external_product_number;
     this.product_id = product.id;
@@ -1125,7 +1127,7 @@ export class EditComponent implements OnInit {
     this.updateProductModal.show();
     this.form.patchValue({
       // name: product.name,
-      productName:  product.name,
+      productName: product.name,
       sku: product.sku,
       quantity: product.quantity,
       discount: product.discount,
@@ -1147,7 +1149,10 @@ export class EditComponent implements OnInit {
         // name: this.form.value.productName,
         soci_id: this.soci_id,
         quantity: this.form.value.quantity,
-        cost: this.productCheck == "update_product" ? parseFloat(this.productCostprice) : this.product_cost,
+        cost:
+          this.productCheck == "update_product"
+            ? parseFloat(this.productCostprice)
+            : this.product_cost,
         margin: 12.0,
         total_price: this.form.value.quantity.total_price,
         discount: this.form.value.discount,
@@ -1219,6 +1224,7 @@ export class EditComponent implements OnInit {
   // Approve Request
 
   applyForApproval() {
+    this.confirmationModal.hide();
     this.sociService
       .postQuery("/soci/request-approval", {
         id: this.soci_id,
@@ -1226,7 +1232,6 @@ export class EditComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.is_edited = false;
-          this.confirmationModal.hide();
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -1247,13 +1252,13 @@ export class EditComponent implements OnInit {
 
   // Apply for release
   applyForRelease() {
+    this.confirmationReleaseModal.hide();
     this.sociService
       .postQuery("/soci/release", {
         id: this.soci_id,
       })
       .subscribe(
         (data: any) => {
-          this.confirmationReleaseModal.hide();
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
@@ -1275,6 +1280,7 @@ export class EditComponent implements OnInit {
 
   // From Manager-view Approval
   approveSOCI() {
+    this.confirmationApproveModal.hide();
     this.sociService
       .postQuery("/soci/approve", {
         id: this.soci_id,
@@ -1299,6 +1305,7 @@ export class EditComponent implements OnInit {
       );
   }
   escalateSCOI() {
+    this.confirmationEscalateModal.hide();
     this.sociService
       .postQuery("/soci/escalate", {
         id: this.soci_id,

@@ -1,8 +1,8 @@
 <div class="approval-btns">
-  <button type="button" class="btn btn-primary">Quotation Approval</button>
+  <button type="button" class="btn btn-primary quotation-btn">Quotation Approval</button>
   <button
     type="button"
-    class="btn btn-secondary"
+    class="btn btn-secondary soci-btn"
     (click)="getPendingSociList()"
   >
     SOCI Approval
@@ -10,7 +10,7 @@
 </div>
 <div class="card-header row" style="background-color: #898485; color: white">
   <div style="padding-left: 20px">
-    <h2>Pending Quotation</h2>
+    <h2>Pending SOCI</h2>
   </div>
 
   <div class="col-lg col-sm-4;" align="right">
@@ -36,6 +36,7 @@
 <table class="table table-hover table-striped">
   <thead>
     <tr>
+      <th>SOCI ID</th>
       <th>Created date</th>
       <th>FSS Name</th>
       <th>Qutation ID</th>
@@ -48,6 +49,7 @@
   </thead>
   <tbody>
     <tr align="center" *ngFor="let item of pendingSOCI">
+      <td>{{item.soci_id}}</td>
       <td>{{ item.created_at | date: "dd-MMM-yyy" }}</td>
       <td></td>
       <td>{{ item.quote_full_id }}</td>

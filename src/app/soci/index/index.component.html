@@ -245,7 +245,10 @@
         {{ soci.created_at | date: "dd-MMM-yyyy" }}
       </td>
       <td class="text-center">
-        <a href="/#/soci/index">
+        <a 
+        href="#"
+        [routerLink]="['/soci/', soci.id, 'edit']"
+        >
           <span class="p-column-title"> Soci Id</span>
           {{ soci.soci_id }}
         </a>

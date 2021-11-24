@@ -26,7 +26,7 @@ export class ManagerviewApprovalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getPendingSociList();
+    // this.getPendingSociList();
   }
 
   getPendingSociList() {
