@@ -30,13 +30,14 @@ export class CreateComponent implements OnInit {
   filteredQuotes: Quote[];
   selectedQuoteAdvanced: Quote;
   file: any;
-  fileName = "";
+  fileName: any;
   alertBody: string;
   quote_full_id: any;
   is_quote_id_found: boolean;
   soci_id: any;
   soci_data: Object;
-  addMultipleFiles: any[] = [];
+  addMultipleFiles = [];
+  isFileAdded: boolean;
   // rolesPermission: any[] = [];
   // user_json: any;
   // checkPermission: any[] = [];
@@ -85,21 +86,44 @@ export class CreateComponent implements OnInit {
   }
 
   getFile(event) {
-    this.file = event.target.files[0];
+    this.file =  event.target.files[0];
     this.fileName = this.file.name;
   }
 
   addMultiFile() {
-    this.addMultipleFiles.push(this.form.value.fileLabel, this.form.value.file);
+    const formData = new FormData();
+    if (this.file && this.form.value.fileLabel) {
+      this.isFileAdded = true;
+      this.addMultipleFiles.push({
+        remarks: this.form.value.fileLabel,
+        file: this.file,
+        fileName: this.fileName,
+      });
+    }
+    console.log("his.addMultipleFiles: ", this.addMultipleFiles);
+    
   }
 
   submit() {
     const formData = new FormData();
-    this.form.controls["quote_id"].value? formData.append("quote_id", this.form.controls["quote_id"].value["id"]):'';
-    this.form.controls["po_no"].value ? formData.append("po_no", this.form.controls["po_no"].value): '';
-    this.form.controls["po_date"].value? formData.append("po_date", this.form.controls["po_date"].value):'';
-    this.form.controls["po_amount"].value? formData.append("po_amount", this.form.controls["po_amount"].value):'';
-    this.form.controls["receive_po_date"].value? formData.append("receive_po_date",this.form.controls["receive_po_date"].value): '';
+    this.form.controls["quote_id"].value
+      ? formData.append("quote_id", this.form.controls["quote_id"].value["id"])
+      : "";
+    this.form.controls["po_no"].value
+      ? formData.append("po_no", this.form.controls["po_no"].value)
+      : "";
+    this.form.controls["po_date"].value
+      ? formData.append("po_date", this.form.controls["po_date"].value)
+      : "";
+    this.form.controls["po_amount"].value
+      ? formData.append("po_amount", this.form.controls["po_amount"].value)
+      : "";
+    this.form.controls["receive_po_date"].value
+      ? formData.append(
+          "receive_po_date",
+          this.form.controls["receive_po_date"].value
+        )
+      : "";
     formData.append("file", this.file);
 
     if (this.quote_full_id) {

@@ -18,6 +18,10 @@ export class ManagerviewApprovalComponent implements OnInit {
   paginate: [];
   pendingSOCI: any[] = [];
   pageItems: number = 10;
+  is_quotation_view = false;
+  is_soci_view = false;
+  sociBtnColor = "btn btn-primary"
+  quotationBtn = "btn btn-primary"
   // is_approval_view_check: boolean;
   constructor(
     private sociService: SociService,
@@ -27,15 +31,27 @@ export class ManagerviewApprovalComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getPendingSociList();
+    this.getPendingQuotationList();
   }
 
   getPendingSociList() {
+    this.is_soci_view = true;
+    this.is_quotation_view = false;
+    this.sociBtnColor = "btn btn-primary"
+    this.quotationBtn = "btn btn-secondary"
     this.managerView
       .getPendingSOCI(this.pageItems, this.search_text, this.sort)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((data: any) => {
         this.pendingSOCI = data["data"]["soci"]["data"];
       });
+  }
+
+  getPendingQuotationList() {
+    this.is_quotation_view = true;
+    this.is_soci_view = false;
+    this.sociBtnColor = "btn btn-secondary"
+    this.quotationBtn = "btn btn-primary"
   }
 
   goToApproval(soci_id) {

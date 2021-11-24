@@ -507,10 +507,11 @@
                   </td>
                   <td>
                     <input
-                      type=""
-                      style="width: 89%;"
+                      type="date"
+                      style="width: 79%;"
                       class="form-control"
-                      [(ngModel)]="payment.schedule"
+                      [ngModel]="new_payment_schedule_date"
+                      (ngModelChange)="changePaymentSchdule($event)"
                       [ngModelOptions]="{ standalone: true }"
                       *ngIf="enableEdit['payment'] && controller == payment"
                       [attr.disabled]="enableEdit['payment'] && controller == payment? null: ''"
@@ -564,9 +565,6 @@
                         (click)="updatePaymentSchdule(i, payment.id)"
                         ><i class="cil-check-circle"></i
                       ></a>
-                      <!-- (click)="enableEditMethod(payment, 'payment')" -->
-                      <!-- *ngIf="!enableEdit['payment']" -->
-                      <!-- (click)="updatePaymentSchdule(i, payment.id)" -->
                       <a
                         [routerLink]=""
                         routerLinkActive="router-link-active"
@@ -576,9 +574,6 @@
                         <i class="fa fa-edit"></i>
                       </a>
                       &nbsp;
-
-                      <!-- *ngIf="editableRowIndex !== i  -->
-                      <!-- *ngIf="!enableEdit['payment']" -->
                       <a
                         [routerLink]=""
                         routerLinkActive="router-link-active"
@@ -712,8 +707,12 @@
                 <tr>
                   <th>Description</th>
                   <th>Quantity</th>
-                  <th>Unit Price (MYR)</th>
-                  <th>Total Price (MYR)</th>
+                  <th>Unit Price
+                    {{soci_data?.currency}}
+                  </th>
+                  <th>Total Price 
+                    {{soci_data?.currency}}
+                  </th>
                   <th>Notes</th>
                   <th></th>
                   <th></th>
@@ -917,7 +916,9 @@
             </table>
             <div class="col-lg-12" align="right">
               <div class="form-group charges">
-                <b>TotaL </b> IDR<input
+                <p><b> TotaL </b> </p>
+                <p>{{soci_data?.currency}}</p>
+                <input
                   type="text"
                   class="form-control"
                   readonly
@@ -955,18 +956,20 @@
                   *ngFor="let item of billing_instruction; let i = index"
                 >
                   <td>
+                    <!-- item.schedule -->
                     <input
                       type="date"
                       class="form-control"
                       style="width: 89%"
-                      [(ngModel)]="item.schedule"
-                      [attr.disabled]="
-                        enableEdit['addBillInstruction'] && controller == item
-                          ? null
-                          : ''
-                      "
+                      [(ngModel)]="new_billing_instruction_date"
+                      (ngModelChange)="changeBillingSchdule($event)"
+                      *ngIf=" enableEdit['addBillInstruction'] && controller == item"
+                      [attr.disabled]="enableEdit['addBillInstruction'] && controller == item? null: ''"
                       [ngModelOptions]="{ standalone: true }"
                     />
+                    <div *ngIf="editableRowIndex !== i ||selectedId !== 'addBillInstruction'">
+                      {{ item.schedule }}
+                    </div>
                     <!-- {{ item.schedule }} -->
                   </td>
                   <td>
@@ -1049,9 +1052,7 @@
                         [routerLink]=""
                         routerLinkActive="router-link-active"
                         (click)="updateBillingInstruction(i, item.id)"
-                        *ngIf="
-                          enableEdit['addBillInstruction'] && controller == item
-                        "
+                        *ngIf=" enableEdit['addBillInstruction'] && controller == item"
                         ><i class="cil-check-circle"></i
                       ></a>
                       &nbsp;
@@ -1068,13 +1069,8 @@
                       <a
                         [routerLink]=""
                         routerLinkActive="router-link-active"
-                        *ngIf="
-                          editableRowIndex !== i ||
-                          selectedId !== 'addBillInstruction'
-                        "
-                        (click)="
-                          enableEditMethod(i, item, 'addBillInstruction')
-                        "
+                        *ngIf="editableRowIndex !== i ||selectedId !== 'addBillInstruction'"
+                        (click)="enableEditMethod(i, item, 'addBillInstruction')"
                       >
                         <i class="fa fa-edit"></i>
                       </a>
@@ -1360,12 +1356,14 @@
             </div>
             <div class="col-lg-1" style="text-align: middle">
               <div class="col-md-8">
-                <b> Unit (RM)</b>
+                <b> Unit 
+                  {{soci_data?.currency}}
+                </b>
               </div>
             </div>
             <div class="col-lg-2" style="text-align: middle">
               <div class="col-md-8">
-                <b> Amount (RM)</b>
+                <b> Amount {{soci_data?.currency}}</b>
               </div>
             </div>
             <div
@@ -1662,7 +1660,9 @@
 
           <div class="col-lg-12" align="right">
             <div class="form-group charges">
-              <b>TotaL </b> IDR<input
+              <p><b>TotaL </b></p>
+              <p>{{soci_data?.currency}}</p>
+              <input
                 type="text"
                 class="form-control"
                 readonly
@@ -1984,7 +1984,7 @@
       <br />
       <!-- Customer PO Attachments -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
-        <p-accordionTab header="Customer PO Attachments">
+        <p-accordionTab header="SOCI Attachments">
           <table class="table table-bordered table-striped">
             <thead>
               <tr>
@@ -2001,6 +2001,12 @@
         </p-accordionTab>
       </p-accordion>
       <br />
+      <div class="soci-remarks">
+      <!-- Remarks taxbox -->
+      <div class="remarks-texbox">
+        <label>Remarks</label>
+        <textarea class="texarea" placeholder="Remarks..."></textarea>
+      </div>
       <!-- SOCI Detail -->
       <div
         style="
@@ -2039,6 +2045,7 @@
           </p-accordionTab>
         </p-accordion>
       </div>
+    </div>
     </form>
   </div>
 </div>

@@ -8,7 +8,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { number } from "echarts";
+import { dataTool, number } from "echarts";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { Term } from "../../quote/create/terms";
 import { BillingList } from "../../quote/edit/billing-list";
@@ -121,6 +121,10 @@ export class EditComponent implements OnInit {
   is_released: boolean;
   external_id: any;
   productCheck: string;
+  payment_schedules_date: Date;
+  billing_instruction_date: Date;
+  new_payment_schedule_date: string;
+  new_billing_instruction_date: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -557,6 +561,12 @@ export class EditComponent implements OnInit {
         }
       );
   }
+
+  changePaymentSchdule(value){
+    console.log("change-value:", value);
+    this.controller.schedule = value
+  }
+
   deletePaymentSchdule(index, payment_schedule_id) {
     this.sociService
       .deleteQuery("/soci/payment-schedule/" + payment_schedule_id)
@@ -748,7 +758,11 @@ export class EditComponent implements OnInit {
         }
       );
   }
-
+  changeBillingSchdule(value){
+    console.log("change-value:",value);
+    
+    this.controller.schedule = value
+  }
   deleteBillingInstruction(index, billing_instruction_id) {
     this.sociService
       .deleteQuery("/soci/billing-instruction/" + billing_instruction_id)
@@ -1033,8 +1047,6 @@ export class EditComponent implements OnInit {
   }
 
   productDetails(product, check) {
-    console.log("prouct:-->", product);
-    console.log("check-->:", check);
     this.productCheck = check;
     this.external_product_number = product.external_product_number;
     this.product_data_area_id = product.data_area_id;
@@ -1335,6 +1347,19 @@ export class EditComponent implements OnInit {
     delete control["laravel_through_key"];
     this.selectedId = type;
     this.controller = control;
+    console.log("this.controller:",this.controller);
+    if(type == 'payment'){
+    this.payment_schedules_date = new Date(this.controller.schedule)
+    this.payment_schedules_date.setDate(this.payment_schedules_date.getDate() + 1)
+    this.new_payment_schedule_date = new Date(this.payment_schedules_date).toISOString().split("T")[0]
+    this.controller["schedule"] = this.new_payment_schedule_date
+  }
+    else if(type == "addBillInstruction"){
+      this.billing_instruction_date = new Date(this.controller.schedule)
+      this.billing_instruction_date.setDate(this.billing_instruction_date.getDate() + 1)
+      this.new_billing_instruction_date = new Date(this.billing_instruction_date).toISOString().split("T")[0]
+      this.controller["schedule"] =  this.new_billing_instruction_date
+    }
     this.enableEdit[type] = true;
     this.editableRowIndex = index;
   }

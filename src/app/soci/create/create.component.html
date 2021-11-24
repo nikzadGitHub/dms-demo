@@ -11,7 +11,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Customer Quotation Acceptance</h4>
+        <h4 class="modal-title">Create SOCI</h4>
         <button
           type="button"
           class="close"
@@ -137,13 +137,40 @@
             </div>
           </div>
           <br />
+          <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-6">
+              <table class="table table-bordered" *ngIf="isFileAdded">
+                <thead>
+                  <tr align="center">
+                    <th>Remarks</th>
+                    <th>File Name</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr align="center" *ngFor="let item of addMultipleFiles; let i=index">
+                    <td>{{item.remarks}}</td>
+                    <td>{{item.fileName}}</td>
+                    <td>
+                      <a href="#">
+                        <i class="pi pi-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!--  -->
           <div class="row" >
             <div class="col-lg-4">
               <label for="attachment">Attachment: </label>
             </div>
-            <!-- <div class="col-lg-3">
-              <input type="text" class="form-control" formControlName="fileLabel" placeholder="Add label" />
-            </div> -->
+            <div class="col-lg-3">
+              <input type="text" class="form-control" formControlName="fileLabel" placeholder="Remarks..." />
+            </div>
             <div class="col-lg-2">
               <!-- <input
                 formControlName="file"
@@ -180,7 +207,7 @@
                 {{ fileName || "No file selected..." }}
               </div>
             </div>
-            <!-- <div class="col-lg-2">
+            <div class="col-lg-2">
               <a
               [routerLink]=""
               routerLinkActive="router-link-active"
@@ -189,7 +216,7 @@
             >
               <i class="icon-plus icons"></i>
             </a>
-            </div> -->
+            </div>
           </div>
         </form>
       </div>
