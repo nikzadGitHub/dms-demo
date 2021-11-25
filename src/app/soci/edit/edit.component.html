@@ -434,7 +434,7 @@
                       formControlName="remarks"
                       class="form-control"
                       id=""
-                      cols="30"
+                      style="width: 135px;"
                       rows="1"
                     ></textarea>
                   </td>
@@ -508,17 +508,23 @@
                   <td>
                     <input
                       type="date"
-                      style="width: 79%;"
+                      style="width: 79%"
                       class="form-control"
                       [ngModel]="new_payment_schedule_date"
                       (ngModelChange)="changePaymentSchdule($event)"
                       [ngModelOptions]="{ standalone: true }"
                       *ngIf="enableEdit['payment'] && controller == payment"
-                      [attr.disabled]="enableEdit['payment'] && controller == payment? null: ''"
+                      [attr.disabled]="
+                        enableEdit['payment'] && controller == payment
+                          ? null
+                          : ''
+                      "
                     />
                     <!-- *ngIf="enableEdit['payment'] && controller == payment" -->
-                    <div  *ngIf="editableRowIndex !== i || selectedId !== 'payment'">
-                      {{ payment.schedule | date: "dd-MMM-yyyy" }} 
+                    <div
+                      *ngIf="editableRowIndex !== i || selectedId !== 'payment'"
+                    >
+                      {{ payment.schedule | date: "dd-MMM-yyyy" }}
                     </div>
                     <!-- {{ payment.schedule | date: "dd-MMM-yyyy" }} -->
                   </td>
@@ -568,7 +574,9 @@
                       <a
                         [routerLink]=""
                         routerLinkActive="router-link-active"
-                        *ngIf="editableRowIndex !== i || selectedId !== 'payment'"
+                        *ngIf="
+                          editableRowIndex !== i || selectedId !== 'payment'
+                        "
                         (click)="enableEditMethod(i, payment, 'payment')"
                       >
                         <i class="fa fa-edit"></i>
@@ -669,7 +677,7 @@
                       class="form-control"
                       placeholder="Remarks"
                       id=""
-                      cols="30"
+                      style="width: 135px;"
                       rows="1"
                     ></textarea>
                     <!-- <input
@@ -707,11 +715,13 @@
                 <tr>
                   <th>Description</th>
                   <th>Quantity</th>
-                  <th>Unit Price
-                    {{soci_data?.currency}}
+                  <th>
+                    Unit Price
+                    {{ soci_data?.currency }}
                   </th>
-                  <th>Total Price 
-                    {{soci_data?.currency}}
+                  <th>
+                    Total Price
+                    {{ soci_data?.currency }}
                   </th>
                   <th>Notes</th>
                   <th></th>
@@ -895,7 +905,7 @@
                       class="form-control"
                       placeholder="Remarks"
                       id=""
-                      cols="30"
+                      style="width: 135px;"
                       rows="1"
                     ></textarea>
                   </td>
@@ -916,8 +926,8 @@
             </table>
             <div class="col-lg-12" align="right">
               <div class="form-group charges">
-                <p><b> TotaL </b> </p>
-                <p>{{soci_data?.currency}}</p>
+                <p><b> TotaL </b></p>
+                <p>{{ soci_data?.currency }}</p>
                 <input
                   type="text"
                   class="form-control"
@@ -963,11 +973,22 @@
                       style="width: 89%"
                       [(ngModel)]="new_billing_instruction_date"
                       (ngModelChange)="changeBillingSchdule($event)"
-                      *ngIf=" enableEdit['addBillInstruction'] && controller == item"
-                      [attr.disabled]="enableEdit['addBillInstruction'] && controller == item? null: ''"
+                      *ngIf="
+                        enableEdit['addBillInstruction'] && controller == item
+                      "
+                      [attr.disabled]="
+                        enableEdit['addBillInstruction'] && controller == item
+                          ? null
+                          : ''
+                      "
                       [ngModelOptions]="{ standalone: true }"
                     />
-                    <div *ngIf="editableRowIndex !== i ||selectedId !== 'addBillInstruction'">
+                    <div
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'addBillInstruction'
+                      "
+                    >
                       {{ item.schedule }}
                     </div>
                     <!-- {{ item.schedule }} -->
@@ -1052,7 +1073,9 @@
                         [routerLink]=""
                         routerLinkActive="router-link-active"
                         (click)="updateBillingInstruction(i, item.id)"
-                        *ngIf=" enableEdit['addBillInstruction'] && controller == item"
+                        *ngIf="
+                          enableEdit['addBillInstruction'] && controller == item
+                        "
                         ><i class="cil-check-circle"></i
                       ></a>
                       &nbsp;
@@ -1069,8 +1092,13 @@
                       <a
                         [routerLink]=""
                         routerLinkActive="router-link-active"
-                        *ngIf="editableRowIndex !== i ||selectedId !== 'addBillInstruction'"
-                        (click)="enableEditMethod(i, item, 'addBillInstruction')"
+                        *ngIf="
+                          editableRowIndex !== i ||
+                          selectedId !== 'addBillInstruction'
+                        "
+                        (click)="
+                          enableEditMethod(i, item, 'addBillInstruction')
+                        "
                       >
                         <i class="fa fa-edit"></i>
                       </a>
@@ -1136,7 +1164,7 @@
                       class="form-control"
                       placeholder="Remarks"
                       id=""
-                      cols="30"
+                      style="width: 135px;"
                       rows="1"
                     ></textarea>
                     <!-- <input
@@ -1356,14 +1384,15 @@
             </div>
             <div class="col-lg-1" style="text-align: middle">
               <div class="col-md-8">
-                <b> Unit 
-                  {{soci_data?.currency}}
+                <b>
+                  Unit
+                  {{ soci_data?.currency }}
                 </b>
               </div>
             </div>
             <div class="col-lg-2" style="text-align: middle">
               <div class="col-md-8">
-                <b> Amount {{soci_data?.currency}}</b>
+                <b> Amount {{ soci_data?.currency }}</b>
               </div>
             </div>
             <div
@@ -1661,7 +1690,7 @@
           <div class="col-lg-12" align="right">
             <div class="form-group charges">
               <p><b>TotaL </b></p>
-              <p>{{soci_data?.currency}}</p>
+              <p>{{ soci_data?.currency }}</p>
               <input
                 type="text"
                 class="form-control"
@@ -2002,50 +2031,50 @@
       </p-accordion>
       <br />
       <div class="soci-remarks">
-      <!-- Remarks taxbox -->
-      <div class="remarks-texbox">
-        <label>Remarks</label>
-        <textarea class="texarea" placeholder="Remarks..."></textarea>
+        <!-- Remarks taxbox -->
+        <div class="remarks-texbox">
+          <label>Remarks</label>
+          <textarea class="texarea" placeholder="Remarks..."></textarea>
+        </div>
+        <!-- SOCI Detail -->
+        <div
+          style="
+            margin-top: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+          "
+        >
+          <p-accordion [multiple]="true" styleClass="custom" activeIndex="0">
+            <p-accordionTab header="Summary">
+              <table class="table table-borderless table-price">
+                <tr>
+                  <td class="text-left">Subtotal Before Tax</td>
+                  <td class="text-right">{{ product_subtotal_before_tax }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Discount Value</td>
+                  <td class="text-right">
+                    {{ products_total_discount_values | number: "1.2" }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-left">SST (Dynamic) Tax</td>
+                  <td class="text-right">0.000</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Additional Cost & Charges</td>
+                  <td class="text-right">{{ additional_cost_and_charges }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Total Cost</td>
+                  <td class="text-right">{{ total_cost | number: "1.2" }}</td>
+                </tr>
+              </table>
+            </p-accordionTab>
+          </p-accordion>
+        </div>
       </div>
-      <!-- SOCI Detail -->
-      <div
-        style="
-          margin-top: 10px;
-          display: flex;
-          flex-direction: row;
-          justify-content: flex-end;
-        "
-      >
-        <p-accordion [multiple]="true" styleClass="custom" activeIndex="0">
-          <p-accordionTab header="Summary">
-            <table class="table table-borderless table-price">
-              <tr>
-                <td class="text-left">Subtotal Before Tax</td>
-                <td class="text-right">{{ product_subtotal_before_tax }}</td>
-              </tr>
-              <tr>
-                <td class="text-left">Discount Value</td>
-                <td class="text-right">
-                  {{ products_total_discount_values | number: "1.2" }}
-                </td>
-              </tr>
-              <tr>
-                <td class="text-left">SST (Dynamic) Tax</td>
-                <td class="text-right">0.000</td>
-              </tr>
-              <tr>
-                <td class="text-left">Additional Cost & Charges</td>
-                <td class="text-right">{{ additional_cost_and_charges }}</td>
-              </tr>
-              <tr>
-                <td class="text-left">Total Cost</td>
-                <td class="text-right">{{ total_cost | number: "1.2" }}</td>
-              </tr>
-            </table>
-          </p-accordionTab>
-        </p-accordion>
-      </div>
-    </div>
     </form>
   </div>
 </div>
@@ -2062,6 +2091,8 @@
   >
     REQUEST APPROVAL
   </button>
+
+  <!-- [attr.disabled]="sociStatus == 4 || !is_released && !is_edited ? null : ''" -->
   <button
     class="request-btn"
     (click)="confirmationReleaseModal.show()"
@@ -2076,7 +2107,7 @@
     <i class="pi pi-arrow-up"></i>
     ESCALATE
   </button>
-  <button class="reject-btn" (click)="back()">
+  <button class="reject-btn" (click)="confirmationRejectModal.show()">
     <i class="pi pi-times-circle"></i>
     REJECT
   </button>
@@ -2579,6 +2610,47 @@
           Cancel
         </button>
         <button type="button" class="btn btn-info" (click)="escalateSCOI()">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- confirmation reject model -->
+<div
+  id="success"
+  bsModal
+  #confirmationRejectModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationRejectModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">Are you sure to REJECT the SOCI ?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationRejectModal.hide()"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-info" (click)="rejectSOCI()">
           Yes
         </button>
       </div>

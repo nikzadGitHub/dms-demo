@@ -35,7 +35,10 @@ export class EditComponent implements OnInit {
   public confirmationReleaseModal: ModalDirective;
   @ViewChild("confirmationApproveModal")
   public confirmationApproveModal: ModalDirective;
-  @ViewChild("confirmationEscalateModal") public confirmationEscalateModal: ModalDirective;
+  @ViewChild("confirmationEscalateModal")
+  public confirmationEscalateModal: ModalDirective;
+  @ViewChild("confirmationRejectModal")
+  public confirmationRejectModal: ModalDirective;
   
   cost_item_id: any;
   alertBody: string;
@@ -562,9 +565,8 @@ export class EditComponent implements OnInit {
       );
   }
 
-  changePaymentSchdule(value){
-    console.log("change-value:", value);
-    this.controller.schedule = value
+  changePaymentSchdule(value) {
+    this.controller.schedule = value;
   }
 
   deletePaymentSchdule(index, payment_schedule_id) {
@@ -758,10 +760,8 @@ export class EditComponent implements OnInit {
         }
       );
   }
-  changeBillingSchdule(value){
-    console.log("change-value:",value);
-    
-    this.controller.schedule = value
+  changeBillingSchdule(value) {
+    this.controller.schedule = value;
   }
   deleteBillingInstruction(index, billing_instruction_id) {
     this.sociService
@@ -1341,24 +1341,57 @@ export class EditComponent implements OnInit {
         }
       );
   }
+  rejectSOCI() {
+    this.confirmationRejectModal.hide();
+    this.sociService
+      .postQuery("/soci/reject", {
+        id: this.soci_id,
+      })
+      .subscribe(
+        (data: any) => {
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.request_approval = true;
+            this.router.navigate(["/managerview/approval"]);
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+  }
   // From Manager-view Approval
 
   enableEditMethod(index, control, type) {
     delete control["laravel_through_key"];
     this.selectedId = type;
     this.controller = control;
-    console.log("this.controller:",this.controller);
-    if(type == 'payment'){
-    this.payment_schedules_date = new Date(this.controller.schedule)
-    this.payment_schedules_date.setDate(this.payment_schedules_date.getDate() + 1)
-    this.new_payment_schedule_date = new Date(this.payment_schedules_date).toISOString().split("T")[0]
-    this.controller["schedule"] = this.new_payment_schedule_date
-  }
-    else if(type == "addBillInstruction"){
-      this.billing_instruction_date = new Date(this.controller.schedule)
-      this.billing_instruction_date.setDate(this.billing_instruction_date.getDate() + 1)
-      this.new_billing_instruction_date = new Date(this.billing_instruction_date).toISOString().split("T")[0]
-      this.controller["schedule"] =  this.new_billing_instruction_date
+    if (type == "payment") {
+      this.payment_schedules_date = new Date(this.controller.schedule);
+      this.payment_schedules_date.setDate(
+        this.payment_schedules_date.getDate() + 1
+      );
+      this.new_payment_schedule_date = new Date(this.payment_schedules_date)
+        .toISOString()
+        .split("T")[0];
+      this.controller["schedule"] = this.new_payment_schedule_date;
+    } else if (type == "addBillInstruction") {
+      this.billing_instruction_date = new Date(this.controller.schedule);
+      this.billing_instruction_date.setDate(
+        this.billing_instruction_date.getDate() + 1
+      );
+      this.new_billing_instruction_date = new Date(
+        this.billing_instruction_date
+      )
+        .toISOString()
+        .split("T")[0];
+      this.controller["schedule"] = this.new_billing_instruction_date;
     }
     this.enableEdit[type] = true;
     this.editableRowIndex = index;
