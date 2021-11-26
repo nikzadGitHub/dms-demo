@@ -1,4 +1,4 @@
-import { Component, Output, ViewChild } from '@angular/core';
+import { Component, Output, Inject,ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,9 +7,8 @@ import { DialogInterface } from '../..//interfaces/dialog.interface';
 import { AuthService } from '../../auth/auth.service';
 import { DialogService } from '../../common/dialog/dialog.service';
 import { SystemConfig } from '../../config/system-config';
-
-import { AuthenticationResult } from '@azure/msal-browser';
-import { MsalService } from '@azure/msal-angular';
+import { MsalService, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from '@azure/msal-angular';
+import { AuthenticationResult, InteractionStatus, InteractionType, PopupRequest, RedirectRequest } from '@azure/msal-browser';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,6 +30,9 @@ export class LoginComponent {
     private azureAuthService : MsalService,
     private dialogService: DialogService,
     // private dialog: MatDialog
+    @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
+    private MsalServiceAuthService: MsalService,
+    private msalBroadcastService: MsalBroadcastService
   ) { }
 
   ngOnInit(): void {
@@ -119,25 +121,48 @@ export class LoginComponent {
   }
   loginUsingAzure(){
   // this.authService.loginRedirect();
-  this.azureAuthService.loginPopup()
-  .subscribe(async (response: AuthenticationResult) => {
-    console.log(response);
-    let user :any = {
-      fullName :  response.account.name || '',
-      id: response.account.tenantId, 
-      isLocked: false,
-      isActive: false,
-      email: response.account.username,
-      language: 'en'
-    }
-    console.log('user',user);
+  // this.azureAuthService.loginPopup()
+  // .subscribe(async (response: AuthenticationResult) => {
+  //   console.log(response);
+  //   let user :any = {
+  //     fullName :  response.account.name || '',
+  //     id: response.account.tenantId, 
+  //     isLocked: false,
+  //     isActive: false,
+  //     email: response.account.username,
+  //     language: 'en'
+  //   }
+  //   console.log('user',user);
     
-    localStorage.setItem('userRole',JSON.stringify(user))
-    await this.authService.saveUserSession(JSON.stringify(user));
-    this.azureAuthService.instance.setActiveAccount(response.account);
-    await this.authService.setAuthorizationToken(response.accessToken);
-    this.router.navigateByUrl("/dashboard", {replaceUrl: true});
+  //   localStorage.setItem('userRole',JSON.stringify(user))
+  //   await this.authService.saveUserSession(JSON.stringify(user));
+  //   this.azureAuthService.instance.setActiveAccount(response.account);
+  //   await this.authService.setAuthorizationToken(response.accessToken);
+  //   this.router.navigateByUrl("/dashboard", {replaceUrl: true});
 
-  });
+  // });
+
+  this.MsalServiceAuthService.loginRedirect();
+
+  // debugger
+  // if (this.msalGuardConfig.interactionType === InteractionType.Popup) {
+  //   if (this.msalGuardConfig.authRequest) {
+  //     this.MsalServiceAuthService.loginPopup({ ...this.msalGuardConfig.authRequest } as PopupRequest)
+  //       .subscribe((response: AuthenticationResult) => {
+  //         this.MsalServiceAuthService.instance.setActiveAccount(response.account);
+  //       });
+  //   } else {
+  //     this.MsalServiceAuthService.loginPopup()
+  //       .subscribe((response: AuthenticationResult) => {
+  //         this.MsalServiceAuthService.instance.setActiveAccount(response.account);
+  //       });
+  //   }
+  // } else {
+  //   if (this.msalGuardConfig.authRequest) {
+  //     this.MsalServiceAuthService.loginRedirect({ ...this.msalGuardConfig.authRequest } as RedirectRequest);
+  //   } else {
+  //     this.MsalServiceAuthService.loginRedirect();
+  //   }
+  // }
   }
 }
