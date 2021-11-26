@@ -24,9 +24,9 @@ export class IndexComponent implements OnInit {
   socis: Soci[] = [];
   is_po_added = false;
   is_preview_check: boolean;
-  rolesPermission: any[] = [];
+  rolesPermission = [];
   user_json: any;
-  isPermission:boolean;
+  isPermission: boolean;
 
   constructor(public sociService: SociService, private router: Router) {}
 
@@ -79,19 +79,27 @@ export class IndexComponent implements OnInit {
   }
 
   receiveSociData($event) {
-    this.socis.unshift($event.data);
+    debugger
+    if($event.edit){
+      let index = this.socis.findIndex(x => x.soci_id == $event.data.soci_id)
+      this.socis[index] = $event.data
+    }else{
+      this.socis.unshift($event.data);
+    }
+   
   }
 
   checkPermission() {
     this.user_json = JSON.parse(localStorage.getItem("user-json"));
     this.rolesPermission = this.user_json.permissions;
-    this.rolesPermission.forEach((value) => {
-      if(value.name == "Create SOCI" || value.slug == "create_soci"){
-        this.isPermission = true
-      }
-      else{
-        this.isPermission = false
-      }
-    });
+    if (this.rolesPermission) {
+      this.rolesPermission.forEach((value) => {
+        if (value.name == "Create SOCI" || value.slug == "create_soci") {
+          this.isPermission = true;
+        } else {
+          this.isPermission = false;
+        }
+      });
+    }
   }
 }

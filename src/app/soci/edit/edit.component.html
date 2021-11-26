@@ -2,7 +2,7 @@
   <div class="col-lg col-md-6">
     <div class="card rcorners">
       <div class="card-header d-flex b-btm-green purple">
-        <h2 class="chead">Quote Details</h2>
+        <h2 class="chead">SOCI Summary</h2>
       </div>
       <div class="card-body">
         <div class="row">
@@ -14,18 +14,29 @@
           </div>
           <div class="col-lg-2">
             <div class="bg-opp text-white p-1">
-              SOCI ID <span>{{ soci_data?.soci_id }}</span>
+              SOCI ID:
+              <span
+                ><p>{{ soci_data?.soci_id }}</p></span
+              >
             </div>
             <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
           </div>
           <div class="col-lg-2">
             <div class="bg-opp text-white p-1">
-              Quote ID {{ soci_data?.quote_id }}
+              Quote ID:
+              <span>
+                <p>{{ soci_data?.quote_full_id }}</p>
+              </span>
             </div>
             <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
           </div>
           <div class="col-lg-2">
-            <div class="bg-opp text-white p-1">Opport ID</div>
+            <div class="bg-opp text-white p-1">Opport ID:
+              <span>
+                <p>{{soci_data?.quote?.opportunity?.opportunity_code}}</p>
+              </span>
+              
+            </div>
             <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
           </div>
           <div class="col-lg-2">
@@ -54,19 +65,19 @@
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Contact Name</b></label>
-              <p>{{ soci_data?.contact_name }}</p>
+              <p>{{ soci_data?.quote?.opportunity?.ownner?.full_name }}</p>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Email</b></label>
-              <p>{{ soci_data?.contact_email }}</p>
+              <p>{{soci_data?.quote?.opportunity?.ownner?.email }}</p>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Owner</b></label>
-              <p></p>
+              <p>{{soci_data?.quote?.opportunity?.ownner?.full_name}}</p>
             </div>
           </div>
         </div>
@@ -74,7 +85,7 @@
     </div>
     <form [formGroup]="form">
       <!-- PO details -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="PO Details">
           <div class="row">
             <!-- formArrayName="addCosts" -->
@@ -92,7 +103,7 @@
                   <td class="text-center">
                     {{ soci_data?.po_date | date: "dd-MMM-yyyy" }}
                   </td>
-                  <td class="text-center">{{ soci_data?.po_amount }}</td>
+                  <td class="text-center">{{ soci_data?.po_amount | number }}</td>
                 </tr>
               </tbody>
             </table>
@@ -222,7 +233,8 @@
                   <th>Billing ID</th>
                   <th>Stage</th>
                   <th>Percentage %</th>
-                  <th>Amount (MYR)</th>
+                  <th>Amount {{soci_data?.currency}}
+                  </th>
                   <th>Notes</th>
                   <th></th>
                   <th *ngIf="is_preview_check"></th>
@@ -311,26 +323,6 @@
                     style="width: 10%"
                     *ngIf="!is_preview_check && sociStatus == 1"
                   >
-                    <!-- <div class="action-icon">
-                      <a [routerLink]="" routerLinkActive="router-link-active"
-                        ><i class="cil-check-circle"></i
-                      ></a>
-                      <a
-                        [routerLink]=""
-                        routerLinkActive="router-link-active"
-                      >
-                        <i class="fa fa-edit"></i>
-                      </a>
-                      &nbsp;
-                      <a
-                        [routerLink]=""
-                        routerLinkActive="router-link-active"
-                        (click)="deleteBillingMilestone(i, billing.id)"
-                        ><i class="fa fa-trash"></i
-                      ></a>
-                    </div> -->
-                    <!-- // actions -->
-
                     <div class="action-icon">
                       <a
                         [routerLink]=""
@@ -381,10 +373,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr
-                  align="center"
-                  *ngIf="!is_preview_check && sociStatus == 1"
-                >
+                <tr align="center" *ngIf="!is_preview_check && sociStatus == 1">
                   <td style="width: 15%">
                     <input
                       formControlName="billing_id"
@@ -431,7 +420,7 @@
                       formControlName="remarks"
                       class="form-control"
                       id=""
-                      cols="30"
+                      style="width: 135px;"
                       rows="1"
                     ></textarea>
                   </td>
@@ -467,7 +456,7 @@
                   <th>Schedule</th>
                   <th>SOC Payment Terms</th>
                   <th>Status</th>
-                  <th>Amount (MYR)</th>
+                  <th>Amount {{soci_data?.currency}}</th>
                   <th>Notes</th>
                   <th *ngIf="is_preview_check"></th>
                   <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
@@ -504,20 +493,45 @@
                   </td>
                   <td>
                     <input
-                      type=""
+                      type="date"
+                      style="width: 79%"
                       class="form-control"
-                      [(ngModel)]="payment.schedule"
+                      [ngModel]="new_payment_schedule_date"
+                      (ngModelChange)="changePaymentSchdule($event)"
                       [ngModelOptions]="{ standalone: true }"
+                      *ngIf="enableEdit['payment'] && controller == payment"
                       [attr.disabled]="
                         enableEdit['payment'] && controller == payment
                           ? null
                           : ''
                       "
                     />
+                    <!-- *ngIf="enableEdit['payment'] && controller == payment" -->
+                    <div
+                      *ngIf="editableRowIndex !== i || selectedId !== 'payment'"
+                    >
+                      {{ payment.schedule | date: "dd-MMM-yyyy" }}
+                    </div>
                     <!-- {{ payment.schedule | date: "dd-MMM-yyyy" }} -->
                   </td>
-                  <td></td>
-                  <td></td>
+                  <td>
+                    <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="payment.soc_payment_term"
+                    [ngModelOptions]="{ standalone: true }"
+                    [attr.disabled]="enableEdit['payment'] && controller == payment? null: ''"
+                  />
+                  </td>
+                  <td>
+                    <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="payment.status"
+                    [ngModelOptions]="{ standalone: true }"
+                    [attr.disabled]="enableEdit['payment'] && controller == payment? null: ''"
+                  />
+                  </td>
                   <td>
                     <input
                       type="text"
@@ -559,9 +573,6 @@
                         (click)="updatePaymentSchdule(i, payment.id)"
                         ><i class="cil-check-circle"></i
                       ></a>
-                      <!-- (click)="enableEditMethod(payment, 'payment')" -->
-                      <!-- *ngIf="!enableEdit['payment']" -->
-                      <!-- (click)="updatePaymentSchdule(i, payment.id)" -->
                       <a
                         [routerLink]=""
                         routerLinkActive="router-link-active"
@@ -573,9 +584,6 @@
                         <i class="fa fa-edit"></i>
                       </a>
                       &nbsp;
-
-                      <!-- *ngIf="editableRowIndex !== i  -->
-                      <!-- *ngIf="!enableEdit['payment']" -->
                       <a
                         [routerLink]=""
                         routerLinkActive="router-link-active"
@@ -597,10 +605,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr
-                  align="center"
-                  *ngIf="!is_preview_check && sociStatus == 1"
-                >
+                <tr align="center" *ngIf="!is_preview_check && sociStatus == 1">
                   <td style="width: 15%; padding: 6px">
                     <select
                       formControlName="billing_id"
@@ -674,7 +679,7 @@
                       class="form-control"
                       placeholder="Remarks"
                       id=""
-                      cols="30"
+                      style="width: 135px;"
                       rows="1"
                     ></textarea>
                     <!-- <input
@@ -712,8 +717,14 @@
                 <tr>
                   <th>Description</th>
                   <th>Quantity</th>
-                  <th>Unit Price (MYR)</th>
-                  <th>Total Price (MYR)</th>
+                  <th>
+                    Unit Price
+                    {{ soci_data?.currency }}
+                  </th>
+                  <th>
+                    Total Price
+                    {{ soci_data?.currency }}
+                  </th>
                   <th>Notes</th>
                   <th></th>
                   <th></th>
@@ -844,10 +855,7 @@
                 </tr>
                 <!-- *ngFor="let cost of addCosts().controls; let i = index"
                 [formGroupName]="i" -->
-                <tr
-                  align="center"
-                  *ngIf="!is_preview_check && sociStatus == 1"
-                >
+                <tr align="center" *ngIf="!is_preview_check && sociStatus == 1">
                   <td style="width: 15%">
                     <input
                       formControlName="description"
@@ -899,7 +907,7 @@
                       class="form-control"
                       placeholder="Remarks"
                       id=""
-                      cols="30"
+                      style="width: 135px;"
                       rows="1"
                     ></textarea>
                   </td>
@@ -920,7 +928,9 @@
             </table>
             <div class="col-lg-12" align="right">
               <div class="form-group charges">
-                <b>TotaL </b> IDR<input
+                <p><b> TotaL </b></p>
+                <p>{{ soci_data?.currency }}</p>
+                <input
                   type="text"
                   class="form-control"
                   readonly
@@ -944,7 +954,7 @@
                 <tr>
                   <th>Schedule</th>
                   <th>Percentage %</th>
-                  <th>Amount (RM)</th>
+                  <th>Amount {{soci_data?.currency}}</th>
                   <th>SOC Payment Terms</th>
                   <th>Status</th>
                   <th>Note</th>
@@ -958,11 +968,16 @@
                   *ngFor="let item of billing_instruction; let i = index"
                 >
                   <td>
+                    <!-- item.schedule -->
                     <input
                       type="date"
                       class="form-control"
                       style="width: 89%"
-                      [(ngModel)]="item.schedule"
+                      [(ngModel)]="new_billing_instruction_date"
+                      (ngModelChange)="changeBillingSchdule($event)"
+                      *ngIf="
+                        enableEdit['addBillInstruction'] && controller == item
+                      "
                       [attr.disabled]="
                         enableEdit['addBillInstruction'] && controller == item
                           ? null
@@ -970,6 +985,14 @@
                       "
                       [ngModelOptions]="{ standalone: true }"
                     />
+                    <div
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'addBillInstruction'
+                      "
+                    >
+                      {{ item.schedule }}
+                    </div>
                     <!-- {{ item.schedule }} -->
                   </td>
                   <td>
@@ -977,11 +1000,7 @@
                       type="text"
                       class="form-control"
                       [(ngModel)]="item.percentage"
-                      [attr.disabled]="
-                        enableEdit['addBillInstruction'] && controller == item
-                          ? null
-                          : ''
-                      "
+                      [attr.disabled]="enableEdit['addBillInstruction'] && controller == item? null: ''"
                       [ngModelOptions]="{ standalone: true }"
                     />
                     <!-- {{ item.percentage }} -->
@@ -1095,10 +1114,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr
-                  align="center"
-                  *ngIf="!is_preview_check && sociStatus == 1"
-                >
+                <tr align="center" *ngIf="!is_preview_check && sociStatus == 1">
                   <td>
                     <input
                       formControlName="schedule"
@@ -1146,7 +1162,7 @@
                       class="form-control"
                       placeholder="Remarks"
                       id=""
-                      cols="30"
+                      style="width: 135px;"
                       rows="1"
                     ></textarea>
                     <!-- <input
@@ -1366,12 +1382,15 @@
             </div>
             <div class="col-lg-1" style="text-align: middle">
               <div class="col-md-8">
-                <b> Unit (RM)</b>
+                <b>
+                  Unit
+                  {{ soci_data?.currency }}
+                </b>
               </div>
             </div>
             <div class="col-lg-2" style="text-align: middle">
               <div class="col-md-8">
-                <b> Amount (RM)</b>
+                <b> Amount {{ soci_data?.currency }}</b>
               </div>
             </div>
             <div
@@ -1664,7 +1683,9 @@
 
           <div class="col-lg-12" align="right">
             <div class="form-group charges">
-              <b>TotaL </b> IDR<input
+              <p><b>TotaL </b></p>
+              <p>{{ soci_data?.currency }}</p>
+              <input
                 type="text"
                 class="form-control"
                 readonly
@@ -1680,24 +1701,28 @@
       <!-- Product -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="Products">
-          <div class="row ">
+          <div class="row">
             <!-- formArrayName="products" -->
-            <table class="table table-bordered table-striped ">
+            <table class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th>No.</th>
                   <th>Product Name</th>
                   <th>SKU ID</th>
                   <th>Quantity</th>
-                  <th>Unit Price(MYR)</th>
-                  <th>Total Price(MYR)</th>
+                  <th>Unit Price {{soci_data?.currency}}</th>
+                  <th>Total Price {{soci_data?.currency}}</th>
                   <th>Discount %</th>
-                  <th>Net Amount(MYR)</th>
+                  <th>Net Amount {{soci_data?.currency}}</th>
                   <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr align="center" class="prod" *ngFor="let item of product; let i = index">
+                <tr
+                  align="center"
+                  class="prod"
+                  *ngFor="let item of product; let i = index"
+                >
                   <td class="text-center">{{ i + 1 }}</td>
                   <td class="text-center">
                     <input
@@ -1852,10 +1877,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr
-                  align="center"
-                  *ngIf="!is_preview_check && sociStatus == 1"
-                >
+                <tr align="center" *ngIf="!is_preview_check && sociStatus == 1">
                   <!-- {{ i + 1 }} -->
                   <td></td>
                   <td style="size: 20%">
@@ -1985,60 +2007,83 @@
       <br />
       <!-- Customer PO Attachments -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
-        <p-accordionTab header="Customer PO Attachments">
+        <p-accordionTab header="SOCI Attachments">
           <table class="table table-bordered table-striped">
             <thead>
               <tr>
-                <th>Global Order ID</th>
-                <th>FO SO No.</th>
+                <!-- <th>Global Order ID</th>
+                <th>FO SO No.</th> -->
                 <th>Customer PO</th>
                 <th>File Name</th>
-                <th>File Type</th>
+                <!-- <th>File Type</th> -->
                 <th>Download</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              <tr align="center" *ngFor="let item of sociAttachment">
+                <!-- <td></td>
+                <td></td> -->
+                <td>{{soci_data?.po_no}}</td>
+                <td>{{item.fileName}}</td>
+                <!-- <td></td> -->
+                <td>
+                  <a [href]="item.file" target="_blank">Download</a>
+                </td>
+              </tr>
+
+            </tbody>
           </table>
         </p-accordionTab>
       </p-accordion>
       <br />
-      <!-- SOCI Detail -->
-      <div
-        style="
-          margin-top: 10px;
-          display: flex;
-          flex-direction: row;
-          justify-content: flex-end;
-        "
-      >
-        <p-accordion [multiple]="true" styleClass="custom" activeIndex="0">
-          <p-accordionTab header="Summary">
-            <table class="table table-borderless table-price">
-              <tr>
-                <td class="text-left">Subtotal Before Tax</td>
-                <td class="text-right">{{ product_subtotal_before_tax }}</td>
-              </tr>
-              <tr>
-                <td class="text-left">Discount Value</td>
-                <td class="text-right">
-                  {{ products_total_discount_values | number: "1.2" }}
-                </td>
-              </tr>
-              <tr>
-                <td class="text-left">SST (Dynamic) Tax</td>
-                <td class="text-right">0.000</td>
-              </tr>
-              <tr>
-                <td class="text-left">Additional Cost & Charges</td>
-                <td class="text-right">{{ additional_cost_and_charges }}</td>
-              </tr>
-              <tr>
-                <td class="text-left">Total Cost</td>
-                <td class="text-right">{{ total_cost | number: "1.2" }}</td>
-              </tr>
-            </table>
-          </p-accordionTab>
-        </p-accordion>
+      <div class="soci-remarks">
+        <!-- Remarks taxbox -->
+        <div class="remarks-texbox">
+          <label>Remarks</label>
+          <textarea class="texarea" formControlName="sociRemarks" placeholder="Remarks..." ></textarea>
+          <div style="margin-top: 10px;">
+            <button class="btn btn-primary" (click)="updateRemarks()">Update Remarks</button>
+          </div>
+        </div>
+       
+        <!-- SOCI Detail -->
+        <div
+          style="
+            margin-top: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+          "
+        >
+          <p-accordion [multiple]="true" styleClass="custom" activeIndex="0">
+            <p-accordionTab header="Summary">
+              <table class="table table-borderless table-price">
+                <tr>
+                  <td class="text-left">Subtotal Before Tax</td>
+                  <td class="text-right">{{ product_subtotal_before_tax }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Discount Value</td>
+                  <td class="text-right">
+                    {{ products_total_discount_values | number: "1.2" }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-left">SST (Dynamic) Tax</td>
+                  <td class="text-right">0.000</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Additional Cost & Charges</td>
+                  <td class="text-right">{{ additional_cost_and_charges }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Total Cost</td>
+                  <td class="text-right">{{ total_cost | number: "1.2" }}</td>
+                </tr>
+              </table>
+            </p-accordionTab>
+          </p-accordion>
+        </div>
       </div>
     </form>
   </div>
@@ -2056,25 +2101,27 @@
   >
     REQUEST APPROVAL
   </button>
+
+  <!-- [attr.disabled]="sociStatus == 4 || !is_released && !is_edited ? null : ''" -->
   <button
-  class="request-btn"
-  (click)="confirmationReleaseModal.show()"
-  *ngIf="sociStatus == 4 && !is_released && !is_edited"
->
-<i class="pi pi-check"></i>
-  RELEASE
-</button>
+    class="request-btn"
+    (click)="confirmationReleaseModal.show()"
+    *ngIf="sociStatus == 4 && !is_released && !is_edited"
+  >
+    <i class="pi pi-check"></i>
+    RELEASE
+  </button>
 </div>
 <div class="request-btns" *ngIf="sociStatus == 2 && is_approval_view_check">
-  <button class="cancel-btn" (click)="escalateSCOI()">
+  <button class="cancel-btn" (click)="confirmationEscalateModal.show()">
     <i class="pi pi-arrow-up"></i>
     ESCALATE
   </button>
-  <button class="reject-btn" (click)="back()">
+  <button class="reject-btn" (click)="confirmationRejectModal.show()">
     <i class="pi pi-times-circle"></i>
     REJECT
   </button>
-  <button class="request-btn" (click)="approveSOCI()">
+  <button class="request-btn" (click)="confirmationApproveModal.show()">
     <i class="pi pi-check"></i>
     APPROVE
   </button>
@@ -2390,7 +2437,7 @@
 </div>
 <!-- /.modal -->
 
-<!-- confermation-approval-model -->
+<!-- confirmation-REQUEST-model -->
 <div
   id="success"
   bsModal
@@ -2432,7 +2479,7 @@
 </div>
 <!-- /.modal -->
 
-<!-- confermation-release-model -->
+<!-- confirmation-release-model -->
 <div
   id="success"
   bsModal
@@ -2498,6 +2545,128 @@
   <!-- /.modal-dialog -->
 </div>
 
+<!-- confirmation approve mpdel -->
+<div
+  id="success"
+  bsModal
+  #confirmationApproveModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationApproveModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">Are you sure to APPROVE the SOCI ?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationApproveModal.hide()"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-info" (click)="approveSOCI()">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- confirmation escalate model -->
+<div
+  id="success"
+  bsModal
+  #confirmationEscalateModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationEscalateModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">Are you sure to ESCALATE the SOCI ?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationEscalateModal.hide()"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-info" (click)="escalateSCOI()">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- confirmation reject model -->
+<div
+  id="success"
+  bsModal
+  #confirmationRejectModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationRejectModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">Are you sure to REJECT the SOCI ?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationRejectModal.hide()"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-info" (click)="rejectSOCI()">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- update Standared Terms Model -->
 <div
   bsModal

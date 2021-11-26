@@ -4,6 +4,9 @@
 }
 .bg-opp {
   background-color: #5dbec0;
+  p {
+    margin-bottom: 0px;
+  }
 }
 .chead {
   font-family: "Lato";
@@ -13,7 +16,7 @@
   font-weight: 200;
 }
 
-.prod input:disabled{
+.prod input:disabled {
   background-color: #e4e7ea !important;
 }
 
@@ -158,6 +161,9 @@ input:disabled {
   justify-content: flex-end;
   align-items: center;
   white-space: break-spaces;
+  p {
+    margin-bottom: 0px;
+  }
   input {
     width: 230px;
     margin: 10px;
@@ -618,6 +624,32 @@ h4 {
   //     overflow-x: scroll !important;
   //   }
   // }
+}
 
-  
+.soci-remarks {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  .remarks-texbox {
+    display: flex;
+    flex-direction: column;
+    label {
+      color: #495057;
+      font-weight: 600;
+      border-radius: 3px;
+      transition: box-shadow 0.2s;
+      font-size: 24px;
+    }
+    .texarea {
+      border: 1px solid #cfcfcf;
+      height: 160px;
+      width: 480px;
+      padding: 10px;
+      text-align: inherit;
+    }
+  }
+  .texarea:focus-visible {
+    outline: none;
+  }
 }
