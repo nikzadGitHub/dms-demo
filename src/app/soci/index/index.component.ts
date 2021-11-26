@@ -34,8 +34,6 @@ export class IndexComponent implements OnInit {
     this.sociService
       .getAll(this.pageItems, this.search_text, this.sort)
       .subscribe((data) => {
-        console.log("Data:", data);
-        
         this.socis = data["data"]["soci"]["data"];
         this.pages = data["data"]["soci"]["links"];
         this.totalRecords = data["data"]["soci"]["total"];

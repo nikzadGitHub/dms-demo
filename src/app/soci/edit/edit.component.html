@@ -25,7 +25,7 @@
             <div class="bg-opp text-white p-1">
               Quote ID:
               <span>
-                <p>{{ soci_data?.quote_id }}</p>
+                <p>{{ soci_data?.quote_full_id }}</p>
               </span>
             </div>
             <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
@@ -80,7 +80,7 @@
     </div>
     <form [formGroup]="form">
       <!-- PO details -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="PO Details">
           <div class="row">
             <!-- formArrayName="addCosts" -->
@@ -98,7 +98,7 @@
                   <td class="text-center">
                     {{ soci_data?.po_date | date: "dd-MMM-yyyy" }}
                   </td>
-                  <td class="text-center">{{ soci_data?.po_amount }}</td>
+                  <td class="text-center">{{ soci_data?.po_amount | number }}</td>
                 </tr>
               </tbody>
             </table>
@@ -228,7 +228,8 @@
                   <th>Billing ID</th>
                   <th>Stage</th>
                   <th>Percentage %</th>
-                  <th>Amount (MYR)</th>
+                  <th>Amount {{soci_data?.currency}}
+                  </th>
                   <th>Notes</th>
                   <th></th>
                   <th *ngIf="is_preview_check"></th>
@@ -317,26 +318,6 @@
                     style="width: 10%"
                     *ngIf="!is_preview_check && sociStatus == 1"
                   >
-                    <!-- <div class="action-icon">
-                      <a [routerLink]="" routerLinkActive="router-link-active"
-                        ><i class="cil-check-circle"></i
-                      ></a>
-                      <a
-                        [routerLink]=""
-                        routerLinkActive="router-link-active"
-                      >
-                        <i class="fa fa-edit"></i>
-                      </a>
-                      &nbsp;
-                      <a
-                        [routerLink]=""
-                        routerLinkActive="router-link-active"
-                        (click)="deleteBillingMilestone(i, billing.id)"
-                        ><i class="fa fa-trash"></i
-                      ></a>
-                    </div> -->
-                    <!-- // actions -->
-
                     <div class="action-icon">
                       <a
                         [routerLink]=""
@@ -458,7 +439,7 @@
       <br />
 
       <!-- Payment Schedules Accordion -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <p-accordionTab header="Payment Schedules">
           <div class="row">
             <!-- formArrayName="payments" -->
@@ -470,7 +451,7 @@
                   <th>Schedule</th>
                   <th>SOC Payment Terms</th>
                   <th>Status</th>
-                  <th>Amount (MYR)</th>
+                  <th>Amount {{soci_data?.currency}}</th>
                   <th>Notes</th>
                   <th *ngIf="is_preview_check"></th>
                   <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
@@ -952,7 +933,7 @@
                 <tr>
                   <th>Schedule</th>
                   <th>Percentage %</th>
-                  <th>Amount (RM)</th>
+                  <th>Amount {{soci_data?.currency}}</th>
                   <th>SOC Payment Terms</th>
                   <th>Status</th>
                   <th>Note</th>
@@ -1716,10 +1697,10 @@
                   <th>Product Name</th>
                   <th>SKU ID</th>
                   <th>Quantity</th>
-                  <th>Unit Price(MYR)</th>
-                  <th>Total Price(MYR)</th>
+                  <th>Unit Price {{soci_data?.currency}}</th>
+                  <th>Total Price {{soci_data?.currency}}</th>
                   <th>Discount %</th>
-                  <th>Net Amount(MYR)</th>
+                  <th>Net Amount {{soci_data?.currency}}</th>
                   <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
                 </tr>
               </thead>

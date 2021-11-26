@@ -139,11 +139,11 @@ export class CreateComponent implements OnInit {
     // formData.append("file", this.file);
 
     let formData = {
-      quote_id: this.form.controls["quote_id"].value["id"],
-      po_no: this.form.controls["po_no"].value,
+      quote_id:this.form.controls["quote_id"].value?this.form.controls["quote_id"].value["id"]:'',
+      po_no:this.form.controls["po_no"].value? this.form.controls["po_no"].value:'',
       po_date: this.form.controls["po_date"].value,
-      po_amount: this.form.controls["po_amount"].value,
-      receive_po_date: this.form.controls["receive_po_date"].value,
+      po_amount:this.form.controls["po_date"].value?this.form.controls["po_amount"].value:'',
+      receive_po_date:this.form.controls["receive_po_date"].value? this.form.controls["receive_po_date"].value:'',
       file: this.addMultipleFiles,
     };
     if (this.quote_full_id) {

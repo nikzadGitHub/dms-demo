@@ -7,7 +7,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { dataTool, number } from "echarts";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { Term } from "../../quote/create/terms";
@@ -39,7 +39,7 @@ export class EditComponent implements OnInit {
   public confirmationEscalateModal: ModalDirective;
   @ViewChild("confirmationRejectModal")
   public confirmationRejectModal: ModalDirective;
-  
+
   cost_item_id: any;
   alertBody: string;
   paymentCurrentIndex: number;
@@ -203,6 +203,7 @@ export class EditComponent implements OnInit {
       this.is_edited = res["data"]["is_edited"];
       this.is_released = res["data"]["is_released"];
       this.external_id = res["data"]["external_id"];
+
       // standard_term
       this.standard_term = res["data"]["standard_terms"];
       this.standerd_payment_term =
@@ -1299,12 +1300,20 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
+          if (!this.is_released) {
+            this.is_released = false;
+          }
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
+            let navigate: NavigationExtras = {
+              queryParams: {
+                sociPendingList: true,
+              },
+            };
             this.successModal.hide();
             this.request_approval = true;
-            this.router.navigate(["/managerview/approval"]);
+            this.router.navigate(["/managerview/approval"], navigate);
           }, 2000);
         },
         (error) => {
