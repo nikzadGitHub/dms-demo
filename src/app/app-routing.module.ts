@@ -46,7 +46,7 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'azure/callback',
+    path: 'callback',
     component: AzureComponent,
     data: {
       title: 'Azure Callback'

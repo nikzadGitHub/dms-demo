@@ -71,6 +71,7 @@ export class AuthInterceptor implements HttpInterceptor {
       }),
       // retry(2),
       catchError((error: HttpErrorResponse) => {
+        debugger
         if (error.status == 401) {
           if (this.auth.getAuthorizationToken() != "") {
             this.auth.refreshSession().subscribe(

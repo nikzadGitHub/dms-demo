@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy, PathLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -102,7 +102,7 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     auth: {
       clientId: '7a1e9113-1e9b-47cf-804a-92e07373898b',
       authority: 'https://login.microsoftonline.com/419c4758-e653-4ed4-b3e6-d84360e97a52',
-      redirectUri: 'http://localhost:4200/#/azure/callback'
+      redirectUri: 'http://localhost:4200/callback'
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage,
@@ -222,7 +222,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     },
     {
       provide: LocationStrategy,
-      useClass: HashLocationStrategy
+      useClass: PathLocationStrategy,
     },
     {
       provide: HTTP_INTERCEPTORS,
