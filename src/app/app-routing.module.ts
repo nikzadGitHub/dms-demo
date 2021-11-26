@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AzureComponent } from './components/azure/azure.component';
-
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
 import { AuthGuard } from './guards/auth.guard';
@@ -43,13 +41,6 @@ export const routes: Routes = [
     canActivate: [AutoLoginGuard],
     data: {
       title: 'Login Page'
-    }
-  },
-  {
-    path: 'callback',
-    component: AzureComponent,
-    data: {
-      title: 'Azure Callback'
     }
   },
   {
