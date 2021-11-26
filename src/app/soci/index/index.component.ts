@@ -79,7 +79,14 @@ export class IndexComponent implements OnInit {
   }
 
   receiveSociData($event) {
-    this.socis.unshift($event.data);
+    debugger
+    if($event.edit){
+      let index = this.socis.findIndex(x => x.soci_id == $event.data.soci_id)
+      this.socis[index] = $event.data
+    }else{
+      this.socis.unshift($event.data);
+    }
+   
   }
 
   checkPermission() {

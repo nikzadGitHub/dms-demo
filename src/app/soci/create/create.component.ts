@@ -39,6 +39,7 @@ export class CreateComponent implements OnInit {
   addMultipleFiles = [];
 
   isFileAdded: boolean;
+  is_update_soci: boolean;
   // rolesPermission: any[] = [];
   // user_json: any;
   // checkPermission: any[] = [];
@@ -58,20 +59,35 @@ export class CreateComponent implements OnInit {
       receive_po_date: "",
       file: null,
       fileLabel: "",
+      attachments: [],
     });
   }
 
   addPo(quote_full_id, sociId) {
+    this.is_update_soci = true;
+    console.log("is_update_soci:", this.is_update_soci);
     this.soci_id = sociId;
     this.quote_full_id = quote_full_id;
-    // this.is_quote_id_found = true
+    this.getAttachments();
     this.form.patchValue({
       quote_id: this.quote_full_id,
     });
     this.modal.show();
   }
+  getAttachments() {
+    this.sociService.getSpecificSoci(this.soci_id).subscribe((data) => {
+      console.log("attachments: ", data);
+      if (data["data"]["attachments"].length != 0) {
+        this.isFileAdded = true;
+        this.addMultipleFiles = data["data"]["attachments"];
+        console.log("attached-file:", this.addMultipleFiles);
+      }
+    });
+  }
   createSoci() {
     this.form.reset();
+    // this.isFileAdded = false;
+    // this.addMultipleFiles = null;
     this.modal.show();
   }
 
@@ -95,6 +111,7 @@ export class CreateComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = this.handleReaderLoaded.bind(this);
     reader.readAsBinaryString(this.file);
+  
   }
 
   handleReaderLoaded(e) {
@@ -106,13 +123,27 @@ export class CreateComponent implements OnInit {
         file: base64textString,
         fileName: this.fileName,
       });
+      this.form.reset();
     }
   }
 
-  deleteFile(index) {
-    this.addMultipleFiles.splice(index, 1);
-    if (this.addMultipleFiles.length == 0) {
-      this.isFileAdded = false;
+  deleteFile(index, attachmentId) {
+    
+    if (attachmentId) {
+      this.sociService
+        .deleteQuery("/soci/attachment-delete/" + attachmentId)
+        .subscribe((data) => {
+          console.log("delete-data:", data);
+          this.addMultipleFiles.splice(index, 1);
+          if (this.addMultipleFiles.length == 0) {
+            this.isFileAdded = false;
+          }
+        });
+    } else {
+      this.addMultipleFiles.splice(index, 1);
+      if (this.addMultipleFiles.length == 0) {
+        this.isFileAdded = false;
+      }
     }
   }
 
@@ -139,19 +170,30 @@ export class CreateComponent implements OnInit {
     // formData.append("file", this.file);
 
     let formData = {
-      quote_id:this.form.controls["quote_id"].value?this.form.controls["quote_id"].value["id"]:'',
-      po_no:this.form.controls["po_no"].value? this.form.controls["po_no"].value:'',
+      quote_id: this.form.controls["quote_id"].value
+        ? this.form.controls["quote_id"].value["id"]
+        : "",
+      po_no: this.form.controls["po_no"].value
+        ? this.form.controls["po_no"].value
+        : "",
       po_date: this.form.controls["po_date"].value,
-      po_amount:this.form.controls["po_date"].value?this.form.controls["po_amount"].value:'',
-      receive_po_date:this.form.controls["receive_po_date"].value? this.form.controls["receive_po_date"].value:'',
+      po_amount: this.form.controls["po_date"].value
+        ? this.form.controls["po_amount"].value
+        : "",
+      receive_po_date: this.form.controls["receive_po_date"].value
+        ? this.form.controls["receive_po_date"].value
+        : "",
       file: this.addMultipleFiles,
     };
-    if (this.quote_full_id) {
+    if (this.quote_full_id && this.is_update_soci) {
+      let dataWithoutId = this.addMultipleFiles.filter((x) => !x.id);
+      formData["file"] = dataWithoutId;
       this.sociService
         .updatePODetail(this.soci_id, formData)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((res) => {
           this.soci_data = res;
+          this.soci_data["edit"] = true;
           this.sendSociData(this.soci_data);
           this.modal.hide();
           this.alertBody = res["message"];
@@ -168,6 +210,7 @@ export class CreateComponent implements OnInit {
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((res) => {
           this.soci_data = res;
+          this.soci_data["edit"] = false;
           this.sendSociData(this.soci_data);
           this.modal.hide();
           this.alertBody = res["message"];

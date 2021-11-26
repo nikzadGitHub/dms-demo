@@ -31,7 +31,12 @@
             <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
           </div>
           <div class="col-lg-2">
-            <div class="bg-opp text-white p-1">Opport ID:</div>
+            <div class="bg-opp text-white p-1">Opport ID:
+              <span>
+                <p>{{soci_data?.quote?.opportunity?.opportunity_code}}</p>
+              </span>
+              
+            </div>
             <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
           </div>
           <div class="col-lg-2">
@@ -60,19 +65,19 @@
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Contact Name</b></label>
-              <p>{{ soci_data?.contact_name }}</p>
+              <p>{{ soci_data?.quote?.opportunity?.ownner?.full_name }}</p>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Email</b></label>
-              <p>{{ soci_data?.contact_email }}</p>
+              <p>{{soci_data?.quote?.opportunity?.ownner?.email }}</p>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Owner</b></label>
-              <p></p>
+              <p>{{soci_data?.quote?.opportunity?.ownner?.full_name}}</p>
             </div>
           </div>
         </div>
@@ -509,8 +514,24 @@
                     </div>
                     <!-- {{ payment.schedule | date: "dd-MMM-yyyy" }} -->
                   </td>
-                  <td></td>
-                  <td></td>
+                  <td>
+                    <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="payment.soc_payment_term"
+                    [ngModelOptions]="{ standalone: true }"
+                    [attr.disabled]="enableEdit['payment'] && controller == payment? null: ''"
+                  />
+                  </td>
+                  <td>
+                    <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="payment.status"
+                    [ngModelOptions]="{ standalone: true }"
+                    [attr.disabled]="enableEdit['payment'] && controller == payment? null: ''"
+                  />
+                  </td>
                   <td>
                     <input
                       type="text"
@@ -979,11 +1000,7 @@
                       type="text"
                       class="form-control"
                       [(ngModel)]="item.percentage"
-                      [attr.disabled]="
-                        enableEdit['addBillInstruction'] && controller == item
-                          ? null
-                          : ''
-                      "
+                      [attr.disabled]="enableEdit['addBillInstruction'] && controller == item? null: ''"
                       [ngModelOptions]="{ standalone: true }"
                     />
                     <!-- {{ item.percentage }} -->
@@ -1998,15 +2015,27 @@
           <table class="table table-bordered table-striped">
             <thead>
               <tr>
-                <th>Global Order ID</th>
-                <th>FO SO No.</th>
+                <!-- <th>Global Order ID</th>
+                <th>FO SO No.</th> -->
                 <th>Customer PO</th>
                 <th>File Name</th>
-                <th>File Type</th>
+                <!-- <th>File Type</th> -->
                 <th>Download</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              <tr align="center" *ngFor="let item of sociAttachment">
+                <!-- <td></td>
+                <td></td> -->
+                <td>{{soci_data?.po_no}}</td>
+                <td>{{item.fileName}}</td>
+                <!-- <td></td> -->
+                <td>
+                  <a [href]="item.file" target="_blank">Download</a>
+                </td>
+              </tr>
+
+            </tbody>
           </table>
         </p-accordionTab>
       </p-accordion>
@@ -2015,8 +2044,12 @@
         <!-- Remarks taxbox -->
         <div class="remarks-texbox">
           <label>Remarks</label>
-          <textarea class="texarea" placeholder="Remarks..."></textarea>
+          <textarea class="texarea" formControlName="sociRemarks" placeholder="Remarks..." ></textarea>
+          <div style="margin-top: 10px;">
+            <button class="btn btn-primary" (click)="updateRemarks()">Update Remarks</button>
+          </div>
         </div>
+       
         <!-- SOCI Detail -->
         <div
           style="

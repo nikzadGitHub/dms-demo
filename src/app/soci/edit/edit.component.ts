@@ -128,6 +128,8 @@ export class EditComponent implements OnInit {
   billing_instruction_date: Date;
   new_payment_schedule_date: string;
   new_billing_instruction_date: string;
+  sociAttachment: any[] = [];
+  fileType: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -181,6 +183,7 @@ export class EditComponent implements OnInit {
       taxCode: "",
       customerTaxRate: "",
       standardWarranty: "",
+      sociRemarks: "",
     });
   }
 
@@ -196,9 +199,12 @@ export class EditComponent implements OnInit {
   }
 
   getSociData(soci_id) {
-    this.sociService.getSpecificSoci(soci_id).subscribe((res) => {
+    this.sociService.getSpecificSoci(soci_id).subscribe(async (res) => {
       //PO Details
       this.soci_data = res["data"];
+      this.form.patchValue({
+        sociRemarks: this.soci_data?.remarks,
+      });
       this.sociStatus = res["data"]["status"];
       this.is_edited = res["data"]["is_edited"];
       this.is_released = res["data"]["is_released"];
@@ -288,11 +294,24 @@ export class EditComponent implements OnInit {
         (this.products_discount_values / 100) *
         this.product_subtotal_before_tax;
       //
+
+      //SOCI Attachments
+      this.sociAttachment = res["data"]["attachments"];
+      this.sociAttachment.forEach((value) => {
+        console.log("file:", value);
+        // this.fileType = value.file.split(".").pop();
+        this.fileType = value.file
+        console.log("file-type:", this.fileType);
+      });
+      // const response = await fetch(this.fileType);
+      // const fileType = await fileTypeFromStream(response.body);
+      
+      // console.log("file-type:-->",fileType);
+      // End SOCI Attachment
       this.form.patchValue({
         standard_payment_term: this.standerd_payment_term,
         standard_delivery_term: this.standard_delivery_term,
       });
-
       this.additional_cost_and_charges =
         this.total_additional_charges_amount +
         this.total_additional_costs_amount;
@@ -300,9 +319,6 @@ export class EditComponent implements OnInit {
         this.products_total_discount_values +
         this.product_subtotal_before_tax +
         this.additional_cost_and_charges;
-      // this.quotations = res["data"]["quotes"];
-      // this.setInitialValue();
-      // this.initData();
     });
   }
 
@@ -1410,6 +1426,31 @@ export class EditComponent implements OnInit {
     this.enableEdit[type] = false;
     this.editableRowIndex = null;
   }
+  //Update Remarks
+  updateRemarks() {
+    this.sociService
+      .postQuery("/soci/" + this.soci_id, {
+        remarks: this.form.value.sociRemarks,
+      })
+      .subscribe(
+        (data: any) => {
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.request_approval = true;
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+  }
+
   get form_controls() {
     return this.form.controls;
   }
