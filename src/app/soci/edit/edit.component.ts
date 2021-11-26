@@ -539,7 +539,6 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          debugger
           data["data"].soc_payment_term = this.form.value.soc_payment_term
           data["data"].status = this.form.value.status
           this.payment_schedules.push(data["data"]);
