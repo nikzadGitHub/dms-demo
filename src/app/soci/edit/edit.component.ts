@@ -213,7 +213,7 @@ export class EditComponent implements OnInit {
       // standard_term
       this.standard_term = res["data"]["standard_terms"];
       this.standerd_payment_term =
-        res["data"]["standard_terms"]["payment_term"];
+        res["data"]["standard_terms"]["payment_term"]?  res["data"]["standard_terms"]["payment_term"] : 0 ;
       this.payment_term_from =
         res["data"]["standard_terms"]["payment_term_from"];
       // quotation_validity_payment_term_to
@@ -234,7 +234,7 @@ export class EditComponent implements OnInit {
       );
       // Delivery_terms
       this.default_delivery_term =
-        res["data"]["standard_terms"]["default_delivery_term"];
+        res["data"]["standard_terms"]["default_delivery_term"]? res["data"]["standard_terms"]["default_delivery_term"] :0;
       this.default_delivery_term_from =
         res["data"]["standard_terms"]["default_delivery_term_from"];
       this.delivery_term_from =
@@ -244,7 +244,7 @@ export class EditComponent implements OnInit {
         this.delivery_term_to.getDate() + this.default_delivery_term
       );
       this.standard_delivery_term =
-        res["data"]["standard_terms"]["delivery_term"];
+        res["data"]["standard_terms"]["delivery_term"]?res["data"]["standard_terms"]["delivery_term"]:0;
 
       // quotation_validity_delivery_term_to
       this.quotation_validity_delivery_term_to = new Date(
@@ -354,12 +354,14 @@ export class EditComponent implements OnInit {
         standard_payment_term: this.form.value.days,
         standard_payment_term_from: this.form.value.fromDate,
         is_edited: this.is_payment_term_eidt,
+        soci_id: this.soci_id
       })
       .subscribe(
         (data: any) => {
           this.addStandardTermModal.hide();
           this.is_edited = true;
           this.alertBody = data.message;
+          this.form.patchValue({standard_payment_term: this.form.value.days })
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
@@ -380,12 +382,17 @@ export class EditComponent implements OnInit {
         delivery_term: this.form.value.delivery_days,
         delivery_term_from: this.form.value.delivery_fromDate,
         is_edited: this.is_delivery_term_eidt,
+        soci_id: this.soci_id
       })
       .subscribe(
         (data: any) => {
           this.addStandardTermModal.hide();
+          this.form.patchValue({standard_delivery_term: this.form.value.delivery_days })
           this.is_edited = true;
           this.alertBody = data.message;
+
+         
+
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
@@ -532,6 +539,9 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
+          debugger
+          data["data"].soc_payment_term = this.form.value.soc_payment_term
+          data["data"].status = this.form.value.status
           this.payment_schedules.push(data["data"]);
           this.is_edited = true;
           this.alertBody = data.message;
@@ -1397,6 +1407,9 @@ export class EditComponent implements OnInit {
     if (type == "additionalCharges") {
       delete control["code_item"];
       delete control["code_item_id"];
+    }
+    if (type == "billingMilestone") {
+      delete control["payment_schedule"];
     }
     this.selectedId = type;
     this.controller = control;

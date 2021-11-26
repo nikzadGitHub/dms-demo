@@ -123,7 +123,6 @@ export class CreateComponent implements OnInit {
         file: base64textString,
         fileName: this.fileName,
       });
-      this.form.reset();
     }
   }
 
