@@ -118,7 +118,7 @@ export class LoginComponent {
    if(localStorageKeyList.length){
     const accessTokenKey = localStorageKeyList.findIndex(e => e.includes('accesstoken'))
     const refreshtokenKey = localStorageKeyList.findIndex(e => e.includes('refreshtoken'))
-    if(accessTokenKey && refreshtokenKey){
+    // if(accessTokenKey && refreshtokenKey){
 
     const accesstoken =  JSON.parse(localStorage.getItem(localStorageKeyList[accessTokenKey]) || '')
     const refreshtoken =  JSON.parse(localStorage.getItem(localStorageKeyList[refreshtokenKey]) || '')
@@ -147,7 +147,7 @@ export class LoginComponent {
 
       });
 
-    }
+    // }
   }
 }
   loginUsingAzure(){
