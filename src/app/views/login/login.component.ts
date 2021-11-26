@@ -1,4 +1,4 @@
-import { Component, Output, ViewChild } from '@angular/core';
+import { Component, Output, Inject,ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +7,9 @@ import { DialogInterface } from '../..//interfaces/dialog.interface';
 import { AuthService } from '../../auth/auth.service';
 import { DialogService } from '../../common/dialog/dialog.service';
 import { SystemConfig } from '../../config/system-config';
+import { MsalService } from '@azure/msal-angular';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +21,7 @@ export class LoginComponent {
   formSubmitted : boolean = false;
   version: string = '';
   appType: string = '';
+  timesetoutId: any =  null;
   
   formLogin : FormGroup;
 
@@ -25,8 +29,9 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private httpClient: HttpClient,
+    private azureAuthService : MsalService,
     private dialogService: DialogService,
-    // private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -107,5 +112,46 @@ export class LoginComponent {
 
   resetForm() { 
     this.formLogin.reset();
+  }
+  getToken =async()=> {
+   const localStorageKeyList = Object.keys(localStorage)
+   if(localStorageKeyList.length){
+    const accessTokenKey = localStorageKeyList.findIndex(e => e.includes('accesstoken'))
+    const refreshtokenKey = localStorageKeyList.findIndex(e => e.includes('refreshtoken'))
+    if(accessTokenKey && refreshtokenKey){
+
+    const accesstoken =  JSON.parse(localStorage.getItem(localStorageKeyList[accessTokenKey]) || '')
+    const refreshtoken =  JSON.parse(localStorage.getItem(localStorageKeyList[refreshtokenKey]) || '')
+    let data  = {
+      azure_token : accesstoken?.secret,
+      refresh_token : refreshtoken?.secret,
+      fcm_code : ''
+    }
+      const headers= new HttpHeaders()
+      .set('x-app-token', SystemConfig.apiAppToken);
+      this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/azure-login", data, {
+        headers: headers
+      })
+      .subscribe(async (res:any) => {
+              clearInterval(this.timesetoutId);
+              if (!res.success) {
+                    this.dialogService.showErrorDialog(res.message);
+                  } else {
+                    localStorage.setItem('userRole',JSON.stringify(res.data))
+                    await this.authService.setAuthorizationToken(res.data.access_token);
+                    await this.authService.saveUserSession(JSON.stringify(res.data.user));
+                    await this.authService.getUserSession();
+                    await this.authService.loadToken();
+                    this.router.navigateByUrl("/dashboard", {replaceUrl: true});
+                  }
+
+      });
+
+    }
+  }
+}
+  loginUsingAzure(){
+  this.azureAuthService.loginPopup();  
+  this.timesetoutId = setInterval(this.getToken, 3000);
   }
 }
