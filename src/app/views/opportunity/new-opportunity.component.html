@@ -1,0 +1,154 @@
+<div class="animated fadeIn">
+
+	<div class="row">
+		
+		<div class="col-sm-12 col-md-12">
+			<div class="card">
+				<div class="card-header d-flex b-btm-green">
+					<div class="chead">New Opportunity</div>						
+				</div>
+				
+					<div class="card-body p-0">
+						
+						<div class="d-flex justify-content-between p-125">
+							<div style="width:450px">				
+								<input [hidden]="!company_is_from_lead" class="form-control" readonly [(ngModel)]="company_name_from_lead">			
+								<input [hidden]="company_is_from_lead" (input)="companySearch($event.target.value)" type="text" placeholder="Company Name..."  matInput [formControl]="companyControl" [matAutocomplete]="companyNameAutocomplete" class="form-control">
+								<mat-autocomplete #companyNameAutocomplete="matAutocomplete" [displayWith]="displayFn" (optionSelected)='companySelected($event.option.value)'>
+									<mat-option *ngFor="let company of filteredCompanies | async" [value]="company">
+									{{company.name}} | {{company.data_area_id}} / {{company.external_id}}
+									</mat-option>
+								</mat-autocomplete>
+							</div>
+							<!-- <div>Opport. ID {{detail.opportunity_code}}</div> -->
+							<!-- <div>
+								<label>Stages</label>
+								<select class="form-control">
+									<option>123</option>
+								</select>
+							</div>
+							<div>
+								<label>Status</label>
+								<select class="form-control">
+									<option>123</option>
+								</select>
+							</div> -->
+						</div>					
+						<div class="d-flex justify-content-between p-125" style="background-color: #F6F6F6;">
+							<div>
+								<input type="text" [(ngModel)]="topic" class="form-control" placeholder="Topic..."/>
+							</div>
+							<!-- <div>
+								<label>Created Date</label>
+								<div></div>
+							</div>
+							<div>
+								<label>Individual Name</label>
+							</div>
+							<div>
+								<label>Email</label>
+							</div>
+							<div>
+								<label>Owner</label>
+							</div> -->
+						</div>
+				
+					</div>				
+		 
+			</div>
+      	</div>
+		
+		<div class="col-md-12 form-group">
+			<p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">	
+				<p-accordionTab header="Details Info">
+					<div class="row">
+						<div class="col-md-12">
+							<table class="table table-striped m-0 no-outline">
+								<tbody>
+									<tr>
+										<td class="bg-lightgrey text-left w-25">Credit Term</td>
+										<td class="w-25"></td>
+										<td class="bg-lightgrey text-left w-25">Customer Category</td>
+										<td class="w-25"></td>
+									</tr>
+									<tr>
+										<td class="bg-lightgrey text-left">Hospital Class</td>
+										<td></td>
+										<td class="bg-lightgrey text-left">Hospital Bed (Range)</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td class="bg-lightgrey text-left">Credit Limit</td>
+										<td></td>
+										<td class="bg-lightgrey text-left">Hospital Bed (Exact Number)</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td class="bg-lightgrey text-left">Segmant</td>
+										<td></td>
+										<td class="bg-lightgrey text-left">Geographical Zone</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td class="bg-lightgrey text-left">Customer Category</td>
+										<td></td>
+										<td class="bg-lightgrey text-left">Customer Tax Code</td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>				
+				</p-accordionTab>
+			</p-accordion>
+		</div>
+
+      	<!-- <div class="col-sm-12 col-md-12">
+      		<div class="card border-primary">
+			    <div class="card-header">
+			      Details Info
+			    </div>
+			    <div class="card-body p-0">					      
+			    	<table class="table table-striped m-0 no-outline">
+			    		<tbody>
+				    		<tr>
+				    			<td class="bg-lightgrey text-left w-25">Credit Term</td>
+				    			<td class="w-25"></td>
+				    			<td class="bg-lightgrey text-left w-25">Customer Category</td>
+				    			<td class="w-25"></td>
+				    		</tr>
+				    		<tr>
+				    			<td class="bg-lightgrey text-left">Hospital Class</td>
+				    			<td></td>
+				    			<td class="bg-lightgrey text-left">Hospital Bed (Range)</td>
+				    			<td></td>
+				    		</tr>
+				    		<tr>
+				    			<td class="bg-lightgrey text-left">Credit Limit</td>
+				    			<td></td>
+				    			<td class="bg-lightgrey text-left">Hospital Bed (Exact Number)</td>
+				    			<td></td>
+				    		</tr>
+				    		<tr>
+				    			<td class="bg-lightgrey text-left">Segmant</td>
+				    			<td></td>
+				    			<td class="bg-lightgrey text-left">Geographical Zone</td>
+				    			<td></td>
+				    		</tr>
+				    		<tr>
+				    			<td class="bg-lightgrey text-left">Customer Category</td>
+				    			<td></td>
+				    			<td class="bg-lightgrey text-left">Customer Tax Code</td>
+				    			<td></td>
+				    		</tr>
+			    		</tbody>
+			    	</table>
+			    </div>
+			</div>
+      	</div>	   -->
+        <br>
+        <br>
+        <br>
+        <opp-opportunity-booking></opp-opportunity-booking>
+	</div>
+</div>

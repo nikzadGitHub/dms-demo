@@ -1,0 +1,321 @@
+<div class="animated fadeIn">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="col-lg col-md-6">
+            <div class="card rcorners">
+                <div class="card-header row" style="background-color: #898485; color: white;">
+                    <div style="padding-left: 20px;">
+                        <h2>Lead Record</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-row">
+                        <div class="lead-data">
+                            <div class="lead-header">
+                                <div class="row">
+                                    <div class="col-md-auto">
+                                        <h3 class="bold">
+                                            {{ form_controls.company_name.value }}
+                                        </h3>
+                                    </div>
+                                    <div class="col-md-auto lead-id">
+                                        <div>
+                                            <span>LEAD ID</span>
+                                            <span>{{ form_controls.id.value }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="details grey">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="bold">Created Date</label>
+                                            <div>{{ form_controls.created_at.value }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="bold">Contact Name</label>
+                                            <div>{{ form_controls.contact_name.value }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="bold">Email</label>
+                                            <div>{{ form_controls.email.value }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="bold">Owner</label>
+                                            <div>{{ form_controls.lead_owner.value }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <p-accordion>
+                    <p-accordionTab [selected]="true">
+                        <p-header>
+                            <i class="pi pi-info-circle"></i>
+                            <span class="accordion-header">Lead Information</span>
+                        </p-header>
+                        <div class="lead-row">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Lead Owner
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input pInputText formControlName="lead_owner" class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lead-row">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                      <div class="col-md-5 text-header required-field">
+                                          Company Name
+                                      </div>
+                                        <div class="col-md-5">
+                                            <input pInputText formControlName="company_name" class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Source
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input pInputText formControlName="source" class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lead-row">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Individual Name
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input pInputText formControlName="contact_name" class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Able to Contact
+                                        </div>
+                                        <div class="col-md-5">
+                                            <mat-slide-toggle formControlName="able_to_contact" class="example-margin">
+                                            </mat-slide-toggle>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lead-row">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Department
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input pInputText formControlName="department" class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Do We Sell These Products
+                                        </div>
+                                        <div class="col-md-5">
+                                            <mat-slide-toggle formControlName="do_we_sell_these_product" class="example-margin">
+                                            </mat-slide-toggle>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lead-row">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Email
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input pInputText formControlName="email" class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Products That Not Selling
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input pInputText formControlName="products_thats_not_selling" class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lead-row">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header required-field">
+                                            Mobile Number
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input pInputText formControlName="mobile_number" class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Lead Status
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input pInputText formControlName="lead_status" class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lead-row">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Office Number
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input pInputText formControlName="office_number" class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Reason for Disqualifying
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input pInputText formControlName="reason_for_disqualifying" class="form-control" placeholder="" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lead-row" style="border-bottom: none;">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Address
+                                        </div>
+                                        <div class="col-md-7">
+                                            <textarea [rows]="3" style="width: 100%;" pInputTextarea [autoResize]="autoResize" formControlName="address"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-5 text-header">
+                                            Remark
+                                        </div>
+                                        <div class="col-md-7">
+                                            <textarea [rows]="3" style="width: 100%;" pInputTextarea [autoResize]="autoResize" formControlName="remark"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </div>
+            <div class="form-group">
+                <p-accordion>
+                    <p-accordionTab [selected]="true">
+                        <p-header>
+                            <i class="cil-clipboard"></i>
+                            <span class="accordion-header">Modification Log</span>
+                        </p-header>
+                        <div>
+                            <table class="table table-borderless table-striped" formArrayName="modifiction_log">
+                                <thead class="grey">
+                                    <tr>
+                                        <th style="width: 20%;">Date</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let log of getLog.controls; let i=index" [formGroupName]="i">
+                                        <td style="width: 20%;">
+                                            {{ log.value.created_at }}
+                                        </td>
+                                        <td>
+                                            {{ log.value.description }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </div>
+            <div class="form-group">
+                <p-accordion>
+                    <p-accordionTab [selected]="true">
+                        <p-header>
+                            <i class="cil-notes"></i>
+                            <span class="accordion-header">Additional Notes</span>
+                        </p-header>
+                        <div class="">
+                            <div style="padding: 10px 20px 10px 20px;">
+                                <textarea maxLength="250" [rows]="5" style="width: 100%;" pInputTextarea [autoResize]="autoResize" formControlName="additional_notes" placeholder="Limit characters count 250"></textarea>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </div>
+            <div class="col-xl-12 submit-button" align=center>
+                <div class="form-group">
+                    <a routerLink="/leads/index" class="btn btn-secondary">CANCEL</a>
+                    <button class="btn btn-primary" type="submit">SAVE</button>
+                    <!-- <button class="btn btn-primary" type="button" (click)="CreateProspect()">Create Prospect</button> -->
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Success</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{alertBody}}</p>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

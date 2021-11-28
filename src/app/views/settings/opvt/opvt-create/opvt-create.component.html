@@ -1,0 +1,65 @@
+<div class="animated fadeIn">
+    <div class="col-lg col-md-6">
+        <div class="card rcorners">
+            <div class="card-header row" style="background-color: #898485; color: white;">
+                <div style="padding-left: 20px;">
+                    <h2>Create Opportunity Preferred Vendor Types</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="form-group">
+                        <div class="card-row">
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            Title:
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input formControlName="title" class="form-control" placeholder="Title" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            Value:
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input formControlName="value" class="form-control" placeholder="Value" type="input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9 submit-button" align=center>
+                        <div class="form-group">
+                            <a routerLink="settings/opvt/index" class="btn btn-secondary">CANCEL</a>
+                            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">SAVE</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer bg-transparent">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Success</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{alertBody}}</p>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

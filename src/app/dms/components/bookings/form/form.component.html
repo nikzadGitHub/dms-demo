@@ -1,0 +1,160 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <form [formGroup]="formBooking" (ngSubmit)="onSave()" class="form-horizontal">
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label">Status</label>
+                <div class="col-md-9">
+                  <p class="form-control-static">DRAFT</p>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="booking-reason">Booking reason</label>
+                <div class="col-md-4">
+                  <select formControlName="booking_reason" class="form-control">
+                    <option value="">Please select</option>
+                    <option value="events">Events</option>
+                    <option value="training">Training</option>
+                    <option value="contigencies">Contigencies</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label">Request Date</label>
+                <div class="col-md-9">
+                  <p class="form-control-static">{{ curDate }}</p>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label">Customer</label>
+                <div class="col-md-4">
+                  <select formControlName="customer" class="form-control" >
+                    <option value="">Please select</option>
+                    <option *ngFor="let customer of customers" value="{{customer.id}}">{{customer.company_name}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="branch">Branch/site</label>
+                <div class="col-md-4">
+                  <input type="text" formControlName="branch"  class="form-control">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="date-of-delivery">Preferred Date of Delivery </label>
+                        <div class="col-md-4">
+                          <input class="form-control" formControlName="date_of_delivery" type="datetime-local" name="date-of-delivery">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="date-of-collection">Preferred Date of Collection </label>
+                        <div class="col-md-6">
+                          <input class="form-control" formControlName="date_of_collection" type="datetime-local" name="date-of-collection">
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="demo-duration">Demo Duration *</label>
+                <div class="col-md-2">
+                  <input type="number" formControlName="demo_duration" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    months
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="department">Ship-to Department/ Warde</label>
+                <div class="col-md-4">
+                  <input type="text" formControlName="department" class="form-control" >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="contact-name">Ship to Contact Name </label>
+                        <div class="col-md-8">
+                          <input class="form-control" formControlName="contact_name" type="text" name="contact-name">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="contact-number">Ship-To Contact Number </label>
+                        <div class="col-md-6">
+                          <input class="form-control" formControlName="contact_number" type="text" name="contact-number">
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="remarks">Remarks</label>
+                <div class="col-md-9">
+                  <textarea formControlName="remarks" rows="9" class="form-control"></textarea>
+                </div>
+              </div>
+              <div class="custom-footer d-flex justify-content-center">
+                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div><!--/.row-->
+  </div>
+  <div
+    id="success"
+    bsModal
+    #successModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Success</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{ alertBody }}</p>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+  <div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

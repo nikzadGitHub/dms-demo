@@ -1,0 +1,90 @@
+.rcorners{
+  // border-radius: 20px;
+  overflow: hidden;
+}
+
+.buttonColor {
+  background-color: #00538a;
+  border-color: #00538a;
+}
+
+.active{
+  color: green;
+}
+
+.inactive{
+  color: red;
+}
+
+.card-body{
+  padding: 0%;
+  .submit-button {
+      padding-top: 50px;
+  }
+}
+
+.card-row {
+  .row {
+      padding: 7px 15px;
+  }
+}
+
+.card {
+  background-color: var(--body-color);
+}
+
+.card-header{
+  border: 1;
+}
+
+.card-body{
+  padding: 0%;
+  background-color: white;
+  border: white;
+}
+.card-footer {
+  opacity: 1;
+  border: none;
+  padding: 0%;
+  padding-top: 20px;
+}
+
+.text-header {
+  align-self: center;
+}
+
+.p-input-icon-right {
+  width: 100%;
+  i {
+    font-weight: bold;
+    right: 15px;
+  }
+}
+
+.invalid-feedback {
+  color: red;
+  font-size: inherit;
+}
+
+.required-field:after {
+  color: #d00;
+  content: "*";
+  margin-left: 3px;
+}
+
+:host ::ng-deep .multiselect-custom {
+  .selected-item-value {
+    display: inline-flex;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 2px 5px;
+    margin-left: 3px;
+  }
+  .p-multiselect .p-multiselect-label-container .p-multiselect-label {
+    padding: 5px 7px;
+  }
+}
+.close {
+  font-size: 14px;
+  padding-left: 5px;
+}

@@ -1,0 +1,485 @@
+<div class="animated fadeIn">
+    <!--<form [formGroup]="setupForm" (ngSubmit)="onSubmit()">-->
+     <form name="salesTargetSetupForm" #salesTargetSetupForm="ngForm" (ngSubmit)="onSubmit(salesTargetSetupForm, data)">
+        <div class="col-lg col-md-6">
+            <div class="card rcorners">
+                <div class="card-header row" style="background-color: #898485; color: white;">
+                    <div style="padding-left: 20px;">
+                        <h2>Add Sales Target</h2>
+                        <!--<a class="nav-link" [routerLink]="['/home']" (click)="onSubmit()">Home</a>-->
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-row m-4">
+                        <div class="row mb-2">
+                            <h5 class="col-12">
+                                <label><b>General</b></label>
+                            </h5>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="description">
+                                            Description<span class="asterisk"> * </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input id="description" name="title" type="text" pInputText [(ngModel)]="data.title" class="form-control" required/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="country">
+                                                Country<span class="asterisk"> * </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown id="country" name="countryList" [options]="countryArr" optionLabel="official_name" optionValue="code"
+                                            placeholder="Select Country" [style]="{ width: '100%' }" [required]="true"
+                                            [(ngModel)]="data.country_code" (onChange)="onCountryChanged(data.country_code)">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="unit">
+                                            Unit<span class="asterisk"> * </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown id="unit" name="unitList" [options]="unitArr" optionLabel="title" optionValue="id"
+                                            placeholder="Select Unit" [style]="{ width: '100%' }" [required]="true"
+                                            [(ngModel)]="data.unit_id" (onChange)="onUnitChanged(data.country_code, data.unit_id)">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="fss">
+                                            FSS<span class="asterisk"> * </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown id="fss" name="fssList" [options]="fssArr" optionLabel="full_name" optionValue="id"
+                                            placeholder="Select FSS" [style]="{ width: '100%' }" [(ngModel)]="data.user_id" [required]="true">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="teamlead">
+                                            Team Lead
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown id="teamlead" name="teamleadList" [options]="teamLeadArr" optionLabel="full_name" optionValue="id"
+                                            placeholder="Select Team Lead" [showClear]="true" [style]="{ width: '100%' }" [(ngModel)]="data.tl_user_id">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="opc">
+                                            OPC-PIC<span class="asterisk"> * </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown id="opc" name="picList" [options]="opc_picArr" optionLabel="full_name" optionValue="id"
+                                            placeholder="Select OPC-PIC" [style]="{ width: '100%' }" [(ngModel)]="data.opc_pic_user_id" [required]="true">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="class">
+                                            Class
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown id="class" name="classList" [options]="classArr" optionLabel="name" optionValue="value"
+                                            placeholder="Select Class" [showClear]="true" [style]="{ width: '100%' }" [(ngModel)]="data.class_id">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-row m-4">
+                        <div class="row mt-5 mb-2 ml-0 d-flex">
+                            <h5 class="mr-2">
+                                <label><b>Dimensions</b></label>
+                            </h5>
+                            <button class="btn btn-icon btn-outline-primary" type="button"
+                                (click)="onAddDimensionRow()"><i class="cil-plus c-icon"></i>
+                            </button>
+                        </div>
+                        <div class="row mb-2" *ngFor="let a of dimensionRow; let i=index">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="level">
+                                            {{ a == 1 ? 'Level' : '' }}
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown [id]="'level'+i" [name]="'dimensionLevel'+i" placeholder="Select Level"
+                                            [showClear]="true" [style]="{ width: '100%' }"
+                                            [options]="levelArr" optionLabel="name" optionValue="value"
+                                            [(ngModel)]="dimensionLevelArr[i]" [dataKey]="dimensionLevelArr[i]">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="desc">
+                                            {{ a == 1 ? 'Description' : '' }}
+                                        </label>
+                                    </div>
+                                <div class="col-9">
+                                    <p-dropdown [id]="'desc'+i" [name]="'dimensionDesc'+i" placeholder="Select Description"
+                                        [showClear]="true" [style]="{ width: '100%' }"
+                                        [options]="descArr" optionLabel="name" optionValue="value"
+                                        [(ngModel)]="dimensionDescArr[i]" [dataKey]="dimensionDescArr[i]">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-row m-4">
+                    <div class="row mt-5 mb-2">
+                        <h5 class="col-12">
+                            <label><b>Sales Target</b></label>
+                        </h5>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-3 mt-2">
+                                    <label for="currency">
+                                        Currency
+                                    </label>
+                                </div>
+                                <div class="col-9">
+                                    <!--<p-dropdown id="currency" [options]="currencyArr" optionLabel="name" optionValue="value"
+                                        placeholder="Select Currency" [showClear]="true" [style]="{ width: '100%' }">
+                                    </p-dropdown>-->
+                                     <input id="currency" name="currencyCd" pInputText [(ngModel)]="currency" class="form-control" type="input" [readonly]="true"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-3">
+                                    <label for="year">
+                                        Year
+                                    </label>
+                                </div>
+                                <div class="col-9">
+                                    <!--<input id="year" pInputText class="form-control" placeholder="" type="input">-->
+                                    <p-inputNumber name="year" inputId="integeronly" [(ngModel)]="data.year"
+                                        inputId="withoutgrouping" [useGrouping]="false" [style]="{ width: '100%' }">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 submit-button mt-5" align=center>
+                <div class="form-group">
+                    <button class="btn btn-light mr-2 px-4" type="reset" (click)="resetForm(salesTargetSetupForm)"><i class="pi pi-arrow-left mr-2"></i>CANCEL</button>
+                    <button class="btn btn-primary px-5" type="submit" [disabled]="!salesTargetSetupForm.form.valid">
+                        <i class="pi pi-save mr-2"></i>SAVE</button>
+                </div>
+            </div>
+            <div class="card-row m-4">
+                <div class="row mt-5 mb-2">
+                    <h5 class="col-12">
+                         <label>Auto-populated</label>
+                    </h5>
+                </div>
+                <div class="col-lg-12">
+                    <div class="row mb-2">
+                         <div class="col-3">
+                              <div class="row">
+                                  <div class="col-5 mt-2">
+                                      {{ salesTargetMonth[0] }}
+                                  </div>
+                                  <div class="col-7">
+                                      <div class="p-inputgroup">
+                                          <span class="p-inputgroup-addon">{{ currency }}</span>
+                                          <p-inputNumber name="target1" [(ngModel)]="data.month_01_target" inputId="minmaxfraction"
+                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                          </p-inputNumber>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-3">
+                              <div class="row">
+                                  <div class="col-5 mt-2">
+                                      {{ salesTargetMonth[3] }}
+                                  </div>
+                                  <div class="col-7">
+                                      <div class="p-inputgroup">
+                                          <span class="p-inputgroup-addon">{{ currency }}</span>
+                                          <p-inputNumber name="target4" [(ngModel)]="data.month_04_target" inputId="minmaxfraction"
+                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                          </p-inputNumber>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-3">
+                              <div class="row">
+                                  <div class="col-5 mt-2">
+                                      {{ salesTargetMonth[6] }}
+                                  </div>
+                                  <div class="col-7">
+                                      <div class="p-inputgroup">
+                                          <span class="p-inputgroup-addon">{{ currency }}</span>
+                                          <p-inputNumber name="target7" [(ngModel)]="data.month_07_target" inputId="minmaxfraction"
+                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                          </p-inputNumber>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-3">
+                              <div class="row">
+                                  <div class="col-5 mt-2">
+                                      {{ salesTargetMonth[9] }}
+                                  </div>
+                                  <div class="col-7">
+                                      <div class="p-inputgroup">
+                                          <span class="p-inputgroup-addon">{{ currency }}</span>
+                                          <p-inputNumber name="target10" [(ngModel)]="data.month_10_target" inputId="minmaxfraction"
+                                                mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                          </p-inputNumber>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-12">
+                      <div class="row mb-2">
+                          <div class="col-3">
+                              <div class="row">
+                                  <div class="col-5 mt-2">
+                                      {{ salesTargetMonth[1] }}
+                                  </div>
+                                  <div class="col-7">
+                                      <div class="p-inputgroup">
+                                          <span class="p-inputgroup-addon">{{ currency }}</span>
+                                          <p-inputNumber name="target2" [(ngModel)]="data.month_02_target" inputId="minmaxfraction"
+                                                mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                          </p-inputNumber>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-3">
+                              <div class="row">
+                                  <div class="col-5 mt-2">
+                                      {{ salesTargetMonth[4] }}
+                                  </div>
+                                  <div class="col-7">
+                                      <div class="p-inputgroup">
+                                          <span class="p-inputgroup-addon">{{ currency }}</span>
+                                          <p-inputNumber name="target5" [(ngModel)]="data.month_05_target" inputId="minmaxfraction"
+                                                mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                          </p-inputNumber>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-3">
+                              <div class="row">
+                                  <div class="col-5 mt-2">
+                                      {{ salesTargetMonth[7] }}
+                                  </div>
+                                  <div class="col-7">
+                                      <div class="p-inputgroup">
+                                          <span class="p-inputgroup-addon">{{ currency }}</span>
+                                          <p-inputNumber name="target8" [(ngModel)]="data.month_08_target" inputId="minmaxfraction"
+                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                          </p-inputNumber>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-3">
+                              <div class="row">
+                                  <div class="col-5 mt-2">
+                                      {{ salesTargetMonth[10] }}
+                                  </div>
+                                  <div class="col-7">
+                                      <div class="p-inputgroup">
+                                          <span class="p-inputgroup-addon">{{ currency }}</span>
+                                          <p-inputNumber name="target11" [(ngModel)]="data.month_11_target" inputId="minmaxfraction"
+                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                          </p-inputNumber>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-12">
+                      <div class="row mb-2">
+                          <div class="col-3">
+                              <div class="row">
+                                  <div class="col-5 mt-2">
+                                      {{ salesTargetMonth[2] }}
+                                  </div>
+                                  <div class="col-7">
+                                      <div class="p-inputgroup">
+                                          <span class="p-inputgroup-addon">{{ currency }}</span>
+                                          <p-inputNumber name="target3" [(ngModel)]="data.month_03_target" inputId="minmaxfraction"
+                                                mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                          </p-inputNumber>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-3">
+                              <div class="row">
+                                  <div class="col-5 mt-2">
+                                      {{ salesTargetMonth[5] }}
+                                  </div>
+                                  <div class="col-7">
+                                      <div class="p-inputgroup">
+                                          <span class="p-inputgroup-addon">{{ currency }}</span>
+                                          <p-inputNumber name="target6" [(ngModel)]="data.month_06_target" inputId="minmaxfraction"
+                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                          </p-inputNumber>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-3">
+                              <div class="row">
+                                  <div class="col-5 mt-2">
+                                      {{ salesTargetMonth[8] }}
+                                  </div>
+                                  <div class="col-7">
+                                      <div class="p-inputgroup">
+                                          <span class="p-inputgroup-addon">{{ currency }}</span>
+                                          <p-inputNumber name="target9" [(ngModel)]="data.month_09_target" inputId="minmaxfraction"
+                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                          </p-inputNumber>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-3">
+                              <div class="row">
+                                  <div class="col-5 mt-2">
+                                      {{ salesTargetMonth[11] }}
+                                  </div>
+                                  <div class="col-7">
+                                      <div class="p-inputgroup">
+                                          <span class="p-inputgroup-addon">{{ currency }}</span>
+                                          <p-inputNumber name="target12" [(ngModel)]="data.month_12_target" inputId="minmaxfraction"
+                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                          </p-inputNumber>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="card-row m-4">
+                  <div>
+                      <table class="table table-borderless table-striped">
+                          <thead class="grey">
+                              <tr style="border-top: 0.5px;border-top-style: solid;border-bottom: 0.5px;border-bottom-style: solid;">
+                                  <th style="width: 22%;">Description</th>
+                                  <th style="width: 13%;">Q1 ({{ currency }})</th>
+                                  <th style="width: 13%;">Q2 ({{ currency }})</th>
+                                  <th style="width: 13%;">Q3 ({{ currency }})</th>
+                                  <th style="width: 13%;">Q4 ({{ currency }})</th>
+                                  <th style="width: 13%;">Total ({{ currency }})</th>
+                                  <th style="width: 13%;"></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let data of list; let i=index">
+                                  <td>{{ data.title }}</td>
+                                  <td>{{ data.q1 }}</td>
+                                  <td>{{ data.q2 }}</td>
+                                  <td>{{ data.q3 }}</td>
+                                  <td>{{ data.q4 }}</td>
+                                  <td>{{ data.total }}</td>
+                                  <td>
+                                    <!--<a class="btn" style="cursor: pointer;" (click)="deleteRow(i)"><i class="cil-trash"></i></a>-->
+                                      <button pButton pRipple type="button" icon="pi pi-copy" title="Copy" (click)="copyData(data.id)" class="p-button-rounded p-button-text p-button-plain"></button>
+                                      <button pButton pRipple type="button" icon="fa fa-edit" title="Edit" (click)="editData(data.id)" class="p-button-rounded p-button-text p-button-plain"></button>
+                                      <button pButton pRipple type="button" icon="pi pi-trash" title="Delete" (click)="showConfirmationDialog(data.id)" class="p-button-rounded p-button-text p-button-plain"></button>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{modalBody}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="successModal.hide()">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div bsModal #confirmModal="bs-modal" class="modal fade confirm-modal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" align="center">
+              <h4 class="modal-title">{{ modalHeader }}</h4>
+        </div>
+        <div class="modal-body">
+            <p>{{ modalBody }}</p>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="confirmModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="deleteData(selectedId)">Yes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+

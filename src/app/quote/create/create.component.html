@@ -1,0 +1,297 @@
+<div class="animated fadeIn">
+    <div class="col-lg col-md-6">
+        <div class="card rcorners">
+            <div class="card-header"><h1>Create New Quote</h1></div>
+            <div class="card-body">
+                <!-- <a href="#" routerLink="/quote/index" class="btn btn-primary">Back</a> -->
+                    
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="form-group">
+                        <div class="card rcorners customBorder shadow">
+                            <div class="card-header white">
+                                <b>Standard Terms</b>
+                            </div>
+                            <div class="card-body grey">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                Payment Terms:
+                                            </div> 
+                                            <div class="col-md-4">
+                                                <select formControlName="standard_payment_term" (change)="termSelect(f.standard_payment_term.value);dateChange()"
+                                                name="standard_terms" class="form-control">
+                                                    <option>--- Select Term ---</option>
+                                                    <option *ngFor="let term of terms" value="{{term.id}}">{{term.description}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5" style="text-align: middle;">
+                                        Quotation Validity: {{termSelected}} Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
+                                    </div>
+                                    <div class="col-lg-1" style="text-align: right;">
+                                        <div (click)="show=!show">
+                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show"><i class="cil-check-circle"></i></a>
+                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i class="fa fa-edit"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer white">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                    <b>(As Default)</b> Payment Terms: 30 Days
+                                    </div>
+                                    <div class="col-lg-5" style="text-align: right;">
+                                        Quotation Validity: 30 Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
+                                    </div>
+                                    <div class="col-lg-1" style="text-align: right;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="card rcorners customBorder shadow">
+                            <div class="card-header white">
+                                <b>Billing Milestone</b>
+                                <a [routerLink]="" (click)="addBillings()" routerLinkActive="router-link-active" >
+                                    <i class="icon-plus icons"></i>
+                                </a>
+                            </div>
+                            <div class="card-body scroll" style="padding: 0%;">
+                                <div class="row">
+                                    <table class="table table-borderless" formArrayName="billings">
+                                        <thead class="grey">
+                                            <tr>
+                                                <th>Billing ID</th>
+                                                <th>Stage</th>
+                                                <th>Percentage</th>
+                                                <th>Amount (MYR)</th>
+                                                <th>Status</th>
+                                                <th>Notes</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let quantity of billings().controls; let i=index" [formGroupName]="i" align="center">
+                                                <td style="width: 15%;">
+                                                    <input formControlName="billing_id" class="form-control" placeholder="ABC123" type="text">
+                                                </td>
+                                                <td style="width: 15%;">
+                                                    <input formControlName="stage" class="form-control" size="1" placeholder="Deploy" type="text">
+                                                </td>
+                                                <td style="width: 10%;">
+                                                    <input formControlName="percentage" class="form-control" size="1" placeholder="50" type="number" min="0" max="100.00" step=".01">
+                                                </td>
+                                                <td style="width: 20%;">
+                                                    <input formControlName="amount" class="form-control" size="1" placeholder="300" type="number" min="0" step=".01">
+                                                </td>
+                                                <td>
+                                                    <input formControlName="status" class="form-control" size="1" placeholder="Deposit" type="input">
+                                                </td>
+                                                <td style="width: 15%;">
+                                                    <input formControlName="remarks" class="form-control" size="1" placeholder="Remarks" type="text">
+                                                </td>
+                                                <td class="td-actions" style="width: 10%;">
+                                                    <div class="row">
+                                                        <div (click)="show=!show">
+                                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="addBillingMilestone()" 
+                                                            *ngIf="!show"><i class="cil-check-circle"></i></a>
+                                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show"><i class="fa fa-edit"></i></a>
+                                                        </div>&nbsp;
+                                                        <!-- <a [routerLink]="" routerLinkActive="router-link-active" (click)="addBillingMilestone()"><i class="fa fa-edit"></i></a> &nbsp; -->
+                                                        <a [routerLink]="" (click)="removeBillings(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="card-header white">
+                                <b>Payment Schedule</b>
+                                <a [routerLink]="" routerLinkActive="router-link-active" (click)="checkBilling() == false ? dangerModal.show() : addPayments()">
+                                    <i class="icon-plus icons"></i>
+                                </a>
+                            </div>
+                            <div class="card-body scroll" style="padding: 0%;">
+                                <div class="row">
+                                    <table class="table table-borderless" formArrayName="payments">
+                                        <thead class="grey">
+                                            <tr>
+                                                <th>Billing ID</th>
+                                                <th>Percentage</th>
+                                                <th>Schedule</th>
+                                                <th>SOC Payment Terms</th>
+                                                <th>Status</th>
+                                                <th>Amount (MYR)</th>
+                                                <th>Notes</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let quantity of payments().controls; let i=index" [formGroupName]="i" align="center">
+                                                <td style="width: 13%; padding:6px">
+                                                    <select formControlName="billing_id" class="form-control">
+                                                        <option *ngFor="let id of billingIdList" value="{{id}}">{{id}}</option>
+                                                    </select>
+                                                    <!-- <input class="form-control" formControlName="billing_id" placeholder="ABC123" type="text"> -->
+                                                </td>
+                                                <td style="width: 10%; padding:6px">
+                                                    <input class="form-control" formControlName="percentage" size="1" placeholder="50" type="number" min="0" max="100.00" step=".01">
+                                                </td>
+                                                <td style="width: 10%; padding:6px">
+                                                    <input class="form-control" formControlName="schedule" size="1" type="date"></td>
+                                                <td style="width: 15%; padding:6px">
+                                                    <input class="form-control" formControlName="soc_payment_term" placeholder="30 Days" type="number">
+                                                </td>
+                                                <td style=" padding:6px;">
+                                                    <input class="form-control" formControlName="status" size="1" placeholder="Deposit" type="input">
+                                                </td>
+                                                <td style="width: 15%; padding:6px">
+                                                    <input class="form-control" formControlName="amount" size="1" placeholder="300" type="number" min="0" step=".01">
+                                                </td>
+                                                <td style="width: 10%; padding:6px">
+                                                    <input class="form-control" formControlName="remarks" size="1" placeholder="Remarks" type="text">
+                                                </td>
+                                                <td class="td-actions" style="width: 10%; padding:none">
+                                                    <a [routerLink]="" routerLinkActive="router-link-active" ><i class="fa fa-edit"></i></a> &nbsp;
+                                                    <a [routerLink]="" routerLinkActive="router-link-active" (click)="removePayments(i)" ><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="card rcorners customBorder shadow">
+                            <div class="card-header white">
+                                <b>Additional Cost</b>
+                                <a [routerLink]="" (click)="addAddCosts()" routerLinkActive="router-link-active" >
+                                    <i class="icon-plus icons"></i>
+                                </a>
+                            </div>
+                            <div class="card-body scroll" style="padding: 0%;">
+                                <div class="row">
+                                    <table class="table table-borderless" formArrayName="addCosts">
+                                        <thead class="grey">
+                                            <tr>
+                                                <th>Description</th>
+                                                <th>Quantity</th>
+                                                <th>Unit Price (MYR)</th>
+                                                <th>Total Price (MYR)</th>
+                                                <th>Notes</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let cost of addCosts().controls; let i=index" [formGroupName]="i" align="center">
+                                                <td style="width: 15%;">
+                                                    <input formControlName="description" class="form-control" placeholder="Training" type="text">
+                                                </td>
+                                                <td style="width: 15%;">
+                                                    <input formControlName="quantity" class="form-control" size="1" placeholder="1" 
+                                                    (keyup)="allTotal(cost['controls'],addCosts().controls)"
+                                                    type="number" min="0">
+                                                </td>
+                                                <td style="width: 10%;">
+                                                    <input formControlName="unit_price" class="form-control" size="1" placeholder="300"
+                                                    (keyup)="allTotal(cost['controls'],addCosts().controls)"
+                                                    type="number" min="0" step=".01">
+                                                </td>
+                                                <td style="width: 20%;">
+                                                    <input formControlName="total_price" class="form-control" size="1" placeholder="300"
+                                                    type="number" min="0" step=".01">
+                                                </td>
+                                                <td style="width: 15%;">
+                                                    <input formControlName="remarks" class="form-control" size="1" placeholder="Remarks" type="text">
+                                                </td>
+                                                <td class="td-actions" style="width: 10%;">
+                                                    <a [routerLink]="" routerLinkActive="router-link-active" ><i class="fa fa-edit"></i></a> &nbsp;
+                                                    <a [routerLink]="" (click)="removeAddCosts(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="col-lg-9" align="right">
+                                        <div class="form-group">
+                                            <b>SUB TOTAL: MYR {{sub_total | number : '1.2-2'}}</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input 
+                            formControlName="title"
+                            id="title" 
+                            type="text" 
+                            class="form-control">
+                        <div *ngIf="f.title.touched && f.title.invalid" class="alert alert-danger">
+                            <div *ngIf="f.title.errors.required">Title is required.</div>
+                        </div>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="body">Body</label>
+                        <textarea 
+                            formControlName="body"
+                            id="body" 
+                            type="text" 
+                            class="form-control">
+                        </textarea>
+                        <div *ngIf="f.body.touched && f.body.invalid" class="alert alert-danger">
+                            <div *ngIf="f.body.errors.required">Body is required.</div>
+                        </div>
+                    </div> -->
+                    <div class="col-lg-9" align=center>
+                        <div class="form-group">
+                            <a routerLink="/quote/index" class="btn btn-secondary">CANCEL</a>
+                            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">SAVE & NEXT</button>
+                        </div>
+                    </div>                        
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Success</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{alertBody}}</p>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-danger" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Warning</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{alertBody}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="addBillings();dangerModal.hide()">Add Billing Milestone</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+

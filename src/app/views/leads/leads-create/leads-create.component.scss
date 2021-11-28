@@ -1,0 +1,95 @@
+.rcorners {
+  // border-radius: 20px;
+  overflow: hidden;
+}
+// i.ui-autocomplete-loader{
+//   display: none;
+// }
+.search-country-name-icon {
+  cursor: pointer;
+}
+.buttonColor {
+  background-color: #00538a;
+  border-color: #00538a;
+}
+
+.text-header {
+  align-self: center;
+}
+
+.invalid-feedback {
+  color: red;
+  font-size: inherit;
+}
+
+.required-field:after {
+  color: #d00;
+  content: "*";
+  margin-left: 3px;
+}
+
+.card-body {
+  padding: 0%;
+  .submit-button {
+    padding-top: 50px;
+  }
+}
+
+.card-row {
+  .row {
+    padding: 8px 15px;
+  }
+}
+
+.card {
+  background-color: var(--body-color);
+}
+
+.card-header {
+  border: 1;
+}
+
+.card-body {
+  padding: 0%;
+  background-color: white;
+  border: white;
+}
+.card-footer {
+  opacity: 1;
+  border: none;
+  padding: 0%;
+  padding-top: 20px;
+}
+
+.radio-label {
+  margin-bottom: 0px;
+  margin-right: 15px;
+  margin-left: 5px;
+}
+
+.p-inputtext {
+  height: 100%;
+}
+
+.not-found-modal {
+  .modal-content {
+    padding: 20px;
+    .modal-header {
+      margin: 0 auto;
+      border-bottom: 0px;
+    }
+
+    .model-title {
+      font-weight: bold;
+    }
+
+    .modal-body {
+      margin: 0 auto;
+    }
+
+    .modal-footer {
+      border-top: 0px;
+      justify-content: center;
+    }
+  }
+}

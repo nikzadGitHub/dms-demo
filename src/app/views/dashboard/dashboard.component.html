@@ -1,0 +1,371 @@
+<p-tabView>
+  <p-tabPanel header="SALES PERFORMANCE" [selected]="true">
+    <div class="animated fadeIn">
+      <div class="row">
+        <div class="col-12 d-flex justify-content-end mb-2">
+          <div class="mr-1 d-flex">
+            <p-button styleClass="arrowBtn" icon="pi pi-chevron-left" (onClick)="yearDecrement('sales')"></p-button>
+            <div class="d-flex flex-column justify-content-center"> {{ selectedYear }} </div>
+            <p-button styleClass="arrowBtn" icon="pi pi-chevron-right" (onClick)="yearIncrement('sales')"></p-button>
+          </div>
+          <div class="ml-1">
+            <i class="cil cil-calendar"></i>
+              <p-dropdown [options]="salesPeriod" optionLabel="name" optionValue="value"
+                [(ngModel)]="selectedSalesPeriod" (onChange)="fetchSalesPerformance(selectedYear, selectedSalesPeriod)" >
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-4">
+          <div class="card text-white bg-warning">
+            <div class="card-body pb-0">
+              <div class="col-12 text-center" style="font-size: 18px;">
+                Total Invoiced Amount
+              </div>
+              <div class="col-12 mt-2 mb-2 text-center" style="font-size: 24px;">
+                <b>RM{{ invoiceAmt }} ({{ invoicePerc }}%)</b>
+              </div>
+              <div class="col-12 mb-2 text-center" style="font-size: 16px;">
+                of Target RM{{ invoiceTargetAmt }}
+              </div>
+            </div>
+          </div>
+        </div><!--/.col-->
+        <div class="col-sm-12 col-md-4">
+          <div class="card text-white bg-success">
+            <div class="card-body pb-0">
+              <div class="col-12 text-center" style="font-size: 18px;">
+                Open Order Amount
+              </div>
+              <div class="col-12 mt-2 mb-2 text-center" style="font-size: 24px;">
+                <b>RM{{ orderAmt }}</b>
+              </div>
+              <div class="col-12 mb-2 text-center" style="font-size: 16px;">
+                Open Order: {{ orderQty }}
+              </div>
+            </div>
+          </div>
+        </div><!--/.col-->
+        <div class="col-sm-12 col-md-4">
+          <div class="card text-white bg-info">
+            <div class="card-body pb-0">
+              <div class="col-12 text-center" style="font-size: 18px;">
+                Committed Funnel Amount
+              </div>
+              <div class="col-12 mt-2 mb-2 text-center" style="font-size: 24px;">
+                <b>RM{{ cfAmt }}</b>
+              </div>
+              <div class="col-12 mb-2 text-center" style="font-size: 16px;">
+                Total: RM{{ cfTotalAmt }}
+              </div>
+            </div>
+          </div>
+        </div><!--/.col-->
+      </div><!--/.row-->
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+                  {{selLabel}} Sales Performance VS Sales Target
+                </div>
+                <div >
+                  <!--<i class="cil cil-calendar"></i>
+                  <p-dropdown [options]="graphPeriod" optionLabel="name" optionValue="value"
+                    [(ngModel)]="selectedGraphPeriod"  (onChange)="fetchSalesDataByPeriod(selectedGraphPeriod)" >
+                  </p-dropdown>-->
+                  <p-splitButton icon="cil-calendar" [model]="graphPeriod" styleClass="periodButton"></p-splitButton>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <div style="font-size: 24px; font-weight: 600;">
+                  <p-selectButton [options]="salesOptions" [(ngModel)]="selectedOption" (onChange)="fetchSalesDataByPeriod(selectedGraphPeriod)" optionLabel="label" optionValue="value" styleClass="graph-one-option"></p-selectButton>
+
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph1" [(ngModel)]="salesTargetCheck" [binary]="true" (onChange)="getSalesData()"></p-checkbox>
+                  <label class="ml-1 mb-0 mt-1" style="font-size:12px;">Sales Target</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph1" [(ngModel)]="invoiceCheck" [binary]="true" (onChange)="getSalesData()"></p-checkbox>
+                  <label class="ml-1 mb-0 mt-1" style="font-size:12px;">Invoice</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph1" [(ngModel)]="salesOrderCheck" [binary]="true" (onChange)="getSalesData()"></p-checkbox>
+                  <label class="ml-1 mb-0 mt-1" style="font-size:12px;">Sales Order</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph1" [(ngModel)]="funnelCheck" [binary]="true" (onChange)="getSalesData()"></p-checkbox>
+                  <label class="ml-1 mb-0 mt-1" style="font-size:12px;">Committed Funnel</label>
+                </div>
+              </div>
+              <div class="mt-2">
+                <p-chart type="bar" [data]="chartSalesMthQtr" [options]="chartOptions"></p-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <div class="card" style="min-height: 418px;">
+            <div class="card-body">
+              <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+                Sales Performance
+              </div>
+              <div class="d-flex justify-content-between" style="font-weight: 500;">
+                <label>Actual Performance</label>
+                <label>{{ progressPerc }}%</label>
+                <label></label>
+              </div>
+              <div>
+                <p-progressBar [value]="progressPerc" [showValue]="false"></p-progressBar>
+              </div>
+              <div class="row ml-2 mt-3">
+                <div class="col-1"><div style="width:20px;height:20px;background:#FF7B00;border-radius:20px;"></div></div>
+                <div class="col-7">Total Sales Amount</div>
+                <div class="col-4">RM{{ ttlSalesAmt }}</div>
+              </div>
+              <div class="row ml-2 mt-4" >
+                <div class="col-1"><div style="width:20px;height:20px;background:#E5E5E5;border-radius:20px;"></div></div>
+                <div class="col-7"><b>Year: {{ selectedYear }}-{{ selectedYear + 1 }}</b> Sales Target Amount</div>
+                <div class="col-4">RM{{targetSalesAmt}}</div>
+              </div>
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedSalesPeriod == 'quarter'">
+                <div class="col-1"></div>
+                <div class="col-7">Q1 (3+9): 1 Apr - 30 Jun {{ selectedYear }}</div>
+                <div class="col-4">RM{{ q1TargetAmt }}</div>
+              </div>
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedSalesPeriod == 'quarter'">
+                <div class="col-1"></div>
+                <div class="col-7">Q2 (6+6): 1 Jul - 30 Sep {{ selectedYear }}</div>
+                <div class="col-4">RM{{ q2TargetAmt }}</div>
+              </div>
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedSalesPeriod == 'quarter'">
+                <div class="col-1"></div>
+                <div class="col-7">Q3 (9+3): 1 Oct - 31 Dec {{ selectedYear }}</div>
+                <div class="col-4">RM{{ q3TargetAmt }}</div>
+              </div>
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedSalesPeriod == 'quarter'">
+                <div class="col-1"></div>
+                <div class="col-7">Q4 (11+1): 1 Jan - 31 Mar {{ selectedYear + 1 }}</div>
+                <div class="col-4">RM{{ q4TargetAmt }}</div>
+              </div>
+              <div class="row ml-2 mt-1" style="font-size: 14px;" [hidden]="selectedSalesPeriod != 'quarter'">
+                <div class="col-1"></div>
+                <div class="col-7">{{ currentQuarter }}</div>
+                <div class="col-4">RM{{ currTargetAmt }}</div>
+              </div>
+              <div class="row ml-2 mt-3" style="font-weight: 500;">
+                <div class="col-8">Balance Amount To Achieve Sales Target</div>
+                <div class="col-4">RM{{ balanceToAchieve }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+                Sales Performance - Brands ({{ selectedYear }})
+              </div>
+              <div class="d-flex justify-content-end">
+                <div class="d-flex">
+                  <p-checkbox name="graph2" value="invoice" [(ngModel)]="brand_invoiceCheck" [binary]="true" (onChange)="getBrandSalesData()"></p-checkbox>
+                  <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Invoice</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph2" value="salesOrder" [(ngModel)]="brand_salesOrderCheck" [binary]="true" (onChange)="getBrandSalesData()"></p-checkbox>
+                  <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Sales Order</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph2" value="funnel" [(ngModel)]="brand_funnelCheck" [binary]="true" (onChange)="getBrandSalesData()"></p-checkbox>
+                  <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Committed Funnel</label>
+                </div>
+              </div>
+              <div>
+                <p-chart type="bar" [data]="chartBrandSales" [options]="chartOptions"></p-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+                Top 10 Customer List
+              </div>
+              <div class="d-flex justify-content-end">
+                <div class="d-flex">
+                  <p-checkbox name="graph3" value="invoice" [(ngModel)]="cust_invoiceCheck" [binary]="true" (onChange)="getCustSalesData()"></p-checkbox>
+                  <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Invoice</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph3" value="salesOrder" [(ngModel)]="cust_salesOrderCheck" [binary]="true" (onChange)="getCustSalesData()"></p-checkbox>
+                  <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Sales Order</label>
+                </div>
+                <div class="d-flex">
+                  <p-checkbox name="graph3" value="funnel" [(ngModel)]="cust_funnelCheck" [binary]="true" (onChange)="getCustSalesData()"></p-checkbox>
+                  <label class="ml-1 mr-4 mb-0 " style="font-size:12px;">Committed Funnel</label>
+                </div>
+              </div>
+              <div>
+                <p-chart type="bar" [data]="chartCustSales" [options]="chartOptions"></p-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="SALES FUNNEL">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-end mb-2">
+        <div class="mr-1 d-flex">
+          <p-button styleClass="arrowBtn" icon="pi pi-chevron-left" (onClick)="yearDecrement('funnel')"></p-button>
+          <div class="d-flex flex-column justify-content-center"> {{ funnelSelectedYear }} </div>
+          <p-button styleClass="arrowBtn" icon="pi pi-chevron-right" (onClick)="yearIncrement('funnel')"></p-button>
+        </div>
+        <div class="ml-1">
+          <i class="cil cil-calendar"></i>
+            <p-dropdown [options]="funnelPeriod" optionLabel="name" optionValue="value"
+               [(ngModel)]="selectedFunnelPeriod" (onChange)="fetchSalesFunnel(funnelSelectedYear, selectedFunnelPeriod)" >
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="card" style="min-height: 400px;">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+                  Activity of {{ currMonth }} {{ funnelSelectedYear }}
+                </div>
+                <div >
+                  <p-splitButton icon="cil-calendar" [model]="activityPeriod" styleClass="periodButton"></p-splitButton>
+                </div>
+              </div>
+              <div class="mt-2">
+                <div echarts [options]="activityChartOption" class="demo-chart" style="height: 300px; width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <div class="card" style="min-height: 400px;">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+                  Forecast Category
+                </div>
+                <div >
+                  <p-splitButton icon="cil-calendar" [model]="forecastPeriod" styleClass="periodButton"></p-splitButton>
+                </div>
+              </div>
+              <div class="mt-2">
+                <div echarts [options]="forecastChartOption" class="demo-chart" style="height: 300px; width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="row">
+      <div class="col-12 col-md-4">
+        <div class="card" style="min-height: 418px;">
+          <div class="card-body">
+            <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+              Opportunities
+            </div>
+            <div class="content">
+              <p-tabView styleClass="sales-funnel-tab">
+                <p-tabPanel header="Latest">
+                  <p-table [value]="opportunityDataLatest" styleClass="p-datatable-striped sales-funnel">
+                    <ng-template pTemplate="body" let-opportunity_list>
+                      <tr>
+                        <td>{{ opportunity_list.date }}</td>
+                        <td>{{ opportunity_list.id }}</td>
+                        <td>RM {{ opportunity_list.amount }}</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </p-tabPanel>
+                <p-tabPanel header="Overdue">
+                  <p-table [value]="opportunityDataOverdue" styleClass="p-datatable-striped sales-funnel">
+                    <ng-template pTemplate="body" let-opportunity_list>
+                      <tr>
+                        <td>{{ opportunity_list.date }}</td>
+                        <td>{{ opportunity_list.id }}</td>
+                        <td>RM {{ opportunity_list.amount }}</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </p-tabPanel>
+              </p-tabView>
+            </div>
+          </div>
+          <div class="card-footer text-right">
+            <a href="#/opportunity">View More ></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="card" style="min-height: 418px;">
+          <div class="card-body">
+            <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+              Activities
+            </div>
+            <div class="content">
+              <p-tabView styleClass="sales-funnel-tab">
+                <p-tabPanel header="Latest">
+                  <p-table [value]="activityLogDataLatest" styleClass="p-datatable-striped sales-funnel">
+                    <ng-template pTemplate="body" let-activity_log>
+                      <tr>
+                        <td>{{ activity_log.date }}</td>
+                        <td>{{ activity_log.description }}</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </p-tabPanel>
+                <p-tabPanel header="Overdue">
+                  <p-table [value]="activityLogDataOverdue" styleClass="p-datatable-striped sales-funnel">
+                    <ng-template pTemplate="body" let-activity_log>
+                      <tr>
+                        <td>{{ activity_log.date }}</td>
+                        <td>{{ activity_log.description }}</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </p-tabPanel>
+              </p-tabView>
+            </div>
+          </div>
+          <div class="card-footer text-right">
+            <a href="#/activities">View More ></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="card" style="min-height: 550px;">
+          <div class="card-body">
+            <div class="mb-4" style="font-size: 24px; font-weight: 600;">
+              Notification
+            </div>
+            <div class="content">
+              <p-table [value]="notificationData" styleClass="p-datatable-striped sales-funnel">
+                <ng-template pTemplate="body" let-notification>
+                  <tr>
+                    <td>{{ notification.description }}</td>
+                    <td>{{ moment(notification.date).fromNow() }}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-tabPanel>
+</p-tabView>

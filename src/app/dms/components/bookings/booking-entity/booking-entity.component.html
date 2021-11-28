@@ -1,0 +1,23 @@
+<app-booking-detail
+  [bookingDetailList]="bookingDetailList">
+</app-booking-detail>
+
+<br>
+
+<app-opportunity-summary [opportunitySummary]="opportunitySummary"></app-opportunity-summary>
+
+<br>
+
+<dms-booking-approval
+  [status]="status"
+  [list]="approvalList"
+  (buttonAction)="onApprovalAction($event)">
+</dms-booking-approval>
+
+<br>
+
+<app-booking-form-main-asset
+  [mainAsset]="mainAsset">
+</app-booking-form-main-asset>
+<br>
+<app-status-log></app-status-log>

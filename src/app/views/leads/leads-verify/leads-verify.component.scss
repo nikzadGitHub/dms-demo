@@ -1,0 +1,93 @@
+.rcorners {
+  // border-radius: 20px;
+  overflow: hidden;
+}
+
+.card-body {
+  padding: 0%;
+  .submit-button {
+    padding-top: 50px;
+  }
+}
+
+.card-row {
+  .row {
+    padding: 8px 15px;
+  }
+}
+
+.card {
+  background-color: var(--body-color);
+}
+
+.card-header {
+  border: 1;
+}
+
+.card-body {
+  padding: 0%;
+  background-color: white;
+  border: white;
+}
+.card-footer {
+  opacity: 1;
+  border: none;
+  padding: 0%;
+  padding-top: 20px;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.radio-label {
+  margin-bottom: 0px;
+  margin-right: 15px;
+  margin-left: 5px;
+}
+
+.grey{
+  background-color: rgb(245, 245, 245);
+}
+
+:host ::ng-deep .mat-slide-toggle-bar {
+  height: 19px;
+  border-radius: 15px;
+}
+:host ::ng-deep .mat-slide-toggle-thumb-container {
+  top: 0px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+:host ::ng-deep .mat-slide-toggle-thumb {
+  height: 16px;
+  width: 15px;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: #386FA4;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: white;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-ripple-element {
+  background-color: #386FA4;
+}
+
+.bold {
+  font-weight: bold;
+}
+.lead-id {
+  background-color: #5dbec0;
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 4px;
+  padding-bottom: 3px;
+}
