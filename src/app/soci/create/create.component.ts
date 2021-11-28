@@ -201,7 +201,7 @@ export class CreateComponent implements OnInit {
           setTimeout(() => {
             this.successModal.hide();
             this.form.reset();
-            this.addMultipleFiles = null;
+            this.addMultipleFiles = [];
           }, 2000);
         });
     } else {
@@ -213,6 +213,7 @@ export class CreateComponent implements OnInit {
           this.soci_data["edit"] = false;
           this.sendSociData(this.soci_data);
           this.form.reset();
+          this.addMultipleFiles = [];
           this.modal.hide();
           this.alertBody = res["message"];
           this.successModal.show();
@@ -224,7 +225,7 @@ export class CreateComponent implements OnInit {
   }
   redirectPage() {
     this.form.reset();
-    this.addMultipleFiles = null;
+    this.addMultipleFiles = [];
     this.router.navigateByUrl("soci/index");
   }
 
