@@ -105,7 +105,7 @@ export class DefaultLayoutComponent {
     localStorage.removeItem("userRole");
     localStorage.removeItem("user-json");
     localStorage.removeItem("auth-token");
-
+    localStorage.clear();
     return false;
   }
 }
