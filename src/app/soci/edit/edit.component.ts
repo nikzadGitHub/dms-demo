@@ -16,6 +16,7 @@ import { Product } from "../../quote/products/products";
 import { Quote } from "../../quote/quote";
 import { QuoteService } from "../../quote/quote.service";
 import { SociService } from "../soci.service";
+import { SystemConfig } from "../../config/system-config";
 
 @Component({
   selector: "app-edit",
@@ -130,7 +131,8 @@ export class EditComponent implements OnInit {
   new_billing_instruction_date: string;
   sociAttachment: any[] = [];
   fileType: any;
-
+  token: any;
+  url: any;
   constructor(
     private route: ActivatedRoute,
     private quoteService: QuoteService,
@@ -196,6 +198,12 @@ export class EditComponent implements OnInit {
       this.soci_id = event.sociId;
       this.getSociData(this.soci_id);
     });
+
+    if(localStorage.getItem("auth-token")){
+      this.token = localStorage.getItem("auth-token")
+    }
+
+    this.url = SystemConfig.apiBaseUrl
   }
 
   getSociData(soci_id) {
@@ -1296,7 +1304,7 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          this.alertBody = data.message;
+          this.alertBody = data.message + " Release Id " + data.data.id;
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();

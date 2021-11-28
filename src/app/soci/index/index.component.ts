@@ -7,6 +7,7 @@ import { Column } from "../column";
 import { CreateComponent } from "../create/create.component";
 import { Soci } from "../soci";
 import { SociService } from "../soci.service";
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: "app-index",
@@ -39,6 +40,9 @@ export class IndexComponent implements OnInit {
         this.totalRecords = data["data"]["soci"]["total"];
         this.checkPermission();
       });
+      setTimeout(() => {
+        console.log(this.socis)
+      }, 4000);
   }
 
   getAll() {
@@ -100,5 +104,27 @@ export class IndexComponent implements OnInit {
         }
       });
     }
+  }
+  exportToExcel($event) {
+    let dupArr :Array<any>= this.socis
+    let exportArr : Array<any> = []
+    for(let i = 0 ; i < dupArr.length; i++){
+      let compObj :any  = {}
+      compObj.created_at = dupArr[i].created_at
+      compObj.company_name = dupArr[i].customer.company_name? dupArr[i].customer.company_name:''
+      compObj.soci_id = dupArr[i].soci_id
+      compObj.quote_full_id = dupArr[i].quote_full_id
+      compObj.quote_date = dupArr[i].quote_date
+      compObj.amount = dupArr[i].po_amount ? dupArr[i].po_amount:0
+      compObj.po_no = dupArr[i].po_no
+      compObj.po_date = dupArr[i].po_date
+      exportArr.push(compObj)
+    }
+	  const fileName = 'SOCI_Listing.xlsx';
+		const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportArr);
+		const wb: XLSX.WorkBook = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(wb, ws, 'test');
+
+		XLSX.writeFile(wb, fileName);
   }
 }

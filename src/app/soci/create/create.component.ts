@@ -40,6 +40,7 @@ export class CreateComponent implements OnInit {
 
   isFileAdded: boolean;
   is_update_soci: boolean;
+  fileExtension: any;
   // rolesPermission: any[] = [];
   // user_json: any;
   // checkPermission: any[] = [];
@@ -105,17 +106,17 @@ export class CreateComponent implements OnInit {
   getFile(event) {
     this.file = event.target.files[0];
     this.fileName = this.file.name;
+    this.fileExtension = this.file.type
   }
 
   addMultiFile() {
     const reader = new FileReader();
     reader.onload = this.handleReaderLoaded.bind(this);
     reader.readAsBinaryString(this.file);
-  
   }
 
   handleReaderLoaded(e) {
-    let base64textString = "data:image/png;base64," + btoa(e.target.result);
+    let base64textString = "data:" + this.fileExtension + ";base64," + btoa(e.target.result);
     if (this.file && this.form.value.fileLabel) {
       this.isFileAdded = true;
       this.addMultipleFiles.push({
@@ -200,7 +201,7 @@ export class CreateComponent implements OnInit {
           setTimeout(() => {
             this.successModal.hide();
             this.form.reset();
-            this.addMultipleFiles = null;
+            this.addMultipleFiles = [];
           }, 2000);
         });
     } else {
@@ -211,6 +212,8 @@ export class CreateComponent implements OnInit {
           this.soci_data = res;
           this.soci_data["edit"] = false;
           this.sendSociData(this.soci_data);
+          this.form.reset();
+          this.addMultipleFiles = [];
           this.modal.hide();
           this.alertBody = res["message"];
           this.successModal.show();
@@ -222,7 +225,7 @@ export class CreateComponent implements OnInit {
   }
   redirectPage() {
     this.form.reset();
-    this.addMultipleFiles = null;
+    this.addMultipleFiles = [];
     this.router.navigateByUrl("soci/index");
   }
 
