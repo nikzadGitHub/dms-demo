@@ -2031,7 +2031,7 @@
                 <td>{{item.fileName}}</td>
                 <!-- <td></td> -->
                 <td>
-                  <a [href]="item.file" target="_blank">Download</a>
+                  <a href="{{url + '/soci/attachment-download/' + item.fileName + '?token=' + token}}" target="_blank">Download</a>
                 </td>
               </tr>
 
