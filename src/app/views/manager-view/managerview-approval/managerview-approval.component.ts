@@ -3,7 +3,7 @@ import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { SociService } from "../../../soci/soci.service";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { ManagerViewService } from "../manager-view.service";
+import { ManagerViewService } from "../../../views/manager-view/manager-view.service";
 
 @Component({
   selector: "app-managerview-approval",

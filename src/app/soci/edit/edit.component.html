@@ -955,8 +955,8 @@
                   <th>Schedule</th>
                   <th>Percentage %</th>
                   <th>Amount {{soci_data?.currency}}</th>
-                  <th>SOC Payment Terms</th>
-                  <th>Status</th>
+                  <!-- <th>SOC Payment Terms</th>
+                  <th>Status</th> -->
                   <th>Note</th>
                   <th></th>
                   <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
@@ -1019,33 +1019,7 @@
                     />
                     <!-- {{ item.amount }} -->
                   </td>
-                  <td>
-                    <input
-                      type="text"
-                      class="form-control"
-                      [(ngModel)]="item.soc_payment"
-                      [attr.disabled]="
-                        enableEdit['addBillInstruction'] && controller == item
-                          ? null
-                          : ''
-                      "
-                      [ngModelOptions]="{ standalone: true }"
-                    />
-                    <!-- {{ item.soc_payment }} -->
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      class="form-control"
-                      [(ngModel)]="item.status"
-                      [attr.disabled]="
-                        enableEdit['addBillInstruction'] && controller == item
-                          ? null
-                          : ''
-                      "
-                      [ngModelOptions]="{ standalone: true }"
-                    />
-                  </td>
+                 
                   <td>
                     <input
                       type="text"
@@ -1140,22 +1114,7 @@
                       type="number"
                     />
                   </td>
-                  <td>
-                    <input
-                      formControlName="soc_payment_term"
-                      class="form-control"
-                      placeholder="payment terms"
-                      type="text"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      formControlName="status"
-                      class="form-control"
-                      placeholder="status"
-                      type="text"
-                    />
-                  </td>
+                  
                   <td>
                     <textarea
                       formControlName="remarks"
@@ -1261,7 +1220,7 @@
                     [routerLink]=""
                     routerLinkActive="router-link-active"
                     (click)="updateAdditionalInstruction(i, item.id)"
-                    *ngIf=""
+                    *ngIf="enableEdit['additionalInstruction'] && controller == item"
                     ><i class="cil-check-circle"></i
                   ></a>
                   &nbsp;
@@ -1417,27 +1376,24 @@
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control"
                       style="width: 200px"
-                      *ngIf="editableRowIndex == i"
+                
                     >
                       <option value="" disabled selected>Select Item</option>
                       <option
                         *ngFor="let item of additional_costs; let i = index"
-                        value="{{ item.id }}"
+                        value="{{ item.id }}" [ngValue]="item.cost_item_id"
                       >
                         {{ item.description }}
                       </option>
                     </select>
-
-                    <input
+                    <!-- *ngIf="editableRowIndex !== i || selectedId !== 'additionalCharges'" -->
+                    <!-- <input
                       class="text-left form-control"
                       style="width: 200px"
                       type="text"
                       [(ngModel)]="item.code_item"
                       readonly
-                      *ngIf="
-                        editableRowIndex !== i ||
-                        selectedId !== 'additionalCharges'
-                      "
+                      *ngIf="editableRowIndex !== i || selectedId !== 'additionalCharges'" 
                       [attr.disabled]="
                         enableEdit['additionalCharges'] && controller == item
                           ? null
@@ -1445,7 +1401,7 @@
                       "
                       [ngModelOptions]="{ standalone: true }"
                       placeholder="Enter Item"
-                    />
+                    /> -->
                   </div>
                 </div>
               </div>

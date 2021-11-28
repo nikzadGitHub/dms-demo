@@ -221,7 +221,7 @@ export class EditComponent implements OnInit {
       // standard_term
       this.standard_term = res["data"]["standard_terms"];
       this.standerd_payment_term =
-        res["data"]["standard_terms"]["payment_term"];
+        res["data"]["standard_terms"]["payment_term"]?  res["data"]["standard_terms"]["payment_term"] : 0 ;
       this.payment_term_from =
         res["data"]["standard_terms"]["payment_term_from"];
       // quotation_validity_payment_term_to
@@ -242,7 +242,7 @@ export class EditComponent implements OnInit {
       );
       // Delivery_terms
       this.default_delivery_term =
-        res["data"]["standard_terms"]["default_delivery_term"];
+        res["data"]["standard_terms"]["default_delivery_term"]? res["data"]["standard_terms"]["default_delivery_term"] :0;
       this.default_delivery_term_from =
         res["data"]["standard_terms"]["default_delivery_term_from"];
       this.delivery_term_from =
@@ -252,7 +252,7 @@ export class EditComponent implements OnInit {
         this.delivery_term_to.getDate() + this.default_delivery_term
       );
       this.standard_delivery_term =
-        res["data"]["standard_terms"]["delivery_term"];
+        res["data"]["standard_terms"]["delivery_term"]?res["data"]["standard_terms"]["delivery_term"]:0;
 
       // quotation_validity_delivery_term_to
       this.quotation_validity_delivery_term_to = new Date(
@@ -362,12 +362,14 @@ export class EditComponent implements OnInit {
         standard_payment_term: this.form.value.days,
         standard_payment_term_from: this.form.value.fromDate,
         is_edited: this.is_payment_term_eidt,
+        soci_id: this.soci_id
       })
       .subscribe(
         (data: any) => {
           this.addStandardTermModal.hide();
           this.is_edited = true;
           this.alertBody = data.message;
+          this.form.patchValue({standard_payment_term: this.form.value.days })
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
@@ -388,12 +390,17 @@ export class EditComponent implements OnInit {
         delivery_term: this.form.value.delivery_days,
         delivery_term_from: this.form.value.delivery_fromDate,
         is_edited: this.is_delivery_term_eidt,
+        soci_id: this.soci_id
       })
       .subscribe(
         (data: any) => {
           this.addStandardTermModal.hide();
+          this.form.patchValue({standard_delivery_term: this.form.value.delivery_days })
           this.is_edited = true;
           this.alertBody = data.message;
+
+         
+
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
@@ -416,9 +423,6 @@ export class EditComponent implements OnInit {
 
   // ADD Billing_Milestone
   addBillingMileStone() {
-    // this.billing_milestone.forEach((values) => {
-    //   this.billing_percentage += values.percentage;
-    // });
     this.sociService
       .postQuery("/soci/billing-milestone", {
         soci_id: this.soci_id,
@@ -543,6 +547,8 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
+          data["data"].soc_payment_term = this.form.value.soc_payment_term
+          data["data"].status = this.form.value.status
           this.payment_schedules.push(data["data"]);
           this.is_edited = true;
           this.alertBody = data.message;
@@ -1035,7 +1041,7 @@ export class EditComponent implements OnInit {
         unit_price: this.form.value.unit_price,
         quantity: this.form.value.quantity,
         cost: this.product_cost,
-        margin: 1,
+        margin: 2,
         total_price: this.form.value.quantity.total_price,
         product_id: this.product_id,
         discount: this.form.value.discount,
@@ -1154,6 +1160,7 @@ export class EditComponent implements OnInit {
     this.product_cost = product.cost;
     this.product_data_area_id = product.data_area_id;
     this.external_product_number = product.external_product_number;
+    this.product_data_area_id = product.data_area_id;
     this.product_id = product.id;
     this.product_amount = product.amount;
     if (product.product_type) {
@@ -1180,10 +1187,11 @@ export class EditComponent implements OnInit {
   updateProduct() {
     this.sociService
       .putQuery("/soci/product/" + this.product_id, {
+        cost_price: this.productCostprice,
         external_product_number: this.external_product_number,
+        discount: this.form.value.discount,
+        unit_price: this.form.value.unit_price,
         data_area_id: this.product_data_area_id,
-        product_id: this.product_id,
-        // name: this.form.value.productName,
         soci_id: this.soci_id,
         quantity: this.form.value.quantity,
         cost:
@@ -1192,7 +1200,7 @@ export class EditComponent implements OnInit {
             : this.product_cost,
         margin: 12.0,
         total_price: this.form.value.quantity.total_price,
-        discount: this.form.value.discount,
+        product_id: this.product_id,
         amount: this.form.value.amount,
         product_type: this.productType,
       })
@@ -1403,6 +1411,13 @@ export class EditComponent implements OnInit {
 
   enableEditMethod(index, control, type) {
     delete control["laravel_through_key"];
+    if (type == "additionalCharges") {
+      delete control["code_item"];
+      delete control["code_item_id"];
+    }
+    if (type == "billingMilestone") {
+      delete control["payment_schedule"];
+    }
     this.selectedId = type;
     this.controller = control;
     if (type == "payment") {
