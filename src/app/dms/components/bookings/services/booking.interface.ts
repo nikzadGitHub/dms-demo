@@ -20,6 +20,6 @@ export interface SaveResult {
 
 export interface BookingInterface {
   getList(): Observable<BookingList>;
-
-  saveBooking(form: any): Observable<SaveResult>;
+  create(data: any):Observable<SaveResult>;
+  updateBooking(data: any, id: any): Observable<SaveResult>;
 }
