@@ -61,7 +61,13 @@ export class MockBookingService implements BookingInterface {
     return of(mockBookingsData);
   }
 
-  saveBooking(form: any): Observable<SaveResult> {
+  create(form: any): Observable<SaveResult> {
+    return of({
+      id: 1
+    });
+  }
+
+  updateBooking(form: any, id: any): Observable<SaveResult> {
     return of({
       id: 1
     });
