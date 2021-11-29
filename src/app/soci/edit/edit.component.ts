@@ -401,22 +401,19 @@ export class EditComponent implements OnInit {
           this.addStandardTermModal.hide();
           this.is_edited = true;
           this.alertBody = data.message;
-          this.form.patchValue({ 
-            standard_payment_term: this.form.value.days  
-           });
            this.payment_term_from = this.form.value.fromDate
-          //  console.log("payment_term_to:", this.addDays('10/29/2021', 10));
            this.payment_term_to = new Date(this.payment_term_from);
            this.payment_term_to.setDate(
              this.payment_term_to.getDate() + parseInt(this.form.value.days)
            );
+           this.form.patchValue({ 
+            standard_payment_term: this.form.value.days  
+           });
            console.log("payment_term_to:", this.payment_term_to);
            
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            // this.form.reset();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -450,7 +447,6 @@ export class EditComponent implements OnInit {
           );
           this.is_edited = true;
           this.alertBody = data.message;
-
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
@@ -610,7 +606,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -638,7 +633,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -666,7 +660,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -702,7 +695,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -752,7 +744,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -778,7 +769,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -812,7 +802,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -843,7 +832,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -869,7 +857,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -899,7 +886,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -927,7 +913,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -950,7 +935,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -988,7 +972,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -1051,7 +1034,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -1078,7 +1060,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -1135,7 +1116,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -1293,7 +1273,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.form.reset();
           }, 2000);
         },
         (error: any) => {
@@ -1322,7 +1301,6 @@ export class EditComponent implements OnInit {
         this.successModal.show();
         setTimeout(() => {
           this.successModal.hide();
-          this.form.reset();
         }, 2000);
       },
       (error) => {
