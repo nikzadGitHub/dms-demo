@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { OpportunitySummary } from '../../../services/booking-entity';
-import { MainAsset } from '../../../services/main-asset-service/main-asset-entity';
+import {emptyOpportunitySummary, OpportunitySummary} from '../../../services/booking-entity';
+import { MainAsset } from '../../../services/asset-entity';
 
 
 @Component({
@@ -9,19 +9,18 @@ import { MainAsset } from '../../../services/main-asset-service/main-asset-entit
   styleUrls: ['./opportunity-booking-form.component.scss']
 })
 export class OpportunityBookingFormComponent implements OnInit{
-  opportunitySummary: OpportunitySummary;
+  opportunitySummary: OpportunitySummary = emptyOpportunitySummary;
   mainAsset: MainAsset;
   constructor() { }
   ngOnInit(): void {
     this.mainAsset = {
-      main: null,
-      compatibleAccessories: null,
-      peripheralAccessories: null,
-      consumables: null,
-      packingDuringShipment: null,
-      accessoriesList: null,
-      addBtn: true
-    }
+      main: [],
+      compatibles: [],
+      peripherals: [],
+      consumables: [],
+      packing: [],
+      accessories: []
+    };
     this.opportunitySummary = {
         customer: "test",
         opportunity_id: "test",

@@ -1,43 +1,98 @@
 <dms-expand-panel title="Approval Workflow" [open]="true">
-    <div class="row">
-        <div class="col-md-12">
-            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                <div class="form-group row">
-                    <div class="col-md-4 col-form-label">Status</div>
-                    <div class="col-md-8">
-                        <p class="form-control-static"><b>{{ statusText }}</b></p>
-                    </div>
-                </div>
-
-                <div *ngFor="let approval of approvalList; let i = index">
-                    <div class="row">
-                        <div class="col-md-4">
-                            {{ approval.description }}
-                        </div>
-                        <div class="col-md-2">
-                            {{ approval.status }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ approval.user_name }}
-                        </div>
-                    </div>
-                    <br>
-                </div>
-            </form>
-            <br>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <ng-content></ng-content>
-                </div>
-            </div>
-            <br>
-            <div class="d-flex justify-content-center">
-                <div *ngFor="let button of buttons; let i=index" class="pr-2">
-                    <button type="submit" class="btn btn-md btn-primary"
-                        (click)="onButtonClick(i)">{{ button.title | uppercase }}</button>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-md-12">
+      <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="form-group row">
+          <div class="col-md-4 col-form-label">Status</div>
+          <div class="col-md-8">
+            <p class="form-control-static"><b>{{ statusText }}</b></p>
+          </div>
         </div>
+
+        <div *ngFor="let approval of list; let i = index">
+          <div class="row">
+            <div class="col-md-4">
+              {{ approval.description }}
+            </div>
+            <div class="col-md-2">
+              {{ approval.status }}
+            </div>
+            <div class="col-md-6">
+              <span *ngFor="let user of approval.user_list; let i=index">
+              {{ i && ',' }} {{ user.name }}
+              </span>
+            </div>
+          </div>
+          <br>
+        </div>
+      </form>
+      <br>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <div *ngIf="isConfirmed" class="animated fadeIn card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-5">
+                  Main Asset Serial No
+                </div>
+                <div class="col-md-7">
+                  2
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <label class="col-md-5" for="warehouse_from">
+                  From Warehouse
+                </label>
+                <div class="col-md-7">
+                  <input id="warehouse_from" type="text"
+                         class="form-control"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <label class="col-md-5" for="ward_from">
+                  From Ward/ Department
+                </label>
+                <div class="col-md-7">
+                  <input id="ward_from" type="text"
+                         class="form-control"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <label class="col-md-5" for="destination">
+                  To Ward / Department
+                </label>
+                <div class="col-md-7">
+                  <input id="destination" type="text"
+                         class="form-control"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-2"></div>
+                <div class="col-10">
+                  <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-primary mr-3">SUBMIT</button>
+                    <br>
+                    <button type="button" class="btn btn-primary">CANCEL</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-content></ng-content>
+        </div>
+      </div>
+      <br>
+      <div class="d-flex justify-content-center">
+        <div *ngFor="let button of buttons; let i=index" class="pr-2">
+          <button type="submit" class="btn btn-md btn-primary"
+                  (click)="onButtonClick(i)">{{ button.title | uppercase }}</button>
+        </div>
+      </div>
     </div>
+  </div>
 </dms-expand-panel>

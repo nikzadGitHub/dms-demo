@@ -4,18 +4,17 @@ import { BookingStatus, statusToNumber, statusFromNumber, statusIncrement } from
 describe('BookingStatus Enum', () => {
   it('should have value with Uppercase first letter', () => {
     const list = Object.values(BookingStatus);
-    for (const text in list) {
+    for (const text of list) {
       const first = text.substring(0, 1);
-      if (first != first.toUpperCase()) {
-        fail('Invalid casing for: ' + text);
-      }
+      expect(first)
+        .withContext('Invalid casing for: ' + text)
+        .toEqual(first.toUpperCase());
     }
-    expect().nothing();
   });
 
   it('should have value with Lowercase keys', () => {
     const list = Object.keys(BookingStatus);
-    for (const text in list) {
+    for (const text of list) {
       expect(text).toEqual(text.toLowerCase());
     }
   });
@@ -26,7 +25,7 @@ describe('BookingStatus Enum', () => {
     for (let i = 0; i < list.length; ++i) {
       const current = list[i];
       for (let j = i + 1; j < list.length; ++j) {
-        if (list[j] == current) {
+        if (list[j] === current) {
           fail('Value was duplicated for: ' + current);
         }
       }
@@ -59,8 +58,8 @@ describe('BookingStatus: Cast to/from Number', () => {
       .toBe(BookingStatus.unknown);
   });
 
-  it('should not increment last case', () => {
+  it('should increment reviewed to endorsed', () => {
     expect(statusIncrement(BookingStatus.reviewed))
-      .toBe(BookingStatus.endorced);
+      .toBe(BookingStatus.endorsed);
   });
 });

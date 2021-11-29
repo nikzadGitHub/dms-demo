@@ -2,6 +2,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormComponent } from './form.component';
+import {DmsModule} from '../../../dms.module';
 
 describe('BookingFormComponent', () => {
 
@@ -10,6 +11,7 @@ describe('BookingFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [DmsModule],
       declarations: [ FormComponent ]
     })
     .compileComponents();
@@ -24,5 +26,5 @@ describe('BookingFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
+
 });
