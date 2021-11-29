@@ -199,11 +199,11 @@ export class EditComponent implements OnInit {
       this.getSociData(this.soci_id);
     });
 
-    if(localStorage.getItem("auth-token")){
-      this.token = localStorage.getItem("auth-token")
+    if (localStorage.getItem("auth-token")) {
+      this.token = localStorage.getItem("auth-token");
     }
 
-    this.url = SystemConfig.apiBaseUrl
+    this.url = SystemConfig.apiBaseUrl;
   }
 
   getSociData(soci_id) {
@@ -220,8 +220,9 @@ export class EditComponent implements OnInit {
 
       // standard_term
       this.standard_term = res["data"]["standard_terms"];
-      this.standerd_payment_term =
-        res["data"]["standard_terms"]["payment_term"]?  res["data"]["standard_terms"]["payment_term"] : 0 ;
+      this.standerd_payment_term = res["data"]["standard_terms"]["payment_term"]
+        ? res["data"]["standard_terms"]["payment_term"]
+        : 0;
       this.payment_term_from =
         res["data"]["standard_terms"]["payment_term_from"];
       // quotation_validity_payment_term_to
@@ -241,8 +242,11 @@ export class EditComponent implements OnInit {
           this.default_payment_term
       );
       // Delivery_terms
-      this.default_delivery_term =
-        res["data"]["standard_terms"]["default_delivery_term"]? res["data"]["standard_terms"]["default_delivery_term"] :0;
+      this.default_delivery_term = res["data"]["standard_terms"][
+        "default_delivery_term"
+      ]
+        ? res["data"]["standard_terms"]["default_delivery_term"]
+        : 0;
       this.default_delivery_term_from =
         res["data"]["standard_terms"]["default_delivery_term_from"];
       this.delivery_term_from =
@@ -251,8 +255,11 @@ export class EditComponent implements OnInit {
       this.delivery_term_to.setDate(
         this.delivery_term_to.getDate() + this.default_delivery_term
       );
-      this.standard_delivery_term =
-        res["data"]["standard_terms"]["delivery_term"]?res["data"]["standard_terms"]["delivery_term"]:0;
+      this.standard_delivery_term = res["data"]["standard_terms"][
+        "delivery_term"
+      ]
+        ? res["data"]["standard_terms"]["delivery_term"]
+        : 0;
 
       // quotation_validity_delivery_term_to
       this.quotation_validity_delivery_term_to = new Date(
@@ -308,12 +315,12 @@ export class EditComponent implements OnInit {
       this.sociAttachment.forEach((value) => {
         console.log("file:", value);
         // this.fileType = value.file.split(".").pop();
-        this.fileType = value.file
+        this.fileType = value.file;
         console.log("file-type:", this.fileType);
       });
       // const response = await fetch(this.fileType);
       // const fileType = await fileTypeFromStream(response.body);
-      
+
       // console.log("file-type:-->",fileType);
       // End SOCI Attachment
       this.form.patchValue({
@@ -362,14 +369,14 @@ export class EditComponent implements OnInit {
         standard_payment_term: this.form.value.days,
         standard_payment_term_from: this.form.value.fromDate,
         is_edited: this.is_payment_term_eidt,
-        soci_id: this.soci_id
+        soci_id: this.soci_id,
       })
       .subscribe(
         (data: any) => {
           this.addStandardTermModal.hide();
           this.is_edited = true;
           this.alertBody = data.message;
-          this.form.patchValue({standard_payment_term: this.form.value.days })
+          this.form.patchValue({ standard_payment_term: this.form.value.days });
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
@@ -390,16 +397,16 @@ export class EditComponent implements OnInit {
         delivery_term: this.form.value.delivery_days,
         delivery_term_from: this.form.value.delivery_fromDate,
         is_edited: this.is_delivery_term_eidt,
-        soci_id: this.soci_id
+        soci_id: this.soci_id,
       })
       .subscribe(
         (data: any) => {
           this.addStandardTermModal.hide();
-          this.form.patchValue({standard_delivery_term: this.form.value.delivery_days })
+          this.form.patchValue({
+            standard_delivery_term: this.form.value.delivery_days,
+          });
           this.is_edited = true;
           this.alertBody = data.message;
-
-         
 
           this.successModal.show();
           setTimeout(() => {
@@ -547,8 +554,8 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          data["data"].soc_payment_term = this.form.value.soc_payment_term
-          data["data"].status = this.form.value.status
+          data["data"].soc_payment_term = this.form.value.soc_payment_term;
+          data["data"].status = this.form.value.status;
           this.payment_schedules.push(data["data"]);
           this.is_edited = true;
           this.alertBody = data.message;
@@ -1457,6 +1464,7 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
+          this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {

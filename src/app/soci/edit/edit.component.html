@@ -139,7 +139,7 @@
             <div
               class="col-lg-1"
               style="text-align: right"
-              *ngIf="!is_preview_check && sociStatus == 1"
+              *ngIf="!is_preview_check && sociStatus == 1 || sociStatus == 7"
             >
               <div>
                 <a
@@ -191,7 +191,7 @@
             <div
               class="col-lg-1"
               style="text-align: right"
-              *ngIf="!is_preview_check && sociStatus == 1"
+              *ngIf="!is_preview_check && sociStatus == 1 || sociStatus == 7"
             >
               <div>
                 <a
@@ -321,7 +321,7 @@
                   <td
                     class="text-center td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && sociStatus == 1"
+                    *ngIf="!is_preview_check && sociStatus == 1 || sociStatus == 7"
                   >
                     <div class="action-icon">
                       <a
@@ -563,7 +563,7 @@
                   <td
                     class="td-actions"
                     style="width: 10%; padding: none"
-                    *ngIf="!is_preview_check && sociStatus == 1"
+                    *ngIf="!is_preview_check && sociStatus == 1 || sociStatus == 7"
                   >
                     <div class="action-icon">
                       <a
@@ -806,7 +806,7 @@
                   <td
                     class="td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && sociStatus == 1"
+                    *ngIf="!is_preview_check && sociStatus == 1 || sociStatus == 7"
                   >
                     <div class="action-icon">
                       <!-- (click)="disableEditMethod(cost, 'addCost')"
@@ -1038,7 +1038,7 @@
                   <td
                     class="td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && sociStatus == 1"
+                    *ngIf="!is_preview_check && sociStatus == 1 || sociStatus == 7"
                   >
                     <div class="action-icon">
                       <a
@@ -1211,7 +1211,7 @@
             <div
               class="col-md-1"
               style="text-align: right"
-              *ngIf="!is_preview_check && sociStatus == 1"
+              *ngIf="!is_preview_check && sociStatus == 1 || sociStatus == 7"
             >
               <div class="row">
                 <!-- //action -->
@@ -1386,22 +1386,6 @@
                         {{ item.description }}
                       </option>
                     </select>
-                    <!-- *ngIf="editableRowIndex !== i || selectedId !== 'additionalCharges'" -->
-                    <!-- <input
-                      class="text-left form-control"
-                      style="width: 200px"
-                      type="text"
-                      [(ngModel)]="item.code_item"
-                      readonly
-                      *ngIf="editableRowIndex !== i || selectedId !== 'additionalCharges'" 
-                      [attr.disabled]="
-                        enableEdit['additionalCharges'] && controller == item
-                          ? null
-                          : ''
-                      "
-                      [ngModelOptions]="{ standalone: true }"
-                      placeholder="Enter Item"
-                    /> -->
                   </div>
                 </div>
               </div>
@@ -1494,7 +1478,7 @@
               <div
                 class="col-md-1"
                 style="text-align: right"
-                *ngIf="!is_preview_check && sociStatus == 1"
+                *ngIf="!is_preview_check && sociStatus == 1 || sociStatus == 7"
               >
                 <div class="row">
                   <!-- //action -->
@@ -1813,7 +1797,7 @@
                   <td
                     class="td-actions"
                     style="width: 5%"
-                    *ngIf="!is_preview_check && sociStatus == 1"
+                    *ngIf="!is_preview_check && sociStatus == 1 || sociStatus == 7"
                   >
                     <!-- //action -->
                     <div class="action-icon" style="display: flex">
@@ -2057,7 +2041,7 @@
   <button
     class="request-approval-btn"
     (click)="confirmationModal.show()"
-    *ngIf="sociStatus == 1 && is_edited"
+    *ngIf="sociStatus == 1 || sociStatus == 7 && is_edited"
   >
     REQUEST APPROVAL
   </button>
