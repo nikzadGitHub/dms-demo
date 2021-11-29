@@ -121,7 +121,9 @@
           [(ngModel)]="search_text"
         />
         <span>
-          <i (click)="exportToExcel($event)" class="pi pi-file-excel export-to-excel"></i>
+          <i (click)="exportToExcel($event)"><img style="margin: 8px;"
+            src="../../../../assets/img/icons/Vector (2).svg"
+          /></i>
         </span>
       </span>
     </div>
@@ -129,7 +131,7 @@
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="created_at" class="text-center">
-        <div style="width: 100px;" class="p-d-flex p-jc-between p-ai-center">
+        <div style="width: 93px;" class="p-d-flex p-jc-between p-ai-center">
           Created Date
           <p-sortIcon field="created_at"></p-sortIcon>
           <p-columnFilter
@@ -153,7 +155,7 @@
         </div>
       </th>
       <th pSortableColumn="customer.company_name" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
+        <div style="width: 65px;" class="p-d-flex p-jc-between p-ai-center">
           Company Name
           <p-sortIcon field="customer.company_name"></p-sortIcon>
           <p-columnFilter
@@ -165,7 +167,7 @@
         </div>
       </th>
       <th pSortableColumn="quote_full_id" class="text-center">
-        <div style="width: 122px;" class="p-d-flex p-jc-between p-ai-center">
+        <div style="width: 90px;" class="p-d-flex p-jc-between p-ai-center">
           Quotation ID
           <p-sortIcon field="quote_full_id"></p-sortIcon>
           <p-columnFilter
@@ -177,7 +179,7 @@
         </div>
       </th>
       <th pSortableColumn="quote_date" class="text-center">
-        <div style="width: 112px;" class="p-d-flex p-jc-between p-ai-center">
+        <div style="width: 80px;" class="p-d-flex p-jc-between p-ai-center">
           Quote Date
           <p-sortIcon field="quote_date"></p-sortIcon>
           <p-columnFilter
@@ -189,7 +191,7 @@
         </div>
       </th>
       <th pSortableColumn="po_amount" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
+        <div style="width: 65px;" class="p-d-flex p-jc-between p-ai-center">
           Amount (MYR)
           <p-sortIcon field="po_amount"></p-sortIcon>
           <p-columnFilter
@@ -201,7 +203,7 @@
         </div>
       </th>
       <th pSortableColumn="po_no" class="text-center">
-        <div style="width: 78px;" class="p-d-flex p-jc-between p-ai-center">
+        <div style="width: 65px;" class="p-d-flex p-jc-between p-ai-center">
           PO No
           <p-sortIcon field="po_no"></p-sortIcon>
           <p-columnFilter
