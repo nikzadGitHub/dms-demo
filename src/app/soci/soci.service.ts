@@ -117,6 +117,10 @@ export class SociService {
     );
   }
 
+  // deleteAttachment(id: number): Observable<object> {
+  //   return this.httpClient.delete(this.apiURL + "/soci/attachment-delete/", id ,this.httpOptions);
+  // }
+
   putQuery(url, req): Observable<object> {
     let query = url;
     return this.httpClient.put(

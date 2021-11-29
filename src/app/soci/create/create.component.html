@@ -11,7 +11,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Customer Quotation Acceptance</h4>
+        <h4 class="modal-title">Create SOCI</h4>
         <button
           type="button"
           class="close"
@@ -29,8 +29,6 @@
               <label for="quote_id">Quotation Reference No: </label>
             </div>
             <div class="col-lg-6">
-              <!-- For Edit -->
-              <!-- [(ngModel)]="selectedQuoteAdvanced" -->
               <input
                 type="text"
                 class="form-control"
@@ -41,20 +39,6 @@
                 readonly
                 [style]="{ width: '100%' }"
               />
-              <!-- <p-autoComplete
-                formControlName="quote_id"
-                field="quote_id"
-                [(ngModel)]="selectedQuoteAdvanced"
-                *ngIf="quote_full_id"
-                [style]="{ width: '100%' }"
-                [inputStyle]="{ width: '100%' }"
-              >
-                <ng-template let-quote pTemplate="item">
-                  <div class="quote-item">
-                    <div>{{ quote.quote_id }}</div>
-                  </div>
-                </ng-template>
-              </p-autoComplete> -->
 
               <!-- For create -->
               <p-autoComplete
@@ -137,13 +121,52 @@
             </div>
           </div>
           <br />
-          <div class="row" >
+          <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-6">
+              <table class="table table-bordered" *ngIf="isFileAdded && addMultipleFiles.length>0">
+                <thead>
+                  <tr align="center">
+                    <th>Remarks</th>
+                    <th>File Name</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    align="center"
+                    *ngFor="let item of addMultipleFiles; let i = index"
+                  >
+                    <td>{{ item.remarks }}</td>
+                    <td>{{ item.fileName }}</td>
+                    <td>
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="deleteFile(i, item.id)"
+                      >
+                        <i class="pi pi-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!--  -->
+          <div class="row">
             <div class="col-lg-4">
               <label for="attachment">Attachment: </label>
             </div>
-            <!-- <div class="col-lg-3">
-              <input type="text" class="form-control" formControlName="fileLabel" placeholder="Add label" />
-            </div> -->
+            <div class="col-lg-3">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="fileLabel"
+                placeholder="Remarks..."
+              />
+            </div>
             <div class="col-lg-2">
               <!-- <input
                 formControlName="file"
@@ -169,27 +192,23 @@
                   (click)="fileUpload.click()"
                 >
                   Upload File
-                  <input
-                    #fileInput
-                    type="file"
-                    style="display: none"
-                  />
+                  <input #fileInput type="file" style="display: none" />
                 </button>
               </div>
               <div class="selected-file">
                 {{ fileName || "No file selected..." }}
               </div>
             </div>
-            <!-- <div class="col-lg-2">
+            <div class="col-lg-2">
               <a
-              [routerLink]=""
-              routerLinkActive="router-link-active"
-              class="add-icon"
-              (click)="addMultiFile()"
-            >
-              <i class="icon-plus icons"></i>
-            </a>
-            </div> -->
+                [routerLink]=""
+                routerLinkActive="router-link-active"
+                class="add-icon"
+                (click)="addMultiFile()"
+              >
+                <i class="icon-plus icons"></i>
+              </a>
+            </div>
           </div>
         </form>
       </div>

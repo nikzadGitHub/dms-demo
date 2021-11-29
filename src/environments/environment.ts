@@ -5,6 +5,8 @@
 
 export const environment = {
   production: false,
+  AZURE_TENANT_ID : '419c4758-e653-4ed4-b3e6-d84360e97a52',
+  AZURE_CLIENT_ID :'7a1e9113-1e9b-47cf-804a-92e07373898b'
 };
 
 export const settings = {

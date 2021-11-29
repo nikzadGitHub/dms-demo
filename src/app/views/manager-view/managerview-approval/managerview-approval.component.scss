@@ -1,4 +1,11 @@
 .approval-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
   margin-bottom: 20px;
   margin-top: 10px;
+  .quotation-btn {
+    margin-right: 10px;
+  }
 }
