@@ -10,4 +10,6 @@ export class SystemConfig {
 
     public static appId = "my.com.websight.idsmed.sparks.funnel";
     public static appType = environment.production ? "PRODUCTION" : "STAGING";
+    public static azureTenantId = environment.AZURE_TENANT_ID;
+    public static azureClientId = environment.AZURE_CLIENT_ID;
 }
