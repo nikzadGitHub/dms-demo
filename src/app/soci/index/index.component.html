@@ -1,92 +1,3 @@
-<!-- <p-table
-  #dt
-  [value]="socis"
-  styleClass="p-datatable-customers"
-  [rowHover]="true"
-  [reorderableColumns]="true"
-  responsiveLayout="scroll"
-  [reorderableColumns]="true"
-  [lazy]="true"
-  (onLazyLoad)="SortColumn($event)"
-  (onColReorder)="columnOrder($event)"
-  [filterDelay]="0"
-  [globalFilterFields]="['quote_id', 'company', 'amount', 'status']"
-  [columns]="columns"
->
-  <ng-template pTemplate="caption">
-    <div class="table-header">
-      <span>
-        SOCI Listing
-        <a
-          [routerLink]=""
-          routerLinkActive="router-link-active"
-          (click)="createModal.showModal()"
-        >
-          <i class="icon-plus icons" style="color: white"></i>
-        </a>
-      </span>
-      <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input
-          type="text"
-          pInputText
-          placeholder="Global Search"
-          (input)="getAll()"
-          [(ngModel)]="search_text"
-        />
-      </span>
-    </div>
-  </ng-template>
-  <ng-template pTemplate="header" let-columns>
-    <tr>
-      <th
-        *ngFor="let column of columns"
-        pSortableColumn="{{ column.field }}"
-        class="text-center"
-        pReorderableColumn
-      >
-        <div class="p-d-flex p-jc-between p-ai-center">
-          {{ column.header }}
-          <p-sortIcon field="{{ column.field }}"></p-sortIcon>
-          <p-columnFilter
-            type="{{ column.type }}"
-            field="{{ column.field }}"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
-        </div>
-      </th>
-      <th [style]="{ width: '5%' }"></th>
-    </tr>
-  </ng-template>
-  <ng-template
-    pTemplate="body"
-    let-soci
-    let-rowData
-    let-columns="columns"
-    let-index="rowIndex"
-  >
-    <tr class="p-selectable-row" [pReorderableRow]="index">
-      <td class="text-center" *ngFor="let col of columns">
-        <span class="p-column-title">{{ col.header }}</span>
-        {{ rowData[col.field] }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title">Action</span>
-        <a
-          href="#"
-          [routerLink]="['/soci/', soci.id, 'edit']"
-          class="fa fa-edit"
-        ></a>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
-<p-paginator
-  [rows]="pageItems"
-  [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
->
-</p-paginator> -->
 
 <p-table
   #dt
@@ -224,6 +135,18 @@
           ></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="fo_order_number" class="text-center">
+        <div style="width: 65px;" class="p-d-flex p-jc-between p-ai-center">
+          FO Number
+          <p-sortIcon field="fo_order_number"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="fo_order_number"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="status_desc" class="text-center">
         <div style="width: 65px;" class="p-d-flex p-jc-between p-ai-center">
           status
@@ -297,8 +220,31 @@
         </div>
       </td>
       <td class="text-center">
-        <span class="p-column-title">Po. date</span>
-        {{ soci.po_date | date: "MM-dd-yyyy" }}
+        <div *ngIf="!soci.po_date">
+          <a
+          [routerLink]=""
+          routerLinkActive="router-link-active"
+          *ngIf="soci.po_no == null"
+          (click)="createModal.addPo(soci.quote_full_id, soci.id)"
+        >
+          Po Date
+        </a>
+        </div>
+        <div *ngIf="soci.po_date">
+          <span class="p-column-title">Po. date</span>
+          {{ soci.po_date | date: "MM-dd-yyyy" }}
+        </div>
+     
+      </td>
+      <td class="text-center">
+        <div *ngIf="soci.fo_order_number">
+          <span class="p-column-title">Fo Number</span>
+        {{ soci.fo_order_number  }}
+        </div>
+        <div *ngIf="!soci.fo_order_number">
+          <span class="p-column-title">Fo Number</span>
+          _
+        </div>
       </td>
       <td class="text-center">{{ soci.status_desc }}</td>
       <td class="text-center">

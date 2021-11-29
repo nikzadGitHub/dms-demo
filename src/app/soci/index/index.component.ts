@@ -118,6 +118,7 @@ export class IndexComponent implements OnInit {
       compObj.amount = dupArr[i].po_amount ? dupArr[i].po_amount:0
       compObj.po_no = dupArr[i].po_no
       compObj.po_date = dupArr[i].po_date
+      compObj.fo_order_number = dupArr[i].fo_order_number
       exportArr.push(compObj)
     }
 	  const fileName = 'SOCI_Listing.xlsx';

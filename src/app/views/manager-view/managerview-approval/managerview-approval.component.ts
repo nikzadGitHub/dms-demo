@@ -22,7 +22,7 @@ export class ManagerviewApprovalComponent implements OnInit {
   is_soci_view = false;
   sociBtnColor = "btn btn-primary";
   quotationBtn = "btn btn-primary";
-  isSociApprove: boolean;
+  isManagerViewAction: boolean;
   // is_approval_view_check: boolean;
   constructor(
     private sociService: SociService,
@@ -34,9 +34,9 @@ export class ManagerviewApprovalComponent implements OnInit {
   ngOnInit(): void {
     // this.getPendingSociList();
     this.route.queryParams.subscribe((params) => {
-      this.isSociApprove = params.sociPendingList;
+      this.isManagerViewAction = params.isManagerViewAction;
     });
-    if (this.isSociApprove) {
+    if (this.isManagerViewAction) {
       this.getPendingSociList();
     } else {
       this.getPendingQuotationList();
@@ -57,7 +57,7 @@ export class ManagerviewApprovalComponent implements OnInit {
   }
 
   getPendingQuotationList() {
-    this.isSociApprove = false;
+    this.isManagerViewAction = false;
     this.is_quotation_view = true;
     this.is_soci_view = false;
     this.sociBtnColor = "btn btn-secondary";

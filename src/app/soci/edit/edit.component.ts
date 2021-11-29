@@ -17,6 +17,7 @@ import { Quote } from "../../quote/quote";
 import { QuoteService } from "../../quote/quote.service";
 import { SociService } from "../soci.service";
 import { SystemConfig } from "../../config/system-config";
+import * as moment from "moment";
 
 @Component({
   selector: "app-edit",
@@ -24,6 +25,7 @@ import { SystemConfig } from "../../config/system-config";
   styleUrls: ["./edit.component.scss"],
 })
 export class EditComponent implements OnInit {
+  moment: any = moment;
   @ViewChild("billingRemarkModal") billingRemarkModal: ModalDirective;
   @ViewChild("paymentRemarkModal") paymentRemarkModal: ModalDirective;
   @ViewChild("successModal") successModal: ModalDirective;
@@ -74,10 +76,10 @@ export class EditComponent implements OnInit {
   default_delivery_term_to: Date;
   standard_delivery_term: any;
   payment_term_to: Date;
-  payment_term_from: Date;
+  payment_term_from: string;
   default_payment_term: any;
   default_payment_term_from: Date;
-  delivery_term_from: Date;
+  delivery_term_from: string;
   delivery_term_to: Date;
   default_delivery_term: any;
   quotation_validity_delivery_term_to: Date;
@@ -133,6 +135,9 @@ export class EditComponent implements OnInit {
   fileType: any;
   token: any;
   url: any;
+  selected_date: any;
+  isCancelRemarks: boolean;
+  sociDetailId: any;
   constructor(
     private route: ActivatedRoute,
     private quoteService: QuoteService,
@@ -186,6 +191,7 @@ export class EditComponent implements OnInit {
       customerTaxRate: "",
       standardWarranty: "",
       sociRemarks: "",
+      cancelled_remarks: ''
     });
   }
 
@@ -214,6 +220,7 @@ export class EditComponent implements OnInit {
         sociRemarks: this.soci_data?.remarks,
       });
       this.sociStatus = res["data"]["status"];
+      this.sociDetailId = res["data"]["soci_id"]
       this.is_edited = res["data"]["is_edited"];
       this.is_released = res["data"]["is_released"];
       this.external_id = res["data"]["external_id"];
@@ -271,12 +278,18 @@ export class EditComponent implements OnInit {
       );
       // billing_milestone
       this.billing_milestone = res["data"]["billing_milestones"];
+      if(this.billing_milestone.length != 0){
       this.billing_milestone.forEach((values) => {
         this.billing_id = values.billing_id;
         this.billing_percentage += values.percentage;
       });
       this.autoIncreaseBillingId(this.billing_id);
       this.calculateBillingPercentage();
+    }else{
+      this.form.patchValue({
+        billing_id: this.sociDetailId+ "_1",
+      });
+    }
       // payment_schedules
       this.payment_schedules = res["data"]["payment_schedules"];
       // this.getPaymentSchdule()
@@ -323,10 +336,13 @@ export class EditComponent implements OnInit {
 
       // console.log("file-type:-->",fileType);
       // End SOCI Attachment
-      this.form.patchValue({
-        standard_payment_term: this.standerd_payment_term,
-        standard_delivery_term: this.standard_delivery_term,
-      });
+     
+        this.form.patchValue({
+          standard_payment_term: this.standerd_payment_term,
+          standard_delivery_term: this.standard_delivery_term,
+        });
+    
+      
       this.additional_cost_and_charges =
         this.total_additional_charges_amount +
         this.total_additional_costs_amount;
@@ -340,13 +356,15 @@ export class EditComponent implements OnInit {
   // Standard Term
 
   editStandardPaymentTerm() {
+    // let selected_date
     this.is_payment_term_eidt = true;
     if ((this.is_payment_term_eidt = true)) {
+      console.log("payment_term_from:", this.payment_term_from);
       this.addStandardTermModal.show();
-      let date = new Date(this.payment_term_from).toISOString().split("T")[0];
+    console.log('new Dat', this.payment_term_from.split(" ")[0])
       this.form.patchValue({
         days: this.standerd_payment_term,
-        fromDate: date,
+        fromDate:   this.payment_term_from.split(" ")[0],
       });
     }
   }
@@ -355,12 +373,19 @@ export class EditComponent implements OnInit {
     this.is_delivery_term_eidt = true;
     if (this.is_delivery_term_eidt) {
       this.addStandardTermModal.show();
-      let date = new Date(this.delivery_term_from).toISOString().split("T")[0];
+      // let date = new Date(this.delivery_term_from).toISOString().split("T")[0];
+      console.log("default_delivery_term:", this.default_delivery_term);
       this.form.patchValue({
-        delivery_days: this.default_delivery_term,
-        delivery_fromDate: date,
+        delivery_days: this.standard_delivery_term,
+        delivery_fromDate: this.delivery_term_from.split(" ")[0],
       });
     }
+  }
+  
+  addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result.toDateString();
   }
 
   updatePaymentTerms() {
@@ -376,10 +401,22 @@ export class EditComponent implements OnInit {
           this.addStandardTermModal.hide();
           this.is_edited = true;
           this.alertBody = data.message;
-          this.form.patchValue({ standard_payment_term: this.form.value.days });
+          this.form.patchValue({ 
+            standard_payment_term: this.form.value.days  
+           });
+           this.payment_term_from = this.form.value.fromDate
+          //  console.log("payment_term_to:", this.addDays('10/29/2021', 10));
+           this.payment_term_to = new Date(this.payment_term_from);
+           this.payment_term_to.setDate(
+             this.payment_term_to.getDate() + parseInt(this.form.value.days)
+           );
+           console.log("payment_term_to:", this.payment_term_to);
+           
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            // this.form.reset();
+            this.form.reset();
           }, 2000);
         },
         (error) => {
@@ -405,6 +442,12 @@ export class EditComponent implements OnInit {
           this.form.patchValue({
             standard_delivery_term: this.form.value.delivery_days,
           });
+
+          this.delivery_term_from = this.form.value.delivery_fromDate
+          this.delivery_term_to = new Date(this.delivery_term_from);
+          this.delivery_term_to.setDate(
+            this.delivery_term_to.getDate() + parseInt(this.form.value.delivery_days)
+          );
           this.is_edited = true;
           this.alertBody = data.message;
 
@@ -475,10 +518,15 @@ export class EditComponent implements OnInit {
     }
   }
   autoIncreaseBillingId(billing_id) {
-    var billin_id_array = billing_id.split("_");
-    this.form.patchValue({
-      billing_id: billin_id_array[0] + "_" + (parseInt(billin_id_array[1]) + 1),
-    });
+    console.log("billing_id:", billing_id);
+    
+    if(billing_id){ 
+      var billin_id_array = billing_id.split("_");
+      this.form.patchValue({
+        billing_id: billin_id_array[0] + "_" + (parseInt(billin_id_array[1]) + 1),
+      });
+      console.log("billing_id>>>>:", billin_id_array[0] + "_" + (parseInt(billin_id_array[1]) + 1));
+    }
   }
 
   updateBillingMilestone(index, billing_instruction_id) {
@@ -676,6 +724,8 @@ export class EditComponent implements OnInit {
   }
 
   changeCostvalues(value) {
+    console.log("cost-value:",value);
+    
     if (value.quantity && value.unit_price) {
       value.total_price = value.quantity * value.unit_price;
     } else {
@@ -689,7 +739,11 @@ export class EditComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.additional_costs[index] = data["data"];
-          this.total_additional_costs_amount += data["data"]["total_price"];
+          let total = 0;
+          this.additional_costs.forEach(ele => {
+            total += ele.total_price
+          })
+          this.total_additional_costs_amount = total // data["data"]["total_price"];
           this.additional_cost_and_charges += data["data"]["total_price"];
           this.total_cost += data["data"]["total_price"];
           this.editableRowIndex = null;
@@ -770,7 +824,10 @@ export class EditComponent implements OnInit {
         }
       );
   }
-
+  changeBillingInstructionAmount(value){
+    console.log("value:", value);
+    this.controller.amount = value
+  }
   updateBillingInstruction(index, billing_instruction_id) {
     this.sociService
       .putQuery(
@@ -960,11 +1017,14 @@ export class EditComponent implements OnInit {
     }
   }
   updateChargesQuantity(value) {
+    console.log("charge-quantity-value:", value);
+    
     if (value.quantity) {
       value.total_price = value.unit_price * value.quantity;
     }
   }
   updateChargesUnitPrice(value) {
+    console.log("value: ", value);
     if (value.quantity && value.unit_price) {
       value.total_price = value.unit_price * value.quantity;
     }
@@ -978,7 +1038,11 @@ export class EditComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.additional_charges[index] = data["data"];
-          this.total_additional_charges_amount += data["data"]["total_price"];
+          let total = 0;
+          this.additional_charges.forEach(ele => {
+            total += ele.total_price
+          })
+          this.total_additional_charges_amount = total //data["data"]["total_price"];
           this.additional_cost_and_charges += data["data"]["total_price"];
           this.total_cost += data["data"]["total_price"];
           this.editableRowIndex = null;
@@ -1292,8 +1356,10 @@ export class EditComponent implements OnInit {
             this.router.navigate(["/soci/index"]);
           }, 2000);
         },
-        (error) => {
-          this.alertBody = "Please enter required fields";
+        (error:any) => {
+          console.log("error:",error);
+          console.log(" error[data]:", error["error"]["data"]["value"]);
+          this.alertBody = error["error"]["data"]["value"] || "Please enter required fields";
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
@@ -1345,14 +1411,10 @@ export class EditComponent implements OnInit {
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
-            let navigate: NavigationExtras = {
-              queryParams: {
-                sociPendingList: true,
-              },
-            };
             this.successModal.hide();
             this.request_approval = true;
-            this.router.navigate(["/managerview/approval"], navigate);
+            this.managerViewAction();
+            // this.router.navigate(["/managerview/approval"], navigate);
           }, 2000);
         },
         (error) => {
@@ -1377,7 +1439,8 @@ export class EditComponent implements OnInit {
           setTimeout(() => {
             this.successModal.hide();
             this.request_approval = true;
-            this.router.navigate(["/managerview/approval"]);
+            this.managerViewAction();
+            // this.router.navigate(["/managerview/approval"]);
           }, 2000);
         },
         (error) => {
@@ -1394,6 +1457,7 @@ export class EditComponent implements OnInit {
     this.sociService
       .postQuery("/soci/reject", {
         id: this.soci_id,
+        cancelled_remarks: this.form.value.cancelled_remarks
       })
       .subscribe(
         (data: any) => {
@@ -1402,7 +1466,8 @@ export class EditComponent implements OnInit {
           setTimeout(() => {
             this.successModal.hide();
             this.request_approval = true;
-            this.router.navigate(["/managerview/approval"]);
+            this.managerViewAction();
+            // this.router.navigate(["/managerview/approval"]);
           }, 2000);
         },
         (error) => {
@@ -1414,9 +1479,30 @@ export class EditComponent implements OnInit {
         }
       );
   }
+private managerViewAction(){
+  let navigate: NavigationExtras = {
+    queryParams: {
+      isManagerViewAction: true,
+    },
+  };
+  this.successModal.hide();
+  this.request_approval = true;
+  this.router.navigate(["/managerview/approval"], navigate);
+}
+  addCancelRemarks() {
+    console.log("cancel-remarks:", this.form.value.cancelled_remarks);
+    if(this.form.value.cancelled_remarks){
+      this.isCancelRemarks = true;
+    }
+    else{
+      this.isCancelRemarks = false;
+    }
+  }
   // From Manager-view Approval
 
   enableEditMethod(index, control, type) {
+    console.log("controller:", control);
+    
     delete control["laravel_through_key"];
     if (type == "additionalCharges") {
       delete control["code_item"];
@@ -1469,7 +1555,6 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.request_approval = true;
           }, 2000);
         },
         (error) => {

@@ -554,6 +554,16 @@ h4 {
 //     }
 // }
 
+.reject-remakrs {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  label {
+    font-weight: 600;
+    font-family: 'Lato';
+    margin-bottom: 0px;
+  }
+}
 .row {
   padding: 10px;
 }
