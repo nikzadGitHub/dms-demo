@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { OpportunitySummary } from '../../../services/booking-entity';
+import {emptyOpportunitySummary, OpportunitySummary} from '../../../services/booking-entity';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { OpportunitySummary } from '../../../services/booking-entity';
  * @class
  */
 export class OpportunitySummaryComponent implements OnInit{
-  @Input() opportunitySummary: OpportunitySummary ;
+  @Input() opportunitySummary: OpportunitySummary = emptyOpportunitySummary;
   constructor() { }
   ngOnInit(): void {}
 }

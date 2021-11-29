@@ -45,7 +45,7 @@ ng serve
 ## Deploy
 Build for production with minification, like:
 ```
-ng build
+npm run build
 ```
 
 ## Deploy Documentation
@@ -64,7 +64,8 @@ iDSMED-frontend/
 ├── e2e/
 ├── src/
 │   ├── app/
-|   |   └── dms/
+|   |   ├── dms/
+│   |   └── ...
 │   ├── assets/
 │   ├── environments/
 │   ├── scss/

@@ -8,7 +8,7 @@
                 <i class="cil-info"></i>
                 <span class="accordion-header">Opportunity Summary</span>
             </p-header>
-                  <div>
+                  <div *ngIf="opportunitySummary; else empty">
                     <table class="table table-borderless">
                       <tbody>
                         <tr>
@@ -32,6 +32,9 @@
                       </tbody>
                     </table>
                   </div>
+          <ng-template #empty>
+            <p>Summary not set...</p>
+          </ng-template>
         </p-accordionTab>
     </p-accordion>
   </div>

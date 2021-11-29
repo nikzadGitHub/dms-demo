@@ -44,6 +44,15 @@ export class ApiClient {
   }
 
   /**
+   * Sends a request with Put-method to Backend's API.
+   */
+   put<T>(path: string|String, data: any) : Observable<T> {
+    return this.map<T>(
+      this.httpClient.put<ApiJsonResponse>(this.baseUrl + path, data, this.httpOptions)
+    );
+  }
+
+  /**
    * Casts input {@link ApiJsonResponse} to given type {@link T}.
    */
   map<T>(json: Observable<ApiJsonResponse>): Observable<T> {
