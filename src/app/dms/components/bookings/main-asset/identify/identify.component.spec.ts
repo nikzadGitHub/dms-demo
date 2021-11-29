@@ -2,6 +2,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IdentifyComponent } from './identify.component';
+import {MockEquipmentsService} from '../../../../services/mock-equipments.service';
 
 describe('BookingFormComponent', () => {
 
@@ -10,7 +11,8 @@ describe('BookingFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IdentifyComponent ]
+      declarations: [ IdentifyComponent ],
+      providers: [ MockEquipmentsService ]
     })
     .compileComponents();
   });
@@ -24,5 +26,5 @@ describe('BookingFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
+
 });

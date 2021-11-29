@@ -2,6 +2,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BookingFormComponent } from './booking-form.component';
+import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 
 describe('BookingFormComponent', () => {
 

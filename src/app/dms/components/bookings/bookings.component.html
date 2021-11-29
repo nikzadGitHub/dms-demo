@@ -3,7 +3,7 @@
       <div class="table-header d-flex">
           <div class="d-flex">
                 <div>Booking Listing</div>
-                <div class="ml-2 mt-1"><a routerLink="/booking_list/new" routerLinkActive="router-link-active"><i class="icon-plus icons" style="color: #FFFFFF"></i></a></div>
+                <div class="ml-2 mt-1"><a href (click)="onCreate($event)" routerLinkActive="router-link-active" ><i class="icon-plus icons" style="color: #FFFFFF"></i></a></div>
           </div>
           <div class="p-input-icon-left">
               <label for="search-input"><i class="pi pi-search"></i></label>
@@ -79,10 +79,10 @@
     <ng-template pTemplate="body" let-bookingItem>
       <tr class="p-selectable-row">
         <td class="text-center">
-            <a routerLink="{{ bookingItem.code }}" routerLinkActive="router-link-active">{{ bookingItem.code }}</a>
+            <a routerLink="{{ bookingItem.id }}" routerLinkActive="router-link-active">{{ bookingItem.booking_no }}</a>
         </td>
         <td class="text-center">
-            {{ bookingItem.requested_at }}
+            {{ bookingItem.request_date }}
         </td>
         <td class="text-center">
             {{ bookingItem.requester }}
@@ -94,10 +94,10 @@
             {{ bookingItem.product_desc }}
         </td>
         <td class="text-center">
-            {{ bookingItem.customer_id }}
+            {{ bookingItem.customer }}
         </td>
         <td class="text-center">
-            {{ bookingItem.reason }}
+            {{ bookingItem.booking_reason }}
         </td>
         <td class="text-center">
           {{ bookingItem.status }}

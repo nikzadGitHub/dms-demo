@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs';
 
 export interface BookingItem {
-  code: string;
+  id: bigint;
+  booking_no: string;
   request_date: string;
   requester: string;
   sku: string;
@@ -13,6 +14,12 @@ export interface BookingItem {
 
 export type BookingList = BookingItem[];
 
+export interface SaveResult {
+  id: any;
+}
+
 export interface BookingInterface {
   getList(): Observable<BookingList>;
+  create(data: any):Observable<SaveResult>;
+  updateBooking(data: any, id: any): Observable<SaveResult>;
 }
