@@ -128,26 +128,54 @@ export class LoginComponent {
     this.formLogin.reset();
   }
   loginwithAzureToken =async(token:any)=> {
-      let data  = {
-      azure_token : token,
-      fcm_code : ''
-    }
-      const headers= new HttpHeaders()
-      .set('x-app-token', SystemConfig.apiAppToken);
-      this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/azure-login", data, {
-        headers: headers
-      })
-      .subscribe(async (res:any) => {
+    //   let data  = {
+    //   azure_token : token,
+    //   fcm_code : ''
+    // }
+      // const headers= new HttpHeaders()
+      // .set('x-app-token', SystemConfig.apiAppToken);
+      // this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/azure-login", data, {
+      //   headers: headers
+      // })
+      // .subscribe(async (res:any) => {
+      //   if (!res.success) {
+      //         this.dialogService.showErrorDialog(res.message);
+      //       } else {
+      //         localStorage.setItem('userRole',JSON.stringify(res.data))
+      //         await this.authService.setAuthorizationToken(res.data.access_token);
+      //         await this.authService.saveUserSession(JSON.stringify(res.data.user));
+      //         await this.authService.getUserSession();
+      //         await this.authService.loadToken();
+      //         this.router.navigateByUrl("/dashboard", {replaceUrl: true});
+      //       }
+      // });
+
+
+      let res = this.authService.loginAzureToken({
+        azure_token: token,
+        fcm_code: '', 
+      }).pipe(
+  
+      ).subscribe(async (res) => {
+        console.log(res);
         if (!res.success) {
-              this.dialogService.showErrorDialog(res.message);
-            } else {
-              localStorage.setItem('userRole',JSON.stringify(res.data))
-              await this.authService.setAuthorizationToken(res.data.access_token);
-              await this.authService.saveUserSession(JSON.stringify(res.data.user));
-              await this.authService.getUserSession();
-              await this.authService.loadToken();
-              this.router.navigateByUrl("/dashboard", {replaceUrl: true});
-            }
+          this.dialogService.showErrorDialog(res.message);
+        } else {
+          localStorage.setItem('userRole',JSON.stringify(res.data))
+          await this.authService.setAuthorizationToken(res.data.access_token);
+          await this.authService.saveUserSession(JSON.stringify(res.data.user));
+          await this.authService.getUserSession();
+          await this.authService.loadToken();
+          this.router.navigateByUrl("/dashboard", {replaceUrl: true});
+  
+        }
+      }, async (error) => {
+        localStorage.clear();
+        if (typeof error.error.message === 'undefined') {
+          this.dialogService.showErrorDialog(SystemConfig.generalErrorMsg);
+        } else {
+          this.dialogService.showErrorDialog(error.error.message);
+        }
       });
 }
   loginUsingAzure(){
