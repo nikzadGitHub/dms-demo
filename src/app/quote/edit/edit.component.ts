@@ -561,6 +561,15 @@ export class EditComponent implements OnInit {
     }
   }
 
+  selectTemplate() {
+    this.quoteService.getTemplates().subscribe((res) => {
+      console.log(res);
+      
+    });
+  }
+
+  
+
   cancelApprove() {
     if (this.requested_date != null && this.approved_date == null) {
       return true;
@@ -643,6 +652,17 @@ export class EditComponent implements OnInit {
   }
 
   viewQuotationTemplate() {
-    this.router.navigateByUrl("quote/view/quote-template");
+    console.log(this.quotations,'quatation');
+    let navigate: NavigationExtras = {
+      queryParams: {
+       quotation_id: this.id
+      }
+    }
+    // this.quoteService.getQuatation(this.quotations.quote_id).subscribe((res) =>{
+    //   console.log('Quotations Data =>',res);
+      
+    // })
+    this.router.navigate(["quote/view/quote-template"], navigate)
+    // this.router.navigateByUrl("quote/view/quote-template");
   }
 }

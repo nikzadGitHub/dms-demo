@@ -36,18 +36,24 @@
           <div class="vl"></div>
           <div class="v2"></div>
           <div class="head-text" [attr.contenteditable]="editable">
-            <p>Slipi-Jakarta 11410, Indonesia</p>
-            <p>T: +622125678989</p>
-            <p>F: +622125678989</p>
-            <p>E: +622125678989</p>
+            <!-- <p>Sipli-jakarta 11410,indonesia</p>
+            <p>T +622125678989</p>
+            <p>F +622125678989</p>
+            <p>E +622125678989</p> -->
+
+            <p>Sipli-jakarta 11410,indonesia{{quotationsTemplateData?.quotations?.companies?.address}}</p>
+            <p>T +622125678989{{quotationsTemplateData?.quotations?.companies?.telephone_number}}</p>
+            <p>F +622125678989{{quotationsTemplateData?.quotations?.companies?.fax}}</p>
+            <p>E +622125678989{{quotationsTemplateData?.quotations?.companies?.email}}</p>
             <a href="#">www.idsMED.com</a>
           </div>
         </div>
       </div>
       <div class="address-title">
         <p [attr.contenteditable]="editable">
-          Kepada Yth,<br />PT.Aditana Intiperdana <br />
-          Ruko Rungkut Megah Raya M-23
+          Kepada Yth,{{quotationsTemplateData?.quotations?.primary_contact}}<br />{{quotationsTemplateData?.quotations?.customer?.company_name}}<br />
+
+          Ruko Rungkut Megah Raya M-23{{quotationsTemplateData?.quotations?.customer?.address}}
           <br />
           Surabaya
         </p>
@@ -68,11 +74,15 @@
               <tr class="all-th-td-padding-top-bottom-none">
                 <th scope="row">No. Ref</th>
                 <td [attr.contenteditable]="editable">
-                  <span>:&nbsp;&nbsp;&nbsp;</span>1386/SLS/JKT/ZA/VI/2021
+
+
+                  <!-- <span>:&nbsp;&nbsp;&nbsp;</span>1386/SLS/JKT/ZA/VI/2021  -->
+
+                  <span>:&nbsp;&nbsp;&nbsp;</span>{{quotationsTemplateData?.quotations?.quote_id}}
                 </td>
                 <th class="date-field-label">Date :</th>
                 <td class="date-field-data" [attr.contenteditable]="editable">
-                  23 June 2021
+                  {{quotationsTemplateData.quotations?.toDate }}
                 </td>
               </tr>
             </tbody>
@@ -98,6 +108,7 @@
                 <tr>
                   <th scope="col">BRAND</th>
                   <th scope="col">P/N</th>
+
                   <th scope="col">DESCRIPTION</th>
                   <th scope="col">PRICE LIST</th>
                 </tr>
@@ -105,9 +116,11 @@
               <tbody>
                 <tr class="main-table-data">
                   <td>1</td>
-                  <td>Mark</td>
+                  <!-- <td>mark</td> -->
+                  <td>{{quotationsTemplateData?.quotations?.products[0]?.name}}</td>
                   <td>Otto</td>
-                  <td>@mdo</td>
+                  <!-- <td>@mdo</td> -->
+                  <td>{{quotationsTemplateData?.quotations?.products[0]?.list_price}}</td>
                 </tr>
               </tbody>
             </table>
@@ -153,14 +166,19 @@
           </div>
           <div class="sub-text-footer">
             <label [attr.contenteditable]="editable">Hormat kami.</label><br />
+            <!-- <p class="company-name" [attr.contenteditable]="editable">
+              PT. IDS Medical System indonesia
+            </p> -->
             <p class="company-name" [attr.contenteditable]="editable">
-              PT. IDS Medical System Indonisa
+             {{quotationsTemplateData?.quotations?.companies?.title}}
             </p>
             <br />
             <p class="signature"></p>
             <br />
             <p [attr.contenteditable]="editable" class="name-number">
-              <span class="contact-name">ZulfaAlla</span><br />(0812-4920-1673)
+              <!-- <span class="contact-name">ZulfaAlla</span><br />(0812-4920-1673) -->
+
+              <span class="contact-name">{{quotationsTemplateData?.quotations?.sales_person?.full_name}}</span><br />(0812-4920-1673)
             </p>
           </div>
         </div>

@@ -371,11 +371,18 @@
                 <div class="col-lg-4">
                     <input type="text" class="form-control" placeholder="Title"><br><br>
                     <input type="text" class="form-control" placeholder="template"><br><br>
+                
+
+                    <p-dropdown (click)="selectTemplate()"
+                    placeholder="Select Templates" >
+                </p-dropdown>
+
                     <button class="form-control" style="width: 70%;" (click)="checkSignature()">
                         <i class="cil-check-circle" style="color: green;" *ngIf="signatureStatus"></i>
                         <i class="icon-close" style="color: red;" *ngIf="signatureStatus == false"></i>
                         Signature
                     </button>
+                
                 </div>
                 <div class="col-lg-4">
                     <input type="text" class="form-control" placeholder="Subject"><br><br>
