@@ -14,7 +14,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'primeng/fileupload';
 import { EditComponent } from './edit/edit.component';
 import { AccordionModule } from 'primeng/accordion';
-
+import {DropdownModule} from 'primeng/dropdown';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,8 @@ import { AccordionModule } from 'primeng/accordion';
     AutoCompleteModule,
     ReactiveFormsModule,
     FormsModule,
+    DropdownModule,
+    MultiSelectModule,
     FileUploadModule,
     AccordionModule
   ]

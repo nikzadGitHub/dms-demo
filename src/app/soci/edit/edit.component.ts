@@ -337,10 +337,10 @@ export class EditComponent implements OnInit {
       // console.log("file-type:-->",fileType);
       // End SOCI Attachment
      
-        this.form.patchValue({
-          standard_payment_term: this.standerd_payment_term,
-          standard_delivery_term: this.standard_delivery_term,
-        });
+        // this.form.patchValue({
+        //   standard_payment_term: this.standerd_payment_term ,
+        //   standard_delivery_term: this.standard_delivery_term ,
+        // });
     
       
       this.additional_cost_and_charges =
@@ -406,9 +406,10 @@ export class EditComponent implements OnInit {
            this.payment_term_to.setDate(
              this.payment_term_to.getDate() + parseInt(this.form.value.days)
            );
-           this.form.patchValue({ 
-            standard_payment_term: this.form.value.days  
-           });
+           this.standerd_payment_term =this.form.value.days
+          //  this.form.patchValue({ 
+          //   standard_payment_term: this.form.value.days  
+          //  });
            console.log("payment_term_to:", this.payment_term_to);
            
           this.successModal.show();
@@ -436,10 +437,10 @@ export class EditComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.addStandardTermModal.hide();
-          this.form.patchValue({
-            standard_delivery_term: this.form.value.delivery_days,
-          });
-
+          // this.form.patchValue({
+          //   standard_delivery_term: this.form.value.delivery_days,
+          // });
+          this.standard_delivery_term = this.form.value.delivery_days;
           this.delivery_term_from = this.form.value.delivery_fromDate
           this.delivery_term_to = new Date(this.delivery_term_from);
           this.delivery_term_to.setDate(
@@ -1119,7 +1120,9 @@ export class EditComponent implements OnInit {
           }, 2000);
         },
         (error) => {
-          this.alertBody = "Please enter required fields";
+          console.log("error:", error);
+          
+          this.alertBody = error["error"]["data"]["errors"][0].message || "Please enter required fields";
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
@@ -1206,6 +1209,8 @@ export class EditComponent implements OnInit {
     }
   }
   openUpdateProductModal(index, product) {
+    console.log("product:", product);
+    
     this.controller = product;
     this.product_index = index;
     this.product_cost = product.cost;
@@ -1245,15 +1250,26 @@ export class EditComponent implements OnInit {
         data_area_id: this.product_data_area_id,
         soci_id: this.soci_id,
         quantity: this.form.value.quantity,
-        cost:
-          this.productCheck == "update_product"
-            ? parseFloat(this.productCostprice)
-            : this.product_cost,
+        cost:this.productCheck == "update_product"? parseFloat(this.productCostprice): this.product_cost,
         margin: 12.0,
         total_price: this.form.value.quantity.total_price,
         product_id: this.product_id,
         amount: this.form.value.amount,
-        product_type: this.productType,
+        product_type: this.productType? this.productType : '',
+        productName: this.form.value.productName,
+        sku: this.form.value.sku,
+        listPrice: this.form.value.listPrice,
+        floorPrice: this.form.value.floorPrice,
+        justification: this.form.value.justification,
+        principal: this.form.value.principal,
+        productManager: this.form.value.productManager,
+        standardWarranty: this.form.value.standardWarranty,
+        extendedWarranty: this.form.value.extendedWarranty,
+        taxRate: this.form.value.taxRate,
+        customerTaxRate: this.form.value.customerTaxRate,
+        taxCode: this.form.value.taxCode,
+        otherCostCategory: this.form.value.otherCostCategory,
+
       })
       .subscribe(
         (data: any) => {
@@ -1276,7 +1292,8 @@ export class EditComponent implements OnInit {
           }, 2000);
         },
         (error: any) => {
-          this.alertBody = "Please enter required fields";
+          console.log("error:", error);
+          this.alertBody = error["error"]["data"]["errors"][0].message || "Please enter required fields";
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();

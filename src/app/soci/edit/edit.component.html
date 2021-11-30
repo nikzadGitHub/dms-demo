@@ -122,12 +122,14 @@
               <div class="row">
                 <div class="col-md-5"><b>Payment Terms:</b></div>
                 <div class="col-md-4">
-                  <input
+                  <!-- [attr.disabled]="is_payment_term_eidt ? null : ''" -->
+                  {{this.standerd_payment_term + " days"}}
+                  <!-- <input
                     type="number"
                     class="form-control"
-                    [attr.disabled]="is_payment_term_eidt ? null : ''"
+                    style="background: none;border: none;"
                     formControlName="standard_payment_term"
-                  />
+                  /> -->
                 </div>
               </div>
             </div>
@@ -171,15 +173,16 @@
           <div class="row grey">
             <div class="col-md-5">
               <div class="row">
-                <!-- [attr.disabled]="is_delivery_payment_term_eidt ? null : ''" -->
                 <div class="col-md-5"><b>Delivery Terms:</b></div>
                 <div class="col-md-4">
-                  <input
+                  <!-- [attr.disabled]="is_delivery_term_eidt ? null : ''" -->
+                  {{this.standard_delivery_term + " days"}}
+                  <!-- <input
                     type="number"
                     class="form-control"
-                    [attr.disabled]="is_delivery_term_eidt ? null : ''"
+                    style="background: none;border: none;"
                     formControlName="standard_delivery_term"
-                  />
+                  /> -->
                 </div>
               </div>
             </div>
@@ -407,7 +410,7 @@
                     <input
                       formControlName="billing_id"
                       class="form-control"
-                      placeholder="ABC123"
+                      placeholder=""
                       type="text"
                       readonly
                     />
@@ -417,7 +420,7 @@
                       formControlName="stage"
                       class="form-control"
                       size="1"
-                      placeholder="Deploy"
+                      placeholder=""
                       type="text"
                     />
                   </td>
@@ -438,7 +441,7 @@
                       formControlName="amount"
                       class="form-control"
                       size="1"
-                      placeholder="1000"
+                      placeholder="0"
                       type="number"
                       min="0"
                       step=".01"
@@ -700,7 +703,7 @@
                       class="form-control"
                       formControlName="percentage"
                       size="1"
-                      placeholder="50"
+                      placeholder=""
                       type="number"
                       min="0"
                       max="100.00"
@@ -719,7 +722,7 @@
                     <input
                       class="form-control"
                       formControlName="soc_payment_term"
-                      placeholder="30 Days"
+                      placeholder="0 Days"
                       type="number"
                     />
                   </td>
@@ -728,7 +731,7 @@
                       class="form-control"
                       formControlName="status"
                       size="1"
-                      placeholder="Deposit"
+                      placeholder=""
                       type="input"
                     />
                   </td>
@@ -738,7 +741,7 @@
                       class="form-control"
                       formControlName="amount"
                       size="1"
-                      placeholder="300"
+                      placeholder="0"
                       type="number"
                       min="0"
                       step=".01"
@@ -749,7 +752,7 @@
                     <textarea
                       formControlName="remarks"
                       class="form-control"
-                      placeholder="Remarks"
+                      placeholder=""
                       id=""
                       style="width: 135px"
                       rows="1"
@@ -973,7 +976,7 @@
                     <input
                       formControlName="description"
                       class="form-control"
-                      placeholder="Training"
+                      placeholder=""
                       type="text"
                     />
                   </td>
@@ -994,7 +997,7 @@
                     <input
                       formControlName="unit_price"
                       class="form-control"
-                      placeholder="1000"
+                      placeholder="0"
                       type="text"
                       (input)="costUnitValue()"
                     />
@@ -1011,7 +1014,7 @@
                     <textarea
                       formControlName="remarks"
                       class="form-control"
-                      placeholder="Remarks"
+                      placeholder=""
                       id=""
                       style="width: 135px"
                       rows="1"
@@ -1229,7 +1232,7 @@
                     <input
                       formControlName="schedule"
                       class="form-control"
-                      placeholder="schedule"
+                      placeholder=""
                       type="date"
                       style="width: 89%"
                     />
@@ -1255,7 +1258,7 @@
                     <textarea
                       formControlName="remarks"
                       class="form-control"
-                      placeholder="Remarks"
+                      placeholder=""
                       id=""
                       style="width: 135px"
                       rows="1"
@@ -1322,7 +1325,7 @@
                       : ''
                   "
                   [ngModelOptions]="{ standalone: true }"
-                  placeholder="title..."
+                  placeholder=""
                 />
               </div>
             </div>
@@ -1339,7 +1342,7 @@
                       : ''
                   "
                   [ngModelOptions]="{ standalone: true }"
-                  placeholder="Description"
+                  placeholder=""
                 />
               </div>
             </div>
@@ -1412,7 +1415,7 @@
                         style="width: 200px"
                         type="text"
                         formControlName="soci_title"
-                        placeholder="title..."
+                        placeholder=""
                       />
                     </div>
                   </div>
@@ -1425,7 +1428,7 @@
                         style="width: 700px"
                         type="text"
                         formControlName="description"
-                        placeholder="Description"
+                        placeholder=""
                       />
                     </div>
                   </div>
@@ -1539,7 +1542,7 @@
                           : ''
                       "
                       [ngModelOptions]="{ standalone: true }"
-                      placeholder="Description"
+                      placeholder=""
                     />
                   </div>
                 </div>
@@ -1582,7 +1585,7 @@
                           ? null
                           : ''
                       "
-                      placeholder="0.0"
+                      placeholder="0"
                     />
                   </div>
                   <div
@@ -1603,7 +1606,7 @@
                           ? null
                           : ''
                       "
-                      placeholder="0.0"
+                      placeholder="0"
                     />
                     <!-- {{item.unit_price  | number: '1.2'}} -->
                   </div>
@@ -1627,7 +1630,7 @@
                           : ''
                       "
                       [ngModelOptions]="{ standalone: true }"
-                      placeholder="0.0"
+                      placeholder="0"
                     />
                   </div>
                 </div>
@@ -1722,7 +1725,7 @@
                       formControlName="description"
                       style="width: 336px"
                       type="text"
-                      placeholder="Description"
+                      placeholder=""
                     />
                   </div>
                 </div>
@@ -1763,7 +1766,7 @@
                       formControlName="total_price"
                       readonly
                       type="text"
-                      placeholder="0.0"
+                      placeholder="0"
                       style="width: 100px"
                     />
                   </div>

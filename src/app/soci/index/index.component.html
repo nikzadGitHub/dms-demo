@@ -1,4 +1,3 @@
-
 <p-table
   #dt
   [value]="socis"
@@ -16,7 +15,6 @@
         <a
           [routerLink]=""
           routerLinkActive="router-link-active"
-          
           (click)="createModal.createSoci()"
         >
           <i class="icon-plus icons" style="color: white"></i>
@@ -32,7 +30,16 @@
           [(ngModel)]="search_text"
         />
         <span>
-          <i (click)="exportToExcel($event)" class="pi pi-file-excel export-to-excel"></i>
+          <i (click)="exportToExcel($event)"
+            ><img
+              style="margin: 8px"
+              src="../../../../assets/img/icons/Vector (2).svg"
+          /></i>
+          <i class="pi pi-align-justify" style="font-size: 20px">
+            <!-- <p-multiSelect [options]="cities" [(ngModel)]="selectedCities" optionLabel="name" optionValue="code"></p-multiSelect> -->
+
+          </i>
+          <!-- <i (click)="exportToExcel($event)" class="pi pi-file-excel export-to-excel"></i> -->
         </span>
       </span>
     </div>
@@ -40,7 +47,7 @@
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="created_at" class="text-center">
-        <div style="width: 100px;" class="p-d-flex p-jc-between p-ai-center">
+        <div style="width: 100px" class="p-d-flex p-jc-between p-ai-center">
           Created Date
           <p-sortIcon field="created_at"></p-sortIcon>
           <p-columnFilter
@@ -76,7 +83,7 @@
         </div>
       </th>
       <th pSortableColumn="quote_full_id" class="text-center">
-        <div style="width: 122px;" class="p-d-flex p-jc-between p-ai-center">
+        <div style="width: 122px" class="p-d-flex p-jc-between p-ai-center">
           Quotation ID
           <p-sortIcon field="quote_full_id"></p-sortIcon>
           <p-columnFilter
@@ -88,7 +95,7 @@
         </div>
       </th>
       <th pSortableColumn="quote_date" class="text-center">
-        <div style="width: 112px;" class="p-d-flex p-jc-between p-ai-center">
+        <div style="width: 112px" class="p-d-flex p-jc-between p-ai-center">
           Quote Date
           <p-sortIcon field="quote_date"></p-sortIcon>
           <p-columnFilter
@@ -112,7 +119,7 @@
         </div>
       </th>
       <th pSortableColumn="po_no" class="text-center">
-        <div style="width: 78px;" class="p-d-flex p-jc-between p-ai-center">
+        <div style="width: 78px" class="p-d-flex p-jc-between p-ai-center">
           PO No
           <p-sortIcon field="po_no"></p-sortIcon>
           <p-columnFilter
@@ -124,7 +131,7 @@
         </div>
       </th>
       <th pSortableColumn="po_date" class="text-center">
-        <div style="width: 65px;" class="p-d-flex p-jc-between p-ai-center">
+        <div style="width: 65px" class="p-d-flex p-jc-between p-ai-center">
           PO Date
           <p-sortIcon field="po_date"></p-sortIcon>
           <p-columnFilter
@@ -136,7 +143,7 @@
         </div>
       </th>
       <th pSortableColumn="fo_order_number" class="text-center">
-        <div style="width: 65px;" class="p-d-flex p-jc-between p-ai-center">
+        <div style="width: 65px" class="p-d-flex p-jc-between p-ai-center">
           FO Number
           <p-sortIcon field="fo_order_number"></p-sortIcon>
           <p-columnFilter
@@ -148,7 +155,7 @@
         </div>
       </th>
       <th pSortableColumn="status_desc" class="text-center">
-        <div style="width: 65px;" class="p-d-flex p-jc-between p-ai-center">
+        <div style="width: 65px" class="p-d-flex p-jc-between p-ai-center">
           status
           <p-sortIcon field="status_desc"></p-sortIcon>
           <p-columnFilter
@@ -168,13 +175,10 @@
       <!-- {{ opportunity.created_date | date: "dd-MMM-yyyy" }} -->
       <td class="text-center">
         <span class="p-column-title">Created Date</span>
-        {{ soci.created_at | date: "MM-dd-yyyy"}}
+        {{ soci.created_at | date: "MM-dd-yyyy" }}
       </td>
       <td class="text-center">
-        <a 
-        href="#"
-        [routerLink]="['/soci/', soci.id, 'edit']"
-        >
+        <a href="#" [routerLink]="['/soci/', soci.id, 'edit']">
           <span class="p-column-title"> Soci Id</span>
           {{ soci.soci_id }}
         </a>
@@ -195,16 +199,15 @@
       </td>
       <td class="text-center">
         <div *ngIf="soci.po_amount">
-          <span class="p-column-title" > Amount</span>
+          <span class="p-column-title"> Amount</span>
           {{ soci.po_amount }}
         </div>
         <div *ngIf="!soci.po_amount">
-          <span class="p-column-title" > Amount</span>
+          <span class="p-column-title"> Amount</span>
           0
         </div>
-       
       </td>
-      
+
       <td class="text-center">
         <a
           [routerLink]=""
@@ -222,24 +225,23 @@
       <td class="text-center">
         <div *ngIf="!soci.po_date">
           <a
-          [routerLink]=""
-          routerLinkActive="router-link-active"
-          *ngIf="soci.po_no == null"
-          (click)="createModal.addPo(soci.quote_full_id, soci.id)"
-        >
-          Po Date
-        </a>
+            [routerLink]=""
+            routerLinkActive="router-link-active"
+            *ngIf="soci.po_no == null"
+            (click)="createModal.addPo(soci.quote_full_id, soci.id)"
+          >
+            Po Date
+          </a>
         </div>
         <div *ngIf="soci.po_date">
           <span class="p-column-title">Po. date</span>
           {{ soci.po_date | date: "MM-dd-yyyy" }}
         </div>
-     
       </td>
       <td class="text-center">
         <div *ngIf="soci.fo_order_number">
           <span class="p-column-title">Fo Number</span>
-        {{ soci.fo_order_number  }}
+          {{ soci.fo_order_number }}
         </div>
         <div *ngIf="!soci.fo_order_number">
           <span class="p-column-title">Fo Number</span>
@@ -274,8 +276,8 @@
 </p-paginator>
 
 <div>
-<app-create
-  #createModal
-  (sociDataEvent)="receiveSociData($event)"
-></app-create>
+  <app-create
+    #createModal
+    (sociDataEvent)="receiveSociData($event)"
+  ></app-create>
 </div>
