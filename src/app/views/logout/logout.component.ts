@@ -24,6 +24,7 @@ export class LogoutComponent {
       localStorage.removeItem("userRole");
       localStorage.removeItem("user-json");
       localStorage.removeItem("auth-token");
+      localStorage.clear();
     return false;
   }
 

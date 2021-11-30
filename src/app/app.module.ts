@@ -100,8 +100,8 @@ export function loggerCallback(logLevel: LogLevel, message: string) {
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
     auth: {
-      clientId: '7a1e9113-1e9b-47cf-804a-92e07373898b',
-      authority: 'https://login.microsoftonline.com/419c4758-e653-4ed4-b3e6-d84360e97a52',
+      clientId: SystemConfig.azureClientId,
+      authority: `https://login.microsoftonline.com/${SystemConfig.azureTenantId}`,
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage,

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 import { BookingEntityComponent } from './booking-entity.component';
+import {MockBookingEntityService} from '../../../services/mock-booking-entity.service';
 
 
 describe('BookingEntityComponent', () => {
@@ -15,6 +16,7 @@ describe('BookingEntityComponent', () => {
       declarations: [ BookingEntityComponent ],
       imports: [ RouterTestingModule ],
       providers: [
+        MockBookingEntityService,
         { provide: ActivatedRoute, useValue: { params: of({id: '1'}) }}
       ]
     })
