@@ -5,6 +5,8 @@ import {EquipmentPurpose} from '../../../../services/equipment-purpose.enum';
 import {EquipmentEntity, EquipmentList} from '../../../../services/equipment-entity';
 import {EquipmentKind, isEquipmentMain} from '../../../../services/equipment-kind.enum';
 import {EquipmentQuery} from '../../../../services/equipments';
+import { EquipmentsService } from '../../../../services/equipments.service';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * Same as {@link EquipmentEntity}, but has additional fields, for new changes.
@@ -61,8 +63,11 @@ export class IdentifyComponent implements OnInit, OnDestroy {
    */
   @Output() bySave = new EventEmitter<IdentifyComponent>();
 
+  equipmentId:string;
+
   constructor(
-    private api: MockEquipmentsService
+    private api: EquipmentsService,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -102,7 +107,6 @@ export class IdentifyComponent implements OnInit, OnDestroy {
     if (this.searchListener) {
       this.searchListener.unsubscribe();
     }
-    console.log('searching for:', this.filter);
     // Actual search.
     const query: EquipmentQuery = {
       search_text: this.filter,
@@ -130,7 +134,19 @@ export class IdentifyComponent implements OnInit, OnDestroy {
    * View listener for Saving form, emits {@link bySave}.
    */
   onSave() {
-    this.bySave.emit(this);
+      this.api.saveInventoryBooking({
+        bookingId: this.route.snapshot.params.id,
+        equipmentId: this.equipmentId,
+        type: "main",
+      }).subscribe((res) => {
+          if (res) {
+            this.bySave.emit(this);
+          }
+        },
+        err => {
+          console.log(err);
+            alert("not added")
+        });
   }
 
   /**
@@ -144,7 +160,8 @@ export class IdentifyComponent implements OnInit, OnDestroy {
    * Marks given index with {@link EquipmentWithEdit#isPicked},
    * and deselects everything else.
    */
-  onSelect(selectedIndex: number) {
+  onSelect(selectedIndex: number, id:string) {
+    this.equipmentId = id;
     this.list.forEach((entry, index) => {
       entry.isPicked = index === selectedIndex;
     });
