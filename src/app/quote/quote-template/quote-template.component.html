@@ -41,21 +41,23 @@
             <p>F +622125678989</p>
             <p>E +622125678989</p> -->
 
-            <p>Sipli-jakarta 11410,indonesia{{quotationsTemplateData?.quotations?.companies?.address}}</p>
-            <p>T +622125678989{{quotationsTemplateData?.quotations?.companies?.telephone_number}}</p>
-            <p>F +622125678989{{quotationsTemplateData?.quotations?.companies?.fax}}</p>
-            <p>E +622125678989{{quotationsTemplateData?.quotations?.companies?.email}}</p>
+            <p>{{quotationsTemplateData?.quotations?.companies?.address}}</p>
+            <p>{{quotationsTemplateData?.quotations?.companies?.telephone_number}}</p>
+            <p>{{quotationsTemplateData?.quotations?.companies?.fax}}</p>
+            <p>{{quotationsTemplateData?.quotations?.companies?.email}}</p>
             <a href="#">www.idsMED.com</a>
           </div>
         </div>
       </div>
       <div class="address-title">
         <p [attr.contenteditable]="editable">
-          Kepada Yth,{{quotationsTemplateData?.quotations?.primary_contact}}<br />{{quotationsTemplateData?.quotations?.customer?.company_name}}<br />
+          <!-- Kepada Yth,{{quotationsTemplateData?.quotations?.primary_contact}} -->
+         ,{{quotationsTemplateData?.quotations?.primary_contact}}
+          <br />{{quotationsTemplateData?.quotations?.customer?.company_name}}<br />
 
           Ruko Rungkut Megah Raya M-23{{quotationsTemplateData?.quotations?.customer?.address}}
           <br />
-          Surabaya
+          <!-- Surabaya -->
         </p>
       </div>
       <div class="card-body">
@@ -63,10 +65,10 @@
           <table class="table table-borderless">
             <tbody>
               <tr class="all-th-td-padding-bottom-none">
-                <th class="name-field-label" scope="row">Perihal</th>
+                <!-- <th class="name-field-label" scope="row">Perihal</th> -->
                 <td [attr.contenteditable]="editable">
                   <span>:&nbsp;&nbsp;</span>
-                  <span class="name-field">Penawaran Harga</span>
+                  <!-- <span class="name-field">Penawaran Harga</span> -->
                 </td>
                 <td></td>
                 <td></td>
@@ -90,7 +92,7 @@
         </div>
 
         <div class="main-text">
-          <div [attr.contenteditable]="editable">
+          <!-- <div [attr.contenteditable]="editable">
             <p class="text-header">Dengan hormat,</p>
             <p class="text-para">
               Documentation and examples for opt-in styling of tables (given
@@ -98,10 +100,12 @@
               <b> - RSUD. Dr. Harjono Ponorogo.</b>
             </p>
             <p class="table-info-text">
+
+
               Similar to tables and dark tables, use the modifier classes
               .thead-light or .thead-dark to make s appear light or dark gray:
             </p>
-          </div>
+          </div> -->
           <div>
             <table class="table table-bordered table-sm">
               <thead>
@@ -115,10 +119,10 @@
               </thead>
               <tbody>
                 <tr class="main-table-data">
-                  <td>1</td>
-                  <!-- <td>mark</td> -->
+                  <td></td> 
+                   <td></td>
                   <td>{{quotationsTemplateData?.quotations?.products[0]?.name}}</td>
-                  <td>Otto</td>
+                  <!-- <td>Otto</td> -->
                   <!-- <td>@mdo</td> -->
                   <td>{{quotationsTemplateData?.quotations?.products[0]?.list_price}}</td>
                 </tr>
@@ -126,10 +130,10 @@
             </table>
           </div>
           <div class="list-detail" [attr.contenteditable]="editable">
-            <p class="">
+            <!-- <p class="">
               Bootstrap sets basic global display, typography, and link styles:
-            </p>
-            <div class="list-data">
+            </p> -->
+            <!-- <div class="list-data">
               <table class="table table-borderless item-table">
                 <tbody>
                   <tr>
@@ -149,9 +153,9 @@
                   </tr>
                 </tbody>
               </table>
-            </div>
+            </div> -->
           </div>
-          <div class="sub-info-text" [attr.contenteditable]="editable">
+          <!-- <div class="sub-info-text" [attr.contenteditable]="editable">
             <p>*HTML5 adds a new global attribute named [hidden]</p>
             <p>
               [hidden] is not compatible with jQuery’s $(...).hide() and
@@ -163,9 +167,9 @@
               is not modified and the element can still affect the flow of the
               document, use the .invisible class instead.
             </p>
-          </div>
+          </div> -->
           <div class="sub-text-footer">
-            <label [attr.contenteditable]="editable">Hormat kami.</label><br />
+            <!-- <label [attr.contenteditable]="editable">Hormat kami.</label><br /> -->
             <!-- <p class="company-name" [attr.contenteditable]="editable">
               PT. IDS Medical System indonesia
             </p> -->
@@ -178,7 +182,7 @@
             <p [attr.contenteditable]="editable" class="name-number">
               <!-- <span class="contact-name">ZulfaAlla</span><br />(0812-4920-1673) -->
 
-              <span class="contact-name">{{quotationsTemplateData?.quotations?.sales_person?.full_name}}</span><br />(0812-4920-1673)
+              <span class="contact-name">{{quotationsTemplateData?.quotations?.sales_person?.full_name}}</span><br />
             </p>
           </div>
         </div>
