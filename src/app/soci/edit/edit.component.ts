@@ -138,6 +138,7 @@ export class EditComponent implements OnInit {
   selected_date: any;
   isCancelRemarks: boolean;
   sociDetailId: any;
+  customer_id: any;
   constructor(
     private route: ActivatedRoute,
     private quoteService: QuoteService,
@@ -224,7 +225,7 @@ export class EditComponent implements OnInit {
       this.is_edited = res["data"]["is_edited"];
       this.is_released = res["data"]["is_released"];
       this.external_id = res["data"]["external_id"];
-
+      this.customer_id = res["data"]["quote"]["opportunity"]["customer_id"]
       // standard_term
       this.standard_term = res["data"]["standard_terms"];
       this.standerd_payment_term = res["data"]["standard_terms"]["payment_term"]
@@ -326,23 +327,9 @@ export class EditComponent implements OnInit {
       //SOCI Attachments
       this.sociAttachment = res["data"]["attachments"];
       this.sociAttachment.forEach((value) => {
-        console.log("file:", value);
         // this.fileType = value.file.split(".").pop();
         this.fileType = value.file;
-        console.log("file-type:", this.fileType);
       });
-      // const response = await fetch(this.fileType);
-      // const fileType = await fileTypeFromStream(response.body);
-
-      // console.log("file-type:-->",fileType);
-      // End SOCI Attachment
-     
-        // this.form.patchValue({
-        //   standard_payment_term: this.standerd_payment_term ,
-        //   standard_delivery_term: this.standard_delivery_term ,
-        // });
-    
-      
       this.additional_cost_and_charges =
         this.total_additional_charges_amount +
         this.total_additional_costs_amount;
@@ -359,9 +346,7 @@ export class EditComponent implements OnInit {
     // let selected_date
     this.is_payment_term_eidt = true;
     if ((this.is_payment_term_eidt = true)) {
-      console.log("payment_term_from:", this.payment_term_from);
       this.addStandardTermModal.show();
-    console.log('new Dat', this.payment_term_from.split(" ")[0])
       this.form.patchValue({
         days: this.standerd_payment_term,
         fromDate:   this.payment_term_from.split(" ")[0],
@@ -374,7 +359,6 @@ export class EditComponent implements OnInit {
     if (this.is_delivery_term_eidt) {
       this.addStandardTermModal.show();
       // let date = new Date(this.delivery_term_from).toISOString().split("T")[0];
-      console.log("default_delivery_term:", this.default_delivery_term);
       this.form.patchValue({
         delivery_days: this.standard_delivery_term,
         delivery_fromDate: this.delivery_term_from.split(" ")[0],
@@ -382,11 +366,6 @@ export class EditComponent implements OnInit {
     }
   }
   
-  addDays(date, days) {
-    var result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result.toDateString();
-  }
 
   updatePaymentTerms() {
     this.sociService
@@ -407,14 +386,12 @@ export class EditComponent implements OnInit {
              this.payment_term_to.getDate() + parseInt(this.form.value.days)
            );
            this.standerd_payment_term =this.form.value.days
-          //  this.form.patchValue({ 
-          //   standard_payment_term: this.form.value.days  
-          //  });
-           console.log("payment_term_to:", this.payment_term_to);
            
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.form.reset(this.form.value.days);
+            this.form.reset(this.form.value.fromDate);
           }, 2000);
         },
         (error) => {
@@ -451,6 +428,8 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.form.reset(this.form.value.delivery_days);
+            this.form.reset(this.form.value.delivery_fromDate);
           }, 2000);
         },
         (error) => {
@@ -465,6 +444,10 @@ export class EditComponent implements OnInit {
   setTermsConditions() {
     this.is_payment_term_eidt = false;
     this.is_delivery_term_eidt = false;
+    this.form.get("days").reset();
+    this.form.get("fromDate").reset();
+    this.form.get("delivery_days").reset();
+    this.form.get("delivery_fromDate").reset();
   }
   // End Standard Term
 
@@ -490,7 +473,9 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            // this.form.reset(this.form.value.billing_id);
+            this.form.get("stage").reset();
+            this.form.get("amount").reset();
+            this.form.get("remarks").reset();
           }, 2000);
         },
         (error) => {
@@ -515,14 +500,11 @@ export class EditComponent implements OnInit {
     }
   }
   autoIncreaseBillingId(billing_id) {
-    console.log("billing_id:", billing_id);
-    
     if(billing_id){ 
       var billin_id_array = billing_id.split("_");
       this.form.patchValue({
         billing_id: billin_id_array[0] + "_" + (parseInt(billin_id_array[1]) + 1),
       });
-      console.log("billing_id>>>>:", billin_id_array[0] + "_" + (parseInt(billin_id_array[1]) + 1));
     }
   }
 
@@ -607,6 +589,12 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.form.get("percentage").reset();
+            this.form.get("schedule").reset();
+            this.form.get("soc_payment_term").reset();
+            this.form.get("status").reset();
+            this.form.get("amount").reset();
+            this.form.get("remarks").reset();
           }, 2000);
         },
         (error) => {
@@ -696,6 +684,11 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.form.get("description").reset();
+            this.form.get("quantity").reset();
+            this.form.get("unit_price").reset();
+            this.form.get("total_price").reset();
+            this.form.get("remarks").reset();
           }, 2000);
         },
         (error) => {
@@ -717,8 +710,6 @@ export class EditComponent implements OnInit {
   }
 
   changeCostvalues(value) {
-    console.log("cost-value:",value);
-    
     if (value.quantity && value.unit_price) {
       value.total_price = value.quantity * value.unit_price;
     } else {
@@ -803,6 +794,10 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.form.get("schedule").reset();
+            this.form.get("percentage").reset();
+            this.form.get("amount").reset();
+            this.form.get("remarks").reset();
           }, 2000);
         },
         (error) => {
@@ -815,7 +810,6 @@ export class EditComponent implements OnInit {
       );
   }
   changeBillingInstructionAmount(value){
-    console.log("value:", value);
     this.controller.amount = value
   }
   updateBillingInstruction(index, billing_instruction_id) {
@@ -887,6 +881,8 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.form.get("soci_title").reset();
+            this.form.get("description").reset();
           }, 2000);
         },
         (error) => {
@@ -973,6 +969,11 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.form.get("cost_item_id").reset();
+            this.form.get("description").reset();
+            this.form.get("quantity").reset();
+            this.form.get("unit_price").reset();
+            this.form.get("total_price").reset();
           }, 2000);
         },
         (error) => {
@@ -1001,14 +1002,11 @@ export class EditComponent implements OnInit {
     }
   }
   updateChargesQuantity(value) {
-    console.log("charge-quantity-value:", value);
-    
     if (value.quantity) {
       value.total_price = value.unit_price * value.quantity;
     }
   }
   updateChargesUnitPrice(value) {
-    console.log("value: ", value);
     if (value.quantity && value.unit_price) {
       value.total_price = value.unit_price * value.quantity;
     }
@@ -1078,7 +1076,7 @@ export class EditComponent implements OnInit {
   filterProduct(event) {
     let query = event.query;
     this.sociService
-      .getFilteredProducts(query, this.external_id)
+      .getFilteredProducts(query,this.customer_id, this.external_id)
       .subscribe((data) => {
         this.filteredProducts = data["data"];
       });
@@ -1117,11 +1115,16 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.form.get("name").reset();
+            this.form.get("sku").reset();
+            this.form.get("quantity").reset();
+            this.form.get("unit_price").reset();
+            this.form.get("total_price").reset();
+            this.form.get("discount").reset();
+            this.form.get("amount").reset();
           }, 2000);
         },
         (error) => {
-          console.log("error:", error);
-          
           this.alertBody = error["error"]["data"]["errors"][0].message || "Please enter required fields";
           this.dangerModal.show();
           setTimeout(() => {
@@ -1209,8 +1212,6 @@ export class EditComponent implements OnInit {
     }
   }
   openUpdateProductModal(index, product) {
-    console.log("product:", product);
-    
     this.controller = product;
     this.product_index = index;
     this.product_cost = product.cost;
@@ -1243,7 +1244,7 @@ export class EditComponent implements OnInit {
   updateProduct() {
     this.sociService
       .putQuery("/soci/product/" + this.product_id, {
-        cost_price: this.productCostprice,
+        // cost_price: this.productCostprice,
         external_product_number: this.external_product_number,
         discount: this.form.value.discount,
         unit_price: this.form.value.unit_price,
@@ -1256,19 +1257,21 @@ export class EditComponent implements OnInit {
         product_id: this.product_id,
         amount: this.form.value.amount,
         product_type: this.productType? this.productType : '',
-        productName: this.form.value.productName,
-        sku: this.form.value.sku,
-        listPrice: this.form.value.listPrice,
-        floorPrice: this.form.value.floorPrice,
-        justification: this.form.value.justification,
-        principal: this.form.value.principal,
-        productManager: this.form.value.productManager,
-        standardWarranty: this.form.value.standardWarranty,
-        extendedWarranty: this.form.value.extendedWarranty,
-        taxRate: this.form.value.taxRate,
-        customerTaxRate: this.form.value.customerTaxRate,
-        taxCode: this.form.value.taxCode,
-        otherCostCategory: this.form.value.otherCostCategory,
+        // name: this.form.value.name,
+        // productName: this.form.value.productName,
+        // sku: this.form.value.sku,
+        // list_price: this.form.value.listPrice,
+        // floor_price: this.form.value.floorPrice,
+        cas_justification: this.form.value.justification,
+        principle: this.form.value.principal,
+        product_manager: this.form.value.productManager,
+        standard_warranty: this.form.value.standardWarranty,
+        extended_warranty: this.form.value.extendedWarranty,
+        tax_rate: this.form.value.taxRate,
+        tax_code: this.form.value.taxCode,
+        // customerTaxRate: this.form.value.customerTaxRate,
+        
+        // otherCostCategory: this.form.value.otherCostCategory,
 
       })
       .subscribe(
@@ -1292,7 +1295,6 @@ export class EditComponent implements OnInit {
           }, 2000);
         },
         (error: any) => {
-          console.log("error:", error);
           this.alertBody = error["error"]["data"]["errors"][0].message || "Please enter required fields";
           this.dangerModal.show();
           setTimeout(() => {
@@ -1329,6 +1331,25 @@ export class EditComponent implements OnInit {
       }
     );
   }
+  setEditProductForm() {
+    this.form.get("name").reset();
+    this.form.get("productName").reset();
+    this.form.get("sku").reset();
+    this.form.get("quantity").reset();
+    this.form.get("discount").reset();
+    this.form.get("listPrice").reset();
+    this.form.get("unit_price").reset();
+    this.form.get("floorPrice").reset();
+    this.form.get("justification").reset();
+    this.form.get("principal").reset();
+    this.form.get("productManager").reset();
+    this.form.get("standardWarranty").reset();
+    this.form.get("extendedWarranty").reset();
+    this.form.get("taxRate").reset();
+    this.form.get("customerTaxRate").reset();
+    this.form.get("otherCostCategory").reset();
+    this.form.get("amount").reset();
+  }
 
   // End product section
 
@@ -1352,8 +1373,6 @@ export class EditComponent implements OnInit {
           }, 2000);
         },
         (error:any) => {
-          console.log("error:",error);
-          console.log(" error[data]:", error["error"]["data"]["value"]);
           this.alertBody = error["error"]["data"]["value"] || "Please enter required fields";
           this.dangerModal.show();
           setTimeout(() => {
@@ -1470,6 +1489,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.form.get("cancelled_remarks").reset();
           }, 2000);
         }
       );
@@ -1485,7 +1505,6 @@ private managerViewAction(){
   this.router.navigate(["/managerview/approval"], navigate);
 }
   addCancelRemarks() {
-    console.log("cancel-remarks:", this.form.value.cancelled_remarks);
     if(this.form.value.cancelled_remarks){
       this.isCancelRemarks = true;
     }
@@ -1496,8 +1515,6 @@ private managerViewAction(){
   // From Manager-view Approval
 
   enableEditMethod(index, control, type) {
-    console.log("controller:", control);
-    
     delete control["laravel_through_key"];
     if (type == "additionalCharges") {
       delete control["code_item"];

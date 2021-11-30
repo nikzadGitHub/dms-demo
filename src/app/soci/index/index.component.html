@@ -223,16 +223,14 @@
         </div>
       </td>
       <td class="text-center">
-        <div *ngIf="!soci.po_date">
           <a
             [routerLink]=""
             routerLinkActive="router-link-active"
-            *ngIf="soci.po_no == null"
+            *ngIf="soci.po_date == null"
             (click)="createModal.addPo(soci.quote_full_id, soci.id)"
           >
             Po Date
           </a>
-        </div>
         <div *ngIf="soci.po_date">
           <span class="p-column-title">Po. date</span>
           {{ soci.po_date | date: "MM-dd-yyyy" }}

@@ -723,7 +723,7 @@
                       class="form-control"
                       formControlName="soc_payment_term"
                       placeholder="0 Days"
-                      type="number"
+                      type="text"
                     />
                   </td>
                   <td style="padding: 6px">
@@ -1316,7 +1316,7 @@
                 <!-- [value]="item.soci" -->
                 <input
                   class="text-left form-control"
-                  style="width: 200px"
+                  style="width: 146px;"
                   type="text"
                   [(ngModel)]="item.soci"
                   [attr.disabled]="
@@ -1333,7 +1333,7 @@
               <div class="col-md-10">
                 <input
                   class="text-left form-control"
-                  style="width: 700px"
+                  style="width: 600px"
                   type="text"
                   [(ngModel)]="item.description"
                   [attr.disabled]="
@@ -1412,7 +1412,7 @@
                     <div class="col-md-10">
                       <input
                         class="text-left form-control"
-                        style="width: 200px"
+                        style="width: 146px;"
                         type="text"
                         formControlName="soci_title"
                         placeholder=""
@@ -1425,7 +1425,7 @@
                     <div class="col-md-10">
                       <input
                         class="text-left form-control"
-                        style="width: 700px"
+                        style="width: 600px;"
                         type="text"
                         formControlName="description"
                         placeholder=""
@@ -1467,7 +1467,7 @@
           <div class="row grey">
             <div class="col-md-3" style="text-align: middle">
               <div class="row">
-                <div class="col-md-5"><b>Cost Item</b></div>
+                <div class="col-md-6"><b>Cost Item</b></div>
               </div>
             </div>
             <div class="col-lg-4" style="text-align: middle">
@@ -1505,7 +1505,7 @@
               class="row"
               *ngFor="let item of additional_charges; let i = index"
             >
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <div class="">
                   <!-- formControlName="cost_item_id" -->
                   <div class="col-md-10">
@@ -1513,7 +1513,7 @@
                       [(ngModel)]="cost_item_id"
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control"
-                      style="width: 200px"
+                      style="width: 140px;"
                     >
                       <option value="" disabled selected>Select Item</option>
                       <option
@@ -1528,12 +1528,12 @@
                 </div>
               </div>
               <!-- Description -->
-              <div class="col-md-4">
+              <div class="col-md-5">
                 <div class="">
                   <div class="col-md-10">
                     <input
                       class="text-left form-control"
-                      style="width: 336px"
+                      style="width: 390px;"
                       type="text"
                       [(ngModel)]="item.description"
                       [attr.disabled]="
@@ -1696,14 +1696,14 @@
           <!-- Installation -->
           <div *ngIf="!is_preview_check && sociStatus == 1">
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <div class="">
                   <!-- formControlName="" -->
                   <div class="col-md-10">
                     <select
                       class="form-control"
                       formControlName="cost_item_id"
-                      style="width: 200px"
+                      style="width: 140px;"
                     >
                       <!-- let i = index -->
                       <option value="" disabled selected>Select Item</option>
@@ -1717,13 +1717,13 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-5">
                 <div class="">
                   <div class="col-md-10">
                     <input
                       class="text-left form-control"
                       formControlName="description"
-                      style="width: 336px"
+                      style="width: 390px;"
                       type="text"
                       placeholder=""
                     />
@@ -1774,7 +1774,7 @@
               </div>
 
               <div class="col-md-1" style="text-align: right">
-                <div class="row">
+                <div class="">
                   <div class="text-center action-icon">
                     <a
                       [routerLink]=""
@@ -2276,6 +2276,7 @@
 <!-- (onHide)="setTermsConditions()" -->
 <div
   bsModal
+  (onHide)="setEditProductForm()"
   #updateProductModal="bs-modal"
   class="modal fade"
   tabindex="-1"
@@ -2862,7 +2863,10 @@
           <div class="payment-form">
             <div class="days-field">
               <label for="">Days</label>
-              <input type="text" class="form-control" formControlName="days" />
+              <input 
+              type="text" 
+              class="form-control" 
+              formControlName="days" />
             </div>
             <div class="date-field">
               <label for="">From Date</label>
