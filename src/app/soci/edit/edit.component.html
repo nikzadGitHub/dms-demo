@@ -118,27 +118,12 @@
         <!-- Standard Term Accordion -->
         <p-accordionTab header="Standard Terms">
           <div class="row grey">
-            <div class="col-md-5">
-              <div class="row">
-                <div class="col-md-5"><b>Payment Terms:</b></div>
-                <div class="col-md-4">
-                  <!-- [attr.disabled]="is_payment_term_eidt ? null : ''" -->
-                  {{this.standerd_payment_term + " days"}}
-                  <!-- <input
-                    type="number"
-                    class="form-control"
-                    style="background: none;border: none;"
-                    formControlName="standard_payment_term"
-                  /> -->
-                </div>
-              </div>
+            <div class="col-md-5"><b>Payment Terms: </b>{{this.standerd_payment_term + " days"}}
             </div>
             <div class="col-lg-6" style="text-align: middle">
-              <div class="col-md-8">
-                Quotation Validity: From
-                <u>{{ payment_term_from | date: "dd-MMM-yyyy" }}</u> To
+                Quotation Validity: <b>From</b>
+                <u>{{ payment_term_from | date: "dd-MMM-yyyy" }}</u> <b>To</b>
                 <u>{{ payment_term_to | date: "dd-MMM-yyyy" }}</u>
-              </div>
             </div>
             <div
               class="col-lg-1"
@@ -156,13 +141,10 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-5">
-              <b>(As Default) Payment Terms:</b>
-              {{ default_payment_term + " Days" }}
+            <div class="col-md-5"><b>(As Default) Payment Terms: </b>{{ default_payment_term + " Days" }}
             </div>
-            <div class="col-md-6">
-              Quotation Validity: From
-              <u>{{ default_payment_term_from | date: "dd-MMM-yyyy" }}</u> To
+            <div class="col-md-6">Quotation Validity: <b>From</b>
+              <u>{{ default_payment_term_from | date: "dd-MMM-yyyy" }}</u> <b>To</b>
               <u>{{
                 quotation_validity_payment_term_to | date: "dd-MMM-yyyy"
               }}</u>
@@ -171,28 +153,12 @@
           </div>
 
           <div class="row grey">
-            <div class="col-md-5">
-              <div class="row">
-                <div class="col-md-5"><b>Delivery Terms:</b></div>
-                <div class="col-md-4">
-                  <!-- [attr.disabled]="is_delivery_term_eidt ? null : ''" -->
-                  {{this.standard_delivery_term + " days"}}
-                  <!-- <input
-                    type="number"
-                    class="form-control"
-                    style="background: none;border: none;"
-                    formControlName="standard_delivery_term"
-                  /> -->
-                </div>
-              </div>
+            <div class="col-md-5"><b>Delivery Terms: </b>{{this.standard_delivery_term + " days"}}
             </div>
             <div class="col-lg-6" style="text-align: middle">
-              <div class="col-md-8">
-                Quotation Validity: From
-                <u>{{ delivery_term_from | date: "dd-MMM-yyyy" }}</u
-                >To
+                Quotation Validity: <b>From</b>
+                <u>{{ delivery_term_from | date: "dd-MMM-yyyy" }}</u> <b>To</b>
                 <u>{{ delivery_term_to | date: "dd-MMM-yyyy" }}</u>
-              </div>
             </div>
             <div
               class="col-lg-1"
@@ -210,14 +176,11 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-5">
-              <b>(As Default) Delivery Terms:</b>
-              {{ default_delivery_term + " Days" }}
+            <div class="col-md-5"><b>(As Default) Delivery Terms: </b>{{ default_delivery_term + " Days" }}
             </div>
             <div class="col-md-6">
-              Quotation Validity: From
-              <u>{{ default_delivery_term_from | date: "dd-MMM-yyyy" }}</u
-              >To
+              Quotation Validity: <b>From</b>
+              <u>{{ default_delivery_term_from | date: "dd-MMM-yyyy" }}</u> <b>To</b>
               <u>{{
                 quotation_validity_delivery_term_to | date: "dd-MMM-yyyy"
               }}</u>
@@ -284,13 +247,10 @@
                     <input
                       type="text"
                       class="form-control"
+                      style="text-align: right;"
                       [(ngModel)]="billing.percentage"
                       [ngModelOptions]="{ standalone: true }"
-                      [attr.disabled]="
-                        enableEdit['billingMilestone'] && controller == billing
-                          ? null
-                          : ''
-                      "
+                      [attr.disabled]="enableEdit['billingMilestone'] && controller == billing? null: ''"
                     />
                     <!-- {{ billing.percentage }} -->
                   </td>
@@ -506,7 +466,7 @@
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="enableEdit['payment'] && controller == payment? null: ''"
                       class="form-control"
-                      style="width: 88%"
+                      style="width: 130px"
                     >
                       <option value="" disabled selected>Select Item</option>
                       <option
@@ -529,6 +489,7 @@
                     <input
                       type="text"
                       class="form-control"
+                      style="text-align: right; width: 100px;"
                       [(ngModel)]="payment.percentage"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="enableEdit['payment'] && controller == payment? null: ''"
@@ -538,7 +499,7 @@
                   <td>
                     <input
                       type="date"
-                      style="width: 79%"
+                      style="width: 79%;"
                       class="form-control"
                       [ngModel]="new_payment_schedule_date"
                       (ngModelChange)="changePaymentSchdule($event)"
@@ -560,8 +521,9 @@
                   </td>
                   <td>
                     <input
-                      type="text"
+                      type="number"
                       class="form-control"
+                      style="width: 80px; text-align: right;"
                       [(ngModel)]="payment.soc_payment_term"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
@@ -575,7 +537,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      style="width: 100%"
+                      style="width: 100px;"
                       [(ngModel)]="payment.status"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
@@ -592,7 +554,7 @@
                       <input
                         type="text"
                         class="form-control"
-                        style="text-align: right; width: 100%"
+                        style="text-align: right; width: 100px"
                         [ngModel]="payment.amount | number: '1.2'"
                         [ngModelOptions]="{ standalone: true }"
                         [attr.disabled]="
@@ -606,7 +568,7 @@
                       <input
                         type="text"
                         class="form-control"
-                        style="text-align: right; width: 100%"
+                        style="text-align: right; width: 100px"
                         [(ngModel)]="payment.amount"
                         [ngModelOptions]="{ standalone: true }"
                         [attr.disabled]="
@@ -685,7 +647,7 @@
                     <select
                       formControlName="billing_id"
                       class="form-control"
-                      style="width: 70%"
+                      style="width: 130px"
                     >
                       <!-- *ngFor="let bill of billingList"
                     value="{{ bill.billing_id }}" -->
@@ -702,6 +664,7 @@
                     <input
                       class="form-control"
                       formControlName="percentage"
+                      style="width: 100px;"
                       size="1"
                       placeholder=""
                       type="number"
@@ -713,6 +676,7 @@
                   <td style="width: 20%; padding: 6px">
                     <input
                       class="form-control"
+                      style="width: 160px;"
                       formControlName="schedule"
                       size="1"
                       type="date"
@@ -721,6 +685,7 @@
                   <td style="width: 10%; padding: 6px">
                     <input
                       class="form-control"
+                      style="width: 80px;"
                       formControlName="soc_payment_term"
                       placeholder="0 Days"
                       type="text"
@@ -729,6 +694,7 @@
                   <td style="padding: 6px">
                     <input
                       class="form-control"
+                      style="width: 100px"
                       formControlName="status"
                       size="1"
                       placeholder=""
@@ -740,6 +706,7 @@
                     <input
                       class="form-control"
                       formControlName="amount"
+                      style="width: 100px"
                       size="1"
                       placeholder="0"
                       type="number"
@@ -822,6 +789,7 @@
                     <input
                       type="text"
                       class="form-control"
+                      style="text-align: right; width: 65px;"
                       (input)="changeCostvalues(cost)"
                       [(ngModel)]="cost.quantity"
                       [ngModelOptions]="{ standalone: true }"
@@ -1109,6 +1077,7 @@
                     <input
                       type="text"
                       class="form-control"
+                      style="text-align: right; width: 100px"
                       [(ngModel)]="item.percentage"
                       [attr.disabled]="
                         enableEdit['addBillInstruction'] && controller == item
@@ -1234,12 +1203,13 @@
                       class="form-control"
                       placeholder=""
                       type="date"
-                      style="width: 89%"
+                      style="width: 160px"
                     />
                   </td>
                   <td>
                     <input
                       formControlName="percentage"
+                      style="width: 100px;"
                       class="form-control"
                       placeholder="0"
                       type="text"
@@ -1554,7 +1524,7 @@
                     <input
                       class="text-left form-control"
                       type="number"
-                      style="width: 75px"
+                      style="width: 65px; text-align: right;"
                       (input)="updateChargesQuantity(item)"
                       [(ngModel)]="item.quantity"
                       [attr.disabled]="
@@ -1576,7 +1546,7 @@
                     <input
                       class="text-left form-control"
                       type="text"
-                      style="width: 75px; text-align: right !important"
+                      style="width: 100px; text-align: right !important"
                       [(ngModel)]="item.unit_price"
                       (input)="updateChargesUnitPrice(item)"
                       [ngModelOptions]="{ standalone: true }"
@@ -1598,7 +1568,7 @@
                     <input
                       class="text-left form-control"
                       type="text"
-                      style="width: 75px; text-align: right !important"
+                      style="width: 100px; text-align: right !important"
                       [ngModel]="item.unit_price | number: '1.2'"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
@@ -2164,7 +2134,7 @@
         </p-accordionTab>
       </p-accordion>
       <br />
-      <div class="soci-remarks">
+      <div class="soci-remarks" *ngIf="!is_preview_check">
         <!-- Remarks taxbox -->
         <div class="remarks-texbox">
           <label>Remarks</label>
