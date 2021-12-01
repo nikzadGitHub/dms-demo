@@ -49,6 +49,7 @@ export class EditComponent implements OnInit {
   billingRemarks: string;
   remarkIndex: number;
   paymentCurrentIndex: 0;
+  selectTemplateData: any[]=[];
 
   constructor(
     private quoteService: QuoteService,
@@ -92,6 +93,8 @@ export class EditComponent implements OnInit {
       addCosts: this.formBuilder.array([]),
       products: this.formBuilder.array([]),
     });
+
+    this.selectTemplate();
   }
 
   setInitialValue() {
@@ -563,7 +566,8 @@ export class EditComponent implements OnInit {
 
   selectTemplate() {
     this.quoteService.getTemplates().subscribe((res) => {
-      console.log(res);
+      console.log("drop-down-data:",res);
+      this.selectTemplateData = res["data"]
       
     });
   }

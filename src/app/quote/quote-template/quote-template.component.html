@@ -41,10 +41,14 @@
             <p>F +622125678989</p>
             <p>E +622125678989</p> -->
 
-            <p>{{quotationsTemplateData?.quotations?.companies?.address}}</p>
-            <p>{{quotationsTemplateData?.quotations?.companies?.telephone_number}}</p>
-            <p>{{quotationsTemplateData?.quotations?.companies?.fax}}</p>
-            <p>{{quotationsTemplateData?.quotations?.companies?.email}}</p>
+            <p>{{ quotationsTemplateData?.quotations?.companies?.address }}</p>
+            <p>
+              {{
+                quotationsTemplateData?.quotations?.companies?.telephone_number
+              }}
+            </p>
+            <p>{{ quotationsTemplateData?.quotations?.companies?.fax }}</p>
+            <p>{{ quotationsTemplateData?.quotations?.companies?.email }}</p>
             <a href="#">www.idsMED.com</a>
           </div>
         </div>
@@ -52,10 +56,13 @@
       <div class="address-title">
         <p [attr.contenteditable]="editable">
           <!-- Kepada Yth,{{quotationsTemplateData?.quotations?.primary_contact}} -->
-         ,{{quotationsTemplateData?.quotations?.primary_contact}}
-          <br />{{quotationsTemplateData?.quotations?.customer?.company_name}}<br />
+          {{ quotationsTemplateData?.quotations?.primary_contact }}
+          <br />{{ quotationsTemplateData?.quotations?.customer?.company_name
+          }}<br />
 
-          Ruko Rungkut Megah Raya M-23{{quotationsTemplateData?.quotations?.customer?.address}}
+          Ruko Rungkut Megah Raya M-23{{
+            quotationsTemplateData?.quotations?.customer?.address
+          }}
           <br />
           <!-- Surabaya -->
         </p>
@@ -67,7 +74,7 @@
               <tr class="all-th-td-padding-bottom-none">
                 <!-- <th class="name-field-label" scope="row">Perihal</th> -->
                 <td [attr.contenteditable]="editable">
-                  <span>:&nbsp;&nbsp;</span>
+                  <!-- <span>:&nbsp;&nbsp;</span> -->
                   <!-- <span class="name-field">Penawaran Harga</span> -->
                 </td>
                 <td></td>
@@ -76,15 +83,14 @@
               <tr class="all-th-td-padding-top-bottom-none">
                 <th scope="row">No. Ref</th>
                 <td [attr.contenteditable]="editable">
-
-
                   <!-- <span>:&nbsp;&nbsp;&nbsp;</span>1386/SLS/JKT/ZA/VI/2021  -->
 
-                  <span>:&nbsp;&nbsp;&nbsp;</span>{{quotationsTemplateData?.quotations?.quote_id}}
+                  <span>:&nbsp;&nbsp;&nbsp;</span
+                  >{{ quotationsTemplateData?.quotations?.quote_id }}
                 </td>
                 <th class="date-field-label">Date :</th>
                 <td class="date-field-data" [attr.contenteditable]="editable">
-                  {{quotationsTemplateData.quotations?.toDate }}
+                  {{ quotationsTemplateData.quotations?.toDate }}
                 </td>
               </tr>
             </tbody>
@@ -119,12 +125,19 @@
               </thead>
               <tbody>
                 <tr class="main-table-data">
-                  <td></td> 
-                   <td></td>
-                  <td>{{quotationsTemplateData?.quotations?.products[0]?.name}}</td>
-                  <!-- <td>Otto</td> -->
+                  <td>1</td>
+
+                  <td>
+                    {{ quotationsTemplateData?.quotations?.products[0]?.name }}
+                  </td>
+                  <td></td>
                   <!-- <td>@mdo</td> -->
-                  <td>{{quotationsTemplateData?.quotations?.products[0]?.list_price}}</td>
+                  <td>
+                    {{
+                      quotationsTemplateData?.quotations?.products[0]
+                        ?.list_price
+                    }}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -174,7 +187,7 @@
               PT. IDS Medical System indonesia
             </p> -->
             <p class="company-name" [attr.contenteditable]="editable">
-             {{quotationsTemplateData?.quotations?.companies?.title}}
+              {{ quotationsTemplateData?.quotations?.companies?.title }}
             </p>
             <br />
             <p class="signature"></p>
@@ -182,7 +195,10 @@
             <p [attr.contenteditable]="editable" class="name-number">
               <!-- <span class="contact-name">ZulfaAlla</span><br />(0812-4920-1673) -->
 
-              <span class="contact-name">{{quotationsTemplateData?.quotations?.sales_person?.full_name}}</span><br />
+              <span class="contact-name">{{
+                quotationsTemplateData?.quotations?.sales_person?.full_name
+              }}</span
+              ><br />
             </p>
           </div>
         </div>
