@@ -31,11 +31,11 @@
             <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
           </div>
           <div class="col-lg-2">
-            <div class="bg-opp text-white p-1">Opport ID:
+            <div class="bg-opp text-white p-1">
+              Opport ID:
               <span>
-                <p>{{soci_data?.quote?.opportunity?.opportunity_code}}</p>
+                <p>{{ soci_data?.quote?.opportunity?.opportunity_code }}</p>
               </span>
-              
             </div>
             <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
           </div>
@@ -71,13 +71,13 @@
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Email</b></label>
-              <p>{{soci_data?.quote?.opportunity?.ownner?.email }}</p>
+              <p>{{ soci_data?.quote?.opportunity?.ownner?.email }}</p>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Owner</b></label>
-              <p>{{soci_data?.quote?.opportunity?.ownner?.full_name}}</p>
+              <p>{{ soci_data?.quote?.opportunity?.ownner?.full_name }}</p>
             </div>
           </div>
         </div>
@@ -103,7 +103,9 @@
                   <td class="text-center">
                     {{ soci_data?.po_date | date: "dd-MMM-yyyy" }}
                   </td>
-                  <td class="text-center">{{ soci_data?.po_amount | number }}</td>
+                  <td class="text-center">
+                    {{ soci_data?.po_amount | number }}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -120,12 +122,14 @@
               <div class="row">
                 <div class="col-md-5"><b>Payment Terms:</b></div>
                 <div class="col-md-4">
-                  <input
+                  <!-- [attr.disabled]="is_payment_term_eidt ? null : ''" -->
+                  {{this.standerd_payment_term + " days"}}
+                  <!-- <input
                     type="number"
                     class="form-control"
-                    [attr.disabled]="is_payment_term_eidt ? null : ''"
+                    style="background: none;border: none;"
                     formControlName="standard_payment_term"
-                  />
+                  /> -->
                 </div>
               </div>
             </div>
@@ -139,7 +143,7 @@
             <div
               class="col-lg-1"
               style="text-align: right"
-              *ngIf="!is_preview_check && sociStatus == 1"
+              *ngIf="(!is_preview_check && sociStatus == 1) || sociStatus == 7"
             >
               <div>
                 <a
@@ -169,14 +173,16 @@
           <div class="row grey">
             <div class="col-md-5">
               <div class="row">
-                <!-- [attr.disabled]="is_delivery_payment_term_eidt ? null : ''" -->
                 <div class="col-md-5"><b>Delivery Terms:</b></div>
                 <div class="col-md-4">
-                  <input
+                  <!-- [attr.disabled]="is_delivery_term_eidt ? null : ''" -->
+                  {{this.standard_delivery_term + " days"}}
+                  <!-- <input
                     type="number"
                     class="form-control"
+                    style="background: none;border: none;"
                     formControlName="standard_delivery_term"
-                  />
+                  /> -->
                 </div>
               </div>
             </div>
@@ -191,7 +197,7 @@
             <div
               class="col-lg-1"
               style="text-align: right"
-              *ngIf="!is_preview_check && sociStatus == 1"
+              *ngIf="(!is_preview_check && sociStatus == 1) || sociStatus == 7"
             >
               <div>
                 <a
@@ -233,8 +239,7 @@
                   <th>Billing ID</th>
                   <th>Stage</th>
                   <th>Percentage %</th>
-                  <th>Amount {{soci_data?.currency}}
-                  </th>
+                  <th>Amount ({{ soci_data?.currency }})</th>
                   <th>Notes</th>
                   <th></th>
                   <th *ngIf="is_preview_check"></th>
@@ -290,17 +295,42 @@
                     <!-- {{ billing.percentage }} -->
                   </td>
                   <td>
-                    <input
-                      type="text"
-                      class="form-control"
-                      [(ngModel)]="billing.amount"
-                      [ngModelOptions]="{ standalone: true }"
-                      [attr.disabled]="
-                        enableEdit['billingMilestone'] && controller == billing
-                          ? null
-                          : ''
+                    <div
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'billingMilestone'
                       "
-                    />
+                    >
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [ngModel]="billing.amount | number: '1.2'"
+                        [ngModelOptions]="{ standalone: true }"
+                        [attr.disabled]="
+                          enableEdit['billingMilestone'] &&
+                          controller == billing
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+                    <div *ngIf="editableRowIndex == i">
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [(ngModel)]="billing.amount"
+                        [ngModelOptions]="{ standalone: true }"
+                        [attr.disabled]="
+                          enableEdit['billingMilestone'] &&
+                          controller == billing
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+
                     <!-- {{ billing.amount }} -->
                   </td>
                   <td style="width: 20%">
@@ -321,7 +351,9 @@
                   <td
                     class="text-center td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && sociStatus == 1"
+                    *ngIf="
+                      (!is_preview_check && sociStatus == 1) || sociStatus == 7
+                    "
                   >
                     <div class="action-icon">
                       <a
@@ -378,7 +410,7 @@
                     <input
                       formControlName="billing_id"
                       class="form-control"
-                      placeholder="ABC123"
+                      placeholder=""
                       type="text"
                       readonly
                     />
@@ -388,7 +420,7 @@
                       formControlName="stage"
                       class="form-control"
                       size="1"
-                      placeholder="Deploy"
+                      placeholder=""
                       type="text"
                     />
                   </td>
@@ -409,7 +441,7 @@
                       formControlName="amount"
                       class="form-control"
                       size="1"
-                      placeholder="300"
+                      placeholder="0"
                       type="number"
                       min="0"
                       step=".01"
@@ -420,7 +452,7 @@
                       formControlName="remarks"
                       class="form-control"
                       id=""
-                      style="width: 135px;"
+                      style="width: 135px"
                       rows="1"
                     ></textarea>
                   </td>
@@ -456,7 +488,7 @@
                   <th>Schedule</th>
                   <th>SOC Payment Terms</th>
                   <th>Status</th>
-                  <th>Amount {{soci_data?.currency}}</th>
+                  <th>Amount ({{ soci_data?.currency }})</th>
                   <th>Notes</th>
                   <th *ngIf="is_preview_check"></th>
                   <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
@@ -468,14 +500,30 @@
                   *ngFor="let payment of payment_schedules; let i = index"
                 >
                   <td>
-                    <input
+                    <!-- formControlName="billing_id" -->
+                    <select
+                      [(ngModel)]="billing_id"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="enableEdit['payment'] && controller == payment? null: ''"
+                      class="form-control"
+                      style="width: 88%"
+                    >
+                      <option value="" disabled selected>Select Item</option>
+                      <option
+                        *ngFor="let bill of billing_milestone; let i = index"
+                        value="{{ bill.billing_id }}"
+                        [ngValue]="bill.billing_id"
+                      >
+                        {{ bill.billing_id }}
+                      </option>
+                    </select>
+                    <!-- <input
                       type="text"
                       class="form-control"
                       [(ngModel)]="payment.billing_id"
                       [ngModelOptions]="{ standalone: true }"
                       readonly
-                    />
-                    <!-- {{ payment.billing_id }} -->
+                    /> -->
                   </td>
                   <td>
                     <input
@@ -483,11 +531,7 @@
                       class="form-control"
                       [(ngModel)]="payment.percentage"
                       [ngModelOptions]="{ standalone: true }"
-                      [attr.disabled]="
-                        enableEdit['payment'] && controller == payment
-                          ? null
-                          : ''
-                      "
+                      [attr.disabled]="enableEdit['payment'] && controller == payment? null: ''"
                     />
                     <!-- {{ payment.percentage }} -->
                   </td>
@@ -516,27 +560,9 @@
                   </td>
                   <td>
                     <input
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="payment.soc_payment_term"
-                    [ngModelOptions]="{ standalone: true }"
-                    [attr.disabled]="enableEdit['payment'] && controller == payment? null: ''"
-                  />
-                  </td>
-                  <td>
-                    <input
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="payment.status"
-                    [ngModelOptions]="{ standalone: true }"
-                    [attr.disabled]="enableEdit['payment'] && controller == payment? null: ''"
-                  />
-                  </td>
-                  <td>
-                    <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="payment.amount"
+                      [(ngModel)]="payment.soc_payment_term"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['payment'] && controller == payment
@@ -544,6 +570,53 @@
                           : ''
                       "
                     />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="width: 100%"
+                      [(ngModel)]="payment.status"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="
+                        enableEdit['payment'] && controller == payment
+                          ? null
+                          : ''
+                      "
+                    />
+                  </td>
+                  <td>
+                    <div
+                      *ngIf="editableRowIndex !== i || selectedId !== 'payment'"
+                    >
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right; width: 100%"
+                        [ngModel]="payment.amount | number: '1.2'"
+                        [ngModelOptions]="{ standalone: true }"
+                        [attr.disabled]="
+                          enableEdit['payment'] && controller == payment
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+                    <div *ngIf="editableRowIndex == i">
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right; width: 100%"
+                        [(ngModel)]="payment.amount"
+                        [ngModelOptions]="{ standalone: true }"
+                        [attr.disabled]="
+                          enableEdit['payment'] && controller == payment
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+
                     <!-- {{ payment.amount }} -->
                   </td>
                   <td style="width: 16%">
@@ -563,7 +636,9 @@
                   <td
                     class="td-actions"
                     style="width: 10%; padding: none"
-                    *ngIf="!is_preview_check && sociStatus == 1"
+                    *ngIf="
+                      (!is_preview_check && sociStatus == 1) || sociStatus == 7
+                    "
                   >
                     <div class="action-icon">
                       <a
@@ -628,7 +703,7 @@
                       class="form-control"
                       formControlName="percentage"
                       size="1"
-                      placeholder="50"
+                      placeholder=""
                       type="number"
                       min="0"
                       max="100.00"
@@ -647,7 +722,7 @@
                     <input
                       class="form-control"
                       formControlName="soc_payment_term"
-                      placeholder="30 Days"
+                      placeholder="0 Days"
                       type="number"
                     />
                   </td>
@@ -656,7 +731,7 @@
                       class="form-control"
                       formControlName="status"
                       size="1"
-                      placeholder="Deposit"
+                      placeholder=""
                       type="input"
                     />
                   </td>
@@ -666,7 +741,7 @@
                       class="form-control"
                       formControlName="amount"
                       size="1"
-                      placeholder="300"
+                      placeholder="0"
                       type="number"
                       min="0"
                       step=".01"
@@ -677,9 +752,9 @@
                     <textarea
                       formControlName="remarks"
                       class="form-control"
-                      placeholder="Remarks"
+                      placeholder=""
                       id=""
-                      style="width: 135px;"
+                      style="width: 135px"
                       rows="1"
                     ></textarea>
                     <!-- <input
@@ -717,14 +792,8 @@
                 <tr>
                   <th>Description</th>
                   <th>Quantity</th>
-                  <th>
-                    Unit Price
-                    {{ soci_data?.currency }}
-                  </th>
-                  <th>
-                    Total Price
-                    {{ soci_data?.currency }}
-                  </th>
+                  <th>Unit Price ({{ soci_data?.currency }})</th>
+                  <th>Total Price ({{ soci_data?.currency }})</th>
                   <th>Notes</th>
                   <th></th>
                   <th></th>
@@ -764,29 +833,74 @@
                   </td>
                   <td>
                     <!-- (input)="costUnitValue()" -->
-                    <input
-                      type="text"
-                      class="form-control"
-                      [(ngModel)]="cost.unit_price"
-                      (input)="changeCostvalues(cost)"
-                      [ngModelOptions]="{ standalone: true }"
-                      [attr.disabled]="
-                        enableEdit['addCost'] && controller == cost ? null : ''
-                      "
-                    />
+                    <div
+                      *ngIf="editableRowIndex !== i || selectedId !== 'addCost'"
+                    >
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [ngModel]="cost.unit_price | number: '1.2'"
+                        [ngModelOptions]="{ standalone: true }"
+                        [attr.disabled]="
+                          enableEdit['addCost'] && controller == cost
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+                    <div *ngIf="editableRowIndex == i">
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [(ngModel)]="cost.unit_price"
+                        (input)="changeCostvalues(cost)"
+                        [ngModelOptions]="{ standalone: true }"
+                        [attr.disabled]="
+                          enableEdit['addCost'] && controller == cost
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+
                     <!-- {{ cost.unit_price }} -->
                   </td>
                   <td>
-                    <input
-                      type="text"
-                      class="form-control"
-                      [(ngModel)]="cost.total_price"
-                      [ngModelOptions]="{ standalone: true }"
-                      readonly
-                      [attr.disabled]="
-                        enableEdit['addCost'] && controller == cost ? null : ''
-                      "
-                    />
+                    <div
+                      *ngIf="editableRowIndex !== i || selectedId !== 'addCost'"
+                    >
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [ngModel]="cost.total_price | number: '1.2'"
+                        [ngModelOptions]="{ standalone: true }"
+                        readonly
+                        [attr.disabled]="
+                          enableEdit['addCost'] && controller == cost
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+                    <div *ngIf="editableRowIndex == i">
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [(ngModel)]="cost.total_price"
+                        [ngModelOptions]="{ standalone: true }"
+                        readonly
+                        [attr.disabled]="
+                          enableEdit['addCost'] && controller == cost
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+
                     <!-- {{ cost.total_price }} -->
                   </td>
                   <td>
@@ -806,7 +920,9 @@
                   <td
                     class="td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && sociStatus == 1"
+                    *ngIf="
+                      (!is_preview_check && sociStatus == 1) || sociStatus == 7
+                    "
                   >
                     <div class="action-icon">
                       <!-- (click)="disableEditMethod(cost, 'addCost')"
@@ -860,7 +976,7 @@
                     <input
                       formControlName="description"
                       class="form-control"
-                      placeholder="Training"
+                      placeholder=""
                       type="text"
                     />
                   </td>
@@ -881,11 +997,8 @@
                     <input
                       formControlName="unit_price"
                       class="form-control"
-                      size="1"
-                      placeholder="300"
+                      placeholder="0"
                       type="text"
-                      min="0"
-                      step=".01"
                       (input)="costUnitValue()"
                     />
                   </td>
@@ -893,21 +1006,17 @@
                     <input
                       formControlName="total_price"
                       class="form-control"
-                      size="1"
-                      placeholder="300"
                       readonly
                       type="text"
-                      min="0"
-                      step=".01"
                     />
                   </td>
                   <td style="width: 15%">
                     <textarea
                       formControlName="remarks"
                       class="form-control"
-                      placeholder="Remarks"
+                      placeholder=""
                       id=""
-                      style="width: 135px;"
+                      style="width: 135px"
                       rows="1"
                     ></textarea>
                   </td>
@@ -929,13 +1038,14 @@
             <div class="col-lg-12" align="right">
               <div class="form-group charges">
                 <p><b> TotaL </b></p>
-                <p>{{ soci_data?.currency }}</p>
+                <p>({{ soci_data?.currency }})</p>
                 <input
                   type="text"
                   class="form-control"
                   readonly
-                  value=" {{ total_additional_costs_amount }}"
+                  value=" {{ total_additional_costs_amount | number: '1.2' }}"
                 />
+                <!-- value=" {{ total_additional_costs_amount }}" -->
                 <!-- {{ sub_total | number: "1.2-2" }} -->
               </div>
             </div>
@@ -954,7 +1064,7 @@
                 <tr>
                   <th>Schedule</th>
                   <th>Percentage %</th>
-                  <th>Amount {{soci_data?.currency}}</th>
+                  <th>Amount ({{ soci_data?.currency }})</th>
                   <!-- <th>SOC Payment Terms</th>
                   <th>Status</th> -->
                   <th>Note</th>
@@ -1000,16 +1110,6 @@
                       type="text"
                       class="form-control"
                       [(ngModel)]="item.percentage"
-                      [attr.disabled]="enableEdit['addBillInstruction'] && controller == item? null: ''"
-                      [ngModelOptions]="{ standalone: true }"
-                    />
-                    <!-- {{ item.percentage }} -->
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      class="form-control"
-                      [(ngModel)]="item.amount"
                       [attr.disabled]="
                         enableEdit['addBillInstruction'] && controller == item
                           ? null
@@ -1017,9 +1117,46 @@
                       "
                       [ngModelOptions]="{ standalone: true }"
                     />
+                    <!-- {{ item.percentage }} -->
+                  </td>
+                  <td>
+                    <div
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'addBillInstruction'
+                      "
+                    >
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [ngModel]="item.amount | number: '1.2'"
+                        [attr.disabled]="
+                          enableEdit['addBillInstruction'] && controller == item
+                            ? null
+                            : ''
+                        "
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                    </div>
+                    <div *ngIf="editableRowIndex == i">
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [(ngModel)]="item.amount"
+                        [attr.disabled]="
+                          enableEdit['addBillInstruction'] && controller == item
+                            ? null
+                            : ''
+                        "
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                    </div>
+
                     <!-- {{ item.amount }} -->
                   </td>
-                 
+
                   <td>
                     <input
                       type="text"
@@ -1038,7 +1175,9 @@
                   <td
                     class="td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && sociStatus == 1"
+                    *ngIf="
+                      (!is_preview_check && sociStatus == 1) || sociStatus == 7
+                    "
                   >
                     <div class="action-icon">
                       <a
@@ -1093,7 +1232,7 @@
                     <input
                       formControlName="schedule"
                       class="form-control"
-                      placeholder="schedule"
+                      placeholder=""
                       type="date"
                       style="width: 89%"
                     />
@@ -1114,14 +1253,14 @@
                       type="number"
                     />
                   </td>
-                  
+
                   <td>
                     <textarea
                       formControlName="remarks"
                       class="form-control"
-                      placeholder="Remarks"
+                      placeholder=""
                       id=""
-                      style="width: 135px;"
+                      style="width: 135px"
                       rows="1"
                     ></textarea>
                     <!-- <input
@@ -1186,7 +1325,7 @@
                       : ''
                   "
                   [ngModelOptions]="{ standalone: true }"
-                  placeholder="title..."
+                  placeholder=""
                 />
               </div>
             </div>
@@ -1203,7 +1342,7 @@
                       : ''
                   "
                   [ngModelOptions]="{ standalone: true }"
-                  placeholder="Description"
+                  placeholder=""
                 />
               </div>
             </div>
@@ -1211,7 +1350,7 @@
             <div
               class="col-md-1"
               style="text-align: right"
-              *ngIf="!is_preview_check && sociStatus == 1"
+              *ngIf="(!is_preview_check && sociStatus == 1) || sociStatus == 7"
             >
               <div class="row">
                 <!-- //action -->
@@ -1220,7 +1359,9 @@
                     [routerLink]=""
                     routerLinkActive="router-link-active"
                     (click)="updateAdditionalInstruction(i, item.id)"
-                    *ngIf="enableEdit['additionalInstruction'] && controller == item"
+                    *ngIf="
+                      enableEdit['additionalInstruction'] && controller == item
+                    "
                     ><i class="cil-check-circle"></i
                   ></a>
                   &nbsp;
@@ -1274,7 +1415,7 @@
                         style="width: 200px"
                         type="text"
                         formControlName="soci_title"
-                        placeholder="title..."
+                        placeholder=""
                       />
                     </div>
                   </div>
@@ -1287,7 +1428,7 @@
                         style="width: 700px"
                         type="text"
                         formControlName="description"
-                        placeholder="Description"
+                        placeholder=""
                       />
                     </div>
                   </div>
@@ -1341,15 +1482,12 @@
             </div>
             <div class="col-lg-1" style="text-align: middle">
               <div class="col-md-8">
-                <b>
-                  Unit
-                  {{ soci_data?.currency }}
-                </b>
+                <b> Unit ({{ soci_data?.currency }}) </b>
               </div>
             </div>
             <div class="col-lg-2" style="text-align: middle">
               <div class="col-md-8">
-                <b> Amount {{ soci_data?.currency }}</b>
+                <b> Amount ({{ soci_data?.currency }})</b>
               </div>
             </div>
             <div
@@ -1376,32 +1514,16 @@
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control"
                       style="width: 200px"
-                
                     >
                       <option value="" disabled selected>Select Item</option>
                       <option
                         *ngFor="let item of additional_costs; let i = index"
-                        value="{{ item.id }}" [ngValue]="item.cost_item_id"
+                        value="{{ item.id }}"
+                        [ngValue]="item.cost_item_id"
                       >
                         {{ item.description }}
                       </option>
                     </select>
-                    <!-- *ngIf="editableRowIndex !== i || selectedId !== 'additionalCharges'" -->
-                    <!-- <input
-                      class="text-left form-control"
-                      style="width: 200px"
-                      type="text"
-                      [(ngModel)]="item.code_item"
-                      readonly
-                      *ngIf="editableRowIndex !== i || selectedId !== 'additionalCharges'" 
-                      [attr.disabled]="
-                        enableEdit['additionalCharges'] && controller == item
-                          ? null
-                          : ''
-                      "
-                      [ngModelOptions]="{ standalone: true }"
-                      placeholder="Enter Item"
-                    /> -->
                   </div>
                 </div>
               </div>
@@ -1420,7 +1542,7 @@
                           : ''
                       "
                       [ngModelOptions]="{ standalone: true }"
-                      placeholder="Description"
+                      placeholder=""
                     />
                   </div>
                 </div>
@@ -1450,21 +1572,43 @@
               <!-- unit -->
               <div class="col-md-1">
                 <div class="unit">
-                  <div class="col-md-10">
+                  <div class="col-md-10" *ngIf="editableRowIndex == i">
                     <input
                       class="text-left form-control"
                       type="text"
-                      style="width: 75px"
-                      (input)="updateChargesUnitPrice(item)"
+                      style="width: 75px; text-align: right !important"
                       [(ngModel)]="item.unit_price"
+                      (input)="updateChargesUnitPrice(item)"
+                      [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['additionalCharges'] && controller == item
                           ? null
                           : ''
                       "
-                      [ngModelOptions]="{ standalone: true }"
-                      placeholder="0.0"
+                      placeholder="0"
                     />
+                  </div>
+                  <div
+                    class="col-md-10"
+                    *ngIf="
+                      editableRowIndex !== i ||
+                      selectedId !== 'additionalCharges'
+                    "
+                  >
+                    <input
+                      class="text-left form-control"
+                      type="text"
+                      style="width: 75px; text-align: right !important"
+                      [ngModel]="item.unit_price | number: '1.2'"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="
+                        enableEdit['additionalCharges'] && controller == item
+                          ? null
+                          : ''
+                      "
+                      placeholder="0"
+                    />
+                    <!-- {{item.unit_price  | number: '1.2'}} -->
                   </div>
                 </div>
               </div>
@@ -1473,11 +1617,12 @@
               <div class="col-md-2">
                 <div class="amount">
                   <div class="col-md-10">
+                    <!-- [(ngModel)]="item.total_price" -->
                     <input
                       class="text-left form-control"
                       type="text"
-                      style="width: 75px"
-                      [(ngModel)]="item.total_price"
+                      style="width: 75px; text-align: right !important"
+                      [ngModel]="item.total_price | number: '1.2'"
                       readonly
                       [attr.disabled]="
                         enableEdit['additionalCharges'] && controller == item
@@ -1485,7 +1630,7 @@
                           : ''
                       "
                       [ngModelOptions]="{ standalone: true }"
-                      placeholder="0.0"
+                      placeholder="0"
                     />
                   </div>
                 </div>
@@ -1494,7 +1639,9 @@
               <div
                 class="col-md-1"
                 style="text-align: right"
-                *ngIf="!is_preview_check && sociStatus == 1"
+                *ngIf="
+                  (!is_preview_check && sociStatus == 1) || sociStatus == 7
+                "
               >
                 <div class="row">
                   <!-- //action -->
@@ -1578,7 +1725,7 @@
                       formControlName="description"
                       style="width: 336px"
                       type="text"
-                      placeholder="Description"
+                      placeholder=""
                     />
                   </div>
                 </div>
@@ -1617,8 +1764,9 @@
                     <input
                       class="text-left form-control"
                       formControlName="total_price"
+                      readonly
                       type="text"
-                      placeholder="0.0"
+                      placeholder="0"
                       style="width: 100px"
                     />
                   </div>
@@ -1644,13 +1792,14 @@
           <div class="col-lg-12" align="right">
             <div class="form-group charges">
               <p><b>TotaL </b></p>
-              <p>{{ soci_data?.currency }}</p>
+              <p>({{ soci_data?.currency }})</p>
               <input
                 type="text"
                 class="form-control"
                 readonly
-                value=" {{ total_additional_charges_amount }}"
+                value=" {{ total_additional_charges_amount | number: '1.2' }}"
               />
+              <!-- value=" {{ total_additional_charges_amount | number: "1.2-2" }}" -->
               <!-- {{ sub_total | number: "1.2-2" }} -->
             </div>
           </div>
@@ -1670,10 +1819,10 @@
                   <th>Product Name</th>
                   <th>SKU ID</th>
                   <th>Quantity</th>
-                  <th>Unit Price {{soci_data?.currency}}</th>
-                  <th>Total Price {{soci_data?.currency}}</th>
+                  <th>Unit Price ({{ soci_data?.currency }})</th>
+                  <th>Total Price ({{ soci_data?.currency }})</th>
                   <th>Discount %</th>
-                  <th>Net Amount {{soci_data?.currency}}</th>
+                  <th>Net Amount ({{ soci_data?.currency }})</th>
                   <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
                 </tr>
               </thead>
@@ -1685,7 +1834,7 @@
                 >
                   <td class="text-center">{{ i + 1 }}</td>
                   <td class="text-center">
-                    <input
+                    <!-- <input
                       class="text-left form-control"
                       type="text"
                       readonly
@@ -1699,14 +1848,15 @@
                       "
                       [ngModelOptions]="{ standalone: true }"
                       placeholder="Enter Item"
-                    />
-                    <!-- {{ item.name }} -->
+                    /> -->
+                    {{ item.name }}
                   </td>
                   <td class="text-center">
-                    <input
+                    <!-- <input
                       class="text-left form-control"
                       type="text"
                       readonly
+                      style="text-align: center;"
                       [(ngModel)]="item.sku"
                       *ngIf="
                         editableRowIndex !== i ||
@@ -1717,13 +1867,14 @@
                       "
                       [ngModelOptions]="{ standalone: true }"
                       placeholder="Enter Item"
-                    />
-                    <!-- {{ item.sku }} -->
+                    /> -->
+                    {{ item.sku }}
                   </td>
                   <td class="text-center">
-                    <input
+                    <!-- <input
                       class="text-left form-control"
                       type="text"
+                      style="text-align: center !important;"
                       readonly
                       [(ngModel)]="item.quantity"
                       *ngIf="
@@ -1735,13 +1886,14 @@
                       "
                       [ngModelOptions]="{ standalone: true }"
                       placeholder="Enter Item"
-                    />
-                    <!-- {{ item.quantity }} -->
+                    /> -->
+                    {{ item.quantity }}
                   </td>
                   <td class="text-center">
-                    <input
+                    <!-- <input
                       class="text-left form-control"
                       type="text"
+                      style="text-align: right !important; width: 100% ;"
                       readonly
                       [(ngModel)]="item.unit_price"
                       *ngIf="
@@ -1753,12 +1905,13 @@
                       "
                       [ngModelOptions]="{ standalone: true }"
                       placeholder="Enter Item"
-                    />
-                    <!-- {{ item.unit_price }} -->
+                    /> -->
+                    {{ item.unit_price | number: "1.2" }}
                   </td>
                   <td class="text-center">
-                    <input
+                    <!-- <input
                       class="text-left form-control"
+                      style="text-align: right !important; width: 100%;"
                       type="text"
                       readonly
                       [(ngModel)]="item.total_price"
@@ -1771,13 +1924,14 @@
                       "
                       [ngModelOptions]="{ standalone: true }"
                       placeholder="Enter Item"
-                    />
-                    <!-- {{ item.total_price }} -->
+                    /> -->
+                    {{ item.total_price | number: "1.2" }}
                   </td>
                   <td class="text-center">
-                    <input
+                    <!-- <input
                       class="text-left form-control"
                       type="text"
+                      style="text-align: center !important;"
                       readonly
                       [(ngModel)]="item.discount"
                       *ngIf="
@@ -1789,12 +1943,13 @@
                       "
                       [ngModelOptions]="{ standalone: true }"
                       placeholder="Enter Item"
-                    />
-                    <!-- {{ item.discount }} -->
+                    /> -->
+                    {{ item.discount }}
                   </td>
                   <td class="text-center">
-                    <input
+                    <!-- <input
                       class="text-left form-control"
+                      style="text-align: right !important; width: 100%;"
                       type="text"
                       readonly
                       [(ngModel)]="item.amount"
@@ -1807,13 +1962,15 @@
                       "
                       [ngModelOptions]="{ standalone: true }"
                       placeholder="Enter Item"
-                    />
-                    <!-- {{ item.amount }} -->
+                    /> -->
+                    {{ item.amount | number: "1.2" }}
                   </td>
                   <td
                     class="td-actions"
                     style="width: 5%"
-                    *ngIf="!is_preview_check && sociStatus == 1"
+                    *ngIf="
+                      (!is_preview_check && sociStatus == 1) || sociStatus == 7
+                    "
                   >
                     <!-- //action -->
                     <div class="action-icon" style="display: flex">
@@ -1943,7 +2100,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="text-left"><b>Tax (SST)</b></td>
+                  <td class="text-left">
+                    <b>Tax ({{ soci_data?.currency }})</b>
+                  </td>
                   <td class="text-right">{{ tax_rate | number: "1.2" }}</td>
                 </tr>
                 <tr>
@@ -1965,7 +2124,7 @@
       </p-accordion>
       <!-- End of Products Accordion -->
       <br />
-      <!-- Customer PO Attachments -->
+      <!-- SOCI PO Attachments -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
         <p-accordionTab header="SOCI Attachments">
           <table class="table table-bordered table-striped">
@@ -1975,7 +2134,7 @@
                 <th>FO SO No.</th> -->
                 <th>Customer PO</th>
                 <th>File Name</th>
-                <!-- <th>File Type</th> -->
+                <th>File Type</th>
                 <th>Download</th>
               </tr>
             </thead>
@@ -1983,14 +2142,23 @@
               <tr align="center" *ngFor="let item of sociAttachment">
                 <!-- <td></td>
                 <td></td> -->
-                <td>{{soci_data?.po_no}}</td>
-                <td>{{item.fileName}}</td>
-                <!-- <td></td> -->
+                <td>{{ soci_data?.po_no }}</td>
+                <td>{{ item.original_file_name }}</td>
+                <td>{{item.file_type}}</td>
                 <td>
-                  <a href="{{url + '/soci/attachment-download/' + item.fileName + '?token=' + token}}" target="_blank">Download</a>
+                  <a
+                    href="{{
+                      url +
+                        '/soci/attachment-download/' +
+                        item.fileName +
+                        '?token=' +
+                        token
+                    }}"
+                    target="_blank"
+                    >Download</a
+                  >
                 </td>
               </tr>
-
             </tbody>
           </table>
         </p-accordionTab>
@@ -2000,12 +2168,22 @@
         <!-- Remarks taxbox -->
         <div class="remarks-texbox">
           <label>Remarks</label>
-          <textarea class="texarea" formControlName="sociRemarks" placeholder="Remarks..." ></textarea>
-          <div style="margin-top: 10px;">
-            <button class="btn btn-primary" (click)="updateRemarks()">Update Remarks</button>
+          <textarea
+            class="texarea"
+            formControlName="sociRemarks"
+            placeholder="Remarks..."
+          ></textarea>
+          <div style="margin-top: 10px">
+            <button
+              class="btn btn-primary"
+              *ngIf="(!is_preview_check && sociStatus == 1) || sociStatus == 7"
+              (click)="updateRemarks()"
+            >
+              Update Remarks
+            </button>
           </div>
         </div>
-       
+
         <!-- SOCI Detail -->
         <div
           style="
@@ -2020,7 +2198,9 @@
               <table class="table table-borderless table-price">
                 <tr>
                   <td class="text-left">Subtotal Before Tax</td>
-                  <td class="text-right">{{ product_subtotal_before_tax }}</td>
+                  <td class="text-right">
+                    {{ product_subtotal_before_tax | number: "1.2" }}
+                  </td>
                 </tr>
                 <tr>
                   <td class="text-left">Discount Value</td>
@@ -2029,12 +2209,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="text-left">SST (Dynamic) Tax</td>
-                  <td class="text-right">0.000</td>
+                  <td class="text-left">({{ soci_data?.currency }}) Tax</td>
+                  <td class="text-right">0.00</td>
                 </tr>
                 <tr>
                   <td class="text-left">Additional Cost & Charges</td>
-                  <td class="text-right">{{ additional_cost_and_charges }}</td>
+                  <td class="text-right">
+                    {{ additional_cost_and_charges | number: "1.2" }}
+                  </td>
                 </tr>
                 <tr>
                   <td class="text-left">Total Cost</td>
@@ -2057,7 +2239,7 @@
   <button
     class="request-approval-btn"
     (click)="confirmationModal.show()"
-    *ngIf="sociStatus == 1 && is_edited"
+    *ngIf="sociStatus == 1 || (sociStatus == 7 && is_edited)"
   >
     REQUEST APPROVAL
   </button>
@@ -2611,7 +2793,19 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">Are you sure to REJECT the SOCI ?</div>
+      <div class="modal-body">
+        <form [formGroup]="form">
+          <div class="reject-remakrs">
+            <label>Reject Reason</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="cancelled_remarks"
+              (input)="addCancelRemarks()"
+            />
+          </div>
+        </form>
+      </div>
       <div class="modal-footer">
         <button
           type="button"
@@ -2620,7 +2814,12 @@
         >
           Cancel
         </button>
-        <button type="button" class="btn btn-info" (click)="rejectSOCI()">
+        <button
+          type="button"
+          class="btn btn-info"
+          [attr.disabled]="isCancelRemarks ? null : ''"
+          (click)="rejectSOCI()"
+        >
           Yes
         </button>
       </div>

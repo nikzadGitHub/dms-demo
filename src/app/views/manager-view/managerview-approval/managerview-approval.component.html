@@ -33,29 +33,29 @@
 
 <table class="table table-hover table-striped" *ngIf="is_soci_view">
   <thead>
-    <tr>
+    <tr align="center">
       <th>SOCI ID</th>
       <th>Created date</th>
       <th>FSS Name</th>
       <th>Qutation ID</th>
       <th>Company Name</th>
-      <th>Validity Date</th>
-      <th>Reason</th>
+      <!-- <th>Validity Date</th>
+      <th>Reason</th> -->
       <th>Status</th>
-      <th>Amount (RM)</th>
+      <!-- <th>Amount (RM)</th> -->
     </tr>
   </thead>
   <tbody>
     <tr align="center" *ngFor="let item of pendingSOCI">
       <td>{{item.soci_id}}</td>
       <td>{{ item.created_at | date: "dd-MMM-yyy" }}</td>
-      <td></td>
+      <td>_</td>
       <td>{{ item.quote_full_id }}</td>
       <td>{{ item.customer.company_name }}</td>
-      <td></td>
-      <td></td>
+      <!-- <td></td>
+      <td></td> -->
       <td>{{ item.status_desc }}</td>
-      <td></td>
+      <!-- <td></td> -->
       <td>
         <!-- ['/soci/', item.id, 'edit'] -->
         <a
