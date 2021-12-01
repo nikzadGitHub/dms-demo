@@ -180,4 +180,15 @@ export class QuoteService {
     }
     return throwError(errorMessage);
  }
+
+ saveTemplateData(id,headerData,footerData ,bodyData){
+  return this.httpClient.post(this.apiURL + '/quote/quotation-preview/save/'+ id, {
+    'header_content': headerData,
+    'footer_content': footerData,
+    'full_html': bodyData,
+  })
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
 }

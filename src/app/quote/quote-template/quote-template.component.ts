@@ -12,6 +12,7 @@ import html2canvas from "html2canvas";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { DOCUMENT } from "@angular/common";
 import { NavigationExtras, Router } from "@angular/router";
+import { QuoteService } from "../quote.service";
 @Component({
   selector: "app-quote-template",
   templateUrl: "./quote-template.component.html",
@@ -21,6 +22,7 @@ export class QuoteTemplateComponent implements OnInit {
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("fileUpload") fileUpload: ElementRef;
+  @ViewChild("footerContent") footerData: ElementRef;
   alertBody: string;
   alertHeader: string;
   fileName = "";
@@ -34,7 +36,10 @@ export class QuoteTemplateComponent implements OnInit {
   imageHeight: number;
   single: boolean;
   userToken: any;
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private quoteService : QuoteService
+    ) {}
 
   ngOnInit(): void {
     this.userToken = localStorage.getItem("auth-token");
@@ -197,5 +202,14 @@ export class QuoteTemplateComponent implements OnInit {
   }
   reset() {
     this.fileUpload.nativeElement.value = null;
+  }
+  savePreviewContent(){
+    let doc = document.getElementById('headerContent').innerHTML
+    let doc1 = document.getElementById('footerContent').innerHTML
+    let doc2 = document.getElementById('bodyContent').innerHTML
+
+    this.quoteService.saveTemplateData(1,doc,doc1,doc2).subscribe(state=>{
+      console.log("save template data =>",state)
+    })
   }
 }

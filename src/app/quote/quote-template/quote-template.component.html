@@ -80,7 +80,7 @@
         </div>
 
         <div class="main-text">
-          <div [attr.contenteditable]="editable">
+          <div [attr.contenteditable]="editable" id="headerContent">
             <p class="text-header">Dengan hormat,</p>
             <p class="text-para">
               Documentation and examples for opt-in styling of tables (given
@@ -92,53 +92,56 @@
               .thead-light or .thead-dark to make s appear light or dark gray:
             </p>
           </div>
-          <div>
-            <table class="table table-bordered table-sm">
-              <thead>
-                <tr>
-                  <th scope="col">BRAND</th>
-                  <th scope="col">P/N</th>
-                  <th scope="col">DESCRIPTION</th>
-                  <th scope="col">PRICE LIST</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="main-table-data">
-                  <td>1</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="list-detail" [attr.contenteditable]="editable">
-            <p class="">
-              Bootstrap sets basic global display, typography, and link styles:
-            </p>
-            <div class="list-data">
-              <table class="table table-borderless item-table">
+          <div class="bodyContentArea" id="bodyContent">
+            <div>
+              <table class="table table-bordered table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col">BRAND</th>
+                    <th scope="col">P/N</th>
+                    <th scope="col">DESCRIPTION</th>
+                    <th scope="col">PRICE LIST</th>
+                  </tr>
+                </thead>
                 <tbody>
-                  <tr>
-                    <td class="item-list">1.</td>
-                    <td class="item-name">First item</td>
-                    <td>:Cras justo odio</td>
-                  </tr>
-                  <tr>
-                    <td class="item-list">2.</td>
-                    <td>Second item</td>
-                    <td>:Dapibus ac facilisis in</td>
-                  </tr>
-                  <tr>
-                    <td class="item-list">3.</td>
-                    <td>Third item</td>
-                    <td>:Morbi leo risus</td>
+                  <tr class="main-table-data">
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
                   </tr>
                 </tbody>
               </table>
             </div>
+            <div class="list-detail" [attr.contenteditable]="editable">
+              <p class="">
+                Bootstrap sets basic global display, typography, and link styles:
+              </p>
+              <div class="list-data">
+                <table class="table table-borderless item-table">
+                  <tbody>
+                    <tr>
+                      <td class="item-list">1.</td>
+                      <td class="item-name">First item</td>
+                      <td>:Cras justo odio</td>
+                    </tr>
+                    <tr>
+                      <td class="item-list">2.</td>
+                      <td>Second item</td>
+                      <td>:Dapibus ac facilisis in</td>
+                    </tr>
+                    <tr>
+                      <td class="item-list">3.</td>
+                      <td>Third item</td>
+                      <td>:Morbi leo risus</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-          <div class="sub-info-text" [attr.contenteditable]="editable">
+          
+          <div class="sub-info-text" id="footerContent" [attr.contenteditable]="editable">
             <p>*HTML5 adds a new global attribute named [hidden]</p>
             <p>
               [hidden] is not compatible with jQuery’s $(...).hide() and
@@ -150,9 +153,9 @@
               is not modified and the element can still affect the flow of the
               document, use the .invisible class instead.
             </p>
+            <label [attr.contenteditable]="editable">Hormat kami.</label><br />
           </div>
           <div class="sub-text-footer">
-            <label [attr.contenteditable]="editable">Hormat kami.</label><br />
             <p class="company-name" [attr.contenteditable]="editable">
               PT. IDS Medical System Indonisa
             </p>
@@ -162,6 +165,10 @@
             <p [attr.contenteditable]="editable" class="name-number">
               <span class="contact-name">ZulfaAlla</span><br />(0812-4920-1673)
             </p>
+          </div>
+          
+          <div class="previewSave">
+            <button class="btn btn-primary" (click)='savePreviewContent()' >Save</button>
           </div>
         </div>
       </div>
