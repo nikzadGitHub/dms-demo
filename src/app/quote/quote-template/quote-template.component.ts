@@ -11,7 +11,9 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { DOCUMENT } from "@angular/common";
-import { NavigationExtras, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { QuoteService } from "../quote.service";
+import { Quote } from "../quote";
 @Component({
   selector: "app-quote-template",
   templateUrl: "./quote-template.component.html",
@@ -29,16 +31,32 @@ export class QuoteTemplateComponent implements OnInit {
   check = false;
   editable = true;
   url: any;
+  quotationsTemplateData:any;
   elem;
   imageWidth: any;
   imageHeight: number;
   single: boolean;
   userToken: any;
-  constructor(private router: Router) {}
+  quotationId: any;
+  constructor(private router: Router, private quoteService: QuoteService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.quotationId = params.quotation_id
+    })
     this.userToken = localStorage.getItem("auth-token");
     this.getMobileOperatingSystem();
+    this.viewQuotationTemplate();
+  }
+
+  viewQuotationTemplate() {
+    this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
+      console.log('Quotations Data =>',res);
+      this.quotationsTemplateData = res["data"]
+      console.log("quotationsTemplateData:", this.quotationsTemplateData);
+      
+    })
+    this.router.navigateByUrl("quote/view/quote-template");
   }
 
   onFileSelected(event: any) {
