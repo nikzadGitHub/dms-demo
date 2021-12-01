@@ -27,6 +27,7 @@ export class FormComponent implements OnInit{
   formBooking : FormGroup;
   curDate =  new Date(Date.now()).toLocaleDateString();
   customers: CustomerList;
+  duration: any;
 
   constructor(
     private fb: FormBuilder,
@@ -38,13 +39,14 @@ export class FormComponent implements OnInit{
     this.apiCustomers.getList().subscribe((response) => {
       this.customers = response;
     });
+    this.duration = this.bookingDetailList.demo_duration;
     this.formBooking = this.fb.group({
       customer: new FormControl(this.bookingDetailList.customer),
       booking_reason: new FormControl(this.bookingDetailList.booking_reason),
       branch: new FormControl(this.bookingDetailList.branch),
       date_of_delivery: new FormControl(this.bookingDetailList.preferred_date_of_delivery),
       date_of_collection: new FormControl(this.bookingDetailList.preferred_date_of_collection),
-      demo_duration : new FormControl(this.bookingDetailList.demo_duration),
+      demo_duration : new FormControl(this.duration),
       department: new FormControl(this.bookingDetailList.department),
       location: new FormControl(this.bookingDetailList.location),
       contact_name: new FormControl(this.bookingDetailList.ship_to_contact_name),
@@ -82,5 +84,17 @@ export class FormComponent implements OnInit{
             this.dangerModal.hide();
           }, 2000);
       });
+  }
+
+  onDuration(){
+    const date_of_delivery = this.formBooking.get("date_of_delivery").value;
+    const date_of_collection = this.formBooking.get("date_of_collection").value;
+    if(date_of_delivery != "" && date_of_collection != ""){
+      var date1 = new Date(date_of_delivery); 
+      var date2 = new Date(date_of_collection); 
+      var Time = date2.getTime() - date1.getTime(); 
+      var Days = Time / (1000 * 3600 * 24);
+      this.duration =  Days;
+    }
   }
 }

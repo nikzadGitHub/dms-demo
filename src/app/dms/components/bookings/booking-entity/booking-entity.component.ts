@@ -25,6 +25,7 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
   private apiListener: Subscription;
 
   status: any;
+  access: boolean;
   statusText: string = 'Draft';
   bookingId: BigInt = BigInt(0);
   approvalList: ApprovalList = [];
@@ -57,6 +58,7 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
               this.bookingDetailList.status = this.statusName(this.bookingDetailList.status);
               this.opportunitySummary = response.opportunitySummary;
               this.mainAsset = response.mainAsset;
+              this.access = response.access;
             }
             console.log('api: entity', this.bookingId, response);
           });

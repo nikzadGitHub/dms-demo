@@ -1,14 +1,14 @@
 <!--/.col-->
 
   <!--/.col-->
-  <div class="form-group">
+  <div class="form-group" *ngIf="opportunitySummary; else empty">
     <p-accordion class="p-accordion">
         <p-accordionTab class="p-accordionTab" [selected]="true">
             <p-header class="p-header">
                 <i class="cil-info"></i>
                 <span class="accordion-header">Opportunity Summary</span>
             </p-header>
-                  <div *ngIf="opportunitySummary; else empty">
+                  <div>
                     <table class="table table-borderless">
                       <tbody>
                         <tr>

@@ -63,7 +63,7 @@ export class IdentifyComponent implements OnInit, OnDestroy {
    */
   @Output() bySave = new EventEmitter<IdentifyComponent>();
 
-  equipmentId:string;
+  equipmentId:bigint;
 
   constructor(
     private api: EquipmentsService,
@@ -134,19 +134,20 @@ export class IdentifyComponent implements OnInit, OnDestroy {
    * View listener for Saving form, emits {@link bySave}.
    */
   onSave() {
-      this.api.saveInventoryBooking({
-        bookingId: this.route.snapshot.params.id,
-        equipmentId: this.equipmentId,
-        type: "main",
-      }).subscribe((res) => {
-          if (res) {
-            this.bySave.emit(this);
-          }
-        },
-        err => {
-          console.log(err);
-            alert("not added")
-        });
+    this.api.saveInventoryBooking({
+      bookingId: this.route.snapshot.params.id,
+      equipmentId: this.equipmentId,
+      type: "main",
+    }).subscribe((res) => {
+        if (res) {
+          this.bySave.emit(this);
+        }
+      },
+      err => {
+        console.log(err);
+          alert("not added")
+      }
+    );
   }
 
   /**
@@ -160,7 +161,7 @@ export class IdentifyComponent implements OnInit, OnDestroy {
    * Marks given index with {@link EquipmentWithEdit#isPicked},
    * and deselects everything else.
    */
-  onSelect(selectedIndex: number, id:string) {
+  onSelect(selectedIndex: number, id:bigint) {
     this.equipmentId = id;
     this.list.forEach((entry, index) => {
       entry.isPicked = index === selectedIndex;
