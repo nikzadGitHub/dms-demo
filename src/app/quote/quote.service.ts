@@ -99,6 +99,19 @@ export class QuoteService {
     )
   }
 
+  getTemplates(){
+    return this.httpClient.get(this.apiURL + '/quote/quotation-template',this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+  getQuatation(id){
+    return this.httpClient.get(this.apiURL + '/quote/quotation-preview/'+ id,this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   getFilteredProducts(filter){
     filter = filter == '' ? 0 : filter; 
     // /opportunity/get-all-products

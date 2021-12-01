@@ -11,8 +11,9 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { DOCUMENT } from "@angular/common";
-import { NavigationExtras, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { QuoteService } from "../quote.service";
+import { Quote } from "../quote";
 @Component({
   selector: "app-quote-template",
   templateUrl: "./quote-template.component.html",
@@ -31,19 +32,43 @@ export class QuoteTemplateComponent implements OnInit {
   check = false;
   editable = true;
   url: any;
+  quotationsTemplateData:any;
   elem;
   imageWidth: any;
   imageHeight: number;
   single: boolean;
   userToken: any;
-  constructor(
-    private router: Router,
-    private quoteService : QuoteService
-    ) {}
+  quotationId: any;
+  constructor(private router: Router, private quoteService: QuoteService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    // this.quoteService.quotationIdGet().subscribe(state=>{
+    //   this.quotationId = state
+    //   console.log('quotation id =>',state)
+    // })
+    // location.pathname
+    console.log(location.pathname);
+    
+    this.route.queryParams.subscribe((params) => {
+      if('quotation_id' in params)
+      this.quotationId = params.quotation_id
+      console.log('queryParams ==>>',params)
+
+    })
     this.userToken = localStorage.getItem("auth-token");
     this.getMobileOperatingSystem();
+    this.viewQuotationTemplate();
+  }
+
+  viewQuotationTemplate() {
+
+    this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
+      console.log('Quotations Data =>',res);
+      this.quotationsTemplateData = res["data"]
+      console.log("quotationsTemplateData:", this.quotationsTemplateData.quotations.id,'this.quotationsId =>',this.quotationId);
+      
+    })
+    // this.router.navigateByUrl("quote/view/quote-template");
   }
 
   onFileSelected(event: any) {
@@ -208,8 +233,8 @@ export class QuoteTemplateComponent implements OnInit {
     let doc1 = document.getElementById('footerContent').innerHTML
     let doc2 = document.getElementById('bodyContent').innerHTML
 
-    this.quoteService.saveTemplateData(1,doc,doc1,doc2).subscribe(state=>{
-      console.log("save template data =>",state)
+    this.quoteService.saveTemplateData(this.quotationId,doc,doc1,doc2).subscribe(state=>{
+      console.log("save template data =>",state,"this.quotationId",this.quotationId)
     })
   }
 }

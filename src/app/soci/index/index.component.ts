@@ -49,9 +49,6 @@ export class IndexComponent implements OnInit {
         this.totalRecords = data["data"]["soci"]["total"];
         this.checkPermission();
       });
-    setTimeout(() => {
-      console.log(this.socis);
-    }, 4000);
   }
 
   getAll() {

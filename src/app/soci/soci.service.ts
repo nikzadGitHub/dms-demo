@@ -41,19 +41,27 @@ export class SociService {
       .get(url + query, this.httpOptions)
       .pipe(catchError(this.errorHandler));
   }
-  getFilteredProducts(filter, external_id) {
+  getFilteredProducts(filter, customer_id,external_id) {
     filter = filter == "" ? 0 : filter;
+    // "/opportunity/get-all-products?search_text="
     return (
       this.httpClient
-        .get(
-          this.apiURL +
-            "/opportunity/get-all-products?search_text=" +
-            filter +
-            "&external_id=" +
-            external_id,
-          this.httpOptions
-        )
-        // return this.httpClient.get(this.apiURL + '/quote/products/filtered/' + filter,this.httpOptions)
+      .get(
+        this.apiURL +
+          "/soci/get-product?search_text=" +
+          filter +
+          "&customer_id=" +
+          customer_id,
+        this.httpOptions
+      )
+        // .get(
+        //   this.apiURL +
+        //     "/opportunity/get-product?search_text=" +
+        //     filter +
+        //     "&external_id=" +
+        //     external_id,
+        //   this.httpOptions
+        // )
         .pipe(catchError(this.errorHandler))
     );
   }
