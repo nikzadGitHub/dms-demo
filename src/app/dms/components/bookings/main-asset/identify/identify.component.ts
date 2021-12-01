@@ -63,7 +63,7 @@ export class IdentifyComponent implements OnInit, OnDestroy {
    */
   @Output() bySave = new EventEmitter<IdentifyComponent>();
 
-  equipmentId:bigint;
+  equipmentId:BigInt;
 
   constructor(
     private api: EquipmentsService,
@@ -161,7 +161,7 @@ export class IdentifyComponent implements OnInit, OnDestroy {
    * Marks given index with {@link EquipmentWithEdit#isPicked},
    * and deselects everything else.
    */
-  onSelect(selectedIndex: number, id:bigint) {
+  onSelect(selectedIndex: number, id:BigInt) {
     this.equipmentId = id;
     this.list.forEach((entry, index) => {
       entry.isPicked = index === selectedIndex;
