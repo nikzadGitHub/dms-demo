@@ -17,6 +17,7 @@ export const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
+  
   {
     path: 'logout',
     component:LogoutComponent
@@ -124,7 +125,19 @@ export const routes: Routes = [
       },
       {
         path: 'salestarget',
-        loadChildren: () => import('./views/sales-target/sales-target.module').then(m => m.SalesTargetModule)
+        loadChildren: () => import('./views/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)
+      },
+      {
+        path: 'reports',
+        loadChildren: () => import('./views/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./views/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)
+      },
+      {
+        path: 'activities',
+        loadChildren: () => import('./views/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)
       },
       {
         path: 'managerview',
