@@ -64,6 +64,9 @@ tr {
 // }
 
 // new scss
+.p-badge.p-badge-warning {
+  white-space: nowrap !important;
+}
 
 :host ::ng-deep {
   .p-paginator {
@@ -145,17 +148,35 @@ tr {
 
 .row-icon {
   display: flex;
+  padding-left: 15px;
   a {
     margin-right: 12px;
   }
 }
-.input-span-icon{
+i {
+  cursor: pointer;
+}
+
+.column-box {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: auto;
+}
+
+.check-field {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-left: 10px;
+}
+
+.input-span-icon {
   display: flex;
   align-items: center;
   flex-direction: row;
-
 }
-.export-to-excel{
+.export-to-excel {
   font-size: 1.5rem;
   cursor: pointer;
   margin-left: 5px;

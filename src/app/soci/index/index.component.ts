@@ -9,12 +9,8 @@ import { Soci } from "../soci";
 import { SociService } from "../soci.service";
 import * as XLSX from "xlsx";
 import { SelectItem } from "primeng/api";
+import { ModalDirective } from "ngx-bootstrap/modal";
 // import { FilterUtils } from 'primeng/utils';
-
-interface City {
-  name: string,
-  code: string
-}
 
 @Component({
   selector: "app-index",
@@ -22,6 +18,11 @@ interface City {
   styleUrls: ["./index.component.scss"],
 })
 export class IndexComponent implements OnInit {
+  @ViewChild("confirmationExportExcelModal")
+  public confirmationExportExcelModal: ModalDirective;
+  @ViewChild("columnChooserModal")
+  public columnChooserModal: ModalDirective;
+
   private ngUnsubscribe = new Subject();
   sort: any;
   search_text: string = "";
@@ -36,8 +37,22 @@ export class IndexComponent implements OnInit {
   colors: SelectItem[];
   user_json: any;
   isPermission: boolean;
-  cities: City[];
-  selectedCities: City[];
+  sociStatus: any;
+  badgeColor = "";
+  selectedValues: any[] = [];
+  columnValue = [
+    { name: "Created date", key: "c_date" },
+    { name: "SOCI ID", key: "soci_id" },
+    { name: "Company Name", key: "company_name" },
+    { name: "Quotation ID", key: "quote_full_id" },
+    { name: "Quotation Date", key: "quote_date" },
+    { name: "Amount", key: "po_amount" },
+    { name: "PO No", key: "po_no" },
+    { name: "PO Date", key: "po_date" },
+    { name: "FO Number", key: "fo_order_number" },
+    { name: "Status", key: "status_desc" },
+  ];
+
   constructor(public sociService: SociService, private router: Router) {}
 
   ngOnInit(): void {
@@ -49,6 +64,9 @@ export class IndexComponent implements OnInit {
         this.totalRecords = data["data"]["soci"]["total"];
         this.checkPermission();
       });
+      setTimeout(() => {
+        this.selectedValues = this.columnValue.slice(0,10);
+      }, 1000);
   }
 
   getAll() {
@@ -111,6 +129,7 @@ export class IndexComponent implements OnInit {
     }
   }
   exportToExcel($event) {
+    this.confirmationExportExcelModal.hide();
     let dupArr: Array<any> = this.socis;
     let exportArr: Array<any> = [];
     for (let i = 0; i < dupArr.length; i++) {
@@ -136,25 +155,18 @@ export class IndexComponent implements OnInit {
     XLSX.writeFile(wb, fileName);
   }
 
-  columnFilter() {
-
-    this.cities = [
-      {name: 'New York', code: 'NY'},
-      {name: 'Rome', code: 'RM'},
-      {name: 'London', code: 'LDN'},
-      {name: 'Istanbul', code: 'IST'},
-      {name: 'Paris', code: 'PRS'}
-  ];
-    // this.colors = [
-    //   { label: "White", value: "White" },
-    //   { label: "Green", value: "Green" },
-    //   { label: "Silver", value: "Silver" },
-    //   { label: "Black", value: "Black" },
-    //   { label: "Red", value: "Red" },
-    //   { label: "Maroon", value: "Maroon" },
-    //   { label: "Brown", value: "Brown" },
-    //   { label: "Orange", value: "Orange" },
-    //   { label: "Blue", value: "Blue" },
-    // ];
+  updateCols(e, item){
+    console.log("e", e, item)
+    if(!e.checked){
+      let index = this.selectedValues.indexOf(item)
+      this.selectedValues.splice(0, index)
+    }else{
+      this.selectedValues.push(item)
+    }
   }
+
+  checkItem(item){
+    return this.selectedValues.some(ele => ele.key === item)
+  }
+
 }

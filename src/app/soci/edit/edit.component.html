@@ -40,15 +40,9 @@
             <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
           </div>
           <div class="col-lg-2">
-            <div class="text-center status">
-              <label style="color: black"><b>Status</b></label>
-              <input
-                type="text"
-                class="form-control"
-                [value]="soci_data?.status_desc"
-                readonly
-                style="width: 150px"
-              />
+            <div class="status">
+              <label style="color: black"><b>Status: </b></label>
+              <p-badge [value]="soci_data?.status_desc" [severity]="badgeColor" styleClass="p-mr-2"></p-badge>
             </div>
           </div>
           <!-- <div class="col-lg" align='right'><b>Status</b><br><p>{{f.status.value}}</p></div> -->
@@ -118,12 +112,13 @@
         <!-- Standard Term Accordion -->
         <p-accordionTab header="Standard Terms">
           <div class="row grey">
-            <div class="col-md-5"><b>Payment Terms: </b>{{this.standerd_payment_term + " days"}}
+            <div class="col-md-5">
+              <b>Payment Terms: </b>{{ this.standerd_payment_term + " days" }}
             </div>
             <div class="col-lg-6" style="text-align: middle">
-                Quotation Validity: <b>From</b>
-                <u>{{ payment_term_from | date: "dd-MMM-yyyy" }}</u> <b>To</b>
-                <u>{{ payment_term_to | date: "dd-MMM-yyyy" }}</u>
+              Quotation Validity: <b>From</b>
+              <u>{{ payment_term_from | date: "dd-MMM-yyyy" }}</u> <b>To</b>
+              <u>{{ payment_term_to | date: "dd-MMM-yyyy" }}</u>
             </div>
             <div
               class="col-lg-1"
@@ -141,10 +136,14 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-5"><b>(As Default) Payment Terms: </b>{{ default_payment_term + " Days" }}
+            <div class="col-md-5">
+              <b>(As Default) Payment Terms: </b
+              >{{ default_payment_term + " Days" }}
             </div>
-            <div class="col-md-6">Quotation Validity: <b>From</b>
-              <u>{{ default_payment_term_from | date: "dd-MMM-yyyy" }}</u> <b>To</b>
+            <div class="col-md-6">
+              Quotation Validity: <b>From</b>
+              <u>{{ default_payment_term_from | date: "dd-MMM-yyyy" }}</u>
+              <b>To</b>
               <u>{{
                 quotation_validity_payment_term_to | date: "dd-MMM-yyyy"
               }}</u>
@@ -153,12 +152,13 @@
           </div>
 
           <div class="row grey">
-            <div class="col-md-5"><b>Delivery Terms: </b>{{this.standard_delivery_term + " days"}}
+            <div class="col-md-5">
+              <b>Delivery Terms: </b>{{ this.standard_delivery_term + " days" }}
             </div>
             <div class="col-lg-6" style="text-align: middle">
-                Quotation Validity: <b>From</b>
-                <u>{{ delivery_term_from | date: "dd-MMM-yyyy" }}</u> <b>To</b>
-                <u>{{ delivery_term_to | date: "dd-MMM-yyyy" }}</u>
+              Quotation Validity: <b>From</b>
+              <u>{{ delivery_term_from | date: "dd-MMM-yyyy" }}</u> <b>To</b>
+              <u>{{ delivery_term_to | date: "dd-MMM-yyyy" }}</u>
             </div>
             <div
               class="col-lg-1"
@@ -176,11 +176,14 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-5"><b>(As Default) Delivery Terms: </b>{{ default_delivery_term + " Days" }}
+            <div class="col-md-5">
+              <b>(As Default) Delivery Terms: </b
+              >{{ default_delivery_term + " Days" }}
             </div>
             <div class="col-md-6">
               Quotation Validity: <b>From</b>
-              <u>{{ default_delivery_term_from | date: "dd-MMM-yyyy" }}</u> <b>To</b>
+              <u>{{ default_delivery_term_from | date: "dd-MMM-yyyy" }}</u>
+              <b>To</b>
               <u>{{
                 quotation_validity_delivery_term_to | date: "dd-MMM-yyyy"
               }}</u>
@@ -247,10 +250,14 @@
                     <input
                       type="text"
                       class="form-control"
-                      style="text-align: right;"
+                      style="text-align: right"
                       [(ngModel)]="billing.percentage"
                       [ngModelOptions]="{ standalone: true }"
-                      [attr.disabled]="enableEdit['billingMilestone'] && controller == billing? null: ''"
+                      [attr.disabled]="
+                        enableEdit['billingMilestone'] && controller == billing
+                          ? null
+                          : ''
+                      "
                     />
                     <!-- {{ billing.percentage }} -->
                   </td>
@@ -464,7 +471,11 @@
                     <select
                       [(ngModel)]="billing_id"
                       [ngModelOptions]="{ standalone: true }"
-                      [attr.disabled]="enableEdit['payment'] && controller == payment? null: ''"
+                      [attr.disabled]="
+                        enableEdit['payment'] && controller == payment
+                          ? null
+                          : ''
+                      "
                       class="form-control"
                       style="width: 130px"
                     >
@@ -489,17 +500,21 @@
                     <input
                       type="text"
                       class="form-control"
-                      style="text-align: right; width: 100px;"
+                      style="text-align: right; width: 100px"
                       [(ngModel)]="payment.percentage"
                       [ngModelOptions]="{ standalone: true }"
-                      [attr.disabled]="enableEdit['payment'] && controller == payment? null: ''"
+                      [attr.disabled]="
+                        enableEdit['payment'] && controller == payment
+                          ? null
+                          : ''
+                      "
                     />
                     <!-- {{ payment.percentage }} -->
                   </td>
                   <td>
                     <input
                       type="date"
-                      style="width: 79%;"
+                      style="width: 79%"
                       class="form-control"
                       [ngModel]="new_payment_schedule_date"
                       (ngModelChange)="changePaymentSchdule($event)"
@@ -523,7 +538,7 @@
                     <input
                       type="number"
                       class="form-control"
-                      style="width: 80px; text-align: right;"
+                      style="width: 80px; text-align: right"
                       [(ngModel)]="payment.soc_payment_term"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
@@ -537,7 +552,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      style="width: 100px;"
+                      style="width: 100px"
                       [(ngModel)]="payment.status"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
@@ -664,7 +679,7 @@
                     <input
                       class="form-control"
                       formControlName="percentage"
-                      style="width: 100px;"
+                      style="width: 100px"
                       size="1"
                       placeholder=""
                       type="number"
@@ -676,7 +691,7 @@
                   <td style="width: 20%; padding: 6px">
                     <input
                       class="form-control"
-                      style="width: 160px;"
+                      style="width: 160px"
                       formControlName="schedule"
                       size="1"
                       type="date"
@@ -685,7 +700,7 @@
                   <td style="width: 10%; padding: 6px">
                     <input
                       class="form-control"
-                      style="width: 80px;"
+                      style="width: 80px"
                       formControlName="soc_payment_term"
                       placeholder="0 Days"
                       type="text"
@@ -789,7 +804,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      style="text-align: right; width: 65px;"
+                      style="text-align: right; width: 65px"
                       (input)="changeCostvalues(cost)"
                       [(ngModel)]="cost.quantity"
                       [ngModelOptions]="{ standalone: true }"
@@ -1209,7 +1224,7 @@
                   <td>
                     <input
                       formControlName="percentage"
-                      style="width: 100px;"
+                      style="width: 100px"
                       class="form-control"
                       placeholder="0"
                       type="text"
@@ -1286,7 +1301,7 @@
                 <!-- [value]="item.soci" -->
                 <input
                   class="text-left form-control"
-                  style="width: 146px;"
+                  style="width: 146px"
                   type="text"
                   [(ngModel)]="item.soci"
                   [attr.disabled]="
@@ -1382,7 +1397,7 @@
                     <div class="col-md-10">
                       <input
                         class="text-left form-control"
-                        style="width: 146px;"
+                        style="width: 146px"
                         type="text"
                         formControlName="soci_title"
                         placeholder=""
@@ -1395,7 +1410,7 @@
                     <div class="col-md-10">
                       <input
                         class="text-left form-control"
-                        style="width: 600px;"
+                        style="width: 600px"
                         type="text"
                         formControlName="description"
                         placeholder=""
@@ -1435,28 +1450,28 @@
         <p-accordionTab header="Additional/Reduction Charges">
           <!-- Heading -->
           <div class="row grey">
-            <div class="col-md-3" style="text-align: middle">
+            <div class="col-md-3" style="text-align: center">
               <div class="row">
                 <div class="col-md-6"><b>Cost Item</b></div>
               </div>
             </div>
-            <div class="col-lg-4" style="text-align: middle">
+            <div class="col-lg-3" style="text-align: center">
               <div class="col-md-8">
                 <b> Description</b>
               </div>
             </div>
-            <div class="col-lg-1" style="text-align: middle">
+            <div class="col-lg-1" style="text-align: center">
               <div class="col-md-8">
                 <b> Quantity</b>
               </div>
             </div>
-            <div class="col-lg-1" style="text-align: middle">
-              <div class="col-md-8">
+            <div class="col-lg-2" style="text-align: center">
+              <div class="col-md-12">
                 <b> Unit ({{ soci_data?.currency }}) </b>
               </div>
             </div>
-            <div class="col-lg-2" style="text-align: middle">
-              <div class="col-md-8">
+            <div class="col-lg-2" style="text-align: center">
+              <div class="col-md-12">
                 <b> Amount ({{ soci_data?.currency }})</b>
               </div>
             </div>
@@ -1483,7 +1498,7 @@
                       [(ngModel)]="cost_item_id"
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control"
-                      style="width: 140px;"
+                      style="width: 140px"
                     >
                       <option value="" disabled selected>Select Item</option>
                       <option
@@ -1498,12 +1513,12 @@
                 </div>
               </div>
               <!-- Description -->
-              <div class="col-md-5">
+              <div class="col-md-4">
                 <div class="">
                   <div class="col-md-10">
                     <input
                       class="text-left form-control"
-                      style="width: 390px;"
+                      style="width: 360px"
                       type="text"
                       [(ngModel)]="item.description"
                       [attr.disabled]="
@@ -1524,7 +1539,7 @@
                     <input
                       class="text-left form-control"
                       type="number"
-                      style="width: 65px; text-align: right;"
+                      style="width: 65px; text-align: right !important"
                       (input)="updateChargesQuantity(item)"
                       [(ngModel)]="item.quantity"
                       [attr.disabled]="
@@ -1540,13 +1555,16 @@
               </div>
 
               <!-- unit -->
-              <div class="col-md-1">
+              <div class="col-md-2">
                 <div class="unit">
                   <div class="col-md-10" *ngIf="editableRowIndex == i">
                     <input
                       class="text-left form-control"
                       type="text"
-                      style="width: 100px; text-align: right !important"
+                      style="
+                        width: 160px !important;
+                        text-align: right !important;
+                      "
                       [(ngModel)]="item.unit_price"
                       (input)="updateChargesUnitPrice(item)"
                       [ngModelOptions]="{ standalone: true }"
@@ -1568,7 +1586,7 @@
                     <input
                       class="text-left form-control"
                       type="text"
-                      style="width: 100px; text-align: right !important"
+                      style="width: 160px; text-align: right !important"
                       [ngModel]="item.unit_price | number: '1.2'"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
@@ -1591,7 +1609,7 @@
                     <input
                       class="text-left form-control"
                       type="text"
-                      style="width: 75px; text-align: right !important"
+                      style="width: 140px; text-align: right !important"
                       [ngModel]="item.total_price | number: '1.2'"
                       readonly
                       [attr.disabled]="
@@ -1663,7 +1681,7 @@
               </div>
             </div>
           </div>
-          <!-- Installation -->
+          <!-- input data fields -->
           <div *ngIf="!is_preview_check && sociStatus == 1">
             <div class="row">
               <div class="col-md-2">
@@ -1673,7 +1691,7 @@
                     <select
                       class="form-control"
                       formControlName="cost_item_id"
-                      style="width: 140px;"
+                      style="width: 140px"
                     >
                       <!-- let i = index -->
                       <option value="" disabled selected>Select Item</option>
@@ -1687,13 +1705,13 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-5">
+              <div class="col-md-4">
                 <div class="">
                   <div class="col-md-10">
                     <input
                       class="text-left form-control"
                       formControlName="description"
-                      style="width: 390px;"
+                      style="width: 360px"
                       type="text"
                       placeholder=""
                     />
@@ -1714,16 +1732,16 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-1">
+              <div class="col-md-2">
                 <div class="unit">
                   <div class="col-md-10">
                     <input
                       class="text-left form-control"
                       formControlName="unit_price"
+                      style="width: 160px !important"
                       type="text"
                       placeholder="0"
                       (input)="chargesUnitValue()"
-                      style="width: 75px"
                     />
                   </div>
                 </div>
@@ -1737,12 +1755,11 @@
                       readonly
                       type="text"
                       placeholder="0"
-                      style="width: 100px"
+                      style="width: 140px !important"
                     />
                   </div>
                 </div>
               </div>
-
               <div class="col-md-1" style="text-align: right">
                 <div class="">
                   <div class="text-center action-icon">
@@ -2114,7 +2131,7 @@
                 <td></td> -->
                 <td>{{ soci_data?.po_no }}</td>
                 <td>{{ item.original_file_name }}</td>
-                <td>{{item.file_type}}</td>
+                <td>{{ item.file_type }}</td>
                 <td>
                   <a
                     href="{{
@@ -2134,24 +2151,25 @@
         </p-accordionTab>
       </p-accordion>
       <br />
-      <div class="soci-remarks" *ngIf="!is_preview_check">
+      <div class="soci-remarks" *ngIf="!is_preview_check && sociStatus == 1 || sociStatus == 7">
         <!-- Remarks taxbox -->
         <div class="remarks-texbox">
-          <label>Remarks</label>
-          <textarea
-            class="texarea"
-            formControlName="sociRemarks"
-            placeholder="Remarks..."
-          ></textarea>
-          <div style="margin-top: 10px">
+          <div class="remarks-btn">
+            <label>Remarks</label>
             <button
               class="btn btn-primary"
-              *ngIf="(!is_preview_check && sociStatus == 1) || sociStatus == 7"
+              *ngIf="!isRemarksAdded && (sociStatus == 1 || sociStatus == 7)"
               (click)="updateRemarks()"
             >
               Update Remarks
             </button>
           </div>
+          <textarea
+            class="texarea"
+            formControlName="sociRemarks"
+            placeholder="Remarks..."
+            (input)="remarksAdded()"
+          ></textarea>
         </div>
 
         <!-- SOCI Detail -->
@@ -2206,9 +2224,10 @@
     <i class="pi pi-arrow-left"></i>
     Cancel
   </button>
+  <!-- (click)="confirmationModal.show()" -->
   <button
     class="request-approval-btn"
-    (click)="confirmationModal.show()"
+    (click)="checkRamarksAdded()"
     *ngIf="sociStatus == 1 || (sociStatus == 7 && is_edited)"
   >
     REQUEST APPROVAL
@@ -2768,12 +2787,12 @@
         <form [formGroup]="form">
           <div class="reject-remakrs">
             <label>Reject Reason</label>
-            <input
+            <textarea
               type="text"
               class="form-control"
               formControlName="cancelled_remarks"
               (input)="addCancelRemarks()"
-            />
+            ></textarea>
           </div>
         </form>
       </div>
@@ -2833,10 +2852,7 @@
           <div class="payment-form">
             <div class="days-field">
               <label for="">Days</label>
-              <input 
-              type="text" 
-              class="form-control" 
-              formControlName="days" />
+              <input type="text" class="form-control" formControlName="days" />
             </div>
             <div class="date-field">
               <label for="">From Date</label>
@@ -2885,4 +2901,47 @@
     <!-- /.modal-content -->
   </div>
   <!-- /.modal-dialog -->
+</div>
+
+<!-- check update remarks model -->
+<div
+  id="success"
+  bsModal
+  #confirmationRemarksUpdatedModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationRemarksUpdatedModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Remarks is not updated yet. Do you want to update remarks ?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationRemarksUpdatedModal.hide()"
+        >
+          No
+        </button>
+        <button type="button" class="btn btn-info" (click)="updateRemarks()">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

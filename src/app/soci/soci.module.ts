@@ -16,6 +16,9 @@ import { EditComponent } from './edit/edit.component';
 import { AccordionModule } from 'primeng/accordion';
 import {DropdownModule} from 'primeng/dropdown';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {BadgeModule} from 'primeng/badge';
+import {CheckboxModule} from 'primeng/checkbox';
+
 
 @NgModule({
   declarations: [
@@ -37,6 +40,8 @@ import {MultiSelectModule} from 'primeng/multiselect';
     DropdownModule,
     MultiSelectModule,
     FileUploadModule,
+    BadgeModule,
+    CheckboxModule,
     AccordionModule
   ]
 })
