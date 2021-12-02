@@ -99,6 +99,19 @@ export class QuoteService {
     )
   }
 
+  getTemplates(){
+    return this.httpClient.get(this.apiURL + '/quote/quotation-template',this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+  getQuatation(id){
+    return this.httpClient.get(this.apiURL + '/quote/quotation-preview/'+ id,this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   getFilteredProducts(filter){
     filter = filter == '' ? 0 : filter; 
     // /opportunity/get-all-products
@@ -180,4 +193,15 @@ export class QuoteService {
     }
     return throwError(errorMessage);
  }
+
+ saveTemplateData(id,headerData,footerData ,bodyData){
+  return this.httpClient.post(this.apiURL + '/quote/quotation-preview/save/'+ id, {
+    'header_content': headerData,
+    'footer_content': footerData,
+    'full_html': bodyData,
+  })
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
 }

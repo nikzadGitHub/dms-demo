@@ -94,7 +94,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Profile',
-    url: '/rofile',
+    url: '/profile',
     icon: 'cil-user'
   },
   {
