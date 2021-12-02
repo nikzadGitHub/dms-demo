@@ -1,0 +1,329 @@
+<div class="animated fadeIn">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <h2>Create FPS SKU Management</h2>
+                </div>
+
+                <hr>
+               
+                <form [formGroup]="skuAddForm" (ngSubmit)="onSave()"  class="form-horizontal">
+                
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            FPS SKU No <span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <input type="text" [readonly] formControlName="uuid"  class="form-control"> 
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Validity Start Date<span class="asterisk"> * </span> 
+                        </label>
+                        <div class="col-md-4">
+                            <p-calendar [showTime]="false" [defaultDate]="defaultDate" dateFormat='yy-mm-dd' formControlName="validity_start_at"></p-calendar>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            FPS Type  <span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <p-dropdown formControlName="package_type_id" [options]="fpsTypeList" optionLabel="title"
+                                optionValue="id" styleClass="form-control" 
+                                placeholder="Select FPS Type" emptyMessage="No FPS Type Available">
+                            </p-dropdown>
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Validity End Date 
+                        </label>
+                        <div class="col-md-4">
+                            <p-calendar [showTime]="false" dateFormat='yy-mm-dd' [defaultDate]="defaultDate" formControlName="validity_end_at"></p-calendar>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Country<span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <p-dropdown formControlName="country_code" [options]="countryList" optionLabel="official_name"
+                                optionValue="code" styleClass="form-control" 
+                                placeholder="Select Country" emptyMessage="No Country Available">
+                            </p-dropdown>
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Interest<span class="asterisk"> * </span> 
+                        </label>
+                        <div class="col-md-4">
+                            <div class="form-group row"> 
+                                <div class="col-md-3">
+                                    <mat-slide-toggle formControlName="has_interest" class="form-control" #has_interest class="example-margin">
+                                    </mat-slide-toggle>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="number" step="0.1" *ngIf="has_interest.checked"  formControlName="interest_rate"  class="form-control">
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <div class="form-group row"> 
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Financial Instititue<span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <p-dropdown formControlName="financier_id" [options]="institutions_list"  optionLabel="title"
+                                optionValue="id" styleClass="form-control" 
+                                placeholder="Select Institution" emptyMessage="No Institution Available">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Payment Frequency
+                        </label>
+                        <div class="col-md-4">
+                            <div class="d-flex justify-content-between">
+                                
+                                <div class="d-flex">
+                                  <p-checkbox name="monthly_payment" [binary]="true" formControlName="monthly_payment" inputId="status1"></p-checkbox>
+                                  <label class="radio-label" for="status1">Monthly</label>
+                                </div>
+
+                                <div class="d-flex">
+                                    <p-checkbox name="quarterly_payment" [binary]="true" formControlName="quarterly_payment" inputId="status2"></p-checkbox>
+                                    <label class="radio-label" for="status1">Quarterly</label>
+                                </div>
+
+                                <div class="d-flex">
+                                    <p-checkbox name="yearly_payment" [binary]="true" formControlName="yearly_payment" inputId="status3"></p-checkbox>
+                                    <label class="radio-label" for="status1">Half-Yearly</label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-md-8 col-form-label" for="booking-reason">
+                                            Agreement Number Mandatory<span class="asterisk"> * </span>
+                                        </label>
+    
+                                        <div class="col-md-4">
+                                            <mat-slide-toggle  class="example-margin">
+                                            </mat-slide-toggle>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-7">
+                            <div class="form-group row">
+                                <div class="col-md-5">
+                                    <div class="form-group row">
+                                        <label class="col-md-8 col-form-label" for="booking-reason">
+                                            Mininumum Payment Amount<span class="asterisk"> * </span>
+                                        </label>
+    
+                                        <div class="col-md-4">
+                                            <mat-slide-toggle  #min_payment class="example-margin">
+                                            </mat-slide-toggle>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-7">
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <p-dropdown  [disabled]="!min_payment.checked" formControlName="currency_code" [options]="currencies_list" optionLabel="currency_code"
+                                                optionValue="id" styleClass="form-control"
+                                                placeholder="$" emptyMessage="No Currency Available">
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p-inputNumber [disabled]="!min_payment.checked" formControlName="min_payment_amount"></p-inputNumber>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-7">
+                            <div class="form-group row">
+                                <div class="col-md-5">
+                                    <div class="form-group row">
+                                        <label class="col-md-8 col-form-label" for="booking-reason">
+                                            Minimum Usage<span class="asterisk"> * </span>
+                                        </label>
+    
+                                        <div class="col-md-4">
+                                            <mat-slide-toggle #min_usage class="example-margin">
+                                            </mat-slide-toggle>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-7">
+                                    <p-inputNumber [disabled]="!min_usage.checked" formControlName="min_usage"></p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-7">
+                            <div class="form-group row">
+                                <div class="col-md-5">
+                                    <div class="form-group row">
+                                        <label class="col-md-8 col-form-label" for="booking-reason">
+                                            Minimum Procedure<span class="asterisk"> * </span>
+                                        </label>
+    
+                                        <div class="col-md-4">
+                                            <mat-slide-toggle #min_procedure class="example-margin">
+                                            </mat-slide-toggle>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-7">
+                                    <p-inputNumber [disabled]="!min_procedure.checked" formControlName="min_procedure"></p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-7">
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-md-8 col-form-label" for="booking-reason">
+                                            Required Tenure<span class="asterisk"> * </span>
+                                        </label>
+    
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <p-inputNumber formControlName="required_tenure"></p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-7">
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-md-12 col-form-label" for="booking-reason">
+                                            List of Document Required
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <textarea formControlName="required_docs" rows="9" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="custom-footer d-flex justify-content-center">
+                        <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Save</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+
+        <br>
+
+        <!-- <div class="col-sm-12 col-md-12 form-group">
+            <h3>Consumable Usage</h3> -->
+            <!-- Here the fps list related to current opportunity is displayed -->
+            <!-- <app-fps-list></app-fps-list>
+        </div> -->
+
+        <br>
+
+        <div class="col-sm-12 col-md-12 form-group">
+            <h3>File Library</h3>
+            <!-- Here the fps list related to current opportunity is displayed -->
+            <!-- <app-fps-list></app-fps-list> -->
+            <p>Work on this section will be done later</p>
+        </div>
+
+
+
+    </div><!--/.row-->
+
+  </div>
+  <div
+    id="success"
+    bsModal
+    #successModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Success</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{ alertBody }}</p>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+  <div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
