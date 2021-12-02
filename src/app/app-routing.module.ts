@@ -107,6 +107,10 @@ export const routes: Routes = [
         loadChildren: () => import('./dms/dms.module').then(m => m.DmsModule),
       },
       {
+        path: 'fps',
+        loadChildren: () => import('./fps/fps.module').then(m => m.FpsModule),
+      },
+      {
         path: 'contact',
         loadChildren: () => import('./views/contact/contact.module').then(m => m.ContactModule)
       },
