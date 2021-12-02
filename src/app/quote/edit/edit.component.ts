@@ -50,6 +50,7 @@ export class EditComponent implements OnInit {
   remarkIndex: number;
   paymentCurrentIndex: 0;
   selectTemplateData: any[]=[];
+  templateId: any;
 
   constructor(
     private quoteService: QuoteService,
@@ -658,7 +659,8 @@ export class EditComponent implements OnInit {
   viewQuotationTemplate() {
     let navigate: NavigationExtras = {
       queryParams: {
-       quotation_id: this.id
+       quotation_id: this.id,
+       template_id:this.templateId
       }
     }
     // this.quoteService.getQuatation(this.quotations.quote_id).subscribe((res) =>{
@@ -667,5 +669,9 @@ export class EditComponent implements OnInit {
     // })
     this.router.navigate(["quote/view/quote-template"], navigate)
     // this.router.navigateByUrl("quote/view/quote-template");
+  }
+
+  getTemplate(e){
+    this.templateId = e.target.value
   }
 }
