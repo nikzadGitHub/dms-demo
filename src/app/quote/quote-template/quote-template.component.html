@@ -98,7 +98,7 @@
 
         <div class="main-text">
           <div [attr.contenteditable]="editable" id="headerContent" #headerContent 
-          [quotationContent?.header_content]="model" (input)="model=$event.target.textContent">
+          [innerText]="quotationContent?.header_content" >
 
           {{ quotationContent?.header_content }}
             <!-- <p class="text-header">Dengan hormat,</p>
@@ -146,7 +146,7 @@
           </div>
 
           <div class="bodyContentArea" [attr.contenteditable]="editable" id="bodyContent" #bodyContent
-          [quotationContent?.full_html]="model" (input)="model=$event.target.textContent">
+          [innerText]="quotationContent?.full_html" >
           {{ quotationContent?.full_html }}
 
           
@@ -192,7 +192,7 @@
           <br>
           
           <div class="list-detail" [attr.contenteditable]="editable" id="footerContent" #footerContent
-          [quotationContent?.footer_content]="model" (input)="model=$event.target.textContent">
+          [innerText]="quotationContent?.footer_content" >
           {{ quotationContent?.footer_content }}
 
             
