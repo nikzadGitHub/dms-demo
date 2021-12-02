@@ -53,19 +53,22 @@
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Create Date</b></label>
-              <p>{{ soci_data?.created_at | date: "dd-MMM-yyyy" }}</p>
+              <p *ngIf="soci_data?.created_at">{{ soci_data?.created_at | date: "dd-MMM-yyyy" }}</p>
+              <p *ngIf="!soci_data?.created_at">_</p>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Contact Name</b></label>
-              <p>{{ soci_data?.quote?.opportunity?.ownner?.full_name }}</p>
+              <p *ngIf="soci_data?.quote?.opportunity?.ownner?.full_name">{{ soci_data?.quote?.opportunity?.ownner?.full_name }}</p>
+              <p *ngIf="!soci_data?.quote?.opportunity?.ownner?.full_name">_</p>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Email</b></label>
-              <p>{{ soci_data?.quote?.opportunity?.ownner?.email }}</p>
+              <p *ngIf="soci_data?.quote?.opportunity?.ownner?.email">{{ soci_data?.quote?.opportunity?.ownner?.email }}</p>
+              <p *ngIf="!soci_data?.quote?.opportunity?.ownner?.email">_</p>
             </div>
           </div>
           <div class="col-lg-3">
@@ -93,12 +96,23 @@
               </thead>
               <tbody>
                 <tr align="center">
-                  <td class="text-center">{{ soci_data?.po_no }}</td>
                   <td class="text-center">
-                    {{ soci_data?.po_date | date: "dd-MMM-yyyy" }}
+                    <div *ngIf="soci_data?.po_no">
+                      {{ soci_data?.po_no }}
+                    </div>
+                    <div *ngIf="!soci_data?.po_no">_</div>
+                    </td>
+                  <td class="text-center">
+                    <div *ngIf="soci_data?.po_date">
+                      {{ soci_data?.po_date | date: "dd-MMM-yyyy" }}
+                    </div>
+                    <div *ngIf="!soci_data?.po_date">_</div>
                   </td>
                   <td class="text-center">
-                    {{ soci_data?.po_amount | number }}
+                    <div *ngIf="soci_data?.po_amount">
+                      {{ soci_data?.po_amount | number }}
+                    </div>
+                    <div *ngIf="!soci_data?.po_amount">_</div>
                   </td>
                 </tr>
               </tbody>
@@ -2129,7 +2143,13 @@
               <tr align="center" *ngFor="let item of sociAttachment">
                 <!-- <td></td>
                 <td></td> -->
-                <td>{{ soci_data?.po_no }}</td>
+                <td>
+                  <div *ngIf="soci_data?.po_no">
+                    {{ soci_data?.po_no }}
+                  </div>
+                  <div *ngIf="!soci_data?.po_no">_</div>
+                </td>
+                <!-- <td>_</td> -->
                 <td>{{ item.original_file_name }}</td>
                 <td>{{ item.file_type }}</td>
                 <td>
