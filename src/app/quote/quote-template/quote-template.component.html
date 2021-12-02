@@ -35,7 +35,7 @@
           </div>
           <div class="vl"></div>
           <div class="v2"></div>
-          <div class="head-text" [attr.contenteditable]="editable">
+          <div class="head-text">
             <p> {{ quotationsTemplateData?.quotations?.companies?.address }}</p>
             <p><b>Telephone:</b> {{quotationsTemplateData?.quotations?.companies?.telephone_number}}</p>
             <p><b>Fax:</b> {{ quotationsTemplateData?.quotations?.companies?.fax }}</p>
@@ -45,14 +45,15 @@
         </div>
       </div>
       <div class="address-title">
-        <p [attr.contenteditable]="editable">
+        <p>
           {{ quotationsTemplateData?.quotations?.primary_contact }}
-          <br />{{ quotationsTemplateData?.quotations?.customer?.company_name}}<br />
-
-          Ruko Rungkut Megah Raya M-23{{
+          <b> Company Name:</b>
+          {{  quotationsTemplateData?.quotations?.customer?.company_name}}<br>
+         <b>Address:</b>
+         {{
             quotationsTemplateData?.quotations?.customer?.address
           }}
-          <br />
+          
           <!-- Surabaya -->
         </p>
       </div>
@@ -61,20 +62,20 @@
           <table class="table table-borderless">
             <tbody>
               <tr class="all-th-td-padding-bottom-none">
-                <td [attr.contenteditable]="editable">
+                <td >
                 </td>
                 <td></td>
                 <td></td>
               </tr>
               <tr class="all-th-td-padding-top-bottom-none">
-                <th scope="row">No. Ref</th>
-                <td [attr.contenteditable]="editable">
+                <th scope="row"><b>No. Ref: </b></th>
+                <td>
                   <span>:&nbsp;&nbsp;&nbsp;</span
                   >{{ quotationsTemplateData?.quotations?.quote_id }}
                 </td>
-                <th class="date-field-label">Date :</th>
-                <td class="date-field-data" [attr.contenteditable]="editable">
-                  {{ quotationsTemplateData?.quotations?.toDate }}
+                <th class="date-field-label"><b>Date :</b></th>
+                <td class="date-field-data">
+                  {{ quotationsTemplateData?.quotations?.created_at  | date: 'dd/MM/yyyy'}}
                 </td>
               </tr>
             </tbody>
@@ -82,8 +83,8 @@
         </div>
 
         <div class="main-text">
-          <div [attr.contenteditable]="editable" id="headerContent" #headerContent 
-          [innerText]="quotationContent?.header_content" >
+          <div  style="border: 1px solid lightgray;opacity: 0.5;"  contentEditable=true  data-text="Enter text here" [attr.contenteditable]="editable" id="headerContent" #headerContent 
+          [innerText]="quotationContent?.header_content">
 
           {{ quotationContent?.header_content }}
           </div>
@@ -94,26 +95,17 @@
                 <tr>
                   <th scope="col">BRAND</th>
                   <th scope="col">P/N</th>
-
                   <th scope="col">DESCRIPTION</th>
                   <th scope="col">PRICE LIST</th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="main-table-data">
+                <tr class="main-table-data" *ngFor="let item of quotationsTemplateData?.quotations?.products">
                   <!-- there should be loop for all the products -->
-                  <td>1</td>
-
-                  <td>
-                    {{ quotationsTemplateData?.quotations?.products[0]?.name }}
-                  </td>
                   <td></td>
-                  <td>
-                    {{
-                      quotationsTemplateData?.quotations?.products[0]
-                        ?.list_price
-                    }}
-                  </td>
+                  <td> {{ item.name }} </td>
+                  <td></td>
+                  <td>  {{item.list_price}} </td>
                 </tr>
               </tbody>
             </table>
@@ -121,12 +113,12 @@
           <br>
           <br>
           
-          <div class="list-detail" [attr.contenteditable]="editable" id="footerContent" #footerContent
+          <div style="border: 1px solid lightgray;opacity: 0.5;" class="list-detail" contentEditable=true data-text="Enter text here" [attr.contenteditable]="editable" id="footerContent" #footerContent
           [innerText]="quotationContent?.footer_content" >
           {{ quotationContent?.footer_content }}
           </div>
           <br />
-            <p [attr.contenteditable]="editable" class="name-number">
+            <p class="name-number">
               <span class="contact-name">ZulfaAlla</span><br />(0812-4920-1673)
 
               <span class="contact-name">
