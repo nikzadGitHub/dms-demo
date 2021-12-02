@@ -8,10 +8,7 @@
   outline: 1px solid lightgray;
   border-radius: 3px;
 }
-// .table th,
-// .table td {
-//   padding: 0px;
-// }
+
 .file-input {
   display: none;
 }
@@ -63,10 +60,15 @@
   display: flex;
   flex-direction: row;
   margin-left: 13px;
-  margin-right: 13px;
   margin-top: 13px;
   font-size: 17px;
   color: black;
+  flex-direction: column;
+}
+
+[contentEditable=true]:empty:not(:focus):before{
+  content:attr(data-placeholder);
+  color: grey;
 }
 .card-body {
   .card-title {
@@ -79,7 +81,7 @@
   .table {
     color: black;
     th {
-      width: 75px;
+      width: 67px;
       font-weight: 100;
       padding-inline-start: 0px;
     }
@@ -87,12 +89,7 @@
       text-decoration: underline;
       font-weight: bold;
     }
-    // .date-field-label {
-     
-    // }
-    // .date-field-data {
-    //   padding-left: 0px;
-    // }
+   
     }
 
   .main-text {
@@ -108,7 +105,7 @@
       text-align: center;
     }
     [contentEditable=true]:empty:not(:focus):before{
-      content:attr(data-text)
+      content:attr(data-placeholder)
   }
     table.table-bordered > thead > tr > th {
       border: 1px solid black;
