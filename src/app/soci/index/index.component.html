@@ -1,3 +1,11 @@
+<!-- 'created_at',
+'created_by',
+'soci_id',
+'quote_date',
+'po_no',
+'po_date',
+'fo_order_number', -->
+
 <p-table
   #dt
   [value]="socis"
@@ -6,18 +14,13 @@
   responsiveLayout="scroll"
   [filterDelay]="0"
   [globalFilterFields]="[
-    'created_at',
-    'created_by',
-    'soci_id',
-    'quote_date',
-    'po_no',
-    'po_date',
-    'fo_order_number',
+
     'quote_id',
     'company',
     'amount',
     'status'
   ]"
+  (onFilter)='columnFilter($event)'
 >
   <ng-template pTemplate="caption">
     <div class="table-header">
@@ -242,7 +245,7 @@
       <!-- {{ opportunity.created_date | date: "dd-MMM-yyyy" }} -->
       <td class="text-center" *ngIf="checkItem('c_date')">
         <span class="p-column-title">Created Date</span>
-        {{ soci.created_at | date: "MM-dd-yyyy" }}
+        {{ soci.created_at | date: "dd-MMM-yyyy"}}
       </td>
       <td class="text-center" *ngIf="checkItem('soci_id')">
         <a href="#" [routerLink]="['/soci/', soci.id, 'edit']">

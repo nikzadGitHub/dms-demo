@@ -400,14 +400,13 @@ export class EditComponent implements OnInit {
           this.is_edited = true;
           this.alertBody = data.message;
           this.standerd_payment_term = this.form.value.days;
-          console.log("form-value: ", this.form.value.fromDate);
           
           this.payment_term_from = this.form.value.fromDate;
           this.payment_term_to = new Date(this.payment_term_from);
           this.payment_term_to.setDate(
             this.payment_term_to.getDate() + parseInt(this.form.value.days)
           );
-          console.log("this.payment_term_to:", this.payment_term_to);
+
           
           this.successModal.show();
           setTimeout(() => {

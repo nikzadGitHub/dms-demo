@@ -53,7 +53,8 @@ export class IndexComponent implements OnInit {
     { name: "FO Number", key: "fo_order_number" },
     { name: "Status", key: "status_desc" },
   ];
-  isTooltipSown: any = ''
+  isTooltipSown: any = "";
+  sociDate: any;
 
   constructor(public sociService: SociService, private router: Router) {}
 
@@ -61,14 +62,23 @@ export class IndexComponent implements OnInit {
     this.sociService
       .getAll(this.pageItems, this.search_text, this.sort)
       .subscribe((data) => {
+        data["data"]["soci"]["data"].forEach((value) => {
+          value.created_at = new Date(value.created_at);
+          if (value.po_date != null) {
+            value.po_date = new Date(value.po_date);
+          }
+          if(value.quote_date != null){
+            value.quote_date = new Date(value.quote_date)
+          }
+        });
         this.socis = data["data"]["soci"]["data"];
         this.pages = data["data"]["soci"]["links"];
         this.totalRecords = data["data"]["soci"]["total"];
         this.checkPermission();
       });
-      setTimeout(() => {
-        this.selectedValues = this.columnValue.slice(0,10);
-      }, 1000);
+    setTimeout(() => {
+      this.selectedValues = this.columnValue.slice(0, 10);
+    }, 1000);
   }
 
   getAll() {
@@ -157,20 +167,23 @@ export class IndexComponent implements OnInit {
     XLSX.writeFile(wb, fileName);
   }
 
-  updateCols(e, item){
-    console.log("e", e, item)
-    if(!e.checked){
-      let index = this.selectedValues.indexOf(item)
-      this.selectedValues.splice(0, index)
-    }else{
-      this.selectedValues.push(item)
+  updateCols(e, item) {
+    if (!e.checked) {
+      let index = this.selectedValues.indexOf(item);
+      this.selectedValues.splice(0, index);
+    } else {
+      this.selectedValues.push(item);
     }
   }
 
-  checkItem(item){
-    return this.selectedValues.some(ele => ele.key === item)
+  checkItem(item) {
+    return this.selectedValues.some((ele) => ele.key === item);
   }
   clear(table: Table) {
     table.clear();
-}
+  }
+
+  columnFilter(event) {
+    console.log("column-filter:", event);
+  }
 }

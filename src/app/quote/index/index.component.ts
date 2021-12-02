@@ -90,7 +90,7 @@ export class IndexComponent implements OnInit {
   }
 
   columnFilter(event){
-    console.log(event)
+    console.log("column-filter:",event)
   }
 
   SortColumn(event: LazyLoadEvent){
