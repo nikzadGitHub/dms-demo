@@ -233,12 +233,13 @@ export class QuoteTemplateComponent implements OnInit {
     this.fileUpload.nativeElement.value = null;
   }
   savePreviewContent(){
-    let doc =  this.headerData.nativeElement.innerText
-    let doc1 = this.footerData.nativeElement.innerText
-    let doc2 = this.bodyData.nativeElement.innerText
+    let header =  this.headerData.nativeElement.innerText
+    let footer = this.footerData.nativeElement.innerText
+    let fullBody = this.bodyData.nativeElement.innerHTML
 
-    this.quoteService.saveTemplateData(this.quotationId,doc,doc1,doc2).subscribe(state=>{
-      console.log("save template data =>",state,"this.quotationId",this.quotationId)
+
+    this.quoteService.saveTemplateData(this.quotationId,header,footer,fullBody).subscribe(state=>{
+      console.log("save template data =>",state)
     })
 
       this.successMessage = "Data is Updated Successfully......!!";
