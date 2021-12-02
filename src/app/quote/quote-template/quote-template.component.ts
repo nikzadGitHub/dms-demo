@@ -11,7 +11,9 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { DOCUMENT } from "@angular/common";
-import { NavigationExtras, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { QuoteService } from "../quote.service";
+import { Quote } from "../quote";
 @Component({
   selector: "app-quote-template",
   templateUrl: "./quote-template.component.html",
@@ -21,6 +23,9 @@ export class QuoteTemplateComponent implements OnInit {
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("fileUpload") fileUpload: ElementRef;
+  @ViewChild("bodyContent") bodyData: ElementRef;
+  @ViewChild("headerContent") headerData: ElementRef;
+  @ViewChild("footerContent") footerData: ElementRef;
   alertBody: string;
   alertHeader: string;
   fileName = "";
@@ -29,16 +34,45 @@ export class QuoteTemplateComponent implements OnInit {
   check = false;
   editable = true;
   url: any;
+  quotationsTemplateData:any;
   elem;
   imageWidth: any;
   imageHeight: number;
   single: boolean;
   userToken: any;
-  constructor(private router: Router) {}
+  quotationId: any;
+  quotationContent: any;
+  successMessage: string;
+  constructor(private router: Router, private quoteService: QuoteService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    // this.quoteService.quotationIdGet().subscribe(state=>{
+    //   this.quotationId = state
+    //   console.log('quotation id =>',state)
+    // })
+    // location.pathname
+    console.log(location.pathname);
+    
+    this.route.queryParams.subscribe((params) => {
+      if('quotation_id' in params)
+      this.quotationId = params.quotation_id
+      console.log('queryParams ==>>',params)
+
+    })
     this.userToken = localStorage.getItem("auth-token");
     this.getMobileOperatingSystem();
+    this.viewQuotationTemplate();
+  }
+
+  viewQuotationTemplate() {
+
+    this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
+      console.log('Quotations Data =>',res);
+      this.quotationsTemplateData = res["data"]
+      this.quotationContent = res["data"].quotations.quotation_contents
+      
+    })
+    // this.router.navigateByUrl("quote/view/quote-template");
   }
 
   onFileSelected(event: any) {
@@ -198,4 +232,18 @@ export class QuoteTemplateComponent implements OnInit {
   reset() {
     this.fileUpload.nativeElement.value = null;
   }
+  savePreviewContent(){
+    let header =  this.headerData.nativeElement.innerText
+    let footer = this.footerData.nativeElement.innerText
+    let fullBody = this.bodyData.nativeElement.innerHTML
+
+
+    this.quoteService.saveTemplateData(this.quotationId,header,footer,fullBody).subscribe(state=>{
+      console.log("save template data =>",state)
+    })
+
+      this.successMessage = "Data is Updated Successfully......!!";
+      this.successModal.show();
+  }
+  
 }

@@ -245,7 +245,7 @@
       <!-- {{ opportunity.created_date | date: "dd-MMM-yyyy" }} -->
       <td class="text-center" *ngIf="checkItem('c_date')">
         <span class="p-column-title">Created Date</span>
-        {{ soci.created_at | date: "dd-MMM-yyyy"}}
+        {{ soci.created_at | date: "MM-dd-yyyy"}}
       </td>
       <td class="text-center" *ngIf="checkItem('soci_id')">
         <a href="#" [routerLink]="['/soci/', soci.id, 'edit']">

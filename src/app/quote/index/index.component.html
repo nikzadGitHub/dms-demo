@@ -1,17 +1,6 @@
-<p-table
-  #dt
-  [value]="quotes"
-  styleClass="p-datatable-customers"
-  [rowHover]="true"
-  [reorderableColumns]="true"
-  [lazy]="true"
-  (onLazyLoad)="SortColumn($event)"
-  [filterDelay]="0"
-  [globalFilterFields]="['quote_id', 'company', 'amount', 'status']"
-  (onFilter)="columnFilter($event)"
-  [columns]="columns"
-  (onColReorder)="columnOrder($event)"
->
+<p-table class="table table-bordered table-hover table-striped" #dt [value]="quotes" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true" [lazy]="true"
+(onLazyLoad)="SortColumn($event)"
+[filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']" (onFilter)='columnFilter($event)' [columns]="columns" (onColReorder)="columnOrder($event)">
   <ng-template pTemplate="caption">
     <div class="table-header">
       Quotation Listing
