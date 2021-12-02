@@ -1579,7 +1579,7 @@ export class EditComponent implements OnInit {
   }
   //Update Remarks
   remarksAdded() {
-    this.form.value.sociRemarks
+    this.form.value.sociRemarks || this.soci_data?.remarks !== this.form.value.sociRemarks
       ? (this.isRemarksAdded = false)
       : (this.isRemarksAdded = true);
   }
@@ -1592,7 +1592,7 @@ export class EditComponent implements OnInit {
     }
   }
 
-  updateRemarks() {
+  updateRemarks(showApprovalFlag = true) {
     this.confirmationRemarksUpdatedModal.hide();
       this.sociService
         .postQuery("/soci/" + this.soci_id, {
@@ -1606,8 +1606,8 @@ export class EditComponent implements OnInit {
             this.alertBody = data.message;
             this.successModal.show();
             setTimeout(() => {
-              // this.successModal.hide();
-              this.confirmationModal.show();
+              this.successModal.hide();
+              if(showApprovalFlag) this.confirmationModal.show();
             }, 2000);
           },
           (error) => {

@@ -2171,15 +2171,15 @@
         </p-accordionTab>
       </p-accordion>
       <br />
-      <div class="soci-remarks" *ngIf="!is_preview_check && sociStatus == 1 || sociStatus == 7">
+      <div class="soci-remarks" [style.justifyContent]=" !is_preview_check && sociStatus == 1 || sociStatus == 7 ? 'space-between' : 'end'">
         <!-- Remarks taxbox -->
-        <div class="remarks-texbox">
+        <div class="remarks-texbox" *ngIf="!is_preview_check && sociStatus == 1 || sociStatus == 7">
           <div class="remarks-btn">
             <label>Remarks</label>
             <button
               class="btn btn-primary"
               *ngIf="!isRemarksAdded && (sociStatus == 1 || sociStatus == 7)"
-              (click)="updateRemarks()"
+              (click)="updateRemarks(false)"
             >
               Update Remarks
             </button>
@@ -2954,7 +2954,7 @@
         <button
           type="button"
           class="btn btn-secondary"
-          (click)="confirmationRemarksUpdatedModal.hide()"
+          (click)="confirmationRemarksUpdatedModal.hide(); confirmationModal.show()"
         >
           No
         </button>
