@@ -1607,7 +1607,7 @@ export class EditComponent implements OnInit {
             this.alertBody = data.message;
             this.successModal.show();
             setTimeout(() => {
-              this.successModal.hide();
+              // this.successModal.hide();
               this.confirmationModal.show();
             }, 2000);
           },

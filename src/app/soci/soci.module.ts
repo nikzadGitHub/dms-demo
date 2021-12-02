@@ -18,7 +18,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {BadgeModule} from 'primeng/badge';
 import {CheckboxModule} from 'primeng/checkbox';
-
+import {TooltipModule} from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -42,6 +42,7 @@ import {CheckboxModule} from 'primeng/checkbox';
     FileUploadModule,
     BadgeModule,
     CheckboxModule,
+    TooltipModule,
     AccordionModule
   ]
 })

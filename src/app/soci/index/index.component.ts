@@ -10,6 +10,7 @@ import { SociService } from "../soci.service";
 import * as XLSX from "xlsx";
 import { SelectItem } from "primeng/api";
 import { ModalDirective } from "ngx-bootstrap/modal";
+import { Table } from "primeng/table";
 // import { FilterUtils } from 'primeng/utils';
 
 @Component({
@@ -52,6 +53,7 @@ export class IndexComponent implements OnInit {
     { name: "FO Number", key: "fo_order_number" },
     { name: "Status", key: "status_desc" },
   ];
+  isTooltipSown: any = ''
 
   constructor(public sociService: SociService, private router: Router) {}
 
@@ -168,5 +170,7 @@ export class IndexComponent implements OnInit {
   checkItem(item){
     return this.selectedValues.some(ele => ele.key === item)
   }
-
+  clear(table: Table) {
+    table.clear();
+}
 }
