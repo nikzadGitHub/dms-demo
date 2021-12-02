@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { LocalStorageRefService } from './local-storage-ref.service';
 
 @Injectable({
@@ -6,6 +7,7 @@ import { LocalStorageRefService } from './local-storage-ref.service';
 })
 export class LocalStorageService {
   private _localStorage: Storage;
+  loaderValue = new Subject<any>()
   
   constructor(private _localStorageRefService: LocalStorageRefService) {
     this._localStorage = _localStorageRefService.localStorage;
@@ -32,5 +34,13 @@ export class LocalStorageService {
 
   clear() : void {
     this._localStorage.clear();
+  }
+
+  public loaderSet(value) {
+    this.loaderValue.next(value);
+  }
+
+  public loaderGet(): Observable<any> {
+    return this.loaderValue.asObservable();
   }
 }

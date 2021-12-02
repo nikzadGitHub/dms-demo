@@ -3,6 +3,7 @@
     <input
       type="file"
       class="file-input"
+      multiple
       (change)="onFileSelected($event)"
       #fileUpload
     />
@@ -44,7 +45,30 @@
           </div>
         </div>
       </div>
+
+
       <div class="address-title">
+
+        
+        <div *ngIf="quotationsTemplateData?.quotations?.contacts?.primary_contact?.full_name">
+          {{quotationsTemplateData?.quotations?.contacts?.primary_contact?.full_name}},
+        </div>
+        
+            <div *ngIf="quotationsTemplateData?.quotations?.customer?.company_name">
+              {{  quotationsTemplateData?.quotations?.customer?.company_name}},
+            </div>
+            
+         <div *ngIf="  quotationsTemplateData?.quotations?.customer?.address">
+          {{
+            quotationsTemplateData?.quotations?.customer?.address
+          }}
+         </div>
+         
+        
+      </div>
+
+
+      <!-- <div class="address-title">
         <p>
           {{ quotationsTemplateData?.quotations?.primary_contact }}
           <b> Company Name:</b>
@@ -55,8 +79,8 @@
           }}
           
           <!-- Surabaya -->
-        </p>
-      </div>
+      
+      </div> 
       <div class="card-body">
         <div class="initial-info">
           <table class="table table-borderless">
@@ -83,7 +107,7 @@
         </div>
 
         <div class="main-text">
-          <div  style="border: 1px solid lightgray;opacity: 0.5;"  contentEditable=true  data-text="Enter text here" [attr.contenteditable]="editable" id="headerContent" #headerContent 
+          <div  style="border: 1px solid lightgray;"   contentEditable = true data-placeholder="Enter text here"  [attr.contenteditable]="editable" id="headerContent" #headerContent 
           [innerText]="quotationContent?.header_content">
 
           {{ quotationContent?.header_content }}
@@ -102,9 +126,9 @@
               <tbody>
                 <tr class="main-table-data" *ngFor="let item of quotationsTemplateData?.quotations?.products">
                   <!-- there should be loop for all the products -->
-                  <td></td>
+                  <td>No Data Available </td>
                   <td> {{ item.name }} </td>
-                  <td></td>
+                  <td>No Description</td>
                   <td>  {{item.list_price}} </td>
                 </tr>
               </tbody>
@@ -112,8 +136,9 @@
           </div>
           <br>
           <br>
+          <br>
           
-          <div style="border: 1px solid lightgray;opacity: 0.5;" class="list-detail" contentEditable=true data-text="Enter text here" [attr.contenteditable]="editable" id="footerContent" #footerContent
+          <div style="border: 1px solid lightgray;" class="list-detail" contentEditable = true data-placeholder="Enter text here"  [attr.contenteditable]="editable" id="footerContent" #footerContent
           [innerText]="quotationContent?.footer_content" >
           {{ quotationContent?.footer_content }}
           </div>
@@ -141,7 +166,7 @@
       </div>
     </div>
   </div>
-</div>
+
 
 
 <!-- display succes message -->

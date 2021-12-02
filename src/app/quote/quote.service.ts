@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
    
-import {  Observable, throwError } from 'rxjs';
+import {  Observable, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
   
 import { Quote } from './quote';
@@ -19,7 +19,7 @@ export class QuoteService {
       'Content-Type': 'application/json',
     })
   }
-  
+
   constructor(private httpClient: HttpClient) { }
    
   getAll(pageItems,search_text,sort): Observable<Quote[]> {
@@ -204,4 +204,23 @@ export class QuoteService {
     catchError(this.errorHandler)
   )
 }
+
+uploadTemplateImage(filePath,Q_id,T_id){
+  return this.httpClient.post(this.apiURL + '/quote/quotation-upload/'+ Q_id +'/' + T_id + '/', filePath, {
+    headers: {
+      'Content-Type': 'file'
+    },
+  })
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
+
+downloadPdfTemplate(Q_id,T_id){
+  return this.httpClient.get(this.apiURL + '/quote/quotation-preview-merge/'+ Q_id +'/' + T_id + '/')
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
+
 }

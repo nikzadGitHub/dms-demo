@@ -1,0 +1,14 @@
+.mainLoader{
+    position: absolute;
+    background: rgba(248, 242, 242, 0.8);
+    width: 100%;
+    height: 100%;
+    z-index: 999999999999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+body.mainLoader {
+    overflow: hidden;
+}
