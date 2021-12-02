@@ -17,7 +17,6 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 
 import { FpsRoutingModule } from './fps-routing.module';
-import { IndexComponent } from './components/fps-form/index/index.component';
 import { CreateComponent } from './components/fps-form/create/create.component';
 import { EditComponent } from './components/fps-form/edit/edit.component';
 import { SkuCreateComponent } from './components/sku/sku-create/sku-create.component';
@@ -27,7 +26,6 @@ import { SkuIndexComponent } from './components/sku/sku-index/sku-index.componen
 
 @NgModule({
   declarations: [
-    IndexComponent,
     CreateComponent,
     EditComponent,
     SkuCreateComponent,
