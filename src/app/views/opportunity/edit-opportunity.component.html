@@ -302,6 +302,11 @@
 										<i class="cil-plus c-icon"></i>
 										<span>PRODUCT</span>
 									</button>
+
+									<a class="btn btn-custom form-group" [routerLink]="['/fps/fps-create']">
+										<i class="cil-plus c-icon"></i> &nbsp;FPS Requets
+									</a>
+
 								</div>
 								<div class="card border-primary m-3 w-50">
 									<div class="card-body">
@@ -334,6 +339,19 @@
 			</p-accordion>
 		</div>
 
+		<div class="col-sm-12 col-md-12 form-group">
+			<h3>FPS Request</h3>
+			<!-- Here the fps list related to current opportunity is displayed -->
+			<app-fps-list></app-fps-list>
+	
+			<!-- Accordion for the fps list related to current opportunity -->
+			<!-- <p-accordionTab header="FPS Request">
+				<div class="row">
+					<app-fps-list></app-fps-list>
+				</div>
+			</p-accordionTab>		 -->
+		</div>
+		
       	<div class="col-sm-12 col-md-12 form-group">
       		<p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
 				<p-accordionTab header="Competitor List">
