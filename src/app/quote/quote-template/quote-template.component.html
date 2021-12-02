@@ -98,8 +98,11 @@
         </div>
 
         <div class="main-text">
-          <div [attr.contenteditable]="editable" id="headerContent">
-            <p class="text-header">Dengan hormat,</p>
+          <div [attr.contenteditable]="editable" id="headerContent" #headerContent 
+          [quotationContent?.header_content]="model" (input)="model=$event.target.textContent">
+
+          {{ quotationContent?.header_content }}
+            <!-- <p class="text-header">Dengan hormat,</p>
             <p class="text-para">
               Documentation and examples for opt-in styling of tables (given
               their prevalent use in JavaScript plugins) with Bootstrap.
@@ -110,9 +113,9 @@
 
               Similar to tables and dark tables, use the modifier classes
               .thead-light or .thead-dark to make s appear light or dark gray:
-            </p>
+            </p> -->
           </div>
-          <div class="bodyContentArea" id="bodyContent">
+
           <div>
             <table class="table table-bordered table-sm">
               <thead>
@@ -132,7 +135,6 @@
                     {{ quotationsTemplateData?.quotations?.products[0]?.name }}
                   </td>
                   <td></td>
-                  <!-- <td>@mdo</td> -->
                   <td>
                     {{
                       quotationsTemplateData?.quotations?.products[0]
@@ -143,11 +145,17 @@
               </tbody>
             </table>
           </div>
-          <div class="list-detail" [attr.contenteditable]="editable" id="footerContent">
-            <p class="">
+
+          <div class="bodyContentArea" [attr.contenteditable]="editable" id="bodyContent" #bodyContent
+          [quotationContent?.full_html]="model" (input)="model=$event.target.textContent">
+          {{ quotationContent?.full_html }}
+
+          
+          <!-- <div class="list-detail" [attr.contenteditable]="editable" id="footerContent"> -->
+            <!-- <p class="">
               Bootstrap sets basic global display, typography, and link styles:
-            </p>
-          </div>
+            </p> -->
+          <!-- </div> -->
           <!-- <div class="sub-info-text" [attr.contenteditable]="editable">
             <p>*HTML5 adds a new global attribute named [hidden]</p>
             <p>
@@ -161,27 +169,46 @@
               document, use the .invisible class instead.
             </p>
           </div> -->
-          <div class="sub-text-footer">
+          <!-- <div class="sub-text-footer"> -->
             <!-- <label [attr.contenteditable]="editable">Hormat kami.</label><br /> -->
             <!-- <p class="company-name" [attr.contenteditable]="editable">
               PT. IDS Medical System indonesia
             </p> -->
-            <p class="company-name" [attr.contenteditable]="editable">
+            <!-- <p class="company-name" [attr.contenteditable]="editable">
               {{ quotationsTemplateData?.quotations?.companies?.title }}
             </p>
             <br />
             <p class="signature"></p>
             <br />
-            <p [attr.contenteditable]="editable" class="name-number">
+            <p [attr.contenteditable]="editable" class="name-number"> -->
               <!-- <span class="contact-name">ZulfaAlla</span><br />(0812-4920-1673) -->
 
-              <span class="contact-name">{{
+              <!-- <span class="contact-name">{{
                 quotationsTemplateData?.quotations?.sales_person?.full_name
               }}</span
               ><br />
-            </p>
+            </p> -->
           </div>
+          <br>
+          <br>
           
+          <div class="list-detail" [attr.contenteditable]="editable" id="footerContent" #footerContent
+          [quotationContent?.footer_content]="model" (input)="model=$event.target.textContent">
+          {{ quotationContent?.footer_content }}
+
+            
+          </div>
+
+
+          <br />
+            <p [attr.contenteditable]="editable" class="name-number">
+              <span class="contact-name">ZulfaAlla</span><br />(0812-4920-1673)
+
+              <span class="contact-name">
+                {{quotationsTemplateData?.quotations?.sales_person?.full_name}}
+              </span
+              ><br />
+            </p>
           <div class="previewSave">
             <button class="btn btn-primary" (click)='savePreviewContent()' >Save</button>
           </div>
@@ -189,6 +216,30 @@
       </div>
     </div>
   </div>
+<!-- display succes message -->
+  <div
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ successMessage }}</p>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 
   <div #pdfTable class="" id="pdfTable">
     <div class="card" style="width: 100%" *ngIf="check">

@@ -23,6 +23,8 @@ export class QuoteTemplateComponent implements OnInit {
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("fileUpload") fileUpload: ElementRef;
+  @ViewChild("bodyContent") bodyData: ElementRef;
+  @ViewChild("headerContent") headerData: ElementRef;
   @ViewChild("footerContent") footerData: ElementRef;
   alertBody: string;
   alertHeader: string;
@@ -39,6 +41,8 @@ export class QuoteTemplateComponent implements OnInit {
   single: boolean;
   userToken: any;
   quotationId: any;
+  quotationContent: any;
+  successMessage: string;
   constructor(private router: Router, private quoteService: QuoteService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -65,7 +69,7 @@ export class QuoteTemplateComponent implements OnInit {
     this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
       console.log('Quotations Data =>',res);
       this.quotationsTemplateData = res["data"]
-      console.log("quotationsTemplateData:", this.quotationsTemplateData.quotations.id,'this.quotationsId =>',this.quotationId);
+      this.quotationContent = res["data"].quotations.quotation_contents
       
     })
     // this.router.navigateByUrl("quote/view/quote-template");
@@ -229,12 +233,16 @@ export class QuoteTemplateComponent implements OnInit {
     this.fileUpload.nativeElement.value = null;
   }
   savePreviewContent(){
-    let doc = document.getElementById('headerContent').innerHTML
-    let doc1 = document.getElementById('footerContent').innerHTML
-    let doc2 = document.getElementById('bodyContent').innerHTML
+    let doc =  this.headerData.nativeElement.innerText
+    let doc1 = this.footerData.nativeElement.innerText
+    let doc2 = this.bodyData.nativeElement.innerText
 
     this.quoteService.saveTemplateData(this.quotationId,doc,doc1,doc2).subscribe(state=>{
       console.log("save template data =>",state,"this.quotationId",this.quotationId)
     })
+
+      this.successMessage = "Data is Updated Successfully......!!";
+      this.successModal.show();
   }
+  
 }
