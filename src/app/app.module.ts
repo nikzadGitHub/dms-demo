@@ -137,8 +137,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     P500Component,
     LoginComponent,
     RegisterComponent,
-    DialogComponent,
-    FpsComponent
+    DialogComponent
   ],
   providers: [
     {
