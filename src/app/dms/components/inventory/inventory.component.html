@@ -21,54 +21,75 @@
     <ng-template pTemplate="header">
         <tr>
             <th pSortableColumn="serial_no" class="text-center">
-                <div class="p-d-flex p-jc-between p-ai-center">
+                <div style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
                     Serial No
-                    <p-sortIcon field="serial_no"></p-sortIcon>
-                    <p-columnFilter type="numeric" field="serial_no" display="menu" class="p-ml-auto"></p-columnFilter>
+                    <div class="th-icons">
+                        <p-sortIcon field="serial_no"></p-sortIcon>
+                        <p-columnFilter type="numeric" field="serial_no" display="menu" class="p-ml-auto"></p-columnFilter>
+                    </div>
+                   
                 </div>
             </th>
             <th pSortableColumn="stock_keep_unit" class="text-center">
-                <div class="p-d-flex p-jc-between p-ai-center">
+                <div  style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
                     SKU
-                    <p-sortIcon field="stock_keep_unit"></p-sortIcon>
-                    <p-columnFilter type="text" field="stock_keep_unit" display="menu" class="p-ml-auto">
-                    </p-columnFilter>
+                    <div class="sku-icons">
+                        <p-sortIcon field="stock_keep_unit"></p-sortIcon>
+                        <p-columnFilter type="text" field="stock_keep_unit" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </div>
+                   
                 </div>
             </th>
             <th pSortableColumn="product_name" class="text-center">
-                <div class="p-d-flex p-jc-between p-ai-center">
+                <div style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
                     Product Name
-                    <p-sortIcon field="product_name"></p-sortIcon>
-                    <p-columnFilter type="text" field="product_name" display="menu" class="p-ml-auto"></p-columnFilter>
+                    <div class="product-icons">
+                        <p-sortIcon field="product_name"></p-sortIcon>
+                        <p-columnFilter type="text" field="product_name" display="menu" class="p-ml-auto"></p-columnFilter>
+                    </div>
+                   
                 </div>
             </th>
             <th pSortableColumn="agency" class="text-center">
-                <div class="p-d-flex p-jc-between p-ai-center">
+                <div style="display:flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
                     Agency/ Principal
-                    <p-sortIcon field="agency"></p-sortIcon>
-                    <p-columnFilter type="text" field="agency" display="menu" class="p-ml-auto"></p-columnFilter>
+                    <div class="agency-icons">
+                        <p-sortIcon field="agency"></p-sortIcon>
+                        <p-columnFilter type="text" field="agency" display="menu" class="p-ml-auto"></p-columnFilter>
+                    </div>
+                   
                 </div>
             </th>
             <th pSortableColumn="description" class="text-center">
-                <div class="p-d-flex p-jc-between p-ai-center">
+                <div  style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
                     Description
-                    <p-sortIcon field="description"></p-sortIcon>
-                    <p-columnFilter type="text" field="description" display="menu" class="p-ml-auto"></p-columnFilter>
+                    <div class="desc-icons">
+                        <p-sortIcon field="description"></p-sortIcon>
+                        <p-columnFilter type="text" field="description" display="menu" class="p-ml-auto"></p-columnFilter>
+                    </div>
+                  
                 </div>
             </th>
             <th pSortableColumn="status" class="text-center">
-                <div class="p-d-flex p-jc-between p-ai-center">
+                <div  style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
                     Status
-                    <p-sortIcon field="status"></p-sortIcon>
+                    <div class="status-icons">
+                        <p-sortIcon field="status"></p-sortIcon>
                     <p-columnFilter type="text" field="status" display="menu" class="p-ml-auto"></p-columnFilter>
+                    </div>
+                    
                 </div>
             </th>
             <th pSortableColumn="booking_id" class="text-center">
-                <div class="p-d-flex p-jc-between p-ai-center">
+                <div  style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
                     Current Booking
-                    <p-sortIcon field="booking_id"></p-sortIcon>
-                    <p-columnFilter type="numeric" field="booking_id" display="menu" class="p-ml-auto">
-                    </p-columnFilter>
+                    <div class="booking-icons">
+                        <p-sortIcon field="booking_id"></p-sortIcon>
+                        <p-columnFilter type="numeric" field="booking_id" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </div>
+                  
                 </div>
             </th>
 

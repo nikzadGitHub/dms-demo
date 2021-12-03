@@ -79,6 +79,12 @@ tr {
         margin-right: 5px;
     }
 }
+.th-icon{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 
 @media screen and (max-width: 960px) {
     :host ::ng-deep {
