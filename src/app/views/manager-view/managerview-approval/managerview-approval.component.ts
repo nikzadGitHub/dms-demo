@@ -82,7 +82,6 @@ export class ManagerviewApprovalComponent implements OnInit {
   searchSoci() {
     this.managerView
       .getPendingSOCI(this.pageItems, this.search_text, this.sort)
-      // .getAll(this.pageItems, this.search_text, this.sort)
       .subscribe((data) => {
         this.pendingSOCI = data["data"]["soci"]["data"];
         this.totalRecords = data["data"]["soci"]["total"];

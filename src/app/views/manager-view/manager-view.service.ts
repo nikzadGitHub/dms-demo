@@ -4,7 +4,6 @@ import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { settings } from "../../../environments/environment";
-import { Soci } from "../../soci/soci";
 
 @Injectable({
   providedIn: "root",
@@ -37,22 +36,5 @@ export class ManagerViewService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(errorMessage);
-  }
-
-  getAll(pageItems, search_text, sort): Observable<Soci[]> {
-    let param: any;
-    if (sort && sort["field"] != null) {
-      param = {
-        page_items: pageItems,
-        search_text: search_text,
-        field: sort.field,
-        order: sort.order,
-      };
-    } else {
-      param = { page_items: pageItems, search_text: search_text };
-    }
-    return this.httpClient
-      .get<Soci[]>(this.apiURL + "/soci", { params: param })
-      .pipe(catchError(this.errorHandler));
   }
 }

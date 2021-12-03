@@ -137,7 +137,7 @@
             <div
               class="col-lg-1"
               style="text-align: right"
-              *ngIf="(!is_preview_check && sociStatus == 1) || sociStatus == 7"
+              *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
             >
               <div>
                 <a
@@ -177,7 +177,7 @@
             <div
               class="col-lg-1"
               style="text-align: right"
-              *ngIf="(!is_preview_check && sociStatus == 1) || sociStatus == 7"
+              *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
             >
               <div>
                 <a
@@ -223,7 +223,7 @@
                   <th>Notes</th>
                   <th></th>
                   <th *ngIf="is_preview_check"></th>
-                  <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
+                  <th *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -332,9 +332,7 @@
                   <td
                     class="text-center td-actions"
                     style="width: 10%"
-                    *ngIf="
-                      (!is_preview_check && sociStatus == 1) || sociStatus == 7
-                    "
+                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
                   >
                     <div class="action-icon">
                       <a
@@ -386,7 +384,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check && sociStatus == 1">
+                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
                   <td style="width: 15%">
                     <input
                       formControlName="billing_id"
@@ -472,7 +470,7 @@
                   <th>Amount ({{ soci_data?.currency }})</th>
                   <th>Notes</th>
                   <th *ngIf="is_preview_check"></th>
-                  <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
+                  <th *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -627,9 +625,7 @@
                   <td
                     class="td-actions"
                     style="width: 10%; padding: none"
-                    *ngIf="
-                      (!is_preview_check && sociStatus == 1) || sociStatus == 7
-                    "
+                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
                   >
                     <div class="action-icon">
                       <a
@@ -671,7 +667,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check && sociStatus == 1">
+                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
                   <td style="width: 15%; padding: 6px">
                     <select
                       formControlName="billing_id"
@@ -793,7 +789,7 @@
                   <th>Notes</th>
                   <th></th>
                   <th></th>
-                  <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
+                  <th *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -917,13 +913,9 @@
                   <td
                     class="td-actions"
                     style="width: 10%"
-                    *ngIf="
-                      (!is_preview_check && sociStatus == 1) || sociStatus == 7
-                    "
+                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
                   >
                     <div class="action-icon">
-                      <!-- (click)="disableEditMethod(cost, 'addCost')"
-                            *ngIf="enableEdit['addCost'] && controller == cost" -->
                       <a
                         [routerLink]=""
                         routerLinkActive="router-link-active"
@@ -968,7 +960,7 @@
                 </tr>
                 <!-- *ngFor="let cost of addCosts().controls; let i = index"
                 [formGroupName]="i" -->
-                <tr align="center" *ngIf="!is_preview_check && sociStatus == 1">
+                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
                   <td style="width: 15%">
                     <input
                       formControlName="description"
@@ -1066,7 +1058,7 @@
                   <th>Status</th> -->
                   <th>Note</th>
                   <th></th>
-                  <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
+                  <th *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -1173,9 +1165,7 @@
                   <td
                     class="td-actions"
                     style="width: 10%"
-                    *ngIf="
-                      (!is_preview_check && sociStatus == 1) || sociStatus == 7
-                    "
+                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
                   >
                     <div class="action-icon">
                       <a
@@ -1225,7 +1215,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check && sociStatus == 1">
+                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
                   <td>
                     <input
                       formControlName="schedule"
@@ -1349,7 +1339,7 @@
             <div
               class="col-md-1"
               style="text-align: right"
-              *ngIf="(!is_preview_check && sociStatus == 1) || sociStatus == 7"
+              *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
             >
               <div class="row">
                 <!-- //action -->
@@ -1403,7 +1393,7 @@
 
           <!-- Add additional_instruction -->
 
-          <div *ngIf="!is_preview_check && sociStatus == 1">
+          <div *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
             <div>
               <div class="row">
                 <div class="col-md-3">
@@ -1641,9 +1631,7 @@
               <div
                 class="col-md-1"
                 style="text-align: right"
-                *ngIf="
-                  (!is_preview_check && sociStatus == 1) || sociStatus == 7
-                "
+                *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
               >
                 <div class="row">
                   <!-- //action -->
@@ -1696,7 +1684,7 @@
             </div>
           </div>
           <!-- input data fields -->
-          <div *ngIf="!is_preview_check && sociStatus == 1">
+          <div *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
             <div class="row">
               <div class="col-md-2">
                 <div class="">
@@ -1969,9 +1957,7 @@
                   <td
                     class="td-actions"
                     style="width: 5%"
-                    *ngIf="
-                      (!is_preview_check && sociStatus == 1) || sociStatus == 7
-                    "
+                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
                   >
                     <!-- //action -->
                     <div class="action-icon" style="display: flex">
@@ -1995,7 +1981,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check && sociStatus == 1">
+                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
                   <!-- {{ i + 1 }} -->
                   <td></td>
                   <td style="size: 20%">
@@ -2171,9 +2157,9 @@
         </p-accordionTab>
       </p-accordion>
       <br />
-      <div class="soci-remarks" [style.justifyContent]=" !is_preview_check && sociStatus == 1 || sociStatus == 7 ? 'space-between' : 'end'">
+      <div class="soci-remarks" [style.justifyContent]="!is_preview_check && (sociStatus == 1 || sociStatus == 7) ? 'space-between' : 'end'">
         <!-- Remarks taxbox -->
-        <div class="remarks-texbox" *ngIf="!is_preview_check && sociStatus == 1 || sociStatus == 7">
+        <div class="remarks-texbox" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
           <div class="remarks-btn">
             <label>Remarks</label>
             <button
