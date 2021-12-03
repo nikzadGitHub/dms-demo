@@ -248,7 +248,7 @@
         {{ soci.created_at | date: "MM-dd-yyyy"}}
       </td>
       <td class="text-center" *ngIf="checkItem('soci_id')">
-        <a href="#" [routerLink]="['/soci/', soci.id, 'edit']">
+        <a href="" [routerLink]="['/soci/', soci.id, 'edit']">
           <span class="p-column-title"> Soci Id</span>
           {{ soci.soci_id }}
         </a>
