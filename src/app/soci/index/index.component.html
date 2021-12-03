@@ -81,15 +81,21 @@
         class="text-center"
         *ngIf="checkItem('c_date')"
       >
-        <div style="width: 93px" class="p-d-flex p-jc-between p-ai-center">
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
           Created Date
-          <p-sortIcon field="created_at"></p-sortIcon>
-          <p-columnFilter
-            type="date"
-            field="created_at"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div class="date-icons">
+            
+              <p-sortIcon field="created_at"></p-sortIcon>
+              <p-columnFilter
+                type="date"
+                field="created_at"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            
+           
+          </div>
+       
         </div>
       </th>
       <th
@@ -97,15 +103,18 @@
         class="text-center"
         *ngIf="checkItem('soci_id')"
       >
-        <div class="p-d-flex p-jc-between p-ai-center">
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
           SOCI ID
-          <p-sortIcon field="soci_id"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="soci_id"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div class="soci-icons">
+            <p-sortIcon field="soci_id"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="soci_id"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
         </div>
       </th>
       <th
@@ -113,15 +122,17 @@
         class="text-center"
         *ngIf="checkItem('company_name')"
       >
-        <div style="width: 65px" class="p-d-flex p-jc-between p-ai-center">
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
           Company Name
-          <p-sortIcon field="customer.company_name"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="customer.company_name"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div class="name-icons">  
+            <p-sortIcon field="customer.company_name"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="customer.company_name"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter></div>
+        
         </div>
       </th>
       <th
@@ -129,15 +140,18 @@
         class="text-center"
         *ngIf="checkItem('quote_full_id')"
       >
-        <div style="width: 90px" class="p-d-flex p-jc-between p-ai-center">
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
           Quotation ID
-          <p-sortIcon field="quote_full_id"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="quote_full_id"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div class="quote-icons">
+            <p-sortIcon field="quote_full_id"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="quote_full_id"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+       
         </div>
       </th>
       <th
@@ -145,15 +159,18 @@
         class="text-center"
         *ngIf="checkItem('quote_date')"
       >
-        <div style="width: 80px" class="p-d-flex p-jc-between p-ai-center">
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
           Quote Date
-          <p-sortIcon field="quote_date"></p-sortIcon>
-          <p-columnFilter
-            type="date"
-            field="quote_date"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div class="Q-Date-icons">
+            <p-sortIcon field="quote_date"></p-sortIcon>
+            <p-columnFilter
+              type="date"
+              field="quote_date"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
         </div>
       </th>
       <th
@@ -161,15 +178,18 @@
         class="text-center"
         *ngIf="checkItem('po_amount')"
       >
-        <div style="width: 65px" class="p-d-flex p-jc-between p-ai-center">
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
           Amount (MYR)
-          <p-sortIcon field="po_amount"></p-sortIcon>
-          <p-columnFilter
-            type="numeric"
-            field="po_amount"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div class="amount-icons">
+            <p-sortIcon field="po_amount"></p-sortIcon>
+            <p-columnFilter
+              type="numeric"
+              field="po_amount"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+        
         </div>
       </th>
       <th
@@ -177,15 +197,18 @@
         class="text-center"
         *ngIf="checkItem('po_no')"
       >
-        <div style="width: 65px" class="p-d-flex p-jc-between p-ai-center">
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
           PO No
-          <p-sortIcon field="po_no"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="po_no"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div class="PO-icons">
+            <p-sortIcon field="po_no"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="po_no"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+        
         </div>
       </th>
       <th
@@ -193,15 +216,18 @@
         class="text-center"
         *ngIf="checkItem('po_date')"
       >
-        <div style="width: 65px" class="p-d-flex p-jc-between p-ai-center">
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
           PO Date
-          <p-sortIcon field="po_date"></p-sortIcon>
-          <p-columnFilter
-            type="date"
-            field="po_date"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div class="PO_date-icons">
+            <p-sortIcon field="po_date"></p-sortIcon>
+            <p-columnFilter
+              type="date"
+              field="po_date"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
         </div>
       </th>
       <th
@@ -209,15 +235,18 @@
         class="text-center"
         *ngIf="checkItem('fo_order_number')"
       >
-        <div style="width: 65px" class="p-d-flex p-jc-between p-ai-center">
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
           FO Number
-          <p-sortIcon field="fo_order_number"></p-sortIcon>
-          <p-columnFilter
-            type="date"
-            field="fo_order_number"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div class="fo-icons">
+            <p-sortIcon field="fo_order_number"></p-sortIcon>
+            <p-columnFilter
+              type="date"
+              field="fo_order_number"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
         </div>
       </th>
       <th
@@ -225,15 +254,18 @@
         class="text-center"
         *ngIf="checkItem('status_desc')"
       >
-        <div style="width: 65px" class="p-d-flex p-jc-between p-ai-center">
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
           Status
-          <p-sortIcon field="status_desc"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="status_desc"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div class="status-icons">
+            <p-sortIcon field="status_desc"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="status_desc"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
         </div>
       </th>
 

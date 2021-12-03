@@ -1,4 +1,4 @@
-<p-table   class="table table-bordered table-hover table-striped"  #dt [value]="datasource" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true"
+<p-table   class="table table-hover table-striped"  #dt [value]="datasource" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true"
     responsiveLayout="scroll" [filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']"
     [columns]="columns">
     <ng-template pTemplate="caption">
@@ -16,11 +16,14 @@
         <tr>
             <th *ngFor="let column of columns" pSortableColumn="{{column.field}}" class="text-center"
                 pReorderableColumn>
-                <div class="p-d-flex p-jc-between p-ai-center">
+                <div style="width:100% ;white-space: nowrap;display: flex;flex-direction: column; align-items: center;"style="width:100% ;white-space: nowrap;display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
                     {{column.header}}
-                    <p-sortIcon field="{{column.field}}"></p-sortIcon>
-                    <p-columnFilter type="{{column.type}}" field="{{column.field}}" display="menu" class="p-ml-auto">
-                    </p-columnFilter>
+                    <div class="th-icon">
+                        <p-sortIcon field="{{column.field}}"></p-sortIcon>
+                        <p-columnFilter type="{{column.type}}" field="{{column.field}}" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </div>
+                   
                 </div>
             </th>
 
