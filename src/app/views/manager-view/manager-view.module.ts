@@ -15,6 +15,8 @@ import { ManagerViewActiveComponent } from './manager-view-active/manager-view-a
 import {TabViewModule} from 'primeng/tabview';
 import { AccordionModule } from 'primeng/accordion';
 import { PaginatorModule } from 'primeng/paginator';
+import {BadgeModule} from 'primeng/badge';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -29,6 +31,7 @@ import { PaginatorModule } from 'primeng/paginator';
     InputTextModule,
     InputNumberModule,
     TabViewModule,
+    BadgeModule,
     AccordionModule,
     ModalModule
   ],

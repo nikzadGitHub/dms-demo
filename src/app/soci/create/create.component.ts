@@ -136,6 +136,7 @@ export class CreateComponent implements OnInit {
         remarks: this.form.value.fileLabel,
         file: base64textString,
         fileName: this.fileName,
+        original_file_name: this.fileName
       });
 
       this.form.get("fileLabel").reset();

@@ -64,6 +64,9 @@ tr {
 // }
 
 // new scss
+.p-badge.p-badge-warning {
+  white-space: nowrap !important;
+}
 
 :host ::ng-deep {
   .p-paginator {
@@ -145,17 +148,61 @@ tr {
 
 .row-icon {
   display: flex;
+  padding-left: 15px;
   a {
     margin-right: 12px;
   }
 }
-.input-span-icon{
+i {
+  cursor: pointer;
+}
+
+.column-box {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: auto;
+}
+
+.check-field {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-left: 10px;
+}
+.reject-badge {
+  background-color: #f44336;
+  color: #f8f9fa;
+  border: none;
+  border-radius: 10px;
+  display: inline-block;
+  padding: 0 .5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+.reject-badge:focus-visible{
+  border: none;
+  outline: none;
+}
+
+.reject-badge:focus{
+  border: none;
+  outline: none;
+}
+
+.input-span-icon {
   display: flex;
   align-items: center;
   flex-direction: row;
-
 }
-.export-to-excel{
+.export-to-excel {
   font-size: 1.5rem;
   cursor: pointer;
   margin-left: 5px;

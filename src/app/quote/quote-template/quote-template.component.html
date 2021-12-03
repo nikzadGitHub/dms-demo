@@ -36,34 +36,25 @@
           </div>
           <div class="vl"></div>
           <div class="v2"></div>
-          <div class="head-text" [attr.contenteditable]="editable">
-            <!-- <p>Sipli-jakarta 11410,indonesia</p>
-            <p>T +622125678989</p>
-            <p>F +622125678989</p>
-            <p>E +622125678989</p> -->
-
-            <p>{{ quotationsTemplateData?.quotations?.companies?.address }}</p>
-            <p>
-              {{
-                quotationsTemplateData?.quotations?.companies?.telephone_number
-              }}
-            </p>
-            <p>{{ quotationsTemplateData?.quotations?.companies?.fax }}</p>
-            <p>{{ quotationsTemplateData?.quotations?.companies?.email }}</p>
+          <div class="head-text">
+            <p> {{ quotationsTemplateData?.quotations?.companies?.address }}</p>
+            <p><b>Telephone:</b> {{quotationsTemplateData?.quotations?.companies?.telephone_number}}</p>
+            <p><b>Fax:</b> {{ quotationsTemplateData?.quotations?.companies?.fax }}</p>
+            <p><b>Email:</b> {{ quotationsTemplateData?.quotations?.companies?.email }}</p>
             <a href="#">www.idsMED.com</a>
           </div>
         </div>
       </div>
       <div class="address-title">
-        <p [attr.contenteditable]="editable">
-          <!-- Kepada Yth,{{quotationsTemplateData?.quotations?.primary_contact}} -->
+        <p>
           {{ quotationsTemplateData?.quotations?.primary_contact }}
-          <br />{{ quotationsTemplateData?.quotations?.customer?.company_name}}<br />
-
-          Ruko Rungkut Megah Raya M-23{{
+          <b> Company Name:</b>
+          {{  quotationsTemplateData?.quotations?.customer?.company_name}}<br>
+         <b>Address:</b>
+         {{
             quotationsTemplateData?.quotations?.customer?.address
           }}
-          <br />
+          
           <!-- Surabaya -->
         </p>
       </div>
@@ -72,25 +63,20 @@
           <table class="table table-borderless">
             <tbody>
               <tr class="all-th-td-padding-bottom-none">
-                <!-- <th class="name-field-label" scope="row">Perihal</th> -->
-                <td [attr.contenteditable]="editable">
-                  <!-- <span>:&nbsp;&nbsp;</span> -->
-                  <!-- <span class="name-field">Penawaran Harga</span> -->
+                <td >
                 </td>
                 <td></td>
                 <td></td>
               </tr>
               <tr class="all-th-td-padding-top-bottom-none">
-                <th scope="row">No. Ref</th>
-                <td [attr.contenteditable]="editable">
-                  <!-- <span>:&nbsp;&nbsp;&nbsp;</span>1386/SLS/JKT/ZA/VI/2021  -->
-
+                <th scope="row"><b>No. Ref: </b></th>
+                <td>
                   <span>:&nbsp;&nbsp;&nbsp;</span
                   >{{ quotationsTemplateData?.quotations?.quote_id }}
                 </td>
-                <th class="date-field-label">Date :</th>
-                <td class="date-field-data" [attr.contenteditable]="editable">
-                  {{ quotationsTemplateData?.quotations?.toDate }}
+                <th class="date-field-label"><b>Date :</b></th>
+                <td class="date-field-data">
+                  {{ quotationsTemplateData?.quotations?.created_at  | date: 'dd/MM/yyyy'}}
                 </td>
               </tr>
             </tbody>
@@ -98,22 +84,10 @@
         </div>
 
         <div class="main-text">
-          <div [attr.contenteditable]="editable" id="headerContent" #headerContent 
-          [innerText]="quotationContent?.header_content" >
+          <div  style="border: 1px solid lightgray;opacity: 0.5;"  contentEditable=true  data-text="Enter text here" [attr.contenteditable]="editable" id="headerContent" #headerContent 
+          [innerText]="quotationContent?.header_content">
 
           {{ quotationContent?.header_content }}
-            <!-- <p class="text-header">Dengan hormat,</p>
-            <p class="text-para">
-              Documentation and examples for opt-in styling of tables (given
-              their prevalent use in JavaScript plugins) with Bootstrap.
-              <b> - RSUD. Dr. Harjono Ponorogo.</b>
-            </p>
-            <p class="table-info-text">
-
-
-              Similar to tables and dark tables, use the modifier classes
-              .thead-light or .thead-dark to make s appear light or dark gray:
-            </p> -->
           </div>
 
           <div>
@@ -122,86 +96,31 @@
                 <tr>
                   <th scope="col">BRAND</th>
                   <th scope="col">P/N</th>
-
                   <th scope="col">DESCRIPTION</th>
                   <th scope="col">PRICE LIST</th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="main-table-data">
-                  <td>1</td>
-
-                  <td>
-                    {{ quotationsTemplateData?.quotations?.products[0]?.name }}
-                  </td>
+                <tr class="main-table-data" *ngFor="let item of quotationsTemplateData?.quotations?.products">
+                  <!-- there should be loop for all the products -->
                   <td></td>
-                  <td>
-                    {{
-                      quotationsTemplateData?.quotations?.products[0]
-                        ?.list_price
-                    }}
-                  </td>
+                  <td> {{ item.name }} </td>
+                  <td></td>
+                  <td>  {{item.list_price}} </td>
                 </tr>
               </tbody>
             </table>
           </div>
-
-          <!-- <div class="bodyContentArea" [attr.contenteditable]="editable" id="bodyContent" #bodyContent
-          [innerText]="quotationContent?.full_html" >
-          {{ quotationContent?.full_html }} -->
-
-          
-          <!-- <div class="list-detail" [attr.contenteditable]="editable" id="footerContent"> -->
-            <!-- <p class="">
-              Bootstrap sets basic global display, typography, and link styles:
-            </p> -->
-          <!-- </div> -->
-          <!-- <div class="sub-info-text" [attr.contenteditable]="editable">
-            <p>*HTML5 adds a new global attribute named [hidden]</p>
-            <p>
-              [hidden] is not compatible with jQuery’s $(...).hide() and
-              $(...).show() methods. Therefore, we don’t currently especially
-              endorse [hidden] <a href="#">www.idsmed.com</a>
-            </p>
-            <p>
-              To merely toggle the visibility of an element, meaning its display
-              is not modified and the element can still affect the flow of the
-              document, use the .invisible class instead.
-            </p>
-          </div> -->
-          <!-- <div class="sub-text-footer"> -->
-            <!-- <label [attr.contenteditable]="editable">Hormat kami.</label><br /> -->
-            <!-- <p class="company-name" [attr.contenteditable]="editable">
-              PT. IDS Medical System indonesia
-            </p> -->
-            <!-- <p class="company-name" [attr.contenteditable]="editable">
-              {{ quotationsTemplateData?.quotations?.companies?.title }}
-            </p>
-            <br />
-            <p class="signature"></p>
-            <br />
-            <p [attr.contenteditable]="editable" class="name-number"> -->
-              <!-- <span class="contact-name">ZulfaAlla</span><br />(0812-4920-1673) -->
-
-              <!-- <span class="contact-name">{{
-                quotationsTemplateData?.quotations?.sales_person?.full_name
-              }}</span
-              ><br />
-            </p> -->
-          <!-- </div>
           <br>
-          <br> -->
+          <br>
+          <br>
           
-          <div class="list-detail" [attr.contenteditable]="editable" id="footerContent" #footerContent
+          <div style="border: 1px solid lightgray;opacity: 0.5;" class="list-detail" contentEditable=true data-text="Enter text here" [attr.contenteditable]="editable" id="footerContent" #footerContent
           [innerText]="quotationContent?.footer_content" >
           {{ quotationContent?.footer_content }}
-
-            
           </div>
-
-
           <br />
-            <p [attr.contenteditable]="editable" class="name-number">
+            <p class="name-number">
               <span class="contact-name">ZulfaAlla</span><br />(0812-4920-1673)
 
               <span class="contact-name">
@@ -216,30 +135,6 @@
       </div>
     </div>
   </div>
-<!-- display succes message -->
-  <div
-  id="success"
-  bsModal
-  #successModal="bs-modal"
-  class="modal fade"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="myModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-success" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Success</h4>
-      </div>
-      <div class="modal-body">
-        <p>{{ successMessage }}</p>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
 
   <div #pdfTable class="" id="pdfTable">
     <div class="card" style="width: 100%" *ngIf="check">
@@ -248,6 +143,32 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<!-- display succes message -->
+<div
+id="success"
+bsModal
+#successModal="bs-modal"
+class="modal fade"
+tabindex="-1"
+role="dialog"
+aria-labelledby="myModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-success" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Success</h4>
+    </div>
+    <div class="modal-body">
+      <p>{{ successMessage }}</p>
+    </div>
+  </div>
+  <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
 </div>
 
 <div

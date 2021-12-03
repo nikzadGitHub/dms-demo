@@ -54,7 +54,13 @@
       <td>{{ item.customer.company_name }}</td>
       <!-- <td></td>
       <td></td> -->
-      <td>{{ item.status_desc }}</td>
+      <td>
+        <p-badge [value]="item.status_desc" *ngIf="item.status == 4"  severity="success" styleClass="p-mr-2"></p-badge>
+        <p-badge [value]="item.status_desc" *ngIf="item.status == 1" severity="info" styleClass="p-mr-2"></p-badge>
+        <p-badge [value]="item.status_desc" *ngIf="item.status == 2" severity="warning" styleClass="p-mr-2"></p-badge>
+        <p-badge [value]="item.status_desc" *ngIf="item.status == 7" severity="danger"></p-badge>
+        <!-- {{ item.status_desc }} -->
+      </td>
       <!-- <td></td> -->
       <td>
         <!-- ['/soci/', item.id, 'edit'] -->

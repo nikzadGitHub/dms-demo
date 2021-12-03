@@ -1,23 +1,38 @@
-<p-table #dt [value]="quotes" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true" [lazy]="true"
+<p-table class="table table-bordered table-hover table-striped" #dt [value]="quotes" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true" [lazy]="true"
 (onLazyLoad)="SortColumn($event)"
 [filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']" (onFilter)='columnFilter($event)' [columns]="columns" (onColReorder)="columnOrder($event)">
   <ng-template pTemplate="caption">
     <div class="table-header">
-        Quotation Listing
-        <span class="p-input-icon-left">
-            <i class="pi pi-search"></i>
-            <input type="text" pInputText placeholder="Global Search" (input)="getAll()" 
-            [(ngModel)]="search_text"/>
-        </span>
+      Quotation Listing
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          type="text"
+          pInputText
+          placeholder="Global Search"
+          (input)="getAll()"
+          [(ngModel)]="search_text"
+        />
+      </span>
     </div>
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" class="text-center" pReorderableColumn>
+      <th
+        *ngFor="let col of columns"
+        pSortableColumn="{{ col.field }}"
+        class="text-center"
+        pReorderableColumn
+      >
         <div class="p-d-flex p-jc-between p-ai-center">
-          {{col.header}}
-          <p-sortIcon field="{{col.field}}"></p-sortIcon>
-          <p-columnFilter type="{{col.type}}" field="{{col.field}}" display="menu" class="p-ml-auto"></p-columnFilter>
+          {{ col.header }}
+          <p-sortIcon field="{{ col.field }}"></p-sortIcon>
+          <p-columnFilter
+            type="{{ col.type }}"
+            field="{{ col.field }}"
+            display="menu"
+            class="p-ml-auto"
+          ></p-columnFilter>
         </div>
       </th>
       <!-- <th pSortableColumn="created_date" class="text-center">
@@ -69,14 +84,19 @@
             <p-columnFilter type="numeric" field="amount" display="menu" class="p-ml-auto"></p-columnFilter>
         </div>
       </th> -->
-      <th [style]="{'width':'5%'}">
-      </th>
+      <th [style]="{ width: '5%' }"></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-quote let-rowData let-columns="columns" let-index="rowIndex">
+  <ng-template
+    pTemplate="body"
+    let-quote
+    let-rowData
+    let-columns="columns"
+    let-index="rowIndex"
+  >
     <tr class="p-selectable-row" [pReorderableRow]="index">
       <td class="text-center" *ngFor="let col of columns">
-        <span class="p-column-title">{{col.header}}</span>
+        <span class="p-column-title">{{ col.header }}</span>
         {{ rowData[col.field] }}
       </td>
       <!-- <td class="text-center">
@@ -109,10 +129,19 @@
       </td> -->
       <td class="text-center">
         <span class="p-column-title">Action</span>
-        <a href="#" [routerLink]="['/quote/', quote.id, 'edit']" class="fa fa-edit"></a>
+        <a
+          href="#"
+          [routerLink]="['/quote/', quote.id, 'edit']"
+          class="fa fa-edit"
+        ></a>
       </td>
     </tr>
   </ng-template>
 </p-table>
-<p-paginator (onPageChange)="paginate($event)" [rows]="pageItems" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
+<p-paginator
+  (onPageChange)="paginate($event)"
+  [rows]="pageItems"
+  [totalRecords]="totalRecords"
+  [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
+>
 </p-paginator>

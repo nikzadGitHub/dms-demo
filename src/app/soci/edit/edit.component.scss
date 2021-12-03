@@ -50,8 +50,8 @@
   padding-top: 35px;
 }
 .status {
-  position: relative;
-  bottom: 33px;
+  display: flex;
+  flex-direction: column;
 }
 .footer-data {
   color: black;
@@ -553,15 +553,20 @@ h4 {
 //         overflow-x: hidden;
 //     }
 // }
-
+.remarks-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
 .reject-remakrs {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  flex-direction: column;
+  margin: 10px;
   label {
     font-weight: 600;
-    font-family: 'Lato';
-    margin-bottom: 0px;
+    font-family: "Lato";
+    margin-bottom: 4px;
   }
 }
 .row {

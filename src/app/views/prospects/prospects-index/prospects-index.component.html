@@ -1,4 +1,4 @@
-<p-table #dt [value]="datasource" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true"
+<p-table   class="table table-bordered table-hover table-striped"  #dt [value]="datasource" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true"
     responsiveLayout="scroll" [filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']"
     [columns]="columns">
     <ng-template pTemplate="caption">
