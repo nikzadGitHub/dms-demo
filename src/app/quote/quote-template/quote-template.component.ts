@@ -14,6 +14,8 @@ import { DOCUMENT } from "@angular/common";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { QuoteService } from "../quote.service";
 import { Quote } from "../quote";
+import { FormGroup , FormBuilder} from "@angular/forms";
+import { LocalStorageService } from "../../_services/local-storage.service";
 @Component({
   selector: "app-quote-template",
   templateUrl: "./quote-template.component.html",
@@ -43,19 +45,19 @@ export class QuoteTemplateComponent implements OnInit {
   quotationId: any;
   quotationContent: any;
   successMessage: string;
-  constructor(private router: Router, private quoteService: QuoteService, private route: ActivatedRoute) {}
+  templateId: any;
+  constructor(private router: Router,
+    private quoteService: QuoteService,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private loaderService:LocalStorageService
+    ) {}
 
   ngOnInit(): void {
-    // this.quoteService.quotationIdGet().subscribe(state=>{
-    //   this.quotationId = state
-    //   console.log('quotation id =>',state)
-    // })
-    // location.pathname
-    console.log(location.pathname);
     
     this.route.queryParams.subscribe((params) => {
-      if('quotation_id' in params)
       this.quotationId = params.quotation_id
+      this.templateId = params.template_id
       console.log('queryParams ==>>',params)
 
     })
@@ -79,12 +81,7 @@ export class QuoteTemplateComponent implements OnInit {
     this.file = event.target.files[0];
     this.fileName = this.file.name;
 
-    if (
-      this.file &&
-      (this.file.type == "image/png" ||
-        this.file.type == "image/jpg" ||
-        this.file.type == "image/jpeg")
-    ) {
+    if (this.file) {
       this.check = true;
       this.fileName = this.file.name;
       var reader = new FileReader();
@@ -101,29 +98,51 @@ export class QuoteTemplateComponent implements OnInit {
         this.url = reader.result;
       };
 
-      const formData = new FormData();
+      var formData = new FormData();
       formData.append("file", this.file);
-      this.alertHeader = "Image uploaded successfully";
-      this.alertBody = "Do you want to download one pdf or two pdf ?";
-      this.successModal.show();
+      // this.alertHeader = "Image uploaded successfully";
+      // this.alertBody = "Do you want to download one pdf or two pdf ?";
+      // this.successModal.show();
     } else {
       this.alertHeader = "Image type error";
       this.alertBody = "Please select png, jpg or jpeg image";
       this.dangerModal.show();
     }
+    
+    if (this.templateId && this.quotationId) {
+      this.loaderService.loaderSet(true)
+      this.quoteService.uploadTemplateImage(formData, this.quotationId, this.templateId).subscribe(state => {
+        if (state) {
+          this.loaderService.loaderSet(false)
+        }
+      })
+    } else {
+      this.alertHeader = "Template Id Erroe";
+      this.alertBody = "Template Id is Missing.....";
+      this.dangerModal.show();
+    }
   }
 
   downloadPDF() {
-    if (this.single == true) {
-      this.generateCompletePDF();
-    } else {
-      if (this.url) {
-        this.generateTemplatePDF();
-        this.generateQuotationImagePDF();
-      } else {
-        this.generateTemplatePDF();
-      }
+    if(this.templateId && this.quotationId){
+      this.quoteService.downloadPdfTemplate(this.quotationId,this.templateId).subscribe(state=>{
+        console.log("Pdf Download ----!",state)
+      })
+    } else{
+      this.alertHeader = "Template Id Erroe";
+      this.alertBody = "Template Id is Missing.....";
+      this.dangerModal.show();
     }
+    // if (this.single == true) {
+    //   this.generateCompletePDF();
+    // } else {
+    //   if (this.url) {
+    //     this.generateTemplatePDF();
+    //     this.generateQuotationImagePDF();
+    //   } else {
+    //     this.generateTemplatePDF();
+    //   }
+    // }
   }
   generateCompletePDF() {
     let data = document.getElementById("pdfTable");
@@ -235,10 +254,9 @@ export class QuoteTemplateComponent implements OnInit {
   savePreviewContent(){
     let doc =  this.headerData.nativeElement.innerText
     let doc1 = this.footerData.nativeElement.innerText
-    let doc2 = this.bodyData.nativeElement.innerText
+    let doc2 = this.bodyData.nativeElement.innerHTML
 
     this.quoteService.saveTemplateData(this.quotationId,doc,doc1,doc2).subscribe(state=>{
-      console.log("save template data =>",state,"this.quotationId",this.quotationId)
     })
 
       this.successMessage = "Data is Updated Successfully......!!";

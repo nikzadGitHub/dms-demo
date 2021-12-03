@@ -1,8 +1,9 @@
-<div class="main-content">
+<div class="main-content" id="bodyContent" #bodyContent>
   <div class="download-btn">
     <input
       type="file"
       class="file-input"
+      multiple
       (change)="onFileSelected($event)"
       #fileUpload
     />
@@ -145,9 +146,9 @@
             </table>
           </div>
 
-          <div class="bodyContentArea" [attr.contenteditable]="editable" id="bodyContent" #bodyContent
+          <!-- <div class="bodyContentArea" [attr.contenteditable]="editable" id="bodyContent" #bodyContent
           [innerText]="quotationContent?.full_html" >
-          {{ quotationContent?.full_html }}
+          {{ quotationContent?.full_html }} -->
 
           
           <!-- <div class="list-detail" [attr.contenteditable]="editable" id="footerContent"> -->
@@ -187,9 +188,9 @@
               }}</span
               ><br />
             </p> -->
-          </div>
+          <!-- </div>
           <br>
-          <br>
+          <br> -->
           
           <div class="list-detail" [attr.contenteditable]="editable" id="footerContent" #footerContent
           [innerText]="quotationContent?.footer_content" >

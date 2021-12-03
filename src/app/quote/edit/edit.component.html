@@ -590,11 +590,11 @@
             class="form-control"
             placeholder="Title"
           /><br /><br />
-          <input
+          <!-- <input
             type="text"
             class="form-control"
             placeholder="template"
-          /><br /><br />
+          /><br /><br /> -->
 
           <!-- <ng-template let-value pTemplate="selectTemplateData"> -->
           <!-- <p-dropdown placeholder="Select Templates" [options]="selectTemplateData" formControlName="title">
@@ -604,9 +604,9 @@
             style="width: 70%; margin-bottom: 9px"
             formControlName=""
             name=""
-            class="form-control"
+            class="form-control templateSelectedClass"
+            (input)='getTemplate($event)'
           >
-            <option>--- Select Term ---</option>
             <option
               *ngFor="let item of selectTemplateData"
               value="{{ item.id }}"
