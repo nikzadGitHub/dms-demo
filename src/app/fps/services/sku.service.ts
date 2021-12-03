@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {SkuInterface, SkuList, SaveResult} from '../services/sku-interface';
-import { ApiClientService } from '../api-client.service';
+import {SkuInterface, SkuList, SaveResult} from '@app/fps/services/sku-interface';
+import { ApiClientService } from '@app/fps/api-client.service';
 
 
 @Injectable({providedIn: 'root'})

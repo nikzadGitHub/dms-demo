@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
-import { FpsFormService } from '../../../services/fps-form.service';
+import { FpsFormService } from '@app/fps/services/fps-form.service';
 
 @Component({
   selector: 'app-fps-list',

@@ -3,16 +3,19 @@ import { Router } from "@angular/router";
 import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalDirective } from "ngx-bootstrap/modal";
-import { DialogService } from '../../../../common/dialog/dialog.service';
-import { SkuService } from '../../../services/sku.service';
-import { CountryService, Country } from '../../../../_services/shared/country.service';
-import { FinancialInstitutionService, FinancialInstitution } from '../../../../_services/shared/finantial-institution.service';
-import { CurrencyService } from '../../../../_services/shared/currency.service';
+import { DialogService } from '@app/common/dialog/dialog.service';
+import { SkuService } from '@app/fps/services/sku.service';
+import { CountryService, Country } from '@app/_services/shared/country.service';
+import { FinancialInstitutionService, FinancialInstitution } from '@app/_services/shared/finantial-institution.service';
+import { CurrencyService } from '@app/_services/shared/currency.service';
 
 @Component({
   selector: 'app-sku-create',
   templateUrl: './sku-create.component.html',
-  styleUrls: ['./sku-create.component.scss']
+  styleUrls: [
+    './sku-create.component.scss',
+    '../../common/shared.styles.component.scss'
+  ]
 })
 export class SkuCreateComponent implements OnInit {
 
@@ -53,7 +56,7 @@ export class SkuCreateComponent implements OnInit {
   ngOnInit(): void {
 
     this.skuAddForm = this.fb.group({
-      uuid: new FormControl(''),
+      uuid: new FormControl('',[Validators.required]),
       financier_id : new FormControl('', [Validators.required]),
       validity_start_at : new FormControl(new Date()),
       validity_end_at : new FormControl(new Date()),

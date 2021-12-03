@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ModalDirective } from "ngx-bootstrap/modal";
-import { DialogService } from '../../../../common/dialog/dialog.service';
-import { FpsService } from '../../../fps.service';
-import { AppService } from '../../../../_services/shared/app.service';
-import { FinancialInstitutionService, FinancialInstitution } from '../../../../_services/shared/finantial-institution.service';
+import { DialogService } from '@app/common/dialog/dialog.service';
+import { FpsService } from '@app/fps/fps.service';
+import { AppService } from '@app/_services/shared/app.service';
+import { FinancialInstitutionService, FinancialInstitution } from '@app/_services/shared/finantial-institution.service';
 
 export interface OpportunityDetail {
 	company_name: any;
@@ -16,7 +17,10 @@ export interface OpportunityDetail {
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss', '../../../../views/opportunity/opportunity.component.scss'],
+  styleUrls: [
+    './create.component.scss',
+    '../../common/shared.styles.component.scss'
+  ],
   providers: [AppService],
 })
 export class CreateComponent implements OnInit {
@@ -26,9 +30,10 @@ export class CreateComponent implements OnInit {
   fpsAddForm : FormGroup;
   alertBody: string;
   alertHeader: string;
-  fps_user_list
-  payment_frequency_list
-  institutions_list
+  // fps_user_list
+  // payment_frequency_list
+  // institutions_list
+  current_apportunity_id : number;
 
   oppt_details : OpportunityDetail = {
     company_name: '',
@@ -44,6 +49,8 @@ export class CreateComponent implements OnInit {
     private institutionService: FinancialInstitutionService,
     private zone: NgZone,
     private dialogService: DialogService,
+    private activatedRoute: ActivatedRoute,
+    
   ) {}
 
   get form_controls() {
@@ -79,8 +86,13 @@ export class CreateComponent implements OnInit {
       fps_required_docs: new FormControl(),
     });
 
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.current_apportunity_id = params['opport_id'];
+      this.fpsAddForm.controls.fps_opportunity_id.setValue(this.current_apportunity_id);
+    });
+
     // Get the opportity which PFS is going to be added to.
-    this.appService.getQuery('/opportunity/detail/'+274, null).subscribe((data) => {	
+    this.appService.getQuery('/opportunity/detail/'+this.current_apportunity_id, null).subscribe((data) => {	
       this.oppt_details = data['data'];
       console.log('opptDetiasl', this.oppt_details);
     })
@@ -103,6 +115,7 @@ export class CreateComponent implements OnInit {
         }
       }
     })
+
   }
 
   onSave(): void {
