@@ -44,8 +44,6 @@ export class EditComponent implements OnInit {
   public confirmationRejectModal: ModalDirective;
   @ViewChild("confirmationRemarksUpdatedModal")
   public confirmationRemarksUpdatedModal: ModalDirective;
-  
-
 
   cost_item_id: any;
   alertBody: string;
@@ -145,7 +143,7 @@ export class EditComponent implements OnInit {
   customer_id: any;
   isRemarksAdded: boolean = true;
   isRemarksUpdated: boolean;
-  badgeColor ='';
+  badgeColor = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -229,16 +227,14 @@ export class EditComponent implements OnInit {
         sociRemarks: this.soci_data?.remarks,
       });
       this.sociStatus = res["data"]["status"];
-      if(this.sociStatus == 1){
-        this.badgeColor = 'info'
-      }else if(this.sociStatus == 2){
-        this.badgeColor = 'warning'
-      }
-      else if(this.sociStatus == 7){
-        this.badgeColor = 'danger'
-      }
-      else if(this.sociStatus == 4){
-        this.badgeColor = 'success'
+      if (this.sociStatus == 1) {
+        this.badgeColor = "info";
+      } else if (this.sociStatus == 2) {
+        this.badgeColor = "warning";
+      } else if (this.sociStatus == 7) {
+        this.badgeColor = "danger";
+      } else if (this.sociStatus == 4) {
+        this.badgeColor = "success";
       }
 
       this.sociDetailId = res["data"]["soci_id"];
@@ -400,14 +396,13 @@ export class EditComponent implements OnInit {
           this.is_edited = true;
           this.alertBody = data.message;
           this.standerd_payment_term = this.form.value.days;
-          
+
           this.payment_term_from = this.form.value.fromDate;
           this.payment_term_to = new Date(this.payment_term_from);
           this.payment_term_to.setDate(
             this.payment_term_to.getDate() + parseInt(this.form.value.days)
           );
 
-          
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
@@ -1579,47 +1574,46 @@ export class EditComponent implements OnInit {
   }
   //Update Remarks
   remarksAdded() {
-    this.form.value.sociRemarks || this.soci_data?.remarks !== this.form.value.sociRemarks
+    this.form.value.sociRemarks ||
+    this.soci_data?.remarks !== this.form.value.sociRemarks
       ? (this.isRemarksAdded = false)
       : (this.isRemarksAdded = true);
   }
   checkRamarksAdded() {
     if (this.isRemarksAdded) {
       this.confirmationModal.show();
-    }
-    else if(!this.isRemarksAdded){
+    } else if (!this.isRemarksAdded) {
       this.confirmationRemarksUpdatedModal.show();
     }
   }
 
   updateRemarks(showApprovalFlag = true) {
     this.confirmationRemarksUpdatedModal.hide();
-      this.sociService
-        .postQuery("/soci/" + this.soci_id, {
-          remarks: this.form.value.sociRemarks,
-        })
-        .subscribe(
-          (data: any) => {
-            this.is_edited = true;
-            this.isRemarksUpdated = true;
-            this.isRemarksAdded = true;
-            this.alertBody = data.message;
-            this.successModal.show();
-            setTimeout(() => {
-              this.successModal.hide();
-              if(showApprovalFlag) this.confirmationModal.show();
-            }, 2000);
-          },
-          (error) => {
-            this.alertBody = "Please enter required fields";
-            this.dangerModal.show();
-            this.isRemarksAdded = false;
-            setTimeout(() => {
-              this.dangerModal.hide();
-            }, 2000);
-          }
-        );
-    
+    this.sociService
+      .postQuery("/soci/" + this.soci_id, {
+        remarks: this.form.value.sociRemarks,
+      })
+      .subscribe(
+        (data: any) => {
+          this.is_edited = true;
+          this.isRemarksUpdated = true;
+          this.isRemarksAdded = true;
+          this.alertBody = data.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            if (showApprovalFlag) this.confirmationModal.show();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = "Please enter required fields";
+          this.dangerModal.show();
+          this.isRemarksAdded = false;
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
   }
 
   get form_controls() {

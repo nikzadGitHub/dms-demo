@@ -50,8 +50,9 @@
   <tbody>
     <tr align="center" *ngFor="let item of pendingSOCI">
       <td>
-        <a href="#" [routerLink]="['/soci/', item.id, 'edit']"></a>
-        {{item.soci_id}}
+        <a href="#" [routerLink]="['/soci/', item.id, 'edit']">
+          {{item.soci_id}}
+        </a>
       </td>
       <td>{{ item.created_at | date: "dd-MMM-yyy" }}</td>
       <td>_</td>

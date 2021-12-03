@@ -1,4 +1,5 @@
-<p-table class="table table-bordered table-hover table-striped"
+<p-table
+  class="table table-bordered table-hover table-striped"
   #dt
   [value]="datasource"
   styleClass="p-datatable-customers"
@@ -40,32 +41,33 @@
           </div>
         </span>
       </span>
-  <div>
-
-    <span class="p-input-icon-left">
-      <i class="pi pi-search"></i>
-      <input
-        type="text"
-        pInputText
-        placeholder="Global Search"
-        (input)="getAll()"
-        [(ngModel)]="search_text"
-      />
-    </span>
-  <img
-  style="width: 22px; margin: 0px 8px 0px 0px"
-  src="../../../../assets/img/icons/Vector (2).svg"
-/>
-<img style="width: 22px" src="../../../../assets/img/icons/Vector (1).svg" />
-<img
-  style="width: 22px; margin: 7px"
-  src="../../../../assets/img/icons/vertcalLines.svg"
-/>
-  </div>
+      <div>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            type="text"
+            pInputText
+            placeholder="Global Search"
+            (input)="getAll()"
+            [(ngModel)]="search_text"
+          />
+        </span>
+        <img
+          style="width: 22px; margin: 0px 8px 0px 0px"
+          src="../../../../assets/img/icons/Vector (2).svg"
+        />
+        <img
+          style="width: 22px"
+          src="../../../../assets/img/icons/Vector (1).svg"
+        />
+        <img
+          style="width: 22px; margin: 7px"
+          src="../../../../assets/img/icons/vertcalLines.svg"
+        />
+      </div>
     </div>
   </ng-template>
   <ng-template pTemplate="header" let-columns>
-    
     <tr>
       <th
         *ngFor="let column of columns"
@@ -73,16 +75,26 @@
         class="text-center"
         pReorderableColumn
       >
-        <div style="width: 65px;" class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="
+            width: 65px;
+            white-space: nowrap;
+            display: flex;
+            flex-direction: column;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           {{ column.header }}
-          <p-sortIcon field="{{ column.field }}"></p-sortIcon>
-          <p-columnFilter
-            type="{{ column.type }}"
-            field="{{ column.field }}"
-            display="menu"
-            class="p-ml-auto"
-          >
-          </p-columnFilter>
+          <div class="icon-div">
+            <p-sortIcon field="{{ column.field }}"></p-sortIcon>
+            <p-columnFilter
+              type="{{ column.type }}"
+              field="{{ column.field }}"
+              display="menu"
+              class="p-ml-auto"
+            >
+            </p-columnFilter>
+          </div>
         </div>
       </th>
 
@@ -91,7 +103,7 @@
   </ng-template>
   <ng-template pTemplate="body" let-data>
     <tr class="p-selectable-row">
-      <td class="text-center ">
+      <td class="text-center">
         <span class="p-column-title">Created Date</span>
         {{ data.created_at | date: "dd-MMM-yyyy" }}
       </td>
