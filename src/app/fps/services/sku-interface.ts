@@ -19,6 +19,6 @@ id: any;
 export interface SkuInterface {
 getList(): Observable<SkuList>;
 
-saveFps(form: any): Observable<SaveResult>;
+saveSku(form: any): Observable<SaveResult>;
 }
   

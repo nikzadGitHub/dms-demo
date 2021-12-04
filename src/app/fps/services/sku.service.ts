@@ -14,8 +14,11 @@ export class SkuService implements SkuInterface {
     return this.apiClient.get<SkuList>('sku');
   }
 
-  saveFps(data: any): Observable<SaveResult> {
+  saveSku(data: any): Observable<SaveResult> {
     return this.apiClient.post('sku/createDraft', data);
   }
 
+  saveRates(data: any): Observable<SaveResult> {
+    return this.apiClient.post('rate/store', data);
+  }
 }

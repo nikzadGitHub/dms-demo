@@ -6,7 +6,6 @@ import { IconModule } from '@coreui/icons-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TableModule } from 'primeng/table';
 import { FpsRoutingModule } from './fps-routing.module';
 import { CreateComponent } from './components/fps-form/create/create.component';

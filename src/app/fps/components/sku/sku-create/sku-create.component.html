@@ -10,14 +10,14 @@
 
                 <hr>
                
-                <form [formGroup]="skuAddForm" (ngSubmit)="onSave()"  class="form-horizontal">
+                <form [formGroup]="skuAddForm" id="skuAddForm" (ngSubmit)="onSave()"  class="form-horizontal">
                 
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label" for="booking-reason">
                             FPS SKU No <span class="asterisk"> * </span>
                         </label>
                         <div class="col-md-4">
-                            <input type="text" [readonly] formControlName="uuid"  class="form-control"> 
+                            <input type="text" [readonly]="true" formControlName="uuid"  class="form-control"> 
                         </div>
 
                         <label class="col-md-2 col-form-label" for="booking-reason">
@@ -100,156 +100,146 @@
 
                                 <div class="d-flex">
                                     <p-checkbox name="quarterly_payment" [binary]="true" formControlName="quarterly_payment" inputId="status2"></p-checkbox>
-                                    <label class="radio-label" for="status1">Quarterly</label>
+                                    <label class="radio-label" for="status2">Quarterly</label>
                                 </div>
 
                                 <div class="d-flex">
                                     <p-checkbox name="yearly_payment" [binary]="true" formControlName="yearly_payment" inputId="status3"></p-checkbox>
-                                    <label class="radio-label" for="status1">Half-Yearly</label>
+                                    <label class="radio-label" for="status3">Half-Yearly</label>
                                 </div>
 
                             </div>
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Mininumum Payment Amount
+                        </label>
+                        <div class="col-md-4">
+                            <input type="number" [readonly]="!min_payment.checked" formControlName="min_payment_amount"  class="form-control">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-md-8 col-form-label" for="booking-reason">
+                                    Mininumum Payment Amount<span class="asterisk"> * </span>
+                                </label>
+
+                                <div class="col-md-4">
+                                    <mat-slide-toggle  #min_payment class="example-margin">
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label" for="booking-reason">
+                                    Min Payment Amount Currency
+                                </label>
+                                <div class="col-md-8">
+                                    <p-dropdown  [disabled]="!min_payment.checked" formControlName="currency_code" [options]="currencies_list" optionLabel="currency_code"
+                                        optionValue="id" styleClass="form-control"
+                                        placeholder="$" emptyMessage="No Currency Available">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-md-8 col-form-label" for="booking-reason">
+                                    Minimum Usage<span class="asterisk"> * </span>
+                                </label>
+
+                                <div class="col-md-4">
+                                    <mat-slide-toggle #min_usage class="example-margin">
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Minimum Usage<span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <input type="number" [readonly]="!min_usage.checked" formControlName="min_usage" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-md-8 col-form-label" for="booking-reason">
+                                    Procedure Per Month<span class="asterisk"> * </span>
+                                </label>
+    
+                                <div class="col-md-4">
+                                    <mat-slide-toggle #min_procedure class="example-margin">
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Minimum Procedure<span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <input type="number" [readonly]="!min_procedure.checked" formControlName="procedure_per_month"  class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-md-8 col-form-label" for="booking-reason">
-                                            Agreement Number Mandatory<span class="asterisk"> * </span>
-                                        </label>
-    
-                                        <div class="col-md-4">
-                                            <mat-slide-toggle  class="example-margin">
-                                            </mat-slide-toggle>
-                                        </div>
-                                    </div>
+                                <label class="col-md-8 col-form-label" for="booking-reason">
+                                    Consumable Usage<span class="asterisk"> * </span>
+                                </label>
+
+                                <div class="col-md-4">
+                                    <mat-slide-toggle #min_usage class="example-margin">
+                                    </mat-slide-toggle>
                                 </div>
+
                             </div>
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Required Tenure<span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <p-inputNumber formControlName="required_tenure"></p-inputNumber>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <div class="form-group row">
-                                <div class="col-md-5">
-                                    <div class="form-group row">
-                                        <label class="col-md-8 col-form-label" for="booking-reason">
-                                            Mininumum Payment Amount<span class="asterisk"> * </span>
-                                        </label>
-    
-                                        <div class="col-md-4">
-                                            <mat-slide-toggle  #min_payment class="example-margin">
-                                            </mat-slide-toggle>
-                                        </div>
-                                    </div>
-                                </div>
+                                <label class="col-md-8 col-form-label" for="booking-reason">
+                                    Agreement Number Mandatory<span class="asterisk"> * </span>
+                                </label>
 
-                                <div class="col-md-7">
-                                    <div class="form-group row">
-                                        <div class="col-md-4">
-                                            <p-dropdown  [disabled]="!min_payment.checked" formControlName="currency_code" [options]="currencies_list" optionLabel="currency_code"
-                                                optionValue="id" styleClass="form-control"
-                                                placeholder="$" emptyMessage="No Currency Available">
-                                            </p-dropdown>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <p-inputNumber [disabled]="!min_payment.checked" formControlName="min_payment_amount"></p-inputNumber>
-                                        </div>
-                                    </div>
+                                <div class="col-md-4">
+                                    <mat-slide-toggle  class="example-margin">
+                                    </mat-slide-toggle>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <div class="col-md-7">
-                            <div class="form-group row">
-                                <div class="col-md-5">
-                                    <div class="form-group row">
-                                        <label class="col-md-8 col-form-label" for="booking-reason">
-                                            Minimum Usage<span class="asterisk"> * </span>
-                                        </label>
-    
-                                        <div class="col-md-4">
-                                            <mat-slide-toggle #min_usage class="example-margin">
-                                            </mat-slide-toggle>
-                                        </div>
-                                    </div>
-                                </div>
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            List of Document Required
+                        </label>
 
-                                <div class="col-md-7">
-                                    <p-inputNumber [disabled]="!min_usage.checked" formControlName="min_usage"></p-inputNumber>
-                                </div>
-                            </div>
+                        <div class="col-md-4">
+                            <textarea formControlName="required_docs" data-lpignore="true" rows="9" class="form-control"></textarea>
                         </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-md-7">
-                            <div class="form-group row">
-                                <div class="col-md-5">
-                                    <div class="form-group row">
-                                        <label class="col-md-8 col-form-label" for="booking-reason">
-                                            Minimum Procedure<span class="asterisk"> * </span>
-                                        </label>
-    
-                                        <div class="col-md-4">
-                                            <mat-slide-toggle #min_procedure class="example-margin">
-                                            </mat-slide-toggle>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-7">
-                                    <p-inputNumber [disabled]="!min_procedure.checked" formControlName="min_procedure"></p-inputNumber>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-md-7">
-                            <div class="form-group row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-md-8 col-form-label" for="booking-reason">
-                                            Required Tenure<span class="asterisk"> * </span>
-                                        </label>
-    
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <p-inputNumber formControlName="required_tenure"></p-inputNumber>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-md-7">
-                            <div class="form-group row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-md-12 col-form-label" for="booking-reason">
-                                            List of Document Required
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <textarea formControlName="required_docs" rows="9" class="form-control"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="custom-footer d-flex justify-content-center">
-                        <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Save</button>
-                    </div>
+                    </div>                
                 </form>
             </div>
             </div>
@@ -257,25 +247,79 @@
 
         <br>
 
-        <!-- <div class="col-sm-12 col-md-12 form-group">
-            <h3>Consumable Usage</h3> -->
-            <!-- Here the fps list related to current opportunity is displayed -->
-            <!-- <app-fps-list></app-fps-list>
-        </div> -->
-
-        <br>
-
         <div class="col-sm-12 col-md-12 form-group">
-            <h3>File Library</h3>
-            <!-- Here the fps list related to current opportunity is displayed -->
-            <!-- <app-fps-list></app-fps-list> -->
-            <p>Work on this section will be done later</p>
+            <form [formGroup]="rateAddForm" (ngSubmit)="submitSelect()">
+                <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+                    <!-- FPS SKU Rate -->
+                    <p-accordionTab header="FPS SKU Rate">
+                        <div class="row">
+                            <table class="table table-borderless" id="sku_rate" formArrayName="addRates">
+                                <thead>
+                                    <tr>
+                                        <th>Rate No</th>
+                                        <th>Validity Start Date</th>
+                                        <th>Validity End Date</th>
+                                        <th>Status</th>
+                                        <th>Type</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let cost of addRates().controls; let i=index" [formGroupName]="i"
+                                        align="center">
+                                        <td style="width: 15%;">
+                                            <input formControlName="rate_no" size="1" class="form-control" type="number">
+                                        </td>
+                                        <td style="width: 15%;">
+                                            <input formControlName="validity_start_at" class="form-control" type="date"
+                                                min="0">
+                                        </td>
+                                        <td style="width: 10%;">
+                                            <input formControlName="validity_end_at" class="form-control" type="date" min="0" step=".01">
+                                        </td>
+                                        <td style="width: 20%;">
+                                            <p-dropdown  formControlName="status" [options]="rateStatusList" optionLabel="title"
+                                                optionValue="id" styleClass="form-control" emptyMessage="No Status Available">
+                                            </p-dropdown>
+                                        </td>
+                                        <td style="width: 15%;">
+                                            <p-dropdown  formControlName="rate_type" [options]="rateTypeOptions" optionLabel="label"
+                                                optionValue="value" styleClass="form-control" >
+                                            </p-dropdown>
+                                        </td>
+                                        <td class="td-actions" style="width: 10%;">
+                                            <a [routerLink]="" routerLinkActive="router-link-active"><i
+                                                    class="fa fa-edit"></i></a> &nbsp;
+                                            <a [routerLink]="" (click)="removeAddRates(i)"
+                                                routerLinkActive="router-link-active"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot align="center">
+                                    <tr>
+                                        <td class="td-actions" colspan="9" align="center">
+                                            <a [routerLink]="" (click)="addAddRates()"
+                                                routerLinkActive="router-link-active">
+                                                <i class="icon-plus icons"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </p-accordionTab>
+                    <!-- End of FPS SKU Rate Accordion -->
+                </p-accordion>
+            </form>
         </div>
-
-
-
     </div><!--/.row-->
 
+    <div class="col-sm-12 col-md-12 form-group">
+        <div class="custom-footer d-flex justify-content-center">
+            <button type="button" (click)="cancelSkuForm()" class="btn btn-sm btn-light"> CANCEL</button>
+            <button type="submit" form="skuAddForm" class="btn btn-sm btn-primary">Save</button>
+        </div>
+    </div>
   </div>
   <div
     id="success"
