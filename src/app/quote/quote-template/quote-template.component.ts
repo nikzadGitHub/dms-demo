@@ -46,6 +46,7 @@ export class QuoteTemplateComponent implements OnInit {
   quotationContent: any;
   successMessage: string;
   templateId: any;
+  loader: boolean;
   constructor(private router: Router,
     private quoteService: QuoteService,
     private route: ActivatedRoute,
@@ -58,7 +59,6 @@ export class QuoteTemplateComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.quotationId = params.quotation_id
       this.templateId = params.template_id
-      console.log('queryParams ==>>',params)
 
     })
     this.userToken = localStorage.getItem("auth-token");
@@ -69,7 +69,6 @@ export class QuoteTemplateComponent implements OnInit {
   viewQuotationTemplate() {
 
     this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
-      console.log('Quotations Data =>',res);
       this.quotationsTemplateData = res["data"]
       this.quotationContent = res["data"].quotations.quotation_contents
       
@@ -110,10 +109,13 @@ export class QuoteTemplateComponent implements OnInit {
     }
     
     if (this.templateId && this.quotationId) {
-      this.loaderService.loaderSet(true)
+      // this.loaderService.loaderSet(true)
+      this.loader = true
       this.quoteService.uploadTemplateImage(formData, this.quotationId, this.templateId).subscribe(state => {
         if (state) {
-          this.loaderService.loaderSet(false)
+          // this.loaderService.loaderSet(false)
+      this.loader = false
+
         }
       })
     } else {
@@ -123,10 +125,10 @@ export class QuoteTemplateComponent implements OnInit {
     }
   }
 
-  downloadPDF() {
+  downloadUploadedPDF() {
     if(this.templateId && this.quotationId){
-      this.quoteService.downloadPdfTemplate(this.quotationId,this.templateId).subscribe(state=>{
-        console.log("Pdf Download ----!",state)
+      this.quoteService.downloadUploadedPdfTemplate(this.quotationId,1).subscribe(state=>{
+        
       })
     } else{
       this.alertHeader = "Template Id Erroe";
@@ -258,11 +260,19 @@ export class QuoteTemplateComponent implements OnInit {
 
 
     this.quoteService.saveTemplateData(this.quotationId,header,footer,fullBody).subscribe(state=>{
-      console.log("save template data =>",state)
     })
 
       this.successMessage = "Data is Updated Successfully......!!";
       this.successModal.show();
+  }
+
+  downloadQuotationTemplate(){
+    this.quoteService.downloadQuoteTemplate(this.quotationId,this.templateId).subscribe(state=>{
+      if(state){
+      this.successMessage = "Quotaion Downloaded Successfully......!!";
+      this.successModal.show();
+      }
+    })
   }
   
 }

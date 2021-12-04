@@ -162,10 +162,25 @@
   }
 }
 .previewSave{
-  width: 15%;
+  width: 30%;
   margin: auto;
-  button{
+  display: flex;
+  .saveButton{
     width: 110px;
     height: 45px;
+  }
+  .quotationDownload{
+    width: 165px;
+    height: 45px;
+    margin-left: 15px;
+  }
+}
+.topButtons{
+  height: 65px;
+  .loaderText{
+    float: right;
+    margin-right: 165px;
+    margin-top: -15px;
+    color: rgb(41, 136, 224);
   }
 }

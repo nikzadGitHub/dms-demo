@@ -216,8 +216,15 @@ uploadTemplateImage(filePath,Q_id,T_id){
   )
 }
 
-downloadPdfTemplate(Q_id,T_id){
+downloadUploadedPdfTemplate(Q_id,T_id){
   return this.httpClient.get(this.apiURL + '/quote/quotation-preview-merge/'+ Q_id +'/' + T_id + '/')
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
+
+downloadQuoteTemplate(Q_id,T_id){
+  return this.httpClient.get(this.apiURL + '/quote/quotation-preview-download/'+ Q_id +'/' + T_id + '/')
   .pipe(
     catchError(this.errorHandler)
   )
