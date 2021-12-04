@@ -16,7 +16,8 @@ import {TabViewModule} from 'primeng/tabview';
 import { AccordionModule } from 'primeng/accordion';
 import { PaginatorModule } from 'primeng/paginator';
 import {BadgeModule} from 'primeng/badge';
-
+import {CheckboxModule} from 'primeng/checkbox';
+import {TooltipModule} from 'primeng/tooltip';
 @NgModule({
   imports: [
     CommonModule,

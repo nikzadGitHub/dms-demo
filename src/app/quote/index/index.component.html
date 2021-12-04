@@ -1,4 +1,4 @@
-<p-table class="table table-bordered table-hover table-striped" #dt [value]="quotes" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true" [lazy]="true"
+<p-table class="table table-hover table-striped" #dt [value]="quotes" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true" [lazy]="true"
 (onLazyLoad)="SortColumn($event)"
 [filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']" (onFilter)='columnFilter($event)' [columns]="columns" (onColReorder)="columnOrder($event)">
   <ng-template pTemplate="caption">
@@ -24,15 +24,18 @@
         class="text-center"
         pReorderableColumn
       >
-        <div class="p-d-flex p-jc-between p-ai-center">
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
           {{ col.header }}
-          <p-sortIcon field="{{ col.field }}"></p-sortIcon>
-          <p-columnFilter
-            type="{{ col.type }}"
-            field="{{ col.field }}"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div class="icons">
+            <p-sortIcon field="{{ col.field }}"></p-sortIcon>
+            <p-columnFilter
+              type="{{ col.type }}"
+              field="{{ col.field }}"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
         </div>
       </th>
       <!-- <th pSortableColumn="created_date" class="text-center">

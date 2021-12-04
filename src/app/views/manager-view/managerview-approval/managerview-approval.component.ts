@@ -4,6 +4,7 @@ import { SociService } from "../../../soci/soci.service";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { ManagerViewService } from "../../../views/manager-view/manager-view.service";
+import { Soci } from "../../../soci/soci";
 
 @Component({
   selector: "app-managerview-approval",
@@ -15,8 +16,11 @@ export class ManagerviewApprovalComponent implements OnInit {
 
   sort: any;
   search_text: string = "";
-  paginate: [];
+
+  pages: any[];
+  totalRecords: number;
   pendingSOCI: any[] = [];
+  socis: Soci[] = [];
   pageItems: number = 10;
   is_quotation_view = false;
   is_soci_view = false;
@@ -53,6 +57,8 @@ export class ManagerviewApprovalComponent implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((data: any) => {
         this.pendingSOCI = data["data"]["soci"]["data"];
+        this.pages = data["data"]["soci"]["links"];
+        this.totalRecords = data["data"]["soci"]["total"];
       });
   }
 
@@ -72,5 +78,30 @@ export class ManagerviewApprovalComponent implements OnInit {
       },
     };
     this.router.navigate(["/soci/", soci_id, "edit"], navigate);
+  }
+  searchSoci() {
+    this.managerView
+      .getPendingSOCI(this.pageItems, this.search_text, this.sort)
+      .subscribe((data) => {
+        this.pendingSOCI = data["data"]["soci"]["data"];
+        this.totalRecords = data["data"]["soci"]["total"];
+      });
+  }
+
+  paginate(event) {
+    this.pageItems = event.rows;
+    this.onClick(parseInt(event.page) + 1);
+  }
+
+  onClick(pageNo) {
+    let url = this.pages[pageNo].url;
+    this.sociService
+      .getPage(url, this.pageItems, this.search_text)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((data) => {
+        // this.socis = data["data"]["soci"]["data"];
+        this.pendingSOCI = data["data"]["soci"]["data"];
+        this.pages = data["data"]["soci"]["links"];
+      });
   }
 }

@@ -2,6 +2,12 @@ tr {
     border: hidden;
 }
 
+.icon-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 // new scss
 
 :host ::ng-deep {
@@ -80,6 +86,12 @@ tr {
         margin-right: 5px;
     }
 }
+.icon-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 
 @media screen and (max-width: 960px) {
     :host ::ng-deep {
@@ -88,6 +100,7 @@ tr {
                 .p-datatable-thead > tr > th,
                 .p-datatable-tfoot > tr > td {
                     display: none !important;
+                    
                 }
     
                 .p-datatable-tbody > tr {
