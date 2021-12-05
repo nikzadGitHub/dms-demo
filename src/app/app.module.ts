@@ -3,6 +3,12 @@ import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+//Start Of The Free FullCalender Plugings 
+import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
+//End OF The Free FullCalender Plugins
+
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
@@ -11,7 +17,7 @@ import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
-};
+}; 
 
 import { AppComponent } from './app.component';
 
@@ -28,7 +34,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 const APP_CONTAINERS = [
   DefaultLayoutComponent
-];
+]; 
 
 import {
   AppAsideModule,
@@ -39,7 +45,7 @@ import {
 } from '@coreui/angular';
 
 // Import routing module
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module'; 
 
 // Import 3rd party components
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -57,7 +63,7 @@ import { DialogComponent } from './components/shared/dialog/dialog.component';
 import { QuoteModule } from './quote/quote.module';
 import { OpportunityModule } from './views/opportunity/opportunity.module';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { CalendarModule } from 'primeng/calendar';
+// import { CalendarModule } from 'primeng/calendar';
 import { AccordionModule } from 'primeng/accordion';
 import { DatePipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
@@ -80,13 +86,23 @@ import * as echarts from 'echarts';
 import { ManagerViewModule } from './views/manager-view/manager-view.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 
+
+
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin
+]); 
+
+
+
 @NgModule({
   imports: [
+    FullCalendarModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
+    AppRoutingModule, 
     AppAsideModule,
     AppBreadcrumbModule.forRoot(),
     AppFooterModule,
@@ -106,9 +122,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
     MatProgressSpinnerModule,
     QuoteModule,
     SettingsModule,
-    OpportunityModule,
+    OpportunityModule, 
     AutoCompleteModule,
-    CalendarModule,
+    // CalendarModule,
     AccordionModule,
     TableModule,
     SociModule,

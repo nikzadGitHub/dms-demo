@@ -9,7 +9,7 @@ import {
 import {EquipmentList} from './equipment-entity';
 
 
-@Injectable()
+@Injectable() 
 export class EquipmentsService implements EquipmentsInterface {
 
   constructor(private apiClient: ApiClient) {

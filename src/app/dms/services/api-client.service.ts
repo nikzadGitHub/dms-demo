@@ -13,13 +13,13 @@ import {ApiJsonResponse} from './api-client';
   // FIXME: not even a single module-service should be provided directly in Root-App.
   providedIn: 'root'
 })
-export class ApiClient {
+export class ApiClient { 
   private baseUrl = settings.apiBaseUrl + '/dms/';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     })
-  };
+  }; 
 
   constructor(private httpClient: HttpClient) { }
 
@@ -66,5 +66,5 @@ export class ApiClient {
       errorMessage = `Error Code: ${response.status}\nMessage: ${response.message}`;
     }
     return throwError(errorMessage);
-  }
+  } 
 }

@@ -15,7 +15,7 @@ export class BookingEntityService implements BookingEntityInterface {
 
   getEntity(bookingId: BigInt): Observable<BookingEntity> {
     return this.apiClient.get<BookingEntity>('bookings/' + bookingId.toString());
-  }
+  } 
 
   getApprovals(bookingId: BigInt): Observable<ApprovalList> {
     return this.apiClient.get<ApprovalList>('bookings/'

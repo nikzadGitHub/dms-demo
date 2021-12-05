@@ -7,9 +7,9 @@ import { MainAsset } from './asset-entity';
 export interface UserInfo {
   name: string;
   id: BigInt;
-}
+} 
 
-export interface ApprovalEntity {
+export interface ApprovalEntity { 
   description: string;
   status: string;
   user_list: UserInfo[];
