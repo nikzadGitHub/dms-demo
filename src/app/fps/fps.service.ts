@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {FpsInterface, FpsList, SaveResult} from './services/fps-interface';
 import { ApiClientService } from './api-client.service';
+import { SystemConfig } from '@app/config/system-config';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({providedIn: 'root'})
 
 export class FpsService implements FpsInterface {
 
-  constructor(private apiClient: ApiClientService) { }
+  constructor(private httpClient: HttpClient, private apiClient: ApiClientService) { }
 
   getList(): Observable<FpsList> {
     return this.apiClient.get<FpsList>('fps');
@@ -53,6 +55,14 @@ export class FpsService implements FpsInterface {
       {'id': 2, 'title': 'Active' },
       {'id': 3, 'title': 'Obsolete' }
     ];
+  }
+
+  getTenureList(financial_id: number, payment_frequency: string): Observable<any> {
+    return this.httpClient.get(SystemConfig.apiBaseUrl + "/tenure-list/" + financial_id + "/" + payment_frequency).pipe();
+  }
+
+  getUsersList(): Observable<any> {
+    return this.httpClient.get(SystemConfig.apiBaseUrl + "/user-list").pipe();
   }
 
 }

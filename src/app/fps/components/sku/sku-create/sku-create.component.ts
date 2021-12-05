@@ -35,6 +35,7 @@ export class SkuCreateComponent implements OnInit {
   countryList: Country[] = [];
   currencies_list = [];
   institutions_list: FinancialInstitution[] = [];
+  countryCode : string = 'MY';
 
   constructor(
     private countryService: CountryService,
@@ -69,14 +70,15 @@ export class SkuCreateComponent implements OnInit {
       has_interest : new FormControl(),
       monthly_payment : new FormControl(),
       quarterly_payment : new FormControl(),
-      yearly_payment : new FormControl(),
+      half_yearly_payment : new FormControl(),
       currency_code : new FormControl(),
       min_payment_amount : new FormControl(),
       min_usage : new FormControl(),
       consumable_usage : new FormControl(),
       procedure_per_month : new FormControl(),
       required_tenure : new FormControl(),
-      required_docs: new FormControl()
+      required_docs: new FormControl(),
+      agreement_mandatory: new FormControl()
     });
 
     this.rateAddForm = this.fb.group({
@@ -121,7 +123,7 @@ export class SkuCreateComponent implements OnInit {
       }
     })
 
-    this.institutionService.getFinancialInstition().subscribe({
+    this.institutionService.getFinancialInstition(this.countryCode).subscribe({
       next: (response) => {
         if (response.success) {
           this.zone.run(() => {
@@ -178,7 +180,7 @@ export class SkuCreateComponent implements OnInit {
       financier_id: this.skuAddForm.get("financier_id").value + "",  
       monthly_payment: (this.skuAddForm.get("monthly_payment").value) ? 1 : 0,  
       quarterly_payment: (this.skuAddForm.get("quarterly_payment").value) ? 1 : 0,  
-      yearly_payment: (this.skuAddForm.get("yearly_payment").value) ? 1 : 0,  
+      half_yearly_payment: (this.skuAddForm.get("half_yearly_payment").value) ? 1 : 0,  
       package_type_id: this.skuAddForm.get("package_type_id").value + "",
       interest_rate: this.skuAddForm.get("interest_rate").value + "",
       currency_code: this.skuAddForm.get("currency_code").value + "",
@@ -187,7 +189,8 @@ export class SkuCreateComponent implements OnInit {
       required_docs: this.skuAddForm.get("required_docs").value + "",
       procedure_per_month: this.skuAddForm.get("procedure_per_month").value + "",
       min_usage: this.skuAddForm.get("min_usage").value + "",
-      required_tenure: this.skuAddForm.get("required_tenure").value + ""
+      required_tenure: this.skuAddForm.get("required_tenure").value + "",
+      agreement_mandatory: this.skuAddForm.get("agreement_mandatory").value + "",
     
     }).subscribe((res) => {
         if (res.id) {

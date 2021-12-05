@@ -24,7 +24,7 @@
                             Validity Start Date<span class="asterisk"> * </span> 
                         </label>
                         <div class="col-md-4">
-                            <p-calendar [showTime]="false" [defaultDate]="defaultDate" dateFormat='yy-mm-dd' formControlName="validity_start_at"></p-calendar>
+                            <p-calendar [showTime]="false" dateFormat='yy-mm-dd' formControlName="validity_start_at"></p-calendar>
                         </div>
                     </div>
 
@@ -43,7 +43,7 @@
                             Validity End Date 
                         </label>
                         <div class="col-md-4">
-                            <p-calendar [showTime]="false" dateFormat='yy-mm-dd' [defaultDate]="defaultDate" formControlName="validity_end_at"></p-calendar>
+                            <p-calendar [showTime]="false" dateFormat='yy-mm-dd' formControlName="validity_end_at"></p-calendar>
                         </div>
                     </div>
 
@@ -104,7 +104,7 @@
                                 </div>
 
                                 <div class="d-flex">
-                                    <p-checkbox name="yearly_payment" [binary]="true" formControlName="yearly_payment" inputId="status3"></p-checkbox>
+                                    <p-checkbox name="half_yearly_payment" [binary]="true" formControlName="half_yearly_payment" inputId="status3"></p-checkbox>
                                     <label class="radio-label" for="status3">Half-Yearly</label>
                                 </div>
 
@@ -226,7 +226,7 @@
                                 </label>
 
                                 <div class="col-md-4">
-                                    <mat-slide-toggle  class="example-margin">
+                                    <mat-slide-toggle formControlName="agreement_mandatory"  class="example-margin">
                                     </mat-slide-toggle>
                                 </div>
                             </div>
@@ -248,7 +248,7 @@
         <br>
 
         <div class="col-sm-12 col-md-12 form-group">
-            <form [formGroup]="rateAddForm" (ngSubmit)="submitSelect()">
+            <form [formGroup]="rateAddForm">
                 <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
                     <!-- FPS SKU Rate -->
                     <p-accordionTab header="FPS SKU Rate">

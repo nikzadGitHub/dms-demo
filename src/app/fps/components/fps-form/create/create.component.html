@@ -35,22 +35,25 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label class="bold">Transaction Type</label>
-                                                <select class="form-control">
-                                                    <option>1 - Non-Recourse Finance Lease/operating</option>
-                                                </select>
+                                                <p-dropdown formControlName="fps_transaction_type_id" [options]="fpsTypeList" optionLabel="title"
+                                                    optionValue="id" styleClass="form-control" 
+                                                    emptyMessage="No FPS Type Available">
+                                                </p-dropdown>
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label class="bold">Status</label>
-                                                <select class="form-control">
-                                                    <option>Awaiting Quotation</option>
-                                                </select>
+                                                 <p-dropdown formControlName="fps_status_id" [options]="fpsStatusList" optionLabel="title"
+                                                    optionValue="id" styleClass="form-control" 
+                                                    emptyMessage="No FPS Status Available">
+                                                </p-dropdown>
                                             </div>
                                         </div>
 
                                     </div>
+                                    <!-- {{form_controls|json}} -->
                                 </div>
                                 <div class="details grey">
                                     <div class="row">
@@ -58,7 +61,7 @@
                                             <div class="form-group">
                                                 <label class="bold">Created Date</label>
                                                 <div>
-                                                    {{ oppt_details.created_at }}
+                                                    {{ oppt_details.created_at | date: "dd-MMM-yyyy" }}
                                                 </div>
                                             </div>
                                         </div>
@@ -66,7 +69,10 @@
                                             <div class="form-group">
                                                 <label class="bold">Opportunity ID </label>
                                                 <div>
-                                                    {{ oppt_details.created_at }}
+                                                    {{current_apportunity_id}}
+                                                    <input type="text" formControlName="fps_opportunity_id"  class="form-control">
+
+                                                    <input type="text" formControlName="fps_data_area_id" title="fps_data_area_id"  class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -74,7 +80,8 @@
                                             <div class="form-group">
                                                 <label class="bold">Quote ID (Version)</label>
                                                 <div>
-                                                    {{ oppt_details.created_at }}
+                                                    ...
+                                                    <!-- <input type="text" formControlName="fps_no"  class="form-control"> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -82,7 +89,8 @@
                                             <div class="form-group">
                                                 <label class="bold">SOCI No.</label>
                                                 <div>
-                                                    {{ oppt_details.created_at }}
+                                                    ... 
+                                                    <!-- <input type="text" formControlName="fps_no"  class="form-control"> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -106,11 +114,11 @@
     
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" for="booking-reason">
-                                Payment Frequency *
+                                Payment Frequency<span class="asterisk"> * </span>
                             </label>
                             <div class="col-md-4">
                                 <p-dropdown formControlName="fps_payment_frequency" [options]="payment_frequency_list" optionLabel="label"
-                                    optionValue="id" styleClass="form-control" 
+                                    optionValue="value" styleClass="form-control" (onChange)="updateTenure()"
                                     placeholder="Select Frequency" emptyMessage="No Payment Frequency Available">
                                 </p-dropdown>
                             </div>
@@ -118,8 +126,10 @@
                             <label class="col-md-2 col-form-label" for="booking-reason">
                                 Tenure 
                             </label>
-                            <div class="col-md-4">
-                                <input type="text" formControlName="fps_tenure_id"  class="form-control">
+                            <div class="col-md-4">                                
+                                <p-dropdown formControlName="fps_tenure_id" [options]="tenure_list" optionLabel="details_tenure"
+                                    optionValue="id" styleClass="form-control" (onChange)="updateInterestRate()">
+                                </p-dropdown>
                             </div>
                         </div>
     
@@ -129,25 +139,26 @@
                             </label>
                             <div class="col-md-4">
                                 <p-dropdown formControlName="fps_financier_id" [options]="institutions_list"  optionLabel="title"
-                                    optionValue="id" styleClass="form-control" 
+                                    optionValue="id" styleClass="form-control" (onChange)="updateTenure()"
                                     placeholder="Select Institution" emptyMessage="No Institution Available">
                                 </p-dropdown>
+                                
                             </div>
     
                             <label class="col-md-2 col-form-label" for="booking-reason">
                                 Interest %
                             </label>
                             <div class="col-md-4">
-                                <input type="number" step="0.1"  formControlName="fps_interest_rate"  class="form-control">
+                                <input type="number" step="0.1"  (change)="updateMontlyPayment()" formControlName="fps_interest_rate"  class="form-control">
                             </div>
                         </div>
     
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" for="booking-reason">
-                                Currency *
+                                Currency<span class="asterisk"> * </span>
                             </label>
                             <div class="col-md-4">
-                                <input type="text" formControlName="fps_currency_code" [disabled]="true" class="form-control">
+                                <input type="text" formControlName="fps_currency_code" [readonly]="true" class="form-control">
                             </div>
     
                             <label class="col-md-2 col-form-label" for="booking-reason">
@@ -160,7 +171,7 @@
     
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" for="booking-reason">
-                                Total Financial Amount *
+                                Total Financial Amount<span class="asterisk"> * </span>
                             </label>
                             <div class="col-md-4">
                                 <input type="number" formControlName="fps_total_financial_amount"  class="form-control">
@@ -182,7 +193,7 @@
                                         Advance Payment (%)
                                     </label>
                                     <div class="col-md-8">
-                                        <input type="number" step="0.1"  formControlName="fps_adv_payment_percentage"  class="form-control">
+                                        <input type="number" step="0.1" (change)="onChangeAdvancePayment()"  formControlName="fps_adv_payment_percentage"  class="form-control">
                                     </div>
                                 </div>
     
@@ -210,10 +221,10 @@
     
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="booking-reason">
+                                    <label class="col-md-4 col-form-label" for="booking-reason">
                                         Remark
                                     </label>
-                                    <div class="col-md-4">
+                                    <div class="col-md-8">
                                         <textarea formControlName="fps_remarks" rows="9" class="form-control"></textarea>
                                     </div>
                                 </div>
@@ -229,7 +240,7 @@
                                 Validated By
                             </label>
                             <div class="col-md-4">
-                                <p-dropdown formControlName="fps_validated_by" [options]="fps_user_list" optionLabel="name"
+                                <p-dropdown formControlName="fps_validated_by" [options]="fps_user_list" optionLabel="full_name"
                                     optionValue="id" styleClass="form-control" 
                                     placeholder="Select User" emptyMessage="No User Available">
                                 </p-dropdown>
@@ -239,8 +250,8 @@
                                 Argeement No.
                             </label>
                             <div class="col-md-4">
-                                <input type="text" formControlName="fps_leas_aggr_no"  class="form-control">
-                            </div>
+                                <input type="text"  [readonly]="this.fpsAddForm.controls.fps_status_id.value != 9" formControlName="fps_leas_aggr_no"  class="form-control">
+                            </div> 
                         </div>
                         
                         <div class="form-group row">
@@ -251,7 +262,7 @@
                                         Approved By 
                                     </label>
                                     <div class="col-md-8">
-                                        <p-dropdown formControlName="fps_approved_by" [options]="fps_user_list" optionLabel="name"
+                                        <p-dropdown formControlName="fps_approved_by" [options]="fps_user_list" optionLabel="full_name"
                                             optionValue="id" styleClass="form-control" 
                                             placeholder="Select User" emptyMessage="No User Available">
                                         </p-dropdown>
@@ -261,10 +272,10 @@
     
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="booking-reason">
+                                    <label class="col-md-4 col-form-label" for="booking-reason">
                                         Required Documents
                                     </label>
-                                    <div class="col-md-4">
+                                    <div class="col-md-8">
                                         <textarea formControlName="fps_required_docs" rows="9" class="form-control"></textarea>
                                     </div>
                                 </div>
