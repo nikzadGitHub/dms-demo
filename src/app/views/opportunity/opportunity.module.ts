@@ -18,7 +18,7 @@ import { NewOpportunityComponent } from './new-opportunity.component';
 import { EditOpportunityComponent } from './edit-opportunity.component';
 import { OpportunityBookingComponent } from './opportunity-booking/opportunity-booking.component';
 
-import { IndexComponent } from '../../fps/components/fps-form/index/index.component';
+import { IndexComponent } from '@app/fps/components/fps-form/index/index.component';
 
 @NgModule({
   imports: [    
