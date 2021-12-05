@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
 import { AuthGuard } from './guards/auth.guard';
@@ -9,6 +8,7 @@ import { AutoLoginGuard } from './guards/auto-login.guard';
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
+import { LogoutComponent } from './views/logout/logout.component';
 import { RegisterComponent } from './views/register/register.component';
 
 export const routes: Routes = [
@@ -16,6 +16,11 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
+  },
+  
+  {
+    path: 'logout',
+    component:LogoutComponent
   },
   {
     path: '404',
@@ -124,11 +129,27 @@ export const routes: Routes = [
       },
       {
         path: 'salestarget',
-        loadChildren: () => import('./views/sales-target/sales-target.module').then(m => m.SalesTargetModule)
+        loadChildren: () => import('./views/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)
+      },
+      {
+        path: 'reports',
+        loadChildren: () => import('./views/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./views/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)
+      },
+      {
+        path: 'activities',
+        loadChildren: () => import('./views/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)
       },
       {
         path: 'managerview',
         loadChildren: () => import('./views/manager-view/manager-view.module').then(m => m.ManagerViewModule)
+      },
+      {
+        path: 'customers',
+        loadChildren: () => import('./views/customers/customers.module').then(m => m.CustomersModule)
       },
     ]
   },

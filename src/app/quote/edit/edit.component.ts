@@ -17,6 +17,7 @@ import { BillingList } from "./billing-list";
 export class EditComponent implements OnInit {
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
+  @ViewChild("dangerModal1") dangerModal1: ModalDirective;
   @ViewChild("infoModal") infoModal: ModalDirective;
   @ViewChild("paymentRemarkModal") paymentRemarkModal: ModalDirective;
   @ViewChild("billingRemarkModal") billingRemarkModal: ModalDirective;
@@ -49,6 +50,9 @@ export class EditComponent implements OnInit {
   billingRemarks: string;
   remarkIndex: number;
   paymentCurrentIndex: 0;
+  selectTemplateData: any[]=[];
+  templateId: any;
+  alertHeader: string;
 
   constructor(
     private quoteService: QuoteService,
@@ -92,6 +96,8 @@ export class EditComponent implements OnInit {
       addCosts: this.formBuilder.array([]),
       products: this.formBuilder.array([]),
     });
+
+    this.selectTemplate();
   }
 
   setInitialValue() {
@@ -561,6 +567,16 @@ export class EditComponent implements OnInit {
     }
   }
 
+  selectTemplate() {
+    this.quoteService.getTemplates().subscribe((res) => {
+      console.log("drop-down-data:",res);
+      this.selectTemplateData = res["data"]
+      
+    });
+  }
+
+  
+
   cancelApprove() {
     if (this.requested_date != null && this.approved_date == null) {
       return true;
@@ -643,6 +659,27 @@ export class EditComponent implements OnInit {
   }
 
   viewQuotationTemplate() {
-    this.router.navigateByUrl("quote/view/quote-template");
+    if(this.templateId){
+      let navigate: NavigationExtras = {
+        queryParams: {
+         quotation_id: this.id,
+         template_id:this.templateId
+        }
+      }
+      // this.quoteService.getQuatation(this.quotations.quote_id).subscribe((res) =>{
+      //   console.log('Quotations Data =>',res);
+        
+      // })
+      this.router.navigate(["quote/view/quote-template"], navigate)
+      // this.router.navigateByUrl("quote/view/quote-template");
+    } else{
+      this.alertBody ="Please Select Template Id First"
+      this.alertHeader ="Warning..!!"
+        this.dangerModal1.show();
+    }
+  }
+
+  getTemplate(e){
+    this.templateId = e.target.value
   }
 }

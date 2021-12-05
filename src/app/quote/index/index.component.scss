@@ -126,6 +126,11 @@ tr {
         display: none;
     }
 }
+.icons{
+    display: flex;
+        
+    align-items: center;  
+}
 
 @media screen and (max-width: 960px) {
     :host ::ng-deep {

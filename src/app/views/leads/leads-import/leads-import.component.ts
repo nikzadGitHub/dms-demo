@@ -18,6 +18,7 @@ export class LeadsImportComponent implements OnInit {
     'Prospect',
     'Source'
   ];
+  errorList = [];
   displayData: any = 0;
   successCreate: any = 0;
   danger: any = 0;
@@ -49,7 +50,7 @@ export class LeadsImportComponent implements OnInit {
 
   submit(){
     let stopCreate = false
-    for (var i = 0, len = this.csvRecords.length; i < len; i++) {
+    for (let i = 0, len = this.csvRecords.length; i < len; i++) {
       this.csvRecords[i].mobile_number = this.csvRecords[i].phone;
       if (stopCreate) {
         this.danger = 1;
@@ -64,6 +65,12 @@ export class LeadsImportComponent implements OnInit {
         this.number_of_record += 1;
       },
       errors => {
+        if(LeadsService.leadErrorMessage){
+          this.errorList.push({
+            'row': i+1,
+            'message': LeadsService.leadErrorMessage
+          })
+        }
         this.danger_number_of_record = 1 + this.number_of_record;
         this.danger = 1;
       });

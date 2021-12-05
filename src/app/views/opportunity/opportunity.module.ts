@@ -12,6 +12,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {TabViewModule} from 'primeng/tabview';
 
 import { ListOpportunityComponent } from './list-opportunity.component';
 import { NewOpportunityComponent } from './new-opportunity.component';
@@ -35,7 +36,10 @@ import { IndexComponent } from '@app/fps/components/fps-form/index/index.compone
     ModalModule,
     MatAutocompleteModule,
     ProgressbarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+
+    TabViewModule
+  
   ],
   declarations: [
     NewOpportunityComponent,
