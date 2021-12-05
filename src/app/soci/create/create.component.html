@@ -1,94 +1,288 @@
-<div bsModal #createModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Customer Quotation Acceptance</h4>
-          <button type="button" class="close" (click)="createModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="form" (ngSubmit)="submit()">
-            <div class="row">
-                <div class="col-lg-4">
-                  <label for="quote_id">Quotation Reference No: </label>
-                </div>
-                <div class="col-lg-6">
-                  <p-autoComplete formControlName="quote_id" [(ngModel)]="selectedQuoteAdvanced" [suggestions]="filteredQuotes" 
-                  (completeMethod)="filterQuote($event)" field="quote_id" [dropdown]="true"
-                  [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
-                      <ng-template let-quote pTemplate="item">
-                          <div class="quote-item">
-                              <div>{{quote.quote_id}}</div>
-                          </div>
-                      </ng-template>
-                  </p-autoComplete>
-                </div>
+<div
+  bsModal
+  (onHide)="resetForm()"
+  #createModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" *ngIf="isCreateSoci">Create SOCI</h4>
+        <h4 class="modal-title" *ngIf="is_update_soci">Update SOCI</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="createModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- (ngSubmit)="submit()" -->
+        <form [formGroup]="form">
+          <div class="row">
+            <div class="col-lg-3">
+              <label for="quote_id">Quotation Reference No: </label>
             </div>
-            <br>
-            <div class="row">
-              <div class="col-lg-4">
-                <label for="po_no">Purchase Order No: </label>
-              </div>
-              <div class="col-lg-6">
-                <input class="form-control" formControlName="po_no" type="text" id="po_no" placeholder="PO Number">
-              </div>
-            </div>
-            <br>
-            <div class="row">
-              <div class="col-lg-4">
-                <label for="po_value">Purchase Order Value: </label>
-              </div>
-              <div class="col-lg-6">
-                <input class="form-control" type="number" formControlName="po_value" id="po_value" placeholder="PO Number">
-              </div>
-            </div>
-            <br>
-            <div class="row">
-              <div class="col-lg-4">
-                <label for="po_date">Purchase Order Date: </label>
-              </div>
-              <div class="col-lg-6">
-                <input class="form-control" type="date" formControlName="po_date" id="po_date" placeholder="PO Number">
-              </div>
-            </div>
-            <br>
-            <div class="row">
-              <div class="col-lg-4">
-                <label for="receive_po_date">Receive Purchase Order Date: </label>
-              </div>
-              <div class="col-lg-6">
-                <input class="form-control" type="date" formControlName="receive_po_date" id="receive_po_date" placeholder="PO Number">
-              </div>
-            </div>
-            <br>
-            <div class="row">
-              <div class="col-lg-4">
-                <label for="attachment">Attachment: </label>
-              </div>
-              <div class="col-lg-6">
-                <input formControlName="file" class="form-control" type="file" name="myFile" (change)='getFile($event)'>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="createModal.hide()">Close</button>
-          <button type="button" class="btn btn-primary" (click)="submit()">Save changes</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+            <div class="col-lg-9">
+              <input
+                type="text"
+                class="form-control create-model-input"
+                formControlName="quote_id"
+                [(ngModel)]="selectedQuoteAdvanced"
+                *ngIf="quote_full_id"
+                field="quote_id"
+                readonly
+                [style]="{ width: '100%' }"
+              />
 
-<div (onHide)="redirectPage()" id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <!-- For create -->
+              <p-autoComplete
+                formControlName="quote_id"
+                [(ngModel)]="selectedQuoteAdvanced"
+                [suggestions]="filteredQuotes"
+                *ngIf="!quote_full_id"
+                (completeMethod)="filterQuote($event)"
+                field="quote_id"
+                [dropdown]="true"
+                [style]="{ width: '100%' }"
+                [inputStyle]="{ width: '100%' }"
+              >
+                <ng-template let-quote pTemplate="item">
+                  <div class="quote-item">
+                    <div>{{ quote.quote_id }}</div>
+                  </div>
+                </ng-template>
+              </p-autoComplete>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-lg-3">
+              <label for="po_no">Purchase Order No: </label>
+            </div>
+            <div class="col-lg-9">
+              <input
+                class="form-control create-model-input"
+                formControlName="po_no"
+                type="text"
+                id="po_no"
+                [attr.disabled]="poNumber ? '': null"
+                placeholder="PO number"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-lg-3">
+              <label for="po_amount">Purchase Order Amount: </label>
+            </div>
+            <div class="col-lg-9">
+              <input
+                class="form-control create-model-input"
+                type="number"
+                formControlName="po_amount"
+                id="po_amount"
+                placeholder="PO amount"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-lg-3">
+              <label for="po_date">Purchase Order Date: </label>
+            </div>
+            <div class="col-lg-9">
+              <input
+                class="form-control create-model-input"
+                type="date"
+                formControlName="po_date"
+                id="po_date"
+                placeholder="PO Number"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-lg-3">
+              <label for="receive_po_date">Receive Purchase Order Date: </label>
+            </div>
+            <div class="col-lg-9">
+              <input
+                class="form-control create-model-input"
+                type="date"
+                formControlName="receive_po_date"
+                id="receive_po_date"
+                placeholder="PO Number"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-9">
+              <table class="table table-bordered" *ngIf="isFileAdded && addMultipleFiles.length>0">
+                <thead>
+                  <tr align="center">
+                    <th>Remarks</th>
+                    <th>File Name</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    align="center"
+                    *ngFor="let item of addMultipleFiles; let i = index"
+                  >
+                    <td>{{ item.remarks }}</td>
+                    <td>{{ item.original_file_name }}</td>
+                    <td>
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="deleteFile(i, item.id)"
+                      >
+                        <i class="pi pi-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!--  -->
+          <div class="row">
+            <div class="col-lg-3">
+              <label for="attachment">Attachment: </label>
+            </div>
+            <div class="col-lg-5">
+              <input
+                type="text"
+                class="form-control"
+                style="height: 40px;"
+                formControlName="fileLabel"
+                placeholder="Remarks..."
+              />
+            </div>
+            <div class="col-lg-3">
+              <!-- <input
+                formControlName="file"
+                class="form-control"
+                type="file"
+                name="myFile"
+                (change)="getFile($event)"
+              /> -->
+
+              <input
+                type="file"
+                class="file-input"
+                (change)="getFile($event)"
+                #fileUpload
+              />
+              <div class="file-upload">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  role="button"
+                  rel="nofollow"
+                  target="_blank"
+                  style="width: 200px;"
+                  (click)="fileUpload.click()"
+                >
+                  Upload File
+                  <input #fileInput type="file" style="display: none" />
+                </button>
+              </div>
+              <div class="selected-file">
+                {{ fileName || "No file selected..." }}
+              </div>
+            </div>
+            <div class="col-lg-1" style="text-align: center;">
+              <a
+                [routerLink]=""
+                routerLinkActive="router-link-active"
+                class="add-icon"
+                (click)="addMultiFile()"
+              >
+                <i class="icon-plus icons"></i>
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="createModal.hide()"
+        >
+          Close
+        </button>
+        <!-- (click)="submit()" -->
+        <button type="button" class="btn btn-primary" (click)="submit()">
+          Save changes
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div
+  (onHide)="redirectPage()"
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Success</h4>
       </div>
       <div class="modal-body">
-        <p>{{alertBody}}</p>
+        <p>{{ alertBody }}</p>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->  
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<!-- error model -->
+<div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

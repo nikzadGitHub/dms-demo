@@ -1,25 +1,31 @@
-<div class="main-content">
-  <div class="download-btn">
-    <input
-      type="file"
-      class="file-input"
-      (change)="onFileSelected($event)"
-      #fileUpload
-    />
-    <button
-      type="button"
-      class="btn btn-primary btn-sm m-2 file-upload"
-      role="button"
-      rel="nofollow"
-      target="_blank"
-      (click)="fileUpload.click()"
-    >
-      Upload Image
-      <input #fileInput type="file" style="display: none" />
-    </button>
-    <button class="btn btn-primary btn-sm" (click)="downloadPDF()">
-      Download Quotation
-    </button>
+<div class="main-content" id="bodyContent" #bodyContent>
+  <div class="topButtons">
+    <div class="download-btn">
+      <input
+        type="file"
+        class="file-input"
+        multiple
+        (change)="onFileSelected($event)"
+        #fileUpload
+      />
+      <button
+        type="button"
+        class="btn btn-primary btn-sm m-2 file-upload"
+        role="button"
+        rel="nofollow"
+        target="_blank"
+        (click)="fileUpload.click()"
+      >
+        Upload Image
+        <input #fileInput type="file" style="display: none" />
+      </button>
+      <button class="btn btn-primary btn-sm" (click)="downloadUploadedPDF()">
+        Download Quotation
+      </button>
+    </div>
+    <div class="loaderText" *ngIf="loader">
+      <div><b>Uploading......</b></div>
+    </div>
   </div>
   <!-- style="width: 100%" -->
   <div class="card">
@@ -35,44 +41,58 @@
           </div>
           <div class="vl"></div>
           <div class="v2"></div>
-          <div class="head-text" [attr.contenteditable]="editable">
-            <p>Slipi-Jakarta 11410, Indonesia</p>
-            <p>T: +622125678989</p>
-            <p>F: +622125678989</p>
-            <p>E: +622125678989</p>
+          <div class="head-text">
+            <p> {{ quotationsTemplateData?.quotations?.companies?.address }}</p>
+            <p><b>Telephone:</b> {{quotationsTemplateData?.quotations?.companies?.telephone_number}}</p>
+            <p><b>Fax:</b> {{ quotationsTemplateData?.quotations?.companies?.fax }}</p>
+            <p><b>Email:</b> {{ quotationsTemplateData?.quotations?.companies?.email }}</p>
             <a href="#">www.idsMED.com</a>
           </div>
         </div>
       </div>
+
+
       <div class="address-title">
-        <p [attr.contenteditable]="editable">
-          Kepada Yth,<br />PT.Aditana Intiperdana <br />
-          Ruko Rungkut Megah Raya M-23
-          <br />
-          Surabaya
-        </p>
+
+        
+        <div *ngIf="quotationsTemplateData?.quotations?.contacts?.primary_contact?.full_name">
+          {{quotationsTemplateData?.quotations?.contacts?.primary_contact?.full_name}},
+        </div>
+        
+            <div *ngIf="quotationsTemplateData?.quotations?.customer?.company_name">
+              {{  quotationsTemplateData?.quotations?.customer?.company_name}},
+            </div>
+            
+         <div *ngIf="  quotationsTemplateData?.quotations?.customer?.address">
+          {{
+            quotationsTemplateData?.quotations?.customer?.address
+          }}
+         </div>
+         
+        
       </div>
+
+
+      </div> 
       <div class="card-body">
         <div class="initial-info">
           <table class="table table-borderless">
             <tbody>
               <tr class="all-th-td-padding-bottom-none">
-                <th class="name-field-label" scope="row">Perihal</th>
-                <td [attr.contenteditable]="editable">
-                  <span>:&nbsp;&nbsp;</span>
-                  <span class="name-field">Penawaran Harga</span>
+                <td >
                 </td>
                 <td></td>
                 <td></td>
               </tr>
               <tr class="all-th-td-padding-top-bottom-none">
-                <th scope="row">No. Ref</th>
-                <td [attr.contenteditable]="editable">
-                  <span>:&nbsp;&nbsp;&nbsp;</span>1386/SLS/JKT/ZA/VI/2021
+                <th scope="row"><b>No. Ref: </b></th>
+                <td>
+                  <span>:&nbsp;&nbsp;&nbsp;</span
+                  >{{ quotationsTemplateData?.quotations?.quote_id }}
                 </td>
-                <th class="date-field-label">Date :</th>
-                <td class="date-field-data" [attr.contenteditable]="editable">
-                  23 June 2021
+                <th class="date-field-label"><b>Date :</b></th>
+                <td class="date-field-data">
+                  {{ quotationsTemplateData?.quotations?.created_at  | date: 'dd/MM/yyyy'}}
                 </td>
               </tr>
             </tbody>
@@ -80,18 +100,12 @@
         </div>
 
         <div class="main-text">
-          <div [attr.contenteditable]="editable">
-            <p class="text-header">Dengan hormat,</p>
-            <p class="text-para">
-              Documentation and examples for opt-in styling of tables (given
-              their prevalent use in JavaScript plugins) with Bootstrap.
-              <b> - RSUD. Dr. Harjono Ponorogo.</b>
-            </p>
-            <p class="table-info-text">
-              Similar to tables and dark tables, use the modifier classes
-              .thead-light or .thead-dark to make s appear light or dark gray:
-            </p>
+          <div  style="border: 1px solid lightgray;"   contentEditable = true data-placeholder="Enter text here"  [attr.contenteditable]="editable" id="headerContent" #headerContent 
+          [innerText]="quotationContent?.header_content">
+
+          {{ quotationContent?.header_content }}
           </div>
+
           <div>
             <table class="table table-bordered table-sm">
               <thead>
@@ -103,65 +117,36 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="main-table-data">
-                  <td>1</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
+                <tr class="main-table-data" *ngFor="let item of quotationsTemplateData?.quotations?.products">
+                  <!-- there should be loop for all the products -->
+                  <td>No Data Available </td>
+                  <td> {{ item.name }} </td>
+                  <td>{{ item.name }}</td>
+                  <td>  {{item.list_price}} </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div class="list-detail" [attr.contenteditable]="editable">
-            <p class="">
-              Bootstrap sets basic global display, typography, and link styles:
-            </p>
-            <div class="list-data">
-              <table class="table table-borderless item-table">
-                <tbody>
-                  <tr>
-                    <td class="item-list">1.</td>
-                    <td class="item-name">First item</td>
-                    <td>:Cras justo odio</td>
-                  </tr>
-                  <tr>
-                    <td class="item-list">2.</td>
-                    <td>Second item</td>
-                    <td>:Dapibus ac facilisis in</td>
-                  </tr>
-                  <tr>
-                    <td class="item-list">3.</td>
-                    <td>Third item</td>
-                    <td>:Morbi leo risus</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <br>
+          <br>
+          <br>
+          
+          <div style="border: 1px solid lightgray;" class="list-detail" contentEditable = true data-placeholder="Enter text here"  [attr.contenteditable]="editable" id="footerContent" #footerContent
+          [innerText]="quotationContent?.footer_content" >
+          {{ quotationContent?.footer_content }}
           </div>
-          <div class="sub-info-text" [attr.contenteditable]="editable">
-            <p>*HTML5 adds a new global attribute named [hidden]</p>
-            <p>
-              [hidden] is not compatible with jQuery’s $(...).hide() and
-              $(...).show() methods. Therefore, we don’t currently especially
-              endorse [hidden] <a href="#">www.idsmed.com</a>
-            </p>
-            <p>
-              To merely toggle the visibility of an element, meaning its display
-              is not modified and the element can still affect the flow of the
-              document, use the .invisible class instead.
-            </p>
-          </div>
-          <div class="sub-text-footer">
-            <label [attr.contenteditable]="editable">Hormat kami.</label><br />
-            <p class="company-name" [attr.contenteditable]="editable">
-              PT. IDS Medical System Indonisa
-            </p>
-            <br />
-            <p class="signature"></p>
-            <br />
-            <p [attr.contenteditable]="editable" class="name-number">
+          <br />
+            <p class="name-number">
               <span class="contact-name">ZulfaAlla</span><br />(0812-4920-1673)
+
+              <span class="contact-name">
+                {{quotationsTemplateData?.quotations?.sales_person?.full_name}}
+              </span
+              ><br />
             </p>
+          <div class="previewSave">
+            <button class="btn btn-primary saveButton" (click)='savePreviewContent()' >Save</button>
+            <button class="btn btn-primary quotationDownload" (click)='downloadQuotationTemplate()' > Download Quotation </button>
           </div>
         </div>
       </div>
@@ -175,6 +160,32 @@
       </div>
     </div>
   </div>
+
+
+
+<!-- display succes message -->
+<div
+id="success"
+bsModal
+#successModal="bs-modal"
+class="modal fade"
+tabindex="-1"
+role="dialog"
+aria-labelledby="myModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-success" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Success</h4>
+    </div>
+    <div class="modal-body">
+      <p>{{ successMessage }}</p>
+    </div>
+  </div>
+  <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
 </div>
 
 <div

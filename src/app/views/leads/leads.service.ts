@@ -11,6 +11,7 @@ import { settings } from '../../../environments/environment';
 export class LeadsService {
 
   private apiURL = settings.apiBaseUrl;
+  public static leadErrorMessage = '';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -26,6 +27,14 @@ export class LeadsService {
       query += '&field=' + sort.field + '&order=' + sort.order;
     }
     return this.httpClient.get<any[]>(this.apiURL + query,this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  getPage(url,pageItems,search_text){
+    let query = '&page_items=' + pageItems + '&search_text=' + search_text;
+    return this.httpClient.get(url + query,this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
@@ -48,8 +57,8 @@ export class LeadsService {
     )
   }
 
-  createProspect(lead_id): Observable<any> {
-    return this.httpClient.post(this.apiURL + '/lead/create-prospect', lead_id, this.httpOptions)
+  createProspect(id): Observable<any> {
+    return this.httpClient.post(this.apiURL + '/lead/create-prospect', id, this.httpOptions)
     .pipe(
       tap((response: any) => {
         console.log(response);
@@ -80,13 +89,7 @@ export class LeadsService {
     )
   }
 
-  getPage(url,pageItems,search_text){
-    let query = '&page_items=' + pageItems + '&search_text=' + search_text;
-    return this.httpClient.get(url + query,this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    )
-  }
+
 
   searchContact(contact): Observable<any> {
     console.log(contact);
@@ -106,6 +109,8 @@ export class LeadsService {
 
   errorHandler(error) {
     let errorMessage = '';
+    LeadsService.leadErrorMessage = '';
+    LeadsService.leadErrorMessage = error?.error?.message || '';     
     if(error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
     } else {

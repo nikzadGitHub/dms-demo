@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ProspectsService } from '../prospects.service';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-prospects-index',
@@ -10,6 +11,8 @@ import { ProspectsService } from '../prospects.service';
   styleUrls: ['./prospects-index.component.scss']
 })
 export class ProspectsIndexComponent implements OnInit {
+  @ViewChild('successModal') successModal : ModalDirective;
+  @ViewChild('confirmModal') confirmModal : ModalDirective;
   private ngUnsubscribe = new Subject;
   sort: any;
   search_text: string = '';
@@ -25,6 +28,9 @@ export class ProspectsIndexComponent implements OnInit {
     {'header':'Email','field':'email','type':'text'},
     {'header':'Phone','field':'phone','type':'text'}
   ];
+  selectedId: any;
+  modalHeader: any;
+  modalBody: any;
   constructor(
     public prospectsService: ProspectsService
   ) { }
@@ -48,7 +54,7 @@ export class ProspectsIndexComponent implements OnInit {
       this.datasource = data['data']['data'];
       this.pages = data['data']['links'];
       this.totalRecords = data['data']['total'];
-    })  
+    })
   }
 
   SortColumn(event: LazyLoadEvent){
@@ -67,7 +73,21 @@ export class ProspectsIndexComponent implements OnInit {
     .subscribe((data)=>{
       this.datasource = data['data']['data'];
       this.pages = data['data']['links'];
-    })  
+    })
+  }
+  showConfirmationDialog (id): void {
+    this.selectedId = id;
+    this.modalHeader = 'Delete Prospect';
+    this.modalBody = 'Are you sure you want to delete this prospect?'
+    this.confirmModal.show();
   }
 
+  deleteData(id) {
+    this.prospectsService.delete(id)
+      .subscribe(res => {
+        this.getList();
+        this.confirmModal.hide();
+        this.successModal.show();
+    });
+  }
 }

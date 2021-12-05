@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { LeadsService } from "../leads.service";
+import * as moment from 'moment';
 
 @Component({
   selector: "app-leads-verify",
@@ -10,6 +11,7 @@ import { LeadsService } from "../leads.service";
   styleUrls: ["./leads-verify.component.scss"],
 })
 export class LeadsVerifyComponent implements OnInit {
+  moment: any = moment;
   public autoResize: boolean = true;
   @ViewChild("successModal") successModal: ModalDirective;
   id: any;
@@ -74,7 +76,7 @@ export class LeadsVerifyComponent implements OnInit {
   }
 
   CreateProspect() {
-    this.leadsService.createProspect({ lead_id: this.id }).subscribe((res) => {
+    this.leadsService.createProspect({ id: this.id }).subscribe((res) => {
       this.alertBody = res.message || "Created Prospect Successfully";
       this.successModal.show();
     });

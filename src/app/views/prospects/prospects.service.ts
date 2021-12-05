@@ -73,8 +73,45 @@ export class ProspectsService {
   }
 
   delete(id){
-    return this.httpClient.delete(this.apiURL + '/prospect/' + id, this.httpOptions)
+    return this.httpClient.delete(this.apiURL + '/prospect/delete/' + id, this.httpOptions)
     .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  getContactList (prospectId){
+    return this.httpClient.get(this.apiURL + '/prospect/' + prospectId + '/contacts', this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  deleteContact(prospectId, contactId){
+    return this.httpClient.post(this.apiURL + '/prospect/' + prospectId + '/contacts/remove', { contact_id: contactId }, this.httpOptions)
+    .pipe(
+      tap((response: any) => {
+        console.log(response);
+    }),
+      catchError(this.errorHandler)
+    )
+  }
+
+  addContact(prospectId, contactId){
+    return this.httpClient.post(this.apiURL + '/prospect/' + prospectId + '/contacts/add', {contact_id: contactId}, this.httpOptions)
+    .pipe(
+      tap((response: any) => {
+        console.log(response);
+    }),
+      catchError(this.errorHandler)
+    )
+  }
+
+  setPrimaryContact(prospectId, contactId){
+    return this.httpClient.post(this.apiURL + '/prospect/' + prospectId + '/contacts/primary', {contact_id: contactId}, this.httpOptions)
+    .pipe(
+      tap((response: any) => {
+        console.log(response);
+    }),
       catchError(this.errorHandler)
     )
   }
@@ -86,6 +123,7 @@ export class ProspectsService {
       catchError(this.errorHandler)
     )
   }
+
 
   errorHandler(error) {
     let errorMessage = '';

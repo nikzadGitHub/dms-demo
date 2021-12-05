@@ -56,7 +56,6 @@ export class EditComponent implements OnInit {
 	});
 
   get form_controls() {
-    // console.log(this.form.controls)
     return this.form.controls;
   }
 
@@ -140,6 +139,8 @@ export class EditComponent implements OnInit {
       data.other_accounts = [];
     }
     this.Service.update(data, this.id).subscribe(res => {
+    
+      
         this.alertBody = res.message || 'Updated Successfully';
         this.id = res.data.value;
         this.successModal.show();

@@ -12,14 +12,14 @@
                         <div class="lead-data">
                             <div class="lead-header">
                                 <div class="row">
-                                    <div class="col-md-auto">
+                                    <div class="col-md-3">
                                         <h3 class="bold">
                                             {{ form_controls.company_name.value }}
                                         </h3>
                                     </div>
-                                    <div class="col-md-auto lead-id">
-                                        <div>
-                                            <span>LEAD ID</span>
+                                    <div class="col-md-3 ">
+                                        <div class="lead-id">
+                                            <span>Lead ID: </span>
                                             <span>{{ form_controls.id.value }}</span>
                                         </div>
                                     </div>
@@ -30,7 +30,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="bold">Created Date</label>
-                                            <div>{{ form_controls.created_at.value }}</div>
+                                            <div>{{ moment(form_controls.created_at.value).format('DD-MMM-YYYY') }}</div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -85,7 +85,7 @@
                                 <div class="col-xl-8">
                                     <div class="row">
                                         <div class="col-md-5 text-header required-field">
-                                            Porducts That Not Selling
+                                            Products That Not Selling
                                         </div>
                                         <div class="col-md-7">
                                             <textarea [rows]="5" style="width: 100%;" pInputTextarea [autoResize]="autoResize" formControlName="products_thats_not_selling"></textarea>
@@ -138,8 +138,8 @@
                     </div>
                     <div class="col-xl-12 submit-button" align=center>
                         <div class="form-group">
-                            <button class="btn btn-secondary" type="submit">SAVE</button>
-                            <button class="btn btn-primary" type="button" (click)="CreateProspect()">Create Prospect</button>
+                            <button class="btn btn-secondary pr-5 pl-5 mr-2" type="submit"><i class="cil-save mr-1 mt-1"></i>SAVE</button>
+                            <button class="btn btn-primary pr-4 pl-4" type="button" (click)="CreateProspect()"><i class="cil-money mt-1 mr-1"></i>Create Prospect</button>
                         </div>
                     </div>
                 </form>
