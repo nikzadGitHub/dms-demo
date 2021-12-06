@@ -45,8 +45,7 @@ export class OpportunityFormComponent implements OnInit{
     });
   }
   onSave(): void {
-    this.bookingService.saveBooking({
-      status: "Draft",
+    this.bookingService.updateBooking({
       customer: this.formBooking.get("customer").value + "",
       curDate: this.curDate,
       booking_reason: "Demo",
@@ -58,7 +57,7 @@ export class OpportunityFormComponent implements OnInit{
       contact_name: this.formBooking.get("contact_name").value + "",
       contact_number: this.formBooking.get("contact_number").value + "",
       remarks: this.formBooking.get("remarks").value + ""
-    }).subscribe((res) => {
+    }, 8).subscribe((res) => {
         if (res.id) {
           this.alertBody = "Booking saved successfully.";
           this.successModal.show();

@@ -1,6 +1,4 @@
-
 import { environment } from '../../../environments/environment'
-
 import {ApiClient} from './api-client.service';
 import { InventoryService } from './inventory.service';
 import { MockInventoryService } from './mock-inventory.service';

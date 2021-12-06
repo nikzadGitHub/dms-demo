@@ -1,0 +1,31 @@
+.file-input {
+  display: none;
+}
+
+.add-icon {
+  font-size: x-large;
+}
+
+.create-model-input{
+  // width: 600px;
+  height: 40px;
+}
+
+.selected-file{
+  margin: 10px;
+}
+
+
+@media (min-width: 992px) {
+  .modal-lg,
+  .modal-xl {
+    max-width: 1000px;
+  }
+}
+
+// @media (min-width: 576px) {
+//   .modal-lg, .modal-dialog {
+//     max-width: 950px;
+//     margin: 1.75rem auto;
+//   }
+// }

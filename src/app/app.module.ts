@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy} from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Start Of The Free FullCalender Plugings 
@@ -42,6 +42,7 @@ import {
   AppHeaderModule,
   AppFooterModule,
   AppSidebarModule,
+  
 } from '@coreui/angular';
 
 // Import routing module
@@ -84,7 +85,62 @@ import { InputTextModule } from 'primeng/inputtext';
 import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
 import { ManagerViewModule } from './views/manager-view/manager-view.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CreateComponent } from './views/customers/create/create.component';
+import { IndexComponent } from './views/customers/index/index.component';
+import { EditComponent } from './views/customers/edit/edit.component';
+import { CustomersModule } from './views/customers/customers.module';
+
+import { environment } from '../environments/environment';
+import { SystemConfig } from './config/system-config';
+
+import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
+import { MsalGuard, MsalInterceptor, MsalBroadcastService, MsalInterceptorConfiguration, MsalModule, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG, MsalGuardConfiguration, MsalRedirectComponent } from '@azure/msal-angular';
+
+const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
+
+export function loggerCallback(logLevel: LogLevel, message: string) {
+  console.log(message);
+}
+
+export function MSALInstanceFactory(): IPublicClientApplication {
+  return new PublicClientApplication({
+    auth: {
+      clientId: SystemConfig.azureClientId,
+      authority: `https://login.microsoftonline.com/${SystemConfig.azureTenantId}`,
+    },
+    cache: {
+      cacheLocation: BrowserCacheLocation.LocalStorage,
+      storeAuthStateInCookie: isIE, // set to true for IE 11
+    },
+    system: {
+      loggerOptions: {
+        loggerCallback,
+        logLevel: LogLevel.Info,
+        piiLoggingEnabled: false
+      }
+    }
+  });
+}
+
+export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
+  const protectedResourceMap = new Map<string, Array<string>>();
+  protectedResourceMap.set('https://graph.microsoft.com/v1.0/me', ['user.read']);
+
+  return {
+    interactionType: InteractionType.Redirect,
+    protectedResourceMap
+  };
+}
+
+export function MSALGuardConfigFactory(): MsalGuardConfiguration {
+  return { 
+    interactionType: InteractionType.Redirect,
+    authRequest: {
+      scopes: ['user.read']
+    }
+  };
+}
 
 
 
@@ -144,7 +200,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     }),
     ManagerViewModule,
     NgbModule,
-    InputTextModule
+    InputTextModule,
+    CustomersModule,
+    MsalModule
   ],
   declarations: [
     AppComponent,
@@ -153,12 +211,33 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     P500Component,
     LoginComponent,
     RegisterComponent,
-    DialogComponent
+    DialogComponent,
+    // CreateComponent,
+    // IndexComponent,
+    // EditComponent,
+    // LogoutComponent
   ],
   providers: [
     {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true
+    },
+    {
+      provide: MSAL_INSTANCE,
+      useFactory: MSALInstanceFactory
+    },
+    {
+      provide: MSAL_GUARD_CONFIG,
+      useFactory: MSALGuardConfigFactory
+    },
+    {
+      provide: MSAL_INTERCEPTOR_CONFIG,
+      useFactory: MSALInterceptorConfigFactory
+    },
+    {
       provide: LocationStrategy,
-      useClass: HashLocationStrategy
+      useClass: HashLocationStrategy,
     },
     {
       provide: HTTP_INTERCEPTORS,
@@ -167,7 +246,10 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     },
     IconSetService,
     DatePipe,
+    MsalService,
+    MsalGuard,
+    MsalBroadcastService,
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [ AppComponent , MsalRedirectComponent]
 })
 export class AppModule { }

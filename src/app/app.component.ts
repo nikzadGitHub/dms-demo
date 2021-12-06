@@ -5,17 +5,24 @@ import { Router, NavigationEnd } from '@angular/router';
 
 import { IconSetService } from '@coreui/icons-angular';
 import { freeSet } from '@coreui/icons';
+import { LocalStorageService } from './_services/local-storage.service';
 
 @Component({
   // tslint:disable-next-line
-  selector: 'body', 
-  template: '<router-outlet></router-outlet>',
+
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
   providers: [IconSetService],
 })
 export class AppComponent implements OnInit {
-  constructor( 
-    private router: Router, 
-    public iconSet: IconSetService
+
+  isLoading = false
+
+  constructor(
+    private router: Router,
+    public iconSet: IconSetService,
+    private loaderService:LocalStorageService
   ) {
     // iconSet singleton
     iconSet.icons = { ...freeSet }; 
@@ -46,6 +53,9 @@ export class AppComponent implements OnInit {
       }
       window.scrollTo(0, 0);
     });
+    this.loaderService.loaderGet().subscribe(state=>{
+      this.isLoading = state
+    })
   }
 
 

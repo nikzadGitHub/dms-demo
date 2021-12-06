@@ -54,10 +54,10 @@
                                         </label>
                                     </div>
                                     <div class="col-9">
-                                        <p-dropdown id="unit" name="unitList" [options]="unitArr" optionLabel="title" optionValue="id"
+                                        <p-dropdown id="unit" name="unitList" [options]="salesTargetData" optionLabel="unit.title" optionValue="unit.title"
                                             placeholder="Select Unit" [style]="{ width: '100%' }" [required]="true"
-                                            [(ngModel)]="data.unit_id" (onChange)="onUnitChanged(data.country_code, data.unit_id)">
-                                        </p-dropdown>
+                                            [(ngModel)]="data.id" (onChange)="onUnitChanged(data.country_code, data.id)">
+                                        </p-dropdown>       
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
                                         </label>
                                     </div>
                                     <div class="col-9">
-                                        <p-dropdown id="fss" name="fssList" [options]="fssArr" optionLabel="full_name" optionValue="id"
+                                        <p-dropdown id="fss" name="fssList" [options]="fssArr" optionLabel="unit.title" optionValue="id"
                                             placeholder="Select FSS" [style]="{ width: '100%' }" [(ngModel)]="data.user_id" [required]="true">
                                         </p-dropdown>
                                     </div>
@@ -115,7 +115,7 @@
                                         </label>
                                     </div>
                                     <div class="col-9">
-                                        <p-dropdown id="class" name="classList" [options]="classArr" optionLabel="name" optionValue="value"
+                                        <p-dropdown id="class" name="classList" [options]="classArr" optionLabel="name" optionValue="code"
                                             placeholder="Select Class" [showClear]="true" [style]="{ width: '100%' }" [(ngModel)]="data.class_id">
                                         </p-dropdown>
                                     </div>
@@ -143,8 +143,9 @@
                                     <div class="col-9">
                                         <p-dropdown [id]="'level'+i" [name]="'dimensionLevel'+i" placeholder="Select Level"
                                             [showClear]="true" [style]="{ width: '100%' }"
-                                            [options]="levelArr" optionLabel="name" optionValue="value"
-                                            [(ngModel)]="dimensionLevelArr[i]" [dataKey]="dimensionLevelArr[i]">
+                                            [options]="levelArr" optionLabel="name" optionValue="code"
+                                            [(ngModel)]="dimensionLevelArr[i]" [dataKey]="dimensionLevelArr[i]"
+                                            (onChange)="onLevelChanges(dimensionLevelArr[i], data.country_code)">
                                         </p-dropdown>
                                     </div>
                                 </div>
@@ -156,296 +157,317 @@
                                             {{ a == 1 ? 'Description' : '' }}
                                         </label>
                                     </div>
-                                <div class="col-9">
-                                    <p-dropdown [id]="'desc'+i" [name]="'dimensionDesc'+i" placeholder="Select Description"
-                                        [showClear]="true" [style]="{ width: '100%' }"
-                                        [options]="descArr" optionLabel="name" optionValue="value"
-                                        [(ngModel)]="dimensionDescArr[i]" [dataKey]="dimensionDescArr[i]">
-                                    </p-dropdown>
+                                    <div class="col-9">
+                                        <p-dropdown [id]="'desc'+i" [name]="'dimensionDesc'+i" placeholder="Select Description"
+                                            [showClear]="true" [style]="{ width: '100%' }"
+                                            [options]="descArr" optionLabel="name" optionValue="code"
+                                            [(ngModel)]="dimensionDescArr[i]" [dataKey]="dimensionDescArr[i]">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-row m-4">
+                          <div class="row mt-5 mb-2">
+                            <h5 class="col-12">
+                                <label><b>Sales Target</b></label>
+                            </h5>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="currency">
+                                            Currency
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <!--<p-dropdown id="currency" [options]="currencyArr" optionLabel="name" optionValue="value"
+                                            placeholder="Select Currency" [showClear]="true" [style]="{ width: '100%' }">
+                                        </p-dropdown>-->
+                                        <input id="currency" name="currencyCd" pInputText [(ngModel)]="currency" class="form-control" type="input" [readonly]="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label for="year">
+                                            Year
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                        <!--<input id="year" pInputText class="form-control" placeholder="" type="input">-->
+                                        <p-inputNumber name="year" inputId="integeronly" [(ngModel)]="data.year"
+                                            inputId="withoutgrouping" [useGrouping]="false" [style]="{ width: '100%' }">
+                                        </p-inputNumber>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- <div class="col-lg-12 submit-button mt-5" align=center>
+                    <div class="form-group">
+                        <button class="btn btn-light mr-2 px-4" type="reset" (click)="resetForm(salesTargetSetupForm)"><i class="pi pi-arrow-left mr-2"></i>CANCEL</button>
+                        <button class="btn btn-primary px-5" type="submit" >
+                            <i class="pi pi-save mr-2"></i>SAVE</button>
+                    </div>
+                </div> -->
                 <div class="card-row m-4">
                     <div class="row mt-5 mb-2">
                         <h5 class="col-12">
-                            <label><b>Sales Target</b></label>
+                            <label>Auto-populated</label>
                         </h5>
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-6">
-                            <div class="row">
-                                <div class="col-3 mt-2">
-                                    <label for="currency">
-                                        Currency
-                                    </label>
-                                </div>
-                                <div class="col-9">
-                                    <!--<p-dropdown id="currency" [options]="currencyArr" optionLabel="name" optionValue="value"
-                                        placeholder="Select Currency" [showClear]="true" [style]="{ width: '100%' }">
-                                    </p-dropdown>-->
-                                     <input id="currency" name="currencyCd" pInputText [(ngModel)]="currency" class="form-control" type="input" [readonly]="true"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="row">
-                                <div class="col-3">
-                                    <label for="year">
-                                        Year
-                                    </label>
-                                </div>
-                                <div class="col-9">
-                                    <!--<input id="year" pInputText class="form-control" placeholder="" type="input">-->
-                                    <p-inputNumber name="year" inputId="integeronly" [(ngModel)]="data.year"
-                                        inputId="withoutgrouping" [useGrouping]="false" [style]="{ width: '100%' }">
-                                    </p-inputNumber>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-lg-12">
+                        <div class="row mb-2">
+                            <div class="col-3">
+                                  <div class="row">
+                                      <div class="col-5 mt-2">
+                                          {{ salesTargetMonth[0] }}
+                                      </div>
+                                      <div class="col-7">
+                                          <div class="p-inputgroup">
+                                              <span class="p-inputgroup-addon">{{ currency }}</span>
+                                              <p-inputNumber name="target1" [(ngModel)]="data.month_01_target" inputId="minmaxfraction"
+                                                  mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-3">
+                                  <div class="row">
+                                      <div class="col-5 mt-2">
+                                          {{ salesTargetMonth[3] }}
+                                      </div>
+                                      <div class="col-7">
+                                          <div class="p-inputgroup">
+                                              <span class="p-inputgroup-addon">{{ currency }}</span>
+                                              <p-inputNumber name="target4" [(ngModel)]="data.month_04_target" inputId="minmaxfraction"
+                                                  mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-3">
+                                  <div class="row">
+                                      <div class="col-5 mt-2">
+                                          {{ salesTargetMonth[6] }}
+                                      </div>
+                                      <div class="col-7">
+                                          <div class="p-inputgroup">
+                                              <span class="p-inputgroup-addon">{{ currency }}</span>
+                                              <p-inputNumber name="target7" [(ngModel)]="data.month_07_target" inputId="minmaxfraction"
+                                                  mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-3">
+                                  <div class="row">
+                                      <div class="col-5 mt-2">
+                                          {{ salesTargetMonth[9] }}
+                                      </div>
+                                      <div class="col-7">
+                                          <div class="p-inputgroup">
+                                              <span class="p-inputgroup-addon">{{ currency }}</span>
+                                              <p-inputNumber name="target10" [(ngModel)]="data.month_10_target" inputId="minmaxfraction"
+                                                    mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-12">
+                          <div class="row mb-2">
+                              <div class="col-3">
+                                  <div class="row">
+                                      <div class="col-5 mt-2">
+                                          {{ salesTargetMonth[1] }}
+                                      </div>
+                                      <div class="col-7">
+                                          <div class="p-inputgroup">
+                                              <span class="p-inputgroup-addon">{{ currency }}</span>
+                                              <p-inputNumber name="target2" [(ngModel)]="data.month_02_target" inputId="minmaxfraction"
+                                                    mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-3">
+                                  <div class="row">
+                                      <div class="col-5 mt-2">
+                                          {{ salesTargetMonth[4] }}
+                                      </div>
+                                      <div class="col-7">
+                                          <div class="p-inputgroup">
+                                              <span class="p-inputgroup-addon">{{ currency }}</span>
+                                              <p-inputNumber name="target5" [(ngModel)]="data.month_05_target" inputId="minmaxfraction"
+                                                    mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-3">
+                                  <div class="row">
+                                      <div class="col-5 mt-2">
+                                          {{ salesTargetMonth[7] }}
+                                      </div>
+                                      <div class="col-7">
+                                          <div class="p-inputgroup">
+                                              <span class="p-inputgroup-addon">{{ currency }}</span>
+                                              <p-inputNumber name="target8" [(ngModel)]="data.month_08_target" inputId="minmaxfraction"
+                                                  mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-3">
+                                  <div class="row">
+                                      <div class="col-5 mt-2">
+                                          {{ salesTargetMonth[10] }}
+                                      </div>
+                                      <div class="col-7">
+                                          <div class="p-inputgroup">
+                                              <span class="p-inputgroup-addon">{{ currency }}</span>
+                                              <p-inputNumber name="target11" [(ngModel)]="data.month_11_target" inputId="minmaxfraction"
+                                                  mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-12">
+                          <div class="row mb-2">
+                              <div class="col-3">
+                                  <div class="row">
+                                      <div class="col-5 mt-2">
+                                          {{ salesTargetMonth[2] }}
+                                      </div>
+                                      <div class="col-7">
+                                          <div class="p-inputgroup">
+                                              <span class="p-inputgroup-addon">{{ currency }}</span>
+                                              <p-inputNumber name="target3" [(ngModel)]="data.month_03_target" inputId="minmaxfraction"
+                                                    mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-3">
+                                  <div class="row">
+                                      <div class="col-5 mt-2">
+                                          {{ salesTargetMonth[5] }}
+                                      </div>
+                                      <div class="col-7">
+                                          <div class="p-inputgroup">
+                                              <span class="p-inputgroup-addon">{{ currency }}</span>
+                                              <p-inputNumber name="target6" [(ngModel)]="data.month_06_target" inputId="minmaxfraction"
+                                                  mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-3">
+                                  <div class="row">
+                                      <div class="col-5 mt-2">
+                                          {{ salesTargetMonth[8] }}
+                                      </div>
+                                      <div class="col-7">
+                                          <div class="p-inputgroup">
+                                              <span class="p-inputgroup-addon">{{ currency }}</span>
+                                              <p-inputNumber name="target9" [(ngModel)]="data.month_09_target" inputId="minmaxfraction"
+                                                  mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-3">
+                                  <div class="row">
+                                      <div class="col-5 mt-2">
+                                          {{ salesTargetMonth[11] }}
+                                      </div>
+                                      <div class="col-7">
+                                          <div class="p-inputgroup">
+                                              <span class="p-inputgroup-addon">{{ currency }}</span>
+                                              <p-inputNumber name="target12" [(ngModel)]="data.month_12_target" inputId="minmaxfraction"
+                                                  mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+
+              
+
+
+
+                  <div class="col-lg-12 submit-button mt-5" align=center>
+                    <div class="form-group">
+                        <button class="btn btn-light mr-2 px-4" type="reset" (click)="resetForm(salesTargetSetupForm)"><i class="pi pi-arrow-left mr-2"></i>CANCEL</button>
+                        <button class="btn btn-primary px-5" type="submit" >
+                            <i class="pi pi-save mr-2"></i>SAVE</button>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-12 submit-button mt-5" align=center>
-                <div class="form-group">
-                    <button class="btn btn-light mr-2 px-4" type="reset" (click)="resetForm(salesTargetSetupForm)"><i class="pi pi-arrow-left mr-2"></i>CANCEL</button>
-                    <button class="btn btn-primary px-5" type="submit" [disabled]="!salesTargetSetupForm.form.valid">
-                        <i class="pi pi-save mr-2"></i>SAVE</button>
+
+
+
+                  <div class="card-row m-4">
+                      <div>
+                          <p-table [value]="list" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+                              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5,10,25]">
+                              <ng-template pTemplate="header">
+                                  <tr>
+                                      <th style="width: 20%;">Description</th>
+                                      <th style="width: 13%;">Q1 ({{ currency }})</th>
+                                      <th style="width: 13%;">Q2 ({{ currency }})</th>
+                                      <th style="width: 13%;">Q3 ({{ currency }})</th>
+                                      <th style="width: 13%;">Q4 ({{ currency }})</th>
+                                      <th style="width: 13%;">Total ({{ currency }})</th>
+                                      <th style="width: 15%;"></th>
+                                  </tr>
+                              </ng-template>
+                              <ng-template pTemplate="body" let-data>
+                                  <tr>
+                                      <td>{{ data.title }}</td>
+                                      <td>{{ data.q1 }}</td>
+                                      <td>{{ data.q2 }}</td>
+                                      <td>{{ data.q3 }}</td>
+                                      <td>{{ data.q4 }}</td>
+                                      <td>{{ data.total }}</td>
+                                      <td>
+                                          <button pButton pRipple type="button" icon="pi pi-copy" title="Copy" (click)="copyData(data.id)" class="p-button-rounded p-button-text p-button-plain"></button>
+                                          <button pButton pRipple type="button" icon="fa fa-edit" title="Edit" (click)="editData(data.id)" class="p-button-rounded p-button-text p-button-plain"></button>
+                                          <button pButton pRipple type="button" icon="pi pi-trash" title="Delete" (click)="showConfirmationDialog(data.id)" class="p-button-rounded p-button-text p-button-plain"></button>
+                                      </td>
+                                  </tr>
+                                  <tr *ngIf="dataLength==0">
+                                      <td >
+                                          <h4>No record found at this moment.</h4>
+                                      </td>
+                                  </tr>
+                              </ng-template>
+                          </p-table>
+                      </div>
                 </div>
-            </div>
-            <div class="card-row m-4">
-                <div class="row mt-5 mb-2">
-                    <h5 class="col-12">
-                         <label>Auto-populated</label>
-                    </h5>
-                </div>
-                <div class="col-lg-12">
-                    <div class="row mb-2">
-                         <div class="col-3">
-                              <div class="row">
-                                  <div class="col-5 mt-2">
-                                      {{ salesTargetMonth[0] }}
-                                  </div>
-                                  <div class="col-7">
-                                      <div class="p-inputgroup">
-                                          <span class="p-inputgroup-addon">{{ currency }}</span>
-                                          <p-inputNumber name="target1" [(ngModel)]="data.month_01_target" inputId="minmaxfraction"
-                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-                                          </p-inputNumber>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-3">
-                              <div class="row">
-                                  <div class="col-5 mt-2">
-                                      {{ salesTargetMonth[3] }}
-                                  </div>
-                                  <div class="col-7">
-                                      <div class="p-inputgroup">
-                                          <span class="p-inputgroup-addon">{{ currency }}</span>
-                                          <p-inputNumber name="target4" [(ngModel)]="data.month_04_target" inputId="minmaxfraction"
-                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-                                          </p-inputNumber>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-3">
-                              <div class="row">
-                                  <div class="col-5 mt-2">
-                                      {{ salesTargetMonth[6] }}
-                                  </div>
-                                  <div class="col-7">
-                                      <div class="p-inputgroup">
-                                          <span class="p-inputgroup-addon">{{ currency }}</span>
-                                          <p-inputNumber name="target7" [(ngModel)]="data.month_07_target" inputId="minmaxfraction"
-                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-                                          </p-inputNumber>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-3">
-                              <div class="row">
-                                  <div class="col-5 mt-2">
-                                      {{ salesTargetMonth[9] }}
-                                  </div>
-                                  <div class="col-7">
-                                      <div class="p-inputgroup">
-                                          <span class="p-inputgroup-addon">{{ currency }}</span>
-                                          <p-inputNumber name="target10" [(ngModel)]="data.month_10_target" inputId="minmaxfraction"
-                                                mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-                                          </p-inputNumber>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-lg-12">
-                      <div class="row mb-2">
-                          <div class="col-3">
-                              <div class="row">
-                                  <div class="col-5 mt-2">
-                                      {{ salesTargetMonth[1] }}
-                                  </div>
-                                  <div class="col-7">
-                                      <div class="p-inputgroup">
-                                          <span class="p-inputgroup-addon">{{ currency }}</span>
-                                          <p-inputNumber name="target2" [(ngModel)]="data.month_02_target" inputId="minmaxfraction"
-                                                mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-                                          </p-inputNumber>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-3">
-                              <div class="row">
-                                  <div class="col-5 mt-2">
-                                      {{ salesTargetMonth[4] }}
-                                  </div>
-                                  <div class="col-7">
-                                      <div class="p-inputgroup">
-                                          <span class="p-inputgroup-addon">{{ currency }}</span>
-                                          <p-inputNumber name="target5" [(ngModel)]="data.month_05_target" inputId="minmaxfraction"
-                                                mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-                                          </p-inputNumber>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-3">
-                              <div class="row">
-                                  <div class="col-5 mt-2">
-                                      {{ salesTargetMonth[7] }}
-                                  </div>
-                                  <div class="col-7">
-                                      <div class="p-inputgroup">
-                                          <span class="p-inputgroup-addon">{{ currency }}</span>
-                                          <p-inputNumber name="target8" [(ngModel)]="data.month_08_target" inputId="minmaxfraction"
-                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-                                          </p-inputNumber>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-3">
-                              <div class="row">
-                                  <div class="col-5 mt-2">
-                                      {{ salesTargetMonth[10] }}
-                                  </div>
-                                  <div class="col-7">
-                                      <div class="p-inputgroup">
-                                          <span class="p-inputgroup-addon">{{ currency }}</span>
-                                          <p-inputNumber name="target11" [(ngModel)]="data.month_11_target" inputId="minmaxfraction"
-                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-                                          </p-inputNumber>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-lg-12">
-                      <div class="row mb-2">
-                          <div class="col-3">
-                              <div class="row">
-                                  <div class="col-5 mt-2">
-                                      {{ salesTargetMonth[2] }}
-                                  </div>
-                                  <div class="col-7">
-                                      <div class="p-inputgroup">
-                                          <span class="p-inputgroup-addon">{{ currency }}</span>
-                                          <p-inputNumber name="target3" [(ngModel)]="data.month_03_target" inputId="minmaxfraction"
-                                                mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-                                          </p-inputNumber>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-3">
-                              <div class="row">
-                                  <div class="col-5 mt-2">
-                                      {{ salesTargetMonth[5] }}
-                                  </div>
-                                  <div class="col-7">
-                                      <div class="p-inputgroup">
-                                          <span class="p-inputgroup-addon">{{ currency }}</span>
-                                          <p-inputNumber name="target6" [(ngModel)]="data.month_06_target" inputId="minmaxfraction"
-                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-                                          </p-inputNumber>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-3">
-                              <div class="row">
-                                  <div class="col-5 mt-2">
-                                      {{ salesTargetMonth[8] }}
-                                  </div>
-                                  <div class="col-7">
-                                      <div class="p-inputgroup">
-                                          <span class="p-inputgroup-addon">{{ currency }}</span>
-                                          <p-inputNumber name="target9" [(ngModel)]="data.month_09_target" inputId="minmaxfraction"
-                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-                                          </p-inputNumber>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-3">
-                              <div class="row">
-                                  <div class="col-5 mt-2">
-                                      {{ salesTargetMonth[11] }}
-                                  </div>
-                                  <div class="col-7">
-                                      <div class="p-inputgroup">
-                                          <span class="p-inputgroup-addon">{{ currency }}</span>
-                                          <p-inputNumber name="target12" [(ngModel)]="data.month_12_target" inputId="minmaxfraction"
-                                              mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-                                          </p-inputNumber>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="card-row m-4">
-                  <div>
-                      <table class="table table-borderless table-striped">
-                          <thead class="grey">
-                              <tr style="border-top: 0.5px;border-top-style: solid;border-bottom: 0.5px;border-bottom-style: solid;">
-                                  <th style="width: 22%;">Description</th>
-                                  <th style="width: 13%;">Q1 ({{ currency }})</th>
-                                  <th style="width: 13%;">Q2 ({{ currency }})</th>
-                                  <th style="width: 13%;">Q3 ({{ currency }})</th>
-                                  <th style="width: 13%;">Q4 ({{ currency }})</th>
-                                  <th style="width: 13%;">Total ({{ currency }})</th>
-                                  <th style="width: 13%;"></th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr *ngFor="let data of list; let i=index">
-                                  <td>{{ data.title }}</td>
-                                  <td>{{ data.q1 }}</td>
-                                  <td>{{ data.q2 }}</td>
-                                  <td>{{ data.q3 }}</td>
-                                  <td>{{ data.q4 }}</td>
-                                  <td>{{ data.total }}</td>
-                                  <td>
-                                    <!--<a class="btn" style="cursor: pointer;" (click)="deleteRow(i)"><i class="cil-trash"></i></a>-->
-                                      <button pButton pRipple type="button" icon="pi pi-copy" title="Copy" (click)="copyData(data.id)" class="p-button-rounded p-button-text p-button-plain"></button>
-                                      <button pButton pRipple type="button" icon="fa fa-edit" title="Edit" (click)="editData(data.id)" class="p-button-rounded p-button-text p-button-plain"></button>
-                                      <button pButton pRipple type="button" icon="pi pi-trash" title="Delete" (click)="showConfirmationDialog(data.id)" class="p-button-rounded p-button-text p-button-plain"></button>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
             </div>
         </div>
     </form>

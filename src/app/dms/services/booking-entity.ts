@@ -17,18 +17,19 @@ export interface ApprovalEntity {
 export type ApprovalList = ApprovalEntity[];
 
 export interface BookingDetail {
+  id: bigint;
   status: string;
-  status_request_date: string;
-  code: string;
+  booking_no: string;
   branch: string;
   booking_reason: string;
   request_date: string;
   customer: string;
-  preferred_date_of_elivery: string;
+  preferred_date_of_delivery: string;
   preferred_date_of_collection: string;
   demo_duration: string;
   department: string;
-  shipment_to_contact_name: string;
+  location: string;
+  ship_to_contact_name: string;
   ship_to_contact_number: string;
   remarks: string;
   loan_start_date: string;
@@ -55,18 +56,19 @@ export const emptyOpportunitySummary: OpportunitySummary = {
 
 export interface BookingEntity {
   status: BookingStatus;
-  approvalList: ApprovalList;
+  approvalList: ApprovalList | null;
   bookingDetailList: BookingDetail;
-  opportunitySummary: OpportunitySummary;
-  mainAsset: MainAsset
+  opportunitySummary: OpportunitySummary | null;
+  mainAsset: MainAsset | null;
+  access: boolean;
 }
 
 export type BookingEntityList = BookingEntity[];
 
 export interface BookingEntityInterface {
   getEntity(bookingId: BigInt): Observable<BookingEntity>;
-  getApprovals(bookingId: BigInt): Observable<ApprovalList>;
-  getBookingDetail(bookingId: BigInt): Observable<BookingDetail>;
-  getOpportunitySummary(bookingId: BigInt): Observable<OpportunitySummary>;
-  getMainAsset(bookingId: BigInt): Observable<MainAsset>;
+  // getApprovals(bookingId: BigInt): Observable<ApprovalList>;
+  // getBookingDetail(bookingId: BigInt): Observable<BookingDetail>;
+  // getOpportunitySummary(bookingId: BigInt): Observable<OpportunitySummary>;
+  // getMainAsset(bookingId: BigInt): Observable<MainAsset>;
 }

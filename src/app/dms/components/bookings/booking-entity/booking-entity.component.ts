@@ -9,6 +9,7 @@ import {
 import { ApprovalList, BookingDetail, BookingEntity, OpportunitySummary } from '../../../services/booking-entity';
 import { BookingStatus, statusIncrement } from '../../../services/booking-status.enum';
 import { MainAsset } from '../../../services/asset-entity';
+import { BookingEntityService } from '../../../services/booking-entity.service';
 
 /**
  * Provides View for single Booking-Entity (in Demo-Bookings table).
@@ -23,7 +24,9 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
   private routeListener: Subscription;
   private apiListener: Subscription;
 
-  status = BookingStatus.unknown;
+  status: any;
+  access: boolean;
+  statusText: string = 'Draft';
   bookingId: BigInt = BigInt(0);
   approvalList: ApprovalList = [];
   bookingDetailList: BookingDetail;
@@ -33,7 +36,7 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private api: MockBookingEntityService,
+    private api: BookingEntityService,
   ) { }
 
   ngOnInit(): void {
@@ -42,9 +45,6 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
         this.apiListener.unsubscribe();
       }
       let param: string = paramList['id'] + '';
-      if (param.toLowerCase().startsWith('bk-')) {
-        param = param.substring(3);
-      }
       const id = BigInt(param);
       this.bookingId = id;
       // Updates anything related to ID.
@@ -52,11 +52,13 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
         this.apiListener = this.api.getEntity(id)
           .subscribe((response) => {
             if (response as BookingEntity) {
-              this.status = response.status;
+              this.status = response.status
               this.approvalList = response.approvalList;
               this.bookingDetailList = response.bookingDetailList;
+              this.bookingDetailList.status = this.statusName(this.bookingDetailList.status);
               this.opportunitySummary = response.opportunitySummary;
               this.mainAsset = response.mainAsset;
+              this.access = response.access;
             }
             console.log('api: entity', this.bookingId, response);
           });
@@ -79,5 +81,22 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
       console.log('Status changed from ', lastStatus, 'to', this.status);
     }
     console.log('Approval onAction', event);
+  }
+
+  statusName(status){
+    const statusList =  [
+      'Draft', 
+      '1 Raising Booking Request - Draft',
+      '2 Raising Booking Request - Submitted',
+      '3 Raising Booking Request - MSC Reviewed',
+      '4 Raising Booking Request - conflict',
+      '5 Raising Booking Request - declined',
+      '6 Raising Booking Request - Provisionally Accepted',
+      '7 Raising Booking Request - Confirmed'
+    ]
+    if(status != '' && status != null){
+      return statusList[status];
+    }
+    return statusList[0];
   }
 }

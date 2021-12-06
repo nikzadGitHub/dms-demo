@@ -61,6 +61,21 @@ export const navItems: INavData[] = [
     icon: 'cil-dollar',
   },
   {
+    name: 'FPS',
+    url: '/fps',
+    icon: 'cil-dollar',
+    children: [
+      {
+        name: 'Create FPS',
+        url: '/fps/fps-create',
+      },
+      {
+        name: 'FPS Request List',
+        url: '/fps/fps-listing',
+      }
+    ]
+  },
+  {
     name: 'SOCI',
     url: '/soci/index',
     icon: 'cil-storage'
@@ -97,21 +112,37 @@ export const navItems: INavData[] = [
     icon: 'cil-group',
     children: [
       {
-        name: 'Approval',
-        url: '/managerview/approval',
-      },
+        name: 'FPM',
+        url: '/managerview',
+        children: [
+          {
+            name: 'Approval',
+            url: '/managerview/approval',
+          },
+          {
+            name: 'Reassignment',
+            url: '/managerview/reassignment',
+          },
+          {
+            name: 'Deactivate/Active',
+            url: '/managerview/active',
+          },
+          {
+            name: 'Sales Target Setup',
+            url: '/managerview/salestargetsetup',
+          },
+        ]
+      }, 
       {
-        name: 'Reassignment',
-        url: '/managerview/reassignment',
-      },
-      {
-        name: 'Deactivate/Active',
-        url: '/managerview/active',
-      },
-      {
-        name: 'Sales Target Setup',
-        url: '/managerview/salestargetsetup',
-      },
+        name: 'FPS',
+        url: '/fps',
+        children: [
+          {
+            name: 'FPS SKU List',
+            url: '/fps/sku-listing',
+          }
+        ]
+      }
     ]
   },
   {
@@ -119,7 +150,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Profile',
-    url: '/rofile',
+    url: '/profile',
     icon: 'cil-user'
   },
   {

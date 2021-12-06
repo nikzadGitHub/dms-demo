@@ -41,18 +41,19 @@ const mockApproval: ApprovalList = [
 ];
 
 const mockBookingDetail: BookingDetail = {
+    id: BigInt(1),
     status: "2 Raising Booking Request - Submitted",
-    status_request_date: "10/1/2021",
-    code: 'BK-00992',
+    booking_no: 'BK-00992',
     branch: "XXXX",
     booking_reason: "Demo",
     request_date: "9/3/2021",
     customer: "Parkway Singapore",
-    preferred_date_of_elivery: "10/13/2021",
+    preferred_date_of_delivery: "10/13/2021",
     preferred_date_of_collection: "12/13/2021",
     demo_duration: "2 months",
     department: "Ward 1, ",
-    shipment_to_contact_name: "XXXXXX",
+    location: "Malaya",
+    ship_to_contact_name: "XXXXXX",
     ship_to_contact_number: "XXXXXXXX",
     remarks: "",
     loan_start_date: "",
@@ -159,7 +160,8 @@ export class MockBookingEntityService implements BookingEntityInterface {
       approvalList: mockApproval,
       bookingDetailList: mockBookingDetail,
       opportunitySummary: mockOpportunitySummary,
-      mainAsset: mockMainAsset
+      mainAsset: mockMainAsset,
+      access: false
     }
   ];
 

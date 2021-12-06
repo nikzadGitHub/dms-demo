@@ -19,6 +19,7 @@
     "postinstall": "ngcc --properties es2015 browser module main --first-only",
     "start": "ng serve",
     "build": "ng build --prod --aot --build-optimizer --common-chunk --vendor-chunk --optimization --progress",
+    "build-dev": "ng build --configuration dev --aot --build-optimizer --common-chunk --vendor-chunk --optimization --progress",
     "build-docs": "npx compodoc -p tsconfig.doc.json",
     "test": "ng test",
     "test-dms": "npx ng test --include=**/dms/**/*.spec.ts --include=**/dms/*.spec.ts",
@@ -74,6 +75,7 @@
     "ts-helpers": "^1.1.2",
     "tslib": "^2.0.0",
     "web-animations-js": "^2.3.2",
+    "xlsx": "^0.17.4",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
