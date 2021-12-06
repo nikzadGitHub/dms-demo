@@ -18,7 +18,11 @@
 </div>
 
 <!-- SOCI pending approval list table -->
+<<<<<<< HEAD
 <!-- <div
+=======
+<div
+>>>>>>> 2808e112368b4553f5dfbee2fea912fa3a9f341b
   class="card-header row"
   style="background-color: #898485; color: white"
   *ngIf="is_soci_view"
@@ -320,8 +324,8 @@
   <tbody>
     <tr align="center" *ngFor="let item of pendingSOCI">
       <td>
-        <a href="#" [routerLink]="['/soci/', item.id, 'edit']">
-          {{item.soci_id}}
+        <a href="#" [routerLink]="" (click)="goToApproval(item.id)">
+          {{ item.soci_id }}
         </a>
       </td>
       <td>{{ item.created_at | date: "dd-MMM-yyy" }}</td>
@@ -329,16 +333,35 @@
       <td>{{ item.quote_full_id }}</td>
       <td>{{ item.customer?.company_name }}</td>
       <td>
-        <p-badge [value]="item.status_desc" *ngIf="item.status == 4"  severity="success" styleClass="p-mr-2"></p-badge>
-        <p-badge [value]="item.status_desc" *ngIf="item.status == 1" severity="info" styleClass="p-mr-2"></p-badge>
-        <p-badge [value]="item.status_desc" *ngIf="item.status == 2" severity="warning" styleClass="p-mr-2"></p-badge>
-        <p-badge [value]="item.status_desc" *ngIf="item.status == 7" severity="danger"></p-badge>
+        <p-badge
+          [value]="item.status_desc"
+          *ngIf="item.status == 4"
+          severity="success"
+          styleClass="p-mr-2"
+        ></p-badge>
+        <p-badge
+          [value]="item.status_desc"
+          *ngIf="item.status == 1"
+          severity="info"
+          styleClass="p-mr-2"
+        ></p-badge>
+        <p-badge
+          [value]="item.status_desc"
+          *ngIf="item.status == 2"
+          severity="warning"
+          styleClass="p-mr-2"
+        ></p-badge>
+        <p-badge
+          [value]="item.status_desc"
+          *ngIf="item.status == 7"
+          severity="danger"
+        ></p-badge>
       </td>
       <td>
         <a
           href="#"
           [routerLink]=""
-          (click)=" goToApproval(item.id)"
+          (click)="goToApproval(item.id)"
           class="fa fa-edit"
         ></a>
       </td>
