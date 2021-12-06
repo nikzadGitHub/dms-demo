@@ -8,8 +8,8 @@
     <h1 mat-dialog-title>{{ dialogData.dialogHeader }}</h1>
     <div mat-dialog-content>
       <p>{{ dialogData.dialogContent }}</p>
-    </div>
-    <div mat-dialog-actions>
+    </div> 
+    <div mat-dialog-actions> 
       <button
         mat-button
         (click)="handleDialogSubmit()"
@@ -19,7 +19,7 @@
       >
         {{ dialogData.confirmButtonLabel }}
       </button>
-      <button
+      <button 
         mat-button
         cdkFocusInitial
         (click)="closeDialog()"
