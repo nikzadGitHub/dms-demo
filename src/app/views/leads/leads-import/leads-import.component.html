@@ -26,7 +26,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xl-12" align=center>
-                            <a>Download template file (.csv file)</a>
+                            <a href="../../../../assets/img/template/lead_template.csv">Download template file (.csv file)</a>
                         </div>
                     </div>
                 </div>
@@ -34,9 +34,11 @@
                     <div class="alert alert-success" role="alert" [ngClass]="(successCreate == 1 ? 'show' : 'hide')">
                         <b>Success: </b>The {{number_of_record}} records have been updated into the system
                     </div>
-                    <div class="alert alert-danger" role="alert" [ngClass]="(danger == 1 ? 'show' : 'hide')">
-                        Something went wrong, kindly double check your No. {{danger_number_of_record}} record.
+                    <div  class="alert alert-danger" role="alert" [ngClass]="(danger == 1 ? 'show' : 'hide')">
+                        Something went wrong, kindly double check your file <br>
+                        <div *ngFor="let error of errorList; "> Row {{error.row}}: {{error.message}}</div>
                     </div>
+
                     <table class="table table-striped table-inverse">
                         <thead>
                             <tr>

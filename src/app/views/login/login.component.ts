@@ -1,4 +1,4 @@
-import { Component, Output, ViewChild } from '@angular/core';
+import { Component, Output, Inject,ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +7,12 @@ import { DialogInterface } from '../..//interfaces/dialog.interface';
 import { AuthService } from '../../auth/auth.service';
 import { DialogService } from '../../common/dialog/dialog.service';
 import { SystemConfig } from '../../config/system-config';
+import { MsalService, MsalBroadcastService } from '@azure/msal-angular';
+import { EventMessage, EventType, AuthenticationResult } from '@azure/msal-browser';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+import { filter } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -17,16 +23,17 @@ export class LoginComponent {
 
   formSubmitted : boolean = false;
   version: string = '';
-  appType: string = '';
-  
+  appType: string = '';  
   formLogin : FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private httpClient: HttpClient,
+    private azureAuthService : MsalService,
+    private msalBroadcastService: MsalBroadcastService,
     private dialogService: DialogService,
-    // private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +52,19 @@ export class LoginComponent {
         Validators.maxLength(128)
       ])
     });
+    this.msalBroadcastService.msalSubject$
+    .pipe(
+      filter((msg: EventMessage) => msg.eventType === EventType.LOGIN_SUCCESS),
+    )
+    .subscribe((result: EventMessage) => {
+      const payload = result.payload as AuthenticationResult;
+      console.log('payload',payload)
+      if(payload.accessToken){
+        this.loginwithAzureToken(payload.accessToken)
+      }
+      this.azureAuthService.instance.setActiveAccount(payload.account);
+    });
+
   }
 
   onFormSubmit(): void {
@@ -61,13 +81,12 @@ export class LoginComponent {
   
       ).subscribe(async (res) => {
         console.log(res);
-        // await loading.dismiss();
         if (!res.success) {
           this.dialogService.showErrorDialog(res.message);
           // this.errorMessage = res.message;
           // this.dangerModal.show();
         } else {
-          
+          localStorage.setItem('userRole',JSON.stringify(res.data))
           await this.authService.setAuthorizationToken(res.data.access_token);
           await this.authService.saveUserSession(JSON.stringify(res.data.user));
           await this.authService.getUserSession();
@@ -107,5 +126,59 @@ export class LoginComponent {
 
   resetForm() { 
     this.formLogin.reset();
+  }
+  loginwithAzureToken =async(token:any)=> {
+    //   let data  = {
+    //   azure_token : token,
+    //   fcm_code : ''
+    // }
+      // const headers= new HttpHeaders()
+      // .set('x-app-token', SystemConfig.apiAppToken);
+      // this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/azure-login", data, {
+      //   headers: headers
+      // })
+      // .subscribe(async (res:any) => {
+      //   if (!res.success) {
+      //         this.dialogService.showErrorDialog(res.message);
+      //       } else {
+      //         localStorage.setItem('userRole',JSON.stringify(res.data))
+      //         await this.authService.setAuthorizationToken(res.data.access_token);
+      //         await this.authService.saveUserSession(JSON.stringify(res.data.user));
+      //         await this.authService.getUserSession();
+      //         await this.authService.loadToken();
+      //         this.router.navigateByUrl("/dashboard", {replaceUrl: true});
+      //       }
+      // });
+
+
+      let res = this.authService.loginAzureToken({
+        azure_token: token,
+        fcm_code: '', 
+      }).pipe(
+  
+      ).subscribe(async (res) => {
+        console.log(res);
+        if (!res.success) {
+          this.dialogService.showErrorDialog(res.message);
+        } else {
+          localStorage.setItem('userRole',JSON.stringify(res.data))
+          await this.authService.setAuthorizationToken(res.data.access_token);
+          await this.authService.saveUserSession(JSON.stringify(res.data.user));
+          await this.authService.getUserSession();
+          await this.authService.loadToken();
+          this.router.navigateByUrl("/dashboard", {replaceUrl: true});
+  
+        }
+      }, async (error) => {
+        localStorage.clear();
+        if (typeof error.error.message === 'undefined') {
+          this.dialogService.showErrorDialog(SystemConfig.generalErrorMsg);
+        } else {
+          this.dialogService.showErrorDialog(error.error.message);
+        }
+      });
+}
+  loginUsingAzure(){
+  this.azureAuthService.loginPopup();  
   }
 }

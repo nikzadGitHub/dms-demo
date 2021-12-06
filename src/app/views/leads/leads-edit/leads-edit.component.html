@@ -12,14 +12,14 @@
                         <div class="lead-data">
                             <div class="lead-header">
                                 <div class="row">
-                                    <div class="col-md-auto">
+                                    <div class="col-md-3">
                                         <h3 class="bold">
                                             {{ form_controls.company_name.value }}
                                         </h3>
                                     </div>
-                                    <div class="col-md-auto lead-id">
-                                        <div>
-                                            <span>LEAD ID</span>
+                                    <div class="col-md-3">
+                                        <div class="lead-id">
+                                            <span>Lead ID:</span>
                                             <span>{{ form_controls.id.value }}</span>
                                         </div>
                                     </div>
@@ -30,7 +30,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="bold">Created Date</label>
-                                            <div>{{ form_controls.created_at.value }}</div>
+                                            <div>{{ moment(form_controls.created_at.value).format('DD-MMM-YYYY') }}</div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -262,16 +262,16 @@
                             <table class="table table-borderless table-striped" formArrayName="modifiction_log">
                                 <thead class="grey">
                                     <tr>
-                                        <th style="width: 20%;">Date</th>
-                                        <th>Description</th>
+                                        <th style="width: 20%; padding-left: 50px;">Date</th>
+                                        <th style="padding-left: 50px;">Description</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let log of getLog.controls; let i=index" [formGroupName]="i">
-                                        <td style="width: 20%;">
-                                            {{ log.value.created_at }}
+                                        <td style="width: 20%; padding-left: 50px;">
+                                            {{ moment(log.value.created_at).format('DD-MMM-YYYY') }}
                                         </td>
-                                        <td>
+                                        <td style="padding-left: 50px;">
                                             {{ log.value.description }}
                                         </td>
                                     </tr>
@@ -298,8 +298,8 @@
             </div>
             <div class="col-xl-12 submit-button" align=center>
                 <div class="form-group">
-                    <a routerLink="/leads/index" class="btn btn-secondary">CANCEL</a>
-                    <button class="btn btn-primary" type="submit">SAVE</button>
+                    <a routerLink="/leads/index" class="btn btn-secondary pr-5 pl-5 mr-2"><i class="cil-arrow-left mr-1 mt-1"></i>CANCEL</a>
+                    <button class="btn btn-primary pr-5 pl-5" type="submit"><i class="cil-save mr-1 mt-1"></i>SAVE</button>
                     <!-- <button class="btn btn-primary" type="button" (click)="CreateProspect()">Create Prospect</button> -->
                 </div>
             </div>

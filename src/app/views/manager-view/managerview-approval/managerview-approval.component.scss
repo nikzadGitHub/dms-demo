@@ -1,0 +1,28 @@
+.approval-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  .quotation-btn {
+    margin-right: 10px;
+  }
+}
+.btn-primary:focus, .btn-primary.focus {
+  // box-shadow: 0 0 0 0.2rem rgb(86 133 178 / 50%);
+  text-decoration: underline;
+}
+.btn-primary {
+  color: #fff;
+  background-color: #386FA4;
+  border-color: #386FA4;
+  text-decoration: underline;
+}
+.button:focus-visible {
+  text-decoration: underline;
+}
+
+.button:focus {
+  text-decoration: underline;
+}

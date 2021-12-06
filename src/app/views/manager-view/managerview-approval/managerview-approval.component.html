@@ -1,0 +1,128 @@
+<div class="approval-btns">
+  <button type="button" [class]="quotationBtn" class="quotation-btn" (click)="getPendingQuotationList()">Quotation Approval</button>
+  <button type="button" [class]="sociBtnColor" class="soci-btn" (click)="getPendingSociList()">
+    SOCI Approval
+  </button>
+</div>
+
+<!-- SOCI pending approval list table -->
+<div class="card-header row" style="background-color: #898485; color: white" *ngIf="is_soci_view">
+  <div style="padding-left: 20px">
+    <h2>Pending SOCI</h2>
+  </div>
+
+  <div class="col-lg col-sm-4;" align="right">
+    <input
+      style="width: 25%"
+      class="form-control"
+      placeholder="SOCI Search"
+      type="text"
+      (input)=" searchSoci()"
+      [(ngModel)]="search_text"
+    />
+  </div>
+
+  <!-- <img
+    style="width: 22px; margin: 0px 8px 0px 0px"
+    src="../../../../assets/img/icons/Vector (2).svg"
+  />
+  <img style="width: 22px" src="../../../../assets/img/icons/Vector (1).svg" />
+  <img
+    style="width: 22px; margin: 7px"
+    src="../../../../assets/img/icons/vertcalLines.svg"
+  /> -->
+</div>
+
+<table class="table table-hover table-striped" *ngIf="is_soci_view">
+  <thead>
+    <tr align="center">
+      <th>SOCI ID</th>
+      <th>Created date</th>
+      <th>FSS Name</th>
+      <th>Qutation ID</th>
+      <th>Company Name</th>
+      <!-- <th>Validity Date</th>
+      <th>Reason</th> -->
+      <th>Status</th>
+      <!-- <th>Amount (RM)</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr align="center" *ngFor="let item of pendingSOCI">
+      <td>
+        <a href="#" [routerLink]="['/soci/', item.id, 'edit']">
+          {{item.soci_id}}
+        </a>
+      </td>
+      <td>{{ item.created_at | date: "dd-MMM-yyy" }}</td>
+      <td>_</td>
+      <td>{{ item.quote_full_id }}</td>
+      <td>{{ item.customer.company_name }}</td>
+      <td>
+        <p-badge [value]="item.status_desc" *ngIf="item.status == 4"  severity="success" styleClass="p-mr-2"></p-badge>
+        <p-badge [value]="item.status_desc" *ngIf="item.status == 1" severity="info" styleClass="p-mr-2"></p-badge>
+        <p-badge [value]="item.status_desc" *ngIf="item.status == 2" severity="warning" styleClass="p-mr-2"></p-badge>
+        <p-badge [value]="item.status_desc" *ngIf="item.status == 7" severity="danger"></p-badge>
+      </td>
+      <td>
+        <!-- ['/soci/', item.id, 'edit'] -->
+        <a
+          href="#"
+          [routerLink]=""
+          (click)=" goToApproval(item.id)"
+          class="fa fa-edit"
+        ></a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- End SOCI pending list table -->
+
+<!-- Quotation list table -->
+<div class="card-header row" style="background-color: #898485; color: white" *ngIf="is_quotation_view">
+  <div style="padding-left: 20px">
+    <h2>Pending Quotation</h2>
+  </div>
+
+  <div class="col-lg col-sm-4;" align="right">
+    <input
+      style="width: 25%"
+      class="form-control"
+      placeholder="Search"
+      type="text"
+    />
+  </div>
+
+  <!-- <img
+    style="width: 22px; margin: 0px 8px 0px 0px"
+    src="../../../../assets/img/icons/Vector (2).svg"
+  />
+  <img style="width: 22px" src="../../../../assets/img/icons/Vector (1).svg" />
+  <img
+    style="width: 22px; margin: 7px"
+    src="../../../../assets/img/icons/vertcalLines.svg"
+  /> -->
+</div>
+<table class="table table-hover table-striped">
+  <!-- <thead>
+    <tr>
+      <th>SOCI ID</th>
+      <th>Created date</th>
+      <th>FSS Name</th>
+      <th>Qutation ID</th>
+      <th>Company Name</th>
+      <th>Validity Date</th>
+      <th>Reason</th>
+      <th>Status</th>
+      <th>Amount (RM)</th>
+    </tr>
+  </thead> -->
+</table>
+
+<p-paginator
+  (onPageChange)="paginate($event)"
+  [rows]="pageItems"
+  [totalRecords]="totalRecords"
+  [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
+>
+</p-paginator>

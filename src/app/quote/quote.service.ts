@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
    
-import {  Observable, throwError } from 'rxjs';
+import {  Observable, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
   
 import { Quote } from './quote';
@@ -19,7 +19,7 @@ export class QuoteService {
       'Content-Type': 'application/json',
     })
   }
-  
+
   constructor(private httpClient: HttpClient) { }
    
   getAll(pageItems,search_text,sort): Observable<Quote[]> {
@@ -99,8 +99,23 @@ export class QuoteService {
     )
   }
 
+  getTemplates(){
+    return this.httpClient.get(this.apiURL + '/quote/quotation-template',this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+  getQuatation(id){
+    return this.httpClient.get(this.apiURL + '/quote/quotation-preview/'+ id,this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   getFilteredProducts(filter){
     filter = filter == '' ? 0 : filter; 
+    // /opportunity/get-all-products
+    // return this.httpClient.get(this.apiURL + '/opportunity/get-all-products?search_text=' + filter,this.httpOptions)
     return this.httpClient.get(this.apiURL + '/quote/products/filtered/' + filter,this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
@@ -178,4 +193,41 @@ export class QuoteService {
     }
     return throwError(errorMessage);
  }
+
+ saveTemplateData(id,headerData,footerData ,bodyData){
+  return this.httpClient.post(this.apiURL + '/quote/quotation-preview/save/'+ id, {
+    'header_content': headerData,
+    'footer_content': footerData,
+    'full_html': bodyData,
+  })
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
+
+uploadTemplateImage(filePath,Q_id,T_id){
+  return this.httpClient.post(this.apiURL + '/quote/quotation-upload/'+ Q_id +'/' + T_id + '/', filePath, {
+    headers: {
+      'Content-Type': 'file'
+    },
+  })
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
+
+downloadUploadedPdfTemplate(Q_id,T_id){
+  return this.httpClient.get(this.apiURL + '/quote/quotation-preview-merge/'+ Q_id +'/' + T_id + '/')
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
+
+downloadQuoteTemplate(Q_id,T_id){
+  return this.httpClient.get(this.apiURL + '/quote/quotation-preview-download/'+ Q_id +'/' + T_id + '/')
+  .pipe(
+    catchError(this.errorHandler)
+  )
+}
+
 }

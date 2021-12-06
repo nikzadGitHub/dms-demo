@@ -298,7 +298,7 @@ export class AuthService {
   }
 
   loginAzureToken(azureToken: {
-    azure_token: string, refresh_token: string
+    azure_token: string, fcm_code: string
   }): Observable<any> {
     
     return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/azure-login", azureToken);

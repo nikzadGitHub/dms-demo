@@ -14,7 +14,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'primeng/fileupload';
 import { EditComponent } from './edit/edit.component';
 import { AccordionModule } from 'primeng/accordion';
-
+import {DropdownModule} from 'primeng/dropdown';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {BadgeModule} from 'primeng/badge';
+import {CheckboxModule} from 'primeng/checkbox';
+import {TooltipModule} from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,12 @@ import { AccordionModule } from 'primeng/accordion';
     AutoCompleteModule,
     ReactiveFormsModule,
     FormsModule,
+    DropdownModule,
+    MultiSelectModule,
     FileUploadModule,
+    BadgeModule,
+    CheckboxModule,
+    TooltipModule,
     AccordionModule
   ]
 })
