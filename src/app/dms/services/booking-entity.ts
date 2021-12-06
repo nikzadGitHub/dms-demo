@@ -59,7 +59,8 @@ export interface BookingEntity {
   approvalList: ApprovalList | null;
   bookingDetailList: BookingDetail;
   opportunitySummary: OpportunitySummary | null;
-  mainAsset: MainAsset | null
+  mainAsset: MainAsset | null;
+  access: boolean;
 }
 
 export type BookingEntityList = BookingEntity[];
