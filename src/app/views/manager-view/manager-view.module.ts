@@ -33,6 +33,8 @@ import {TooltipModule} from 'primeng/tooltip';
     InputNumberModule,
     TabViewModule,
     BadgeModule,
+    CheckboxModule,
+    TooltipModule,
     AccordionModule,
     ModalModule
   ],
