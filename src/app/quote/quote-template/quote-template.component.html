@@ -1,26 +1,31 @@
 <div class="main-content" id="bodyContent" #bodyContent>
-  <div class="download-btn">
-    <input
-      type="file"
-      class="file-input"
-      multiple
-      (change)="onFileSelected($event)"
-      #fileUpload
-    />
-    <button
-      type="button"
-      class="btn btn-primary btn-sm m-2 file-upload"
-      role="button"
-      rel="nofollow"
-      target="_blank"
-      (click)="fileUpload.click()"
-    >
-      Upload Image
-      <input #fileInput type="file" style="display: none" />
-    </button>
-    <button class="btn btn-primary btn-sm" (click)="downloadPDF()">
-      Download Quotation
-    </button>
+  <div class="topButtons">
+    <div class="download-btn">
+      <input
+        type="file"
+        class="file-input"
+        multiple
+        (change)="onFileSelected($event)"
+        #fileUpload
+      />
+      <button
+        type="button"
+        class="btn btn-primary btn-sm m-2 file-upload"
+        role="button"
+        rel="nofollow"
+        target="_blank"
+        (click)="fileUpload.click()"
+      >
+        Upload Image
+        <input #fileInput type="file" style="display: none" />
+      </button>
+      <button class="btn btn-primary btn-sm" (click)="downloadUploadedPDF()">
+        Download Quotation
+      </button>
+    </div>
+    <div class="loaderText" *ngIf="loader">
+      <div><b>Uploading......</b></div>
+    </div>
   </div>
   <!-- style="width: 100%" -->
   <div class="card">
@@ -116,7 +121,7 @@
                   <!-- there should be loop for all the products -->
                   <td>No Data Available </td>
                   <td> {{ item.name }} </td>
-                  <td>No Description</td>
+                  <td>{{ item.name }}</td>
                   <td>  {{item.list_price}} </td>
                 </tr>
               </tbody>
@@ -140,7 +145,8 @@
               ><br />
             </p>
           <div class="previewSave">
-            <button class="btn btn-primary" (click)='savePreviewContent()' >Save</button>
+            <button class="btn btn-primary saveButton" (click)='savePreviewContent()' >Save</button>
+            <button class="btn btn-primary quotationDownload" (click)='downloadQuotationTemplate()' > Download Quotation </button>
           </div>
         </div>
       </div>
