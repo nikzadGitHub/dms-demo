@@ -9,6 +9,7 @@ import {
 import {EquipmentList} from './equipment-entity';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
