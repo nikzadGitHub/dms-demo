@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { InventoryList, InventoryInterface } from './inventory.interface';
+import { InventoryList, InventoryInterface } from './inventory';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class MockInventoryService implements InventoryInterface {
   private mockData: InventoryList = [
     {
@@ -15,7 +13,7 @@ export class MockInventoryService implements InventoryInterface {
       agency_name: 'trxt',
       description: 'trxt',
       status: 'Approved',
-      booking_id: 92,
+      booking_id: BigInt(92),
     }, {
       serial_no: 2,
       stock_keep_unit: 'CX32312',
@@ -23,7 +21,7 @@ export class MockInventoryService implements InventoryInterface {
       agency_name: 'trxt',
       description: 'trxt',
       status: 'Provisionally accepted',
-      booking_id: 292,
+      booking_id: BigInt(292),
     }, {
       serial_no: 234,
       stock_keep_unit: 'UY4234',
@@ -31,7 +29,7 @@ export class MockInventoryService implements InventoryInterface {
       agency_name: 'trxt',
       description: 'trxt',
       status: 'Available',
-      booking_id: 192,
+      booking_id: BigInt(192),
     }, {
       serial_no: 412,
       stock_keep_unit: 'XY2568',
@@ -39,7 +37,7 @@ export class MockInventoryService implements InventoryInterface {
       agency_name: 'trxt',
       description: 'trxt',
       status: 'Draft',
-      booking_id: 692,
+      booking_id: BigInt(692),
     },
   ];
 

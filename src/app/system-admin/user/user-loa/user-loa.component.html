@@ -1,0 +1,156 @@
+<div class="card main-div">
+  <div class="card-header page-heading-icon">
+    <!-- <h1>Level Of Authority</h1> -->
+    <div>
+      <h2>Level Of Authority</h2>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="title-text">
+      <i class="pi pi-user-plus"></i>
+      Add Level Of Authority
+    </p>
+    <div class="authority-text">
+      <!-- ★ -->
+      <label>Unit: <span class="red-star">*</span></label>
+      <p-dropdown
+        id="opc"
+        name="picList"
+        [options]="dummy_data"
+        optionLabel="name"
+        placeholder="Select Approve By"
+        [style]="{ width: '300px' }"
+        [required]="true"
+      ></p-dropdown>
+      <!-- <select class="form-control" required>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select> -->
+      <!-- Payment Term Approval -->
+      <label>Payment Term Approval:<span class="red-star">*</span></label>
+      <p-dropdown
+        id="opc"
+        name="picList"
+        [options]="dummy_data"
+        optionLabel="name"
+        placeholder="Select Approve By"
+        [style]="{ width: '300px' }"
+        [required]="true"
+      ></p-dropdown>
+      <!-- <select class="form-control" required>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select> -->
+    </div>
+    <div class="authority-text-2">
+      <!-- Person Charges -->
+      <label> Person Charges:<span class="red-star">*</span></label>
+      <p-dropdown
+        id="opc"
+        name="picList"
+        [options]="dummy_data"
+        optionLabel="name"
+        placeholder="Select Approve By"
+        [style]="{ width: '300px' }"
+        [required]="true"
+      ></p-dropdown>
+      <!-- <select class="form-control" required>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select> -->
+    </div>
+
+    <!-- price level approval -->
+    <div class="price-action">
+      <h4>Price Level Approval</h4>
+      <button class="btn btn-icon btn-outline-primary" icon="pi pi-check">
+        <i class="cil-plus c-icon"></i>
+      </button>
+    </div>
+    <div class="price-level">
+      <!-- Amount -->
+      <label>Amount: <span class="red-star">*</span></label>
+      <input type="text" class="form-control" />
+
+      <!-- approve by -->
+      <label>Approve By: <span class="red-star">*</span></label>
+      <p-dropdown
+        id="opc"
+        name="picList"
+        [options]="dummy_data"
+        optionLabel="name"
+        placeholder="Select Approve By"
+        [style]="{ width: '300px' }"
+        [required]="true"
+      >
+      </p-dropdown>
+      <!-- <select class="form-control" required>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select> -->
+    </div>
+
+    <div class="action-btn">
+      <button type="button" class="btn btn-outline-primary cancel-btn">
+        CANCEL
+      </button>
+      <button type="button" class="btn btn-primary save-btn">SAVE</button>
+    </div>
+
+    <div class="authority-table">
+      <!-- table table-striped -->
+      <table class="">
+        <thead>
+          <tr class="bg-primary">
+            <th>Created Date</th>
+            <th>Name</th>
+            <th>Rate</th>
+            <th>Country</th>
+            <th>Main Unit</th>
+            <th>Sub Unit</th>
+            <th>Report To</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>14-July-2021</td>
+            <td>Jack Lee</td>
+            <td>FSS</td>
+            <td>Malaysia</td>
+            <td>Care Area</td>
+            <td>West Malaysia</td>
+            <td>Methew Chan</td>
+            <td align="center">
+              <a [routerLink]="" routerLinkActive="router-link-active">
+                <i class="fa fa-edit"></i>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>14-July-2021</td>
+            <td>Jack Lee</td>
+            <td>FSS</td>
+            <td>Malaysia</td>
+            <td>Care Area</td>
+            <td>West Malaysia</td>
+            <td>Methew Chan</td>
+            <td align="center">
+              <a [routerLink]="" routerLinkActive="router-link-active">
+                <i class="fa fa-edit"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

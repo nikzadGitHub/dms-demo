@@ -1,148 +1,497 @@
-<p-table #dt [value]="socis" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true" responsiveLayout="scroll"
-[reorderableColumns]="true" [lazy]="true" (onLazyLoad)="SortColumn($event)" (onColReorder)="columnOrder($event)"
-[filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']" [columns]="columns">
+
+<p-table
+  #dt
+  [value]="socis"
+  styleClass="p-datatable-customers"
+  [rowHover]="true"
+  responsiveLayout="scroll"
+  [filterDelay]="0"
+  [globalFilterFields]="[
+
+    'quote_id',
+    'company',
+    'amount',
+    'status'
+  ]"
+  (onFilter)='columnFilter($event)'
+>
   <ng-template pTemplate="caption">
     <div class="table-header">
+      <span>
+        SOCI Listing
+        <!-- *ngIf="isPermission" -->
+        <a
+          [routerLink]=""
+          routerLinkActive="router-link-active"
+          (click)="createModal.createSoci()"
+        >
+          <i class="icon-plus icons" style="color: white"></i>
+        </a>
+      </span>
+      <span class="p-input-icon-left input-span-icon">
+        <i class="pi pi-search"></i>
+        <input
+          type="text"
+          pInputText
+          placeholder="SOCI Search"
+          (input)="getAll()"
+          [(ngModel)]="search_text"
+        />
         <span>
-          SOCI Listing 
-          <a [routerLink]="" routerLinkActive="router-link-active" (click)='createModal.showModal()'>
-            <i class="icon-plus icons" style="color: white;"></i>
-          </a>
+          <i (click)="confirmationExportExcelModal.show()"
+            ><img
+              style="margin: 8px"
+              src="../../../../assets/img/icons/Vector (2).svg"
+          /></i>
+          <i (click)="columnChooserModal.show()">
+            <img
+              src="../../../assets/img/icons/vertcalLines.svg"
+              style="width: 25px; margin: 7px"
+            />
+          </i>
         </span>
-        <span class="p-input-icon-left">
-            <i class="pi pi-search"></i>
-            <input type="text" pInputText placeholder="Global Search" (input)="getAll()" 
-            [(ngModel)]="search_text"/>
-        </span>
+      </span>
     </div>
   </ng-template>
-  <ng-template pTemplate="header" let-columns>
+  <ng-template pTemplate="header">
     <tr>
-      <th *ngFor="let column of columns" pSortableColumn="{{column.field}}" class="text-center" pReorderableColumn>
-        <div class="p-d-flex p-jc-between p-ai-center">
-          {{column.header}}
-          <p-sortIcon field="{{column.field}}"></p-sortIcon>
-          <p-columnFilter type="{{column.type}}" field="{{column.field}}" display="menu" class="p-ml-auto"></p-columnFilter>
+      <th
+        pSortableColumn="created_at"
+        class="text-center"
+        *ngIf="checkItem('c_date')"
+      >
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+          Created Date
+          <div class="date-icons">
+            
+              <p-sortIcon field="created_at"></p-sortIcon>
+              <p-columnFilter
+                type="date"
+                field="created_at"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            
+           
+          </div>
+       
         </div>
       </th>
-      <!-- <th pSortableColumn="created_date" class="text-center" pReorderableColumn>
-        <div class="p-d-flex p-jc-between p-ai-center">
-            Created Date
-            <p-sortIcon field="created_date"></p-sortIcon>
-            <p-columnFilter type="date" field="created_date" display="menu" class="p-ml-auto"></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="soci_id" class="text-center" pReorderableColumn>
-        <div class="p-d-flex p-jc-between p-ai-center">
-            SOCI ID
+      <th
+        pSortableColumn="soci_id"
+        class="text-center"
+        *ngIf="checkItem('soci_id')"
+      >
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+          SOCI ID
+          <div class="soci-icons">
             <p-sortIcon field="soci_id"></p-sortIcon>
-            <p-columnFilter type="text" field="soci_id" display="menu" class="p-ml-auto"></p-columnFilter>
+            <p-columnFilter
+              type="text"
+              field="soci_id"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
         </div>
       </th>
-      <th pSortableColumn="company" class="text-center" pReorderableColumn>
-        <div class="p-d-flex p-jc-between p-ai-center">
-            Company Name
-            <p-sortIcon field="company"></p-sortIcon>
-            <p-columnFilter type="text" field="company" display="menu" class="p-ml-auto"></p-columnFilter>
+      <th
+        pSortableColumn="customer.company_name"
+        class="text-center"
+        *ngIf="checkItem('company_name')"
+      >
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+          Company Name
+          <div class="name-icons">  
+            <p-sortIcon field="customer.company_name"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="customer.company_name"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter></div>
+        
         </div>
       </th>
-      <th pSortableColumn="quote_id" class="text-center" pReorderableColumn>
-        <div class="p-d-flex p-jc-between p-ai-center">
-            Quotation ID
-            <p-sortIcon field="quote_id"></p-sortIcon>
-            <p-columnFilter type="text" field="quote_id" display="menu" class="p-ml-auto"></p-columnFilter>
+      <th
+        pSortableColumn="quote_full_id"
+        class="text-center"
+        *ngIf="checkItem('quote_full_id')"
+      >
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+          Quotation ID
+          <div class="quote-icons">
+            <p-sortIcon field="quote_full_id"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="quote_full_id"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+       
         </div>
       </th>
-      <th pSortableColumn="quote_date" class="text-center" pReorderableColumn>
-        <div class="p-d-flex p-jc-between p-ai-center">
-            Quote Date
+      <th
+        pSortableColumn="quote_date"
+        class="text-center"
+        *ngIf="checkItem('quote_date')"
+      >
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+          Quote Date
+          <div class="Q-Date-icons">
             <p-sortIcon field="quote_date"></p-sortIcon>
-            <p-columnFilter type="date" field="quote_date" display="menu" class="p-ml-auto"></p-columnFilter>
+            <p-columnFilter
+              type="date"
+              field="quote_date"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
         </div>
       </th>
-      <th pSortableColumn="amount" class="text-center" pReorderableColumn>
-        <div class="p-d-flex p-jc-between p-ai-center">
-            Amount (MYR)
-            <p-sortIcon field="amount"></p-sortIcon>
-            <p-columnFilter type="numeric" field="amount" display="menu" class="p-ml-auto"></p-columnFilter>
+      <th
+        pSortableColumn="po_amount"
+        class="text-center"
+        *ngIf="checkItem('po_amount')"
+      >
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+          Amount (MYR)
+          <div class="amount-icons">
+            <p-sortIcon field="po_amount"></p-sortIcon>
+            <p-columnFilter
+              type="numeric"
+              field="po_amount"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+        
         </div>
       </th>
-      <th pSortableColumn="po_no" class="text-center" pReorderableColumn>
-        <div class="p-d-flex p-jc-between p-ai-center">
-            PO No
+      <th
+        pSortableColumn="po_no"
+        class="text-center"
+        *ngIf="checkItem('po_no')"
+      >
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+          PO No
+          <div class="PO-icons">
             <p-sortIcon field="po_no"></p-sortIcon>
-            <p-columnFilter type="text" field="po_no" display="menu" class="p-ml-auto"></p-columnFilter>
+            <p-columnFilter
+              type="text"
+              field="po_no"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+        
         </div>
       </th>
-      <th pSortableColumn="po_date" class="text-center" pReorderableColumn>
-        <div class="p-d-flex p-jc-between p-ai-center">
-            PO Date
+      <th
+        pSortableColumn="po_date"
+        class="text-center"
+        *ngIf="checkItem('po_date')"
+      >
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+          PO Date
+          <div class="PO_date-icons">
             <p-sortIcon field="po_date"></p-sortIcon>
-            <p-columnFilter type="date" field="po_date" display="menu" class="p-ml-auto"></p-columnFilter>
+            <p-columnFilter
+              type="date"
+              field="po_date"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
         </div>
       </th>
-      <th pSortableColumn="status" class="text-center" pReorderableColumn>
-        <div class="p-d-flex p-jc-between p-ai-center">
-            Status
-            <p-sortIcon field="status"></p-sortIcon>
-            <p-columnFilter type="text" field="status" display="menu" class="p-ml-auto"></p-columnFilter>
+      <th
+        pSortableColumn="fo_order_number"
+        class="text-center"
+        *ngIf="checkItem('fo_order_number')"
+      >
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+          FO Number
+          <div class="fo-icons">
+            <p-sortIcon field="fo_order_number"></p-sortIcon>
+            <p-columnFilter
+              type="date"
+              field="fo_order_number"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
         </div>
-      </th> -->
-      
-      <th [style]="{'width':'5%'}">
       </th>
+      <th
+        pSortableColumn="status_desc"
+        class="text-center"
+        *ngIf="checkItem('status_desc')"
+      >
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+          Status
+          <div class="status-icons">
+            <p-sortIcon field="status_desc"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="status_desc"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
+        </div>
+      </th>
+
+      <th [style]="{ width: '5%' }"></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-soci let-rowData let-columns="columns" let-index="rowIndex">
-    <tr class="p-selectable-row" [pReorderableRow]="index">
-      <td class="text-center" *ngFor="let col of columns">
-        <span class="p-column-title">{{col.header}}</span>
-        {{ rowData[col.field] }}
-      </td>
-      <!-- <td class="text-center">
+  <ng-template pTemplate="body" let-soci>
+    <tr class="p-selectable-row">
+      <!-- {{ opportunity.created_date | date: "dd-MMM-yyyy" }} -->
+      <td class="text-center" *ngIf="checkItem('c_date')">
         <span class="p-column-title">Created Date</span>
-        {{ quote.created_at | date:'dd-MMM-yyyy' }}
+        {{ soci.created_at | date: "MM-dd-yyyy"}}
+      </td>
+      <td class="text-center" *ngIf="checkItem('soci_id')">
+        <a href="" [routerLink]="['/soci/', soci.id, 'edit']">
+          <span class="p-column-title"> Soci Id</span>
+          {{ soci.soci_id }}
+        </a>
+      </td>
+      <td class="text-center" *ngIf="checkItem('company_name')">
+        <a href="/#/soci/index">
+          <span class="p-column-title"> Company Name</span>
+          {{ soci?.customer?.company_name }}
+        </a>
+      </td>
+      <td class="text-center" *ngIf="checkItem('quote_full_id')">
+        <span class="p-column-title">Quote Id</span>
+        {{ soci.quote_full_id }}
+      </td>
+      <td class="text-center" *ngIf="checkItem('quote_date')">
+        <span class="p-column-title">Quote Sate</span>
+        {{ soci.quote_date | date: "MM-dd-yyyy" }}
+      </td>
+      <td class="text-center" *ngIf="checkItem('po_amount')">
+        <div *ngIf="soci.po_amount">
+          <span class="p-column-title"> Amount</span>
+          {{ soci.po_amount }}
+        </div>
+        <div *ngIf="!soci.po_amount">
+          <span class="p-column-title"> Amount</span>
+          0
+        </div>
+      </td>
+
+      <td class="text-center" *ngIf="checkItem('po_no')">
+        <a
+          [routerLink]=""
+          routerLinkActive="router-link-active"
+          *ngIf="soci.po_no == null"
+          (click)="createModal.addPo(soci.quote_full_id, soci.id)"
+        >
+          Add Po
+        </a>
+        <div *ngIf="soci.po_no">
+          <span class="p-column-title">Po no</span>
+          {{ soci.po_no }}
+        </div>
+      </td>
+      <td class="text-center" *ngIf="checkItem('po_date')">
+        <a
+          [routerLink]=""
+          routerLinkActive="router-link-active"
+          *ngIf="soci.po_date == null"
+          (click)="createModal.addPo(soci.quote_full_id, soci.id)"
+        >
+          Po Date
+        </a>
+        <div *ngIf="soci.po_date">
+          <span class="p-column-title">Po. date</span>
+          {{ soci.po_date | date: "MM-dd-yyyy" }}
+        </div>
+      </td>
+      <td class="text-center" *ngIf="checkItem('fo_order_number')">
+        <div *ngIf="soci.fo_order_number">
+          <span class="p-column-title">Fo Number</span>
+          {{ soci.fo_order_number }}
+        </div>
+        <div *ngIf="!soci.fo_order_number">
+          <span class="p-column-title">Fo Number</span>
+          _
+        </div>
+      </td>
+      <td class="text-center" *ngIf="checkItem('status_desc')">
+        <p-badge
+          [value]="soci.status_desc"
+          *ngIf="soci.status == 4"
+          severity="success"
+          styleClass="p-mr-2"
+          class="soci-list-badges"
+        ></p-badge>
+        <p-badge
+          [value]="soci.status_desc"
+          *ngIf="soci.status == 1"
+          severity="info"
+          styleClass="p-mr-2"
+          class="soci-list-badges"
+        ></p-badge>
+        <p-badge
+          [value]="soci.status_desc"
+          *ngIf="soci.status == 2"
+          severity="warning"
+          styleClass="p-mr-2"
+          class="soci-list-badges"
+        ></p-badge>
+
+        <input
+          type="text"
+          [pTooltip]="soci.cancelled_remarks"
+          tooltipPosition="top"
+          [value]="soci.status_desc"
+          readonly
+          tooltipEvent="focus"
+          *ngIf="soci.status == 7"
+          class="reject-badge"
+        />
+        <!-- <p-badge
+          [pTooltip]="soci.cancelled_remarks"
+          tooltipPosition="left"
+          tooltipEvent="focus"
+          [value]="soci.status_desc"
+          *ngIf="soci.status == 7"
+          severity="danger"
+          class="soci-list-badges reject-badge"
+        ></p-badge> -->
       </td>
       <td class="text-center">
-        <span class="p-column-title">SOCI ID</span>
-        {{ quote.quote_id }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title">Company</span>
-        {{ quote.company }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title">Quotation ID</span>
-        {{ quote.quote_id }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title">Quote Date</span>
-        {{ quote.validity_date | date:'dd-MMM-yyyy' }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title">Amount (MYR)</span>
-        {{ quote.amount }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title">PO No</span>
-        {{ quote.quote_id }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title">PO Date</span>
-        {{ quote.validity_date | date:'dd-MMM-yyyy' }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title">Status</span>
-        {{ quote.status }}
-      </td> -->
-      <td class="text-center">
-        <span class="p-column-title">Action</span>
-        <a href="#" [routerLink]="['/soci/', soci.id, 'edit']" class="fa fa-edit"></a>
+        <div class="row-icon">
+          <a
+            href="#"
+            (click)="previewSOCI(soci.id)"
+            [routerLink]=""
+            class="fa fa-eye"
+          ></a>
+          <a
+            href="#"
+            [routerLink]="['/soci/', soci.id, 'edit']"
+            class="fa fa-edit"
+          ></a>
+        </div>
       </td>
     </tr>
   </ng-template>
 </p-table>
-<p-paginator [rows]="pageItems" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
+<p-paginator
+  (onPageChange)="paginate($event)"
+  [rows]="pageItems"
+  [totalRecords]="totalRecords"
+  [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
+>
 </p-paginator>
 
-<app-create #createModal></app-create>
+<div>
+  <app-create
+    #createModal
+    (sociDataEvent)="receiveSociData($event)"
+  ></app-create>
+</div>
+
+<!-- export excel popup -->
+<div
+  bsModal
+  #confirmationExportExcelModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationExportExcelModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">Do you want to export the excel ?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationExportExcelModal.hide()"
+        >
+          No
+        </button>
+        <button
+          type="button"
+          class="btn btn-info"
+          (click)="exportToExcel($event)"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- column chooser model -->
+<!-- (onHide)="setTermsConditions()" -->
+<div
+  bsModal
+  #columnChooserModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Select Column</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="columnChooserModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="column-box">
+          <div
+            *ngFor="let item of columnValue"
+            class="p-field-checkbox check-field"
+          >
+            <label>{{ item.name }}</label>
+
+            <p-checkbox
+              name="group2"
+              [value]="item"
+              [(ngModel)]="selectedValues"
+              [inputId]="item.key"
+              (onChange)="updateCols($event, item)"
+            ></p-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

@@ -43,7 +43,7 @@
 	</div>
   </div> -->
 
-<p-table
+<p-table class="table table-hover table-striped"
   #dt
   [value]="opportunities"
   styleClass="p-datatable-opportunity"
@@ -68,7 +68,6 @@
           pInputText
           placeholder="Global Search"
           [(ngModel)]="search_text"
-          (input)="getAll()"
         />
       </div>
     </div>
@@ -76,75 +75,107 @@
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="created_date" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
+        <div style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
           Created Date
-          <p-sortIcon field="created_date"></p-sortIcon>
-          <p-columnFilter
-            type="date"
-            field="created_date"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div style=" display: flex;
+        
+          align-items: center;">
+             <p-sortIcon field="created_date"></p-sortIcon>
+            <p-columnFilter
+              type="date"
+              field="created_date"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter></div>
         </div>
       </th>
       <th pSortableColumn="op_id" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
+        <div  style="width:100% ;white-space: nowrap;display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
           Opportunity ID
-          <p-sortIcon field="op_id"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="op_id"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div style=" display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;">
+            <p-sortIcon field="op_id"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="op_id"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
         </div>
       </th>
       <th pSortableColumn="topic" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
+        <div style="width:100% ;white-space: nowrap;display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
           Topic
-          <p-sortIcon field="topic"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="topic"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div style=" display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;">
+             <p-sortIcon field="topic"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="topic"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter></div>
+         
         </div>
       </th>
       <th pSortableColumn="company_name" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
+        <div style="width:100% ;white-space: nowrap;display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
           Company Name
-          <p-sortIcon field="company_name"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="company_name"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div style=" display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;">
+            <p-sortIcon field="company_name"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="company_name"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
         </div>
       </th>
       <th pSortableColumn="status_id" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
+        <div style="width:100% ;white-space: nowrap;display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
           Status
-          <p-sortIcon field="status_id"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="status_id"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div style=" display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;">
+            <p-sortIcon field="status_id"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="status_id"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
         </div>
       </th>
       <th pSortableColumn="amount" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
+        <div style="width:100% ;white-space: nowrap;display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
           Amount (MYR)
-          <p-sortIcon field="amount"></p-sortIcon>
-          <p-columnFilter
-            type="numeric"
-            field="amount"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
+          <div  style=" display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;">
+            <p-sortIcon field="amount"></p-sortIcon>
+            <p-columnFilter
+              type="numeric"
+              field="amount"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
         </div>
       </th>
 
@@ -174,8 +205,9 @@
         {{ opportunity.status }}
       </td>
       <td class="text-center">
+        <!-- | currency: "MYR" -->
         <span class="p-column-title">Amount (MYR)</span>
-        {{ opportunity.amount | currency: "MYR" }}
+        {{ opportunity.est_value }}
       </td>
       <td>
         <div class="row-icon">

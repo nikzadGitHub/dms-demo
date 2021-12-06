@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserComponent } from './user.component';
+import { UserLoaComponent } from './user-loa/user-loa.component';
 
-export const fallbackPath = 'user';
+// export const fallbackPath = 'user';
 
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   redirectTo:,
+  //   pathMatch: 'full',
+  // },
   {
-    path: '',
-    redirectTo: fallbackPath,
-    pathMatch: 'full',
-  },
-  {
-    path: 'user', component: UserComponent,
-    data: {
-      title: 'Add User'
-    }
+    path: 'userloa', component: UserLoaComponent,
+  
   }
 ];
 

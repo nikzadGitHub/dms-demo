@@ -1,0 +1,128 @@
+.main-div {
+  display: flex;
+  flex-direction: column;
+  font-family: "Lato";
+  .red-star {
+    color: red;
+  }
+  .page-heading-icon {
+    background-color: #898485;
+    color: white;
+  }
+  .title-text {
+    background: #d3d3d357;
+    line-height: 39px;
+    padding: 6px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    // color: black;
+    i {
+      margin-right: 10px;
+      margin-left: 10px;
+    }
+  }
+
+  .authority-text {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+
+    select {
+      width: 300px;
+    }
+    label {
+      margin-right: 10px;
+    }
+  }
+  .authority-text-2 {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 20px;
+
+    select {
+      width: 300px;
+    }
+    label {
+      margin-right: 45px;
+    }
+  }
+
+  .price-action {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-start;
+    margin-top: 20px;
+    h4 {
+      margin-top: 20px;
+      margin-right: 10px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .btn-outline-primary {
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      i {
+        margin: -6px;
+        font-size: 16px;
+      }
+    }
+  }
+  .price-level {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-top: 25px;
+
+    select {
+      width: 300px;
+    }
+    input {
+      width: 300px;
+    }
+  }
+
+  .action-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+
+    button {
+      width: 150px;
+    }
+    .cancel-btn {
+      margin-right: 10px;
+    }
+  }
+
+  .authority-table {
+    display: flex;
+    flex-direction: row;
+    margin: 35px 20px 20px 20px;
+    table {
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    th,
+    td {
+      padding: 1em;
+      border: 1px solid lightgray;
+      // background: #ddd;
+      // border-bottom: 2px solid white;
+    }
+    tr:nth-child(even) {
+      background-color: #e8e8e8;
+    }
+  }
+}

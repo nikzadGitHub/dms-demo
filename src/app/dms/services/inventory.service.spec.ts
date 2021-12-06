@@ -10,7 +10,8 @@ describe('InventoryService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule
-      ]
+      ],
+      providers: [InventoryService]
     });
     service = TestBed.inject(InventoryService);
   });

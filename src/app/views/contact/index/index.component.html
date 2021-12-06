@@ -13,6 +13,7 @@
               </div>
           </div>
           <div class="card-body">
+            <!-- <loading *ngIf="isLoading">{{ isLoading }}</loading> -->
               <app-list-table [tableData]="tableData" [headers]="headers" [path]="path" [key]="key" (delete_id)="deleteData($event)"></app-list-table>
           </div>
           <div class="card-footer bg-transparent">
