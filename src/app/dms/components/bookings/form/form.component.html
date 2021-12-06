@@ -27,7 +27,7 @@
                   <div class="form-group row">
                     <label class="col-md-4 col-form-label" for="booking-reason">Booking reason</label>
                     <div class="col-md-8">
-                      <select formControlName="booking_reason" class="form-control">
+                      <select formControlName="booking_reason" class="form-control" [(ngModel)]="optionValue" [attr.disabled]="editable">
                         <option value="">Please select</option>
                         <option value="demo">Demo</option>
                         <option value="events">Events</option>
@@ -130,6 +130,102 @@
                   <textarea formControlName="remarks" rows="9" class="form-control"></textarea>
                 </div>
               </div>
+              
+              <!-- bme log -->
+              <div class="form-group"  *ngIf="optionValue  == 'demo'">
+                <p-accordion class="p-accordion">
+                    <p-accordionTab class="p-accordionTab" [selected]="true">
+                        <p-header class="p-header">
+                            <i class="cil-info"></i>
+                            <span class="accordion-header">Bme Logs</span>
+                        </p-header>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Work Order Type</th>
+                                    <th>Required ?</th>
+                                    <th>Work Order Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Contingency</td>
+                                    <td>
+                                        <select class="form-control" formControlName="wo_con_req">
+                                            <option [value]="1" selected>Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" class="form-control" formControlName="wo_con_won" readonly></td>
+                                </tr>
+                                <tr>
+                                  <td>PDI</td>
+                                  <td>
+                                      <select class="form-control" formControlName="wo_pdi_req">
+                                          <option value="1" selected>Yes</option>
+                                          <option value="0">No</option>
+                                      </select>
+                                  </td>
+                                  <td><input type="text" class="form-control" formControlName="wo_pdi_won" readonly></td>
+                                </tr>
+                                <tr>
+                                  <td>Installation</td>
+                                  <td>
+                                      <select class="form-control" formControlName="wo_ins_req">
+                                          <option value="1" selected>Yes</option>
+                                          <option value="0">No</option>
+                                      </select>
+                                  </td>
+                                  <td><input type="text" class="form-control" formControlName="wo_ins_won" readonly></td>
+                                </tr>
+                                <tr>
+                                  <td>TNC</td>
+                                  <td>
+                                      <select class="form-control" formControlName="wo_tnc_req" >
+                                          <option value="1">Yes</option>
+                                          <option value="0">No</option>
+                                      </select>
+                                  </td>  
+                                  <td><input type="text" class="form-control" formControlName="wo_tnc_won" readonly></td>
+                                </tr>
+                                <tr>
+                                  <td>Training</td>
+                                  <td>
+                                      <select class="form-control" formControlName="wo_trn_req">
+                                          <option value="1" selected>Yes</option>
+                                          <option value="0">No</option>
+                                      </select>
+                                  </td>
+                                  <td><input type="text" class="form-control" formControlName="wo_trn_won" readonly></td>
+                                </tr>
+                                <tr>
+                                  <td>Warehouse QA</td>
+                                  <td>
+                                      <select class="form-control" formControlName="wo_wq_req">
+                                          <option value="1">Yes</option>
+                                          <option value="0">No</option> 
+                                      </select>
+                                  </td>
+                                  <td><input type="text" class="form-control" formControlName="wo_wq_won" readonly></td>
+                                </tr>
+                                <tr>
+                                  <td>Post-Deployment Repair</td>
+                                  <td>
+                                      <select class="form-control" formControlName="wo_pdr_req">
+                                          <option value="1" selected>Yes</option>
+                                          <option value="0">No</option>
+                                      </select>
+                                  </td>
+                                  <td><input type="text" class="form-control" formControlName="wo_pdr_won" readonly></td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </p-accordionTab>
+                </p-accordion>
+              </div>
+              <!-- bme log -->
+
               <div class="custom-footer d-flex justify-content-center">
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Save</button>
               </div>
@@ -139,6 +235,9 @@
       </div>
     </div><!--/.row-->
   </div>
+
+  
+
   <div
     id="success"
     bsModal
