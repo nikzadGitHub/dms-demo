@@ -39,8 +39,7 @@ export class EquipmentTableComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   get isRoot() {
     return this.kind === 'main';
@@ -66,7 +65,7 @@ export class EquipmentTableComponent implements OnInit {
    */
   get isLimitReached() {
     const max = this.maxPick;
-    return max ? this.data.length > max : false;
+    return max ? this.data.length >= max : false;
   }
 
   /**
