@@ -4,6 +4,8 @@ import {FpsInterface, FpsList, SaveResult} from './services/fps-interface';
 import { ApiClientService } from './api-client.service';
 import { SystemConfig } from '@app/config/system-config';
 import { HttpClient } from '@angular/common/http';
+import { FormControl, FormGroup } from '@angular/forms';
+
 
 @Injectable({providedIn: 'root'})
 
@@ -57,12 +59,23 @@ export class FpsService implements FpsInterface {
     ];
   }
 
-  getTenureList(financial_id: number, payment_frequency: string): Observable<any> {
-    return this.httpClient.get(SystemConfig.apiBaseUrl + "/tenure-list/" + financial_id + "/" + payment_frequency).pipe();
+  getTenureList(fps_type_id: number, financial_id: number, payment_frequency: string): Observable<any> {
+    return this.httpClient.get(SystemConfig.apiBaseUrl + "/tenure-list/"+ fps_type_id + "/" + financial_id + "/" + payment_frequency).pipe();
   }
 
   getUsersList(): Observable<any> {
     return this.httpClient.get(SystemConfig.apiBaseUrl + "/user-list").pipe();
+  }
+
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    });
   }
 
 }

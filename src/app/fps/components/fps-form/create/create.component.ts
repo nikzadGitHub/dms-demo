@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalDirective } from "ngx-bootstrap/modal";
@@ -35,6 +35,8 @@ export class CreateComponent implements OnInit {
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("foundModal") foundModal: ModalDirective;
+  @ViewChild('fpsAddFormContainer') fpsAddFormContainerRef: ElementRef;
+
   fpsAddForm : FormGroup;
   alertBody: string;
   alertHeader: string;
@@ -52,18 +54,17 @@ export class CreateComponent implements OnInit {
   current_apportunity_id : number;
   countryCode : string = 'MY';
 
-  oppt_details : OpportunityDetail = {
-    company_name: '',
+  oppt_details : any = {
     opportunity_code: '',
     created_at: '',
     currency_code: '',
-    data_area_id: 0,
-    amount: ''
+    amount: '',
+    bill_to: '',
   };
    
   constructor(
     private fb: FormBuilder,
-    private FpsService: FpsService,
+    private fpsService: FpsService,
     private appService: AppService,
     private institutionService: FinancialInstitutionService,
     private zone: NgZone,
@@ -71,8 +72,8 @@ export class CreateComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {}
 
-  fpsTypeList = this.FpsService.getTransSactionTypeList();
-  fpsStatusList = this.FpsService.getFpsStatusList();
+  fpsTypeList = this.fpsService.getTransSactionTypeList();
+  fpsStatusList = this.fpsService.getFpsStatusList();
 
   get form_controls() {
     return this.fpsAddForm.controls;
@@ -81,16 +82,16 @@ export class CreateComponent implements OnInit {
   ngOnInit(): void {
     
     this.fpsAddForm = this.fb.group({
-      fps_no: new FormControl(),
+      fps_no: new FormControl('',[Validators.required]),
       fps_opportunity_id: new FormControl(),
       fps_quote_id: new FormControl(),
       fps_customer_name: new FormControl(),
       fps_soci_uuid: new FormControl(),
       fps_transaction_type_id: new FormControl(),
-      fps_financier_id: new FormControl(),
-      fps_payment_frequency: new FormControl(),
+      fps_financier_id: new FormControl('',[Validators.required]),
+      fps_payment_frequency: new FormControl('',[Validators.required]),
       fps_status_id : new FormControl(),
-      fps_tenure_id : new FormControl(),
+      fps_tenure_id : new FormControl('',[Validators.required]),
       fps_adv_payment : new FormControl(),
       fps_adv_payment_percentage : new FormControl(),
       fps_net_financing_amount : new FormControl(),
@@ -119,11 +120,11 @@ export class CreateComponent implements OnInit {
       console.log('opptDetiasl', this.oppt_details);
       this.fpsAddForm.controls.fps_currency_code.setValue(this.oppt_details.currency_code);
       this.fpsAddForm.controls.fps_total_financial_amount.setValue(this.oppt_details.amount);
-      this.fpsAddForm.controls.fps_data_area_id.setValue(this.oppt_details.data_area_id);
+      this.fpsAddForm.controls.fps_data_area_id.setValue(this.oppt_details.bill_to.data_area_id);
     })
 
     // Get list of users.
-    this.FpsService.getUsersList().subscribe((res) => {	
+    this.fpsService.getUsersList().subscribe((res) => {	
       this.fps_user_list = res.data;
     })
     
@@ -168,10 +169,21 @@ export class CreateComponent implements OnInit {
   }
 
   onSave(): void {
+
+    if (!this.fpsAddForm.valid) {
+      this.fpsService.validateAllFormFields(this.fpsAddForm);
+      this.fpsAddFormContainerRef.nativeElement.scrollIntoView({behavior: 'smooth'});
+      return;
+    } 
+
     console.log('data', this.fpsAddForm);
 
-    this.FpsService.saveFps({
-      name: this.fpsAddForm.get("fps_payment_frequency").value + "",
+    this.fpsService.saveFps({
+      fps_no: this.fpsAddForm.get("fps_no").value + "",
+      fps_opportunity_id: this.fpsAddForm.get("fps_opportunity_id").value + "",
+      fps_quote_id: this.fpsAddForm.get("fps_quote_id").value + "",
+      fps_payment_frequency: this.fpsAddForm.get("fps_no").value + "",
+      
       
     }).subscribe((res) => {
         if (res.id) {
@@ -229,8 +241,11 @@ export class CreateComponent implements OnInit {
     
     let financial_id = this.fpsAddForm.controls.fps_financier_id.value;
     let payment_frequency = this.fpsAddForm.controls.fps_payment_frequency.value;
+    let fps_transaction_type = this.fpsAddForm.controls.fps_transaction_type_id.value;
+    fps_transaction_type = (fps_transaction_type < 1) ? 1 : fps_transaction_type;
+    financial_id = (financial_id < 1) ? null : financial_id;
 
-    this.FpsService.getTenureList(financial_id, payment_frequency).subscribe((res) => {
+    this.fpsService.getTenureList(fps_transaction_type, financial_id, payment_frequency).subscribe((res) => {
         if(res.length > 0) {
           res.unshift({'id': '', 'details_tenure' : 'Select Tenure'})
         }
@@ -249,4 +264,9 @@ export class CreateComponent implements OnInit {
       return e[key] == value;
     });
   }
+
+  isFieldValid(field: string) {
+    return !this.fpsAddForm.get(field).valid && this.fpsAddForm.get(field).touched;
+  }
+
 }

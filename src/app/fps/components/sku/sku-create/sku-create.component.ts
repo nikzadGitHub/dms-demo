@@ -63,7 +63,7 @@ export class SkuCreateComponent implements OnInit {
     this.skuAddForm = this.fb.group({
       uuid: new FormControl('',[Validators.required]),
       validity_start_at : new FormControl(new Date()),
-      package_type_id : new FormControl('',[Validators.required]),
+      package_type_id : new FormControl('1',[Validators.required]),
       validity_end_at : new FormControl(new Date()),
       country_code : new FormControl('',[Validators.required]),
       interest_rate : new FormControl(),
@@ -167,22 +167,16 @@ export class SkuCreateComponent implements OnInit {
 
   setConditionalValidators() {
 
-    console.log("setConditionalValidators called")
     const interest_rate = this.skuAddForm.get('interest_rate');
 
     this.skuAddForm.get('has_interest').valueChanges
       .subscribe(has_interest => {
-        console.log("has_interest changed")
-
         if (has_interest == 1) {
-          console.log("valid added")
           interest_rate.setValidators([Validators.required]);
         }
         else {
-          console.log("valid removed")
           interest_rate.clearValidators();
         }
-
       });
   }
 
@@ -198,7 +192,7 @@ export class SkuCreateComponent implements OnInit {
   onSave(): void {
 
     if (!this.skuAddForm.valid) {
-      this.validateAllFormFields(this.skuAddForm);
+      this.fpsService.validateAllFormFields(this.skuAddForm);
       this.skuAddFormContainerRef.nativeElement.scrollIntoView({behavior: 'smooth'});
       return;
     } 
@@ -210,7 +204,7 @@ export class SkuCreateComponent implements OnInit {
       quarterly_payment: (this.skuAddForm.get("quarterly_payment").value) ? 1 : 0,  
       half_yearly_payment: (this.skuAddForm.get("half_yearly_payment").value) ? 1 : 0,  
       package_type_id: this.skuAddForm.get("package_type_id").value + "",
-      interest_rate: this.skuAddForm.get("interest_rate").value + "",
+      interest_rate: ((this.skuAddForm.get("interest_rate").value)? this.skuAddForm.get("interest_rate").value : 0) + "",
       currency_code: this.skuAddForm.get("currency_code").value + "",
       validity_start_at: this.datePipe.transform(this.skuAddForm.get("validity_start_at").value, "yyyy-MM-dd"),
       validity_end_at: this.datePipe.transform(this.skuAddForm.get("validity_end_at").value, "yyyy-MM-dd"),
@@ -313,30 +307,8 @@ export class SkuCreateComponent implements OnInit {
       });
   }
 
-  isFieldEmpty(field){
-    return field.invalid && (field.dirty || field.touched);
-  }
-
   isFieldValid(field: string) {
     return !this.skuAddForm.get(field).valid && this.skuAddForm.get(field).touched;
   }
   
-  displayFieldCss(field: string) {
-    return {
-      'has-error': this.isFieldValid(field),
-      'has-feedback': this.isFieldValid(field)
-    };
-  }
-
-  validateAllFormFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      if (control instanceof FormControl) {
-        control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {
-        this.validateAllFormFields(control);
-      }
-    });
-  }
-
 }
