@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import { MockInventoryService } from '../../services/mock-inventory.service';
+import { InventoryService } from '../../services/inventory.service';
 import { InventoryList, bookingIdFormat } from '../../services/inventory';
 import { MenuItem } from 'primeng/api/menuitem';
 
@@ -10,8 +11,11 @@ import { MenuItem } from 'primeng/api/menuitem';
   styleUrls: ['./inventory.component.scss']
 })
 export class InventoryComponent implements OnInit {
-
-  constructor(private api: MockInventoryService) { }
+  constructor(
+    private api: InventoryService,
+    private router: Router, 
+    private route: ActivatedRoute
+  ) { }
   menuItems: MenuItem[] = [
     {
       label: 'On-Hand',
