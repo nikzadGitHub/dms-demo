@@ -59,7 +59,7 @@ export class CreateComponent implements OnInit {
     created_at: '',
     currency_code: '',
     amount: '',
-    bill_to: '',
+    customer: '',
   };
    
   constructor(
@@ -87,19 +87,19 @@ export class CreateComponent implements OnInit {
       fps_quote_id: new FormControl(),
       fps_customer_name: new FormControl(),
       fps_soci_uuid: new FormControl(),
-      fps_transaction_type_id: new FormControl(),
-      fps_financier_id: new FormControl('',[Validators.required]),
+      fps_transaction_type_id: new FormControl(1, [Validators.min(1)]),
+      fps_financier_id: new FormControl('',[Validators.required, Validators.min(1)]),
       fps_payment_frequency: new FormControl('',[Validators.required]),
-      fps_status_id : new FormControl(),
+      fps_status_id : new FormControl(1, [Validators.min(1)]),
       fps_tenure_id : new FormControl('',[Validators.required]),
-      fps_adv_payment : new FormControl(),
+      fps_adv_payment : new FormControl('0'),
       fps_adv_payment_percentage : new FormControl(),
       fps_net_financing_amount : new FormControl(),
       fps_monthly_payment_amount : new FormControl(),
       fps_interest_rate : new FormControl(),
       fps_validated_by : new FormControl(),
       fps_approved_by : new FormControl(),
-      fps_leas_aggr_no : new FormControl(),
+      fps_leas_aggr_no : new FormControl('0'),
       fps_internal_aggr_no : new FormControl(),
       fps_remarks : new FormControl(),
       fps_currency_code: new FormControl(),
@@ -120,7 +120,8 @@ export class CreateComponent implements OnInit {
       console.log('opptDetiasl', this.oppt_details);
       this.fpsAddForm.controls.fps_currency_code.setValue(this.oppt_details.currency_code);
       this.fpsAddForm.controls.fps_total_financial_amount.setValue(this.oppt_details.amount);
-      this.fpsAddForm.controls.fps_data_area_id.setValue(this.oppt_details.bill_to.data_area_id);
+      this.fpsAddForm.controls.fps_data_area_id.setValue(this.oppt_details.customer.data_area_id);
+      
     })
 
     // Get list of users.
@@ -182,8 +183,25 @@ export class CreateComponent implements OnInit {
       fps_no: this.fpsAddForm.get("fps_no").value + "",
       fps_opportunity_id: this.fpsAddForm.get("fps_opportunity_id").value + "",
       fps_quote_id: this.fpsAddForm.get("fps_quote_id").value + "",
-      fps_payment_frequency: this.fpsAddForm.get("fps_no").value + "",
-      
+      fps_transaction_type_id: this.fpsAddForm.get("fps_transaction_type_id").value + "",
+      fps_payment_frequency: this.fpsAddForm.get("fps_payment_frequency").value + "",
+      fps_financier_id: this.fpsAddForm.get("fps_financier_id").value + "",
+      fps_adv_payment: this.fpsAddForm.get("fps_adv_payment").value + "",
+      fps_adv_payment_percentage: this.fpsAddForm.get("fps_adv_payment_percentage").value + "",
+      fps_total_financial_amount: this.fpsAddForm.get("fps_total_financial_amount").value + "",
+      fps_net_financing_amount: this.fpsAddForm.get("fps_net_financing_amount").value + "",
+      fps_monthly_payment_amount: this.fpsAddForm.get("fps_monthly_payment_amount").value + "",
+      fps_tenure_id: this.fpsAddForm.get("fps_tenure_id").value + "",
+      fps_interest_rate: this.fpsAddForm.get("fps_interest_rate").value + "",
+      fps_status_id: this.fpsAddForm.get("fps_status_id").value + "",
+      fps_validated_by: this.fpsAddForm.get("fps_validated_by").value + "",
+      fps_approved_by: this.fpsAddForm.get("fps_approved_by").value + "",
+      fps_leas_aggr_no: this.fpsAddForm.get("fps_leas_aggr_no").value + "",
+      fps_remarks: this.fpsAddForm.get("fps_remarks").value + "",
+      fps_required_docs: this.fpsAddForm.get("fps_required_docs").value + "",
+      fps_customer_name: this.oppt_details.customer.owner + "",
+      fps_internal_aggr_no:  "",
+
       
     }).subscribe((res) => {
         if (res.id) {
@@ -218,7 +236,8 @@ export class CreateComponent implements OnInit {
     var result = this.getFilteredCodes(this.tenure_list, "id", rateID);    
     this.fpsAddForm.controls.fps_interest_rate.setValue(result[0].details_interest_rate);
     this.fpsAddForm.controls.fps_min_payment_amount.setValue(result[0].min_payment_amount);
-    this.fpsAddForm.controls.fps_required_docs.setValue(result[0].required_docs);
+    this.fpsAddForm.controls.fps_required_docs.setValue(result[0].required_docs ?? '');
+    
     if(result[0].agreement_mandatory == 0) {
       this.agreement_mandatory = false;
     }
@@ -242,8 +261,6 @@ export class CreateComponent implements OnInit {
     let financial_id = this.fpsAddForm.controls.fps_financier_id.value;
     let payment_frequency = this.fpsAddForm.controls.fps_payment_frequency.value;
     let fps_transaction_type = this.fpsAddForm.controls.fps_transaction_type_id.value;
-    fps_transaction_type = (fps_transaction_type < 1) ? 1 : fps_transaction_type;
-    financial_id = (financial_id < 1) ? null : financial_id;
 
     this.fpsService.getTenureList(fps_transaction_type, financial_id, payment_frequency).subscribe((res) => {
         if(res.length > 0) {
