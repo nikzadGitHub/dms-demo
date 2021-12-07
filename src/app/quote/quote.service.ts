@@ -5,7 +5,7 @@ import {  Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
   
 import { Quote } from './quote';
-import { settings } from '../../environments/environment';
+import { settings } from '../../environments/environment.prod';
    
 @Injectable({
   providedIn: 'root'

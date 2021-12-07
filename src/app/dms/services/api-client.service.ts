@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 
-import { settings } from '../../../environments/environment';
+import { settings } from '../../../environments/environment.prod';
 import {ApiJsonResponse} from './api-client';
 
 /**

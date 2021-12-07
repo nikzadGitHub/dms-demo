@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { IconSetService } from '@coreui/icons-angular';
-import { settings } from '../../../environments/environment';
+import { settings } from '../../../environments/environment.prod';
 import { Observable } from 'rxjs';
 
 @Injectable()

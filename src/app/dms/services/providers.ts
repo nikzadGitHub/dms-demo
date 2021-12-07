@@ -1,5 +1,5 @@
 
-import { environment } from '../../../environments/environment'
+import { environment } from '../../../environments/environment.prod'
 
 import {ApiClient} from './api-client.service';
 import { InventoryService } from './inventory.service';
