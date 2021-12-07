@@ -1,6 +1,6 @@
 <div class="animated fadeIn">
 
-    <div class="row">
+    <div class="row" #skuAddFormContainer>
         <div class="col-md-12">
             <div class="card">
             <div class="card-body">
@@ -12,12 +12,14 @@
                
                 <form [formGroup]="skuAddForm" id="skuAddForm" (ngSubmit)="onSave()"  class="form-horizontal">
                 
-                    <div class="form-group row">
+                    <div class="form-group row" [ngClass]="displayFieldCss('uuid')">
                         <label class="col-md-2 col-form-label" for="booking-reason">
                             FPS SKU No <span class="asterisk"> * </span>
                         </label>
                         <div class="col-md-4">
-                            <input type="text" [readonly]="true" formControlName="uuid"  class="form-control"> 
+                            <input type="text" [readonly]="true" formControlName="uuid" id="uuid" class="form-control">
+                            <app-form-error-presentation [displayError]="isFieldValid('uuid')" errorMsg="Uuid is rquired.">
+                            </app-form-error-presentation>
                         </div>
 
                         <label class="col-md-2 col-form-label" for="booking-reason">
@@ -28,15 +30,18 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row" [ngClass]="displayFieldCss('package_type_id')">
                         <label class="col-md-2 col-form-label" for="booking-reason">
                             FPS Type  <span class="asterisk"> * </span>
                         </label>
                         <div class="col-md-4">
-                            <p-dropdown formControlName="package_type_id" [options]="fpsTypeList" optionLabel="title"
+                            <p-dropdown formControlName="package_type_id" id="package_type_id" [options]="fpsTypeList" optionLabel="title"
                                 optionValue="id" styleClass="form-control" 
                                 placeholder="Select FPS Type" emptyMessage="No FPS Type Available">
                             </p-dropdown>
+                            <app-form-error-presentation [displayError]="isFieldValid('package_type_id')" errorMsg="FPS Type is rquired.">
+                            </app-form-error-presentation>
+                            
                         </div>
 
                         <label class="col-md-2 col-form-label" for="booking-reason">
@@ -47,42 +52,48 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row" [ngClass]="displayFieldCss('country_code')">
                         <label class="col-md-2 col-form-label" for="booking-reason">
                             Country<span class="asterisk"> * </span>
                         </label>
                         <div class="col-md-4">
-                            <p-dropdown formControlName="country_code" [options]="countryList" optionLabel="official_name"
+                            <p-dropdown formControlName="country_code" id="country_code" [options]="countryList" optionLabel="official_name"
                                 optionValue="code" styleClass="form-control" 
                                 placeholder="Select Country" emptyMessage="No Country Available">
                             </p-dropdown>
+                            <app-form-error-presentation [displayError]="isFieldValid('country_code')" errorMsg="Country is rquired.">
+                            </app-form-error-presentation>
                         </div>
 
                         <label class="col-md-2 col-form-label" for="booking-reason">
-                            Interest<span class="asterisk"> * </span> 
+                            Interest
                         </label>
                         <div class="col-md-4">
-                            <div class="form-group row"> 
+                            <div class="form-group row" [ngClass]="displayFieldCss('interest_rate')"> 
                                 <div class="col-md-3">
-                                    <mat-slide-toggle formControlName="has_interest" class="form-control" #has_interest class="example-margin">
+                                    <mat-slide-toggle formControlName="has_interest"  class="form-control" #has_interest class="example-margin">
                                     </mat-slide-toggle>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="number" step="0.1" *ngIf="has_interest.checked"  formControlName="interest_rate"  class="form-control">
+                                    <input type="number" step="0.1" id="interest_rate" *ngIf="has_interest.checked" formControlName="interest_rate"  class="form-control">
+                                    <app-form-error-presentation [displayError]="isFieldValid('interest_rate')" errorMsg="Interest Rate is rquired.">
+                                    </app-form-error-presentation>
                                 </div>
                             </div> 
                         </div>
                     </div>
 
-                    <div class="form-group row"> 
+                    <div class="form-group row" [ngClass]="displayFieldCss('financier_id')"> 
                         <label class="col-md-2 col-form-label" for="booking-reason">
                             Financial Instititue<span class="asterisk"> * </span>
                         </label>
                         <div class="col-md-4">
-                            <p-dropdown formControlName="financier_id" [options]="institutions_list"  optionLabel="title"
+                            <p-dropdown formControlName="financier_id" id="financier_id" [options]="institutions_list"  optionLabel="title"
                                 optionValue="id" styleClass="form-control" 
                                 placeholder="Select Institution" emptyMessage="No Institution Available">
                             </p-dropdown>
+                            <app-form-error-presentation [displayError]="isFieldValid('financier_id')" errorMsg="Financial Institution is rquired.">
+                            </app-form-error-presentation>
                         </div>
                     </div>
 
@@ -122,9 +133,9 @@
 
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <div class="form-group row">
+                            <div class="form-group row" >
                                 <label class="col-md-8 col-form-label" for="booking-reason">
-                                    Mininumum Payment Amount<span class="asterisk"> * </span>
+                                    Mininumum Payment Amount
                                 </label>
 
                                 <div class="col-md-4">
@@ -195,7 +206,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row" >
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-md-8 col-form-label" for="booking-reason">
@@ -210,11 +221,13 @@
                             </div>
                         </div>
 
-                        <label class="col-md-2 col-form-label" for="booking-reason">
+                        <label class="col-md-2 col-form-label" for="booking-reason" [ngClass]="displayFieldCss('required_tenure')">
                             Required Tenure<span class="asterisk"> * </span>
                         </label>
                         <div class="col-md-4">
-                            <p-inputNumber formControlName="required_tenure"></p-inputNumber>
+                            <p-inputNumber id="required_tenure" formControlName="required_tenure"></p-inputNumber>
+                            <app-form-error-presentation [displayError]="isFieldValid('required_tenure')" errorMsg="Tenure is rquired.">
+                            </app-form-error-presentation>
                         </div>
                     </div>
 

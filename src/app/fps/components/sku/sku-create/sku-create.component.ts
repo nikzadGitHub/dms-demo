@@ -25,6 +25,7 @@ export class SkuCreateComponent implements OnInit {
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("foundModal") foundModal: ModalDirective;
   @ViewChild('submitSkuAdd') submitSkuAdd: ElementRef<HTMLElement>;
+  @ViewChild('skuAddFormContainer') skuAddFormContainerRef: ElementRef;
 
   skuAddForm : FormGroup;
   rateAddForm: FormGroup;
@@ -61,24 +62,24 @@ export class SkuCreateComponent implements OnInit {
 
     this.skuAddForm = this.fb.group({
       uuid: new FormControl('',[Validators.required]),
-      financier_id : new FormControl('', [Validators.required]),
       validity_start_at : new FormControl(new Date()),
+      package_type_id : new FormControl('',[Validators.required]),
       validity_end_at : new FormControl(new Date()),
-      country_code : new FormControl(),
-      interest_rate : new FormControl(0),
-      package_type_id : new FormControl(),
+      country_code : new FormControl('',[Validators.required]),
+      interest_rate : new FormControl(),
+      financier_id : new FormControl('', [Validators.required]),
       has_interest : new FormControl(),
       monthly_payment : new FormControl(),
       quarterly_payment : new FormControl(),
       half_yearly_payment : new FormControl(),
       currency_code : new FormControl(),
-      min_payment_amount : new FormControl(),
-      min_usage : new FormControl(),
+      min_payment_amount : new FormControl('0'),
+      min_usage : new FormControl('0'),
       consumable_usage : new FormControl(),
       procedure_per_month : new FormControl(),
-      required_tenure : new FormControl(),
+      required_tenure : new FormControl('0'),
       required_docs: new FormControl(),
-      agreement_mandatory: new FormControl()
+      agreement_mandatory: new FormControl('0')
     });
 
     this.rateAddForm = this.fb.group({
@@ -160,7 +161,29 @@ export class SkuCreateComponent implements OnInit {
         }
       }
     })
-  
+    
+    this.setConditionalValidators();
+  }
+
+  setConditionalValidators() {
+
+    console.log("setConditionalValidators called")
+    const interest_rate = this.skuAddForm.get('interest_rate');
+
+    this.skuAddForm.get('has_interest').valueChanges
+      .subscribe(has_interest => {
+        console.log("has_interest changed")
+
+        if (has_interest == 1) {
+          console.log("valid added")
+          interest_rate.setValidators([Validators.required]);
+        }
+        else {
+          console.log("valid removed")
+          interest_rate.clearValidators();
+        }
+
+      });
   }
 
   // initData()
@@ -173,7 +196,12 @@ export class SkuCreateComponent implements OnInit {
   // }
 
   onSave(): void {
-    
+
+    if (!this.skuAddForm.valid) {
+      this.validateAllFormFields(this.skuAddForm);
+      this.skuAddFormContainerRef.nativeElement.scrollIntoView({behavior: 'smooth'});
+      return;
+    } 
     this.SkuService.saveSku({
       uuid: this.skuAddForm.get("uuid").value + "",      
       country_code: this.skuAddForm.get("country_code").value + "",
@@ -283,6 +311,32 @@ export class SkuCreateComponent implements OnInit {
       err => {
         console.log(err);
       });
+  }
+
+  isFieldEmpty(field){
+    return field.invalid && (field.dirty || field.touched);
+  }
+
+  isFieldValid(field: string) {
+    return !this.skuAddForm.get(field).valid && this.skuAddForm.get(field).touched;
+  }
+  
+  displayFieldCss(field: string) {
+    return {
+      'has-error': this.isFieldValid(field),
+      'has-feedback': this.isFieldValid(field)
+    };
+  }
+
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    });
   }
 
 }
