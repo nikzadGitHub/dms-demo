@@ -1,10 +1,3 @@
-<!-- 'created_at',
-'created_by',
-'soci_id',
-'quote_date',
-'po_no',
-'po_date',
-'fo_order_number', -->
 
 <p-table
   #dt
@@ -35,14 +28,6 @@
           <i class="icon-plus icons" style="color: white"></i>
         </a>
       </span>
-      <!-- <button
-        pButton
-        label="Clear"
-        class="p-button-outlined"
-        icon="pi pi-filter-slash"
-        (click)="clear(dt)"
-        style="color: #f8f9fa"
-      ></button> -->
       <span class="p-input-icon-left input-span-icon">
         <i class="pi pi-search"></i>
         <input
@@ -64,12 +49,6 @@
               style="width: 25px; margin: 7px"
             />
           </i>
-          <!-- <i
-            class="pi pi-align-justify"
-            style="font-size: 20px"
-            (click)="columnChooserModal.show()"
-          >
-          </i> -->
         </span>
       </span>
     </div>
@@ -288,7 +267,7 @@
       <td class="text-center" *ngIf="checkItem('company_name')">
         <a href="/#/soci/index">
           <span class="p-column-title"> Company Name</span>
-          {{ soci.customer.company_name }}
+          {{ soci?.customer?.company_name }}
         </a>
       </td>
       <td class="text-center" *ngIf="checkItem('quote_full_id')">
