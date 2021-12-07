@@ -40,6 +40,7 @@ export class IndexComponent implements OnInit {
   constructor(public quoteService: QuoteService) { }
   
   ngOnInit(): void {
+    this.loading = true;
     this.quoteService.getAll(this.pageItems,this.search_text,this.sort)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe(data=>{
@@ -52,6 +53,9 @@ export class IndexComponent implements OnInit {
       } else {
         this.columns = JSON.parse(data['data']['columnOrder']['column_order']);
       }
+      this.loading = false;
+    }, error => {
+      this.loading = false;
     })
   }
   

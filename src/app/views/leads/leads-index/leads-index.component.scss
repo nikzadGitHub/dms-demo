@@ -1,6 +1,11 @@
 tr {
     border: hidden;
 }
+:host ::ng-deep {
+    .p-datatable {
+        min-height: 500px !important;
+    }
+}
 
 .icon-div {
     display: flex;
