@@ -115,6 +115,10 @@ export const navItems: INavData[] = [
         name: 'User LOA',
         url: '/user/userloa',
       },
+      {
+        name: 'Unit Setup',
+        url: '/user/unitsetup',
+      },
     ]
   },/*
   {

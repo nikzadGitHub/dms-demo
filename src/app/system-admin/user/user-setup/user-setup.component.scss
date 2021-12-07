@@ -23,29 +23,47 @@
     }
   }
 
-  .price-action {
+  .accordion {
     display: flex;
     flex-direction: row;
-    align-items: baseline;
-    justify-content: flex-start;
-    margin-top: 20px;
-    h4 {
-      margin-top: 20px;
-      margin-right: 10px;
-      font-weight: 600;
-      font-size: 16px;
+    justify-content: space-evenly;
+    margin-bottom: 10px;
+    .agency-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      //   margin: 15px;
+      button {
+        border: none;
+        margin-bottom: 10px;
+      }
+      p {
+        cursor: pointer;
+        margin-bottom: 5px;
+        width: 100%;
+        line-height: 35px;
+        padding-left: 12px;
+        font-family: "Lato";
+      }
+      .p-1 {
+        padding-left: 12px !important;
+        background: #2196f3;
+        color: white;
+      }
     }
-    .btn-outline-primary {
-      height: 30px;
-      width: 30px;
-      border-radius: 50%;
-      i {
-        margin: -6px;
-        font-size: 16px;
+    .check-field {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+      margin: 10px;
+
+      p-checkbox {
+        padding-right: 10px;
+        padding-left: 30px;
       }
     }
   }
-  
 
   .action-btn {
     display: flex;
@@ -105,7 +123,6 @@
     }
   }
 }
-
 :host ::ng-deep {
   .p-paginator {
     .p-paginator-current {
@@ -308,5 +325,38 @@
   /* Responsive */
   .p-datatable-customers .p-datatable-tbody > tr > td .p-column-title {
     display: none;
+  }
+}
+
+// accordins
+:host ::ng-deep .customColor.p-accordion {
+  width: 345px;
+  .p-accordion-header {
+    font-size: 24px;
+    font-weight: bolder;
+    background: white;
+    span.pi {
+      margin-top: -8px;
+      position: absolute;
+      right: 0.5em;
+      top: 50%;
+    }
+    .p-accordion-header-link {
+      background: white;
+    }
+  }
+  .p-accordion-content {
+    padding: 0px;
+    overflow-x: hidden;
+  }
+}
+
+:host ::ng-deep .customColor.p-accordion {
+  width: 345px;
+  .p-accordion-header {
+    background: #f8f9fa;
+    .p-accordion-header-link {
+      background: #f8f9fa;
+    }
   }
 }

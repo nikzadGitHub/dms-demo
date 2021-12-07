@@ -1,0 +1,250 @@
+<div class="card main-div">
+  <div class="card-header page-heading-icon">
+    <!-- <h1>Level Of Authority</h1> -->
+    <div>
+      <h2>User Setup</h2>
+    </div>
+  </div>
+  <!-- [formGroup]="userSetupForm" -->
+  <form >
+    <div class="card-body">
+      <p class="title-text">
+        <!-- <i class="pi pi-user-plus"></i> -->
+        Details
+      </p>
+      <!-- accordian-1 -->
+      <div class="accordion">
+        <!-- parent-unit -->
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+          <p-accordionTab header="Parent Unit">
+            <div
+              *ngFor="let item of parentUnitValue"
+              class="p-field-checkbox check-field"
+            >
+              <p-checkbox
+                name="group2"
+                [value]="item"
+                [inputId]="item.key"
+              ></p-checkbox>
+              <label>{{ item.name }}</label>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+
+        <!-- agency -->
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+          <p-accordionTab header="Agency">
+            <div class="agency-text">
+              <!-- <button class="btn btn-primary">Agency</button>
+              <button class="btn btn-primary">Region</button> -->
+              <p class="p-1">Agency</p>
+              <p>Region</p>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+        <!-- Menufacturer -->
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+          <p-accordionTab header="Menufacturer">
+            <div
+              *ngFor="let item of menufacturerValue"
+              class="p-field-checkbox check-field"
+            >
+              <p-checkbox
+                name="group2"
+                [value]="item"
+                [inputId]="item.key"
+              ></p-checkbox>
+              <label>{{ item.name }}</label>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+
+      <!-- accordian-2 -->
+      <div class="accordion">
+        <!-- parent-unit -->
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+          <p-accordionTab header="OPC">
+            <div
+              *ngFor="let item of parentUnitValue"
+              class="p-field-checkbox check-field"
+            >
+              <p-checkbox
+                name="group2"
+                [value]="item"
+                [inputId]="item.key"
+              ></p-checkbox>
+              <label>{{ item.name }}</label>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+
+        <!-- agency -->
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+          <p-accordionTab header="Care Area">
+            <div class="agency-text">
+              <!-- <button class="btn btn-primary">Agency</button>
+              <button class="btn btn-primary">Region</button> -->
+              <p class="p-1">Agency</p>
+              <p>Region</p>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+        <!-- Menufacturer -->
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+          <p-accordionTab header="Principles">
+            <div
+              *ngFor="let item of menufacturerValue"
+              class="p-field-checkbox check-field"
+            >
+              <p-checkbox
+                name="group2"
+                [value]="item"
+                [inputId]="item.key"
+              ></p-checkbox>
+              <label>{{ item.name }}</label>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+
+      <div class="action-btn">
+        <button type="button" class="btn btn-outline-primary cancel-btn">
+          CANCEL
+        </button>
+        <button type="button" class="btn btn-primary save-btn">SAVE</button>
+      </div>
+
+      <div class="authority-table">
+        <p-table
+          #dt
+          [value]="dummyUserSetupData"
+          styleClass="p-datatable-authority"
+          [rowHover]="true"
+          responsiveLayout="scroll"
+          [filterDelay]="0"
+          [globalFilterFields]="[]"
+        >
+          <!-- Header -->
+          <ng-template pTemplate="header">
+            <div class="table-header-column">
+              <tr
+                align="center"
+                style="background-color: #009aff !important; color: white"
+              >
+                <!-- created-date -->
+                <th pSortableColumn="created_at" class="text-center">
+                  <div class="column-design">
+                    Created Date
+                    <div class="date-icons">
+                      <p-sortIcon field="created_at"></p-sortIcon>
+                      <p-columnFilter
+                        type="date"
+                        field="created_at"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <!-- unit_name -->
+                <th pSortableColumn="unit_name" class="text-center">
+                  <div class="column-design">
+                    Unit Name
+                    <div class="name-icons">
+                      <p-sortIcon field="unit_name"></p-sortIcon>
+                      <p-columnFilter
+                        type="text"
+                        field="unit_name"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <!-- country -->
+                <th pSortableColumn="country" class="text-center">
+                  <div class="column-design">
+                    Country
+                    <div class="country-icons">
+                      <p-sortIcon field="country"></p-sortIcon>
+                      <p-columnFilter
+                        type="text"
+                        field="country"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <!-- main-unit -->
+                <th pSortableColumn="main_unit" class="text-center">
+                  <div class="column-design">
+                    Main Unit
+                    <div class="main_unit-icons">
+                      <p-sortIcon field="main_unit"></p-sortIcon>
+                      <p-columnFilter
+                        type="text"
+                        field="main_unit"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <!-- sub-unit -->
+                <th pSortableColumn="sub_unit" class="text-center">
+                  <div class="column-design">
+                    Sub Unit
+                    <div class="sub_unit-icons">
+                      <p-sortIcon field="sub_unit"></p-sortIcon>
+                      <p-columnFilter
+                        type="text"
+                        field="sub_unit"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <!-- action -->
+                <th pSortableColumn="action" class="text-center">
+                  <div class="column-design">
+                    Action
+                    <div class="action-icons"></div>
+                  </div>
+                </th>
+              </tr>
+            </div>
+          </ng-template>
+
+          <!-- Data -->
+          <ng-template pTemplate="body" let-authority>
+            <tr align="center">
+              <td class="text-center">
+                {{ authority.created_at | date: "MM-dd-yyyy" }}
+              </td>
+              <td class="text-center">
+                {{ authority.name }}
+              </td>
+              <td class="text-center">
+                {{ authority.country }}
+              </td>
+              <td class="text-center">
+                {{ authority.main_unit }}
+              </td>
+              <td class="text-center">
+                {{ authority.sub_unit }}
+              </td>
+              <td class="text-center">
+                <a [routerLink]="" routerLinkActive="router-link-active">
+                  <i class="fa fa-edit"></i>
+                </a>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </form>
+</div>
