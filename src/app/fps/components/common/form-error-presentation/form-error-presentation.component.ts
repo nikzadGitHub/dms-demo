@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-form-error-presentation',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-error-presentation.component.scss']
 })
 export class FormErrorPresentationComponent implements OnInit {
+
+  @Input() errorMsg: string;
+  @Input() displayError: boolean;
 
   constructor() { }
 
