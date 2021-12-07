@@ -19,7 +19,7 @@
             </div>
             <div class="col-md-6">
               <span *ngFor="let user of approval.user_list; let i=index">
-              {{ i && ',' }} {{ user.name }}
+                {{ i ? ',' : '' }} {{ user.name }}
               </span>
             </div>
           </div>
@@ -87,10 +87,10 @@
         </div>
       </div>
       <br>
-      <div class="d-flex justify-content-center">
+      <div class="d-flex justify-content-center" *ngIf="access">
         <div *ngFor="let button of buttons; let i=index" class="pr-2">
           <button type="submit" class="btn btn-md btn-primary"
-                  (click)="onButtonClick(i)">{{ button.title | uppercase }}</button>
+                  (click)="onButtonClick(button.status)">{{ button.title | uppercase }}</button>
         </div>
       </div>
     </div>

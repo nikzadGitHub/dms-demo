@@ -1,441 +1,2953 @@
 <div class="animated fadeIn">
-    <div class="col-lg col-md-6">
-        <div class="card rcorners">
-            <div class="card-header purple"><h2>Quote Details</h2></div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <label class="form-control no-border"><h2><b>{{company_details['company_name']}}</b></h2></label>
-                    </div>
-                    <div class="col-lg-2">
-                        <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label>
-                    </div>
-                    <!-- <div class="col-lg" align='right'><b>Status</b><br><p>{{f.status.value}}</p></div> -->
-                </div>
+  <div class="col-lg col-md-6">
+    <div class="card rcorners">
+      <div class="card-header d-flex b-btm-green purple">
+        <h2 class="chead">SOCI Summary</h2>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="chead">
+              {{ soci_data?.company_name }}
             </div>
-            <div class="card-footer">
-        
+            <!-- <label class="form-control no-border"><h2><b>{{company_details['company_name']}}</b></h2></label> -->
+          </div>
+          <div class="col-lg-2">
+            <div class="bg-opp text-white p-1">
+              SOCI ID:
+              <span
+                ><p>{{ soci_data?.soci_id }}</p></span
+              >
             </div>
+            <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
+          </div>
+          <div class="col-lg-2">
+            <div class="bg-opp text-white p-1">
+              Quote ID:
+              <span>
+                <p>{{ soci_data?.quote_full_id }}</p>
+              </span>
+            </div>
+            <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
+          </div>
+          <div class="col-lg-2">
+            <div class="bg-opp text-white p-1">
+              Opport ID:
+              <span>
+                <p>{{ soci_data?.quote?.opportunity?.opportunity_code }}</p>
+              </span>
+            </div>
+            <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
+          </div>
+          <div class="col-lg-2">
+            <div class="status">
+              <label style="color: black"><b>Status: </b></label>
+              <p-badge [value]="soci_data?.status_desc" [severity]="badgeColor" styleClass="p-mr-2"></p-badge>
+            </div>
+          </div>
+          <!-- <div class="col-lg" align='right'><b>Status</b><br><p>{{f.status.value}}</p></div> -->
         </div>
-        <form [formGroup]="form" (ngSubmit)="submit()">
-            <p-accordion [multiple]="true" styleClass="customColor">
-                <!-- Standard Term Accordion -->
-                <p-accordionTab header="Standard Terms">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Payment Terms:
-                                </div> 
-                                <div class="col-md-4">
-                                    <select formControlName="standard_payment_term" (change)="termSelect(f.standard_payment_term.value);dateChange()"
-                                    name="standard_terms" class="form-control">
-                                        <option>--- Select Term ---</option>
-                                        <option *ngFor="let term of terms" value="{{term.id}}">{{term.description}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-5" style="text-align: middle;">
-                            Quotation Validity: {{termSelected}} Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
-                        </div>
-                        <div class="col-lg-1" style="text-align: right;">
-                            <div (click)="show=!show">
-                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="show"><i class="cil-check-circle"></i></a>
-                                <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!show"><i class="fa fa-edit"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row grey">
-                        <div class="col-md-3">
-                        <b>(As Default)</b> Payment Terms: 30 Days
-                        </div>
-                        <div class="col-lg-5" style="text-align: right">
-                            Quotation Validity: 30 Days, From <u>{{fromDate | date:'dd-MMM-yyyy'}}</u> To <u>{{toDate | date:'dd-MMM-yyyy'}}</u>
-                        </div>
-                        <div class="col-lg-1" style="text-align: right;"></div>
-                    </div>
-                </p-accordionTab>
-                <!-- End of Standard Term Accordion -->
-
-                <p-accordionTab header="Billing Milestones">
-                    <div class="row">
-                        <table class="table table-borderless" formArrayName="billings">
-                            <thead>
-                                <tr>
-                                    <th>Billing ID</th>
-                                    <th>Stage</th>
-                                    <th>Percentage</th>
-                                    <th>Amount (MYR)</th>
-                                    <th>Status</th>
-                                    <th>Notes</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let billing of billings().controls; let i=index" [formGroupName]="i" align="center">
-                                    <td style="width: 15%;">
-                                        <input formControlName="billing_id" class="form-control" placeholder="ABC123" type="text">
-                                    </td>
-                                    <td style="width: 15%;">
-                                        <input formControlName="stage" class="form-control" size="1" placeholder="Deploy" type="text">
-                                    </td>
-                                    <td style="width: 10%;">
-                                        <input formControlName="percentage" class="form-control" size="1" placeholder="50" type="number" min="0" max="100.00" step=".01">
-                                    </td>
-                                    <td style="width: 20%;">
-                                        <input formControlName="amount" class="form-control" size="1" placeholder="300" type="number" min="0" step=".01">
-                                    </td>
-                                    <td>
-                                        <input formControlName="status" class="form-control" size="1" placeholder="Deposit" type="input">
-                                    </td>
-                                    <td style="width: 15%;">
-                                        <textarea formControlName="remarks" class="form-control" id="" cols="30" rows="1" (focus)='billingRemarkModalOpen(i)'></textarea>
-                                        <!-- <input formControlName="remarks" class="form-control" size="1" placeholder="Remarks" type="text"> -->
-                                    </td>
-                                    <td class="td-actions" style="width: 10%;">
-                                        <div class="row">
-                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="disableEditMethod(billing,'billing');addBillingMilestone()"  
-                                            *ngIf="enableEdit['billing'] && controller == billing"><i class="cil-check-circle"></i></a>
-                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!enableEdit['billing']" 
-                                            (click)="enableEditMethod(billing,'billing')">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            &nbsp;
-                                            <a [routerLink]="" (click)="removeBillings(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot align="center">
-                                <tr>
-                                    <td class="td-actions" colspan="9" align="center">
-                                        <a [routerLink]="" (click)="addBillings()" routerLinkActive="router-link-active" >
-                                            <i class="icon-plus icons"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </p-accordionTab>
-
-                <!-- Payment Schedules Accordion -->
-                <p-accordionTab header="Payment Schedules">
-                    <div class="row">
-                        <table class="table table-borderless" formArrayName="payments">
-                            <thead>
-                                <tr>
-                                    <th>Billing ID</th>
-                                    <th>Percentage</th>
-                                    <th>Schedule</th>
-                                    <th>SOC Payment Terms</th>
-                                    <th>Status</th>
-                                    <th>Amount (MYR)</th>
-                                    <th>Notes</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let payment of payments().controls; let i=index" [formGroupName]="i" align="center">
-                                    <td style="width: 15%; padding:6px">
-                                        <select formControlName="billing_id" class="form-control" style="width: 70%;">
-                                            <option *ngFor="let bill of billingList" value="{{bill.billing_id}}">{{bill.billing_id}}</option>
-                                        </select>
-                                    </td>
-                                    <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="percentage" size="1" placeholder="50" 
-                                        type="number" min="0" max="100.00" step=".01" (keyup)="changePaymentPercent(i)">
-                                    </td>
-                                    <td style="width: 20%; padding:6px">
-                                        <input class="form-control" formControlName="schedule" size="1" type="date"></td>
-                                    <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="soc_payment_term" placeholder="30 Days" type="number">
-                                    </td>
-                                    <td style=" padding:6px;">
-                                        <input class="form-control" formControlName="status" size="1" placeholder="Deposit" type="input">
-                                    </td>
-                                    <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="amount" size="1" placeholder="300" 
-                                        type="number" min="0" step=".01" (keyup)="changePaymentValue(i)">
-                                    </td>
-                                    <td style="width: 10%; padding:6px">
-                                        <input class="form-control" formControlName="remarks" size="1" placeholder="Remarks" type="text" 
-                                        (focus)="paymentRemarkModalOpen(i)">
-                                    </td>
-                                    <td class="td-actions" style="width: 10%; padding:none">
-                                        <div class="row">
-                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="disableEditMethod(payment,'payment')"  
-                                            *ngIf="enableEdit['payment'] && controller == payment"><i class="cil-check-circle"></i></a>
-                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!enableEdit['payment']" 
-                                            (click)="enableEditMethod(payment,'payment')">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            &nbsp;
-                                            <a [routerLink]="" (click)="removePayments(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot align="center">
-                                <tr>
-                                    <td class="td-actions" colspan="9" align="center">
-                                        <a [routerLink]="" (click)="addPayments()" routerLinkActive="router-link-active" >
-                                            <i class="icon-plus icons"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </p-accordionTab>
-                <!-- End of Payment Schedules Accordion -->
-
-                <!-- Additional Costs Accordion -->
-                <p-accordionTab header="Additional Costs">
-                    <div class="row">
-                        <table class="table table-borderless" formArrayName="addCosts">
-                            <thead>
-                                <tr>
-                                    <th>Description</th>
-                                    <th>Quantity</th>
-                                    <th>Unit Price (MYR)</th>
-                                    <th>Total Price (MYR)</th>
-                                    <th>Notes</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let cost of addCosts().controls; let i=index" [formGroupName]="i" align="center">
-                                    <td style="width: 15%;">
-                                        <input formControlName="description" class="form-control" placeholder="Training" type="text">
-                                    </td>
-                                    <td style="width: 15%;">
-                                        <input formControlName="quantity" class="form-control" size="1" placeholder="1" 
-                                        (keyup)="allTotal(cost['controls'],addCosts().controls)"
-                                        type="number" min="0">
-                                    </td>
-                                    <td style="width: 10%;">
-                                        <input formControlName="unit_price" class="form-control" size="1" placeholder="300"
-                                        (keyup)="allTotal(cost['controls'],addCosts().controls)"
-                                        type="number" min="0" step=".01">
-                                    </td>
-                                    <td style="width: 20%;">
-                                        <input formControlName="total_price" class="form-control" size="1" placeholder="300"
-                                        type="number" min="0" step=".01">
-                                    </td>
-                                    <td style="width: 15%;">
-                                        <input formControlName="remarks" class="form-control" size="1" placeholder="Remarks" type="text">
-                                    </td>
-                                    <td class="td-actions" style="width: 10%;">
-                                        <div class="row">
-                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="disableEditMethod(cost,'addCost')"  
-                                            *ngIf="enableEdit['addCost'] && controller == cost"><i class="cil-check-circle"></i></a>
-                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!enableEdit['addCost']" 
-                                            (click)="enableEditMethod(cost,'addCost')">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            &nbsp;
-                                            <a [routerLink]="" (click)="removeAddCosts(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot align="center">
-                                <tr>
-                                    <td class="td-actions" colspan="9" align="center">
-                                        <a [routerLink]="" (click)="addAddCosts()" routerLinkActive="router-link-active" >
-                                            <i class="icon-plus icons"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                        <div class="col-lg-9" align="right">
-                            <div class="form-group">
-                                <b>SUB TOTAL: MYR {{sub_total | number : '1.2-2'}}</b>
-                            </div>
-                        </div>
-                    </div>
-                </p-accordionTab>
-                <!-- End of Additional Costs Accordion -->
-            </p-accordion>
-            <br>
-            <p-accordion styleClass="customColor">
-                 <!-- Products Accordion -->
-                 <p-accordionTab header="Products">
-                    <div class="row">
-                        <table class="table table-borderless" formArrayName="products">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Product Name</th>
-                                    <th>SKU ID</th>
-                                    <th>Quantity</th>
-                                    <th>Unit Price(MYR)</th>
-                                    <th>Total Price(MYR)</th>
-                                    <th>Discount</th>
-                                    <th>Net Amount(MYR)</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let productC of products().controls; let i=index;" [formGroupName]="i" align="center">
-                                    <td>{{ i+1 }}</td>
-                                    <td style="size: 20%;">
-                                        <p-autoComplete formControlName="name" [(ngModel)]="selectedProductAdvanced[i]" [suggestions]="filteredProducts" 
-                                        (completeMethod)="filterProduct($event)" field="name" [dropdown]="true" 
-                                        [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}">
-                                            <ng-template let-product pTemplate="item">
-                                                <div class="product-item" (click)='productDetails(product,productC);countNetAmount(productC)'>
-                                                    <div>{{product.name}}</div>
-                                                </div>
-                                            </ng-template>
-                                        </p-autoComplete> 
-                                    </td>
-                                    <td><input class="form-control" formControlName="sku" type="text"></td>
-                                    <td><input class="form-control" formControlName="quantity" type="number" step=".01" (keyup)='countNetAmount(productC)'></td>
-                                    <td><input class="form-control" formControlName="unit_price" type="number" step=".01"></td>
-                                    <td><input class="form-control" formControlName="total_price" type="number" step=".01"></td>
-                                    <td><input class="form-control" formControlName="discount" type="number" (keyup)='countNetAmount(productC)' step=".01"></td>
-                                    <td><input class="form-control" formControlName="amount" type="number" step=".01"></td>
-                                    <td class="td-actions" style="width: 5%;">
-                                        <div class="row">
-                                            <a [routerLink]="" routerLinkActive="router-link-active" (click)="disableEditMethod(productC,'product')"
-                                            *ngIf="enableEdit['product'] && controller == productC"><i class="cil-check-circle"></i></a>
-                                            <a [routerLink]="" routerLinkActive="router-link-active" *ngIf="!enableEdit['product']" 
-                                            (click)="enableEditMethod(productC,'product')">
-                                                <i class="fa fa-edit"></i>
-                                            </a>&nbsp;
-                                            <a [routerLink]="" (click)="removeProduct(i)" routerLinkActive="router-link-active" ><i class="fa fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot align="center">
-                                <tr>
-                                    <td colspan="9" align="center">
-                                        <a [routerLink]="" (click)="addNewProduct()" routerLinkActive="router-link-active" >
-                                            <i class="icon-plus icons"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="card">
-                            <div class=""></div>
-                        </div>
-                    </div>
-                </p-accordionTab>
-                <!-- End of Products Accordion -->
-            </p-accordion>
-
-            <!-- Billing Instruction Accordion -->
-            <p-accordion styleClass="customColor">
-                <p-accordionTab header="Billing Instruction">
-                    <div class="row">
-                        <table class="table table-borderless">
-                            <thead>
-                                <tr>
-                                    <th>Schedule</th>
-                                    <th>Percentage</th>
-                                    <th>Amount</th>
-                                    <th>SOC Payment Terms</th>
-                                    <th>Amount</th>
-                                    <th>Note</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr align="center">
-                                    <td>By Month</td>
-                                    <td>50%</td>
-                                    <td>80,000</td>
-                                    <td>Before Delivery</td>
-                                    <td>Deposit</td>
-                                    <td>No remarks</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </p-accordionTab>
-            </p-accordion>
-            <!-- End of Billing Instruction Accordion -->
-
-            <!-- Additional Instruction and Information Accordion -->
-            <p-accordion styleClass="customColor">
-                <p-accordionTab header="Additional Instruction and Information">
-                </p-accordionTab>
-            </p-accordion>
-            <!-- End of Additional Instruction and Information -->
-        </form>
-
+      </div>
+      <div class="card-footer">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="text-center footer-data">
+              <label><b>Create Date</b></label>
+              <p *ngIf="soci_data?.created_at">{{ soci_data?.created_at | date: "dd-MMM-yyyy" }}</p>
+              <p *ngIf="!soci_data?.created_at">_</p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="text-center footer-data">
+              <label><b>Contact Name</b></label>
+              <p *ngIf="soci_data?.quote?.opportunity?.ownner?.full_name">{{ soci_data?.quote?.opportunity?.ownner?.full_name }}</p>
+              <p *ngIf="!soci_data?.quote?.opportunity?.ownner?.full_name">_</p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="text-center footer-data">
+              <label><b>Email</b></label>
+              <p *ngIf="soci_data?.quote?.opportunity?.ownner?.email">{{ soci_data?.quote?.opportunity?.ownner?.email }}</p>
+              <p *ngIf="!soci_data?.quote?.opportunity?.ownner?.email">_</p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="text-center footer-data">
+              <label><b>Owner</b></label>
+              <p>{{ soci_data?.quote?.opportunity?.ownner?.full_name }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <form [formGroup]="form">
+      <!-- PO details -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="PO Details">
+          <div class="row">
+            <!-- formArrayName="addCosts" -->
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>PO No</th>
+                  <th>PO date</th>
+                  <th>PO Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr align="center">
+                  <td class="text-center">
+                    <div *ngIf="soci_data?.po_no">
+                      {{ soci_data?.po_no }}
+                    </div>
+                    <div *ngIf="!soci_data?.po_no">_</div>
+                    </td>
+                  <td class="text-center">
+                    <div *ngIf="soci_data?.po_date">
+                      {{ soci_data?.po_date | date: "dd-MMM-yyyy" }}
+                    </div>
+                    <div *ngIf="!soci_data?.po_date">_</div>
+                  </td>
+                  <td class="text-center">
+                    <div *ngIf="soci_data?.po_amount">
+                      {{ soci_data?.po_amount | number }}
+                    </div>
+                    <div *ngIf="!soci_data?.po_amount">_</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End PO details -->
+      <br />
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <!-- Standard Term Accordion -->
+        <p-accordionTab header="Standard Terms">
+          <div class="row grey">
+            <div class="col-md-5">
+              <b>Payment Terms: </b>{{ this.standerd_payment_term + " days" }}
+            </div>
+            <div class="col-lg-6" style="text-align: middle">
+              Quotation Validity: <b>From</b>
+              <u>{{ payment_term_from | date: "dd-MMM-yyyy" }}</u> <b>To</b>
+              <u>{{ payment_term_to | date: "dd-MMM-yyyy" }}</u>
+            </div>
+            <div
+              class="col-lg-1"
+              style="text-align: right"
+              *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+            >
+              <div>
+                <a
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="editStandardPaymentTerm()"
+                  ><i class="fa fa-edit"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5">
+              <b>(As Default) Payment Terms: </b
+              >{{ default_payment_term + " Days" }}
+            </div>
+            <div class="col-md-6">
+              Quotation Validity: <b>From</b>
+              <u>{{ default_payment_term_from | date: "dd-MMM-yyyy" }}</u>
+              <b>To</b>
+              <u>{{
+                quotation_validity_payment_term_to | date: "dd-MMM-yyyy"
+              }}</u>
+            </div>
+            <div class="col-lg-1" style="text-align: right"></div>
+          </div>
+
+          <div class="row grey">
+            <div class="col-md-5">
+              <b>Delivery Terms: </b>{{ this.standard_delivery_term + " days" }}
+            </div>
+            <div class="col-lg-6" style="text-align: middle">
+              Quotation Validity: <b>From</b>
+              <u>{{ delivery_term_from | date: "dd-MMM-yyyy" }}</u> <b>To</b>
+              <u>{{ delivery_term_to | date: "dd-MMM-yyyy" }}</u>
+            </div>
+            <div
+              class="col-lg-1"
+              style="text-align: right"
+              *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+            >
+              <div>
+                <a
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="editStandardDeliveryTerm()"
+                  ><i class="fa fa-edit"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5">
+              <b>(As Default) Delivery Terms: </b
+              >{{ default_delivery_term + " Days" }}
+            </div>
+            <div class="col-md-6">
+              Quotation Validity: <b>From</b>
+              <u>{{ default_delivery_term_from | date: "dd-MMM-yyyy" }}</u>
+              <b>To</b>
+              <u>{{
+                quotation_validity_delivery_term_to | date: "dd-MMM-yyyy"
+              }}</u>
+            </div>
+            <div class="col-lg-1" style="text-align: right"></div>
+          </div>
+        </p-accordionTab>
+        <!-- End of Standard Term Accordion -->
+      </p-accordion>
+      <br />
+      <!-- Billing Milestone -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Billing Milestones">
+          <div class="row">
+            <!-- formArrayName="billings" -->
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>Billing ID</th>
+                  <th>Stage</th>
+                  <th>Percentage %</th>
+                  <th>Amount ({{ soci_data?.currency }})</th>
+                  <th>Notes</th>
+                  <th></th>
+                  <th *ngIf="is_preview_check"></th>
+                  <th *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  align="center"
+                  *ngFor="let billing of billing_milestone; let i = index"
+                >
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="billing.billing_id"
+                      [ngModelOptions]="{ standalone: true }"
+                      readonly
+                      [attr.disabled]="
+                        enableEdit['billingMilestone'] && controller == billing
+                          ? null
+                          : ''
+                      "
+                    />
+                    <!-- {{ billing.billing_id }} -->
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="billing.stage"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="
+                        enableEdit['billingMilestone'] && controller == billing
+                          ? null
+                          : ''
+                      "
+                    />
+                    <!-- {{ billing.stage }} -->
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="text-align: right"
+                      [(ngModel)]="billing.percentage"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="
+                        enableEdit['billingMilestone'] && controller == billing
+                          ? null
+                          : ''
+                      "
+                    />
+                    <!-- {{ billing.percentage }} -->
+                  </td>
+                  <td>
+                    <div
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'billingMilestone'
+                      "
+                    >
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [ngModel]="billing.amount | number: '1.2'"
+                        [ngModelOptions]="{ standalone: true }"
+                        [attr.disabled]="
+                          enableEdit['billingMilestone'] &&
+                          controller == billing
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+                    <div *ngIf="editableRowIndex == i">
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [(ngModel)]="billing.amount"
+                        [ngModelOptions]="{ standalone: true }"
+                        [attr.disabled]="
+                          enableEdit['billingMilestone'] &&
+                          controller == billing
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+
+                    <!-- {{ billing.amount }} -->
+                  </td>
+                  <td style="width: 20%">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="billing.remarks"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="
+                        enableEdit['billingMilestone'] && controller == billing
+                          ? null
+                          : ''
+                      "
+                    />
+                    <!-- {{ billing.remarks }} -->
+                  </td>
+                  <td class="text-center"></td>
+                  <td
+                    class="text-center td-actions"
+                    style="width: 10%"
+                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+                  >
+                    <div class="action-icon">
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        *ngIf="
+                          enableEdit['billingMilestone'] &&
+                          controller == billing
+                        "
+                        (click)="updateBillingMilestone(i, billing.id)"
+                        ><i class="cil-check-circle"></i
+                      ></a>
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        *ngIf="
+                          editableRowIndex !== i ||
+                          selectedId !== 'billingMilestone'
+                        "
+                        (click)="
+                          enableEditMethod(i, billing, 'billingMilestone')
+                        "
+                      >
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      &nbsp;
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        *ngIf="
+                          enableEdit['billingMilestone'] &&
+                          controller == billing
+                        "
+                        (click)="disableEditMethod(billing, 'billingMilestone')"
+                      >
+                        <i class="pi pi-times"></i>
+                      </a>
+                      &nbsp;
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        *ngIf="
+                          editableRowIndex !== i ||
+                          selectedId !== 'billingMilestone'
+                        "
+                        (click)="deleteBillingMilestone(i, billing.id)"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
+                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+                  <td style="width: 15%">
+                    <input
+                      formControlName="billing_id"
+                      class="form-control"
+                      placeholder=""
+                      type="text"
+                      readonly
+                    />
+                  </td>
+                  <td style="width: 15%">
+                    <input
+                      formControlName="stage"
+                      class="form-control"
+                      size="1"
+                      placeholder=""
+                      type="text"
+                    />
+                  </td>
+                  <td style="width: 10%">
+                    <input
+                      formControlName="percentage"
+                      class="form-control"
+                      size="1"
+                      placeholder="0"
+                      type="number"
+                      min="0"
+                      max="100.00"
+                      step=".01"
+                    />
+                  </td>
+                  <td style="width: 20%">
+                    <input
+                      formControlName="amount"
+                      class="form-control"
+                      size="1"
+                      placeholder="0"
+                      type="number"
+                      min="0"
+                      step=".01"
+                    />
+                  </td>
+                  <td style="width: 15%">
+                    <textarea
+                      formControlName="remarks"
+                      class="form-control"
+                      id=""
+                      style="width: 135px"
+                      rows="1"
+                    ></textarea>
+                  </td>
+                  <td class="text-center"></td>
+
+                  <td class="td-actions" colspan="9" align="center">
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addBillingMileStone()"
+                    >
+                      <i class="icon-plus icons"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <br />
+
+      <!-- Payment Schedules Accordion -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Payment Schedules">
+          <div class="row">
+            <!-- formArrayName="payments" -->
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>Billing ID</th>
+                  <th>Percentage %</th>
+                  <th>Schedule</th>
+                  <th>SOC Payment Terms</th>
+                  <th>Status</th>
+                  <th>Amount ({{ soci_data?.currency }})</th>
+                  <th>Notes</th>
+                  <th *ngIf="is_preview_check"></th>
+                  <th *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  align="center"
+                  *ngFor="let payment of payment_schedules; let i = index"
+                >
+                  <td>
+                    <!-- formControlName="billing_id" -->
+                    <select
+                      [(ngModel)]="billing_id"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="
+                        enableEdit['payment'] && controller == payment
+                          ? null
+                          : ''
+                      "
+                      class="form-control"
+                      style="width: 130px"
+                    >
+                      <option value="" disabled selected>Select Item</option>
+                      <option
+                        *ngFor="let bill of billing_milestone; let i = index"
+                        value="{{ bill.billing_id }}"
+                        [ngValue]="bill.billing_id"
+                      >
+                        {{ bill.billing_id }}
+                      </option>
+                    </select>
+                    <!-- <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="payment.billing_id"
+                      [ngModelOptions]="{ standalone: true }"
+                      readonly
+                    /> -->
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="text-align: right; width: 100px"
+                      [(ngModel)]="payment.percentage"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="
+                        enableEdit['payment'] && controller == payment
+                          ? null
+                          : ''
+                      "
+                    />
+                    <!-- {{ payment.percentage }} -->
+                  </td>
+                  <td>
+                    <input
+                      type="date"
+                      style="width: 79%"
+                      class="form-control"
+                      [ngModel]="new_payment_schedule_date"
+                      (ngModelChange)="changePaymentSchdule($event)"
+                      [ngModelOptions]="{ standalone: true }"
+                      *ngIf="enableEdit['payment'] && controller == payment"
+                      [attr.disabled]="
+                        enableEdit['payment'] && controller == payment
+                          ? null
+                          : ''
+                      "
+                    />
+                    <!-- *ngIf="enableEdit['payment'] && controller == payment" -->
+                    <div
+                      *ngIf="editableRowIndex !== i || selectedId !== 'payment'"
+                    >
+                      {{ payment.schedule | date: "dd-MMM-yyyy" }}
+                    </div>
+                    <!-- {{ payment.schedule | date: "dd-MMM-yyyy" }} -->
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      class="form-control"
+                      style="width: 80px; text-align: right"
+                      [(ngModel)]="payment.soc_payment_term"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="
+                        enableEdit['payment'] && controller == payment
+                          ? null
+                          : ''
+                      "
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="width: 100px"
+                      [(ngModel)]="payment.status"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="
+                        enableEdit['payment'] && controller == payment
+                          ? null
+                          : ''
+                      "
+                    />
+                  </td>
+                  <td>
+                    <div
+                      *ngIf="editableRowIndex !== i || selectedId !== 'payment'"
+                    >
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right; width: 100px"
+                        [ngModel]="payment.amount | number: '1.2'"
+                        [ngModelOptions]="{ standalone: true }"
+                        [attr.disabled]="
+                          enableEdit['payment'] && controller == payment
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+                    <div *ngIf="editableRowIndex == i">
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right; width: 100px"
+                        [(ngModel)]="payment.amount"
+                        [ngModelOptions]="{ standalone: true }"
+                        [attr.disabled]="
+                          enableEdit['payment'] && controller == payment
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+
+                    <!-- {{ payment.amount }} -->
+                  </td>
+                  <td style="width: 16%">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="payment.remarks"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="
+                        enableEdit['payment'] && controller == payment
+                          ? null
+                          : ''
+                      "
+                    />
+                    <!-- {{ payment.remarks }} -->
+                  </td>
+                  <td
+                    class="td-actions"
+                    style="width: 10%; padding: none"
+                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+                  >
+                    <div class="action-icon">
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        *ngIf="enableEdit['payment'] && controller == payment"
+                        (click)="updatePaymentSchdule(i, payment.id)"
+                        ><i class="cil-check-circle"></i
+                      ></a>
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        *ngIf="
+                          editableRowIndex !== i || selectedId !== 'payment'
+                        "
+                        (click)="enableEditMethod(i, payment, 'payment')"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      &nbsp;
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        *ngIf="enableEdit['payment'] && controller == payment"
+                        (click)="disableEditMethod(payment, 'payment')"
+                      >
+                        <i class="pi pi-times"></i>
+                      </a>
+                      &nbsp;
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        *ngIf="
+                          editableRowIndex !== i || selectedId !== 'payment'
+                        "
+                        (click)="deletePaymentSchdule(i, payment.id)"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
+                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+                  <td style="width: 15%; padding: 6px">
+                    <select
+                      formControlName="billing_id"
+                      class="form-control"
+                      style="width: 130px"
+                    >
+                      <!-- *ngFor="let bill of billingList"
+                    value="{{ bill.billing_id }}" -->
+                      <option
+                        *ngFor="let bill of billing_milestone; let i = index"
+                        value="{{ bill.billing_id }}"
+                      >
+                        {{ bill.billing_id }}
+                      </option>
+                    </select>
+                  </td>
+                  <td style="width: 10%; padding: 6px">
+                    <!-- (keyup)="changePaymentPercent(i)" -->
+                    <input
+                      class="form-control"
+                      formControlName="percentage"
+                      style="width: 100px"
+                      size="1"
+                      placeholder=""
+                      type="number"
+                      min="0"
+                      max="100.00"
+                      step=".01"
+                    />
+                  </td>
+                  <td style="width: 20%; padding: 6px">
+                    <input
+                      class="form-control"
+                      style="width: 160px"
+                      formControlName="schedule"
+                      size="1"
+                      type="date"
+                    />
+                  </td>
+                  <td style="width: 10%; padding: 6px">
+                    <input
+                      class="form-control"
+                      style="width: 80px"
+                      formControlName="soc_payment_term"
+                      placeholder="0 Days"
+                      type="text"
+                    />
+                  </td>
+                  <td style="padding: 6px">
+                    <input
+                      class="form-control"
+                      style="width: 100px"
+                      formControlName="status"
+                      size="1"
+                      placeholder=""
+                      type="input"
+                    />
+                  </td>
+                  <td style="width: 10%; padding: 6px">
+                    <!-- (keyup)="changePaymentValue(i)" -->
+                    <input
+                      class="form-control"
+                      formControlName="amount"
+                      style="width: 100px"
+                      size="1"
+                      placeholder="0"
+                      type="number"
+                      min="0"
+                      step=".01"
+                    />
+                  </td>
+                  <td style="width: 10%; padding: 6px">
+                    <!-- (focus)="paymentRemarkModalOpen(i)" -->
+                    <textarea
+                      formControlName="remarks"
+                      class="form-control"
+                      placeholder=""
+                      id=""
+                      style="width: 135px"
+                      rows="1"
+                    ></textarea>
+                    <!-- <input
+                      class="form-control"
+                      formControlName="remarks"
+                      size="1"
+                      placeholder="Remarks"
+                      type="text"
+                    /> -->
+                  </td>
+                  <td class="td-actions" colspan="9" align="center">
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addPaymentSchedule()"
+                    >
+                      <i class="icon-plus icons"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End of Payment Schedules Accordion -->
+      <br />
+      <!-- Additional Costs Accordion -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Additional Costs">
+          <div class="row">
+            <!-- formArrayName="addCosts" -->
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                  <th>Unit Price ({{ soci_data?.currency }})</th>
+                  <th>Total Price ({{ soci_data?.currency }})</th>
+                  <th>Notes</th>
+                  <th></th>
+                  <th></th>
+                  <th *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  align="center"
+                  *ngFor="let cost of additional_costs; let i = index"
+                >
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="cost.description"
+                      [attr.disabled]="
+                        enableEdit['addCost'] && controller == cost ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    <!-- {{ cost.description }} -->
+                  </td>
+                  <td>
+                    <!-- (input)="changeQuantity()" -->
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="text-align: right; width: 65px"
+                      (input)="changeCostvalues(cost)"
+                      [(ngModel)]="cost.quantity"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="
+                        enableEdit['addCost'] && controller == cost ? null : ''
+                      "
+                    />
+                    <!-- {{ cost.quantity }} -->
+                  </td>
+                  <td>
+                    <!-- (input)="costUnitValue()" -->
+                    <div
+                      *ngIf="editableRowIndex !== i || selectedId !== 'addCost'"
+                    >
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [ngModel]="cost.unit_price | number: '1.2'"
+                        [ngModelOptions]="{ standalone: true }"
+                        [attr.disabled]="
+                          enableEdit['addCost'] && controller == cost
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+                    <div *ngIf="editableRowIndex == i">
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [(ngModel)]="cost.unit_price"
+                        (input)="changeCostvalues(cost)"
+                        [ngModelOptions]="{ standalone: true }"
+                        [attr.disabled]="
+                          enableEdit['addCost'] && controller == cost
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+
+                    <!-- {{ cost.unit_price }} -->
+                  </td>
+                  <td>
+                    <div
+                      *ngIf="editableRowIndex !== i || selectedId !== 'addCost'"
+                    >
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [ngModel]="cost.total_price | number: '1.2'"
+                        [ngModelOptions]="{ standalone: true }"
+                        readonly
+                        [attr.disabled]="
+                          enableEdit['addCost'] && controller == cost
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+                    <div *ngIf="editableRowIndex == i">
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [(ngModel)]="cost.total_price"
+                        [ngModelOptions]="{ standalone: true }"
+                        readonly
+                        [attr.disabled]="
+                          enableEdit['addCost'] && controller == cost
+                            ? null
+                            : ''
+                        "
+                      />
+                    </div>
+
+                    <!-- {{ cost.total_price }} -->
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="cost.remarks"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="
+                        enableEdit['addCost'] && controller == cost ? null : ''
+                      "
+                    />
+                    <!-- {{ cost.remarks }} -->
+                  </td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td
+                    class="td-actions"
+                    style="width: 10%"
+                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+                  >
+                    <div class="action-icon">
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="updateAdditionalCost(i, cost.id)"
+                        *ngIf="enableEdit['addCost'] && controller == cost"
+                        ><i class="cil-check-circle"></i
+                      ></a>
+                      &nbsp;
+                      <!-- *ngIf="enableEdit['addCost'] && controller == cost" -->
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="disableEditMethod(cost, 'addCost')"
+                        *ngIf="enableEdit['addCost'] && controller == cost"
+                      >
+                        <i class="pi pi-times"></i>
+                      </a>
+                      <!-- *ngIf="!enableEdit['addCost']"
+                          (click)="enableEditMethod(cost, 'addCost')" -->
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        *ngIf="
+                          editableRowIndex !== i || selectedId !== 'addCost'
+                        "
+                        (click)="enableEditMethod(i, cost, 'addCost')"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      &nbsp;
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        *ngIf="
+                          editableRowIndex !== i || selectedId !== 'addCost'
+                        "
+                        (click)="deleteAdditionalCost(i, cost.id)"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
+                <!-- *ngFor="let cost of addCosts().controls; let i = index"
+                [formGroupName]="i" -->
+                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+                  <td style="width: 15%">
+                    <input
+                      formControlName="description"
+                      class="form-control"
+                      placeholder=""
+                      type="text"
+                    />
+                  </td>
+                  <td style="width: 15%">
+                    <!-- (keyup)="allTotal(cost['controls'], addCosts().controls)" -->
+                    <input
+                      formControlName="quantity"
+                      class="form-control"
+                      size="1"
+                      placeholder="0"
+                      type="number"
+                      (input)="changeQuantity()"
+                      min="0"
+                    />
+                  </td>
+                  <td style="width: 18%">
+                    <!-- (keyup)="allTotal(cost['controls'], addCosts().controls)" -->
+                    <input
+                      formControlName="unit_price"
+                      class="form-control"
+                      placeholder="0"
+                      type="text"
+                      (input)="costUnitValue()"
+                    />
+                  </td>
+                  <td style="width: 18%">
+                    <input
+                      formControlName="total_price"
+                      class="form-control"
+                      readonly
+                      type="text"
+                    />
+                  </td>
+                  <td style="width: 15%">
+                    <textarea
+                      formControlName="remarks"
+                      class="form-control"
+                      placeholder=""
+                      id=""
+                      style="width: 135px"
+                      rows="1"
+                    ></textarea>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td class="td-actions" colspan="9" align="center">
+                    <!-- (click)="addAddCosts()" -->
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addAdditionalCost()"
+                    >
+                      <i class="icon-plus icons"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="col-lg-12" align="right">
+              <div class="form-group charges">
+                <p><b> TotaL </b></p>
+                <p>({{ soci_data?.currency }})</p>
+                <input
+                  type="text"
+                  class="form-control"
+                  readonly
+                  value=" {{ total_additional_costs_amount | number: '1.2' }}"
+                />
+                <!-- value=" {{ total_additional_costs_amount }}" -->
+                <!-- {{ sub_total | number: "1.2-2" }} -->
+              </div>
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End of Additional Costs Accordion -->
+      <br />
+
+      <!-- Billing Instruction Accordion -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Billing Instruction">
+          <div class="row">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>Schedule</th>
+                  <th>Percentage %</th>
+                  <th>Amount ({{ soci_data?.currency }})</th>
+                  <!-- <th>SOC Payment Terms</th>
+                  <th>Status</th> -->
+                  <th>Note</th>
+                  <th></th>
+                  <th *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  align="center"
+                  *ngFor="let item of billing_instruction; let i = index"
+                >
+                  <td>
+                    <!-- item.schedule -->
+                    <input
+                      type="date"
+                      class="form-control"
+                      style="width: 89%"
+                      [(ngModel)]="new_billing_instruction_date"
+                      (ngModelChange)="changeBillingSchdule($event)"
+                      *ngIf="
+                        enableEdit['addBillInstruction'] && controller == item
+                      "
+                      [attr.disabled]="
+                        enableEdit['addBillInstruction'] && controller == item
+                          ? null
+                          : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    <div
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'addBillInstruction'
+                      "
+                    >
+                      {{ item.schedule }}
+                    </div>
+                    <!-- {{ item.schedule }} -->
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="text-align: right; width: 100px"
+                      [(ngModel)]="item.percentage"
+                      [attr.disabled]="
+                        enableEdit['addBillInstruction'] && controller == item
+                          ? null
+                          : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    <!-- {{ item.percentage }} -->
+                  </td>
+                  <td>
+                    <div
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'addBillInstruction'
+                      "
+                    >
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [ngModel]="item.amount | number: '1.2'"
+                        [attr.disabled]="
+                          enableEdit['addBillInstruction'] && controller == item
+                            ? null
+                            : ''
+                        "
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                    </div>
+                    <div *ngIf="editableRowIndex == i">
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="text-align: right"
+                        [(ngModel)]="item.amount"
+                        [attr.disabled]="
+                          enableEdit['addBillInstruction'] && controller == item
+                            ? null
+                            : ''
+                        "
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                    </div>
+
+                    <!-- {{ item.amount }} -->
+                  </td>
+
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="item.remarks"
+                      [attr.disabled]="
+                        enableEdit['addBillInstruction'] && controller == item
+                          ? null
+                          : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    <!-- {{ item.remarks }} -->
+                  </td>
+                  <td></td>
+                  <td
+                    class="td-actions"
+                    style="width: 10%"
+                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+                  >
+                    <div class="action-icon">
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="updateBillingInstruction(i, item.id)"
+                        *ngIf="
+                          enableEdit['addBillInstruction'] && controller == item
+                        "
+                        ><i class="cil-check-circle"></i
+                      ></a>
+                      &nbsp;
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="disableEditMethod(item, 'addBillInstruction')"
+                        *ngIf="
+                          enableEdit['addBillInstruction'] && controller == item
+                        "
+                      >
+                        <i class="pi pi-times"></i>
+                      </a>
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        *ngIf="
+                          editableRowIndex !== i ||
+                          selectedId !== 'addBillInstruction'
+                        "
+                        (click)="
+                          enableEditMethod(i, item, 'addBillInstruction')
+                        "
+                      >
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      &nbsp;
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        *ngIf="
+                          editableRowIndex !== i ||
+                          selectedId !== 'addBillInstruction'
+                        "
+                        (click)="deleteBillingInstruction(i, item.id)"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
+                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+                  <td>
+                    <input
+                      formControlName="schedule"
+                      class="form-control"
+                      placeholder=""
+                      type="date"
+                      style="width: 160px"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      formControlName="percentage"
+                      style="width: 100px"
+                      class="form-control"
+                      placeholder="0"
+                      type="text"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      formControlName="amount"
+                      class="form-control"
+                      placeholder="0"
+                      type="number"
+                    />
+                  </td>
+
+                  <td>
+                    <textarea
+                      formControlName="remarks"
+                      class="form-control"
+                      placeholder=""
+                      id=""
+                      style="width: 135px"
+                      rows="1"
+                    ></textarea>
+                    <!-- <input
+                      formControlName="remarks"
+                      class="form-control"
+                      placeholder="remarks"
+                      type="text"
+                    /> -->
+                  </td>
+                  <td class="td-actions" colspan="9" align="center">
+                    <!-- (click)="addAddCosts()" -->
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addBillingInstruction()"
+                    >
+                      <i class="icon-plus icons"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End of Billing Instruction Accordion -->
+      <br />
+
+      <!-- Additional Instruction and Information Accordion -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Additional Instruction and Information">
+          <!-- Heading -->
+          <div class="row grey">
+            <div class="col-3">
+              <div class="row">
+                <div class="col-5"><b>Title</b></div>
+              </div>
+            </div>
+            <div class="col-lg-6" style="text-align: middle">
+              <div class="col-md-8">
+                <b> Description</b>
+              </div>
+            </div>
+          </div>
+          <!-- bil to -->
+
+          <div
+            class="row"
+            *ngFor="let item of additional_instructions; let i = index"
+          >
+            <div class="col-md-3">
+              <div class="col-md-10">
+                <!-- [value]="item.soci" -->
+                <input
+                  class="text-left form-control"
+                  style="width: 146px"
+                  type="text"
+                  [(ngModel)]="item.soci"
+                  [attr.disabled]="
+                    enableEdit['additionalInstruction'] && controller == item
+                      ? null
+                      : ''
+                  "
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder=""
+                />
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="col-md-10">
+                <input
+                  class="text-left form-control"
+                  style="width: 600px"
+                  type="text"
+                  [(ngModel)]="item.description"
+                  [attr.disabled]="
+                    enableEdit['additionalInstruction'] && controller == item
+                      ? null
+                      : ''
+                  "
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder=""
+                />
+              </div>
+            </div>
+
+            <div
+              class="col-md-1"
+              style="text-align: right"
+              *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+            >
+              <div class="row">
+                <!-- //action -->
+                <div class="action-icon">
+                  <a
+                    [routerLink]=""
+                    routerLinkActive="router-link-active"
+                    (click)="updateAdditionalInstruction(i, item.id)"
+                    *ngIf="
+                      enableEdit['additionalInstruction'] && controller == item
+                    "
+                    ><i class="cil-check-circle"></i
+                  ></a>
+                  &nbsp;
+                  <a
+                    [routerLink]=""
+                    routerLinkActive="router-link-active"
+                    (click)="disableEditMethod(item, 'additionalInstruction')"
+                    *ngIf="
+                      enableEdit['additionalInstruction'] && controller == item
+                    "
+                  >
+                    <i class="pi pi-times"></i>
+                  </a>
+                  <a
+                    [routerLink]=""
+                    routerLinkActive="router-link-active"
+                    *ngIf="
+                      editableRowIndex !== i ||
+                      selectedId !== 'additionalInstruction'
+                    "
+                    (click)="enableEditMethod(i, item, 'additionalInstruction')"
+                  >
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  &nbsp;
+                  <a
+                    [routerLink]=""
+                    routerLinkActive="router-link-active"
+                    *ngIf="
+                      editableRowIndex !== i ||
+                      selectedId !== 'additionalInstruction'
+                    "
+                    (click)="deleteAdditionalInstruction(i, item.id)"
+                    ><i class="fa fa-trash"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add additional_instruction -->
+
+          <div *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+            <div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="">
+                    <div class="col-md-10">
+                      <input
+                        class="text-left form-control"
+                        style="width: 146px"
+                        type="text"
+                        formControlName="soci_title"
+                        placeholder=""
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="">
+                    <div class="col-md-10">
+                      <input
+                        class="text-left form-control"
+                        style="width: 600px"
+                        type="text"
+                        formControlName="description"
+                        placeholder=""
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-1" style="text-align: right">
+                  <div class="row">
+                    <div class="action-icon">
+                      <!-- <a [routerLink]="" routerLinkActive="router-link-active"
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp; -->
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        style="font-size: 20px"
+                        (click)="addAdditionalInstruction()"
+                      >
+                        <i class="icon-plus icons"></i
+                      ></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End of Additional Instruction and Information -->
+      <br />
+
+      <!-- Additional/Reduction Charges -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Additional/Reduction Charges">
+          <!-- Heading -->
+          <div class="row grey">
+            <div class="col-md-3" style="text-align: center">
+              <div class="row">
+                <div class="col-md-6"><b>Cost Item</b></div>
+              </div>
+            </div>
+            <div class="col-lg-3" style="text-align: center">
+              <div class="col-md-8">
+                <b> Description</b>
+              </div>
+            </div>
+            <div class="col-lg-1" style="text-align: center">
+              <div class="col-md-8">
+                <b> Quantity</b>
+              </div>
+            </div>
+            <div class="col-lg-2" style="text-align: center">
+              <div class="col-md-12">
+                <b> Unit ({{ soci_data?.currency }}) </b>
+              </div>
+            </div>
+            <div class="col-lg-2" style="text-align: center">
+              <div class="col-md-12">
+                <b> Amount ({{ soci_data?.currency }})</b>
+              </div>
+            </div>
+            <div
+              class="col-lg-1"
+              style="text-align: middle"
+              *ngIf="!is_preview_check && sociStatus == 1"
+            >
+              <div class="">
+                <b> Action</b>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="row"
+              *ngFor="let item of additional_charges; let i = index"
+            >
+              <div class="col-md-2">
+                <div class="">
+                  <!-- formControlName="cost_item_id" -->
+                  <div class="col-md-10">
+                    <select
+                      [(ngModel)]="cost_item_id"
+                      [ngModelOptions]="{ standalone: true }"
+                      class="form-control"
+                      style="width: 140px"
+                    >
+                      <option value="" disabled selected>Select Item</option>
+                      <option
+                        *ngFor="let item of additional_costs; let i = index"
+                        value="{{ item.id }}"
+                        [ngValue]="item.cost_item_id"
+                      >
+                        {{ item.description }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <!-- Description -->
+              <div class="col-md-4">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      style="width: 360px"
+                      type="text"
+                      [(ngModel)]="item.description"
+                      [attr.disabled]="
+                        enableEdit['additionalCharges'] && controller == item
+                          ? null
+                          : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- qty -->
+              <div class="col-md-1">
+                <div class="qty">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      type="number"
+                      style="width: 65px; text-align: right !important"
+                      (input)="updateChargesQuantity(item)"
+                      [(ngModel)]="item.quantity"
+                      [attr.disabled]="
+                        enableEdit['additionalCharges'] && controller == item
+                          ? null
+                          : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- unit -->
+              <div class="col-md-2">
+                <div class="unit">
+                  <div class="col-md-10" *ngIf="editableRowIndex == i">
+                    <input
+                      class="text-left form-control"
+                      type="text"
+                      style="
+                        width: 160px !important;
+                        text-align: right !important;
+                      "
+                      [(ngModel)]="item.unit_price"
+                      (input)="updateChargesUnitPrice(item)"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="
+                        enableEdit['additionalCharges'] && controller == item
+                          ? null
+                          : ''
+                      "
+                      placeholder="0"
+                    />
+                  </div>
+                  <div
+                    class="col-md-10"
+                    *ngIf="
+                      editableRowIndex !== i ||
+                      selectedId !== 'additionalCharges'
+                    "
+                  >
+                    <input
+                      class="text-left form-control"
+                      type="text"
+                      style="width: 160px; text-align: right !important"
+                      [ngModel]="item.unit_price | number: '1.2'"
+                      [ngModelOptions]="{ standalone: true }"
+                      [attr.disabled]="
+                        enableEdit['additionalCharges'] && controller == item
+                          ? null
+                          : ''
+                      "
+                      placeholder="0"
+                    />
+                    <!-- {{item.unit_price  | number: '1.2'}} -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Amount -->
+              <div class="col-md-2">
+                <div class="amount">
+                  <div class="col-md-10">
+                    <!-- [(ngModel)]="item.total_price" -->
+                    <input
+                      class="text-left form-control"
+                      type="text"
+                      style="width: 140px; text-align: right !important"
+                      [ngModel]="item.total_price | number: '1.2'"
+                      readonly
+                      [attr.disabled]="
+                        enableEdit['additionalCharges'] && controller == item
+                          ? null
+                          : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- action -->
+              <div
+                class="col-md-1"
+                style="text-align: right"
+                *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+              >
+                <div class="row">
+                  <!-- //action -->
+                  <div class="action-icon">
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="updateAdditionalCharges(i, item.id)"
+                      *ngIf="
+                        enableEdit['additionalCharges'] && controller == item
+                      "
+                      ><i class="cil-check-circle"></i
+                    ></a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="disableEditMethod(item, 'additionalCharges')"
+                      *ngIf="
+                        enableEdit['additionalCharges'] && controller == item
+                      "
+                    >
+                      <i class="pi pi-times"></i>
+                    </a>
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      (click)="enableEditMethod(i, item, 'additionalCharges')"
+                    >
+                      <i class="fa fa-edit"></i>
+                    </a>
+                    &nbsp;
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      (click)="deleteAdditionalCharges(i, item.id)"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- input data fields -->
+          <div *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="">
+                  <!-- formControlName="" -->
+                  <div class="col-md-10">
+                    <select
+                      class="form-control"
+                      formControlName="cost_item_id"
+                      style="width: 140px"
+                    >
+                      <!-- let i = index -->
+                      <option value="" disabled selected>Select Item</option>
+                      <option
+                        *ngFor="let item of additional_costs; let i = index"
+                        value="{{ item.id }}"
+                      >
+                        {{ item.description }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      formControlName="description"
+                      style="width: 360px"
+                      type="text"
+                      placeholder=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div class="qty">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      formControlName="quantity"
+                      (input)="changeQuantity()"
+                      type="number"
+                      placeholder="0"
+                      style="width: 75px"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="unit">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      formControlName="unit_price"
+                      style="width: 160px !important"
+                      type="text"
+                      placeholder="0"
+                      (input)="chargesUnitValue()"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="amount">
+                  <div class="col-md-10">
+                    <input
+                      class="text-left form-control"
+                      formControlName="total_price"
+                      readonly
+                      type="text"
+                      placeholder="0"
+                      style="width: 140px !important"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-1" style="text-align: right">
+                <div class="">
+                  <div class="text-center action-icon">
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      style="font-size: 20px"
+                      (click)="addAdditionalCharges()"
+                      ><i class="icon-plus icons"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12" align="right">
+            <div class="form-group charges">
+              <p><b>TotaL </b></p>
+              <p>({{ soci_data?.currency }})</p>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                value=" {{ total_additional_charges_amount | number: '1.2' }}"
+              />
+              <!-- value=" {{ total_additional_charges_amount | number: "1.2-2" }}" -->
+              <!-- {{ sub_total | number: "1.2-2" }} -->
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End Additional/Reduction Charges -->
+      <br />
+      <!-- Product -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="Products">
+          <div class="row">
+            <!-- formArrayName="products" -->
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Product Name</th>
+                  <th>SKU ID</th>
+                  <th>Quantity</th>
+                  <th>Unit Price ({{ soci_data?.currency }})</th>
+                  <th>Total Price ({{ soci_data?.currency }})</th>
+                  <th>Discount %</th>
+                  <th>Net Amount ({{ soci_data?.currency }})</th>
+                  <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  align="center"
+                  class="prod"
+                  *ngFor="let item of product; let i = index"
+                >
+                  <td class="text-center">{{ i + 1 }}</td>
+                  <td class="text-center">
+                    <!-- <input
+                      class="text-left form-control"
+                      type="text"
+                      readonly
+                      [(ngModel)]="item.name"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      [attr.disabled]="
+                        enableEdit['product'] && controller == item ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Enter Item"
+                    /> -->
+                    {{ item.name }}
+                  </td>
+                  <td class="text-center">
+                    <!-- <input
+                      class="text-left form-control"
+                      type="text"
+                      readonly
+                      style="text-align: center;"
+                      [(ngModel)]="item.sku"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      [attr.disabled]="
+                        enableEdit['product'] && controller == item ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Enter Item"
+                    /> -->
+                    {{ item.sku }}
+                  </td>
+                  <td class="text-center">
+                    <!-- <input
+                      class="text-left form-control"
+                      type="text"
+                      style="text-align: center !important;"
+                      readonly
+                      [(ngModel)]="item.quantity"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      [attr.disabled]="
+                        enableEdit['product'] && controller == item ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Enter Item"
+                    /> -->
+                    {{ item.quantity }}
+                  </td>
+                  <td class="text-center">
+                    <!-- <input
+                      class="text-left form-control"
+                      type="text"
+                      style="text-align: right !important; width: 100% ;"
+                      readonly
+                      [(ngModel)]="item.unit_price"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      [attr.disabled]="
+                        enableEdit['product'] && controller == item ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Enter Item"
+                    /> -->
+                    {{ item.unit_price | number: "1.2" }}
+                  </td>
+                  <td class="text-center">
+                    <!-- <input
+                      class="text-left form-control"
+                      style="text-align: right !important; width: 100%;"
+                      type="text"
+                      readonly
+                      [(ngModel)]="item.total_price"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      [attr.disabled]="
+                        enableEdit['product'] && controller == item ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Enter Item"
+                    /> -->
+                    {{ item.total_price | number: "1.2" }}
+                  </td>
+                  <td class="text-center">
+                    <!-- <input
+                      class="text-left form-control"
+                      type="text"
+                      style="text-align: center !important;"
+                      readonly
+                      [(ngModel)]="item.discount"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      [attr.disabled]="
+                        enableEdit['product'] && controller == item ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Enter Item"
+                    /> -->
+                    {{ item.discount }}
+                  </td>
+                  <td class="text-center">
+                    <!-- <input
+                      class="text-left form-control"
+                      style="text-align: right !important; width: 100%;"
+                      type="text"
+                      readonly
+                      [(ngModel)]="item.amount"
+                      *ngIf="
+                        editableRowIndex !== i ||
+                        selectedId !== 'additionalCharges'
+                      "
+                      [attr.disabled]="
+                        enableEdit['product'] && controller == item ? null : ''
+                      "
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Enter Item"
+                    /> -->
+                    {{ item.amount | number: "1.2" }}
+                  </td>
+                  <td
+                    class="td-actions"
+                    style="width: 5%"
+                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+                  >
+                    <!-- //action -->
+                    <div class="action-icon" style="display: flex">
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        (click)="openUpdateProductModal(i, item)"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      &nbsp;
+                      <a
+                        [routerLink]=""
+                        routerLinkActive="router-link-active"
+                        *ngIf="
+                          editableRowIndex !== i || selectedId !== 'product'
+                        "
+                        (click)="deleteProduct(i, item.id)"
+                        ><i class="fa fa-trash"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
+                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+                  <!-- {{ i + 1 }} -->
+                  <td></td>
+                  <td style="size: 20%">
+                    <!-- [(ngModel)]="selectedProductAdvanced[i]" -->
+                    <p-autoComplete
+                      formControlName="name"
+                      [suggestions]="filteredProducts"
+                      (completeMethod)="filterProduct($event)"
+                      field="name"
+                      [dropdown]="true"
+                      [style]="{ width: '100%' }"
+                      [inputStyle]="{ width: '100%' }"
+                    >
+                      <ng-template let-product pTemplate="item">
+                        <div
+                          class="product-item"
+                          (click)="productDetails(product, 'add_product')"
+                        >
+                          <div>{{ product.name }}</div>
+                        </div>
+                      </ng-template>
+                    </p-autoComplete>
+                  </td>
+                  <td style="width: 14%">
+                    <input
+                      class="form-control"
+                      formControlName="sku"
+                      type="text"
+                      readonly
+                    />
+                  </td>
+                  <td>
+                    <!-- (keyup)="countNetAmount(productC)" -->
+                    <input
+                      class="form-control"
+                      formControlName="quantity"
+                      type="number"
+                      step=".01"
+                      placeholder="0"
+                      (input)="addProductQuantity()"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      class="form-control"
+                      formControlName="unit_price"
+                      type="number"
+                      step=".01"
+                      readonly
+                    />
+                  </td>
+                  <td>
+                    <input
+                      class="form-control"
+                      formControlName="total_price"
+                      type="number"
+                      step=".01"
+                      readonly
+                    />
+                  </td>
+                  <td>
+                    <!-- (keyup)="countNetAmount(productC)" -->
+                    <input
+                      class="form-control"
+                      formControlName="discount"
+                      type="number"
+                      step=".01"
+                      (input)="addDiscount()"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      class="form-control"
+                      formControlName="amount"
+                      type="number"
+                      step=".01"
+                      readonly
+                    />
+                  </td>
+                  <td class="td-actions" colspan="9" align="center">
+                    <a
+                      [routerLink]=""
+                      routerLinkActive="router-link-active"
+                      (click)="addPrductData()"
+                    >
+                      <i class="icon-plus icons"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            class="card border-primary m-3"
+            style="float: right; width: 435px; border-radius: 15px"
+          >
+            <div class="card-body">
+              <table class="table table-borderless table-price">
+                <tr>
+                  <td class="text-left"><b> Subtotal Before Tax</b></td>
+                  <td class="text-right">
+                    {{ product_subtotal_before_tax | number: "1.2" }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-left">
+                    <b>Tax ({{ soci_data?.currency }})</b>
+                  </td>
+                  <td class="text-right">{{ tax_rate | number: "1.2" }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left"><b>Discount Value</b></td>
+                  <td class="text-right">
+                    {{ products_total_discount_values | number: "1.2" }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-left"><b>Total Amount</b></td>
+                  <td class="text-right">
+                    {{ product_total_net_amount | number: "1.2" }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End of Products Accordion -->
+      <br />
+      <!-- SOCI PO Attachments -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordionTab header="SOCI Attachments">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <!-- <th>Global Order ID</th>
+                <th>FO SO No.</th> -->
+                <th>Customer PO</th>
+                <th>File Name</th>
+                <th>File Type</th>
+                <th>Download</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr align="center" *ngFor="let item of sociAttachment">
+                <!-- <td></td>
+                <td></td> -->
+                <td>
+                  <div *ngIf="soci_data?.po_no">
+                    {{ soci_data?.po_no }}
+                  </div>
+                  <div *ngIf="!soci_data?.po_no">_</div>
+                </td>
+                <!-- <td>_</td> -->
+                <td>{{ item.original_file_name }}</td>
+                <td>{{ item.file_type }}</td>
+                <td>
+                  <a
+                    href="{{
+                      url +
+                        '/soci/attachment-download/' +
+                        item.fileName +
+                        '?token=' +
+                        token
+                    }}"
+                    target="_blank"
+                    >Download</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </p-accordionTab>
+      </p-accordion>
+      <br />
+      <div class="soci-remarks" [style.justifyContent]="!is_preview_check && (sociStatus == 1 || sociStatus == 7) ? 'space-between' : 'end'">
+        <!-- Remarks taxbox -->
+        <div class="remarks-texbox" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+          <div class="remarks-btn">
+            <label>Remarks</label>
+            <button
+              class="btn btn-primary"
+              *ngIf="!isRemarksAdded && (sociStatus == 1 || sociStatus == 7)"
+              (click)="updateRemarks(false)"
+            >
+              Update Remarks
+            </button>
+          </div>
+          <textarea
+            class="texarea"
+            formControlName="sociRemarks"
+            placeholder="Remarks..."
+            (input)="remarksAdded()"
+          ></textarea>
+        </div>
+
+        <!-- SOCI Detail -->
+        <div
+          style="
+            margin-top: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+          "
+        >
+          <p-accordion [multiple]="true" styleClass="custom" activeIndex="0">
+            <p-accordionTab header="Summary">
+              <table class="table table-borderless table-price">
+                <tr>
+                  <td class="text-left">Subtotal Before Tax</td>
+                  <td class="text-right">
+                    {{ product_subtotal_before_tax | number: "1.2" }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-left">Discount Value</td>
+                  <td class="text-right">
+                    {{ products_total_discount_values | number: "1.2" }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-left">({{ soci_data?.currency }}) Tax</td>
+                  <td class="text-right">0.00</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Additional Cost & Charges</td>
+                  <td class="text-right">
+                    {{ additional_cost_and_charges | number: "1.2" }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-left">Total Cost</td>
+                  <td class="text-right">{{ total_cost | number: "1.2" }}</td>
+                </tr>
+              </table>
+            </p-accordionTab>
+          </p-accordion>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 
-<div class="row"></div> <!-- Empty row to give some space at the bottom -->
+<div class="request-btns" *ngIf="!is_approval_view_check">
+  <button class="cancel-btn" (click)="back()">
+    <i class="pi pi-arrow-left"></i>
+    Cancel
+  </button>
+  <!-- (click)="confirmationModal.show()" -->
+  <button
+    class="request-approval-btn"
+    (click)="checkRamarksAdded()"
+    *ngIf="sociStatus == 1 || (sociStatus == 7 && is_edited)"
+  >
+    REQUEST APPROVAL
+  </button>
+
+  <!-- [attr.disabled]="sociStatus == 4 || !is_released && !is_edited ? null : ''" -->
+  <button
+    class="request-btn"
+    (click)="confirmationReleaseModal.show()"
+    *ngIf="sociStatus == 4 && !is_released && !is_edited"
+  >
+    <i class="pi pi-check"></i>
+    RELEASE
+  </button>
+</div>
+<div class="request-btns" *ngIf="sociStatus == 2 && is_approval_view_check">
+  <button class="cancel-btn" (click)="confirmationEscalateModal.show()">
+    <i class="pi pi-arrow-up"></i>
+    ESCALATE
+  </button>
+  <button class="reject-btn" (click)="confirmationRejectModal.show()">
+    <i class="pi pi-times-circle"></i>
+    REJECT
+  </button>
+  <button class="request-btn" (click)="confirmationApproveModal.show()">
+    <i class="pi pi-check"></i>
+    APPROVE
+  </button>
+</div>
+
+<!-- Empty row to give some space at the bottom -->
 <div class="row"></div>
 
-<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-danger" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Warning</h4>
-        </div>
+<!-- update product model -->
+<!-- (onHide)="setTermsConditions()" -->
+<div
+  bsModal
+  (onHide)="setEditProductForm()"
+  #updateProductModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Product Line</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="updateProductModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="form">
         <div class="modal-body">
-          <p>{{dangerBody}}</p>
-        </div>
-        <div class="modal-footer" *ngIf="modal_type == 'paymentPercentage'">
-            <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Keep Changes</button>
-            <button type="button" class="btn btn-primary" (click)="setPaymentAutoAssignPercentage();dangerModal.hide()">Auto-Assign</button>
-            <button type="button" class="btn btn-primary" (click)="setDefaultPayment();dangerModal.hide()">Revert Default</button>
-        </div>
-        <div class="modal-footer" *ngIf="modal_type == 'paymentValue'">
-            <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Keep Changes</button>
-            <button type="button" class="btn btn-primary" (click)="setPaymentAutoAssignValue();dangerModal.hide()">Auto-Assign</button>
-            <button type="button" class="btn btn-primary" (click)="setDefaultPayment();dangerModal.hide()">Revert Default</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+          <label for="">Please search product or add dummy sku.</label>
 
-<div bsModal #paymentRemarkModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-info" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Remarks</h4>
-          <button type="button" class="close" (click)="paymentRemarkModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <textarea name="pformRemarks" id="pformRemarks" cols="60" placeholder="remarks" rows="10" [(ngModel)]="paymentRemarks"></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="paymentRemarkModalClose()">Confirm</button>
-          <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+          <!-- product-search -->
+          <div class="search-product">
+            <label for="">Product Name</label>
+            <p-autoComplete
+              formControlName="name"
+              [suggestions]="filteredProducts"
+              (completeMethod)="filterProduct($event)"
+              field="name"
+              [dropdown]="true"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+            >
+              <ng-template let-product pTemplate="item">
+                <div
+                  class="product-item"
+                  (click)="productDetails(product, 'update_product')"
+                >
+                  <div>{{ product.name }}</div>
+                </div>
+              </ng-template>
+            </p-autoComplete>
+          </div>
+          <hr />
+          <!-- product-data -->
+          <div class="product-info">
+            <div class="product-name">
+              <label>Product Name</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                formControlName="productName"
+                required
+              />
+            </div>
+            <div class="product-sku">
+              <label>SKU ID</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                formControlName="sku"
+                required
+              />
+            </div>
+            <div class="product-quantity">
+              <label for="">Quantity</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="quantity"
+                (input)="addProductQuantity()"
+                required
+              />
+            </div>
+            <div class="item-discount">
+              <label for="">Item Discount</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="0.0"
+                formControlName="discount"
+                (input)="addDiscount()"
+                required
+              />
+            </div>
+            <div class="list-price">
+              <label for="">List price</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                formControlName="listPrice"
+                required
+              />
+            </div>
+            <div class="unit-price">
+              <label for="">Unit Price</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                placeholder="0.0"
+                formControlName="unit_price"
+                required
+              />
+            </div>
+            <div class="floor-price">
+              <label for="">Floor Price</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="0.0"
+                formControlName="floorPrice"
+              />
+            </div>
+            <div class="justification">
+              <label for="">CAS Justification</label>
+              <textarea
+                name=""
+                class="form-control"
+                formControlName="justification"
+              ></textarea>
+            </div>
+            <div class="principal">
+              <label for="">Principal</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="principal"
+              />
+            </div>
+            <div class="product-manager">
+              <label for="">Product Manager</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="productManager"
+              />
+            </div>
+          </div>
+          <hr />
+          <!-- For Equipment -->
+          <div class="equipment-info">
+            <h3>For Equipment</h3>
+            <div class="standard-warranty">
+              <label>Standard Warranty</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="standardWarranty"
+              />
+            </div>
+            <div class="extended-warranty">
+              <label>Extended Warranty</label>
+              <select class="form-control" formControlName="extendedWarranty">
+                <option display="none">Please select...</option>
+                <option value="180 DAYS">180 DAYS</option>
+                <option value="120 DAYS">120 DAYS</option>
+                <option value="1 YEAR">1 YEAR</option>
+                <option value="5 DAYS">5 DAYS</option>
+                <option value="60 DAYS">60 DAYS</option>
+              </select>
+            </div>
+            <div class="tax-rate">
+              <label>Tax Rate</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="0.0"
+                formControlName="taxRate"
+              />
+            </div>
+            <div class="cutomer-tax">
+              <label>Customer Tax Code</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="customerTaxRate"
+              />
+            </div>
+            <div class="tax-code">
+              <label>Tax Code</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="taxCode"
+              />
+            </div>
+          </div>
 
-<div bsModal #billingRemarkModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-info" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Cancellation Remarks</h4>
-          <button type="button" class="close" (click)="billingRemarkModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <!-- other Cost -->
+          <div class="other-cost">
+            <h3>Other Cost</h3>
+            <div class="category">
+              <label> Category</label>
+              <select class="form-control" formControlName="otherCostCategory">
+                <option display="none">Please select...</option>
+                <option value="Dental Supplies">Dental Supplies</option>
+                <option value="Patient Care">Patient Care</option>
+                <option value="Diabetic Product/Service">
+                  Diabetic Product/Service
+                </option>
+                <option value="Implantable">Implantable</option>
+              </select>
+            </div>
+          </div>
+          <!-- total -->
+          <div class="total">
+            <label for="">Total</label>
+            <input
+              type="text"
+              class="form-control"
+              readonly
+              formControlName="amount"
+            />
+          </div>
+
+          <div class="submit-btn">
+            <button class="cancel-btn" (click)="updateProductModal.hide()">
+              Cancel
+            </button>
+            <button class="save-btn" (click)="updateProduct()">Save</button>
+          </div>
         </div>
-        <div class="modal-body">
-          <textarea name="bformRemarks" id="bformRemarks" cols="60" placeholder="remarks" rows="10" [(ngModel)]="billingRemarks"></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="billingRemarkModalClose()">Confirm</button>
-          <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div
+  bsModal
+  #paymentRemarkModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Remarks</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="paymentRemarkModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea
+          name="pformRemarks"
+          id="pformRemarks"
+          cols="60"
+          placeholder="remarks"
+          rows="10"
+          [(ngModel)]="paymentRemarks"
+        ></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary">Confirm</button>
+        <!-- <button type="button" class="btn btn-info" (click)="cancelQuote()">Cancel Quote</button> -->
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- confirmation-REQUEST-model -->
+<div
+  id="success"
+  bsModal
+  #confirmationModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">Are you sure to REQUEST the SOCI ?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationModal.hide()"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-info" (click)="applyForApproval()">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.modal -->
+
+<!-- confirmation-release-model -->
+<div
+  id="success"
+  bsModal
+  #confirmationReleaseModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationReleaseModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">Are you sure to RELEASE the SOCI ?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationReleaseModal.hide()"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-info" (click)="applyForRelease()">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success-Model -->
+<div
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!-- confirmation approve mpdel -->
+<div
+  id="success"
+  bsModal
+  #confirmationApproveModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationApproveModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">Are you sure to APPROVE the SOCI ?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationApproveModal.hide()"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-info" (click)="approveSOCI()">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- confirmation escalate model -->
+<div
+  id="success"
+  bsModal
+  #confirmationEscalateModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationEscalateModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">Are you sure to ESCALATE the SOCI ?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationEscalateModal.hide()"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-info" (click)="escalateSCOI()">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- confirmation reject model -->
+<div
+  id="success"
+  bsModal
+  #confirmationRejectModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationRejectModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form">
+          <div class="reject-remakrs">
+            <label>Reject Reason</label>
+            <textarea
+              type="text"
+              class="form-control"
+              formControlName="cancelled_remarks"
+              (input)="addCancelRemarks()"
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationRejectModal.hide()"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-info"
+          [attr.disabled]="isCancelRemarks ? null : ''"
+          (click)="rejectSOCI()"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- update Standared Terms Model -->
+<div
+  bsModal
+  (onHide)="setTermsConditions()"
+  #addStandardTermModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" *ngIf="is_payment_term_eidt">
+          Add Payment Term
+        </h4>
+        <h4 class="modal-title" *ngIf="is_delivery_term_eidt">
+          Add Delivery Term
+        </h4>
+        <button
+          type="button"
+          class="close"
+          (click)="addStandardTermModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- payment_term -->
+        <form [formGroup]="form" *ngIf="is_payment_term_eidt">
+          <div class="payment-form">
+            <div class="days-field">
+              <label for="">Days</label>
+              <input type="text" class="form-control" formControlName="days" />
+            </div>
+            <div class="date-field">
+              <label for="">From Date</label>
+              <input
+                type="date"
+                class="form-control"
+                formControlName="fromDate"
+              />
+            </div>
+          </div>
+          <div class="update-term-btn">
+            <button class="update-btn" (click)="updatePaymentTerms()">
+              Update
+            </button>
+          </div>
+        </form>
+
+        <!-- is_delivery_term_eidt -->
+        <form [formGroup]="form" *ngIf="is_delivery_term_eidt">
+          <div class="payment-form">
+            <div class="days-field">
+              <label for="">Days</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="delivery_days"
+              />
+            </div>
+            <div class="date-field">
+              <label for="">From Date</label>
+              <input
+                type="date"
+                class="form-control"
+                formControlName="delivery_fromDate"
+              />
+            </div>
+          </div>
+          <div class="update-term-btn">
+            <button class="update-btn" (click)="updateDeliveryTerms()">
+              Update
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!-- check update remarks model -->
+<div
+  id="success"
+  bsModal
+  #confirmationRemarksUpdatedModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationRemarksUpdatedModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Remarks is not updated yet. Do you want to update remarks ?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationRemarksUpdatedModal.hide(); confirmationModal.show()"
+        >
+          No
+        </button>
+        <button type="button" class="btn btn-info" (click)="updateRemarks()">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

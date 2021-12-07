@@ -168,7 +168,8 @@ export class MockBookingEntityService implements BookingEntityInterface {
       approvalList: mockApproval,
       bookingDetailList: mockBookingDetail,
       opportunitySummary: mockOpportunitySummary,
-      mainAsset: mockMainAsset
+      mainAsset: mockMainAsset,
+      access: false
     }
   ];
 

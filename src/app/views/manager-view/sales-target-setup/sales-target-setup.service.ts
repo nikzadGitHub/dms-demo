@@ -62,8 +62,8 @@ export class SalesTargetSetupService {
     );
   }
 
-  getClassList(): Observable<any> {
-    let query = '/sales-target/class';
+  getClassList(countryCode): Observable<any> {
+    let query = '/sales-target/class/' + countryCode;
 
     return this.httpClient.get<any[]>(this.apiURL + query,this.httpOptions)
       .pipe(
@@ -71,8 +71,8 @@ export class SalesTargetSetupService {
     );
   }
 
-  getDimensionLevelList(): Observable<any> {
-    let query = '/sales-target/dimension-level';
+  getDimensionLevelList(countryCode): Observable<any> {
+    let query = '/sales-target/dimension-level/' + countryCode;
 
     return this.httpClient.get<any[]>(this.apiURL + query,this.httpOptions)
       .pipe(
@@ -108,8 +108,7 @@ export class SalesTargetSetupService {
   }
 
   saveSalesTargetSetupData(data) {
-    let query = '/sales-target';
-
+    let query = '/sales-target';    
     return this.httpClient.post<any[]>(this.apiURL + query, data, this.httpOptions)
       .pipe(
         tap((response: any) => {

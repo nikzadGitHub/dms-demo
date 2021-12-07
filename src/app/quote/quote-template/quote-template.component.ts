@@ -11,7 +11,11 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { DOCUMENT } from "@angular/common";
-import { NavigationExtras, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { QuoteService } from "../quote.service";
+import { Quote } from "../quote";
+import { FormGroup , FormBuilder} from "@angular/forms";
+import { LocalStorageService } from "../../_services/local-storage.service";
 @Component({
   selector: "app-quote-template",
   templateUrl: "./quote-template.component.html",
@@ -21,6 +25,9 @@ export class QuoteTemplateComponent implements OnInit {
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("fileUpload") fileUpload: ElementRef;
+  @ViewChild("bodyContent") bodyData: ElementRef;
+  @ViewChild("headerContent") headerData: ElementRef;
+  @ViewChild("footerContent") footerData: ElementRef;
   alertBody: string;
   alertHeader: string;
   fileName = "";
@@ -29,28 +36,51 @@ export class QuoteTemplateComponent implements OnInit {
   check = false;
   editable = true;
   url: any;
+  quotationsTemplateData:any;
   elem;
   imageWidth: any;
   imageHeight: number;
   single: boolean;
   userToken: any;
-  constructor(private router: Router) {}
+  quotationId: any;
+  quotationContent: any;
+  successMessage: string;
+  templateId: any;
+  loader: boolean;
+  constructor(private router: Router,
+    private quoteService: QuoteService,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private loaderService:LocalStorageService
+    ) {}
 
   ngOnInit(): void {
+    
+    this.route.queryParams.subscribe((params) => {
+      this.quotationId = params.quotation_id
+      this.templateId = params.template_id
+
+    })
     this.userToken = localStorage.getItem("auth-token");
     this.getMobileOperatingSystem();
+    this.viewQuotationTemplate();
+  }
+
+  viewQuotationTemplate() {
+
+    this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
+      this.quotationsTemplateData = res["data"]
+      this.quotationContent = res["data"].quotations.quotation_contents
+      
+    })
+    // this.router.navigateByUrl("quote/view/quote-template");
   }
 
   onFileSelected(event: any) {
     this.file = event.target.files[0];
     this.fileName = this.file.name;
 
-    if (
-      this.file &&
-      (this.file.type == "image/png" ||
-        this.file.type == "image/jpg" ||
-        this.file.type == "image/jpeg")
-    ) {
+    if (this.file) {
       this.check = true;
       this.fileName = this.file.name;
       var reader = new FileReader();
@@ -67,29 +97,54 @@ export class QuoteTemplateComponent implements OnInit {
         this.url = reader.result;
       };
 
-      const formData = new FormData();
+      var formData = new FormData();
       formData.append("file", this.file);
-      this.alertHeader = "Image uploaded successfully";
-      this.alertBody = "Do you want to download one pdf or two pdf ?";
-      this.successModal.show();
+      // this.alertHeader = "Image uploaded successfully";
+      // this.alertBody = "Do you want to download one pdf or two pdf ?";
+      // this.successModal.show();
     } else {
       this.alertHeader = "Image type error";
       this.alertBody = "Please select png, jpg or jpeg image";
       this.dangerModal.show();
     }
+    
+    if (this.templateId && this.quotationId) {
+      // this.loaderService.loaderSet(true)
+      this.loader = true
+      this.quoteService.uploadTemplateImage(formData, this.quotationId, this.templateId).subscribe(state => {
+        if (state) {
+          // this.loaderService.loaderSet(false)
+      this.loader = false
+
+        }
+      })
+    } else {
+      this.alertHeader = "Template Id Erroe";
+      this.alertBody = "Template Id is Missing.....";
+      this.dangerModal.show();
+    }
   }
 
-  downloadPDF() {
-    if (this.single == true) {
-      this.generateCompletePDF();
-    } else {
-      if (this.url) {
-        this.generateTemplatePDF();
-        this.generateQuotationImagePDF();
-      } else {
-        this.generateTemplatePDF();
-      }
+  downloadUploadedPDF() {
+    if(this.templateId && this.quotationId){
+      this.quoteService.downloadUploadedPdfTemplate(this.quotationId,1).subscribe(state=>{
+        
+      })
+    } else{
+      this.alertHeader = "Template Id Erroe";
+      this.alertBody = "Template Id is Missing.....";
+      this.dangerModal.show();
     }
+    // if (this.single == true) {
+    //   this.generateCompletePDF();
+    // } else {
+    //   if (this.url) {
+    //     this.generateTemplatePDF();
+    //     this.generateQuotationImagePDF();
+    //   } else {
+    //     this.generateTemplatePDF();
+    //   }
+    // }
   }
   generateCompletePDF() {
     let data = document.getElementById("pdfTable");
@@ -198,4 +253,26 @@ export class QuoteTemplateComponent implements OnInit {
   reset() {
     this.fileUpload.nativeElement.value = null;
   }
+  savePreviewContent(){
+    let header =  this.headerData.nativeElement.innerText
+    let footer = this.footerData.nativeElement.innerText
+    let fullBody = this.bodyData.nativeElement.innerHTML
+
+
+    this.quoteService.saveTemplateData(this.quotationId,header,footer,fullBody).subscribe(state=>{
+    })
+
+      this.successMessage = "Data is Updated Successfully......!!";
+      this.successModal.show();
+  }
+
+  downloadQuotationTemplate(){
+    this.quoteService.downloadQuoteTemplate(this.quotationId,this.templateId).subscribe(state=>{
+      if(state){
+      this.successMessage = "Quotaion Downloaded Successfully......!!";
+      this.successModal.show();
+      }
+    })
+  }
+  
 }
