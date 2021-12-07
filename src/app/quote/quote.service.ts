@@ -224,7 +224,8 @@ downloadUploadedPdfTemplate(Q_id,T_id){
 }
 
 downloadQuoteTemplate(Q_id,T_id){
-  return this.httpClient.get(this.apiURL + '/quote/quotation-preview-download/'+ Q_id +'/' + T_id + '/')
+  let body= {}
+  return this.httpClient.post(this.apiURL + '/quote/quotation-preview-download/'+ Q_id +'/' + T_id + '/',body)
   .pipe(
     catchError(this.errorHandler)
   )
