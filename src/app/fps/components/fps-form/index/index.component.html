@@ -18,6 +18,7 @@
   </ng-template>
   <ng-template pTemplate="header" let-columns>
     <tr>
+      <th [style]="{ width: '5%' }"></th>
       <th
         *ngFor="let column of columns"
         pSortableColumn="{{ column.field }}"
@@ -34,8 +35,12 @@
       </th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-fpsItem>
+  <ng-template pTemplate="body" let-fpsItem let-rowIndex="rowIndex + 1">
     <tr class="p-selectable-row">
+      <td class="text-center">
+        <span class="p-column-title"></span>
+        {{ rowIndex }}
+      </td>
       <td class="text-center">
         <span class="p-column-title">FPS Request  No</span>
         {{ fpsItem.fps_no }}

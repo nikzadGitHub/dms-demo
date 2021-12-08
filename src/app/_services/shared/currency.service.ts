@@ -16,4 +16,8 @@ export class CurrencyService {
     return this.httpClient.get(SystemConfig.apiBaseUrl + "/currencies-list/?countryCode=" + countryCode).pipe();
   }
 
+  getCountryCodeFromCurrency(currency_code : string): Observable<any> {
+    return this.httpClient.get(SystemConfig.apiBaseUrl + "/convert-currency-to-country/?currency_code=" + currency_code).pipe();
+  }
+
 }

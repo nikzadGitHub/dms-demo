@@ -6,6 +6,7 @@ import { DialogService } from '@app/common/dialog/dialog.service';
 import { FpsService } from '@app/fps/fps.service';
 import { AppService } from '@app/_services/shared/app.service';
 import { FinancialInstitutionService, FinancialInstitution } from '@app/_services/shared/finantial-institution.service';
+import { CurrencyService } from '@app/_services/shared/currency.service';
 
 export interface OpportunityDetail {
 	company_name: any;
@@ -52,7 +53,7 @@ export class CreateComponent implements OnInit {
   institutions_list : [];
   tenure_list : [] = [];
   current_apportunity_id : number;
-  countryCode : string = 'MY';
+  countryCode : string = null;
 
   oppt_details : any = {
     opportunity_code: '',
@@ -69,7 +70,9 @@ export class CreateComponent implements OnInit {
     private institutionService: FinancialInstitutionService,
     private zone: NgZone,
     private dialogService: DialogService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private currencyService: CurrencyService,
+    private router: Router,
   ) {}
 
   fpsTypeList = this.fpsService.getTransSactionTypeList();
@@ -80,7 +83,7 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
     this.fpsAddForm = this.fb.group({
       fps_no: new FormControl('',[Validators.required]),
       fps_opportunity_id: new FormControl(),
@@ -117,10 +120,19 @@ export class CreateComponent implements OnInit {
     // Get the opportity which PFS is going to be added to.
     this.appService.getQuery('/opportunity/detail/'+this.current_apportunity_id, null).subscribe((data) => {	
       this.oppt_details = data['data'];
-      console.log('opptDetiasl', this.oppt_details);
       this.fpsAddForm.controls.fps_currency_code.setValue(this.oppt_details.currency_code);
       this.fpsAddForm.controls.fps_total_financial_amount.setValue(this.oppt_details.amount);
       this.fpsAddForm.controls.fps_data_area_id.setValue(this.oppt_details.customer.data_area_id);
+
+      this.currencyService.getCountryCodeFromCurrency(this.oppt_details.currency_code).subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.zone.run(() => {
+              this.countryCode = response.data.iso3;
+            });
+          } 
+        }
+      });
       
     })
 
@@ -134,25 +146,6 @@ export class CreateComponent implements OnInit {
         if (response.success) {
           this.zone.run(() => {
             this.fpsAddForm.controls.fps_no.setValue('FPS' + (response.data[0].id + 1) +'-'+this.oppt_details.opportunity_code);
-          });
-        } else {
-          this.dialogService.showErrorDialog(response.message);
-        }
-      },
-      error: (error) => {
-        if (error.error.message != undefined) {
-          this.dialogService.showErrorDialog(error.error.message);
-        } else {
-          this.dialogService.showErrorDialog("Error retrieve institutions list");
-        }
-      }
-    })
-
-    this.institutionService.getFinancialInstition(this.countryCode).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.zone.run(() => {
-            this.institutions_list = response.data.institutions;
           });
         } else {
           this.dialogService.showErrorDialog(response.message);
@@ -210,7 +203,7 @@ export class CreateComponent implements OnInit {
           setTimeout(() => {
             this.successModal.hide();
           }, 2000);
-          this.fpsAddForm.reset();
+          this.router.navigateByUrl('/fps/fps-listing', {replaceUrl: true})
         }
       },
       err => {
@@ -258,11 +251,14 @@ export class CreateComponent implements OnInit {
 
   updateTenure() {
     
+    this.loadFinancialInstitutions();
+
     let financial_id = this.fpsAddForm.controls.fps_financier_id.value;
     let payment_frequency = this.fpsAddForm.controls.fps_payment_frequency.value;
     let fps_transaction_type = this.fpsAddForm.controls.fps_transaction_type_id.value;
 
-    this.fpsService.getTenureList(fps_transaction_type, financial_id, payment_frequency).subscribe((res) => {
+    if(fps_transaction_type && financial_id && payment_frequency) {
+      this.fpsService.getTenureList(fps_transaction_type, financial_id, payment_frequency).subscribe((res) => {
         if(res.length > 0) {
           res.unshift({'id': '', 'details_tenure' : 'Select Tenure'})
         }
@@ -274,6 +270,28 @@ export class CreateComponent implements OnInit {
       err => {
         console.log(err);
       });
+    }
+  }
+
+  loadFinancialInstitutions() {
+    this.institutionService.getFinancialInstition(this.countryCode).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.zone.run(() => {
+            this.institutions_list = response.data.institutions;
+          });
+        } else {
+          this.dialogService.showErrorDialog(response.message);
+        }
+      },
+      error: (error) => {
+        if (error.error.message != undefined) {
+          this.dialogService.showErrorDialog(error.error.message);
+        } else {
+          this.dialogService.showErrorDialog("Error retrieve institutions list");
+        }
+      }
+    })
   }
 
   getFilteredCodes(array, key, value) {
