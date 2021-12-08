@@ -55,12 +55,14 @@ export class IndexComponent implements OnInit {
   ];
   isTooltipSown: any = "";
   sociDate: any;
+  loading:boolean
 
   constructor(public sociService: SociService, private router: Router) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    this.loading = true 
     this.sociService
-      .getAll(this.pageItems, this.search_text, this.sort)
+      .getAll(this.pageItems, this.search_text, this.sort) 
       .subscribe((data) => {
 
         data["data"]["soci"]["data"].forEach((value) => {
@@ -76,18 +78,26 @@ export class IndexComponent implements OnInit {
         this.pages = data["data"]["soci"]["links"];
         this.totalRecords = data["data"]["soci"]["total"];
         this.checkPermission();
-      });
+        this.loading = false 
+
+      },error => {
+          this.loading = false;
+        });
     setTimeout(() => {
       this.selectedValues = this.columnValue.slice(0, 10);
     }, 1000);
   }
 
   getAll() {
+    // this.loading=true
     this.sociService
       .getAll(this.pageItems, this.search_text, this.sort)
       .subscribe((data) => {
         this.socis = data["data"]["soci"]["data"];
         this.totalRecords = data["data"]["soci"]["total"];
+      //   this.loading=false
+      // },error => {
+      //   this.loading = false;
       });
   }
   addPo(check) {

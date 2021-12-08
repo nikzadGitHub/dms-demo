@@ -10,7 +10,7 @@ import { MenuItem } from 'primeng/api/menuitem';
   styleUrls: ['./inventory.component.scss']
 })
 export class InventoryComponent implements OnInit {
-
+  loading: boolean;
   constructor(private api: MockInventoryService) { }
   menuItems: MenuItem[] = [
     {
@@ -33,15 +33,23 @@ export class InventoryComponent implements OnInit {
   formatBooking: (id: number) => string = bookingIdFormat;
 
   ngOnInit(): void {
-    this.api.getList().subscribe((response) => {
-      if (response as InventoryList) {
-        this.inventoryList = response;
-      }
+    this.loading = true;
+    this.api.getList().subscribe(
+      (response) => {
+        if (response as InventoryList) {
+          this.inventoryList = response;
+        }
       console.log(response);
-    });
+      this.loading = false;
+
+    }, 
+    err => {
+      this.loading = false;
+    }
+    );
   }
 
   onSearch() {
-    console.log('searching for:', this.search_text);
+    // console.log('searching for:', this.search_text);
   }
 }
