@@ -1,6 +1,3 @@
-export interface SkuInterface {
-}
-
 import { Observable } from 'rxjs';
 
 export interface SkuItem {
@@ -14,8 +11,7 @@ id: any;
 }
 
 export interface SkuInterface {
-getList(): Observable<SkuList>;
-
-saveSku(form: any): Observable<SaveResult>;
+    getList(pageItems, search_text, sort): Observable<SkuList>;
+    saveSku(form: any): Observable<SaveResult>;
 }
   
