@@ -98,17 +98,17 @@
       </td>
       <td class="text-center">
         <span class="p-column-title">Monthly</span>
-        <mat-slide-toggle name="monthly_payment" [checked]="data.monthly_payment == 1"  class="form-control" class="example-margin">
+        <mat-slide-toggle name="monthly_payment" (change)="updatePaymentMethod('monthly_payment', data.id)" [checked]="data.monthly_payment == 1"  class="form-control" class="example-margin">
         </mat-slide-toggle>
       </td>
       <td class="text-center">
         <span class="p-column-title">Quarterly</span>
-        <mat-slide-toggle name="quarterly_payment"  [checked]="data.quarterly_payment == 1" class="form-control" class="example-margin">
+        <mat-slide-toggle name="quarterly_payment" (change)="updatePaymentMethod('quarterly_payment', data.id)" [checked]="data.quarterly_payment == 1" class="form-control" class="example-margin">
         </mat-slide-toggle>
       </td>
       <td class="text-center">
         <span class="p-column-title">Half-Yearly</span>
-        <mat-slide-toggle name="half_yearly_payment" [checked]="data.half_yearly_payment == 1" class="form-control" class="example-margin">
+        <mat-slide-toggle name="half_yearly_payment" (change)="updatePaymentMethod('half_yearly_payment', data.id)" [checked]="data.half_yearly_payment == 1" class="form-control" class="example-margin">
         </mat-slide-toggle>
       </td>
       <td class="text-center">
@@ -138,3 +138,28 @@
   [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
 >
 </p-paginator>
+
+<div
+    id="success"
+    bsModal
+    #successModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Success</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{ alertBody }}</p>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->

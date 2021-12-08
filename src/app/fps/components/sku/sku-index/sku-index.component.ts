@@ -25,6 +25,8 @@ export class SkuIndexComponent implements OnInit {
   pages: any[];
   totalRecords:number;
   skuList : any;
+  alertBody: string;
+  alertHeader: string;
   columns: Column[] = [
 
     {'header':'FPS SKU No','field':'uuid','type':'string'},
@@ -97,4 +99,20 @@ export class SkuIndexComponent implements OnInit {
     })  
   }
 
+  updatePaymentMethod(field, id) {
+    this.skuService.updateSkuPaymentMethod({'id' : id, 'field' : field}).subscribe({
+      next: (res) => {
+        if (res.code == 200) {       
+          this.alertBody = "Payment Method Updated.";
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+          }, 2000);
+        }
+      },
+      error: (error) => {
+        this.dialogService.showErrorDialog("Payment Method Can't be Updated!<br>" + error );
+      }
+    });   
+  }
 }

@@ -41,6 +41,10 @@ export class SkuService implements SkuInterface {
     return this.apiClient.post('sku/createDraft', data);
   }
 
+  updateSkuPaymentMethod(data: any): Observable<SaveResult> {
+    return this.apiClient.post('sku/UpdatePaymentMethod', data);
+  }
+
   saveRates(data: any): Observable<SaveResult> {
     return this.apiClient.post('rate/store', data);
   }
