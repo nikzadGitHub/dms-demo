@@ -79,7 +79,7 @@ export class SkuIndexComponent implements OnInit {
     return this.fpsTypeList.find(typeItem => typeItem.id == key).title; 
   }
 
-  paginate(event){
+  paginate(event) {
     this.pageItems = event.rows;
     this.onClick(parseInt(event.page) + 1);
   }
@@ -90,8 +90,6 @@ export class SkuIndexComponent implements OnInit {
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((response)=>{
       this.zone.run(() => {
-        console.log("resp1", response)
-        console.log("resp", response.data)
         this.skuList = response.data.data;
         this.pages = response.data.links;
         this.totalRecords = response.data.total;

@@ -1,20 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {FpsInterface, FpsList, SaveResult} from './services/fps-interface';
+import {FpsInterface, SaveResult} from './services/fps-interface';
 import { ApiClientService } from './api-client.service';
 import { SystemConfig } from '@app/config/system-config';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
-
 
 @Injectable({providedIn: 'root'})
 
 export class FpsService implements FpsInterface {
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+  }
+
   constructor(private httpClient: HttpClient, private apiClient: ApiClientService) { }
 
-  getList(): Observable<FpsList> {
-    return this.apiClient.get<FpsList>('fps');
+  getList(pageItems, search_text, sort): Observable<any> {
+    let query = 'fps?page_items=' + pageItems + '&search_text=' + search_text;
+
+    if(sort && sort['field']!= null){
+      query += '&field=' + sort.field + '&order=' + sort.order;
+    }
+    return this.apiClient.get<any>(query);
+  }
+
+  getPage(url, pageItems, search_text){
+    let query = '&page_items=' + pageItems + '&search_text=' + search_text;
+    return this.httpClient.get<any>(url + query,this.httpOptions);
   }
 
   saveFps(data: any): Observable<SaveResult> {
