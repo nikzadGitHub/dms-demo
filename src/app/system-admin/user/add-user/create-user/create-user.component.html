@@ -1,0 +1,202 @@
+<div class="card main-div">
+  <div class="card-header page-heading-icon">
+    <!-- <h1>Level Of Authority</h1> -->
+    <div class="header-text">
+      <h2>Add User</h2>
+      <div>
+        <!-- save-btn -->
+        <p-button styleClass="p-px-3">
+          <ng-template pTemplate="content">
+            <img
+              src="../../../../assets/img/icons/save.svg"
+              alt=""
+              style="width: 15px"
+            />
+          </ng-template>
+        </p-button>
+
+        <!-- back-btn -->
+        <p-button styleClass="p-px-3">
+          <ng-template pTemplate="content">
+            <img
+              src="../../../../assets/img/icons/back-arrow.svg"
+              alt=""
+              style="width: 17px"
+            />
+          </ng-template>
+        </p-button>
+      </div>
+
+      <!-- <img src="../../../../assets/img/icons/back-arrow.svg" alt=""> -->
+    </div>
+  </div>
+  <form>
+    <div class="card-body">
+      <p class="title-text">
+        <i class="pi pi-user-plus"> </i>
+        <!-- <i class="pi pi-user-plus"></i> -->
+        Add User
+      </p>
+      <div class="row">
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >User Name <span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-md-10">
+          <p-autoComplete
+            [suggestions]="filtereduser"
+            (completeMethod)="filterProduct($event)"
+            field="name"
+            [dropdown]="true"
+            [style]="{ width: '100%' }"
+            [inputStyle]="{ width: '100%' }"
+          >
+            <ng-template let-product>
+              <div class="product-item">
+                <div></div>
+              </div>
+            </ng-template>
+          </p-autoComplete>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >User Access <span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-md-10">
+          <p-multiSelect
+            [options]="cities"
+            [(ngModel)]="selectedCities"
+            optionLabel="name"
+            optionValue="code"
+            display="chip"
+            [style]="{ width: '100%' }"
+          ></p-multiSelect>
+        </div>
+      </div>
+      <!-- name-fields -->
+      <div class="row mt-4">
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >First Name <span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-md-5">
+          <input
+            type="text"
+            pInputText
+            placeholder="first name"
+            style="width: 340px"
+          />
+        </div>
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >Last Name <span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-md-4">
+          <input
+            type="text"
+            pInputText
+            placeholder="last name"
+            style="width: 351px"
+          />
+        </div>
+      </div>
+
+      <!-- email-and-phone-field -->
+      <div class="row mt-4">
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >Email <span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-md-5">
+          <input
+            type="email"
+            pInputText
+            placeholder="example@gmail.com"
+            style="width: 340px"
+          />
+        </div>
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >Phone Number<span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-md-4">
+          <input type="text" pInputText placeholder="0" style="width: 351px" />
+        </div>
+      </div>
+
+      <!-- amount-fields -->
+      <div class="row mt-4">
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >Discount Margin %<span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-md-5">
+          <input type="text" pInputText placeholder="0" style="width: 340px" />
+        </div>
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >Approved By<span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-md-4">
+          <p-dropdown
+            id="opc"
+            name="picList"
+            [options]="dummy_data"
+            optionLabel="name"
+            placeholder="Select Approve By"
+            [style]="{ width: '351px' }"
+            [required]="true"
+          >
+          </p-dropdown>
+        </div>
+      </div>
+
+      <!-- date-field -->
+
+      <div class="row mt-4">
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px">Validity</label>
+        </div>
+        <div class="col-md-5">
+          <input type="date" pInputText placeholder="0" style="width: 340px" />
+        </div>
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px">Until</label>
+        </div>
+        <div class="col-md-4">
+          <input type="date" pInputText placeholder="0" style="width: 351px" />
+        </div>
+      </div>
+
+      <!-- status-field -->
+      <div class="row mt-4">
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >Status <span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-md-5">
+          <input type="text" pInputText placeholder="" style="width: 340px" />
+        </div>
+      </div>
+      <!-- action-btn -->
+      <div class="action-btn">
+        <button type="button" class="btn btn-outline-primary cancel-btn">
+          CANCEL
+        </button>
+        <button type="button" class="btn btn-primary save-btn">SAVE</button>
+      </div>
+    </div>
+  </form>
+</div>

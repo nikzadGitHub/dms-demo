@@ -17,6 +17,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { UserSetupComponent } from './user-unit/user-setup.component';
 import {CheckboxModule} from 'primeng/checkbox';
 import {UserComponent} from './add-user/user.component'
+import {ButtonModule} from 'primeng/button';
+import { CreateUserComponent } from './add-user/create-user/create-user.component';
+
 
 @NgModule({
   imports: [
@@ -31,11 +34,12 @@ import {UserComponent} from './add-user/user.component'
     PaginatorModule,
     InputTextModule,
     AccordionModule,
+    ButtonModule,
     CheckboxModule,
     IconModule,
     InputNumberModule,
     TableModule,
   ],
-  declarations: [UserComponent, UserLoaComponent, UserSetupComponent],
+  declarations: [UserComponent, UserLoaComponent, UserSetupComponent, CreateUserComponent],
 })
 export class UserModule {}

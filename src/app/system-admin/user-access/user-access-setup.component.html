@@ -1,68 +1,107 @@
 <div class="animated fadeIn">
-  <form name="systemAdminForm" #systemAdminForm="ngForm" (ngSubmit)="onSubmit()">
+  <form
+    name="systemAdminForm"
+    #systemAdminForm="ngForm"
+    (ngSubmit)="onSubmit()"
+  >
     <div class="col-md-12">
       <div class="row header pt-3 pb-3">
-        <div class="col-lg-10 col-md-8 col-sm-8 ">
+        <div class="col-lg-10 col-md-8 col-sm-8">
           <span class="header-icon">
             <i class="pi pi-user"></i>
             <h3 class="title text-dark"><b>User Access</b></h3>
-        </span>
+          </span>
         </div>
-        <div class="col-lg-1 col-md-2 col-sm-2 ">
+        <div class="col-lg-1 col-md-2 col-sm-2">
           <a href="#">
-            <button type="submit" class="btn btn-primary btn-fill pull-right form-control">
+            <button
+              type="submit"
+              class="btn btn-primary btn-fill pull-right form-control"
+              (click)="addRolePermission()"
+            >
               <i class="pi pi-plus"></i>
             </button>
           </a>
         </div>
-        <div class="col-lg-1 col-md-2 col-sm-2 ">
+        <div class="col-lg-1 col-md-2 col-sm-2">
           <a href="#">
-            <button type="button" class="btn btn-danger btn-fill pull-right form-control">
+            <button
+              type="button"
+              class="btn btn-danger btn-fill pull-right form-control"
+            >
               <i class="pi pi-trash"></i>
             </button>
           </a>
         </div>
       </div>
-      <div class="card-header row" style="background-color: #F6F6F6;">
+      <div class="card-header row" style="background-color: #f6f6f6">
         <i class="pi pi-list"></i>
         <span class="ml-2"><b>User Group</b></span>
       </div>
       <div class="pt-3 pb-3">
         <div class="form-group has-search">
           <span class="fa fa-search form-control-feedback"></span>
-          <input type="text" class="form-control ds-input" id="search-input"
-            placeholder="Search..." style="position: relative; vertical-align: top;"
-            (input)="dt.filterGlobal($event.target.value, 'contains')">
+          <input
+            type="text"
+            class="form-control ds-input"
+            id="search-input"
+            placeholder="Search..."
+            style="position: relative; vertical-align: top"
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+          />
         </div>
-        <p-table #dt [value]="userGroupList" styleClass="p-datatable-gridlines"
-          [globalFilterFields]="['userName','status','createdDate']"
-          [paginator]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+        <p-table
+          #dt
+          [value]="userRoleList"
+          styleClass="p-datatable-gridlines"
+          [globalFilterFields]="['name', 'status', 'created_at']"
+          [paginator]="true"
+          [rows]="10"
+          [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[{ showAll: 'All' }, 10, 25, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        >
           <ng-template pTemplate="header">
-              <tr>
-                <th class="text-center" width="5%">
-                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                <th width="40%">User Group Name</th>
-                <th class="text-center" width="20%">Status</th>
-                <th class="text-center" width="20%">Creaed Date</th>
-                <th class="text-center" width="15%">Action</th>
-              </tr>
+            <tr>
+              <th class="text-center" width="5%">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
+              <th width="40%">User Group Name</th>
+              <th class="text-center" width="20%">Status</th>
+              <th class="text-center" width="20%">Creaed Date</th>
+              <th class="text-center" width="15%">Action</th>
+            </tr>
           </ng-template>
           <ng-template pTemplate="body" let-user>
-              <tr>
-                <td class="text-center">
-                  <p-tableCheckbox [value]="user"></p-tableCheckbox>
-                </td>
-                <td>{{ user.userGroup }}</td>
-                <td class="text-center">{{ user.status }}</td>
-                <td class="text-center">{{ user.createdDate }}</td>
-                <td class="text-center">
-                  <a href="#" title="Edit Record">
-                    <i class="fa fa-edit"></i>
-                  </a>
-                </td>
-              </tr>
+            <tr>
+              <td class="text-center">
+                <p-tableCheckbox [value]="user"></p-tableCheckbox>
+              </td>
+              <td>{{ user.name }}</td>
+              <td class="text-center">
+                <div *ngIf="user.status">
+                  {{ user.status }}
+                </div>
+                <div *ngIf="!user.status">_</div>
+              </td>
+              <td class="text-center">
+                <div *ngIf="user.created_at">
+                  {{ user.created_at | date: "dd-MMM-yyyy" }}
+                </div>
+                <div *ngIf="!user.created_at">_</div>
+              </td>
+              <td class="text-center">
+                <!-- (click)="getRoleDetail(user.id)" -->
+                <a
+                  [routerLink]="['/useraccess/', user.id, 'edit']"
+                  routerLinkActive="router-link-active"
+                  title="Edit Record"
+                  
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </td>
+            </tr>
           </ng-template>
         </p-table>
       </div>

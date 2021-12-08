@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EditRoleComponent } from './edit-role/edit-role.component';
 import { UserAccessSetupComponent } from './user-access-setup.component';
 
 const routes: Routes = [
+  { path: 'useraccess', redirectTo: 'useraccess/user-access-setup', pathMatch: 'full' },
   {
-    path: '', component: UserAccessSetupComponent,
+    path: 'user-access-setup', component: UserAccessSetupComponent,
     data: {
       title: 'User Access Setup'
     }
+  },
+  {
+    path:':roleId/edit',
+    component: EditRoleComponent
   }
 ];
 

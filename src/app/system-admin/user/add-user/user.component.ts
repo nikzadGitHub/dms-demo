@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { SystemAdminService } from "../../system-admin.service";
 
 @Component({
   selector: "app-user",
@@ -11,12 +13,42 @@ export class UserComponent implements OnInit {
   rows: number = 10;
   searchInput: string = "";
 
-  constructor() {}
+  constructor(
+    private systemAdminSerive: SystemAdminService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.fetchUserList();
+    this.getUserRole();
+    // this.fetchUserList();
   }
 
+  getUserRole() {
+    this.systemAdminSerive.getQuery("/user-role").subscribe((res: any) => {
+      console.log("user-role-data:", res);
+      this.userList = res.data;
+    });
+  }
+  createUser() {
+    this.router.navigate(['user/create-user'])
+  }
+  // addUser() {
+  //   this.systemAdminSerive
+  //     .postQuery("/user-role", {
+  //       name: "seion",
+  //     })
+  //     .subscribe((res: any) => {
+  //       console.log("add-user:", res);
+  //     });
+  // }
+
+  getUserRoleDetail(userRoleId) {
+    this.systemAdminSerive
+      .getQuery("/user-role/" + userRoleId + "/edit")
+      .subscribe((res: any) => {
+        console.log("detail-user:", res);
+      });
+  }
   fetchUserList() {
     this.userList = [
       {

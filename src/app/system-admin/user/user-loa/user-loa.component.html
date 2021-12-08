@@ -1,16 +1,36 @@
 <div class="card main-div">
   <div class="card-header page-heading-icon">
     <!-- <h1>Level Of Authority</h1> -->
-    <div>
+    <div class="header-text">
       <h2>
         <i class="pi pi-user-plus"> </i>
         Level Of Authority
       </h2>
-      <div class="save-img">
-        <img src="../../../../assets/img/icons/save.svg" alt="">
+      <div>
+        <!-- save-btn -->
+        <p-button
+          styleClass="p-px-3"
+        >
+          <ng-template pTemplate="content">
+            <img
+              src="../../../../assets/img/icons/save.svg"
+              alt=""
+              style="width: 20px"
+            />
+          </ng-template>
+        </p-button>
+
+        <!-- back-btn -->
+        <p-button
+        styleClass="p-px-3"
+      >
+        <ng-template pTemplate="content">
+          <img src="../../../../assets/img/icons/back-arrow.svg" alt="" style="width: 22px;">
+        </ng-template>
+      </p-button>
       </div>
-      
-      <img src="../../../../assets/img/icons/back-arrow.svg" alt="">
+
+      <!-- <img src="../../../../assets/img/icons/back-arrow.svg" alt=""> -->
     </div>
   </div>
   <form [formGroup]="authorityForm">

@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserAccessRoutingModule } from './user-access-routing.module';
 import { UserAccessSetupComponent } from './user-access-setup.component';
 import {TableModule} from 'primeng/table';
+import { EditRoleComponent } from './edit-role/edit-role.component';
+
 
 
 @NgModule({
@@ -15,7 +17,8 @@ import {TableModule} from 'primeng/table';
     TableModule
   ],
   declarations: [
-    UserAccessSetupComponent
+    UserAccessSetupComponent,
+    EditRoleComponent,
   ]
 })
 export class userAccessModule { }

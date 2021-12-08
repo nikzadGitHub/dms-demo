@@ -99,7 +99,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'User Access Setup',
-    url: '/useraccess',
+    url: '/useraccess/user-access-setup',
     icon: 'cil-user-plus',
   },
   {
