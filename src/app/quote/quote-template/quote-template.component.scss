@@ -21,7 +21,7 @@
   }
 }
 .template-header {
-  display: flex;
+  // display: flex;
   flex-direction: row;
   align-items: flex-start;
   margin-left: 10px;
@@ -55,6 +55,19 @@
       padding: 4px;
     }
   }
+  .headerImg{
+    width: 780px;
+    // text-align: end;
+  }
+  .headText{
+    text-align: end;
+  }
+  .secondAddress{
+    float: right;
+    text-align: end;
+    margin-right: 27px;
+    margin-top: 20px;
+  }
 }
 .address-title {
   display: flex;
@@ -81,7 +94,7 @@
   .table {
     color: black;
     th {
-      width: 67px;
+      // width: 67px;
       font-weight: 100;
       padding-inline-start: 0px;
     }
@@ -183,5 +196,41 @@
     margin-right: 165px;
     margin-top: -15px;
     color: rgb(41, 136, 224);
+  }
+}
+#bodyContent{
+  .addressDetailMain{
+    display: flex;
+    .addressDetails{
+      margin-top: 15px;
+      table{
+        th{
+          width: 275px;
+          h5{
+            margin-bottom: 15px !important;
+          }
+        }
+      }
+    }
+  }
+}
+.productTable{
+  table{
+    thead,tbody{
+      tr{
+        // .descCol{
+        //   width: 600px;
+        // }
+        .numberCol{
+          width: 50px !important;
+        }
+        .unitPriceCol{
+          width: 110px ;
+        }
+        .totalPriceCol{
+          width: 110px ;
+        }
+      }
+    }
   }
 }

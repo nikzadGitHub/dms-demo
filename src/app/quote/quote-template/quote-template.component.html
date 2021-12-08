@@ -32,48 +32,79 @@
     <div #pdfTable class="" id="pdfTable">
       <div class="template-header">
         <div class="img-text">
-          <div class="">
+          <div class="headerImg">
             <img
               src="../../../assets/img/logo.png"
               class="card-img-top"
               alt="..."
             />
           </div>
-          <div class="vl"></div>
-          <div class="v2"></div>
-          <div class="head-text">
-            <p> {{ quotationsTemplateData?.quotations?.companies?.address }}</p>
+          <!-- <div class="vl"></div>
+          <div class="v2"></div> -->
+          <div class="headText">
+            <h4 class="textBlur">IDS Medical Systems (M) Sdn Bhd (Co. No:950311-p)</h4>
+            <h4>GST Registration No:000220168192</h4>
+            <h5> 8, Jalan Pensyarah U1/28, Hicom Glenmerie Industrial Park </h5>
+            <h5> 40150 Shah Alam, Sylangor, Malaysia </h5>
+            <div class="phoneFax" style="display: flex;">
+              <h5> <span><b>Telephone: +923847678632486 </b></span> </h5>
+              <h5 class="fax" style="margin-left: 50px;"> <span><b> Fax: +923847678632486 </b></span> </h5>
+            </div>
+            <h6> www.idsMED.com </h6>
+
+            <!-- <p> {{ quotationsTemplateData?.quotations?.companies?.address }}</p>
             <p><b>Telephone:</b> {{quotationsTemplateData?.quotations?.companies?.telephone_number}}</p>
             <p><b>Fax:</b> {{ quotationsTemplateData?.quotations?.companies?.fax }}</p>
             <p><b>Email:</b> {{ quotationsTemplateData?.quotations?.companies?.email }}</p>
-            <a href="#">www.idsMED.com</a>
+            <a href="#">www.idsMED.com</a> -->
           </div>
         </div>
-      </div>
-
-
-      <div class="address-title">
-
-        
-        <div *ngIf="quotationsTemplateData?.quotations?.contacts?.primary_contact?.full_name">
-          {{quotationsTemplateData?.quotations?.contacts?.primary_contact?.full_name}},
-        </div>
-        
-            <div *ngIf="quotationsTemplateData?.quotations?.customer?.company_name">
-              {{  quotationsTemplateData?.quotations?.customer?.company_name}},
+        <div class="secondAddress">
+          <h4><U>JOHR OFFICE</U></h4>
+            <h5> 42 Jalan Pertama, Pusat Perdagangan Danga Utama </h5>
+            <h5> 81300, Sakudai, Johr </h5>
+            <div class="phoneFax" style="display: flex;">
+              <h5> <p><b>Telephone: +923847678632486 </b></p> </h5>
+              <h5 class="fax" style="margin-left: 50px;"> <p><b> Fax: +923847678632486 </b></p> </h5>
             </div>
-            
-         <div *ngIf="  quotationsTemplateData?.quotations?.customer?.address">
-          {{
-            quotationsTemplateData?.quotations?.customer?.address
-          }}
-         </div>
-         
-        
+            <span> www.idsMED.com </span>
+        </div>
       </div>
-
 
       </div> 
+      <div class="addressDetailMain">
+        <div class="address-title col-lg-6 col-md-6">
+          <div *ngIf="quotationsTemplateData?.quotations?.contacts?.primary_contact?.full_name">
+            {{quotationsTemplateData?.quotations?.contacts?.primary_contact?.full_name}},
+          </div>
+          
+              <div *ngIf="quotationsTemplateData?.quotations?.customer?.company_name">
+                {{  quotationsTemplateData?.quotations?.customer?.company_name}},
+              </div>
+              
+           <div *ngIf="  quotationsTemplateData?.quotations?.customer?.address">
+            {{
+              quotationsTemplateData?.quotations?.customer?.address
+            }}
+           </div>
+        </div>
+        <div class="addressDetails col-lg-6 col-md-6">
+          <table>
+            <tr>
+              <th><h5>Quotation No</h5></th>
+              <th class="addressDetatilKey"><h5>: 86214/VG/Q</h5></th>
+            </tr>
+            <tr>
+              <th><h5>Quotation No</h5></th>
+              <th class="addressDetatilKey"><h5>: </h5></th>
+            </tr>
+            <tr>
+              <th><h5>Quotation No</h5></th>
+              <th class="addressDetatilKey"><h5>: 03/03/2021</h5></th>
+            </tr>
+          </table>
+        </div>
+      </div>
       <div class="card-body">
         <div class="initial-info">
           <table class="table table-borderless">
@@ -100,29 +131,34 @@
         </div>
 
         <div class="main-text">
-          <div  style="border: 1px solid lightgray;"   contentEditable = true data-placeholder="Enter text here"  [attr.contenteditable]="editable" id="headerContent" #headerContent 
+          <!-- <div  style="border: 1px solid lightgray;"   contentEditable = true data-placeholder="Enter text here"  [attr.contenteditable]="editable" id="headerContent" #headerContent 
           [innerText]="quotationContent?.header_content">
 
           {{ quotationContent?.header_content }}
-          </div>
+          </div> -->
 
-          <div>
+          <div class="productTable">
             <table class="table table-bordered table-sm">
               <thead>
                 <tr>
-                  <th scope="col">BRAND</th>
-                  <th scope="col">P/N</th>
-                  <th scope="col">DESCRIPTION</th>
-                  <th scope="col">PRICE LIST</th>
+                  <th class="numberCol" scope="col">NO</th>
+                  <th class="descCol" scope="col">DESCRIPTION</th>
+                  <th class="numberCol" scope="col">UOM</th>
+                  <th class="numberCol" scope="col">QTY</th>
+                  <th class="unitPriceCol" scope="col">UNIT PRICE (RM)</th>
+                  <th class="totalPriceCol" scope="col">TOTAL PRICE (RM)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="main-table-data" *ngFor="let item of quotationsTemplateData?.quotations?.products">
                   <!-- there should be loop for all the products -->
-                  <td>No Data Available </td>
-                  <td> {{ item.name }} </td>
-                  <td>{{ item.name }}</td>
-                  <td>  {{item.list_price}} </td>
+                  <td class="numberCol" >1 </td>
+                  <td class="descCol"> {{ item.name }} </td>
+                  <!-- <td class="numberCol">{{ item.name }}</td> -->
+                  <td class="numberCol">Unit</td>
+                  <td class="numberCol">  {{item.list_price}} </td>
+                  <td class="unitPriceCol">  {{item.list_price}} </td>
+                  <td class="totalPriceCol">  {{item.list_price}} </td>
                 </tr>
               </tbody>
             </table>
