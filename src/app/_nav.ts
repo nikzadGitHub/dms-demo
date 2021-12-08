@@ -109,7 +109,7 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Add User',
-        url: '/user',
+        url: '/user/adduser',
       },
       {
         name: 'User LOA',

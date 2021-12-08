@@ -2,7 +2,7 @@
   <div class="card-header page-heading-icon">
     <!-- <h1>Level Of Authority</h1> -->
     <div>
-      <h2>User Setup</h2>
+      <h2>Unit Setup</h2>
     </div>
   </div>
   <!-- [formGroup]="userSetupForm" -->
@@ -15,7 +15,7 @@
       <!-- accordian-1 -->
       <div class="accordion">
         <!-- parent-unit -->
-        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <p-accordionTab header="Parent Unit">
             <div
               *ngFor="let item of parentUnitValue"
@@ -30,9 +30,8 @@
             </div>
           </p-accordionTab>
         </p-accordion>
-
         <!-- agency -->
-        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <p-accordionTab header="Agency">
             <div class="agency-text">
               <!-- <button class="btn btn-primary">Agency</button>
@@ -43,7 +42,7 @@
           </p-accordionTab>
         </p-accordion>
         <!-- Menufacturer -->
-        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <p-accordionTab header="Menufacturer">
             <div
               *ngFor="let item of menufacturerValue"
@@ -63,7 +62,7 @@
       <!-- accordian-2 -->
       <div class="accordion">
         <!-- parent-unit -->
-        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <p-accordionTab header="OPC">
             <div
               *ngFor="let item of parentUnitValue"
@@ -78,9 +77,8 @@
             </div>
           </p-accordionTab>
         </p-accordion>
-
         <!-- agency -->
-        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <p-accordionTab header="Care Area">
             <div class="agency-text">
               <!-- <button class="btn btn-primary">Agency</button>
@@ -91,7 +89,7 @@
           </p-accordionTab>
         </p-accordion>
         <!-- Menufacturer -->
-        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <p-accordionTab header="Principles">
             <div
               *ngFor="let item of menufacturerValue"

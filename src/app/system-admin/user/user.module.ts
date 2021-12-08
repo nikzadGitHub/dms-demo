@@ -14,8 +14,9 @@ import { PaginatorModule } from "primeng/paginator";
 import { IconModule } from "@coreui/icons-angular";
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { UserSetupComponent } from './user-setup/user-setup.component';
+import { UserSetupComponent } from './user-unit/user-setup.component';
 import {CheckboxModule} from 'primeng/checkbox';
+import {UserComponent} from './add-user/user.component'
 
 @NgModule({
   imports: [
@@ -35,6 +36,6 @@ import {CheckboxModule} from 'primeng/checkbox';
     InputNumberModule,
     TableModule,
   ],
-  declarations: [UserLoaComponent, UserSetupComponent],
+  declarations: [UserComponent, UserLoaComponent, UserSetupComponent],
 })
 export class UserModule {}

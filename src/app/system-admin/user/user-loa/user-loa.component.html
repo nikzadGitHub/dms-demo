@@ -2,7 +2,15 @@
   <div class="card-header page-heading-icon">
     <!-- <h1>Level Of Authority</h1> -->
     <div>
-      <h2>Level Of Authority</h2>
+      <h2>
+        <i class="pi pi-user-plus"> </i>
+        Level Of Authority
+      </h2>
+      <div class="save-img">
+        <img src="../../../../assets/img/icons/save.svg" alt="">
+      </div>
+      
+      <img src="../../../../assets/img/icons/back-arrow.svg" alt="">
     </div>
   </div>
   <form [formGroup]="authorityForm">
@@ -131,7 +139,10 @@
           <i class="cil-plus c-icon"></i>
         </button>
       </div>
-      <div class="price-level row mt-4" *ngFor="let item of priceLevelApproval; let i = index">
+      <div
+        class="price-level row mt-4"
+        *ngFor="let item of priceLevelApproval; let i = index"
+      >
         <div class="col-md-6">
           <div class="row">
             <div class="col-3 mt-2">
@@ -171,11 +182,13 @@
                 [required]="true"
               >
               </p-dropdown>
-              <a [routerLink]="" routerLinkActive="router-link-active"
-              (click)="deletePriceLevelRow(i)"
+              <a
+                [routerLink]=""
+                routerLinkActive="router-link-active"
+                (click)="deletePriceLevelRow(i)"
                 ><i
                   class="fa fa-trash"
-                  style=" font-size: 18px;padding-left: 2rem;"
+                  style="font-size: 18px; padding-left: 2rem"
                 ></i
               ></a>
             </div>

@@ -1,3 +1,11 @@
+.card {
+  border: none;
+
+  .card-body {
+    padding: 0px;
+  }
+}
+
 .main-div {
   display: flex;
   flex-direction: column;
@@ -6,17 +14,25 @@
     color: red;
   }
   .page-heading-icon {
-    background-color: #898485;
-    color: white;
+    background: none;
+    color: black;
+    border: none;
+    h2 {
+      font-weight: bold;
+      i {
+        margin-right: 15px;
+        font-size: 1.5rem;
+      }
+    }
   }
   .title-text {
-    background: #d3d3d357;
-    line-height: 39px;
+    line-height: 35px;
+    font-weight: bold;
     padding: 6px;
-    border-radius: 5px;
+    border-radius: 1px;
     margin-bottom: 30px;
     padding-left: 15px;
-    // color: black;
+    background-color: #f6f6f6;
     i {
       margin-right: 10px;
       margin-left: 10px;
@@ -45,7 +61,6 @@
       }
     }
   }
-  
 
   .action-btn {
     display: flex;
