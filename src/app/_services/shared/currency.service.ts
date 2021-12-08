@@ -12,8 +12,8 @@ export class CurrencyService {
     private httpClient: HttpClient,
   ) { }
 
-  getCurrencyList(): Observable<any> {
-    return this.httpClient.get(SystemConfig.apiBaseUrl + "/currencies-list").pipe();
+  getCurrencyList(countryCode : string): Observable<any> {
+    return this.httpClient.get(SystemConfig.apiBaseUrl + "/currencies-list/?countryCode=" + countryCode).pipe();
   }
 
 }

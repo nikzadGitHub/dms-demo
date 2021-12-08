@@ -36,7 +36,7 @@ export class SkuCreateComponent implements OnInit {
   countryList: Country[] = [];
   currencies_list = [];
   institutions_list: FinancialInstitution[] = [];
-  countryCode : string = 'MY';
+  countryCode : string = '';
 
   constructor(
     private countryService: CountryService,
@@ -123,44 +123,6 @@ export class SkuCreateComponent implements OnInit {
         }
       }
     })
-
-    this.institutionService.getFinancialInstition(this.countryCode).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.zone.run(() => {
-            this.institutions_list = response.data.institutions;
-          });
-        } else {
-          this.dialogService.showErrorDialog(response.message);
-        }
-      },
-      error: (error) => {
-        if (error.error.message != undefined) {
-          this.dialogService.showErrorDialog(error.error.message);
-        } else {
-          this.dialogService.showErrorDialog("Error retrieve institutions list");
-        }
-      }
-    })
-
-    this.currencyService.getCurrencyList().subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.zone.run(() => {
-            this.currencies_list = response.data;
-          });
-        } else {
-          this.dialogService.showErrorDialog(response.message);
-        }
-      },
-      error: (error) => {
-        if (error.error.message != undefined) {
-          this.dialogService.showErrorDialog(error.error.message);
-        } else {
-          this.dialogService.showErrorDialog("Error retrieve currencies list");
-        }
-      }
-    })
     
     this.setConditionalValidators();
   }
@@ -234,7 +196,7 @@ export class SkuCreateComponent implements OnInit {
               // Store rate.
               this.storeRates(rate);
             }              
-            // 
+            this.router.navigateByUrl('/fps/sku-listing', {replaceUrl: true})
           }, 2000);
           
         }
@@ -309,6 +271,49 @@ export class SkuCreateComponent implements OnInit {
 
   isFieldValid(field: string) {
     return !this.skuAddForm.get(field).valid && this.skuAddForm.get(field).touched;
+  }
+
+  countryChange() {
+    this.countryCode = this.skuAddForm.get("country_code").value;
+
+    this.currencyService.getCurrencyList(this.countryCode).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.zone.run(() => {
+            this.currencies_list = response.data;
+          });
+        } else {
+          this.dialogService.showErrorDialog(response.message);
+        }
+      },
+      error: (error) => {
+        if (error.error.message != undefined) {
+          this.dialogService.showErrorDialog(error.error.message);
+        } else {
+          this.dialogService.showErrorDialog("Error retrieve currencies list");
+        }
+      }
+    });
+
+    this.institutionService.getFinancialInstition(this.countryCode).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.zone.run(() => {
+            this.institutions_list = response.data.institutions;
+          });
+        } else {
+          this.dialogService.showErrorDialog(response.message);
+        }
+      },
+      error: (error) => {
+        if (error.error.message != undefined) {
+          this.dialogService.showErrorDialog(error.error.message);
+        } else {
+          this.dialogService.showErrorDialog("Error retrieve institutions list");
+        }
+      }
+    })
+
   }
   
 }

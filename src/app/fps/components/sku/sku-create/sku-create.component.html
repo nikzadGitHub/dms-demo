@@ -57,8 +57,8 @@
                             Country<span class="asterisk"> * </span>
                         </label>
                         <div class="col-md-4">
-                            <p-dropdown formControlName="country_code" id="country_code" [options]="countryList" optionLabel="official_name"
-                                optionValue="code" styleClass="form-control" 
+                            <p-dropdown formControlName="country_code" id="country_code" (onChange)="countryChange()" [options]="countryList" optionLabel="official_name"
+                                optionValue="iso3" styleClass="form-control" 
                                 placeholder="Select Country" emptyMessage="No Country Available">
                             </p-dropdown>
                             <app-form-error-presentation [displayError]="isFieldValid('country_code')" errorMsg="Country is rquired.">
@@ -152,7 +152,7 @@
                                 </label>
                                 <div class="col-md-8">
                                     <p-dropdown  [disabled]="!min_payment.checked" formControlName="currency_code" [options]="currencies_list" optionLabel="currency_code"
-                                        optionValue="id" styleClass="form-control"
+                                        optionValue="currency_code" styleClass="form-control"
                                         placeholder="$" emptyMessage="No Currency Available">
                                     </p-dropdown>
                                 </div>
