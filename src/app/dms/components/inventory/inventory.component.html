@@ -2,7 +2,7 @@
 <p-tabMenu [model]="menuItems"
     [activeItem]="activeItem"></p-tabMenu>
 
-<p-table #dt [value]="inventoryList" styleClass="p-datatable-table" [rowHover]="true" [filterDelay]="0"
+<p-table  [loading]="loading" #dt [value]="inventoryList" styleClass="p-datatable-table" [rowHover]="true" [filterDelay]="0"
     [globalFilterFields]="['serial_no','stock_keep_unit','product_name']">
     <ng-template pTemplate="caption">
         <div class="table-header d-flex">
@@ -119,6 +119,14 @@
             </td>
             <td class="text-center">
                 {{ formatBooking(inventoryItem.booking_id) }}
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td style="text-align: center;" [attr.colspan]="columns.length">
+                No records found
             </td>
         </tr>
     </ng-template>

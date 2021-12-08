@@ -657,6 +657,25 @@
           <!-- <p-dropdown placeholder="Select Templates" [options]="selectTemplateData" formControlName="title">
                           
                         </p-dropdown> -->
+                        <button
+                        class="form-control"
+                        style="width: 70%"
+                        (click)="checkSignature()"
+                      >
+                        <i
+                          class="cil-check-circle"
+                          style="color: green"
+                          *ngIf="signatureStatus"
+                        ></i>
+                        <i
+                          class="icon-close"
+                          style="color: red"
+                          *ngIf="signatureStatus == false"
+                        ></i>
+                        Signature
+                      </button>
+                      <br><br>
+          <p><b>Select TemplateID</b></p>
           <select
             style="width: 70%; margin-bottom: 9px"
             formControlName=""
@@ -673,23 +692,7 @@
           </select>
           <!-- </ng-template> -->
 
-          <button
-            class="form-control"
-            style="width: 70%"
-            (click)="checkSignature()"
-          >
-            <i
-              class="cil-check-circle"
-              style="color: green"
-              *ngIf="signatureStatus"
-            ></i>
-            <i
-              class="icon-close"
-              style="color: red"
-              *ngIf="signatureStatus == false"
-            ></i>
-            Signature
-          </button>
+          
         </div>
         <div class="col-lg-4">
           <input
