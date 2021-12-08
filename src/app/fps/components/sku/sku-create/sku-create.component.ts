@@ -37,6 +37,7 @@ export class SkuCreateComponent implements OnInit {
   currencies_list = [];
   institutions_list: FinancialInstitution[] = [];
   countryCode : string = '';
+  data_area_id : string = '';
 
   constructor(
     private countryService: CountryService,
@@ -175,6 +176,7 @@ export class SkuCreateComponent implements OnInit {
       min_usage: this.skuAddForm.get("min_usage").value + "",
       required_tenure: this.skuAddForm.get("required_tenure").value + "",
       agreement_mandatory: this.skuAddForm.get("agreement_mandatory").value + "",
+      data_area_id : 'test_data_rea_id'
     
     }).subscribe((res) => {
         if (res.id) {

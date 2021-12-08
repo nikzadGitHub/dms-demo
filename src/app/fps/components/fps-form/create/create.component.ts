@@ -96,8 +96,8 @@ export class CreateComponent implements OnInit {
       fps_status_id : new FormControl(1, [Validators.min(1)]),
       fps_tenure_id : new FormControl('',[Validators.required]),
       fps_adv_payment : new FormControl('0'),
-      fps_adv_payment_percentage : new FormControl(),
-      fps_net_financing_amount : new FormControl(),
+      fps_adv_payment_percentage : new FormControl('0'),
+      fps_net_financing_amount : new FormControl('0'),
       fps_monthly_payment_amount : new FormControl(),
       fps_interest_rate : new FormControl(),
       fps_validated_by : new FormControl(),
@@ -170,8 +170,6 @@ export class CreateComponent implements OnInit {
       return;
     } 
 
-    console.log('data', this.fpsAddForm);
-
     this.fpsService.saveFps({
       fps_no: this.fpsAddForm.get("fps_no").value + "",
       fps_opportunity_id: this.fpsAddForm.get("fps_opportunity_id").value + "",
@@ -194,7 +192,7 @@ export class CreateComponent implements OnInit {
       fps_required_docs: this.fpsAddForm.get("fps_required_docs").value + "",
       fps_customer_name: this.oppt_details.customer.owner + "",
       fps_internal_aggr_no:  "",
-
+      fps_data_area_id: this.fpsAddForm.get("fps_data_area_id").value + ""
       
     }).subscribe((res) => {
         if (res.id) {
