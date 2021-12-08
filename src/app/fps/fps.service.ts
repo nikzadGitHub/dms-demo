@@ -18,8 +18,8 @@ export class FpsService implements FpsInterface {
 
   constructor(private httpClient: HttpClient, private apiClient: ApiClientService) { }
 
-  getList(pageItems, search_text, sort): Observable<any> {
-    let query = 'fps?page_items=' + pageItems + '&search_text=' + search_text;
+  getList(currentOpportunityId, pageItems, search_text, sort): Observable<any> {
+    let query = 'fps?page_items=' + pageItems + '&search_text=' + search_text + '&current_opportunity_id=' + currentOpportunityId;
 
     if(sort && sort['field']!= null){
       query += '&field=' + sort.field + '&order=' + sort.order;
@@ -27,8 +27,8 @@ export class FpsService implements FpsInterface {
     return this.apiClient.get<any>(query);
   }
 
-  getPage(url, pageItems, search_text){
-    let query = '&page_items=' + pageItems + '&search_text=' + search_text;
+  getPage(url, currentOpportunityId, pageItems, search_text){
+    let query = '&page_items=' + pageItems + '&search_text=' + search_text + '&current_opportunity_id=' + currentOpportunityId;
     return this.httpClient.get<any>(url + query,this.httpOptions);
   }
 

@@ -14,31 +14,6 @@
         <div class="d-flex">
             <div>FPS Request</div>
         </div>
-
-        <div>
-            <span class="p-input-icon-left">
-            <i class="pi pi-search"></i>
-            <input
-                type="text"
-                pInputText
-                placeholder="Global Search"
-                (input)="getAll()"
-                [(ngModel)]="search_text"
-            />
-            </span>
-            <img
-            style="width: 22px; margin: 0px 8px 0px 0px"
-            src="../../../../assets/img/icons/Vector (2).svg"
-            />
-            <img
-            style="width: 22px"
-            src="../../../../assets/img/icons/Vector (1).svg"
-            />
-            <img
-            style="width: 22px; margin: 7px"
-            src="../../../../assets/img/icons/vertcalLines.svg"
-            />
-        </div>
     </div>
   </ng-template>
   <ng-template pTemplate="header" let-columns>
@@ -57,8 +32,6 @@
          
         </div>
       </th>
-
-      <th [style]="{ width: '5%' }"></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-fpsItem>
@@ -86,14 +59,6 @@
       <td class="text-center">
         <span class="p-column-title">Status</span>
         {{ showStatus(fpsItem.fps_status_id) }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title"></span>
-        <a
-          href="#"
-          [routerLink]="['/leads/', fpsItem.id, 'edit']"
-          class="fa fa-edit"
-        ></a>
       </td>
     </tr>
   </ng-template>

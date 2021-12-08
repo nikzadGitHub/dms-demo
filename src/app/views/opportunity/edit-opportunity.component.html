@@ -826,18 +826,8 @@
         </p-accordion>
       </div>
 
-      <div class="col-sm-12 col-md-12 form-group">
-        <h3>FPS Request</h3>
-        <!-- Here the fps list related to current opportunity is displayed -->
-        <app-fps-list></app-fps-list>
-    
-        <!-- Accordion for the fps list related to current opportunity -->
-        <!-- <p-accordionTab header="FPS Request">
-          <div class="row">
-            <app-fps-list></app-fps-list>
-          </div>
-        </p-accordionTab>		 -->
-      </div>
+      <!-- Here the fps list related to current opportunity is displayed -->
+      <app-fps-list [current_opportunity_id]="opportunity_id" ></app-fps-list>
       
       <!-- Competitor List -->
       <div class="col-sm-12 col-md-12 form-group">

@@ -20,6 +20,8 @@ export class IndexComponent implements OnInit {
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("foundModal") foundModal: ModalDirective;
 
+  @Input() current_opportunity_id = '';
+
   private ngUnsubscribe = new Subject;
   sort: any;
   search_text: string = '';
@@ -28,7 +30,7 @@ export class IndexComponent implements OnInit {
   totalRecords:number;
   skuList : any = [] ;
   rateStatusList = this.fpsService.getFpsStatusList();
-
+  
   columns: Column[] = [
 
     {'header':'FPS Request  No','field':'fps_no','type':'string'},
@@ -47,7 +49,8 @@ export class IndexComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.fpsService.getList(this.pageItems,this.search_text, this.sort)
+
+    this.fpsService.getList(this.current_opportunity_id, this.pageItems,this.search_text, this.sort)
     .pipe()
     .subscribe(
       {
@@ -83,7 +86,7 @@ export class IndexComponent implements OnInit {
 
   onClick(pageNo){
     let url = this.pages[pageNo].url
-    this.fpsService.getPage(url,this.pageItems,this.search_text)
+    this.fpsService.getPage(url,this.current_opportunity_id, this.pageItems,this.search_text)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((response)=>{
       this.zone.run(() => {

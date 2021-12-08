@@ -5,7 +5,7 @@ export interface SaveResult {
 }
 
 export interface FpsInterface {
-    getList(pageItems, search_text, sort): Observable<any>;
+    getList(currentOpportunityId, pageItems, search_text, sort): Observable<any>;
     saveFps(form: any): Observable<SaveResult>;
 }
   
