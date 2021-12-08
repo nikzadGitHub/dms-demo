@@ -1,5 +1,140 @@
-<p>sku-index works!</p>
+<p-table class="table table-hover table-striped"
+  #dt
+  [value]="skuList"
+  styleClass="p-datatable-customers"
+  [rowHover]="true"
+  [reorderableColumns]="true"
+  responsiveLayout="scroll"
+  [filterDelay]="0"
+  [globalFilterFields]="['quote_id', 'company', 'amount', 'status']"
+  [columns]="columns"
+>
+  <ng-template pTemplate="caption">
+    <div class="table-header">
+        <div class="d-flex">
+            <div>FPS SKU Listing</div>
+            <div class="ml-2 mt-1">
+                <a routerLink="/fps/sku-create" routerLinkActive="router-link-active"
+                ><i class="icon-plus icons" style="color: #ffffff"></i
+                ></a>
+            </div>
+        </div>
 
-<a class="btn btn-custom form-group" [routerLink]="['/fps/sku-create']">
-    <i class="cil-plus c-icon"></i> &nbsp;New FPS SKU
-</a>
+        <div>
+            <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+                type="text"
+                pInputText
+                placeholder="Global Search"
+                (input)="getAll()"
+                [(ngModel)]="search_text"
+            />
+            </span>
+            <img
+            style="width: 22px; margin: 0px 8px 0px 0px"
+            src="../../../../assets/img/icons/Vector (2).svg"
+            />
+            <img
+            style="width: 22px"
+            src="../../../../assets/img/icons/Vector (1).svg"
+            />
+            <img
+            style="width: 22px; margin: 7px"
+            src="../../../../assets/img/icons/vertcalLines.svg"
+            />
+        </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th
+        *ngFor="let column of columns"
+        pSortableColumn="{{ column.field }}"
+        class="text-center"
+        pReorderableColumn
+      >
+        <div class="p-d-flex p-jc-between p-ai-center">
+          {{ column.header }}
+          <!-- <div class="icon-div">
+            <p-sortIcon field="{{ column.field }}"></p-sortIcon>
+          </div> -->
+         
+        </div>
+      </th>
+
+      <th [style]="{ width: '5%' }"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-data>
+    <tr class="p-selectable-row">
+      <td class="text-center">
+        <span class="p-column-title">FPS SKU No</span>
+        {{ data.uuid }}
+      </td>
+      <td  class="text-center">
+        <span class="p-column-title">FPS Type</span>
+        {{ showFPSType(data.package_type_id) }}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">Financial Instititue</span>
+        {{ data.financial_institution.title }}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">Validity Start Date</span>
+        {{ data.validity_start_at | date: "dd-MMM-yyyy" }}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">Validity End Date</span>
+        {{ data.validity_end_at | date: "dd-MMM-yyyy" }}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">Tenure</span>
+        {{ data.required_tenure }}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">Rate</span>
+        {{ data.interest_rate }}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">Monthly</span>
+        <mat-slide-toggle name="monthly_payment" [checked]="data.monthly_payment == 1"  class="form-control" class="example-margin">
+        </mat-slide-toggle>
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">Quarterly</span>
+        <mat-slide-toggle name="quarterly_payment"  [checked]="data.quarterly_payment == 1" class="form-control" class="example-margin">
+        </mat-slide-toggle>
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">Half-Yearly</span>
+        <mat-slide-toggle name="half_yearly_payment" [checked]="data.half_yearly_payment == 1" class="form-control" class="example-margin">
+        </mat-slide-toggle>
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">Min Usage</span>
+        {{ data.min_usage }}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">Min Procedure</span>
+        {{ data.procedure_per_month }}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title"></span>
+        <a
+          href="#"
+          [routerLink]="['/leads/', data.id, 'edit']"
+          class="fa fa-edit"
+        ></a>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-paginator
+  (onPageChange)="paginate($event)"
+  [rows]="pageItems"
+  [totalRecords]="totalRecords"
+  [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
+>
+</p-paginator>

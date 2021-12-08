@@ -4,10 +4,7 @@ export interface SkuInterface {
 import { Observable } from 'rxjs';
 
 export interface SkuItem {
-    id: bigint;
-    booking_no: string;
-    request_date: string;
-    // Here ...
+    
 }
 
 export type SkuList = SkuItem[];
