@@ -112,21 +112,21 @@
     margin-top: 35px;
     font-size: 16px;
 
-    table.table-bordered {
-      border: 1px solid black;
-      margin-top: 20px;
-      text-align: center;
-    }
+    // table.table-bordered {
+    //   border: 1px solid black;
+    //   margin-top: 20px;
+    //   text-align: center;
+    // }
     [contentEditable=true]:empty:not(:focus):before{
       content:attr(data-placeholder)
   }
-    table.table-bordered > thead > tr > th {
-      border: 1px solid black;
-      background-color: #b7bee9;
-    }
-    table.table-bordered > tbody > tr > td {
-      border: 1px solid black;
-    }
+    // table.table-bordered > thead > tr > th {
+    //   border: 1px solid black;
+    //   background-color: #b7bee9;
+    // }
+    // table.table-bordered > tbody > tr > td {
+    //   border: 1px solid black;
+    // }
 
     .list-detail {
       display: flex;
@@ -198,39 +198,39 @@
     color: rgb(41, 136, 224);
   }
 }
-#bodyContent{
-  .addressDetailMain{
-    display: flex;
-    .addressDetails{
-      margin-top: 15px;
-      table{
-        th{
-          width: 275px;
-          h5{
-            margin-bottom: 15px !important;
-          }
-        }
-      }
-    }
-  }
-}
-.productTable{
-  table{
-    thead,tbody{
-      tr{
-        // .descCol{
-        //   width: 600px;
-        // }
-        .numberCol{
-          width: 50px !important;
-        }
-        .unitPriceCol{
-          width: 110px ;
-        }
-        .totalPriceCol{
-          width: 110px ;
-        }
-      }
-    }
-  }
-}
+// #bodyContent{
+//   .addressDetailMain{
+//     display: flex;
+//     .addressDetails{
+//       margin-top: 15px;
+//       table{
+//         th{
+//           width: 275px;
+//           h5{
+//             margin-bottom: 15px !important;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+// .productTable{
+//   table{
+//     thead,tbody{
+//       tr{
+//         // .descCol{
+//         //   width: 600px;
+//         // }
+//         .numberCol{
+//           width: 50px !important;
+//         }
+//         .unitPriceCol{
+//           width: 110px ;
+//         }
+//         .totalPriceCol{
+//           width: 110px ;
+//         }
+//       }
+//     }
+//   }
+// }
