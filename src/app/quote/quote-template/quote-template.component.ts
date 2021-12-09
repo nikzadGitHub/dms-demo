@@ -276,19 +276,19 @@ export class QuoteTemplateComponent implements OnInit {
   savePreviewContent(){
     // let header =  this.headerData.nativeElement.innerHTML
     let header ={
-      quoteNo: this.headerQuoteNo.nativeElement.innerHTML,
-      refNo: this.headerRefNo.nativeElement.innerHTML,
-      date: this.headerDate.nativeElement.innerHTML,
+      quoteNo: this.headerQuoteNo.nativeElement.innerText,
+      refNo: this.headerRefNo.nativeElement.innerText,
+      date: this.headerDate.nativeElement.innerText,
     }
     // let footer = this.footerData.nativeElement.innerHTML
     let footer = {
-      price:this.priceFooter.nativeElement.innerHTML,
-      deliveryP:this.deliveryPFooter.nativeElement.innerHTML,
-      validity:this.validityFooter.nativeElement.innerHTML,
-      paymentTer:this.paymentTerFooter.nativeElement.innerHTML,
-      manufacturer:this.manufacturerFooter.nativeElement.innerHTML,
-      warranty:this.warrantyFooter.nativeElement.innerHTML,
-      servicing:this.servicingFooter.nativeElement.innerHTML,
+      price:this.priceFooter.nativeElement.innerText,
+      deliveryP:this.deliveryPFooter.nativeElement.innerText,
+      validity:this.validityFooter.nativeElement.innerText,
+      paymentTer:this.paymentTerFooter.nativeElement.innerText,
+      manufacturer:this.manufacturerFooter.nativeElement.innerText,
+      warranty:this.warrantyFooter.nativeElement.innerText,
+      servicing:this.servicingFooter.nativeElement.innerText,
     }
     let fullBody = this.bodyData.nativeElement.innerHTML
     // console.log("Header =>",header)
