@@ -101,7 +101,7 @@ export class SkuCreateComponent implements OnInit {
         if (error.error.message != undefined) {
           this.dialogService.showErrorDialog(error.error.message);
         } else {
-          this.dialogService.showErrorDialog("Error retrieve institutions list");
+          this.dialogService.showErrorDialog("Error retrieve Auto generated ID.");
         }
       }
     })
@@ -143,15 +143,6 @@ export class SkuCreateComponent implements OnInit {
       });
   }
 
-  // initData()
-  // {
-  //   this.sku.forEach(element => {
-  //     element.additional_costs.forEach(addCost => {
-  //       this.addRates().push(this.existingRates(addCost));
-  //     });
-  //   });
-  // }
-
   onSave(): void {
 
     if (!this.skuAddForm.valid) {
@@ -189,6 +180,7 @@ export class SkuCreateComponent implements OnInit {
             
             for(let x = 0; x <rates.length; x++) {
               let rate = {
+                'id': rates[x].rate_no,
                 'financial_package_id': res.id,
                 'validity_start_at': rates[x].validity_start_at,
                 'validity_end_at': rates[x].validity_end_at,
@@ -230,17 +222,6 @@ export class SkuCreateComponent implements OnInit {
     return this.rateAddForm.get("addRates") as FormArray;
   }
 
-  // existingCosts(addRates): FormGroup {
-  //   return this.fb.group({
-  //     id: addRates.id,
-  //     description: addRates.description,
-  //     quantity: addRates.quantity,
-  //     unit_price: addRates.unit_price,
-  //     total_price: addRates.total_price,
-  //     remarks: addRates.remarks,
-  //   });
-  // }
-
   newAddRates(): FormGroup {
     return this.fb.group({
       rate_no: (++this.rate_counter),
@@ -276,8 +257,9 @@ export class SkuCreateComponent implements OnInit {
   }
 
   countryChange() {
+    
     this.countryCode = this.skuAddForm.get("country_code").value;
-
+  
     this.currencyService.getCurrencyList(this.countryCode).subscribe({
       next: (response) => {
         if (response.success) {
@@ -297,24 +279,26 @@ export class SkuCreateComponent implements OnInit {
       }
     });
 
-    this.institutionService.getFinancialInstition(this.countryCode).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.zone.run(() => {
-            this.institutions_list = response.data.institutions;
-          });
-        } else {
-          this.dialogService.showErrorDialog(response.message);
+    if(this.countryCode.length > 0) {
+      this.institutionService.getFinancialInstition(this.countryCode).subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.zone.run(() => {
+              this.institutions_list = response.data.institutions;
+            });
+          } else {
+            this.dialogService.showErrorDialog(response.message);
+          }
+        },
+        error: (error) => {
+          if (error.error.message != undefined) {
+            this.dialogService.showErrorDialog(error.error.message);
+          } else {
+            this.dialogService.showErrorDialog("Error retrieve institutions list");
+          }
         }
-      },
-      error: (error) => {
-        if (error.error.message != undefined) {
-          this.dialogService.showErrorDialog(error.error.message);
-        } else {
-          this.dialogService.showErrorDialog("Error retrieve institutions list");
-        }
-      }
-    })
+      })
+    }
 
   }
   

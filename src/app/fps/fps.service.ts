@@ -93,4 +93,14 @@ export class FpsService implements FpsInterface {
     });
   }
 
+  find(id): Observable<any> {
+    return this.httpClient.get(SystemConfig.apiBaseUrl + '/fps-details/' + id).pipe()
+  }
+
+  updateFps(data: any, id: string): Observable<SaveResult> {
+    return this.apiClient.post('fps/update/' + id, data);
+  }
+
+  
+
 }

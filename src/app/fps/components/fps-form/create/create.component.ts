@@ -18,11 +18,6 @@ export interface OpportunityDetail {
   
 }
 
-export interface UserInfo {
-  name: string;
-  id: BigInt;
-}
-
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -41,7 +36,7 @@ export class CreateComponent implements OnInit {
   fpsAddForm : FormGroup;
   alertBody: string;
   alertHeader: string;
-  fps_user_list: UserInfo[];
+  fps_user_list;
   agreement_mandatory = false;
 
   payment_frequency_list = [
@@ -185,8 +180,8 @@ export class CreateComponent implements OnInit {
       fps_tenure_id: this.fpsAddForm.get("fps_tenure_id").value + "",
       fps_interest_rate: this.fpsAddForm.get("fps_interest_rate").value + "",
       fps_status_id: this.fpsAddForm.get("fps_status_id").value + "",
-      fps_validated_by: this.fpsAddForm.get("fps_validated_by").value + "",
-      fps_approved_by: this.fpsAddForm.get("fps_approved_by").value + "",
+      fps_validated_by: this.fpsAddForm.get("fps_validated_by").value,
+      fps_approved_by: this.fpsAddForm.get("fps_approved_by").value,
       fps_leas_aggr_no: this.fpsAddForm.get("fps_leas_aggr_no").value + "",
       fps_remarks: this.fpsAddForm.get("fps_remarks").value + "",
       fps_required_docs: this.fpsAddForm.get("fps_required_docs").value + "",
