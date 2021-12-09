@@ -1,25 +1,34 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { EditRoleComponent } from './edit-role/edit-role.component';
-import { UserAccessSetupComponent } from './user-access-setup.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { AddUserAccessComponent } from "./add-user-access/add-user-access.component";
+import { EditRoleComponent } from "./edit-role/edit-role.component";
+import { UserAccessSetupComponent } from "./user-access-setup.component";
 
 const routes: Routes = [
-  { path: 'useraccess', redirectTo: 'useraccess/user-access-setup', pathMatch: 'full' },
   {
-    path: 'user-access-setup', component: UserAccessSetupComponent,
-    data: {
-      title: 'User Access Setup'
-    }
+    path: "useraccess",
+    redirectTo: "useraccess/user-access-setup",
+    pathMatch: "full",
   },
   {
-    path:':roleId/edit',
-    component: EditRoleComponent
-  }
+    path: "user-access-setup",
+    component: UserAccessSetupComponent,
+    data: {
+      title: "User Access Setup",
+    },
+  },
+  {
+    path: "add-user-access",
+    component: AddUserAccessComponent,
+  },
+  {
+    path: ":roleId/edit",
+    component: EditRoleComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
-export class UserAccessRoutingModule { }
+export class UserAccessRoutingModule {}

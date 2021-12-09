@@ -33,3 +33,30 @@
   background: none;
   border: none;
 }
+
+.add-role-field {
+  display: flex;
+  flex-direction: row;
+  label {
+    color: black;
+    width: 100px;
+    margin: 10px;
+    font-weight: 600;
+  }
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+  button {
+    width: 150px;
+  }
+  .cancel-btn {
+    margin-right: 10px;
+  }
+}
