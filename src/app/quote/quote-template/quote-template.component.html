@@ -1,4 +1,4 @@
-<div class="main-content" >
+<div class="main-content">
   <div class="topButtons">
     <div class="download-btn">
       <input
@@ -32,8 +32,14 @@
     <div #pdfTable class="" id="pdfTable">
       <div class="template-header">
         <div class="img-text">
-          <div class="headerImg" style="width: 780px;">
-            <img style="width: 150px; height: 60px; margin-top: 50px; margin-left: 55px;"
+          <div class="headerImg" style="width: 780px">
+            <img
+              style="
+                width: 150px;
+                height: 60px;
+                margin-top: 50px;
+                margin-left: 55px;
+              "
               src="../../../assets/img/logo.png"
               class="card-img-top"
               alt="..."
@@ -41,16 +47,22 @@
           </div>
           <!-- <div class="vl"></div>
           <div class="v2"></div> -->
-          <div class="headText" style="text-align: end;">
-            <h4 class="textBlur">IDS Medical Systems (M) Sdn Bhd (Co. No:950311-p)</h4>
+          <div class="headText" style="text-align: end">
+            <h4 class="textBlur">
+              IDS {{quotationsTemplateData?.quotations?.companies?.title}}
+            </h4>
             <h4>GST Registration No:000220168192</h4>
-            <h5> 8, Jalan Pensyarah U1/28, Hicom Glenmerie Industrial Park </h5>
-            <h5> 40150 Shah Alam, Sylangor, Malaysia </h5>
-            <div class="phoneFax" style="display: flex;">
-              <h5> <span><b>Telephone: +923847678632486 </b></span> </h5>
-              <h5 class="fax" style="margin-left: 50px;"> <span><b> Fax: +923847678632486 </b></span> </h5>
+            <h5>8, {{quotationsTemplateData?.quotations?.companies?.address}}</h5>
+            <!-- <h5>4015{{quotationsTemplateData?.quotations?.companies?.address}}</h5> -->
+            <div class="phoneFax" style="display: flex">
+              <h5>
+                <span><b>Telephone:{{quotationsTemplateData?.quotations?.companies?.telephone_number}} </b></span>
+              </h5>
+              <h5 class="fax" style="margin-left: 50px">
+                <span><b> Fax: {{quotationsTemplateData?.quotations?.companies?.fax}} </b></span>
+              </h5>
             </div>
-            <h6> www.idsMED.com </h6>
+            <h6>www.idsMED.com</h6>
 
             <!-- <p> {{ quotationsTemplateData?.quotations?.companies?.address }}</p>
             <p><b>Telephone:</b> {{quotationsTemplateData?.quotations?.companies?.telephone_number}}</p>
@@ -59,154 +71,320 @@
             <a href="#">www.idsMED.com</a> -->
           </div>
         </div>
-        <div class="secondAddress" 
-        style="float: right;
-        text-align: end;
-        margin-right: 27px;
-        margin-top: 20px;" >
+        <div
+          class="secondAddress"
+          style="
+            float: right;
+            text-align: end;
+            margin-right: 27px;
+            margin-top: 20px;
+          "
+        >
           <h4><U>JOHR OFFICE</U></h4>
-            <h5> 42 Jalan Pertama, Pusat Perdagangan Danga Utama </h5>
-            <h5> 81300, Sakudai, Johr </h5>
-            <div class="phoneFax" style="display: flex;">
-              <h5> <p><b>Telephone: +923847678632486 </b></p> </h5>
-              <h5 class="fax" style="margin-left: 50px;"> <p><b> Fax: +923847678632486 </b></p> </h5>
-            </div>
-            <span> www.idsMED.com </span>
+          <h5>42 Jalan Pertama, Pusat Perdagangan Danga Utama {{ quotationsTemplateData?.quotations?.customer?.address }}</h5>
+          <h5>81300, Sakudai, Johr</h5>
+          <div class="phoneFax" style="display: flex">
+            <h5>
+              <p><b>Telephone: +923847678632486 </b></p>
+            </h5>
+            <h5 class="fax" style="margin-left: 50px">
+              <p><b> Fax: +923847678632486 </b></p>
+            </h5>
+          </div>
+          <span> www.idsMED.com </span>
+        </div>
+      </div>
+    </div>
+    <div class="addressDetailMain" style="display: flex">
+      <div class="address-title col-lg-6 col-md-6" style="display: flex">
+        <div
+          *ngIf="
+            quotationsTemplateData?.quotations?.contacts?.primary_contact
+              ?.full_name
+          "
+        >
+          {{
+            quotationsTemplateData?.quotations?.contacts?.primary_contact
+              ?.full_name
+          }},
+        </div>
+
+        <div *ngIf="quotationsTemplateData?.quotations?.customer?.company_name">
+          {{ quotationsTemplateData?.quotations?.customer?.company_name }},
+        </div>
+
+        <div *ngIf="quotationsTemplateData?.quotations?.customer?.address">
+          {{ quotationsTemplateData?.quotations?.customer?.address }}
+        </div>
+      </div>
+      <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px">
+        <table>
+          <tr>
+            <th style="width: 275px">
+              <h5 style="margin-bottom: 15px">Quotation No</h5>
+            </th>
+            <th style="width: 275px" class="addressDetatilKey">
+              <h5>: 86214/VG/Q</h5>
+            </th>
+          </tr>
+          <tr>
+            <th style="width: 275px">
+              <h5 style="margin-bottom: 15px">Quotation No</h5>
+            </th>
+            <th style="width: 275px" class="addressDetatilKey"><h5>:</h5></th>
+          </tr>
+          <tr>
+            <th style="width: 275px">
+              <h5 style="margin-bottom: 15px">Quotation No</h5>
+            </th>
+            <th style="width: 275px" class="addressDetatilKey">
+              <h5>: 03/03/2021</h5>
+            </th>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="initial-info">
+        <table class="table table-borderless">
+          <tbody>
+            <tr class="all-th-td-padding-bottom-none">
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="all-th-td-padding-top-bottom-none">
+              <th scope="row"><b>No. Ref: </b></th>
+              <td>
+                <span>:&nbsp;&nbsp;&nbsp;</span
+                >{{ quotationsTemplateData?.quotations?.quote_id }}
+              </td>
+              <th class="date-field-label"><b>Date :</b></th>
+              <td class="date-field-data">
+                {{
+                  quotationsTemplateData?.quotations?.created_at
+                    | date: "dd/MM/yyyy"
+                }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="attentionRelated">
+        <div class="nameEmail">
+          <div class="name" style="display: flex">
+            <h5 style="width: 115px"><b>Attention &nbsp;&nbsp;:</b></h5>
+            <h5 style="margin-left: 40px">
+              <b>Sister Mimi Aizura - Ward 2B</b>
+            </h5>
+          </div>
+          <div class="email" style="display: flex">
+            <h5 style="width: 115px"><b>Email &nbsp;&nbsp;:</b></h5>
+            <span style="margin-left: 40px">
+              <b>mimi.aizura@mahkotamedical.com</b>
+            </span>
+          </div>
+        </div>
+        <div class="phoneFax" style="display: flex">
+          <div class="email" style="display: flex">
+            <span style="width: 115px"> <b>Telephone &nbsp;&nbsp;:</b> </span>
+            <span style="margin-left: 40px; width: 200px">
+              <b>06-2812400 </b>
+            </span>
+          </div>
+          <div class="email" style="display: flex">
+            <span style="width: 115px"> <b>Fax &nbsp;&nbsp;:</b> </span>
+            <span style="margin-left: 40px; width: 200px">
+              <b>06-2852861</b>
+            </span>
+          </div>
         </div>
       </div>
 
-      </div> 
-      <div class="addressDetailMain" style="display: flex;">
-        <div class="address-title col-lg-6 col-md-6" style="display: flex;">
-          <div *ngIf="quotationsTemplateData?.quotations?.contacts?.primary_contact?.full_name">
-            {{quotationsTemplateData?.quotations?.contacts?.primary_contact?.full_name}},
-          </div>
-          
-              <div *ngIf="quotationsTemplateData?.quotations?.customer?.company_name">
-                {{  quotationsTemplateData?.quotations?.customer?.company_name}},
-              </div>
-              
-           <div *ngIf="  quotationsTemplateData?.quotations?.customer?.address">
-            {{
-              quotationsTemplateData?.quotations?.customer?.address
-            }}
-           </div>
-        </div>
-        <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px;">
-          <table>
-            <tr>
-              <th style="width: 275px;"><h5 style="margin-bottom: 15px;">Quotation No</h5></th>
-              <th style="width: 275px;" class="addressDetatilKey">  <h5>: 86214/VG/Q</h5></th>
-            </tr>
-            <tr>
-              <th style="width: 275px;"><h5 style="margin-bottom: 15px;">Quotation No</h5></th>
-              <th style="width: 275px;" class="addressDetatilKey">  <h5>: </h5></th>
-            </tr>
-            <tr>
-              <th style="width: 275px;"><h5 style="margin-bottom: 15px;">Quotation No</h5></th>
-              <th style="width: 275px;" class="addressDetatilKey">  <h5>: 03/03/2021</h5></th>
-            </tr>
-          </table>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="initial-info">
-          <table class="table table-borderless">
-            <tbody>
-              <tr class="all-th-td-padding-bottom-none">
-                <td >
-                </td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr class="all-th-td-padding-top-bottom-none">
-                <th scope="row"><b>No. Ref: </b></th>
-                <td>
-                  <span>:&nbsp;&nbsp;&nbsp;</span
-                  >{{ quotationsTemplateData?.quotations?.quote_id }}
-                </td>
-                <th class="date-field-label"><b>Date :</b></th>
-                <td class="date-field-data">
-                  {{ quotationsTemplateData?.quotations?.created_at  | date: 'dd/MM/yyyy'}}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="attentionRelated">
-          <div class="nameEmail">
-            <div class="name" style="display: flex;">
-            <h5 style="width: 115px;"> <b>Attention &nbsp;&nbsp;:</b> </h5>
-            <h5 style="margin-left: 40px;"> <b>Sister Mimi Aizura - Ward 2B</b> </h5>
-            </div>
-            <div class="email" style="display: flex;">
-              <h5 style="width: 115px;"> <b>Email &nbsp;&nbsp;:</b> </h5>
-              <span style="margin-left: 40px;"> <b>mimi.aizura@mahkotamedical.com</b> </span>
-              </div>
-          </div>
-          <div class="phoneFax" style="display: flex;">
-            <div class="email" style="display: flex;">
-              <span style="width: 115px;"> <b>Telephone &nbsp;&nbsp;:</b> </span>
-              <span style="margin-left: 40px; width: 200px;"> <b>06-2812400 </b> </span>
-              </div>
-              <div class="email" style="display: flex;">
-                <span style="width: 115px;"> <b>Fax &nbsp;&nbsp;:</b> </span>
-                <span style="margin-left: 40px; width: 200px;"> <b>06-2852861</b> </span>
-                </div>
-          </div>
-        </div>
-
-        <div class="main-text">
-          <!-- <div  style="border: 1px solid lightgray;"   contentEditable = true data-placeholder="Enter text here"  [attr.contenteditable]="editable" id="headerContent" #headerContent 
+      <div class="main-text">
+        <!-- <div  style="border: 1px solid lightgray;"   contentEditable = true data-placeholder="Enter text here"  [attr.contenteditable]="editable" id="headerContent" #headerContent 
           [innerText]="quotationContent?.header_content">
 
           {{ quotationContent?.header_content }}
           </div> -->
 
-          <div class="productTable">
-            <table class="table table-bordered table-sm" 
+        <div class="productTable">
+          <table
+            class="table table-bordered table-sm"
             style="
-            border: 1px solid black;
-            margin-top: 20px;
-            text-align: center;">
-              <thead>
-                <tr>
-                  <th class="numberCol" style="width: 50px; border: 1px solid black;" scope="col">NO</th>
-                  <th class="descCol" style="width: 50px; border: 1px solid black;" scope="col">DESCRIPTION</th>
-                  <th class="numberCol" style="width: 50px; border: 1px solid black;" scope="col">UOM</th>
-                  <th class="numberCol" style="width: 50px; border: 1px solid black;" scope="col">QTY</th>
-                  <th class="unitPriceCol" style="width: 110px; border: 1px solid black;" scope="col">UNIT PRICE (RM)</th>
-                  <th class="totalPriceCol" style="width: 110px; border: 1px solid black;" scope="col">TOTAL PRICE (RM)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="main-table-data" *ngFor="let item of quotationsTemplateData?.quotations?.products">
-                  <!-- there should be loop for all the products -->
-                  <td class="numberCol" style="width: 50px; border: 1px solid black;" >1 </td>
-                  <td class="descCol" style="width: 50px; border: 1px solid black;"> {{ item.name }} </td>
-                  <!-- <td class="numberCol" style="width: 50px; border: 1px solid black;">{{ item.name }}</td> -->
-                  <td class="numberCol" style="width: 50px; border: 1px solid black;">Unit</td>
-                  <td class="numberCol" style="width: 50px; border: 1px solid black;">  {{item.list_price}} </td>
-                  <td class="unitPriceCol" style="width: 110px; border: 1px solid black;">  {{item.list_price}} </td>
-                  <td class="totalPriceCol" style="width: 110px; border: 1px solid black;">  {{item.list_price}} </td>
-                </tr>
-                <tr style="border-bottom: 1px solid black;">
-                  <td> Gross Total <br> Total Amount </td>
-                  <td style="border: 0px 2px solid black;"></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td style="width: 110px; border: 1px solid black; border-left: 1px solid black;"> 160000 </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <br>
-          <br>
-          <br>
-          
-          <!-- <div style="border: 1px solid lightgray;" class="list-detail" contentEditable = true data-placeholder="Enter text here"  [attr.contenteditable]="editable" id="footerContent" #footerContent
+              border: 1px solid black;
+              margin-top: 20px;
+              text-align: center;
+            "
+          >
+            <thead>
+              <tr>
+                <th
+                  class="numberCol"
+                  style="width: 50px; border: 1px solid black"
+                  scope="col"
+                >
+                  NO
+                </th>
+                <th
+                  class="descCol"
+                  style="width: 50px; border: 1px solid black"
+                  scope="col"
+                >
+                  DESCRIPTION
+                </th>
+                <th
+                  class="numberCol"
+                  style="width: 50px; border: 1px solid black"
+                  scope="col"
+                >
+                  UOM
+                </th>
+                <th
+                  class="numberCol"
+                  style="width: 50px; border: 1px solid black"
+                  scope="col"
+                >
+                  QTY
+                </th>
+                <th
+                  class="unitPriceCol"
+                  style="width: 110px; border: 1px solid black"
+                  scope="col"
+                >
+                  UNIT PRICE (RM)
+                </th>
+                <th
+                  class="totalPriceCol"
+                  style="width: 110px; border: 1px solid black"
+                  scope="col"
+                >
+                  TOTAL PRICE (RM)
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="main-table-data"
+                *ngFor="
+                  let item of quotationsTemplateData?.quotations?.products
+                "
+              >
+                <!-- there should be loop for all the products -->
+                <td
+                  class="numberCol"
+                  style="width: 50px; border: 1px solid black"
+                >
+                  1
+                </td>
+                <td
+                  class="descCol"
+                  style="width: 50px; border: 1px solid black"
+                >
+                  {{ item.name }}
+                </td>
+                <!-- <td class="numberCol" style="width: 50px; border: 1px solid black;">{{ item.name }}</td> -->
+                <td
+                  class="numberCol"
+                  style="width: 50px; border: 1px solid black"
+                >
+                  Unit
+                </td>
+                <td
+                  class="numberCol"
+                  style="width: 50px; border: 1px solid black"
+                >
+                  {{ item.list_price }}
+                </td>
+                <td
+                  class="unitPriceCol"
+                  style="width: 110px; border: 1px solid black"
+                >
+                  {{ item.list_price }}
+                </td>
+                <td
+                  class="totalPriceCol"
+                  style="width: 110px; border: 1px solid black"
+                >
+                  {{ item.list_price }}
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid black">
+                <td>
+                 <ul style="list-style-type: none;font-weight: 600;padding: 0px;margin: 0px;"><li>Gross Total</li>
+                  <li>Discount</li>
+                  <li>Net Total</li>
+                  <li>GST (SR 0%)</li>
+                  <li>Total Amount</li>
+                </ul>
+                </td>
+                <td style="border: 0px 2px solid black"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td
+                  style="
+                 
+                   
+                    border: 1px solid black;
+                  
+                  "
+                ><ul style="list-style-type: none;font-weight: 600; margin: 0px;
+                padding: 0px;">
+
+                  <li>16000</li>
+                  <li style="border-bottom: 2px solid;" >2000</li>
+                  <li>10000</li>
+                  <li style="    border: 2px solid;
+                  width: 103%;border-left-width: inherit;">4000</li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <br />
+        <br />
+        <div style="display: flex">
+          <ul style="list-style-type: none">
+            <li>PRICE</li>
+            <li>DELIVERY PERIOD</li>
+            <li>QUOTE VALIDITY</li>
+            <li>PAYMENT TERM</li>
+            <li>MANUFACTURER</li>
+            <li>WARRANTY</li>
+            <li>SERVICING</li>
+          </ul>
+          <ul style="list-style-type: none">
+            <li>: NETT DELIVERED</li>
+            <li>: 2,3 MONT UPON ORDER</li>
+            <li>: 90 DAYS</li>
+            <li>: 60 DAYS</li>
+            <li>: PHLIPS MEDICAL SYSYTEM, GERMANY</li>
+            <li>: 1 YEAR AGAINST MANUFACTURER DEFECTS</li>
+            <li>: TWICE (2) PER YEAR FOR PREVENTIVE MAINTENANCE</li>  
+          </ul>
+        </div>
+        <div style="margin-left: 40px;">
+          <p>
+            Please contact Ms.Veno ( HP: 016-7457806 ) for further
+            information/clarification.<br />Kindly indicate our quotation no..
+            on your Purchase Order and email to MYSOrer@idsmed.com.<br />Our
+            Standard Term and condition enlose shall apply to this documents.
+          </p>
+        </div>
+        <div>
+          <ul style="list-style-type: none" >
+            <li>Signature</li>
+            <li>Name</li>
+            <li>Date</li>
+
+
+          </ul>
+        </div>
+
+        <!-- <div style="border: 1px solid lightgray;" class="list-detail" contentEditable = true data-placeholder="Enter text here"  [attr.contenteditable]="editable" id="footerContent" #footerContent
           [innerText]="quotationContent?.footer_content" >
           {{ quotationContent?.footer_content }}
           </div>
@@ -219,50 +397,53 @@
               </span
               ><br />
             </p> -->
-        
-            
-          </div>
-      </div>
-    </div>
-    <div class="previewSave">
-      <button class="btn btn-primary saveButton" (click)='savePreviewContent()' >Save</button>
-      <button class="btn btn-primary quotationDownload" (click)='downloadQuotationTemplate()' > Download Quotation </button>
-    </div>
-  </div>
-
-  <div #pdfTable class="" id="pdfTable">
-    <div class="card" style="width: 100%" *ngIf="check">
-      <div class="show-image">
-        <img [src]="url" alt="" />
       </div>
     </div>
   </div>
+  <div class="previewSave">
+    <button class="btn btn-primary saveButton" (click)="savePreviewContent()">
+      Save
+    </button>
+    <button
+      class="btn btn-primary quotationDownload"
+      (click)="downloadQuotationTemplate()"
+    >
+      Download Quotation
+    </button>
+  </div>
+</div>
 
-
+<div #pdfTable class="" id="pdfTable">
+  <div class="card" style="width: 100%" *ngIf="check">
+    <div class="show-image">
+      <img [src]="url" alt="" />
+    </div>
+  </div>
+</div>
 
 <!-- display succes message -->
 <div
-id="success"
-bsModal
-#successModal="bs-modal"
-class="modal fade"
-tabindex="-1"
-role="dialog"
-aria-labelledby="myModalLabel"
-aria-hidden="true"
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
 >
-<div class="modal-dialog modal-success" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title">Success</h4>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ successMessage }}</p>
+      </div>
     </div>
-    <div class="modal-body">
-      <p>{{ successMessage }}</p>
-    </div>
+    <!-- /.modal-content -->
   </div>
-  <!-- /.modal-content -->
-</div>
-<!-- /.modal-dialog -->
+  <!-- /.modal-dialog -->
 </div>
 
 <div
