@@ -1,12 +1,13 @@
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
-[contenteditable] {
-  padding: 10px;
-}
+// [contenteditable] {
+//   padding: 10px;
+// }
 [contenteditable]:focus {
   outline: 1px solid lightgray;
   border-radius: 3px;
+  width: 100%;
 }
 
 .file-input {
@@ -69,15 +70,15 @@
     margin-top: 20px;
   }
 }
-.address-title {
-  display: flex;
-  flex-direction: row;
-  margin-left: 13px;
-  margin-top: 13px;
-  font-size: 17px;
-  color: black;
-  flex-direction: column;
-}
+// .address-title {
+//   display: flex;
+//   flex-direction: row;
+//   margin-left: 13px;
+//   margin-top: 13px;
+//   font-size: 17px;
+//   color: black;
+//   flex-direction: column;
+// }
 
 [contentEditable=true]:empty:not(:focus):before{
   content:attr(data-placeholder);

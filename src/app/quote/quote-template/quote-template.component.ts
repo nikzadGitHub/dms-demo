@@ -27,7 +27,18 @@ export class QuoteTemplateComponent implements OnInit {
   @ViewChild("fileUpload") fileUpload: ElementRef;
   @ViewChild("bodyContent") bodyData: ElementRef;
   @ViewChild("headerContent") headerData: ElementRef;
+  @ViewChild("headerQuoteNo") headerQuoteNo: ElementRef;
+  @ViewChild("headerRefNo") headerRefNo: ElementRef;
+  @ViewChild("headerDate") headerDate: ElementRef;
+
   @ViewChild("footerContent") footerData: ElementRef;
+  @ViewChild("price") priceFooter: ElementRef;
+  @ViewChild("deliveryP") deliveryPFooter: ElementRef;
+  @ViewChild("validity") validityFooter: ElementRef;
+  @ViewChild("paymentTer") paymentTerFooter: ElementRef;
+  @ViewChild("manufacturer") manufacturerFooter: ElementRef;
+  @ViewChild("warranty") warrantyFooter: ElementRef;
+  @ViewChild("servicing") servicingFooter: ElementRef;
   alertBody: string;
   alertHeader: string;
   fileName = "";
@@ -48,6 +59,8 @@ export class QuoteTemplateComponent implements OnInit {
   templateId: any;
   loader: boolean;
   blob: any;
+  quotationContentFooter: any;
+  quotationContentHeader: any;
   constructor(private router: Router,
     private quoteService: QuoteService,
     private route: ActivatedRoute,
@@ -72,6 +85,10 @@ export class QuoteTemplateComponent implements OnInit {
     this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
       this.quotationsTemplateData = res["data"]
       this.quotationContent = res["data"].quotations.quotation_contents
+      this.quotationContentFooter = JSON.parse(this.quotationContent.footer_content)
+      this.quotationContentHeader = JSON.parse(this.quotationContent.header_content)
+      // console.log('quoatation content',this.quotationContentFooter)
+      // console.log('quoatation content',this.quotationContentHeader)
       
     })
     // this.router.navigateByUrl("quote/view/quote-template");
@@ -81,7 +98,7 @@ export class QuoteTemplateComponent implements OnInit {
     this.file = event.target.files[0];
     this.fileName = this.file.name;
     let extension = this.file.name.split('.').pop();
-    console.log("this.file",this.file,'extension =>',extension)
+    // console.log("this.file",this.file,'extension =>',extension)
 
     if (this.file) {
       this.check = true;
@@ -215,13 +232,13 @@ export class QuoteTemplateComponent implements OnInit {
   }
 
   onePDF() {
-    console.log("One PDF working");
+    // console.log("One PDF working");
     this.successModal.hide();
     this.reset();
     this.single = true;
   }
   twoPDF() {
-    console.log("Two PDF working");
+    // console.log("Two PDF working");
     this.successModal.hide();
     this.reset();
     this.single = false;
@@ -257,12 +274,28 @@ export class QuoteTemplateComponent implements OnInit {
     this.fileUpload.nativeElement.value = null;
   }
   savePreviewContent(){
-    let header =  this.headerData.nativeElement.innerText
-    let footer = this.footerData.nativeElement.innerText
+    // let header =  this.headerData.nativeElement.innerHTML
+    let header ={
+      quoteNo: this.headerQuoteNo.nativeElement.innerHTML,
+      refNo: this.headerRefNo.nativeElement.innerHTML,
+      date: this.headerDate.nativeElement.innerHTML,
+    }
+    // let footer = this.footerData.nativeElement.innerHTML
+    let footer = {
+      price:this.priceFooter.nativeElement.innerHTML,
+      deliveryP:this.deliveryPFooter.nativeElement.innerHTML,
+      validity:this.validityFooter.nativeElement.innerHTML,
+      paymentTer:this.paymentTerFooter.nativeElement.innerHTML,
+      manufacturer:this.manufacturerFooter.nativeElement.innerHTML,
+      warranty:this.warrantyFooter.nativeElement.innerHTML,
+      servicing:this.servicingFooter.nativeElement.innerHTML,
+    }
     let fullBody = this.bodyData.nativeElement.innerHTML
+    // console.log("Header =>",header)
+    // console.log("Footer =>",footer)
+    // console.log("fullBody =>",fullBody)
 
-
-    this.quoteService.saveTemplateData(this.quotationId,header,footer,fullBody).subscribe(state=>{
+    this.quoteService.saveTemplateData(this.quotationId,JSON.stringify(header),JSON.stringify(footer),fullBody).subscribe(state=>{
     })
 
       this.successMessage = "Data is Updated Successfully......!!";
