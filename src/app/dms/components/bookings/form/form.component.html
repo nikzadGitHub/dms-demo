@@ -27,9 +27,9 @@
                   <div class="form-group row">
                     <label class="col-md-4 col-form-label" for="booking-reason">Booking reason</label>
                     <div class="col-md-8">
-                      <select formControlName="booking_reason" class="form-control" [(ngModel)]="optionValue" [attr.disabled]="editable">
+                      <select formControlName="booking_reason" class="form-control" [(ngModel)]="optionValue" [attr.disabled]="(bookingDetailList.bme_booking_no == bookingDetailList.id && bookingDetailList.booking_reason=='demo') ? true : editable">
                         <option value="">Please select</option>
-                        <option value="demo">Demo</option>
+                        <option value="demo" [selected] = "bookingDetailList.booking_reason == 'demo' ? true : false">Demo</option>
                         <option value="events">Events</option>
                         <option value="training">Training</option>
                         <option value="contigencies">Contigencies</option>
@@ -132,7 +132,7 @@
               </div>
               
               <!-- bme log -->
-              <div class="form-group"  *ngIf="optionValue  == 'demo'">
+              <div class="form-group"  *ngIf="optionValue  == 'demo' || bookingDetailList.booking_reason == 'demo' ">
                 <p-accordion class="p-accordion">
                     <p-accordionTab class="p-accordionTab" [selected]="true">
                         <p-header class="p-header">

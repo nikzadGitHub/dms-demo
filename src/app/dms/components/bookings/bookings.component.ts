@@ -34,6 +34,12 @@ export class BookingsComponent implements OnInit {
 
   onSearch() {
     console.log('searching for:', this.search_text);
+    this.api.getListSearch(this.search_text).subscribe((response) => {
+      if (response as BookingList) {
+        this.bookingList = response;
+      }
+			console.log(response);
+		});
   }
 
   onCreate(event) {

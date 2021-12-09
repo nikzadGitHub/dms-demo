@@ -12,7 +12,6 @@ import { BookingDetail } from '../../../services/booking-entity';
  * For submit the booking form
  * @class
  */
- `optionValue`;
  
 @Component({
   selector: 'app-booking-form-submit',
@@ -21,6 +20,8 @@ import { BookingDetail } from '../../../services/booking-entity';
 })
 export class FormComponent implements OnInit{ 
   editable: boolean;
+  optionValue: string;
+
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("foundModal") foundModal: ModalDirective;
