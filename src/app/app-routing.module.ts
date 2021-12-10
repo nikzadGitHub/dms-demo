@@ -153,6 +153,7 @@ export const routes: Routes = [
       },
     ]
   },
+  { path: 'profile', loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule) },
   { path: '**', component: P404Component }
 ];
 

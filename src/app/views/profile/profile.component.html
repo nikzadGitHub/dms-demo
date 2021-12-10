@@ -1,0 +1,24 @@
+<div class="main">
+    <div class="uploadImage">
+        <input
+          type="file"
+          class="file-input"
+          style="display: none;"
+          multiple
+          (change)="onImageUpload($event)"
+          #fileUpload
+        />
+        <button
+          type="button"
+          class="btn btn-primary btn-sm m-2 file-upload"
+          role="button"
+          rel="nofollow"
+          target="_blank"
+          (click)="fileUpload.click()"
+        >
+          Upload Image
+          <input #fileInput type="file" style="display: none" />
+        </button>
+      
+      </div>
+</div>
