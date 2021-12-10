@@ -127,27 +127,27 @@
       <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px" id="headerContent" #headerContent>
         <table style="color: black;">
           <tr>
-            <th style="width: 275px">
+            <th >
               <h5 style="margin-bottom: 15px">Quotation No</h5>
             </th>
-            <th style="width: 275px" class="addressDetatilKey">
-              <h5 [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
+            <th  class="addressDetatilKey">
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
             </th>
           </tr>
           <tr>
-            <th style="width: 275px">
+            <th>
               <h5 style="margin-bottom: 15px">Your Ref</h5>
             </th>
-            <th style="width: 275px" class="addressDetatilKey">
-              <h5 [attr.contenteditable]="editable" #headerRefNo>{{quotationContentHeader?.refNo}}</h5>
+            <th  class="addressDetatilKey">
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerRefNo>{{quotationContentHeader?.refNo}}</h5>
             </th>
           </tr>
           <tr>
-            <th style="width: 275px">
+            <th style="width: 170px">
               <h5 style="margin-bottom: 15px">Date</h5>
             </th>
-            <th style="width: 275px" class="addressDetatilKey">
-              <h5 [attr.contenteditable]="editable" #headerDate>{{quotationContentHeader?.date}}</h5>
+            <th style="width: 170px" class="addressDetatilKey">
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerDate>{{quotationContentHeader?.date}}</h5>
             </th>
           </tr>
         </table>
@@ -367,14 +367,14 @@
             <li> <b> WARRANTY </b> </li>
             <li> <b> SERVICING </b> </li>
           </ul>
-          <ul style="list-style-type: none" [attr.contenteditable]="editable">
-            <li #price>{{quotationContentFooter?.price}}</li>
-            <li #deliveryP>{{quotationContentFooter?.deliveryP}}</li>
-            <li #validity>{{quotationContentFooter?.validity}}</li>
-            <li #paymentTer>{{quotationContentFooter?.paymentTer}}</li>
-            <li #manufacturer>{{quotationContentFooter?.manufacturer}}</li>
-            <li #warranty>{{quotationContentFooter?.warranty}}</li>
-            <li #servicing>{{quotationContentFooter?.servicing}}</li>  
+          <ul style="list-style-type: none;margin-bottom: 20px;" >
+            <li style="border: 1px solid lightgray;margin-bottom: 3px;" [attr.contenteditable]="editable" #price>{{quotationContentFooter?.price}}</li>
+            <li style="border: 1px solid lightgray;margin-bottom: 3px;" [attr.contenteditable]="editable" #deliveryP>{{quotationContentFooter?.deliveryP}}</li>
+            <li style="border: 1px solid lightgray;margin-bottom: 3px;" [attr.contenteditable]="editable" #validity>{{quotationContentFooter?.validity}}</li>
+            <li style="border: 1px solid lightgray;margin-bottom: 3px;" [attr.contenteditable]="editable" #paymentTer>{{quotationContentFooter?.paymentTer}}</li>
+            <li style="border: 1px solid lightgray;margin-bottom: 3px;" [attr.contenteditable]="editable" #manufacturer>{{quotationContentFooter?.manufacturer}}</li>
+            <li style="border: 1px solid lightgray;margin-bottom: 3px;" [attr.contenteditable]="editable" #warranty>{{quotationContentFooter?.warranty}}</li>
+            <li style="border: 1px solid lightgray;margin-bottom: 3px;" [attr.contenteditable]="editable" #servicing>{{quotationContentFooter?.servicing}}</li>  
           </ul>
         </div>
         <div>
