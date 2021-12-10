@@ -191,7 +191,7 @@
           <div class="email" style="display: flex">
             <h5 style="width: 115px"><b>Email &nbsp;&nbsp;:</b></h5>
             <span style="margin-left: 40px">
-              <b>mimi.aizura@mahkotamedical.com</b>
+              <b> {{ quotationsTemplateData?.quotations?.companies?.email }}</b>
             </span>
           </div>
         </div>
@@ -199,13 +199,13 @@
           <div class="email" style="display: flex">
             <span style="width: 115px"> <b>Telephone &nbsp;&nbsp;:</b> </span>
             <span style="margin-left: 40px; width: 200px">
-              <b>06-2812400 </b>
+              <b>{{quotationsTemplateData?.quotations?.companies?.telephone_number}} </b>
             </span>
           </div>
           <div class="email" style="display: flex">
             <span style="width: 115px"> <b>Fax &nbsp;&nbsp;:</b> </span>
             <span style="margin-left: 40px; width: 200px">
-              <b>06-2852861</b>
+              <b>{{quotationsTemplateData?.quotations?.companies?.fax}}</b>
             </span>
           </div>
         </div>
@@ -304,19 +304,19 @@
                   class="numberCol"
                   style="width: 50px; border: 1px solid black"
                 >
-                  {{ item.list_price }}
+                  {{ item.quantity }}
                 </td>
                 <td
                   class="unitPriceCol"
                   style="width: 110px; border: 1px solid black"
                 >
-                  {{ item.list_price }}
+                  {{ item.unit_price }}
                 </td>
                 <td
                   class="totalPriceCol"
                   style="width: 110px; border: 1px solid black"
                 >
-                  {{ item.list_price }}
+                  {{ item.total_price }}
                 </td>
               </tr>
               <tr style="border-bottom: 2px solid black">
@@ -379,9 +379,9 @@
         </div>
         <div>
           <p>
-            Please contact <b>{{quotationsTemplateData?.quotations?.sales_person?.full_name}}</b>, <span *ngIf="quotationsTemplateData?.quotations?.sales_person?.phone_number"> (<b>{{quotationsTemplateData?.quotations?.sales_person?.phone_number}}</b>) </span> for further
-            information/clarification.<br />Kindly indicate our quotation no..
-            on your Purchase Order and email to <b>{{quotationsTemplateData?.quotations?.sales_person?.email}}</b>.<br />Our
+            Please contact _______ <b>{{quotationsTemplateData?.quotations?.sales_person?.full_name}}</b>, <span *ngIf="quotationsTemplateData?.quotations?.sales_person?.phone_number"> (<b>{{quotationsTemplateData?.quotations?.sales_person?.phone_number}}</b>) </span> for further
+            information/clarification.<br />Kindly indicate our quotation no..<b>{{quotationContentHeader?.quoteNo}}</b>
+            on your Purchase Order and email to:__________ <b>{{quotationsTemplateData?.quotations?.sales_person?.email}}</b>.<br />Our
             Standard Term and condition enlose shall apply to this documents.
           </p>
         </div>

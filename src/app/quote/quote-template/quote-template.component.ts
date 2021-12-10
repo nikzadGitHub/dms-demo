@@ -84,6 +84,8 @@ export class QuoteTemplateComponent implements OnInit {
 
     this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
       this.quotationsTemplateData = res["data"]
+      console.log('this is quotation-template',this.quotationsTemplateData);
+      
       this.quotationContent = res["data"].quotations.quotation_contents
       this.quotationContentFooter = JSON.parse(this.quotationContent.footer_content)
       this.quotationContentHeader = JSON.parse(this.quotationContent.header_content)
