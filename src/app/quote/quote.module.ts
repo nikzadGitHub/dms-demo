@@ -21,6 +21,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { QuoteTemplateComponent } from './quote-template/quote-template.component';
 import { QuoteMobileTemplateComponent } from './quote-mobile-template/quote-mobile-template.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import {TabViewModule} from 'primeng/tabview';
+
+
 
 
 @NgModule({
@@ -38,8 +42,10 @@ import { QuoteMobileTemplateComponent } from './quote-mobile-template/quote-mobi
   imports: [
     CommonModule,
     QuoteRoutingModule,
+    TabsModule,
     FormsModule,
     ReactiveFormsModule,
+    TabViewModule,
     BsDropdownModule,
     IconModule,
     ModalModule,

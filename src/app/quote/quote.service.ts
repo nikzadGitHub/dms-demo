@@ -217,14 +217,31 @@ uploadTemplateImage(filePath,Q_id,T_id){
 }
 
 downloadUploadedPdfTemplate(Q_id,T_id){
-  return this.httpClient.get(this.apiURL + '/quote/quotation-preview-merge/'+ Q_id +'/' + T_id + '/')
+  let authToken = localStorage.getItem('auth-token');
+
+  const httpOptions = {
+    responseType: 'blob' as 'json',
+    headers: new HttpHeaders({
+      'Authorization': authToken,
+    })
+  };
+  return this.httpClient.get(this.apiURL + '/quote/quotation-preview-merge/'+ Q_id +'/' + T_id + '/',httpOptions)
   .pipe(
     catchError(this.errorHandler)
   )
 }
 
 downloadQuoteTemplate(Q_id,T_id){
-  return this.httpClient.get(this.apiURL + '/quote/quotation-preview-download/'+ Q_id +'/' + T_id + '/')
+  let authToken = localStorage.getItem('auth-token');
+
+  const httpOptions = {
+    responseType: 'blob' as 'json',
+    headers: new HttpHeaders({
+      'Authorization': authToken,
+    })
+  };
+  let body= {}
+  return this.httpClient.post(this.apiURL + '/quote/quotation-preview-download/'+ Q_id +'/' + T_id + '/',body,httpOptions)
   .pipe(
     catchError(this.errorHandler)
   )

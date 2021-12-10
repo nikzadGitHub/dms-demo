@@ -27,3 +27,9 @@
   display: flex;
   align-items: center;
 }
+:host ::ng-deep {
+  .p-datatable {
+      min-height: 500px !important;
+  }
+}
+

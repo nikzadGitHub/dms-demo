@@ -1,1 +1,367 @@
-<p>edit works!</p>
+<div class="animated fadeIn">
+
+    <form [formGroup]="fpsEditForm" (ngSubmit)="onSave()"  class="form-horizontal">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="card">
+                    <div class="card-header d-flex b-btm-green">
+                        <div class="chead">Edit FPS Request Form</div>						
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="card-row">
+                            <div class="lead-data">
+                                <div class="lead-header">
+                                    <div class="row">
+                                        <!-- Opportunity Detail help -->
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <h3 class="bold">
+                                                    {{ oppt_details.customer.company_name }}
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 lead-id">
+                                            <div class="form-group">
+                                                <label class="bold">FPS Request No.</label>
+                                                <div class="bg-opp text-white p-1">{{form_controls.fps_no.value}}</div>
+                                                <span> 
+                                                    <input type="hidden" formControlName="fps_no"  class="form-control">
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="bold">Transaction Type</label>
+                                                <p-dropdown formControlName="fps_transaction_type_id" (onChange)="updateTenure()" [options]="fpsTypeList" optionLabel="title"
+                                                    optionValue="id" styleClass="form-control" 
+                                                    emptyMessage="No FPS Type Available">
+                                                </p-dropdown>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="bold">Status</label>
+                                                 <p-dropdown formControlName="fps_status_id" [options]="fpsStatusList" optionLabel="title"
+                                                    optionValue="id" styleClass="form-control" 
+                                                    emptyMessage="No FPS Status Available">
+                                                </p-dropdown>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="details grey">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="bold">Created Date</label>
+                                                <div>
+                                                    {{ oppt_details.created_at | date: "dd-MMM-yyyy" }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="bold">Opportunity ID </label>
+                                                <div>
+                                                    {{current_apportunity_id}}
+                                                    <input type="hidden" formControlName="fps_opportunity_id"  class="form-control">
+
+                                                    <input type="hidden" formControlName="fps_data_area_id" title="fps_data_area_id"  class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="bold">Quote ID (Version)</label>
+                                                <div>
+                                                    ...
+                                                    <!-- <input type="text" formControlName="fps_no"  class="form-control"> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="bold">SOCI No.</label>
+                                                <div>
+                                                    ... 
+                                                    <!-- <input type="text" formControlName="fps_no"  class="form-control"> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+        </div>
+
+        <div class="row" #fpsEditFormContainer>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <h2>General</h2>
+                        </div>
+    
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="booking-reason">
+                                Payment Frequency<span class="asterisk"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <p-dropdown formControlName="fps_payment_frequency" [options]="payment_frequency_list" optionLabel="label"
+                                    optionValue="value" styleClass="form-control" (onChange)="updateTenure()"
+                                    placeholder="Select Frequency" id="fps_payment_frequency" emptyMessage="No Payment Frequency Available">
+                                </p-dropdown>
+                                <app-form-error-presentation [displayError]="isFieldValid('fps_payment_frequency')" errorMsg="Payment Frequency is rquired.">
+                                </app-form-error-presentation>
+                            </div>
+    
+                            <label class="col-md-2 col-form-label" for="booking-reason">
+                                Tenure 
+                            </label>
+                            <div class="col-md-4">                                
+                                <p-dropdown formControlName="fps_tenure_id" id="fps_tenure_id" [options]="tenure_list" optionLabel="details_tenure"
+                                    optionValue="id" styleClass="form-control" (onChange)="updateInterestRate()">
+                                </p-dropdown>
+                                <app-form-error-presentation [displayError]="isFieldValid('fps_tenure_id')" errorMsg="Tenure is rquired.">
+                                </app-form-error-presentation>
+                            </div>
+                        </div>
+    
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="booking-reason" >
+                                Financial Instititue<span class="asterisk"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <p-dropdown formControlName="fps_financier_id" id="fps_financier_id" [options]="institutions_list"  optionLabel="title"
+                                    optionValue="id" styleClass="form-control" (onChange)="updateTenure()"
+                                    placeholder="Select Institution" emptyMessage="No Institution Available">
+                                </p-dropdown>
+                                <app-form-error-presentation [displayError]="isFieldValid('fps_financier_id')" errorMsg="Financial Instititue is rquired.">
+                                </app-form-error-presentation>
+                                
+                            </div>
+    
+                            <label class="col-md-2 col-form-label" for="booking-reason">
+                                Interest %
+                            </label>
+                            <div class="col-md-4">
+                                <input type="number" step="0.1"  (change)="updateMontlyPayment()" formControlName="fps_interest_rate"  class="form-control">
+                            </div>
+                        </div>
+    
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="booking-reason">
+                                Currency<span class="asterisk"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" formControlName="fps_currency_code" [readonly]="true" class="form-control">
+                            </div>
+    
+                            <label class="col-md-2 col-form-label" for="booking-reason">
+                                Monthly Payment Amount
+                            </label>
+                            <div class="col-md-4">
+                                <input type="number" formControlName="fps_monthly_payment_amount"  class="form-control">
+                            </div>
+                        </div>
+    
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="booking-reason">
+                                Total Financial Amount<span class="asterisk"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="number" formControlName="fps_total_financial_amount"  class="form-control">
+                            </div>
+    
+                            <label class="col-md-2 col-form-label" for="booking-reason">
+                                Min Payment Amount
+                            </label>
+                            <div class="col-md-4">
+                                <input type="number" formControlName="fps_min_payment_amount"  class="form-control">
+                            </div>
+                        </div>
+    
+                        <div class="form-group row">
+    
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label" for="booking-reason">
+                                        Advance Payment (%)
+                                    </label>
+                                    <div class="col-md-8">
+                                        <input type="number" step="0.1" (change)="onChangeAdvancePayment()"  formControlName="fps_adv_payment_percentage"  class="form-control">
+                                    </div>
+                                </div>
+    
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label" for="booking-reason">
+                                        Advance Payment
+                                    </label>
+                                    <div class="col-md-8">
+                                        <!-- percentage field -->
+                                        <input type="number" formControlName="fps_adv_payment"  class="form-control">
+                                    </div>
+                                </div>
+    
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label" for="booking-reason">
+                                        Net Financing Amount
+                                    </label>
+                                    <div class="col-md-8">
+                                        <!-- percentage field -->
+                                        <input type="number" formControlName="fps_net_financing_amount"  class="form-control">
+                                    </div>
+                                </div>
+    
+                            </div>
+    
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label" for="booking-reason">
+                                        Remark
+                                    </label>
+                                    <div class="col-md-8">
+                                        <textarea formControlName="fps_remarks" rows="9" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <!-- Separate form fields  -->
+                        <hr>
+    
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="booking-reason">
+                                Validated By
+                            </label>
+                            <div class="col-md-4">
+                                <p-dropdown formControlName="fps_validated_by" [options]="fps_user_list" optionLabel="full_name"
+                                    optionValue="id" styleClass="form-control" 
+                                    placeholder="Select User" emptyMessage="No User Available">
+                                </p-dropdown>
+                            </div>
+    
+                            <label class="col-md-2 col-form-label" for="booking-reason">
+                                Argeement No.
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text"  [readonly]="this.fpsEditForm.controls.fps_status_id.value != 9" formControlName="fps_leas_aggr_no"  class="form-control">
+                            </div> 
+                        </div>
+                        
+                        <div class="form-group row">
+    
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label" for="booking-reason">
+                                        Approved By 
+                                    </label>
+                                    <div class="col-md-8">
+                                        <p-dropdown formControlName="fps_approved_by" [options]="fps_user_list" optionLabel="full_name"
+                                            optionValue="id" styleClass="form-control" 
+                                            placeholder="Select User" emptyMessage="No User Available">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label" for="booking-reason">
+                                        Required Documents
+                                    </label>
+                                    <div class="col-md-8">
+                                        <textarea formControlName="fps_required_docs" rows="9" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+    
+                        <div class="custom-footer d-flex justify-content-center">
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <br>
+    
+            <div class="col-sm-12 col-md-12 form-group">
+                <h3>Consumable Usage</h3>
+                <!-- Here the fps list related to current opportunity is displayed -->
+                <!-- <app-fps-list></app-fps-list> -->
+                <p>Work on this section will be done later</p>
+            </div>
+    
+            <br>
+    
+            <div class="col-sm-12 col-md-12 form-group">
+                <h3>File Library</h3>
+                <!-- Here the fps list related to current opportunity is displayed -->
+                <!-- <app-fps-list></app-fps-list> -->
+                <p>Work on this section will be done later</p>
+            </div>
+
+        </div>
+    </form>
+  </div>
+  <div
+    id="success"
+    bsModal
+    #successModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Success</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{ alertBody }}</p>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+  <div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

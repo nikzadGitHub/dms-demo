@@ -25,6 +25,7 @@ export class SkuCreateComponent implements OnInit {
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("foundModal") foundModal: ModalDirective;
   @ViewChild('submitSkuAdd') submitSkuAdd: ElementRef<HTMLElement>;
+  @ViewChild('skuAddFormContainer') skuAddFormContainerRef: ElementRef;
 
   skuAddForm : FormGroup;
   rateAddForm: FormGroup;
@@ -35,7 +36,8 @@ export class SkuCreateComponent implements OnInit {
   countryList: Country[] = [];
   currencies_list = [];
   institutions_list: FinancialInstitution[] = [];
-  countryCode : string = 'MY';
+  countryCode : string = '';
+  data_area_id : string = '';
 
   constructor(
     private countryService: CountryService,
@@ -61,24 +63,24 @@ export class SkuCreateComponent implements OnInit {
 
     this.skuAddForm = this.fb.group({
       uuid: new FormControl('',[Validators.required]),
-      financier_id : new FormControl('', [Validators.required]),
       validity_start_at : new FormControl(new Date()),
+      package_type_id : new FormControl('1',[Validators.required]),
       validity_end_at : new FormControl(new Date()),
-      country_code : new FormControl(),
-      interest_rate : new FormControl(0),
-      package_type_id : new FormControl(),
+      country_code : new FormControl('',[Validators.required]),
+      interest_rate : new FormControl(),
+      financier_id : new FormControl('', [Validators.required]),
       has_interest : new FormControl(),
       monthly_payment : new FormControl(),
       quarterly_payment : new FormControl(),
       half_yearly_payment : new FormControl(),
       currency_code : new FormControl(),
-      min_payment_amount : new FormControl(),
-      min_usage : new FormControl(),
+      min_payment_amount : new FormControl('0'),
+      min_usage : new FormControl('0'),
       consumable_usage : new FormControl(),
       procedure_per_month : new FormControl(),
-      required_tenure : new FormControl(),
+      required_tenure : new FormControl('0'),
       required_docs: new FormControl(),
-      agreement_mandatory: new FormControl()
+      agreement_mandatory: new FormControl('0')
     });
 
     this.rateAddForm = this.fb.group({
@@ -99,7 +101,7 @@ export class SkuCreateComponent implements OnInit {
         if (error.error.message != undefined) {
           this.dialogService.showErrorDialog(error.error.message);
         } else {
-          this.dialogService.showErrorDialog("Error retrieve institutions list");
+          this.dialogService.showErrorDialog("Error retrieve Auto generated ID.");
         }
       }
     })
@@ -122,58 +124,32 @@ export class SkuCreateComponent implements OnInit {
         }
       }
     })
-
-    this.institutionService.getFinancialInstition(this.countryCode).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.zone.run(() => {
-            this.institutions_list = response.data.institutions;
-          });
-        } else {
-          this.dialogService.showErrorDialog(response.message);
-        }
-      },
-      error: (error) => {
-        if (error.error.message != undefined) {
-          this.dialogService.showErrorDialog(error.error.message);
-        } else {
-          this.dialogService.showErrorDialog("Error retrieve institutions list");
-        }
-      }
-    })
-
-    this.currencyService.getCurrencyList().subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.zone.run(() => {
-            this.currencies_list = response.data;
-          });
-        } else {
-          this.dialogService.showErrorDialog(response.message);
-        }
-      },
-      error: (error) => {
-        if (error.error.message != undefined) {
-          this.dialogService.showErrorDialog(error.error.message);
-        } else {
-          this.dialogService.showErrorDialog("Error retrieve currencies list");
-        }
-      }
-    })
-  
+    
+    this.setConditionalValidators();
   }
 
-  // initData()
-  // {
-  //   this.sku.forEach(element => {
-  //     element.additional_costs.forEach(addCost => {
-  //       this.addRates().push(this.existingRates(addCost));
-  //     });
-  //   });
-  // }
+  setConditionalValidators() {
+
+    const interest_rate = this.skuAddForm.get('interest_rate');
+
+    this.skuAddForm.get('has_interest').valueChanges
+      .subscribe(has_interest => {
+        if (has_interest == 1) {
+          interest_rate.setValidators([Validators.required]);
+        }
+        else {
+          interest_rate.clearValidators();
+        }
+      });
+  }
 
   onSave(): void {
-    
+
+    if (!this.skuAddForm.valid) {
+      this.fpsService.validateAllFormFields(this.skuAddForm);
+      this.skuAddFormContainerRef.nativeElement.scrollIntoView({behavior: 'smooth'});
+      return;
+    } 
     this.SkuService.saveSku({
       uuid: this.skuAddForm.get("uuid").value + "",      
       country_code: this.skuAddForm.get("country_code").value + "",
@@ -182,7 +158,7 @@ export class SkuCreateComponent implements OnInit {
       quarterly_payment: (this.skuAddForm.get("quarterly_payment").value) ? 1 : 0,  
       half_yearly_payment: (this.skuAddForm.get("half_yearly_payment").value) ? 1 : 0,  
       package_type_id: this.skuAddForm.get("package_type_id").value + "",
-      interest_rate: this.skuAddForm.get("interest_rate").value + "",
+      interest_rate: ((this.skuAddForm.get("interest_rate").value)? this.skuAddForm.get("interest_rate").value : 0) + "",
       currency_code: this.skuAddForm.get("currency_code").value + "",
       validity_start_at: this.datePipe.transform(this.skuAddForm.get("validity_start_at").value, "yyyy-MM-dd"),
       validity_end_at: this.datePipe.transform(this.skuAddForm.get("validity_end_at").value, "yyyy-MM-dd"),
@@ -191,6 +167,7 @@ export class SkuCreateComponent implements OnInit {
       min_usage: this.skuAddForm.get("min_usage").value + "",
       required_tenure: this.skuAddForm.get("required_tenure").value + "",
       agreement_mandatory: this.skuAddForm.get("agreement_mandatory").value + "",
+      data_area_id : 'test_data_rea_id'
     
     }).subscribe((res) => {
         if (res.id) {
@@ -203,6 +180,7 @@ export class SkuCreateComponent implements OnInit {
             
             for(let x = 0; x <rates.length; x++) {
               let rate = {
+                'id': rates[x].rate_no,
                 'financial_package_id': res.id,
                 'validity_start_at': rates[x].validity_start_at,
                 'validity_end_at': rates[x].validity_end_at,
@@ -212,7 +190,7 @@ export class SkuCreateComponent implements OnInit {
               // Store rate.
               this.storeRates(rate);
             }              
-            // 
+            this.router.navigateByUrl('/fps/sku-listing', {replaceUrl: true})
           }, 2000);
           
         }
@@ -244,17 +222,6 @@ export class SkuCreateComponent implements OnInit {
     return this.rateAddForm.get("addRates") as FormArray;
   }
 
-  // existingCosts(addRates): FormGroup {
-  //   return this.fb.group({
-  //     id: addRates.id,
-  //     description: addRates.description,
-  //     quantity: addRates.quantity,
-  //     unit_price: addRates.unit_price,
-  //     total_price: addRates.total_price,
-  //     remarks: addRates.remarks,
-  //   });
-  // }
-
   newAddRates(): FormGroup {
     return this.fb.group({
       rate_no: (++this.rate_counter),
@@ -285,4 +252,54 @@ export class SkuCreateComponent implements OnInit {
       });
   }
 
+  isFieldValid(field: string) {
+    return !this.skuAddForm.get(field).valid && this.skuAddForm.get(field).touched;
+  }
+
+  countryChange() {
+    
+    this.countryCode = this.skuAddForm.get("country_code").value;
+  
+    this.currencyService.getCurrencyList(this.countryCode).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.zone.run(() => {
+            this.currencies_list = response.data;
+          });
+        } else {
+          this.dialogService.showErrorDialog(response.message);
+        }
+      },
+      error: (error) => {
+        if (error.error.message != undefined) {
+          this.dialogService.showErrorDialog(error.error.message);
+        } else {
+          this.dialogService.showErrorDialog("Error retrieve currencies list");
+        }
+      }
+    });
+
+    if(this.countryCode.length > 0) {
+      this.institutionService.getFinancialInstition(this.countryCode).subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.zone.run(() => {
+              this.institutions_list = response.data.institutions;
+            });
+          } else {
+            this.dialogService.showErrorDialog(response.message);
+          }
+        },
+        error: (error) => {
+          if (error.error.message != undefined) {
+            this.dialogService.showErrorDialog(error.error.message);
+          } else {
+            this.dialogService.showErrorDialog("Error retrieve institutions list");
+          }
+        }
+      })
+    }
+
+  }
+  
 }

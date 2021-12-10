@@ -12,22 +12,21 @@
                         <div class="card-row">
                             <div class="lead-data">
                                 <div class="lead-header">
-
-                                    {{ oppt_details|json }}
                                     <div class="row">
                                         <!-- Opportunity Detail help -->
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <h3 class="bold">
-                                                    {{ oppt_details.company_name }}
+                                                    {{ oppt_details.customer.company_name }}
                                                 </h3>
                                             </div>
                                         </div>
                                         <div class="col-md-3 lead-id">
                                             <div class="form-group">
-                                                <div class="bg-opp text-white p-1">FPS Request No. {{form_controls.fps_no.value}}</div>
+                                                <label class="bold">FPS Request No.</label>
+                                                <div class="bg-opp text-white p-1">{{form_controls.fps_no.value}}</div>
                                                 <span> 
-                                                    <input type="text" formControlName="fps_no"  class="form-control">
+                                                    <input type="hidden" formControlName="fps_no"  class="form-control">
                                                 </span>
                                             </div>
                                         </div>
@@ -35,7 +34,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label class="bold">Transaction Type</label>
-                                                <p-dropdown formControlName="fps_transaction_type_id" [options]="fpsTypeList" optionLabel="title"
+                                                <p-dropdown formControlName="fps_transaction_type_id" (onChange)="updateTenure()" [options]="fpsTypeList" optionLabel="title"
                                                     optionValue="id" styleClass="form-control" 
                                                     emptyMessage="No FPS Type Available">
                                                 </p-dropdown>
@@ -53,7 +52,6 @@
                                         </div>
 
                                     </div>
-                                    <!-- {{form_controls|json}} -->
                                 </div>
                                 <div class="details grey">
                                     <div class="row">
@@ -70,9 +68,9 @@
                                                 <label class="bold">Opportunity ID </label>
                                                 <div>
                                                     {{current_apportunity_id}}
-                                                    <input type="text" formControlName="fps_opportunity_id"  class="form-control">
+                                                    <input type="hidden" formControlName="fps_opportunity_id"  class="form-control">
 
-                                                    <input type="text" formControlName="fps_data_area_id" title="fps_data_area_id"  class="form-control">
+                                                    <input type="hidden" formControlName="fps_data_area_id" title="fps_data_area_id"  class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -104,7 +102,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" #fpsAddFormContainer>
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
@@ -119,29 +117,35 @@
                             <div class="col-md-4">
                                 <p-dropdown formControlName="fps_payment_frequency" [options]="payment_frequency_list" optionLabel="label"
                                     optionValue="value" styleClass="form-control" (onChange)="updateTenure()"
-                                    placeholder="Select Frequency" emptyMessage="No Payment Frequency Available">
+                                    placeholder="Select Frequency" id="fps_payment_frequency" emptyMessage="No Payment Frequency Available">
                                 </p-dropdown>
+                                <app-form-error-presentation [displayError]="isFieldValid('fps_payment_frequency')" errorMsg="Payment Frequency is rquired.">
+                                </app-form-error-presentation>
                             </div>
     
                             <label class="col-md-2 col-form-label" for="booking-reason">
                                 Tenure 
                             </label>
                             <div class="col-md-4">                                
-                                <p-dropdown formControlName="fps_tenure_id" [options]="tenure_list" optionLabel="details_tenure"
+                                <p-dropdown formControlName="fps_tenure_id" id="fps_tenure_id" [options]="tenure_list" optionLabel="details_tenure"
                                     optionValue="id" styleClass="form-control" (onChange)="updateInterestRate()">
                                 </p-dropdown>
+                                <app-form-error-presentation [displayError]="isFieldValid('fps_tenure_id')" errorMsg="Tenure is rquired.">
+                                </app-form-error-presentation>
                             </div>
                         </div>
     
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label" for="booking-reason">
+                            <label class="col-md-2 col-form-label" for="booking-reason" >
                                 Financial Instititue<span class="asterisk"> * </span>
                             </label>
                             <div class="col-md-4">
-                                <p-dropdown formControlName="fps_financier_id" [options]="institutions_list"  optionLabel="title"
+                                <p-dropdown formControlName="fps_financier_id" id="fps_financier_id" [options]="institutions_list"  optionLabel="title"
                                     optionValue="id" styleClass="form-control" (onChange)="updateTenure()"
                                     placeholder="Select Institution" emptyMessage="No Institution Available">
                                 </p-dropdown>
+                                <app-form-error-presentation [displayError]="isFieldValid('fps_financier_id')" errorMsg="Financial Instititue is rquired.">
+                                </app-form-error-presentation>
                                 
                             </div>
     

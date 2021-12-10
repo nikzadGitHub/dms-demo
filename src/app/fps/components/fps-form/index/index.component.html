@@ -1,65 +1,88 @@
-<p-table #dt [value]="fpmList" styleClass="p-datatable-table" [rowHover]="true" [filterDelay]="0"
-    [globalFilterFields]="['serial_no','stock_keep_unit','product_name']">
-    <ng-template pTemplate="header">
-        <tr>
-            <th pSortableColumn="serial_no" class="text-center">
-                <div class="p-d-flex p-jc-between p-ai-center">
-                    FPS Request  No.
-                </div>
-            </th>
-            <th pSortableColumn="stock_keep_unit" class="text-center">
-                <div class="p-d-flex p-jc-between p-ai-center">
-                    Financial Institute
-                </div>
-            </th>
-            <th pSortableColumn="product_name" class="text-center">
-                <div class="p-d-flex p-jc-between p-ai-center">
-                    Total Financial Amount
-                </div>
-            </th>
-            <th pSortableColumn="agency" class="text-center">
-                <div class="p-d-flex p-jc-between p-ai-center">
-                    Tenure (Months)
-                </div>
-            </th>
-            <th pSortableColumn="description" class="text-center">
-                <div class="p-d-flex p-jc-between p-ai-center">
-                    Monthly Payment Amount
-                </div>
-            </th>
-            <th pSortableColumn="status" class="text-center">
-                <div class="p-d-flex p-jc-between p-ai-center">
-                    Status
-                </div>
-            </th>
-            
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-inventoryItem>
-        <tr class="p-selectable-row">
-            <td class="text-center">
-                {{ inventoryItem.serial_no | number:'5.' }}
-            </td>
-            <td class="text-center">
-                {{ inventoryItem.stock_keep_unit }}
-            </td>
-            <td class="text-center">
-                {{ inventoryItem.product_name }}
-            </td>
-            <td class="text-center">
-                {{ inventoryItem.agency_name }}
-            </td>
-            <td class="text-center">
-                {{ inventoryItem.description }}
-            </td>
-            <td class="text-center">
-                {{ inventoryItem.status }}
-            </td>
-            
-        </tr>
-    </ng-template>
+<p-table class="table table-hover table-striped"
+  #dt
+  [value]="skuList"
+  styleClass="p-datatable-customers"
+  [rowHover]="true"
+  [reorderableColumns]="true"
+  responsiveLayout="scroll"
+  [filterDelay]="0"
+  [globalFilterFields]="['quote_id', 'company', 'amount', 'status']"
+  [columns]="columns"
+>
+  <ng-template pTemplate="caption">
+    <div class="table-header">
+        <div class="d-flex">
+            <div>FPS Request</div>
+        </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th [style]="{ width: '5%' }"></th>
+      <th
+        *ngFor="let column of columns"
+        pSortableColumn="{{ column.field }}"
+        class="text-center"
+        pReorderableColumn
+      >
+        <div class="p-d-flex p-jc-between p-ai-center">
+          {{ column.header }}
+          <!-- <div class="icon-div">
+            <p-sortIcon field="{{ column.field }}"></p-sortIcon>
+          </div> -->
+         
+        </div>
+      </th>
+      <th [style]="{ width: '5%' }"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-fpsItem let-rowIndex="rowIndex + 1">
+    <tr class="p-selectable-row">
+      <td class="text-center">
+        <span class="p-column-title"></span>
+        {{ rowIndex }}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">FPS Request  No</span>
+        {{ fpsItem.fps_no }}
+      </td>
+      <td  class="text-center">
+        <span class="p-column-title">Financial Institute</span>
+        {{ fpsItem.financial_institution.title }}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">Total Financial Amount</span>
+        {{ fpsItem.fps_total_financial_amount }}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">Tenure (Months)</span>
+        {{ fpsItem.tenures.details_tenure }}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">Monthly Payment Amount</span>
+        {{ fpsItem.fps_monthly_payment_amount }}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title">Status</span>
+        {{ showStatus(fpsItem.fps_status_id) }}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title"></span>
+        <a
+          href="#"
+          [routerLink]="['/fps/', fpsItem.id, 'fps-edit']"
+          [queryParams]="{opport_id: fpsItem.fps_opportunity_id}"
+          class="fa fa-edit"
+        ></a>
+      </td>
+    </tr>
+  </ng-template>
 </p-table>
-<!-- <p-paginator [rows]="pageItems" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
-</p-paginator> -->
 
-<br>
+<p-paginator
+  (onPageChange)="paginate($event)"
+  [rows]="pageItems"
+  [totalRecords]="totalRecords"
+  [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
+>
+</p-paginator>

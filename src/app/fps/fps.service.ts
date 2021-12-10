@@ -1,18 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {FpsInterface, FpsList, SaveResult} from './services/fps-interface';
+import {FpsInterface, SaveResult} from './services/fps-interface';
 import { ApiClientService } from './api-client.service';
 import { SystemConfig } from '@app/config/system-config';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Injectable({providedIn: 'root'})
 
 export class FpsService implements FpsInterface {
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+  }
+
   constructor(private httpClient: HttpClient, private apiClient: ApiClientService) { }
 
-  getList(): Observable<FpsList> {
-    return this.apiClient.get<FpsList>('fps');
+  getList(currentOpportunityId, pageItems, search_text, sort): Observable<any> {
+    let query = 'fps?page_items=' + pageItems + '&search_text=' + search_text + '&current_opportunity_id=' + currentOpportunityId;
+
+    if(sort && sort['field']!= null){
+      query += '&field=' + sort.field + '&order=' + sort.order;
+    }
+    return this.apiClient.get<any>(query);
+  }
+
+  getPage(url, currentOpportunityId, pageItems, search_text){
+    let query = '&page_items=' + pageItems + '&search_text=' + search_text + '&current_opportunity_id=' + currentOpportunityId;
+    return this.httpClient.get<any>(url + query,this.httpOptions);
   }
 
   saveFps(data: any): Observable<SaveResult> {
@@ -57,12 +74,33 @@ export class FpsService implements FpsInterface {
     ];
   }
 
-  getTenureList(financial_id: number, payment_frequency: string): Observable<any> {
-    return this.httpClient.get(SystemConfig.apiBaseUrl + "/tenure-list/" + financial_id + "/" + payment_frequency).pipe();
+  getTenureList(fps_type_id: number, financial_id: number, payment_frequency: string): Observable<any> {
+    return this.httpClient.get(SystemConfig.apiBaseUrl + "/tenure-list/"+ fps_type_id + "/" + financial_id + "/" + payment_frequency).pipe();
   }
 
   getUsersList(): Observable<any> {
     return this.httpClient.get(SystemConfig.apiBaseUrl + "/user-list").pipe();
   }
+
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    });
+  }
+
+  find(id): Observable<any> {
+    return this.httpClient.get(SystemConfig.apiBaseUrl + '/fps-details/' + id).pipe()
+  }
+
+  updateFps(data: any, id: string): Observable<SaveResult> {
+    return this.apiClient.post('fps/update/' + id, data);
+  }
+
+  
 
 }

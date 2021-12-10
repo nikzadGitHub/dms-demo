@@ -82,7 +82,7 @@ input::-webkit-inner-spin-button {
 
 :host ::ng-deep .customColor.p-accordion {
     .p-accordion-header {
-        font-size: 1.5em; 
+        font-size: 24px; 
         font-weight: bolder;
         background: white;
         span.pi{
@@ -93,7 +93,7 @@ input::-webkit-inner-spin-button {
         }
         .p-accordion-header-link{
             background: white;
-            border-bottom: none;
+            margin-bottom: 10px;
         }
     }
     .p-accordion-content{

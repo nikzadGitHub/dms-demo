@@ -221,171 +221,519 @@
                       </td>
                     </tr>
 
-		<div class="col-md-12 form-group">
-			<p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
-				<p-accordionTab>					
-					<ng-template pTemplate="header"><i class="cil-cart c-icon"></i>&nbsp;&nbsp;Products</ng-template>
-					<tabset>						
-						<tab class="p-0" *ngFor="let option of product_options; let i = index" [active]="option.is_default == 1">						
-						  	<ng-template tabHeading>
-								<div class="p-relative">
-									<span><i class="icon icon-check mr-1" *ngIf="option.is_default == 1"></i>Option {{i+1}}</span>
-							  		<button (click)="addOption()" class="btn btn-icon btn-outline-primary btn-in-tab" *ngIf="product_options.length == i + 1"><i class="cil-plus c-icon"></i></button>
-								</div>							  	
-							</ng-template>
-						  	<table class="table m-0 no-outline">
-					    		<thead>
-						    		<tr>
-						    			<th>No.</th>
-						    			<th>Product Name</th>
-						    			<th>SKU ID</th>
-						    			<th>Quantity</th>
-						    			<th>Unit Price ({{detail.currency_code}})</th>
-						    			<th>Total Price ({{detail.currency_code}})</th>
-						    			<th>Discount (%)</th>
-						    			<th>Net Amount ({{detail.currency_code}})</th>
-						    			<th></th>
-						    		</tr>	
-					    		</thead>	
-					    		<tbody>
-					    			<tr *ngFor="let product of option.products; let x = index">
-										<td>{{x+1}}</td>
-					    				<td class="text-left">{{product.name}}</td>
-					    				<td class="text-left">{{product.sku}}</td>
-					    				<td class="text-left">{{product.quantity}}</td>
-					    				<td class="text-left">{{product.unit_price |currency:detail.currency_code:'symbol-narrow'}}</td>
-					    				<td class="text-left">{{product.total_price |currency:detail.currency_code:'symbol-narrow'}}</td>
-					    				<td class="text-left">{{product.discount}}</td>					    				
-					    				<td class="text-left">{{product.amount |currency:detail.currency_code:'symbol-narrow'}}</td>
-					    				<td style="width:8%">
-											<a style="cursor: pointer;" (click)="cloneProduct(i, product.id)"><i class="icon-docs icon"></i></a>
-											<a style="cursor: pointer;" (click)="openEditProductModal(i, x, product.id)"><i class="icon-note icon"></i></a>
-											<a style="cursor: pointer;" (click)="deleteProduct(i, x, product.id)"><i class="icon-trash icon"></i></a>
-										</td>
-					    			</tr>
-					    			<tr>
-					    				<td></td>
-					    				<td>
-											<!-- <input type="text" class="form-control" [(ngModel)]="product_name[i]"/> -->
-											<input (input)="productSearch($event.target.value)" type="text"  matInput [formControl]="productControl" [matAutocomplete]="productNameAutoComplete" class="form-control">
-											<mat-autocomplete #productNameAutoComplete="matAutocomplete" [displayWith]="displayFn" (optionSelected)='productSelected($event.option.value, i)' [panelWidth]="450">
-												<mat-option *ngFor="let product of filteredProductList | async" [value]="product">
-												{{product.name}} | {{product.sku}}
-												</mat-option>
-											</mat-autocomplete>
-										</td>
-					    				<td><input type="text" class="form-control" [(ngModel)]="sku[i]" readonly/></td>
-					    				<td><input type="text" class="form-control" [(ngModel)]="quantity[i]" (input)="calculateAmount(i)"/></td>
-					    				<td><input type="text" class="form-control" [(ngModel)]="unit_price[i]" (input)="calculateAmount(i)"/></td>
-					    				<td><input type="text" class="form-control" [(ngModel)]="total_price[i]" (input)="calculateAmount(i)" readonly/></td>
-					    				<td><input type="text" class="form-control" [(ngModel)]="discount[i]" (input)="calculateAmount(i)"/></td>
-					    				<td><input type="text" class="form-control" [(ngModel)]="amount[i]" readonly/></td>
-					    				<td><button class="btn btn-icon btn-outline-primary" (click)="addProduct(i, option.id)"><i class="cil-plus c-icon"></i></button></td>
-					    			</tr>
-					    		</tbody>			    		
-					    	</table>
-							
-							<div class="d-flex justify-content-end form-group" style="align-items: center; justify-content: center;">
-								<div class="ml-3 w-70">
-									<button class="btn btn-custom mr-1 form-group" (click)="setDefaultOption(i, option.id)">
-										<i class="cil-heart c-icon"></i>
-										SET PREFERED OPTION
-									</button>
-									<button class="btn btn-custom mr-1 form-group" (click)="openDeleteOptionModal(i, option.id)">
-										<i class="cil-trash c-icon"></i>
-										<span>DELETE OPTION</span>
-									</button>
-									<button class="btn btn-custom mr-1 form-group" (click)="openCloneOptionModal(i, option.id)">
-										<i class="cil-copy c-icon"></i>
-										<span>CLONE OPTION</span>
-									</button>
-									<button class="btn btn-custom mr-1 form-group">
-										<i class="cil-notes c-icon"></i>
-										<span>CONVERT TO QUOTE</span>
-									</button>
-									<button class="btn btn-custom form-group" data-toggle="modal" (click)="openAddProductModal(option, i)">
-										<i class="cil-plus c-icon"></i>
-										<span>PRODUCT</span>
-									</button>
-									
-									<a class="btn btn-custom form-group" [routerLink]="['/fps/fps-create']" [queryParams]="{opport_id: opportunity_id}">
-										<i class="cil-plus c-icon"></i> &nbsp;FPS Requets
-									</a>
-									
-								</div>
-								<div class="card border-primary m-3 w-50">
-									<div class="card-body">
-										<table class="table table-borderless table-price">
-											<tr>
-												<td class="text-left w-50">Subtotal Before Tax</td>
-												<td class="text-left">{{calculateSubTotal(i) |currency:detail.currency_code:'symbol-narrow'}}</td>
-											</tr>
-											<tr>
-												<td class="text-left">Tax (SST)</td>
-												<td class="text-left"></td>
-											</tr>
-											<tr>
-												<td class="text-left">Discount</td>
-												<td class="text-left">{{calculateDiscount(i) |currency:detail.currency_code:'symbol-narrow'}}</td>
-											</tr>
-											<tr>
-												<td class="text-left">Total Amount</td>
-												<td class="text-left">{{calculateNetAmount(i) |currency:detail.currency_code:'symbol-narrow'}}</td>
-											</tr>
-										</table>
-									</div>
-								</div>
-							</div>
-
-						</tab>				
-					</tabset>
-					
-				</p-accordionTab>
-			</p-accordion>
-		</div>
-
-		<div class="col-sm-12 col-md-12 form-group">
-			<h3>FPS Request</h3>
-			<!-- Here the fps list related to current opportunity is displayed -->
-			<app-fps-list></app-fps-list>
-	
-			<!-- Accordion for the fps list related to current opportunity -->
-			<!-- <p-accordionTab header="FPS Request">
-				<div class="row">
-					<app-fps-list></app-fps-list>
-				</div>
-			</p-accordionTab>		 -->
-		</div>
-		
-      	<div class="col-sm-12 col-md-12 form-group">
-      		<p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
-				<p-accordionTab header="Competitor List">
-					<table class="table m-0 no-outline">
-			    		<thead>
-				    		<tr>				    			
-				    			<th>Name</th>
-				    			<th>Amount (RM)</th>
-				    			<th></th>					    			
-				    		</tr>	
-			    		</thead>	
-			    		<tbody>
-							<tr *ngFor="let competitor of competitors; let i = index">
-								<td class="text-left">{{competitor.name}}</td>
-								<td class="text-left">{{competitor.amount}}</td>
-								<td></td>
-							</tr>						
-			    			<tr>
-			    				<td><input type="text" class="form-control" [(ngModel)]="competitor_name"/></td>
-			    				<td><input type="text" class="form-control" [(ngModel)]="competitor_amount"/></td>
-			    				<td><button class="btn btn-icon btn-outline-primary" (click)="addCompetitor()"><i class="cil-plus c-icon"></i></button></td>			    		
-			    			</tr>			    			
-			    		</tbody>			    		
-			    	</table>
-				</p-accordionTab>
-			</p-accordion>
-      	</div>
-      		      
-	</div>
+                    <tr>
+                      <td class="bg-lightgrey text-left">Segment</td>
+                      <td>
+                        <select
+                          class="form-control"
+                          formControlName="segment_code"
+                        >
+                          <option value="segment_code">Government</option>
+                          <option value="segment_code">Semi Government</option>
+                          <option value="segment_code">Private</option>
+                        </select>
+                      </td>
+                      <td class="bg-lightgrey text-left">Sold To</td>
+                      <td>
+                        <div style="display: flex; align-items: center">
+                          <textarea
+                            name=""
+                            id=""
+                            cols="50"
+                            rows="5"
+                            formControlName="sold_to"
+                            [attr.disabled]="detail_not_editable ? '' : null"
+                            (change)="updateDetail()"
+                          ></textarea>
+                          <!-- <a style="cursor: pointer; float: right"
+                            ><i class="icon-note icon"></i
+                          ></a> -->
+                        </div>
+                      </td>
+                      <td>
+                        <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">Customer Category</td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="category_code"
+                          [attr.disabled]="detail_not_editable ? '' : null"
+                          (change)="updateDetail()"
+                        />
+                      </td>
+                      <td class="text-left">Ship To</td>
+                      <td class="text-left">
+                        <div style="display: flex; align-items: center">
+                          <textarea
+                            name=""
+                            id=""
+                            cols="50"
+                            rows="5"
+                            formControlName="ship_to"
+                            [attr.disabled]="detail_not_editable ? '' : null"
+                            (change)="updateDetail()"
+                          ></textarea>
+                          <!-- <input
+                            type="text"
+                            class="form-control"
+                            formControlName="ship_to"
+                            [attr.disabled]="detail_not_editable ? '' : null"
+                            (change)="updateDetail()"
+                          /> -->
+                          <!-- <a style="cursor: pointer; float: right"
+                            ><i class="icon-note icon"></i
+                          ></a> -->
+                        </div>
+                      </td>
+                      <td>
+                        <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">
+                        Customer SubCategory
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="subcategory_code"
+                          [attr.disabled]="detail_not_editable ? '' : null"
+                          (change)="updateDetail()"
+                        />
+                      </td>
+                      <td class="bg-lightgrey text-left">Bill To</td>
+                      <td class="text-left">
+                        <div style="display: flex; align-items: center">
+                          <textarea
+                            name=""
+                            id=""
+                            cols="50"
+                            rows="5"
+                            formControlName="bill_to"
+                            [attr.disabled]="detail_not_editable ? '' : null"
+                            (change)="updateDetail()"
+                          ></textarea>
+                          <!-- <input
+                            type="text"
+                            class="form-control"
+                            formControlName="bill_to"
+                            [attr.disabled]="detail_not_editable ? '' : null"
+                            (change)="updateDetail()"
+                          /> -->
+                          <!-- <a style="cursor: pointer; float: right"
+                            ><i class="icon-note icon"></i
+                          ></a> -->
+                        </div>
+                      </td>
+                      <td>
+                        <a style="cursor: pointer; float: right"
+                          ><i class="icon-note icon"></i
+                        ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-lightgrey text-left">
+                        Hospital Bed (Range)
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="bed_range"
+                          [attr.disabled]="detail_not_editable ? '' : null"
+                          (change)="updateDetail()"
+                        />
+                      </td>
+                      <td class="bg-lightgrey text-left"></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </form>
+          </p-accordionTab>
+          <!-- Tracking Info -->
+          <p-accordionTab>
+            <ng-template pTemplate="header"
+              ><i class="cil-clock c-icon"></i>&nbsp;&nbsp;Tracking
+              Info</ng-template
+            >
+            <form [formGroup]="opportunityDetailForm2">
+              <div class="row">
+                <div class="col-md-12">
+                  <table class="table m-0 no-outline">
+                    <tr>
+                      <td class="text-left w-25">Request Delivery Date</td>
+                      <td class="w-25">
+                        <input
+                          type="date"
+                          class="form-control"
+                          formControlName="request_delivery_date"
+                          (change)="updateDetail()"
+                        />
+                      </td>
+                      <td class="text-left w-25">Estimated Delivery Date</td>
+                      <td class="w-25">
+                        <input
+                          type="date"
+                          class="form-control"
+                          formControlName="estimated_delivery_date"
+                          (change)="updateDetail()"
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">Estimated PO Date</td>
+                      <td class="w-25">
+                        <input
+                          type="date"
+                          class="form-control"
+                          formControlName="estimated_po_date"
+                          (change)="updateDetail()"
+                        />
+                      </td>
+                      <td class="text-left">Estimated Invoice Date</td>
+                      <td class="w-25">
+                        <input
+                          type="date"
+                          class="form-control"
+                          formControlName="estimated_invoice_date"
+                          (change)="updateDetail()"
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">Care Area</td>
+                      <td class="w-25">
+                        <input
+                          type=""
+                          class="form-control"
+                          formControlName="care_area"
+                          (input)="updateDetail()"
+                        />
+                        <!-- <select
+                          class="form-control"
+                          formControlName="care_area"
+                          (change)="updateDetail()"
+                        >
+                          <option
+                            *ngFor="let care_area of care_areas; let i = index"
+                            value="{{ care_area.care_area_code }}"
+                          >
+                            {{ care_area.care_area }}
+                          </option>
+                        </select> -->
+                      </td>
+                      <td class="text-left">Hospital Department</td>
+                      <td class="w-25">
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="hospital_department"
+                          (input)="updateDetail()"
+                        />
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </form>
+          </p-accordionTab>
+          <!-- Forecast -->
+          <p-accordionTab>
+            <ng-template pTemplate="header"
+              ><i class="cil-columns c-icon"></i
+              >&nbsp;&nbsp;Forecast</ng-template
+            >
+            <form [formGroup]="forecastForm">
+              <div class="row">
+                <div class="col-md-12">
+                  <table class="table m-0 no-outline">
+                    <tr>
+                      <td class="text-left w-25">Preferred Vendor</td>
+                      <td class="w-25">
+                        <select
+                          class="form-control"
+                          (change)="updateForecast()"
+                          formControlName="preferred_vendor"
+                        >
+                          <option
+                            *ngFor="
+                              let type of preferred_vendor_types;
+                              let i = index
+                            "
+                            value="{{ type.id }}"
+                          >
+                            {{ type.title }}
+                          </option>
+                        </select>
+                      </td>
+                      <td class="text-left w-25">Forecast Category</td>
+                      <td class="w-25" style="vertical-align: middle">
+                        <progressbar
+                          [value]="forecast_category"
+                          class="progress-striped active"
+                          [animate]="true"
+                          [striped]="true"
+                          >{{ forecast_category }}%</progressbar
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">Funding Status</td>
+                      <td>
+                        <select
+                          class="form-control"
+                          (change)="updateForecast()"
+                          formControlName="funding_status"
+                        >
+                          <option
+                            *ngFor="let status of funding_status; let i = index"
+                            value="{{ status.id }}"
+                          >
+                            {{ status.title }}
+                          </option>
+                        </select>
+                      </td>
+                      <td class="text-left">Reason for Loss</td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          (input)="updateForecast()"
+                          formControlName="reason"
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">Funding Source</td>
+                      <td>
+                        <select
+                          class="form-control"
+                          (change)="updateForecast()"
+                          formControlName="funding_source"
+                        >
+                          <option
+                            *ngFor="let source of funding_source; let i = index"
+                            value="{{ source.id }}"
+                          >
+                            {{ source.title }}
+                          </option>
+                        </select>
+                      </td>
+                      <td class="text-left">Loss to which competitor</td>
+                      <td>
+                        <select
+                          class="form-control"
+                          (change)="updateForecast()"
+                          formControlName="competitor_id"
+                        >
+                          <option
+                            *ngFor="
+                              let competitor of competitors;
+                              let i = index
+                            "
+                            value="{{ competitor.id }}"
+                          >
+                            {{ competitor.competitor_name }}
+                          </option>
+                        </select>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </form>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+      <!-- Products -->
+      <div class="col-md-12 form-group">
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+          <p-accordionTab>
+            <ng-template pTemplate="header"
+              ><i class="cil-cart c-icon"></i>&nbsp;&nbsp;Products</ng-template
+            >
+            <tabset>
+              <tab
+                class="p-0"
+                *ngFor="let option of product_options; let i = index"
+                [active]="option.is_default == 1"
+              >
+                <ng-template tabHeading>
+                  <div class="p-relative">
+                    <span
+                      ><i
+                        class="icon icon-check mr-1"
+                        *ngIf="option.is_default == 1"
+                      ></i
+                      >Option {{ i + 1 }}</span
+                    >
+                    <button
+                      (click)="addOption()"
+                      class="btn btn-icon btn-outline-primary btn-in-tab"
+                      *ngIf="product_options.length == i + 1"
+                    >
+                      <i class="cil-plus c-icon"></i>
+                    </button>
+                  </div>
+                </ng-template>
+                <table class="table m-0 no-outline">
+                  <thead style="white-space: nowrap;">
+                    <tr>
+                      <th>No.</th>
+                      <th>Product Name</th>
+                      <th>SKU ID</th>
+                      <th>Quantity</th>
+                      <th>Unit Price ({{ detail?.currency_code }})</th>
+                      <th>Total Price ({{ detail?.currency_code }})</th>
+                      <th>Discount (%)</th>
+                      <th>Net Amount ({{ detail?.currency_code }})</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let product of option.products; let x = index">
+                      <td>{{ x + 1 }}</td>
+                      <td class="text-left">{{ product.name }}</td>
+                      <td class="text-left">{{ product.sku }}</td>
+                      <td class="text-left">{{ product.quantity }}</td>
+                      <td class="text-left">
+                        {{
+                          product.unit_price
+                            | currency: detail.currency_code:"symbol-narrow"
+                        }}
+                      </td>
+                      <td class="text-left">
+                        {{
+                          product.total_price
+                            | currency: detail.currency_code:"symbol-narrow"
+                        }}
+                      </td>
+                      <td class="text-left">{{ product.discount }}</td>
+                      <td class="text-left">
+                        {{
+                          product.amount
+                            | currency: detail.currency_code:"symbol-narrow"
+                        }}
+                      </td>
+                      <td style="width: 8%">
+                        <a
+                          style="cursor: pointer;margin: 4px;"
+                          (click)="cloneProduct(i, product.id)"
+                          ><i class="icon-docs icon"></i
+                        ></a>
+                        <a
+                          style="cursor: pointer"
+                          (click)="openEditProductModal(i, x, product.id)"
+                          ><i class="icon-note icon"></i
+                        ></a>
+                        <a
+                          style="cursor: pointer"
+                          (click)="deleteProduct(i, x, product.id)"
+                          ><i class="icon-trash icon"></i
+                        ></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <!-- <input type="text" class="form-control" [(ngModel)]="product_name[i]"/> -->
+                        <input
+                          (input)="productSearch($event.target.value)"
+                          type="text"
+                          matInput
+                          [formControl]="productControl"
+                          [matAutocomplete]="productNameAutoComplete"
+                          class="form-control"
+                        />
+                        <mat-autocomplete
+                          #productNameAutoComplete="matAutocomplete"
+                          [displayWith]="displayFn"
+                          (optionSelected)="
+                            productSelected($event.option.value, i)
+                          "
+                          [panelWidth]="450"
+                        >
+                          <mat-option
+                            *ngFor="let product of filteredProductList | async"
+                            [value]="product"
+                          >
+                            {{ product.name }} | {{ product.sku }}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="sku[i]"
+                          readonly
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="quantity[i]"
+                          (input)="calculateAmount(i)"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="unit_price[i]"
+                          (input)="calculateAmount(i)"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="total_price[i]"
+                          (input)="calculateAmount(i)"
+                          readonly
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="discount[i]"
+                          (input)="calculateAmount(i)"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="amount[i]"
+                          readonly
+                        />
+                      </td>
+                      <td>
+                        <!-- (click)="addProduct(i, option.id, true)" -->
+                        <!-- (click)="openAddProductModal(option, i, true)" -->
+                        <button
+                          class="btn btn-icon btn-outline-primary"
+                          (click)="addProduct(i, option.id, true)"
+                        >
+                          <i class="cil-plus c-icon"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
 
                 <div
                   class="d-flex justify-content-end form-group"
@@ -428,6 +776,11 @@
                       <i class="cil-plus c-icon"></i>
                       <span>PRODUCT</span>
                     </button>
+
+                    <a class="btn btn-custom form-group" [routerLink]="['/fps/fps-create']" [queryParams]="{opport_id: opportunity_id}">
+                      <i class="cil-plus c-icon"></i> &nbsp;FPS Requets
+                    </a>
+
                   </div>
                   <div class="card border-primary m-3 w-50">
                     <div class="card-body">
@@ -472,6 +825,10 @@
           </p-accordionTab>
         </p-accordion>
       </div>
+
+      <!-- Here the fps list related to current opportunity is displayed -->
+      <app-fps-list [current_opportunity_id]="opportunity_id" ></app-fps-list>
+      
       <!-- Competitor List -->
       <div class="col-sm-12 col-md-12 form-group">
         <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">

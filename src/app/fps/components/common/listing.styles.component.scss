@@ -1,11 +1,6 @@
 tr {
     border: hidden;
 }
-:host ::ng-deep {
-    .p-datatable {
-        min-height: 500px !important;
-    }
-}
 
 .icon-div {
     display: flex;
@@ -59,11 +54,15 @@ tr {
         }
     
         .p-datatable-thead > tr > th {
-            text-align: left;
+            vertical-align: middle;
+            > div.p-d-flex {
+                word-break: normal;
+            }
         }
     
         .p-datatable-tbody > tr > td {
             cursor: auto;
+            padding: 0.25em;
         }
     
         .p-dropdown-label:not(.p-placeholder) {
