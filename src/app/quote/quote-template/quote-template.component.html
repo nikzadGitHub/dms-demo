@@ -28,8 +28,8 @@
     </div>
   </div>
   <!-- style="width: 100%" -->
-  <div class="card" id="bodyContent" #bodyContent>
-    <div #pdfTable class="" id="pdfTable">
+  <div class="card" #pdfTable id="pdfTable" #bodyContent>
+    <div>
       <div class="template-header">
         <div class="img-text">
           <div class="headerImg" style="width: 780px">
@@ -359,22 +359,22 @@
         >
         <!-- {{quotationContent?.footer_content}} -->
           <ul style="list-style-type: none; padding: unset;">
-            <li> <b> PRICE </b> </li>
-            <li> <b> DELIVERY PERIOD </b> </li>
-            <li> <b> QUOTE VALIDITY </b> </li>
-            <li> <b> PAYMENT TERM </b> </li>
-            <li> <b> MANUFACTURER </b> </li>
-            <li> <b> WARRANTY </b> </li>
-            <li> <b> SERVICING </b> </li>
+            <li style="width: 385px;height: 35px;"> <b> PRICE </b> </li>
+            <li style="width: 385px;height: 35px;"> <b> DELIVERY PERIOD </b> </li>
+            <li style="width: 385px;height: 35px;"> <b> QUOTE VALIDITY </b> </li>
+            <li style="width: 385px;height: 35px;"> <b> PAYMENT TERM </b> </li>
+            <li style="width: 385px;height: 35px;"> <b> MANUFACTURER </b> </li>
+            <li style="width: 385px;height: 35px;"> <b> WARRANTY </b> </li>
+            <li style="width: 385px;height: 35px;"> <b> SERVICING </b> </li>
           </ul>
           <ul style="list-style-type: none;margin-bottom: 20px;" >
-            <li style="border: 1px solid lightgray;margin-bottom: 3px;" [attr.contenteditable]="editable" #price>{{quotationContentFooter?.price}}</li>
-            <li style="border: 1px solid lightgray;margin-bottom: 3px;" [attr.contenteditable]="editable" #deliveryP>{{quotationContentFooter?.deliveryP}}</li>
-            <li style="border: 1px solid lightgray;margin-bottom: 3px;" [attr.contenteditable]="editable" #validity>{{quotationContentFooter?.validity}}</li>
-            <li style="border: 1px solid lightgray;margin-bottom: 3px;" [attr.contenteditable]="editable" #paymentTer>{{quotationContentFooter?.paymentTer}}</li>
-            <li style="border: 1px solid lightgray;margin-bottom: 3px;" [attr.contenteditable]="editable" #manufacturer>{{quotationContentFooter?.manufacturer}}</li>
-            <li style="border: 1px solid lightgray;margin-bottom: 3px;" [attr.contenteditable]="editable" #warranty>{{quotationContentFooter?.warranty}}</li>
-            <li style="border: 1px solid lightgray;margin-bottom: 3px;" [attr.contenteditable]="editable" #servicing>{{quotationContentFooter?.servicing}}</li>  
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 385px;height: 35px;" [attr.contenteditable]="editable" #price>{{quotationContentFooter?.price}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 385px;height: 35px;" [attr.contenteditable]="editable" #deliveryP>{{quotationContentFooter?.deliveryP}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 385px;height: 35px;" [attr.contenteditable]="editable" #validity>{{quotationContentFooter?.validity}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 385px;height: 35px;" [attr.contenteditable]="editable" #paymentTer>{{quotationContentFooter?.paymentTer}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 385px;height: 35px;" [attr.contenteditable]="editable" #manufacturer>{{quotationContentFooter?.manufacturer}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 385px;height: 35px;" [attr.contenteditable]="editable" #warranty>{{quotationContentFooter?.warranty}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 385px;height: 35px;" [attr.contenteditable]="editable" #servicing>{{quotationContentFooter?.servicing}}</li>  
           </ul>
         </div>
         <div>
@@ -387,7 +387,7 @@
         </div>
         <div class="signatureDiv">
           <div class="signatureImg">
-            <img style="width: 100px; height: 100px;" src="https://api.idsmed-dev.websight-app.com/api/signatures/8/eRP5ltJe3YwcTgbqXdGzHYx002hintydYr4grx5U.png" alt="">
+            <img style="width: 100px; height: 100px;" [src]="this.salesPersonSignature" alt="">
           </div>
         </div>
 
@@ -399,7 +399,7 @@
         <br>
         <br>
         
-        <div class="mainTermCo">
+        <div class="mainTermCo" id="termsConditions">
           <h3 class="text-center"> Terms & Conditions </h3>
           <h5 class="text-center"> lDSMEDY <br>
             IDS Medical Systems (M) Sdn Ohd <br>
@@ -633,12 +633,12 @@
     <button class="btn btn-primary saveButton" (click)="savePreviewContent()">
       Save
     </button>
-    <button
+    <!-- <button
       class="btn btn-primary quotationDownload"
       (click)="downloadQuotationTemplate()"
     >
       Download Quotation
-    </button>
+    </button> -->
   </div>
 </div>
 

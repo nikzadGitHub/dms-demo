@@ -106,7 +106,7 @@ export class QuoteService {
     )
   }
   getQuatation(id){
-    return this.httpClient.get(this.apiURL + '/quote/quotation-preview/'+ 7, this.httpOptions)
+    return this.httpClient.get(this.apiURL + '/quote/quotation-preview/'+ id, this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )

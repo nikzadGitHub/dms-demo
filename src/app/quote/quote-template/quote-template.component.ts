@@ -51,7 +51,7 @@ export class QuoteTemplateComponent implements OnInit {
   elem;
   imageWidth: any;
   imageHeight: number;
-  single: boolean;
+  single: boolean = true;
   userToken: any;
   quotationId: any;
   quotationContent: any;
@@ -61,6 +61,8 @@ export class QuoteTemplateComponent implements OnInit {
   blob: any;
   quotationContentFooter: any;
   quotationContentHeader: any;
+  salesPersonData: any;
+  salesPersonSignature: any;
   constructor(private router: Router,
     private quoteService: QuoteService,
     private route: ActivatedRoute,
@@ -84,11 +86,16 @@ export class QuoteTemplateComponent implements OnInit {
 
     this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
       this.quotationsTemplateData = res["data"]
-      console.log('this is quotation-template',this.quotationsTemplateData);
+      // console.log('this is quotation-template',this.quotationsTemplateData);
+      this.salesPersonData = res["data"].quotations?.sales_person
+      this.salesPersonSignature = this.salesPersonData?.signature_base64
+      this.quotationContent = res["data"].quotations?.quotation_contents
+      if(this.quotationContent){
+        this.quotationContentFooter = JSON.parse(this.quotationContent?.footer_content)
+        this.quotationContentHeader = JSON.parse(this.quotationContent?.header_content)
+      }
       
-      this.quotationContent = res["data"].quotations.quotation_contents
-      this.quotationContentFooter = JSON.parse(this.quotationContent.footer_content)
-      this.quotationContentHeader = JSON.parse(this.quotationContent.header_content)
+      
       // console.log('quoatation content',this.quotationContentFooter)
       // console.log('quoatation content',this.quotationContentHeader)
       
@@ -130,43 +137,43 @@ export class QuoteTemplateComponent implements OnInit {
       this.dangerModal.show();
     }
     
-    if (this.templateId && this.quotationId) {
-      // this.loaderService.loaderSet(true)
-      this.loader = true
-      this.quoteService.uploadTemplateImage(formData, this.quotationId, this.templateId).subscribe(state => {
-        if (state) {
-          // this.loaderService.loaderSet(false)
-      this.loader = false
+    // if (this.templateId && this.quotationId) {
+    //   // this.loaderService.loaderSet(true)
+    //   this.loader = true
+    //   this.quoteService.uploadTemplateImage(formData, this.quotationId, this.templateId).subscribe(state => {
+    //     if (state) {
+    //       // this.loaderService.loaderSet(false)
+    //   this.loader = false
 
-        }
-      })
-    } else {
-      this.alertHeader = "Template Id Erroe";
-      this.alertBody = "Template Id is Missing.....";
-      this.dangerModal.show();
-    }
+    //     }
+    //   })
+    // } else {
+    //   this.alertHeader = "Template Id Erroe";
+    //   this.alertBody = "Template Id is Missing.....";
+    //   this.dangerModal.show();
+    // }
   }
 
   downloadUploadedPDF() {
-    if(this.templateId && this.quotationId){
-      this.quoteService.downloadUploadedPdfTemplate(this.quotationId,1).subscribe(state=>{
+    // if(this.templateId && this.quotationId){
+    //   this.quoteService.downloadUploadedPdfTemplate(this.quotationId,1).subscribe(state=>{
         
-      })
-    } else{
-      this.alertHeader = "Template Id Erroe";
-      this.alertBody = "Template Id is Missing.....";
-      this.dangerModal.show();
-    }
-    // if (this.single == true) {
-    //   this.generateCompletePDF();
-    // } else {
-    //   if (this.url) {
-    //     this.generateTemplatePDF();
-    //     this.generateQuotationImagePDF();
-    //   } else {
-    //     this.generateTemplatePDF();
-    //   }
+    //   })
+    // } else{
+    //   this.alertHeader = "Template Id Erroe";
+    //   this.alertBody = "Template Id is Missing.....";
+    //   this.dangerModal.show();
     // }
+    if (this.single == true) {
+      this.generateCompletePDF();
+    } else {
+      if (this.url) {
+        this.generateTemplatePDF();
+        this.generateQuotationImagePDF();
+      } else {
+        this.generateTemplatePDF();
+      }
+    }
   }
   generateCompletePDF() {
     let data = document.getElementById("pdfTable");
