@@ -168,8 +168,8 @@ export class SkuEditComponent implements OnInit {
       
       // Set Rate values:
       data.data.rates.forEach((addCost) => {
-        this.rate_counter++;
-        this.addRates().push(this.existingCosts(addCost));
+        this.rate_counter = addCost.id;
+        this.addRates().push(this.existingRates(addCost));
       });
       
     });
@@ -271,7 +271,7 @@ export class SkuEditComponent implements OnInit {
     return this.rateAddForm.get("addRates") as FormArray;
   }
 
-  existingCosts(addRates): FormGroup {
+  existingRates(addRates): FormGroup {
     return this.fb.group({
       rate_no: addRates.id,
       validity_start_at: addRates.validity_start_at,
