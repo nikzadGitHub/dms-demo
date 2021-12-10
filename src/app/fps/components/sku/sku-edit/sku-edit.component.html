@@ -278,14 +278,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let cost of addRates().controls; let i=index" [formGroupName]="i"
+                                    <tr *ngFor="let rate of addRates().controls; let i=index" [formGroupName]="i"
                                         align="center">
                                         <td style="width: 15%;">
                                             <input formControlName="rate_no" size="1" class="form-control" type="number">
                                         </td>
                                         <td style="width: 15%;">
-                                            <input formControlName="validity_start_at" class="form-control" type="date"
-                                                min="0">
+                                            <input formControlName="validity_start_at" class="form-control" type="date" min="0">
                                         </td>
                                         <td style="width: 10%;">
                                             <input formControlName="validity_end_at" class="form-control" type="date" min="0" step=".01">
@@ -296,13 +295,17 @@
                                             </p-dropdown>
                                         </td>
                                         <td style="width: 15%;">
-                                            <p-dropdown  formControlName="rate_type" [options]="rateTypeOptions" optionLabel="label"
+                                            <p-dropdown  formControlName="type" [options]="rateTypeOptions" optionLabel="label"
                                                 optionValue="value" styleClass="form-control" >
                                             </p-dropdown>
                                         </td>
                                         <td class="td-actions" style="width: 10%;">
+                                            <a [routerLink]="" (click)="openAddRateDetailsModal(true, i)" routerLinkActive="router-link-active"><i
+                                                class="fa fa-plus" title="Add SKU Rate Details"></i></a> &nbsp;
+
                                             <a [routerLink]="" routerLinkActive="router-link-active"><i
                                                     class="fa fa-edit"></i></a> &nbsp;
+
                                             <a [routerLink]="" (click)="removeAddRates(i)"
                                                 routerLinkActive="router-link-active"><i class="fa fa-trash"></i></a>
                                         </td>
@@ -385,3 +388,114 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!-- Add Product popup -->
+<div
+  bsModal
+  #addProductModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+<div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">FPS SKU Rate Details</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="addProductModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- top-info -->
+        <div class="top-info">
+          <div class="row form-group top-info-1">
+            <div class="col-md-6 info-text">Rate No.</div>
+            <div class="col-md-6">
+              <input type="text" [value]="currentRateNo" [disabled]="true" class="form-control" />
+            </div>
+          </div>
+          <div class="row form-group top-info-1">
+            <div class="col-md-6 info-text">Validity Start</div>
+            <div class="col-md-6">
+                <input type="text" [value]="currentRateStart" [disabled]="true" class="form-control" />
+            </div>
+          </div>
+          <div class="row form-group top-info-1">
+            <div class="col-md-6 info-text">Validity End</div>
+            <div class="col-md-6">
+                <input type="text" [value]="currentRateEnd" [disabled]="true" class="form-control" />
+            </div>
+          </div>
+          <div class="row form-group top-info-1">
+            <div class="col-md-6 info-text">Type</div>
+            <div class="col-md-6">
+                <input type="text" [value]="currentRateType" [disabled]="true" class="form-control" />
+            </div>
+          </div>
+        </div>
+        <hr />
+        <!-- table -->
+        <div class="table-div" >
+            <form [formGroup]="rateDatailAddForm" (ngSubmit)="onSaveRateDetails()">
+                <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+                    <!-- FPS SKU Rate -->
+                    <p-accordionTab header="Rate Details">
+                        <div class="row">
+                            <table class="table table-borderless" id="sku_rate_datails" formArrayName="addRateDetails">
+                                <thead>
+                                    <tr>
+                                        <th>Tenure</th>
+                                        <th>Interest Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let rate of addRateDetails().controls; let i=index" [formGroupName]="i"
+                                        align="center">
+                                        <td style="width: 45%;">
+                                            <input formControlName="details_tenure" size="1" class="form-control" type="number">
+                                        </td>
+                                        <td style="width: 45%;">
+                                            <input formControlName="details_interest_rate" size="1" class="form-control" type="number" step="0.1">
+                                        </td>
+                                        <td class="td-actions" style="width: 10%;">
+                                            <a [routerLink]="" (click)="removeAddRateDetails(i)"
+                                                routerLinkActive="router-link-active"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                     </tr>
+                                </tbody>
+                                <tfoot align="center">
+                                    <tr>
+                                        <td class="td-actions" colspan="3" align="center">
+                                            <a [routerLink]="" (click)="addAddRateDetails()"
+                                                routerLinkActive="router-link-active">
+                                                <i class="icon-plus icons"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-actions" colspan="3" >
+                                            <input type="submit" value="Submit" style="float: right;" class="btn btn-primary" />
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </p-accordionTab>
+                    <!-- End of FPS SKU Rate Accordion -->
+                </p-accordion>
+            </form>
+        </div>
+        <hr />
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>

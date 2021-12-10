@@ -236,8 +236,12 @@ td {
       width: 95%;
       margin: auto;
   }
-}
+  table#sku_rate_datails {
+    width: 92.5%;
+    margin: 0 auto;
+  }
 
+}
 
 @media screen and (max-width: 960px) {
   :host ::ng-deep {

@@ -66,10 +66,6 @@ export const navItems: INavData[] = [
     icon: 'cil-dollar',
     children: [
       {
-        name: 'Create FPS',
-        url: '/fps/fps-create',
-      },
-      {
         name: 'FPS Request List',
         url: '/fps/fps-listing',
       }

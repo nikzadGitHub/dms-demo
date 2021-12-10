@@ -133,9 +133,7 @@ export class EditComponent implements OnInit {
           if (response.success) {
             this.zone.run(() => {
               this.countryCode = response.data.iso3;
-              setTimeout(() =>{
-                this.loadFpsDetails();
-              }, 2000)
+              this.loadFpsDetails();
             });
           } 
         }
@@ -183,7 +181,7 @@ export class EditComponent implements OnInit {
           setTimeout(() => {
             this.successModal.hide();
           }, 2000);
-          // this.router.navigateByUrl('/fps/fps-listing', {replaceUrl: true})
+          this.router.navigateByUrl('/fps/fps-listing', {replaceUrl: true})
         }
       },
       err => {
