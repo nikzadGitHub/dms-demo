@@ -10,14 +10,14 @@ import { AutoCompleteModule } from "primeng/autocomplete";
 import { AccordionModule } from "primeng/accordion";
 import { MultiSelectModule } from "primeng/multiselect";
 import { BadgeModule } from "primeng/badge";
+import {ButtonModule} from 'primeng/button';
+import {CheckboxModule} from 'primeng/checkbox';
 import { PaginatorModule } from "primeng/paginator";
 import { IconModule } from "@coreui/icons-angular";
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { UserSetupComponent } from './user-unit/user-setup.component';
-import {CheckboxModule} from 'primeng/checkbox';
 import {UserComponent} from './add-user/user.component'
-import {ButtonModule} from 'primeng/button';
 import { CreateUserComponent } from './add-user/create-user/create-user.component';
 
 

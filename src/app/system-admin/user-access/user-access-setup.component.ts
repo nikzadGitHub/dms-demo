@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener, ViewChild } from "@angular/core";
-import { Router } from "@angular/router";
+import { NavigationExtras, Router } from "@angular/router";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { SystemAdminService } from "../system-admin.service";
 
@@ -59,6 +59,7 @@ export class UserAccessSetupComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.router.navigate(["/useraccess/edit"]);
           }, 2000);
         },
         (error) => {
@@ -67,16 +68,25 @@ export class UserAccessSetupComponent implements OnInit {
         }
       );
   }
+
+  editRole(roleId) {
+    let navigate: NavigationExtras = {
+      queryParams: {
+        roleId: roleId,
+      },
+    };
+    this.router.navigate(["/useraccess/edit"], navigate);
+  }
   selectData(event, user) {
-    this.dataIsSelected = true
+    this.dataIsSelected = true;
     console.log("Event", event);
     console.log("user", user);
   }
 
-  selectAllData(event, user){
+  selectAllData(event, user) {
     console.log("Event", event);
     console.log("user", user);
-    this.selectedRole = user
+    this.selectedRole = user;
     // this.selectAllRoleList = this.selectedRole.slice(0,75)
   }
 

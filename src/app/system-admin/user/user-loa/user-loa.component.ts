@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Location } from "@angular/common";
+import { SystemAdminService } from "../../system-admin.service";
 
 @Component({
   selector: "app-user-loa",
@@ -8,6 +10,7 @@ import { Router } from "@angular/router";
   styleUrls: ["./user-loa.component.scss"],
 })
 export class UserLoaComponent implements OnInit {
+  userList: any = [];
   priceLevelApproval = [{ amount: "", approveBy: "" }];
   authorityForm: FormGroup;
   dummy_data = [
@@ -39,7 +42,12 @@ export class UserLoaComponent implements OnInit {
       report_to: "Mr C",
     },
   ];
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private systemAdminSerive: SystemAdminService,
+    private location: Location
+  ) {
     this.authorityForm = this.formBuilder.group({
       unit: "",
       paymentTermApproval: "",
@@ -48,15 +56,24 @@ export class UserLoaComponent implements OnInit {
       approveBy: "",
       profitMargin: "",
       discount: "",
+      cellingPriceAmount: "",
+      cellingPriceApproval: "",
     });
   }
 
   ngOnInit(): void {
+    this.getUserRole();
     this.dummyAuthorityData.forEach((value) => {
       value.created_at = new Date(value.created_at);
     });
   }
 
+  getUserRole() {
+    this.systemAdminSerive.getQuery("/user-role").subscribe((res: any) => {
+      console.log("user-role-data:", res);
+      this.userList = res.data;
+    });
+  }
   addPriceLevelApproval() {
     this.priceLevelApproval.push({
       amount: this.authorityForm.value.amount,
@@ -65,7 +82,11 @@ export class UserLoaComponent implements OnInit {
   }
   deletePriceLevelRow(index) {
     // if (this.priceLevelApproval.length > 1) {
-      this.priceLevelApproval.splice(index, 1);
+    this.priceLevelApproval.splice(index, 1);
     // }
+  }
+  back() {
+    // this.location.back();
+    this.router.navigateByUrl("user/adduser");
   }
 }

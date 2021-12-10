@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { NavigationExtras, Router } from "@angular/router";
 import { SystemAdminService } from "../../system-admin.service";
 
 @Component({
@@ -30,24 +30,16 @@ export class UserComponent implements OnInit {
     });
   }
   createUser() {
-    this.router.navigate(['user/create-user'])
+    this.router.navigate(["user/create-user"]);
   }
-  // addUser() {
-  //   this.systemAdminSerive
-  //     .postQuery("/user-role", {
-  //       name: "seion",
-  //     })
-  //     .subscribe((res: any) => {
-  //       console.log("add-user:", res);
-  //     });
-  // }
 
   getUserRoleDetail(userRoleId) {
-    this.systemAdminSerive
-      .getQuery("/user-role/" + userRoleId + "/edit")
-      .subscribe((res: any) => {
-        console.log("detail-user:", res);
-      });
+    let navigate: NavigationExtras = {
+      queryParams: {
+        userRoleId: userRoleId,
+      },
+    };
+    this.router.navigate(["user/create-user"], navigate);
   }
   fetchUserList() {
     this.userList = [

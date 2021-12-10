@@ -2,21 +2,15 @@
   <div class="card-header page-heading-icon">
     <!-- <h1>Level Of Authority</h1> -->
     <div class="header-text">
-      <h2>Add User</h2>
+      <h2 *ngIf="!isEdit">Add User</h2>
+      <h2 *ngIf="isEdit">Edit User</h2>
       <div>
-        <!-- save-btn -->
-        <p-button styleClass="p-px-3">
-          <ng-template pTemplate="content">
-            <img
-              src="../../../../assets/img/icons/save.svg"
-              alt=""
-              style="width: 15px"
-            />
-          </ng-template>
-        </p-button>
-
         <!-- back-btn -->
-        <p-button styleClass="p-px-3">
+        <p-button
+          styleClass="p-button-outlined"
+          class="back-p-btn"
+          (click)="back()"
+        >
           <ng-template pTemplate="content">
             <img
               src="../../../../assets/img/icons/back-arrow.svg"
@@ -30,83 +24,90 @@
       <!-- <img src="../../../../assets/img/icons/back-arrow.svg" alt=""> -->
     </div>
   </div>
-  <form>
+  <form [formGroup]="userform">
     <div class="card-body">
-      <p class="title-text">
+      <p class="title-text" *ngIf="isEdit">
+        <i class="pi pi-user-plus"> </i>
+        <!-- <i class="pi pi-user-plus"></i> -->
+        Edit User
+      </p>
+      <p class="title-text" *ngIf="!isEdit">
         <i class="pi pi-user-plus"> </i>
         <!-- <i class="pi pi-user-plus"></i> -->
         Add User
       </p>
-      <div class="row">
-        <div class="col-md-1 mt-2 mr-3">
+      <div class="row mt-3 mb-3">
+        <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-3">
           <label style="width: 100px"
-            >User Name <span class="red-star">*</span></label
+            >Company <span class="red-star">*</span></label
           >
         </div>
-        <div class="col-md-10">
-          <p-autoComplete
-            [suggestions]="filtereduser"
-            (completeMethod)="filterProduct($event)"
-            field="name"
-            [dropdown]="true"
+        <div class="col-lg-10 col-md-10 col-sm-10">
+          <p-dropdown
+            formControlName="companyName"
+            [options]=""
+            placeholder="Select user"
+            optionLabel=""
             [style]="{ width: '100%' }"
-            [inputStyle]="{ width: '100%' }"
-          >
-            <ng-template let-product>
-              <div class="product-item">
-                <div></div>
-              </div>
-            </ng-template>
-          </p-autoComplete>
+          ></p-dropdown>
         </div>
       </div>
 
-      <div class="row mt-4">
-        <div class="col-md-1 mt-2 mr-3">
+      <div class="row">
+        <div class="col-md-1 col-md-1 col-sm-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >Name <span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5">
+          <input
+            type="text"
+            formControlName="name"
+            pInputText
+            style="width: 340px"
+          />
+        </div>
+
+        <!-- user-access -->
+        <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-3">
           <label style="width: 100px"
             >User Access <span class="red-star">*</span></label
           >
         </div>
-        <div class="col-md-10">
-          <p-multiSelect
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <p-dropdown
+            formControlName="userAccess"
+            [options]="userRoleList"
+            placeholder="Select user"
+            optionLabel="name"
+            [style]="{ width: '351px' }"
+          ></p-dropdown>
+          <!-- <p-multiSelect
             [options]="cities"
             [(ngModel)]="selectedCities"
             optionLabel="name"
             optionValue="code"
             display="chip"
             [style]="{ width: '100%' }"
-          ></p-multiSelect>
+          ></p-multiSelect> -->
         </div>
       </div>
-      <!-- name-fields -->
-      <div class="row mt-4">
+
+      <!-- <div class="row mt-4">
         <div class="col-md-1 mt-2 mr-3">
           <label style="width: 100px"
-            >First Name <span class="red-star">*</span></label
+            >User Access <span class="red-star">*</span></label
           >
         </div>
-        <div class="col-md-5">
-          <input
-            type="text"
-            pInputText
-            placeholder="first name"
-            style="width: 340px"
-          />
+        <div class="col-md-10">
+          <p-dropdown
+            [options]="userRoleList"
+            placeholder="Select user"
+            optionLabel="name"
+            [style]="{ width: '100%' }"
+          ></p-dropdown>
         </div>
-        <div class="col-md-1 mt-2 mr-3">
-          <label style="width: 100px"
-            >Last Name <span class="red-star">*</span></label
-          >
-        </div>
-        <div class="col-md-4">
-          <input
-            type="text"
-            pInputText
-            placeholder="last name"
-            style="width: 351px"
-          />
-        </div>
-      </div>
+      </div> -->
 
       <!-- email-and-phone-field -->
       <div class="row mt-4">
@@ -118,6 +119,7 @@
         <div class="col-md-5">
           <input
             type="email"
+            formControlName="email"
             pInputText
             placeholder="example@gmail.com"
             style="width: 340px"
@@ -129,7 +131,13 @@
           >
         </div>
         <div class="col-md-4">
-          <input type="text" pInputText placeholder="0" style="width: 351px" />
+          <input
+            type="text"
+            pInputText
+            formControlName="phoneNumber"
+            placeholder="0"
+            style="width: 351px"
+          />
         </div>
       </div>
 
@@ -141,7 +149,13 @@
           >
         </div>
         <div class="col-md-5">
-          <input type="text" pInputText placeholder="0" style="width: 340px" />
+          <input
+            type="text"
+            pInputText
+            formControlName="discountMargin"
+            placeholder="0"
+            style="width: 340px"
+          />
         </div>
         <div class="col-md-1 mt-2 mr-3">
           <label style="width: 100px"
@@ -150,10 +164,9 @@
         </div>
         <div class="col-md-4">
           <p-dropdown
-            id="opc"
-            name="picList"
-            [options]="dummy_data"
-            optionLabel="name"
+            formControlName="approvedBy"
+            [options]="userList"
+            optionLabel="full_name"
             placeholder="Select Approve By"
             [style]="{ width: '351px' }"
             [required]="true"
@@ -162,20 +175,35 @@
         </div>
       </div>
 
-      <!-- date-field -->
-
+      <!-- profit-&-unit -->
       <div class="row mt-4">
         <div class="col-md-1 mt-2 mr-3">
-          <label style="width: 100px">Validity</label>
+          <label style="width: 100px"
+            >Profit Percentage %<span class="red-star">*</span></label
+          >
         </div>
         <div class="col-md-5">
-          <input type="date" pInputText placeholder="0" style="width: 340px" />
+          <input
+            type="text"
+            pInputText
+            formControlName="profit"
+            placeholder="0"
+            style="width: 340px"
+          />
         </div>
         <div class="col-md-1 mt-2 mr-3">
-          <label style="width: 100px">Until</label>
+          <label style="width: 100px"
+            >Unit<span class="red-star">*</span></label
+          >
         </div>
         <div class="col-md-4">
-          <input type="date" pInputText placeholder="0" style="width: 351px" />
+          <input
+            type="text"
+            pInputText
+            formControlName="unit"
+            placeholder="0"
+            style="width: 340px"
+          />
         </div>
       </div>
 
@@ -187,7 +215,16 @@
           >
         </div>
         <div class="col-md-5">
-          <input type="text" pInputText placeholder="" style="width: 340px" />
+          <p-dropdown
+            formControlName="status"
+            [options]="status"
+            optionLabel="status"
+            placeholder="Select Status"
+            [style]="{ width: '340px' }"
+            [required]="true"
+          >
+          </p-dropdown>
+          <!-- <input type="text" pInputText placeholder="" style="width: 340px" /> -->
         </div>
       </div>
       <!-- action-btn -->
@@ -195,7 +232,17 @@
         <button type="button" class="btn btn-outline-primary cancel-btn">
           CANCEL
         </button>
-        <button type="button" class="btn btn-primary save-btn">SAVE</button>
+        <button
+          type="button"
+          class="btn btn-primary save-btn"
+          *ngIf="!isEdit"
+          (click)="addUser()"
+        >
+          SAVE
+        </button>
+        <button type="button" class="btn btn-primary save-btn" *ngIf="isEdit">
+          Update
+        </button>
       </div>
     </div>
   </form>

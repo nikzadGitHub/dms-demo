@@ -1,59 +1,139 @@
 <div class="card main-div">
   <div class="card-header page-heading-icon">
     <!-- <h1>Level Of Authority</h1> -->
-    <div>
+    <div class="unit-head">
       <h2>Unit Setup</h2>
+      <div>
+        <!-- back-btn -->
+        <p-button
+          styleClass="p-button-outlined"
+          class="back-p-btn"
+          (click)="back()"
+        >
+          <ng-template pTemplate="content">
+            <img
+              src="../../../../assets/img/icons/back-arrow.svg"
+              alt=""
+              style="width: 17px"
+            />
+          </ng-template>
+        </p-button>
+      </div>
     </div>
   </div>
   <!-- [formGroup]="userSetupForm" -->
-  <form >
+  <form [formGroup]="userSetupForm">
     <div class="card-body">
       <p class="title-text">
         <!-- <i class="pi pi-user-plus"></i> -->
         Details
       </p>
+
+      <!-- Search-field -->
+      <div class="row mt-3 mb-3">
+        <div class="col-lg-1 col-md-1 col-sm-1 mt-2">
+          <label>Company:<span class="red-star">*</span></label>
+        </div>
+        <div class="col-lg-11 col-md-11 col-sm-11">
+          <p-autoComplete
+            formControlName="dataAreaId"
+            [suggestions]="filtereduser"
+            (completeMethod)="filterProduct($event)"
+            field="name"
+            [dropdown]="true"
+            [style]="{ width: '100%' }"
+            [inputStyle]="{ width: '100%' }"
+          >
+            <ng-template let-product>
+              <div class="product-item">
+                <div></div>
+              </div>
+            </ng-template>
+          </p-autoComplete>
+        </div>
+      </div>
+      <!-- Name-field -->
+      <div class="row mb-5">
+        <div class="col-lg-1 col-md-1 col-sm-1 mt-2">
+          <label style="width: 100px"
+            >Unit Name: <span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5">
+          <input
+            type="text"
+            pInputText
+            formControlName="name"
+            style="width: 100%"
+          />
+        </div>
+
+        <!-- code -->
+        <div class="col-lg-1 col-md-1 col-sm-1 mt-2">
+          <label>Code:<span class="red-star">*</span></label>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5">
+          <input
+            type="text"
+            pInputText
+            formControlName="code"
+            style="width: 100%"
+          />
+        </div>
+      </div>
+
       <!-- accordian-1 -->
       <div class="accordion">
         <!-- parent-unit -->
         <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <p-accordionTab header="Parent Unit">
-            <div
-              *ngFor="let item of parentUnitValue"
-              class="p-field-checkbox check-field"
-            >
-              <p-checkbox
-                name="group2"
-                [value]="item"
-                [inputId]="item.key"
-              ></p-checkbox>
-              <label>{{ item.name }}</label>
+            <div class="agency-text" *ngFor="let item of parenUnit">
+              <!-- formControlName="parentUnit" -->
+              <input
+                type="text"
+                class="form-control"
+                [value]="item.official_name"
+                readonly
+                pInputText
+                (click)="addParentUnit($event, item)"
+                style="width: 100%"
+              />
             </div>
           </p-accordionTab>
         </p-accordion>
         <!-- agency -->
         <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <p-accordionTab header="Agency">
-            <div class="agency-text">
-              <!-- <button class="btn btn-primary">Agency</button>
-              <button class="btn btn-primary">Region</button> -->
-              <p class="p-1">Agency</p>
-              <p>Region</p>
+            <div
+              *ngFor="let item of agency"
+              class="p-field-checkbox check-field"
+            >
+              <p-checkbox
+                name="group2"
+                formArrayName="agency"
+                [value]="item.agency"
+                [inputId]="item.code"
+                (click)="changeAgency(item)"
+              ></p-checkbox>
+              <label>{{ item.agency }}</label>
             </div>
           </p-accordionTab>
         </p-accordion>
         <!-- Menufacturer -->
         <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
-          <p-accordionTab header="Menufacturer">
+          <p-accordionTab header="Manufactures">
             <div
-              *ngFor="let item of menufacturerValue"
+              *ngFor="let item of manufactures"
               class="p-field-checkbox check-field"
             >
               <p-checkbox
                 name="group2"
-                [value]="item"
-                [inputId]="item.key"
+                formControlName="manufacture"
+                [value]="item.manufacturer"
+                [inputId]="item.manufacturer_code"
+                (onChange)="changeManufectures($event, item)"
               ></p-checkbox>
-              <label>{{ item.name }}</label>
+              <label>{{ item.manufacturer }}</label>
             </div>
           </p-accordionTab>
         </p-accordion>
@@ -61,56 +141,86 @@
 
       <!-- accordian-2 -->
       <div class="accordion">
-        <!-- parent-unit -->
+        <!-- OPC-unit -->
         <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <p-accordionTab header="OPC">
+            <div *ngFor="let item of opc" class="p-field-checkbox check-field">
+              <p-checkbox
+                name="group2"
+                formControlName="opc"
+                [value]="item.opc"
+                [inputId]="item.opc_code"
+                (onChange)="changeOPC(item)"
+              ></p-checkbox>
+              <label>{{ item.opc }}</label>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+        <!-- care area -->
+        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+          <p-accordionTab header="Care Area">
+            <!-- class="agency-text" -->
             <div
-              *ngFor="let item of parentUnitValue"
               class="p-field-checkbox check-field"
+              *ngFor="let item of careArea"
             >
               <p-checkbox
                 name="group2"
-                [value]="item"
-                [inputId]="item.key"
-              ></p-checkbox>
-              <label>{{ item.name }}</label>
+                formArrayName="careArea"
+                [value]="item.care_area"
+                [inputId]="item.code"
+                (click)="selectCareArea(item)"
+              >
+              </p-checkbox>
+              <label>{{ item.care_area }}</label>
+              <!-- <input
+                type="text"
+                formArrayName="careArea"
+                class="form-control"
+                readonly
+                [value]="item.care_area"
+                (click)="selectCareArea(item)"
+                pInputText
+                style="width: 100%"
+              /> -->
             </div>
           </p-accordionTab>
         </p-accordion>
-        <!-- agency -->
-        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
-          <p-accordionTab header="Care Area">
-            <div class="agency-text">
-              <!-- <button class="btn btn-primary">Agency</button>
-              <button class="btn btn-primary">Region</button> -->
-              <p class="p-1">Agency</p>
-              <p>Region</p>
-            </div>
-          </p-accordionTab>
-        </p-accordion>
-        <!-- Menufacturer -->
+        <!-- Principles -->
         <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <p-accordionTab header="Principles">
             <div
-              *ngFor="let item of menufacturerValue"
+              *ngFor="let item of principles"
               class="p-field-checkbox check-field"
             >
               <p-checkbox
                 name="group2"
-                [value]="item"
-                [inputId]="item.key"
+                formControlName="principles"
+                [value]="item.product_group"
+                [inputId]="item.product_group_code"
+                (onChange)="changePrinciples(item)"
               ></p-checkbox>
-              <label>{{ item.name }}</label>
+              <label>{{ item.product_group }}</label>
             </div>
           </p-accordionTab>
         </p-accordion>
       </div>
 
       <div class="action-btn">
-        <button type="button" class="btn btn-outline-primary cancel-btn">
+        <button
+          type="button"
+          class="btn btn-outline-primary cancel-btn"
+          (click)="resetForm()"
+        >
           CANCEL
         </button>
-        <button type="button" class="btn btn-primary save-btn">SAVE</button>
+        <button
+          type="button"
+          class="btn btn-primary save-btn"
+          (click)="createUnit()"
+        >
+          SAVE
+        </button>
       </div>
 
       <div class="authority-table">

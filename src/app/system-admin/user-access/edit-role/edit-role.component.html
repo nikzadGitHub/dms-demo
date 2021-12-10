@@ -8,18 +8,8 @@
         </span>
       </div>
       <div class="top-btn">
-        <!-- save-btn -->
-        <p-button styleClass="p-px-3">
-          <ng-template pTemplate="content">
-            <img
-              src="../../../../assets/img/icons/save.svg"
-              alt=""
-              style="width: 15px"
-            />
-          </ng-template>
-        </p-button>
         <!-- back-btn -->
-        <p-button styleClass="p-px-3">
+        <p-button styleClass="p-button-outlined" class="back-p-btn">
           <ng-template pTemplate="content">
             <img
               src="../../../../assets/img/icons/back-arrow.svg"
@@ -42,47 +32,33 @@
       </div>
       <div class="col-md-10">
         <input
-        type="text"
-        [value]="roleDetail?.name"
-        class="read-only"
-        disabled
-        pInputText
-        style="width: 100%;"
-      />
-        <!-- <p-autoComplete
-          field="name"
-          [dropdown]="true"
-          [style]="{ width: '100%' }"
-          [inputStyle]="{ width: '100%' }"
-        >
-          <ng-template let-product>
-            <div class="product-item">
-              <div></div>
-            </div>
-          </ng-template>
-        </p-autoComplete> -->
+          type="text"
+          [value]="roleDetail?.name"
+          class="read-only"
+          disabled
+          pInputText
+          style="width: 100%"
+        />
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="form-group has-search">
+          <span class="fa fa-search form-control-feedback"></span>
+          <input
+            type="text"
+            class="form-control ds-input"
+            id="search-input"
+            placeholder="Search..."
+            style="position: relative; vertical-align: top"
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+          />
+        </div>
       </div>
     </div>
 
-    <!-- unit-name-field -->
-    <!-- <div class="row mt-4">
-          <div class="col-md-2 mt-2">
-            <label>Unit Name:</label>
-          </div>
-          <div class="col-md-10">
-            <p-multiSelect
-              [options]="cities"
-              [(ngModel)]="selectedCities"
-              optionLabel="name"
-              optionValue="code"
-              display="chip"
-              [style]="{ width: '100%' }"
-            ></p-multiSelect>
-          </div>
-        </div> -->
-
     <!-- Tables -->
-    <div class="row mt-4">
+    <div class="row">
       <div class="col-md-12">
         <p-table
           #dt
@@ -143,7 +119,6 @@
   <!-- </form> -->
 </div>
 
-
 <!-- succes-model -->
 <div
   id="success"
@@ -168,7 +143,6 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
-
 
 <!-- danger-model -->
 <div

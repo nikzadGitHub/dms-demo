@@ -21,8 +21,9 @@ const routes: Routes = [
     path: "add-user-access",
     component: AddUserAccessComponent,
   },
+  // :roleId/edit
   {
-    path: ":roleId/edit",
+    path: "edit",
     component: EditRoleComponent,
   },
 ];

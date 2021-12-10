@@ -7,27 +7,20 @@
         Level Of Approval
       </h2>
       <div>
-        <!-- save-btn -->
+        <!-- back-btn -->
         <p-button
-          styleClass="p-px-3"
+          styleClass="p-button-outlined"
+          class="back-p-btn"
+          (click)="back()"
         >
           <ng-template pTemplate="content">
             <img
-              src="../../../../assets/img/icons/save.svg"
+              src="../../../../assets/img/icons/back-arrow.svg"
               alt=""
-              style="width: 15px"
+              style="width: 17px"
             />
           </ng-template>
         </p-button>
-
-        <!-- back-btn -->
-        <p-button
-        styleClass="p-px-3"
-      >
-        <ng-template pTemplate="content">
-          <img src="../../../../assets/img/icons/back-arrow.svg" alt="" style="width: 17px;">
-        </ng-template>
-      </p-button>
       </div>
 
       <!-- <img src="../../../../assets/img/icons/back-arrow.svg" alt=""> -->
@@ -65,15 +58,17 @@
         <div class="col-md-6">
           <div class="row">
             <div class="col-3 mt-2">
-              <label>Payment Term:<span class="red-star">*</span></label>
+              <label
+                >Payment Term Approval:<span class="red-star">*</span></label
+              >
             </div>
             <div class="col-9">
               <p-dropdown
                 id="opc"
                 name="picList"
                 formControlName="paymentTermApproval"
-                [options]="dummy_data"
-                optionLabel="name"
+                [options]="userList"
+                optionLabel="full_name"
                 placeholder="Select Approve By"
                 [style]="{ width: '380px' }"
                 [required]="true"
@@ -125,6 +120,55 @@
           </div>
         </div>
       </div>
+      <!-- celling price amount and celling price approval -->
+      <div class="authority-text-1 row mb-2">
+        <!-- Approval Profit Margin -->
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-3 mt-2">
+              <label
+                >Celling Price Amount: <span class="red-star">*</span></label
+              >
+            </div>
+            <div class="col-9">
+              <p-inputNumber
+                name=""
+                formControlName="cellingPriceAmount"
+                inputId="integeronly"
+                inputId="withoutgrouping"
+                [useGrouping]="false"
+                [style]="{ width: '380px' }"
+              >
+              </p-inputNumber>
+            </div>
+          </div>
+        </div>
+
+        <!-- celling price approval -->
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-3 mt-2">
+              <label
+                >Celling Price Approval:<span class="red-star">*</span></label
+              >
+            </div>
+            <div class="col-9">
+              <p-dropdown
+                id="opc"
+                name="picList"
+                formControlName="cellingPriceApproval"
+                [options]="userList"
+                optionLabel="full_name"
+                placeholder="Select celling price approval"
+                [style]="{ width: '380px' }"
+                [required]="true"
+              ></p-dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Person Charges -->
       <div class="authority-text-2 row mb-2">
         <!-- Person Charges -->
         <div class="col-md-6">
@@ -195,8 +239,8 @@
                 id="opc"
                 name="picList"
                 formControlName="approveBy"
-                [options]="dummy_data"
-                optionLabel="name"
+                [options]="userList"
+                optionLabel="full_name"
                 placeholder="Select Approve By"
                 [style]="{ width: '300px' }"
                 [required]="true"

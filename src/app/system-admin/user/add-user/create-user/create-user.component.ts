@@ -1,4 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { SystemAdminService } from "../../../system-admin.service";
 
 @Component({
   selector: "app-create-user",
@@ -7,7 +10,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class CreateUserComponent implements OnInit {
   filtereduser: any[];
-
+  userform: FormGroup;
   dummy_data = [
     { name: "New York", code: "NY" },
     { name: "Rome", code: "RM" },
@@ -37,17 +40,99 @@ export class CreateUserComponent implements OnInit {
       report_to: "Mr C",
     },
   ];
-  cities = [
-    { name: "New York", code: "NY" },
-    { name: "Rome", code: "RM" },
-    { name: "London", code: "LDN" },
-    { name: "Istanbul", code: "IST" },
-    { name: "Paris", code: "PRS" },
+  userList: any = [];
+  userRoleList: any[] = [];
+  status = [
+    { status: "Active", code: "1" },
+    { status: "Suspend", code: "2" },
   ];
   selectedCities: string[];
-  constructor() {}
+  userRoleId: any;
+  isEdit: boolean;
+  constructor(
+    private systemAdminSerive: SystemAdminService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder
+  ) {
+    this.userform = this.formBuilder.group({
+      companyName: "",
+      dataAreaId: "",
+      name: "",
+      userAccess: "",
+      email: "",
+      phoneNumber: "",
+      discountMargin: "",
+      approvedBy: "",
+      profit: "",
+      unit: "",
+      status: "",
+    });
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.userRoleId = params.userRoleId;
+      if (this.userRoleId) {
+        this.isEdit = true;
+        this.getUserRoleDetail(this.userRoleId);
+      } else {
+        this.getUserRole();
+        this.getListOfRolePermission();
+      }
+    });
+  }
 
+  getListOfRolePermission() {
+    this.systemAdminSerive.getQuery("/role").subscribe((res: any) => {
+      console.log("permission-role-data:", res);
+      this.userRoleList = res.data;
+    });
+  }
+  getUserRole() {
+    this.systemAdminSerive.getQuery("/user-role").subscribe((res: any) => {
+      console.log("user-role-data:", res);
+      this.userList = res.data;
+    });
+  }
+
+  getUserRoleDetail(userRoleId) {
+    this.systemAdminSerive
+      .getQuery("/user-role/" + userRoleId + "/edit")
+      .subscribe((res: any) => {
+        console.log("detail-user:", res);
+        this.userRoleList = res?.data?.roles;
+        this.userform.patchValue({
+          name: res?.data?.full_name,
+          email: res?.data?.email,
+          phoneNumber: res?.data?.phone_number,
+        });
+      });
+  }
+
+  addUser() {
+    this.systemAdminSerive
+      .postQuery("/auth/create-user", {
+        companyName: "",
+        dataAreaId: "",
+        name: "",
+        userAccess: "",
+        email: "",
+        phoneNumber: "",
+        discountMargin: "",
+        approvedBy: "",
+        profit: "",
+        unit: "",
+        status: "",
+      })
+      .subscribe((res) => {
+        console.log("add-user-res:", res);
+      });
+  }
   filterProduct(event) {}
+
+  back() {
+    // this.location.back();
+    this.router.navigateByUrl("user/adduser");
+  }
 }

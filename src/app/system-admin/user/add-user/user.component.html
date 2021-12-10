@@ -1,12 +1,8 @@
 <div class="animated fadeIn">
-  <form
-    name="systemAdminForm"
-    #systemAdminForm="ngForm"
-    (ngSubmit)="onSubmit()"
-  >
+  <form >
     <div class="col-md-12">
       <div class="row header pt-3 pb-3">
-        <div class="col-lg-10 col-md-8 col-sm-8">
+        <div class="col-lg-11 col-md-8 col-sm-8">
           <span class="header-icon">
             <i class="pi pi-user"></i>
             <h3 class="title text-dark"><b>User</b></h3>
@@ -20,16 +16,6 @@
               (click)="createUser()"
             >
               <i class="pi pi-plus"></i>
-            </button>
-          </a>
-        </div>
-        <div class="col-lg-1 col-md-2 col-sm-2">
-          <a href="#">
-            <button
-              type="button"
-              class="btn btn-danger btn-fill pull-right form-control"
-            >
-              <i class="pi pi-trash"></i>
             </button>
           </a>
         </div>
@@ -63,9 +49,6 @@
         >
           <ng-template pTemplate="header">
             <tr>
-              <th class="text-center" width="5%">
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-              </th>
               <th width="40%">User Name</th>
               <th class="text-center" width="20%">Status</th>
               <th class="text-center" width="20%">Creaed Date</th>
@@ -74,9 +57,6 @@
           </ng-template>
           <ng-template pTemplate="body" let-user>
             <tr>
-              <td class="text-center">
-                <p-tableCheckbox [value]="user"></p-tableCheckbox>
-              </td>
               <td>{{ user.full_name }}</td>
               <td class="text-center">{{ user.status }}</td>
               <td class="text-center">

@@ -38,13 +38,14 @@ export class EditRoleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((event) => {
-      this.roleId = event.roleId;
-      this.getRoleDetail(this.roleId);
+    this.route.queryParams.subscribe((params) => {
+        this.roleId = params.roleId;
+        this.getRoleDetail(this.roleId);
     });
-
-    // this.selectedRolePermission = this.permissionValue.filter((value) => value.check);
-    // console.log("selected-values:", this.selectedRolePermission);
+    // this.route.params.subscribe((event) => {
+    //   this.roleId = event.roleId;
+    //   this.getRoleDetail(this.roleId);
+    // });
   }
 
   getRoleDetail(roleId) {

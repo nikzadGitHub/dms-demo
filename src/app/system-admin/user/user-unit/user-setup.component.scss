@@ -6,6 +6,14 @@
   }
 }
 
+.unit-head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.red-star {
+  color: red;
+}
 .main-div {
   display: flex;
   flex-direction: column;
@@ -48,7 +56,24 @@
       flex-direction: column;
       align-items: flex-start;
       //   margin: 15px;
-      button {
+      input {
+        margin-bottom: 7px;
+        border: none;
+        background: white;
+        padding-left: 15px;
+      }
+      input:disabled {
+        background-color: white;
+      }
+      input:focus {
+        color: white;
+        background: #2196f3;
+      }
+      input:hover {
+        cursor: pointer;
+        border-color: none;
+      }
+      input button {
         border: none;
         margin-bottom: 10px;
       }
