@@ -14,27 +14,69 @@
                 <p class="form-control-static">DRAFT</p>
               </div>
             </div>
-            <div class="form-group row">
-              <label class="col-md-2 col-form-label" for="booking-reason"
-                >Booking reason</label
-              >
 
-              <div class="col-md-4">
-                <select
-                  formControlName="booking_reason"
-                  (change)="changeReason($event.target.value)"
-                  class="form-control"
-                  [(ngModel)]="selectedBooking"
-                >
-                  <option
-                    [value]="reason.id"
-                    *ngFor="let reason of bookingReasons"
-                  >
-                    {{ reason.name }}
-                  </option>
-                </select>
+
+              <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group row">
+                      <label class="col-md-2 col-form-label" for="booking-reason"
+                        >Booking reason</label
+                      >
+
+                      <div class="col-md-4">
+                        <select
+                          formControlName="booking_reason"
+                          (change)="changeReason($event.target.value)"
+                          class="form-control"
+                          [(ngModel)]="selectedBooking"
+                        >
+                          <option
+                            [value]="reason.id"
+                            *ngFor="let reason of bookingReasons"
+                          >
+                            {{ reason.name }}
+                          </option>
+                        </select>
+
+                      </div><!-- /col-md-4 -->
+                    </div><!-- /form-group -->
+                  </div><!-- /col-md-6 -->
+              </div><!-- /row -->
+
+
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label">Booking No</label>
+                    <div class="col-md-8">
+                      <p class="form-control-static">{{ bookingDetailList.booking_no }}</p>
+                    </div>
+                  </div>
+                </div>
+
               </div>
+
+              <div class="form-group row">
+
+                <label class="col-md-2 col-form-label">Customer</label>
+                <div class="col-md-4">
+                  <select formControlName="customer" class="form-control" >
+                    <option value="">Please select</option>
+                    <option *ngFor="let customer of customers" value="{{customer.id}}">{{customer.company_name}}</option>
+                  </select>
+                </div>
+
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="branch">Branch/site</label>
+                <div class="col-md-4">
+                  <input type="text" formControlName="branch"  class="form-control">
+                </div>
+              </div>
+
             </div>
+
             <div class="form-group row">
               <label class="col-md-2 col-form-label">Request Date</label>
               <div class="col-md-9">
@@ -563,9 +605,164 @@
                   <!-- /.modal -->
                 </div>
               </div>
-            </div>
-          </form>
+
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="remarks">Remarks</label>
+                <div class="col-md-9">
+                  <textarea formControlName="remarks" rows="9" class="form-control"></textarea>
+                </div>
+              </div>
+
+              <!-- bme log -->
+              <div class="form-group"  *ngIf="optionValue  == 'demo'">
+                <p-accordion class="p-accordion">
+                    <p-accordionTab class="p-accordionTab" [selected]="true">
+                        <p-header class="p-header">
+                            <i class="cil-info"></i>
+                            <span class="accordion-header">Bme Logs</span>
+                        </p-header>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Work Order Type</th>
+                                    <th>Required ?</th>
+                                    <th>Work Order Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Contingency</td>
+                                    <td>
+                                        <select class="form-control" formControlName="wo_con_req">
+                                            <option [value]="1" selected>Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" class="form-control" formControlName="wo_con_won" readonly></td>
+                                </tr>
+                                <tr>
+                                  <td>PDI</td>
+                                  <td>
+                                      <select class="form-control" formControlName="wo_pdi_req">
+                                          <option value="1" selected>Yes</option>
+                                          <option value="0">No</option>
+                                      </select>
+                                  </td>
+                                  <td><input type="text" class="form-control" formControlName="wo_pdi_won" readonly></td>
+                                </tr>
+                                <tr>
+                                  <td>Installation</td>
+                                  <td>
+                                      <select class="form-control" formControlName="wo_ins_req">
+                                          <option value="1" selected>Yes</option>
+                                          <option value="0">No</option>
+                                      </select>
+                                  </td>
+                                  <td><input type="text" class="form-control" formControlName="wo_ins_won" readonly></td>
+                                </tr>
+                                <tr>
+                                  <td>TNC</td>
+                                  <td>
+                                      <select class="form-control" formControlName="wo_tnc_req" >
+                                          <option value="1">Yes</option>
+                                          <option value="0">No</option>
+                                      </select>
+                                  </td>
+                                  <td><input type="text" class="form-control" formControlName="wo_tnc_won" readonly></td>
+                                </tr>
+                                <tr>
+                                  <td>Training</td>
+                                  <td>
+                                      <select class="form-control" formControlName="wo_trn_req">
+                                          <option value="1" selected>Yes</option>
+                                          <option value="0">No</option>
+                                      </select>
+                                  </td>
+                                  <td><input type="text" class="form-control" formControlName="wo_trn_won" readonly></td>
+                                </tr>
+                                <tr>
+                                  <td>Warehouse QA</td>
+                                  <td>
+                                      <select class="form-control" formControlName="wo_wq_req">
+                                          <option value="1">Yes</option>
+                                          <option value="0">No</option>
+                                      </select>
+                                  </td>
+                                  <td><input type="text" class="form-control" formControlName="wo_wq_won" readonly></td>
+                                </tr>
+                                <tr>
+                                  <td>Post-Deployment Repair</td>
+                                  <td>
+                                      <select class="form-control" formControlName="wo_pdr_req">
+                                          <option value="1" selected>Yes</option>
+                                          <option value="0">No</option>
+                                      </select>
+                                  </td>
+                                  <td><input type="text" class="form-control" formControlName="wo_pdr_won" readonly></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </p-accordionTab>
+                </p-accordion>
+              </div>
+              <!-- bme log -->
+
+              <div class="custom-footer d-flex justify-content-center">
+                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Save</button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
+    </div><!--/.row-->
+  </div>
+
+
+
+  <div
+    id="success"
+    bsModal
+    #successModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Success</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{ alertBody }}</p>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+  <div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer">
       </div>
     </div>
   </div>

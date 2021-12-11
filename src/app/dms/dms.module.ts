@@ -35,7 +35,6 @@ import { OpportunityBookingFormComponent } from './components/bookings/opportuni
 import { OpportunityFormComponent } from './components/bookings/opportunity-booking-form/opportunity-form/opportunity-form.component';
 
 
-
 @NgModule({
   declarations: [
     DmsComponent,
@@ -56,8 +55,8 @@ import { OpportunityFormComponent } from './components/bookings/opportunity-book
     IdentifyComponent,
     OpportunityBookingFormComponent,
     OpportunityFormComponent
-
   ],
+
   imports: [
     CommonModule,
     DmsRoutingModule,
