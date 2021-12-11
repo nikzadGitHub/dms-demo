@@ -1,0 +1,227 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+@page {
+  margin: 0;
+  size: letter; /*or width x height 150mm 50mm*/
+}
+.file-input {
+  display: none;
+}
+[contenteditable] {
+  padding: 10px;
+}
+[contenteditable]:focus {
+  outline: 1px solid lightgray;
+  border-radius: 3px;
+}
+
+.main-div {
+  font-size: 8px !important;
+  .template-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // width: 41%;
+    .temp-img {
+      display: flex;
+      justify-content: center;
+      margin: 10px;
+      img {
+        // width: 40%;
+        width: 136px;
+        height: auto;
+      }
+    }
+    .v2 {
+      border: 1px solid #2a2a2a;
+      // width: 70%;
+      width: 159px;
+      margin: auto;
+    }
+
+    .info-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 7px;
+      p {
+        margin-bottom: 0px;
+        color: black;
+        font-weight: 500;
+      }
+    }
+  }
+  .card-body {
+    margin-top: -40px;
+  }
+  .address-title {
+    display: flex;
+    flex-direction: row;
+    margin-top: -8px;
+    // margin: 10px;
+    p {
+      font-weight: bold;
+      color: black;
+    }
+  }
+  .first-table {
+    display: flex;
+    margin-left: -10px;
+    color: black;
+    th {
+      font-style: normal;
+      font-weight: normal;
+    }
+  }
+
+  .main-text {
+    display: flex;
+    color: black;
+    flex-direction: column;
+
+    .text-1 {
+      margin-top: 2px;
+      .text-header {
+        margin-bottom: 2px;
+      }
+      .text-para {
+        margin-bottom: 1px;
+      }
+      .table-info-text {
+        margin-bottom: 4px;
+      }
+    }
+    .table-2 {
+      display: flex;
+      text-align: center;
+      .table {
+        margin-bottom: 5px;
+      }
+      .table th {
+        border: 1px solid #23282c;
+        background-color: #b7bee9;
+        color: black;
+      }
+      td {
+        border: 1px solid #23282c;
+      }
+    }
+
+    .list-detail {
+      .list-detail-p {
+        margin-bottom: 3px;
+      }
+      .table-3 {
+        display: flex;
+        .table {
+          margin-bottom: 2px;
+        }
+        .table th,
+        .table td {
+          color: black;
+          padding: 0px;
+        }
+      }
+    }
+
+    .sub-info-text {
+      .sub-info-p1 {
+        margin-bottom: 2px;
+      }
+      .sub-info-p2 {
+        margin-bottom: 2px;
+      }
+      .sub-info-p3 {
+        margin-bottom: 2px;
+      }
+    }
+    .sub-text-footer {
+      // margin-bottom: 50px;
+      label {
+        margin-bottom: 2px;
+      }
+      .company-name {
+        font-weight: 700;
+        // margin-bottom: 69px;
+        margin-bottom: 0px;
+        display: inline-block;
+      }
+      .signature {
+        margin-bottom: 0px;
+      }
+      .name-number {
+        display: inline-block;
+        margin-bottom: 0px;
+      }
+    }
+  }
+}
+.show-image {
+  img {
+    overflow-x: visible;
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .main-div {
+    font-size: 15px !important;
+  }
+  .text-1 {
+    margin-bottom: 6px;
+  }
+  .table-2 {
+    margin-bottom: 5px;
+  }
+  .download-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .template-header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-left: 10px;
+    margin-top: 10px;
+    justify-content: space-between;
+    .img-text {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      .card-img-top {
+        width: 150px;
+      }
+    }
+    .vl {
+      border-left: 2px solid #2a2a2a;
+      height: 100px;
+      margin-left: 13px;
+    }
+    .v2 {
+      display: none;
+    }
+  }
+  .sub-text-footer {
+    margin-bottom: 2px;
+  }
+  .company-name {
+    margin-bottom: 0px;
+  }
+  .name-number {
+    margin-bottom: 0px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .download-btn {
+    position: relative;
+    right: 102px;
+  }
+  .card {
+    position: relative;
+    right: 100px;
+  }
+}

@@ -1,0 +1,87 @@
+// Here you can add other styles
+.text-error {
+  color: red;
+}
+
+.asterisk {
+    color: red;
+}
+
+// For Dashboard
+.dashboard-tab div ul {
+  justify-content: center !important;
+}
+// .p-tabview-nav {
+//   // justify-content: center !important;
+// }
+
+.p-progressbar .p-progressbar-value {
+  background: #ff7b00 !important;
+}
+
+.sidebar .nav-divider {
+  height: 1px;
+  background-color: white;
+}
+
+.periodButton .p-button {
+  background: white;
+  border: 0px;
+}
+
+.periodButton .p-button:enabled:hover {
+  background: white;
+  border: 0px;
+}
+
+.periodButton .p-button-icon {
+  color: black;
+}
+
+.arrowBtn.p-button {
+  border: none;
+  background: transparent;
+  color: black;
+}
+
+.arrowBtn.p-button:enabled:hover {
+  border: none;
+  background: transparent;
+  color: black;
+}
+
+.graph-one-option .p-button {
+  background: transparent !important;
+  color: black !important;
+  border: none !important;
+  font-size: 12px;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.graph-one-option .p-button.p-highlight {
+  background: transparent !important;
+  color: blue !important;
+  border: none !important;
+  font-size: 12px;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.sales-funnel .p-datatable-tbody {
+  font-size: 14px;
+}
+
+.sales-funnel .p-datatable-tbody > tr > td {
+  padding: 5px 0.5rem !important;
+}
+
+.sales-funnel-tab .p-tabview-panels {
+  min-height: 350px;
+}
+.p-inputtext {
+  // height: 100%;
+  padding-inline-end: 29px !important;
+}
+
+@import "../app/dms/components/styles/_dms_global.scss";

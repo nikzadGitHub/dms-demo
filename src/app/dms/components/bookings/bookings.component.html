@@ -1,0 +1,133 @@
+<p-table #dt [value]="bookingList" styleClass="p-datatable-table" [rowHover]="true" [filterDelay]="0" [globalFilterFields]="['code','request_date','requester']">
+    <ng-template pTemplate="caption">
+      <div class="table-header d-flex">
+          <div class="d-flex">
+                <div>Booking Listing</div>
+                <div class="ml-2 mt-1"><a href (click)="onCreate($event)" routerLinkActive="router-link-active" ><i class="icon-plus icons" style="color: #FFFFFF"></i></a></div>
+          </div>
+          <div class="p-input-icon-left">
+              <label for="search-input"><i class="pi pi-search"></i></label>
+              <input id="search-input" type="text" pInputText placeholder="Global Search"
+                     [(ngModel)]="search_text"
+                     (input)="onSearch()"/>
+          </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="code" class="text-center">
+            <div  style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+                Booking No
+                <div class="booking-icons">
+                  <p-sortIcon field="code"></p-sortIcon>
+                  <p-columnFilter type="text" field="code" display="menu" class="p-ml-auto"></p-columnFilter>
+                </div>
+               
+            </div>
+          </th>
+        <th pSortableColumn="request_date" class="text-center">
+          <div  style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+              Request Date
+              <div class="request-date">
+                <p-sortIcon field="request_date"></p-sortIcon>
+                <p-columnFilter type="date" field="request_date" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+             
+          </div>
+        </th>
+        <th pSortableColumn="requester" class="text-center">
+          <div style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+               Requester
+               <div class="req-icons">
+                <p-sortIcon field="requester"></p-sortIcon>
+                <p-columnFilter type="text" field="requester" display="menu" class="p-ml-auto"></p-columnFilter>
+               </div>
+             
+          </div>
+        </th>
+        <th pSortableColumn="sku" class="text-center">
+          <div  style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+                SKU
+                <div class="sku-icons">
+                  <p-sortIcon field="sku"></p-sortIcon>
+              <p-columnFilter type="text" field="sku" display="menu" class="p-ml-auto"></p-columnFilter>
+                </div>
+              
+          </div>
+        </th>
+        <th pSortableColumn="product_desc" class="text-center">
+          <div style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+              Product Desc
+              <div class="prod-icons">
+                <p-sortIcon field="product_desc"></p-sortIcon>
+                <p-columnFilter type="text" field="product_desc" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+            
+          </div>
+        </th>
+        <th pSortableColumn="customer" class="text-center">
+          <div style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+              Customer
+              <div class="cust-icons">
+                <p-sortIcon field="customer"></p-sortIcon>
+                <p-columnFilter type="text" field="customer" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+             
+          </div>
+        </th>
+        <th pSortableColumn="booking_reason" class="text-center">
+          <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+              Booking Reason
+              <div class="booking-icons">
+                <p-sortIcon field="booking_reason"></p-sortIcon>
+                <p-columnFilter type="numeric" field="booking_reason" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+             
+          </div>
+        </th>
+        <th pSortableColumn="status" class="text-center">
+            <div style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+                Status
+                <div class="status-icons">
+                  <p-sortIcon field="status"></p-sortIcon>
+                  <p-columnFilter type="numeric" field="status" display="menu" class="p-ml-auto"></p-columnFilter>
+                </div>
+               
+            </div>
+          </th>
+
+        <th [style]="{'width':'5%'}">
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-bookingItem>
+      <tr class="p-selectable-row">
+        <td class="text-center">
+            <a routerLink="{{ bookingItem.id }}" routerLinkActive="router-link-active">{{ bookingItem.booking_no }}</a>
+        </td>
+        <td class="text-center">
+            {{ bookingItem.request_date }}
+        </td>
+        <td class="text-center">
+            {{ bookingItem.requester }}
+        </td>
+        <td class="text-center">
+            {{ bookingItem.sku }}
+        </td>
+        <td class="text-center">
+            {{ bookingItem.product_desc }}
+        </td>
+        <td class="text-center">
+            {{ bookingItem.customer }}
+        </td>
+        <td class="text-center">
+            {{ bookingItem.booking_reason }}
+        </td>
+        <td class="text-center">
+          {{ bookingItem.status }}
+        </td>
+    </tr>
+    </ng-template>
+  </p-table>
+  <p-paginator [rows]="pageItems" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
+  </p-paginator>

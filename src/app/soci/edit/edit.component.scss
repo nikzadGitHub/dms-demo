@@ -1,0 +1,670 @@
+.rcorners {
+  border-radius: 0;
+  overflow: hidden;
+}
+.bg-opp {
+  background-color: #5dbec0;
+  p {
+    margin-bottom: 0px;
+  }
+}
+.chead {
+  font-family: "Lato";
+  font-size: 24px;
+  line-height: 34px;
+  font-style: normal;
+  font-weight: 200;
+}
+
+.prod input:disabled {
+  background-color: #e4e7ea !important;
+}
+
+.purple {
+  // background-color: #424562;
+  background-color: #898485;
+  color: white;
+}
+
+.white {
+  background-color: white;
+}
+
+.grey {
+  background-color: rgb(245, 245, 245);
+}
+
+.customBorder {
+  border-color: #70acf4;
+}
+
+.card {
+  padding: 0%;
+}
+
+.card-header {
+  border: none;
+}
+
+.card-body {
+  padding-top: 35px;
+}
+.status {
+  display: flex;
+  flex-direction: column;
+}
+.footer-data {
+  color: black;
+  label {
+    font-weight: 600;
+  }
+}
+.customCardHeight {
+  height: 10px;
+}
+.action-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  align-items: center;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 24px;
+
+  i {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    margin-top: 5px;
+  }
+}
+.request-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 24px;
+  margin-top: 30px;
+  i {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    margin-top: 9px;
+  }
+  button {
+    border-radius: 5px;
+    border: 1px solid #386fa4;
+    line-height: 30px;
+  }
+  .cancel-btn {
+    background: #ffffff;
+    color: #386fa4;
+    margin-right: 10px;
+    width: 120px;
+  }
+  .reject-btn {
+    border-color: red;
+    color: red;
+    width: 120px;
+  }
+  .request-approval-btn {
+    background: #386fa4;
+    color: #ffffff;
+    margin-left: 10px;
+  }
+  .request-btn {
+    background: #386fa4;
+    color: #ffffff;
+    margin-left: 10px;
+    width: 120px;
+  }
+}
+
+thead {
+  text-align: center;
+  border: none;
+  border-top: gray;
+  border-bottom: gray;
+  background-color: rgb(245, 245, 245);
+}
+
+input {
+  width: 70%;
+}
+
+input:disabled {
+  background: white;
+  border: none;
+  text-align: center;
+}
+
+.td-actions {
+  font-size: 1.5em;
+  .action-icon {
+    font-size: 19px;
+  }
+}
+input:disabled {
+  border: 1px solid #e4e7ea;
+}
+
+.charges {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  white-space: break-spaces;
+  p {
+    margin-bottom: 0px;
+  }
+  input {
+    width: 230px;
+    margin: 10px;
+  }
+}
+
+.scroll {
+  direction: rtl;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.scroll > * {
+  direction: ltr;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.purple {
+  background-color: #898485;
+  color: white;
+}
+.no-border {
+  border: 0;
+  box-shadow: none;
+}
+:host ::ng-deep .customColor.p-accordion {
+  .p-accordion-header {
+    font-size: 24px;
+    font-weight: bolder;
+    background: white;
+    span.pi {
+      margin-top: -8px;
+      position: absolute;
+      right: 0.5em;
+      top: 50%;
+    }
+    .p-accordion-header-link {
+      background: white;
+    }
+  }
+  .p-accordion-content {
+    padding: 0px;
+    overflow-x: hidden;
+    // .costItemMain{
+    //   display: flex;
+    //   justify-content: center;
+    // }
+    // .stdTermTable{
+    //   margin-top: 15px;
+    // }
+    // .action-icon{
+    //   display: flex;
+    //   justify-content: center;
+    //   align-items: center;
+    //   margin-left: 115px;
+    //   a{
+    //     padding-right: 15px;
+    //   }
+    // }
+  }
+}
+
+:host ::ng-deep .customColor.p-accordion {
+  .p-accordion-header {
+    background: #f8f9fa;
+    .p-accordion-header-link {
+      background: #f8f9fa;
+    }
+  }
+}
+:host ::ng-deep .custom.p-accordion {
+  width: 372px;
+  .p-accordion-header {
+    font-size: 16px;
+    font-weight: bolder;
+    background: #f8f9fa;
+    span.pi {
+      margin-top: -8px;
+      position: absolute;
+      right: 0.5em;
+      top: 50%;
+    }
+    .p-accordion-header-link {
+      background: #f8f9fa;
+    }
+  }
+  .p-accordion-content {
+    padding: 0px;
+    overflow-x: hidden;
+  }
+}
+.payment-form {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  .days-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    color: black;
+    font-size: medium;
+    font-family: "Lato";
+    input {
+      width: 84px;
+      margin-left: 14px;
+    }
+  }
+  .date-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    color: black;
+    font-size: medium;
+    font-family: "Lato";
+
+    input {
+      width: 160px;
+      margin-left: 14px;
+    }
+  }
+}
+.update-term-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 23px;
+  button {
+    border-radius: 5px;
+    border: 1px solid #386fa4;
+    line-height: 30px;
+    color: white;
+    background-color: #386fa4;
+    width: 102px;
+  }
+}
+label {
+  color: black;
+}
+h4 {
+  color: black;
+}
+//edit prodcut model
+.search-product {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  p-autoComplete {
+    width: 75%;
+  }
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  input {
+    width: 573px;
+    height: 40px;
+  }
+  .product-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .product-sku {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .product-quantity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .item-discount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .list-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .unit-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .floor-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .justification {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+    label {
+      color: #386fa4;
+    }
+    textarea {
+      width: 576px;
+    }
+  }
+  .principal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .product-manager {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+}
+
+.equipment-info {
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    font-size: x-large;
+    font-weight: bold;
+    color: black;
+  }
+  input {
+    width: 573px;
+    height: 40px;
+  }
+  select {
+    width: 573px;
+    height: 40px;
+  }
+  .standard-warranty {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+    margin-top: 25px;
+  }
+  .extended-warranty {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .tax-rate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .cutomer-tax {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+  .tax-code {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+  }
+}
+
+.other-cost {
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    font-size: x-large;
+    font-weight: bold;
+    color: black;
+  }
+  .category {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    select {
+      width: 573px;
+      height: 40px;
+    }
+  }
+}
+
+.total {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-size: medium;
+  font-weight: bold;
+  font-family: "Lato";
+  align-items: center;
+
+  margin-bottom: 20px;
+
+  input {
+    width: 125px;
+    height: 38px;
+    margin-left: 10px;
+  }
+}
+
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 20px;
+  button {
+    border-radius: 5px;
+    border: 1px solid #386fa4;
+    line-height: 30px;
+    width: 100px;
+  }
+  .cancel-btn {
+    background: #ffffff;
+    color: #386fa4;
+    margin-right: 10px;
+  }
+  .save-btn {
+    background: #386fa4;
+    color: #ffffff;
+  }
+}
+
+// :host ::ng-deep .customColor.p-accordion {
+//     .p-accordion-header {
+//         font-size: 1.5em;
+//         font-weight: bolder;
+//         background: white;
+//         // border: none;
+//         span.pi{
+//             margin-top: -8px;
+//             position: absolute;
+//             right: 0.5em;
+//             top: 50%;
+//         }
+//         .p-accordion-header-link{
+//             background: white;
+//             border:none;
+//         }
+//     }
+//     .p-accordion-content{
+//         padding: 0px;
+//         overflow-x: hidden;
+//     }
+// }
+.remarks-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.reject-remakrs {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  label {
+    font-weight: 600;
+    font-family: "Lato";
+    margin-bottom: 4px;
+  }
+}
+.row {
+  padding: 10px;
+}
+
+@media screen and (max-width: 576px) {
+  .bg-opp {
+    margin-bottom: 5px;
+  }
+  .form-control {
+    margin-top: 5px;
+  }
+  .stdTermTable {
+    display: flex;
+  }
+  .action-btns {
+    margin-top: 10px;
+    .cancel-btn {
+      margin-left: 350px;
+    }
+  }
+  :host ::ng-deep .customColor.p-accordion {
+    .p-accordion-content {
+      overflow-x: scroll !important;
+      .descriptionTitle {
+        input {
+          width: 150px !important;
+        }
+        width: 150px;
+      }
+      .description {
+        input {
+          width: 150px !important;
+        }
+        width: 150px;
+      }
+      .action-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 0px !important;
+        a {
+          padding-right: 10px;
+        }
+      }
+      .additionalInputDesc {
+        .descriptionTitle {
+          input {
+            width: 150px !important;
+          }
+          width: 150px;
+        }
+        .description {
+          input {
+            width: 150px !important;
+          }
+          width: 150px;
+        }
+      }
+    }
+  }
+
+  // :host ::ng-deep .custom.p-accordion {
+  //   .p-accordion-tab{
+  //     width: 285px;
+  //     float: right;
+  //   }
+  //   .p-accordion-content{
+  //     overflow-x: scroll !important;
+  //   }
+  // }
+}
+
+.soci-remarks {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  .remarks-texbox {
+    display: flex;
+    flex-direction: column;
+    label {
+      color: #495057;
+      font-weight: 600;
+      border-radius: 3px;
+      transition: box-shadow 0.2s;
+      font-size: 24px;
+    }
+    .texarea {
+      border: 1px solid #cfcfcf;
+      height: 160px;
+      width: 480px;
+      padding: 10px;
+      text-align: inherit;
+    }
+  }
+  .texarea:focus-visible {
+    outline: none;
+  }
+}

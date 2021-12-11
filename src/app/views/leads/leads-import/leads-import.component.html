@@ -1,0 +1,75 @@
+<div class="animated fadeIn">
+    <div class="col-lg col-md-6">
+        <div class="card rcorners">
+            <div class="card-header row" style="background-color: #898485; color: white;">
+                <div style="padding-left: 20px;">
+                    <h2>Import Lead</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <div draggable="true" ngClass="{{dragAreaClass}}" class="card-row" [ngClass]="(displayData == 1 ? 'hide' : 'show')">
+                    <div class="row">
+                        <div class="col-xl-12" align=center>
+                            Drag and Drop your file here.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12" align=center>
+                            or
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12" align=center>
+                            <span class="btn btn-primary" (click)="uploads.click()">BROWSE</span>
+                            <input id="files" type="file" name="files" class="form-control" #uploads  (change)="onChange(uploads.files)" value="process" style="display: none;"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12" align=center>
+                            <a href="../../../../assets/img/template/lead_template.csv">Download template file (.csv file)</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-table" [ngClass]="(displayData == 1 ? 'show' : 'hide')">
+                    <div class="alert alert-success" role="alert" [ngClass]="(successCreate == 1 ? 'show' : 'hide')">
+                        <b>Success: </b>The {{number_of_record}} records have been updated into the system
+                    </div>
+                    <div  class="alert alert-danger" role="alert" [ngClass]="(danger == 1 ? 'show' : 'hide')">
+                        Something went wrong, kindly double check your file <br>
+                        <div *ngFor="let error of errorList; "> Row {{error.row}}: {{error.message}}</div>
+                    </div>
+
+                    <table class="table table-striped table-inverse">
+                        <thead>
+                            <tr>
+                                <ng-container *ngFor="let header of headers; let i=index; let last = last;">
+                                    <th>{{ header }}</th>
+                                </ng-container>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let record of csvRecords">
+                                <td> {{record.created_date}} </td>
+                                <td> {{record.lead_id}} </td>
+                                <td> {{record.company_name}} </td>
+                                <td> {{record.contact_name}} </td>
+                                <td> {{record.email}} </td>
+                                <td> {{record.phone}} </td>
+                                <td> {{record.prospect}} </td>
+                                <td> {{record.source}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-xl-12 submit-button" align=center>
+                        <div class="form-group">
+                            <a routerLink="/leads/index" class="btn btn-secondary">CANCEL</a>
+                            <button class="btn btn-primary" type="button" (click)="submit()">SAVE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-transparent">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<app-booking-detail *ngIf="status > 1"
+  [bookingDetailList]="bookingDetailList">
+</app-booking-detail>
+
+<app-booking-form-submit *ngIf="status <= 1"
+[bookingDetailList]="bookingDetailList">
+</app-booking-form-submit>
+
+<br>
+
+<app-opportunity-summary [opportunitySummary]="opportunitySummary"></app-opportunity-summary>
+
+<br>
+
+<dms-booking-approval
+  [status]="status"
+  [access]="access"
+  [list]="approvalList"
+  (buttonAction)="onApprovalAction($event)">
+</dms-booking-approval>
+
+<br>
+
+<app-booking-form-main-asset
+  [mainAsset]="mainAsset"
+  [isAddable]="true">
+</app-booking-form-main-asset>
+<br>
+<app-status-log></app-status-log>

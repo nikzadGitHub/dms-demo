@@ -1,0 +1,15 @@
+<dms-expand-panel
+  class="p-0"
+  title="Main Demo Asset" icon="cil-cart"
+  [open]="true"
+>
+  <div *ngFor="let entry of mainAsset | keyvalue:onSortIgnore; let i=index">
+    <dms-equipment-table
+      *ngIf="entry.value"
+      [kind]="entry.key"
+      [(data)]="entry.value"
+      [isAddable]="isAddable && (i > 0 || mainAsset.main.length == 0)"
+      [isAssignable]="isAssignable">
+    </dms-equipment-table>
+  </div>
+</dms-expand-panel>

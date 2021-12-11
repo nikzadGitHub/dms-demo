@@ -1,0 +1,191 @@
+.rcorners {
+    // border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .card-body {
+    padding: 0%;
+    .submit-button {
+      padding-top: 50px;
+    }
+  }
+
+  .card-row {
+    .row {
+      padding: 8px 15px;
+    }
+  }
+
+  .card {
+    background-color: var(--body-color);
+    box-shadow: 0px 3px lightgrey;
+    margin-bottom: 10px;
+  }
+
+  .card-header {
+    border: 1;
+  }
+
+  .card-body {
+    padding: 0%;
+    background-color: white;
+    border: white;
+  }
+  .card-footer {
+    opacity: 1;
+    border: none;
+    padding: 0%;
+    padding-top: 20px;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .show {
+    display: block;
+  }
+
+  .radio-label {
+    margin-bottom: 0px;
+    margin-right: 15px;
+    margin-left: 5px;
+  }
+
+  .grey {
+    background-color: rgb(245, 245, 245);
+  }
+
+  :host ::ng-deep .mat-slide-toggle-bar {
+    height: 19px;
+    border-radius: 15px;
+  }
+  :host ::ng-deep .mat-slide-toggle-thumb-container {
+    top: 0px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+  :host ::ng-deep .mat-slide-toggle-thumb {
+    height: 16px;
+    width: 15px;
+  }
+
+  ::ng-deep
+    .mat-slide-toggle.mat-checked:not(.mat-disabled)
+    .mat-slide-toggle-bar {
+    background-color: #386fa4;
+  }
+
+  ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: white;
+  }
+
+  ::ng-deep .mat-slide-toggle.mat-checked .mat-ripple-element {
+    background-color: #386fa4;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+  .lead-id {
+    background-color: #5dbec0;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 4px;
+    padding-bottom: 3px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  ::ng-deep .p-accordion p-accordiontab:last-child .p-accordion-content {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  ::ng-deep .p-accordion p-accordiontab:last-child .p-accordion-content:first-child {
+      padding-top: 0px;
+  }
+
+  ::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link {
+    text-decoration: none;
+  }
+
+  ::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
+    margin-top: -8px;
+    position: absolute;
+    right: 0.5em;
+    top: 50%;
+  }
+
+  .accordion-header {
+      font-weight: bold;
+      font-size: 20px;
+      padding-left: 5px;
+  }
+
+  .lead-row {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      .row {
+          padding-left: 20px;
+          padding-right: 20px;
+      }
+  }
+
+  ::ng-deep .p-checkbox .p-checkbox-box {
+    border-radius: 50%;
+  }
+
+  ::ng-deep .p-checkbox .p-checkbox-box .p-checkbox-icon {
+    font-size: 11px;
+  }
+
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: white; // Choose your own color here
+}
+
+.table-striped>tbody>tr:nth-child(even)>td,
+.table-striped>tbody>tr:nth-child(even)>th {
+   background-color: rgb(242 242 242); // Choose your own color here
+}
+
+.btn-icon{
+  height: 1.5rem;
+  line-height: 1.5rem;
+  padding: 0 !important;
+  width: 1.5rem;
+  font-size: 1rem !important;
+  font-weight: bold;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.btn-custom {
+  background-color: #00538a;
+  border-color: #00538a;
+  color:#FFFFFF;
+}
+
+.confirm-modal {
+  .modal-content {
+    padding: 20px;
+    .modal-header {
+      margin: 0 auto;
+      border-bottom: 0px;
+    }
+
+    .model-title {
+      font-weight: bold;
+    }
+
+    .modal-body {
+      margin: 0 auto;
+    }
+
+    .modal-footer {
+      border-top: 0px;
+      justify-content: center;
+    }
+  }
+}

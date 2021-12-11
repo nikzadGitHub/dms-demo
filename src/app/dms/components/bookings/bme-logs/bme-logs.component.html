@@ -1,0 +1,101 @@
+<!--/.col-->
+
+  <!--/.col-->
+  <div class="form-group">
+    <p-accordion class="p-accordion">
+        <p-accordionTab class="p-accordionTab" [selected]="true">
+            <p-header class="p-header">
+                <i class="cil-info"></i>
+                <span class="accordion-header">Bme Logs</span>
+            </p-header>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Work Order Type</th>
+                        <th>Required ?</th>
+                        <th>Work Order Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Contingency</td>
+                        <td>
+                            <select class="form-control" formControlName="wot">
+                                <option value="">Yes/No</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>PDI</td>
+                        <td>
+                            <select class="form-control">
+                                <option value="">Yes/No</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Installation</td>
+                        <td>
+                            <select class="form-control">
+                                <option value="">Yes/No</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>TNC</td>
+                        <td>
+                            <select class="form-control">
+                                <option value="">Yes/No</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Training</td>
+                        <td>
+                            <select class="form-control">
+                                <option value="">Yes/No</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Warehouse QA</td>
+                        <td>
+                            <select class="form-control">
+                                <option value="">Yes/No</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Post-Deployment Repair</td>
+                        <td>
+                            <select class="form-control">
+                                <option value="">Yes/No</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </p-accordionTab>
+    </p-accordion>
+  </div>
