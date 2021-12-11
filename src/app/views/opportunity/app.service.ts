@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
 import {
   HttpClient,
   HttpHeaders,
   HttpParams,
   HttpResponse,
 } from "@angular/common/http";
+import { Injectable } from '@angular/core';
 import { catchError, tap } from "rxjs/operators";
 import { IconSetService } from "@coreui/icons-angular";
 import { settings } from "../../../environments/environment";
@@ -46,7 +46,7 @@ export class AppService {
 
   putQuery(url, req): Observable<Object> {
       console.log("req:", req);
-      
+
     let query = url;
     return this.httpClient.put(
       this.apiURL + query,

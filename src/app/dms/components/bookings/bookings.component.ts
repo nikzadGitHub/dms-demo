@@ -20,7 +20,7 @@ export class BookingsComponent implements OnInit {
 
   constructor(
     private api: BookingService,
-    private router: Router, 
+    private router: Router,
     private route: ActivatedRoute
     ) { }
 
@@ -30,23 +30,26 @@ export class BookingsComponent implements OnInit {
       if (response as BookingList) {
         this.bookingList = response;
       }
-      this.loading=false
-    
-		}, err => {
+      this.loading=false;
+    }, err => {
       this.loading = false;
-    }
-    );
+    });
+
   }
 
   onSearch() {
-    // console.log('searching for:', this.search_text);
+    this.api.getListSearch(this.search_text).subscribe((response) => {
+      if (response as BookingList) {
+        this.bookingList = response;
+      }
+	});
   }
 
   onCreate(event) {
     event.preventDefault()
     this.api.create("booking").subscribe((response) => {
       this.router.navigate(['/dms/bookings', response]);
-		});
+    });
     return false;
   }
 }
