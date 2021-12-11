@@ -212,6 +212,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     LoginComponent,
     RegisterComponent,
     DialogComponent,
+    
     // CreateComponent,
     // IndexComponent,
     // EditComponent,

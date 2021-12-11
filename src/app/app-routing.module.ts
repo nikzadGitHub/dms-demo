@@ -141,7 +141,7 @@ export const routes: Routes = [
       },
       {
         path: 'activities',
-        loadChildren: () => import('./views/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)
+        loadChildren: () => import('./views/user-activities/user-activities.module').then(m => m.UserActivitiesModule)
       },
       {
         path: 'managerview',
