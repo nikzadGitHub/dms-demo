@@ -104,6 +104,8 @@ changePrioritye(id:number){
   // }
 
   ngOnInit(): void {
+    //this.editable = (this.bookingDetailList.booking_reason == '2') ? true : false;
+
     this.apiCustomers.getList().subscribe(response => {
       this.customers = response;
     });

@@ -27,6 +27,7 @@
                         (change)="changeReason($event.target.value)"
                         class="form-control"
                         [(ngModel)]="selectedBooking"
+                        [attr.disabled]="editable"
                       >
                         <option
                           [value]="reason.id"
@@ -171,33 +172,25 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div>            
 
-            <div class="form-group row">
-              <label class="col-md-2 col-form-label" for="remarks">Remarks</label>
-              <div class="col-md-9">
-                <textarea formControlName="remarks" rows="9" class="form-control"></textarea>
-              </div>
-            </div>
-
-            <!-- opportunity -->
-            <div [ngClass]="
-                selectedBooking == 2
-                  ? 'opportunityAppear'
-                  : 'opportunity'
+            <!-- Start Of Opportunity Section -->
+            <div
+              [ngClass]="
+                selectedBooking == 2 ? 'opportunityAppear' : 'opportunity'
               "
-              [(ngModel)]="selectedBooking">
-
+              [(ngModel)]="selectedBooking"
+            >
               <p><strong class="opportunityTitle">Opportunity</strong></p>
+
               <hr />
 
               <div class="opportunityBoxes">
-
                 <div class="opportunityBoxesSame">
                   <div class="opportunityBoxesSameFirst">
                     <label for="" class="opportunityBoxesLabel"
                       >Opportunity ID-Version</label
-                    >
+                    > 
                     <div>
                       <input
                         type="text"
@@ -210,29 +203,28 @@
                       >Initiator</label
                     >
                     <select
-                      formControlName="default_initiator"
+                      formControlName="initiator"
                       (change)="changeAnswer($event.target.value)"
                       class="form-control"
                       [(ngModel)]="defaultAnswer"
                     >
                       <option
-                        [value]="answer.id"
+                        [value]="defaultAnswer"
                         *ngFor="let answer of defaultAnswers"
+                        >{{ answer.ans }}</option
                       >
-                        {{ answer.ans }}
-                      </option>
                     </select>
                   </div>
-                </div><!-- /opportunityBoxesSame -->
+                </div>
 
                 <div class="opportunityBoxesSame">
                   <div class="opportunityBoxesSameFirst">
                     <label for="" class="opportunityBoxesLabel">
                       Winning Probability
-                    </label> 
+                    </label>
 
                     <select
-                      formControlName="default_percentage"
+                      formControlName="probability"
                       (change)="changePercentage($event.target.value)"
                       class="form-control"
                       [(ngModel)]="selectedPercentage"
@@ -240,9 +232,8 @@
                       <option
                         [value]="percentage.id"
                         *ngFor="let percentage of defaultPercentages"
+                        >{{ percentage.value }}</option
                       >
-                        {{ percentage.value }}
-                      </option>
                     </select>
                   </div>
                   <div class="opportunityBoxesSameFirst">
@@ -250,7 +241,7 @@
                       >Competitor participate in Demo?</label
                     >
                     <select
-                      formControlName="default_answer"
+                      formControlName="is_competitor_in_demo"
                       (change)="changeAnswer($event.target.value)"
                       class="form-control"
                       [(ngModel)]="defaultAnswer"
@@ -258,20 +249,16 @@
                       <option
                         [value]="answer.id"
                         *ngFor="let answer of defaultAnswers"
+                        >{{ answer.ans }}</option
                       >
-                        {{ answer.ans }}
-                      </option>
                     </select>
                   </div>
-                </div><!-- /opportunityBoxesSame -->
-
+                </div>
                 <div class="opportunityBoxesSame">
                   <div class="opportunityBoxesSameFirst">
-                    <label for="" class="opportunityBoxesLabel"
-                      >Priority</label
-                    >
+                    <label for="" class="opportunityBoxesLabel">Priority</label>
                     <select
-                      formControlName="default_priority"
+                      formControlName="priority"
                       (change)="changePrioritye($event.target.value)"
                       class="form-control"
                       [(ngModel)]="defaultPriority"
@@ -279,9 +266,8 @@
                       <option
                         [value]="priority.id"
                         *ngFor="let priority of defaultPriorities"
+                        >{{ priority.value }}</option
                       >
-                        {{ priority.value }}
-                      </option>
                     </select>
                   </div>
                   <div class="opportunityBoxesSameFirst">
@@ -289,167 +275,70 @@
                       >IdsMed Sequence of Demo</label
                     >
                     <select
-                      formControlName="default_sequence"
+                      formControlName="squence_of_demo"
+                      (change)="changePriority($event.target.value)"
                       class="form-control"
                       [(ngModel)]="defaultPriority"
                     >
                       <option
                         [value]="priority.id"
                         *ngFor="let priority of defaultPriorities"
+                        >{{ priority.value }}</option
                       >
-                        {{ priority.value }}
-                      </option>
                     </select>
-                    <div class="row">
-                      <div class="col-md-6">   
-                        <div class="form-group row">
-                          <label
-                            class="col-md-4 col-form-label"
-                            for="date-of-delivery"
-                            >Preferred Date of Delivery
-                          </label>
-                          <div class="col-md-6">
-                            <input
-                              class="form-control"
-                              formControlName="date_of_delivery"
-                              type="datetime-local"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label
-                            class="col-md-4 col-form-label"
-                            for="date-of-collection"
-                            >Preferred Date of Collection
-                          </label>
-                          <div class="col-md-6">
-                            <input
-                              class="form-control"
-                              formControlName="date_of_collection"
-                              type="datetime-local"
-                              (change)="onDuration()"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label
-                        class="col-md-2 col-form-label"
-                        for="demo-duration"
-                        >Demo Duration *</label
-                      >
-                      <div class="col-md-2">
-                        <input
-                          type="number"
-                          formControlName="demo_duration"
-                          class="form-control"
-                          [value]="duration"
-                        />
-                      </div>
-                      <div class="col-md-2">Days</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label
-                            class="col-md-4 col-form-label"
-                            for="department"
-                            >Ship-to Department/ Warde</label
-                          >
-                          <div class="col-md-8">
-                            <input
-                              type="text"
-                              formControlName="department"
-                              class="form-control"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label
-                            class="col-md-4 col-form-label"
-                            for="location"
-                            >Ship-to location</label
-                          >
-                          <div class="col-md-8">
-                            <input
-                              type="text"
-                              formControlName="location"
-                              class="form-control"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="opportunitiesText">
-                      <div><label for="">Point Point</label></div>
-                      <div>
-                        <textarea
-                          name=""
-                          id=""
-                          cols="30"
-                          rows="4"
-                          style="resize: none"
-                        ></textarea>
-                      </div>
-                    </div>
-
-                    <div class="opportunitiesText">
-                      <div>
-                        <label for="">Features To highlight</label>
-                      </div>
-                      <div>
-                        <textarea
-                          name=""
-                          id=""
-                          cols="30"
-                          rows="4"
-                          style="resize: none"
-                        ></textarea>
-                      </div>
-                    </div>
-
-                    <div class="opportunitiesText">
-                      <div><label for="">users Feedback</label></div>
-                      <div>
-                        <textarea
-                          name=""
-                          id=""
-                          cols="30"
-                          rows="4"
-                          style="resize: none"
-                        ></textarea>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    class="
-                      custom-footer
-                      d-flex
-                      justify-content-center
-                    "
-                  >
-                    <button
-                      type="submit"
-                      class="btn btn-sm btn-primary"
-                    >
-                      <i class="fa fa-plus"></i> Save
-                    </button>
                   </div>
                 </div>
+              </div>
 
+              <div class="opportunitiesText">
+                <div><label for="selling_points">Point Point</label></div>
+                <div>
+                  <textarea
+                    formControlName="selling_points"
+                    cols="30"
+                    rows="4"
+                    style="resize:none;"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="opportunitiesText">
+                <div>
+                  <label for="customer_feedback">Features To highlight</label>
+                </div>
+                <div>
+                  <textarea
+                    formControlName="customer_feedback"
+                    cols="30"
+                    rows="4"
+                    style="resize:none;"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="opportunitiesText">
+                <div><label for="opportunity_code">users Feedback</label></div>
+                <div>
+                  <textarea
+                    formControlName="opportunity_code"
+                    cols="30"
+                    rows="4"
+                    style="resize:none;"
+                  ></textarea>
+                </div>
+              </div>
+            </div> 
+            <!-- End Of Opportunity Seciton -->
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="remarks">Remarks</label>
+              <div class="col-md-9">
+                <textarea formControlName="remarks" rows="9" class="form-control"></textarea>
               </div>
             </div>
-            <!-- opportuning -->
 
             <!-- bme log -->
-            <div class="form-group"  *ngIf="showBmeLogSec  == true || bookingDetailList.booking_reason == 'demo' ">
+            <div class="form-group"  *ngIf="showBmeLogSec  == true || bookingDetailList.booking_reason == '2' ">
               <p-accordion class="p-accordion">
                   <p-accordionTab class="p-accordionTab" [selected]="true">
                       <p-header class="p-header">
