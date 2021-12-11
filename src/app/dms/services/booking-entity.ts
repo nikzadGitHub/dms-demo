@@ -34,6 +34,14 @@ export interface BookingDetail {
   remarks: string;
   loan_start_date: string;
   loan_end_date: string;
+  con_won:string;
+  pdi_won:string;
+  ins_won:string;
+  trn_won:string;
+  tnc_won:string;
+  war_won:string;
+  pdr_won:string;
+  bme_booking_id:string;
 }
 
 export interface OpportunitySummary {
