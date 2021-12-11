@@ -1,0 +1,130 @@
+<div class="card-header row" style="background-color: #898485; color: white">
+  <div style="padding-left: 20px">
+    <h2>Create Activity</h2>
+  </div>
+</div>
+<div>
+  <div style="width: 260px; margin-top: 14px">
+    <label style="color: black"><b>Customer Name</b></label>
+    <input
+      style="
+        background: white;
+        border: none;
+        border-bottom: 1px solid;
+        margin-bottom: 17px;
+      "
+      class="form-control"
+      formControlName="company_name_from_lead"
+    />
+    <i
+      class="pi pi-search"
+      style="position: absolute; left: 460px; top: 185px"
+    ></i>
+  </div>
+
+  <table class="table table-hover table-striped">
+    <thead style="background: lightgray; color: black">
+      <tr>
+        <th>Created date</th>
+        <th>Primary Contact</th>
+        <th>Other Contacts</th>
+        <th>Owner</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>11-DEC-2021</td>
+        <td>+6298754422</td>
+        <td>+889283232</td>
+        <td>Lee</td>
+
+        <td>
+          <a class="fa fa-edit"></a>
+          <i
+            class="fa fa-trash text-primary"
+            aria-hidden="true"
+            style="cursor: pointer"
+          ></i>
+        </td>
+      </tr>
+      <tr>
+        <td>11-DEC-2021</td>
+        <td>+6298754422</td>
+        <td>+889283232</td>
+        <td>Lee</td>
+        <td>
+          <a class="fa fa-edit"></a>
+          <i
+            class="fa fa-trash text-primary"
+            aria-hidden="true"
+            style="cursor: pointer"
+          ></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p-accordion  styleClass="customColor" activeIndex="">
+    <p-accordionTab header="Activities">
+
+  <div class="col-sm-12 col-md-12">
+   
+     
+      <div  class="form-group">
+        <button class="btn btn-primary mr-2 px-4" type="reset">Open</button>
+        <button class="btn btn-light px-5" type="submit">Closed</button>
+      </div>
+    
+
+      <table class="table table-hover table-striped">
+        <thead style="color: black">
+          <tr>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Due Date</th>
+            <th>Completion Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>11-DEC-2021</td>
+            <td>+6298754422</td>
+            <td>+889283232</td>
+            <td>12-22-2021</td>
+            <td>12-22-2021</td>
+
+
+            <td>
+              <a class="fa fa-edit"></a>
+              <i
+                class="fa fa-trash text-primary"
+                aria-hidden="true"
+                style="cursor: pointer"
+              ></i>
+            </td>
+          </tr>
+          <tr>
+            <td>11-DEC-2021</td>
+            <td>+6298754422</td>
+            <td>+889283232</td>
+            <td>Lee</td>
+            <td>12-22-2021</td>
+
+            <td>
+              <a class="fa fa-edit"></a>
+              <i
+                class="fa fa-trash text-primary"
+                aria-hidden="true"
+                style="cursor: pointer"
+              ></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    </p-accordionTab>
+  </p-accordion>
