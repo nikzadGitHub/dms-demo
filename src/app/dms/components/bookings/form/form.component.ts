@@ -13,8 +13,9 @@ import { BookingDetail } from '../../../services/booking-entity';
   templateUrl: "./form.component.html",
   styleUrls: ["./form.component.scss"]
 })
-export class FormComponent implements OnInit {
 
+export class FormComponent implements OnInit{ 
+  editable: boolean;
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("foundModal") foundModal: ModalDirective;
@@ -30,7 +31,7 @@ export class FormComponent implements OnInit {
   showBmeLogSec: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: FormBuilder, 
     private bookingService: BookingService,
     private apiCustomers: CustomersService
   ) {}
@@ -183,8 +184,8 @@ changePrioritye(id:number){
             this.successModal.hide();
           }, 2000);
         }
-      },
-      err => {
+      },  
+      err => { 
         console.log(err);
           this.alertBody = "The booking can't save";
           this.dangerModal.show();

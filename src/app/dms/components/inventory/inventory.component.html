@@ -81,8 +81,13 @@
                     
                 </div>
             </th>
+<<<<<<< HEAD
+            <!-- <th pSortableColumn="booking_id" class="text-center">
+                <div class="p-d-flex p-jc-between p-ai-center">
+=======
             <th pSortableColumn="booking_id" class="text-center">
                 <div  style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+>>>>>>> e27839d99b134687afd724a03da6ac2d5a296862
                     Current Booking
                     <div class="booking-icons">
                         <p-sortIcon field="booking_id"></p-sortIcon>
@@ -91,7 +96,7 @@
                     </div>
                   
                 </div>
-            </th>
+            </th> -->
 
             <th [style]="{'width':'5%'}">
             </th>
@@ -100,7 +105,7 @@
     <ng-template pTemplate="body" let-inventoryItem>
         <tr class="p-selectable-row">
             <td class="text-center">
-                {{ inventoryItem.serial_no | number:'5.' }}
+                {{ inventoryItem.serial_no | number:'3.' }}
             </td>
             <td class="text-center">
                 {{ inventoryItem.stock_keep_unit }}
@@ -117,9 +122,9 @@
             <td class="text-center">
                 {{ inventoryItem.status }}
             </td>
-            <td class="text-center">
+            <!-- <td class="text-center">
                 {{ formatBooking(inventoryItem.booking_id) }}
-            </td>
+            </td> -->
         </tr>
     </ng-template>
 
