@@ -14,7 +14,6 @@ import { BookingDetail } from '../../../services/booking-entity';
   styleUrls: ["./form.component.scss"]
 })
 export class FormComponent implements OnInit {
-  editable: boolean;
 
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
@@ -27,6 +26,8 @@ export class FormComponent implements OnInit {
   curDate = new Date(Date.now()).toLocaleDateString();
   customers: CustomerList;
   duration: any;
+  editable: boolean;
+  showBmeLogSec: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -89,6 +90,7 @@ changePrioritye(id:number){
   changeReason(id: number) {
     //getted from event
     this.selectedBooking = id;
+    this.showBmeLogSec = true;
     // console.log(id);
     // console.log('compare');
     // console.log(this.selectedBooking);
