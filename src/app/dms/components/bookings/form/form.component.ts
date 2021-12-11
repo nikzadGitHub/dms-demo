@@ -8,12 +8,6 @@ import { BookingService } from '../services/booking.service';
 import { CustomersService } from '../../../services/customers/customers.service';
 import { BookingDetail } from '../../../services/booking-entity';
 
-/**
- * For submit the booking form
- * @class
- */
- `optionValue`;
-
 @Component({
   selector: "app-booking-form-submit",
   templateUrl: "./form.component.html",
@@ -21,6 +15,7 @@ import { BookingDetail } from '../../../services/booking-entity';
 })
 export class FormComponent implements OnInit {
   editable: boolean;
+
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("foundModal") foundModal: ModalDirective;
