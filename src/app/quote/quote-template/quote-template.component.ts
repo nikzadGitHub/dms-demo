@@ -89,6 +89,7 @@ export class QuoteTemplateComponent implements OnInit {
       // console.log('this is quotation-template',this.quotationsTemplateData);
       this.salesPersonData = res["data"].quotations?.sales_person
       this.salesPersonSignature = this.salesPersonData?.signature_base64
+      console.log('this.salesPersonData =>',this.salesPersonData)
       this.quotationContent = res["data"].quotations?.quotation_contents
       if(this.quotationContent){
         this.quotationContentFooter = JSON.parse(this.quotationContent?.footer_content)

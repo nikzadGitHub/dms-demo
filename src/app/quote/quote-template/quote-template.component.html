@@ -15,11 +15,19 @@
         rel="nofollow"
         target="_blank"
         (click)="fileUpload.click()"
+        style="height: 35px;"
       >
         Upload Image
         <input #fileInput type="file" style="display: none" />
       </button>
     
+      <button
+      class="btn btn-primary quotationDownload"
+      (click)="downloadUploadedPDF()"
+    >
+      Download Quotation
+    </button>
+
     </div>
     
   </div>
