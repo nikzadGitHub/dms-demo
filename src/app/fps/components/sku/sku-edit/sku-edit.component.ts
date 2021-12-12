@@ -104,12 +104,13 @@ export class SkuEditComponent implements OnInit {
       half_yearly_payment : new FormControl(),
       currency_code : new FormControl(),
       min_payment_amount : new FormControl('0'),
-      min_usage : new FormControl('0'),
       consumable_usage : new FormControl(),
-      procedure_per_month : new FormControl(),
+      min_procedure : new FormControl(),
       required_tenure : new FormControl('0'),
       required_docs: new FormControl(),
-      agreement_mandatory: new FormControl('0')
+      agreement_mandatory: new FormControl('0'),
+      has_min_procedure:  new FormControl('0'),
+      has_consumable_usage:  new FormControl('0'),
     });
 
     this.countryService.getCountry().subscribe({
@@ -165,7 +166,13 @@ export class SkuEditComponent implements OnInit {
       if(data.data.min_payment_amount > 0) {
         this.skuEditForm.controls.min_payment_amount_flag.setValue(true);
       }
-      
+      if(data.data.consumable_usage > 0) {
+        this.skuEditForm.controls.has_consumable_usage.setValue(true);
+      }
+      if(data.data.min_procedure > 0) {
+        this.skuEditForm.controls.has_min_procedure.setValue(true);
+      }
+
       // Set Rate values:
       data.data.rates.forEach((addCost) => {
         this.rate_counter = addCost.id;
@@ -199,11 +206,12 @@ export class SkuEditComponent implements OnInit {
       validity_start_at: this.datePipe.transform(this.skuEditForm.get("validity_start_at").value, "yyyy-MM-dd"),
       validity_end_at: this.datePipe.transform(this.skuEditForm.get("validity_end_at").value, "yyyy-MM-dd"),
       required_docs: this.skuEditForm.get("required_docs").value + "",
-      procedure_per_month: this.skuEditForm.get("procedure_per_month").value + "",
-      min_usage: this.skuEditForm.get("min_usage").value + "",
       required_tenure: this.skuEditForm.get("required_tenure").value + "",
       agreement_mandatory: this.skuEditForm.get("agreement_mandatory").value + "",
-      data_area_id : 'test_data_rea_id'
+      data_area_id : 'test_data_rea_id',
+      consumable_usage: this.skuEditForm.get("consumable_usage").value + "",
+      min_procedure: this.skuEditForm.get("min_procedure").value + "",
+      min_payment_amount: this.skuEditForm.get("min_payment_amount").value + ""
     
     }, this.skuID).subscribe((res) => {
         if (res.id) {
@@ -313,6 +321,8 @@ export class SkuEditComponent implements OnInit {
   //---------------- End of  SKU Rate -------------------
 
   countryChange() {
+
+    this.countryCode = this.skuEditForm.get("country_code").value;
   
     this.currencyService.getCurrencyList(this.countryCode).subscribe({
       next: (response) => {
@@ -387,7 +397,11 @@ export class SkuEditComponent implements OnInit {
       this.addLine = check;
       this.addRateDetailsModal.show();
 
+    },
+    err => {
+      alert("Details for new rates can be added only after saving. please save and re-edit.");
     });
+
   }
 
   addRateDetails(): FormArray {

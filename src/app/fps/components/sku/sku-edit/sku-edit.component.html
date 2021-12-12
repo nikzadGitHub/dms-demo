@@ -165,11 +165,11 @@
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-md-8 col-form-label" for="booking-reason">
-                                    Minimum Usage<span class="asterisk"> * </span>
+                                    Consumable Usage <span class="asterisk"> * </span>
                                 </label>
 
                                 <div class="col-md-4">
-                                    <mat-slide-toggle #min_usage class="example-margin">
+                                    <mat-slide-toggle #min_usage formControlName="has_consumable_usage" class="example-margin">
                                     </mat-slide-toggle>
                                 </div>
                             </div>
@@ -179,7 +179,7 @@
                             Minimum Usage<span class="asterisk"> * </span>
                         </label>
                         <div class="col-md-4">
-                            <input type="number" [readonly]="!min_usage.checked" formControlName="min_usage" class="form-control">
+                            <input type="number" [readonly]="!min_usage.checked" formControlName="consumable_usage" class="form-control">
                         </div>
                     </div>
 
@@ -192,7 +192,7 @@
                                 </label>
     
                                 <div class="col-md-4">
-                                    <mat-slide-toggle #min_procedure class="example-margin">
+                                    <mat-slide-toggle #min_procedure formControlName="has_min_procedure" class="example-margin">
                                     </mat-slide-toggle>
                                 </div>
                             </div>
@@ -202,7 +202,7 @@
                             Minimum Procedure<span class="asterisk"> * </span>
                         </label>
                         <div class="col-md-4">
-                            <input type="number" [readonly]="!min_procedure.checked" formControlName="procedure_per_month"  class="form-control">
+                            <input type="number" [readonly]="!min_procedure.checked" formControlName="min_procedure"  class="form-control">
                         </div>
                     </div>
 
@@ -210,14 +210,13 @@
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-md-8 col-form-label" for="booking-reason">
-                                    Consumable Usage<span class="asterisk"> * </span>
+                                    Agreement Number Mandatory<span class="asterisk"> * </span>
                                 </label>
 
                                 <div class="col-md-4">
-                                    <mat-slide-toggle #min_usage class="example-margin">
+                                    <mat-slide-toggle formControlName="agreement_mandatory"  class="example-margin">
                                     </mat-slide-toggle>
                                 </div>
-
                             </div>
                         </div>
 
@@ -233,16 +232,7 @@
 
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-md-8 col-form-label" for="booking-reason">
-                                    Agreement Number Mandatory<span class="asterisk"> * </span>
-                                </label>
-
-                                <div class="col-md-4">
-                                    <mat-slide-toggle formControlName="agreement_mandatory"  class="example-margin">
-                                    </mat-slide-toggle>
-                                </div>
-                            </div>
+                            
                         </div>
 
                         <label class="col-md-2 col-form-label" for="booking-reason">

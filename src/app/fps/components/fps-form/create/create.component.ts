@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { DialogService } from '@app/common/dialog/dialog.service';
 import { FpsService } from '@app/fps/fps.service';
 import { AppService } from '@app/_services/shared/app.service';
 import { FinancialInstitutionService, FinancialInstitution } from '@app/_services/shared/finantial-institution.service';
 import { CurrencyService } from '@app/_services/shared/currency.service';
-
 export interface OpportunityDetail {
 	company_name: any;
 	opportunity_code: any;
@@ -38,6 +37,7 @@ export class CreateComponent implements OnInit {
   alertHeader: string;
   fps_user_list;
   agreement_mandatory = false;
+  minProcedureAddForm: FormGroup;
 
   payment_frequency_list = [
     {'value': 'monthly_payment', 'label': 'Monthly'},
@@ -48,7 +48,10 @@ export class CreateComponent implements OnInit {
   institutions_list : [];
   tenure_list : [] = [];
   current_apportunity_id : number;
+  current_quot_id : number;
   countryCode : string = null;
+  has_consumable_usage: boolean = false;
+  has_min_procedure: boolean = false;
 
   oppt_details : any = {
     opportunity_code: '',
@@ -107,8 +110,14 @@ export class CreateComponent implements OnInit {
       fps_data_area_id: new FormControl()
     });
 
+    this.minProcedureAddForm = this.fb.group({
+      addMinProcedure: this.fb.array([]),
+    });
+
     this.activatedRoute.queryParams.subscribe(params => {
       this.current_apportunity_id = params['opport_id'];
+      this.current_quot_id = params['quot_id'];
+      this.fpsAddForm.controls.fps_quote_id.setValue(this.current_quot_id);
       this.fpsAddForm.controls.fps_opportunity_id.setValue(this.current_apportunity_id);
     });
 
@@ -191,12 +200,25 @@ export class CreateComponent implements OnInit {
       
     }).subscribe((res) => {
         if (res.id) {
+          let procedures = this.minProcedureAddForm.value.addMinProcedure;
+          for(let x = 0; x <procedures.length; x++) {
+            let procedure = {
+              'id': null,
+              'fps_id': res.id,
+              'date': procedures[x].date,
+              'no_procedure': procedures[x].no_procedure,
+              'updated_by': procedures[x].updated_by,
+              'updated_on': procedures[x].updated_on,
+            }
+            this.fpsService.storeMinProcedure(procedure);
+          } 
+
           this.alertBody = "FPS saved successfully.";
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.router.navigateByUrl('/fps/fps-listing', {replaceUrl: true})
           }, 2000);
-          this.router.navigateByUrl('/fps/fps-listing', {replaceUrl: true})
         }
       },
       err => {
@@ -218,11 +240,16 @@ export class CreateComponent implements OnInit {
   }
 
   updateInterestRate() {
+    
     let rateID = this.fpsAddForm.controls.fps_tenure_id.value;
-    var result = this.getFilteredCodes(this.tenure_list, "id", rateID);    
+    var result = this.getFilteredCodes(this.tenure_list, "id", rateID);
+    
     this.fpsAddForm.controls.fps_interest_rate.setValue(result[0].details_interest_rate);
+    this.fpsAddForm.controls.fps_adv_payment.setValue(result[0].min_payment_amount);
     this.fpsAddForm.controls.fps_min_payment_amount.setValue(result[0].min_payment_amount);
     this.fpsAddForm.controls.fps_required_docs.setValue(result[0].required_docs ?? '');
+    this.has_consumable_usage = result[0].consumable_usage > 0;
+    this.has_min_procedure = result[0].min_procedure > 0
     
     if(result[0].agreement_mandatory == 0) {
       this.agreement_mandatory = false;
@@ -296,5 +323,29 @@ export class CreateComponent implements OnInit {
   isFieldValid(field: string) {
     return !this.fpsAddForm.get(field).valid && this.fpsAddForm.get(field).touched;
   }
+
+  //---------------- Min Procedure  -------------------
+  addMinProcedure(): FormArray {
+    return this.minProcedureAddForm.get("addMinProcedure") as FormArray;
+  }
+
+  newMinProcedure(): FormGroup {
+    return this.fb.group({
+      date: '',
+      no_procedure: 12,
+      updated_by: 1,
+      updated_on: '',
+    });
+  }
+
+  addAddMinProcedure() {
+    this.addMinProcedure().push(this.newMinProcedure());
+  }
+
+  removeAddMinProcedure(i: number) {
+    this.addMinProcedure().removeAt(i);
+  }
+
+  //---------------- End of  Min Procedure -------------------
 
 }
