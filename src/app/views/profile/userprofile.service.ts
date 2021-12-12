@@ -40,7 +40,7 @@ export class UserprofileService {
 
   getSignatureImage(): Observable<any> {
     let authToken = localStorage.getItem('auth-token');
-    return this.httpClient.get(this.apiURL + '/user/get-signature', {
+    return this.httpClient.get(this.apiURL + '/user/get-signature-web', {
       headers: {
         'Authorization': authToken,
         // responseType: 'blob'

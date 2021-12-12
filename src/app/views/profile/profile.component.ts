@@ -26,21 +26,19 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     let userRole = JSON.parse(localStorage.getItem("userRole"));
     if (userRole) {
-      console.log("userRole =>",userRole)
       this.userRoleName = userRole?.roles[0]?.name;
       this.userName = userRole?.user.full_name;
     }
   }
 
-  ngAfterViewInit(): void{
-    let image  = this.getSignatureImage()
-    console.log('image' , image)
-  }
+  // ngAfterViewInit(): void{
+  //   let image  = this.getSignatureImage()
+  //   console.log('image' , image)
+  // }
   onImageUpload(event: any) {
     this.file = event.target.files[0];
     this.fileName = this.file.name;
     let extension = this.file.name.split('.').pop();
-    console.log("this.file",this.file,'extension =>',extension)
     this.imageMsg = false
     if(extension == 'png'){
       if (this.file) {
@@ -72,8 +70,7 @@ export class ProfileComponent implements OnInit {
 
   getSignatureImage(){
     this.userProfileService.getSignatureImage().subscribe(state=>{
-      console.log("get images =>",state)
-      this.url = state
+      this.url = state['data'].signature
       
     })
   }
@@ -82,7 +79,6 @@ export class ProfileComponent implements OnInit {
     var formData = new FormData();
     formData.append("signature", this.file);
     this.userProfileService.uploadSignatureImage(formData).subscribe(state=>{
-      console.log("uploaded images =>",state)
       this.uploadMessage = true
       if(state){
         setTimeout(() => {
