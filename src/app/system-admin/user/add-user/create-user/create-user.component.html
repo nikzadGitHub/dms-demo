@@ -45,9 +45,9 @@
         <div class="col-lg-10 col-md-10 col-sm-10">
           <p-dropdown
             formControlName="companyName"
-            [options]=""
+            [options]="companies"
             placeholder="Select user"
-            optionLabel=""
+            optionLabel="company_name" optionValue="company_name"
             [style]="{ width: '100%' }"
           ></p-dropdown>
         </div>
@@ -197,13 +197,20 @@
           >
         </div>
         <div class="col-md-4">
-          <input
+          <!-- <input
             type="text"
             pInputText
             formControlName="unit"
             placeholder="0"
             style="width: 340px"
-          />
+          /> -->
+          <p-dropdown
+            formControlName="unit"
+            [options]="units"
+            placeholder="Units"
+            optionLabel="code" optionValue="code"
+            style="width: 340px"
+          ></p-dropdown>
         </div>
       </div>
 

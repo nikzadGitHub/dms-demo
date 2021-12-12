@@ -31,7 +31,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
     InputTextModule,
     DropdownModule,
     InputNumberModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TableModule,
+    PaginatorModule
   ],
   declarations: [
     SystemAdminComponent,

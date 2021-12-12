@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SystemAdminService } from "../../../system-admin.service";
+import { SociService } from './../../../../soci/soci.service'
 
 @Component({
   selector: "app-create-user",
@@ -49,6 +50,8 @@ export class CreateUserComponent implements OnInit {
   selectedCities: string[];
   userRoleId: any;
   isEdit: boolean;
+  companies:Array<any>=[];
+  units:Array<any>;
   constructor(
     private systemAdminSerive: SystemAdminService,
     private router: Router,
@@ -81,6 +84,15 @@ export class CreateUserComponent implements OnInit {
         this.getListOfRolePermission();
       }
     });
+    this.systemAdminSerive
+      .getAllCompamanies().subscribe((res:any) => {
+        res.data.soci.forEach(ele => {
+          this.companies.push(ele.customer)
+        });
+      });
+      this.systemAdminSerive.getUnits().subscribe((res:any)=>{
+        this.units = res.data
+      })
   }
 
   getListOfRolePermission() {
@@ -113,6 +125,9 @@ export class CreateUserComponent implements OnInit {
   addUser() {
     this.systemAdminSerive
       .postQuery("/auth/create-user", {
+        full_name: "saad bin abid cc",
+        phone_number: "+61281234567",
+        discount_margin_percent: "0.50",
         companyName: "",
         dataAreaId: "",
         name: "",

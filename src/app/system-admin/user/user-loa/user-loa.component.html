@@ -6,8 +6,7 @@
         <i class="pi pi-user-plus"> </i>
         Level Of Approval
       </h2>
-      <div>
-        <!-- back-btn -->
+      <!-- <div>
         <p-button
           styleClass="p-button-outlined"
           class="back-p-btn"
@@ -21,7 +20,7 @@
             />
           </ng-template>
         </p-button>
-      </div>
+      </div> -->
 
       <!-- <img src="../../../../assets/img/icons/back-arrow.svg" alt=""> -->
     </div>
@@ -181,8 +180,8 @@
                 id="opc"
                 name="picList"
                 formControlName="PersonCharges"
-                [options]="dummy_data"
-                optionLabel="name"
+                [options]="userList"
+                optionLabel="full_name"
                 placeholder="Select Approve By"
                 [style]="{ width: '380px' }"
                 [required]="true"

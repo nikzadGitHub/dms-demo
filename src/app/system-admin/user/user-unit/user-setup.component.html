@@ -22,7 +22,7 @@
     </div>
   </div>
   <!-- [formGroup]="userSetupForm" -->
-  <form [formGroup]="userSetupForm">
+  <!-- <form [formGroup]="userSetupForm"> -->
     <div class="card-body">
       <p class="title-text">
         <!-- <i class="pi pi-user-plus"></i> -->
@@ -34,8 +34,8 @@
         <div class="col-lg-1 col-md-1 col-sm-1 mt-2">
           <label>Company:<span class="red-star">*</span></label>
         </div>
-        <div class="col-lg-11 col-md-11 col-sm-11">
-          <p-autoComplete
+        <div class="col-lg-5 col-md-5 col-sm-5">
+          <!-- <p-autoComplete
             formControlName="dataAreaId"
             [suggestions]="filtereduser"
             (completeMethod)="filterProduct($event)"
@@ -49,7 +49,14 @@
                 <div></div>
               </div>
             </ng-template>
-          </p-autoComplete>
+          </p-autoComplete> -->
+          <p-dropdown [options]="companies" [style]="{ width: '100%' }" [(ngModel)]="company_Id" optionLabel="title" optionValue="data_area_id"></p-dropdown>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 mt-2">
+          <label>Parent Unit:<span class="red-star">*</span></label>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5">
+          <p-dropdown class="customColor" [options]="parenUnit" [style]="{ width: '100%' }" [(ngModel)]="selectParentUnit" optionLabel="official_name" optionValue="dail_code"></p-dropdown>
         </div>
       </div>
       <!-- Name-field -->
@@ -63,7 +70,7 @@
           <input
             type="text"
             pInputText
-            formControlName="name"
+            [(ngModel)]="unit_Name"
             style="width: 100%"
           />
         </div>
@@ -76,7 +83,7 @@
           <input
             type="text"
             pInputText
-            formControlName="code"
+            [(ngModel)]="unit_Code"
             style="width: 100%"
           />
         </div>
@@ -85,22 +92,26 @@
       <!-- accordian-1 -->
       <div class="accordion">
         <!-- parent-unit -->
-        <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+        <!-- <p-dropdown class="customColor" [options]="parenUnit" [style]="{ width: '100%' }" [(ngModel)]="selectParentUnit" optionLabel="official_name" optionValue="id"></p-dropdown> -->
+        <!-- <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <p-accordionTab header="Parent Unit">
-            <div class="agency-text" *ngFor="let item of parenUnit">
+            <div class="agency-text"> -->
               <!-- formControlName="parentUnit" -->
-              <input
-                type="text"
-                class="form-control"
-                [value]="item.official_name"
-                readonly
-                pInputText
-                (click)="addParentUnit($event, item)"
-                style="width: 100%"
-              />
+              <!-- <input
+                            type="text"
+                            class="form-control"
+                            [value]="item.official_name"
+                            readonly
+                            pInputText
+                            [(ngModel)]="selectParentUnit"
+                            style="width: 100%"
+                          /> -->
+              
+              <!-- <p-dropdown [options]="parenUnit" [style]="{ width: '100%' }" [(ngModel)]="selectParentUnit" optionLabel="official_name" optionValue="id"></p-dropdown>
+              
             </div>
           </p-accordionTab>
-        </p-accordion>
+        </p-accordion> -->
         <!-- agency -->
         <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
           <p-accordionTab header="Agency">
@@ -110,10 +121,9 @@
             >
               <p-checkbox
                 name="group2"
-                formArrayName="agency"
-                [value]="item.agency"
+                [value]="item"
                 [inputId]="item.code"
-                (click)="changeAgency(item)"
+                [(ngModel)]="selectAgency"
               ></p-checkbox>
               <label>{{ item.agency }}</label>
             </div>
@@ -128,10 +138,9 @@
             >
               <p-checkbox
                 name="group2"
-                formControlName="manufacture"
-                [value]="item.manufacturer"
+                [value]="item"
                 [inputId]="item.manufacturer_code"
-                (onChange)="changeManufectures($event, item)"
+                [(ngModel)]="selectManufectures"
               ></p-checkbox>
               <label>{{ item.manufacturer }}</label>
             </div>
@@ -147,10 +156,9 @@
             <div *ngFor="let item of opc" class="p-field-checkbox check-field">
               <p-checkbox
                 name="group2"
-                formControlName="opc"
-                [value]="item.opc"
+                [value]="item"
                 [inputId]="item.opc_code"
-                (onChange)="changeOPC(item)"
+                [(ngModel)]="selectOpc"
               ></p-checkbox>
               <label>{{ item.opc }}</label>
             </div>
@@ -166,10 +174,9 @@
             >
               <p-checkbox
                 name="group2"
-                formArrayName="careArea"
-                [value]="item.care_area"
+                [value]="item"
+                [(ngModel)]="selectedCareArea"
                 [inputId]="item.code"
-                (click)="selectCareArea(item)"
               >
               </p-checkbox>
               <label>{{ item.care_area }}</label>
@@ -195,10 +202,9 @@
             >
               <p-checkbox
                 name="group2"
-                formControlName="principles"
-                [value]="item.product_group"
+                [value]="item"
                 [inputId]="item.product_group_code"
-                (onChange)="changePrinciples(item)"
+                [(ngModel)]="selectPrinciples"
               ></p-checkbox>
               <label>{{ item.product_group }}</label>
             </div>
@@ -219,14 +225,14 @@
           class="btn btn-primary save-btn"
           (click)="createUnit()"
         >
-          SAVE
+         {{(isEditEnabled) ?'Update' : 'Create'}}
         </button>
       </div>
 
       <div class="authority-table">
         <p-table
           #dt
-          [value]="dummyUserSetupData"
+          [value]="selectedAllUnits"
           styleClass="p-datatable-authority"
           [rowHover]="true"
           responsiveLayout="scroll"
@@ -286,7 +292,7 @@
                   </div>
                 </th>
                 <!-- main-unit -->
-                <th pSortableColumn="main_unit" class="text-center">
+                <!-- <th pSortableColumn="main_unit" class="text-center">
                   <div class="column-design">
                     Main Unit
                     <div class="main_unit-icons">
@@ -299,9 +305,9 @@
                       ></p-columnFilter>
                     </div>
                   </div>
-                </th>
+                </th> -->
                 <!-- sub-unit -->
-                <th pSortableColumn="sub_unit" class="text-center">
+                <!-- <th pSortableColumn="sub_unit" class="text-center">
                   <div class="column-design">
                     Sub Unit
                     <div class="sub_unit-icons">
@@ -314,7 +320,7 @@
                       ></p-columnFilter>
                     </div>
                   </div>
-                </th>
+                </th> -->
                 <!-- action -->
                 <th pSortableColumn="action" class="text-center">
                   <div class="column-design">
@@ -330,22 +336,22 @@
           <ng-template pTemplate="body" let-authority>
             <tr align="center">
               <td class="text-center">
-                {{ authority.created_at | date: "MM-dd-yyyy" }}
+                {{ authority.created_at | date: "MM-dd-yyyy" || '' }}
               </td>
               <td class="text-center">
-                {{ authority.name }}
+                {{ authority.title || '' }}
               </td>
               <td class="text-center">
-                {{ authority.country }}
+                {{ authority.code || '' }}
+              </td>
+              <!-- <td class="text-center">
+                {{ '' }}
               </td>
               <td class="text-center">
-                {{ authority.main_unit }}
-              </td>
+                {{ '' }}
+              </td> -->
               <td class="text-center">
-                {{ authority.sub_unit }}
-              </td>
-              <td class="text-center">
-                <a [routerLink]="" routerLinkActive="router-link-active">
+                <a [routerLink]="" (click)="getUnit(authority.id)" routerLinkActive="router-link-active">
                   <i class="fa fa-edit"></i>
                 </a>
               </td>
@@ -354,5 +360,33 @@
         </p-table>
       </div>
     </div>
-  </form>
+  <!-- </form> -->
+</div>
+<div id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
 </div>

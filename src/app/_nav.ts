@@ -108,24 +108,24 @@ export const navItems: INavData[] = [
     icon: 'cil-voice-over-record',
     children: [
       {
-        name: 'Add User',
+        name: 'User',
         url: '/user/adduser',
       },
       {
         name: 'User LOA',
         url: '/user/userloa',
       },
-      {
-        name: 'Unit Setup',
-        url: '/user/unitsetup',
-      },
+      // {
+      //   name: 'Unit Setup',
+      //   url: '/user/unitsetup',
+      // },
     ]
-  },/*
-  {
-    name: 'UNIT SETUP',
-    url: '/unitsetup',
-    icon: 'cil-screen-smartphone',
   },
+  {
+    name: 'Unit Setup',
+    url: '/user/unitsetup',
+    icon: 'cil-screen-smartphone',
+  },/*
   {
     name: 'SETTING',
     url: '/setting',
