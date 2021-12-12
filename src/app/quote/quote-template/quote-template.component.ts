@@ -180,7 +180,7 @@ export class QuoteTemplateComponent implements OnInit {
     html2canvas(data).then((canvas) => {
       var imgData = canvas.toDataURL("image/png");
       var imgWidth = 210;
-      var pageHeight = 300;
+      var pageHeight = 1200;
       var imgHeight = (canvas.height * imgWidth) / canvas.width;
       var heightLeft = imgHeight;
       var doc = new jsPDF("p", "mm");

@@ -379,9 +379,17 @@
         </div>
         <div>
           <p>
-            Please contact _______ <b>{{quotationsTemplateData?.quotations?.sales_person?.full_name}}</b>, <span *ngIf="quotationsTemplateData?.quotations?.sales_person?.phone_number"> (<b>{{quotationsTemplateData?.quotations?.sales_person?.phone_number}}</b>) </span> for further
-            information/clarification.<br />Kindly indicate our quotation no..<b>{{quotationContentHeader?.quoteNo}}</b>
-            on your Purchase Order and email to:__________ <b>{{quotationsTemplateData?.quotations?.sales_person?.email}}</b>.<br />Our
+            Please contact 
+            <span *ngIf="!quotationsTemplateData?.quotations?.sales_person?.full_name">_______</span> 
+            <span *ngIf="quotationsTemplateData?.quotations?.sales_person?.full_name"><b>{{quotationsTemplateData?.quotations?.sales_person?.full_name}}</b></span>,
+             <span *ngIf="!quotationsTemplateData?.quotations?.sales_person?.phone_number">_______</span>
+              <span *ngIf="quotationsTemplateData?.quotations?.sales_person?.phone_number"> (<b>{{quotationsTemplateData?.quotations?.sales_person?.phone_number}}</b>) </span> for further
+            information/clarification.<br />Kindly indicate our 
+            quotation no:<span *ngIf="!quotationContentHeader?.quoteNo">____________</span> 
+            <span *ngIf="quotationContentHeader?.quoteNo"><b>{{quotationContentHeader?.quoteNo}}</b></span>
+            on your Purchase Order and email 
+            to:<span *ngIf="!quotationsTemplateData?.quotations?.sales_person?.email">__________ </span>
+             <span *ngIf="quotationsTemplateData?.quotations?.sales_person?.email"><b>{{quotationsTemplateData?.quotations?.sales_person?.email}}</b></span>.<br />Our
             Standard Term and condition enlose shall apply to this documents.
           </p>
         </div>
@@ -393,6 +401,26 @@
 
         
         <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br><br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br><br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br><br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br><br>
         <br>
         <br>
         <br>
