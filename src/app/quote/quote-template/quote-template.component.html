@@ -19,13 +19,9 @@
         Upload Image
         <input #fileInput type="file" style="display: none" />
       </button>
-      <button class="btn btn-primary btn-sm" (click)="downloadUploadedPDF()">
-        Download Quotation
-      </button>
+    
     </div>
-    <div class="loaderText" *ngIf="loader">
-      <div><b>Uploading......</b></div>
-    </div>
+    
   </div>
   <!-- style="width: 100%" -->
   <div class="card" #pdfTable id="pdfTable" #bodyContent>

@@ -137,7 +137,7 @@ export const routes: Routes = [
       },
       {
         path: 'profile',
-        loadChildren: () => import('./views/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)
+        loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule)
       },
       {
         path: 'activities',
@@ -153,6 +153,7 @@ export const routes: Routes = [
       },
     ]
   },
+  { path: 'profile', loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule) },
   { path: '**', component: P404Component }
 ];
 
