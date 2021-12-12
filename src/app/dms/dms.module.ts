@@ -34,8 +34,6 @@ import { EquipmentTableComponent } from './components/bookings/main-asset/equipm
 import { OpportunityBookingFormComponent } from './components/bookings/opportunity-booking-form/opportunity-booking-form.component';
 import { OpportunityFormComponent } from './components/bookings/opportunity-booking-form/opportunity-form/opportunity-form.component';
 
-
-
 @NgModule({
   declarations: [
     DmsComponent,
@@ -56,8 +54,8 @@ import { OpportunityFormComponent } from './components/bookings/opportunity-book
     IdentifyComponent,
     OpportunityBookingFormComponent,
     OpportunityFormComponent
-
   ],
+
   imports: [
     CommonModule,
     DmsRoutingModule,

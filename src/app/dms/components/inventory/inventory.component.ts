@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import { MockInventoryService } from '../../services/mock-inventory.service';
+import { InventoryService } from '../../services/inventory.service';
 import { InventoryList, bookingIdFormat } from '../../services/inventory';
 import { MenuItem } from 'primeng/api/menuitem';
 
@@ -11,7 +12,7 @@ import { MenuItem } from 'primeng/api/menuitem';
 })
 export class InventoryComponent implements OnInit {
   loading: boolean;
-  constructor(private api: MockInventoryService) { }
+  constructor(private api: InventoryService) { }
   menuItems: MenuItem[] = [
     {
       label: 'On-Hand',
@@ -39,9 +40,8 @@ export class InventoryComponent implements OnInit {
         if (response as InventoryList) {
           this.inventoryList = response;
         }
-      console.log(response);
+      //console.log(response);
       this.loading = false;
-
     }, 
     err => {
       this.loading = false;
@@ -50,6 +50,10 @@ export class InventoryComponent implements OnInit {
   }
 
   onSearch() {
-    // console.log('searching for:', this.search_text);
+    this.api.getListSearch(this.search_text).subscribe((response) => {
+      if (response as InventoryList) {
+        this.inventoryList = response;
+      }
+	});
   }
 }
