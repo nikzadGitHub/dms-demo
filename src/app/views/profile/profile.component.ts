@@ -31,10 +31,9 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  // ngAfterViewInit(): void{
-  //   let image  = this.getSignatureImage()
-  //   console.log('image' , image)
-  // }
+  ngAfterViewInit(): void{
+    this.getSignatureImage()
+  }
   onImageUpload(event: any) {
     this.file = event.target.files[0];
     this.fileName = this.file.name;
