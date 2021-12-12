@@ -311,20 +311,20 @@ export class QuoteTemplateComponent implements OnInit {
       this.successModal.show();
   }
 
-  downloadQuotationTemplate(){
-    this.quoteService.downloadQuoteTemplate(this.quotationId,this.templateId).subscribe(state=>{
-      if(state){
-        this.blob = new Blob([state as BlobPart], {type: 'application/pdf'});
+  // downloadQuotationTemplate(){
+  //   this.quoteService.downloadQuoteTemplate(this.quotationId,this.templateId).subscribe(state=>{
+  //     if(state){
+  //       this.blob = new Blob([state as BlobPart], {type: 'application/pdf'});
 
-        var downloadURL = window.URL.createObjectURL(state);
-        var link = document.createElement('a');
-        link.href = downloadURL;
-        link.download = "Quotation_1.pdf";
-        link.click();
-      this.successMessage = "Quotaion Downloaded Successfully......!!";
-      this.successModal.show();
-      }
-    })
-  }
+  //       var downloadURL = window.URL.createObjectURL(state);
+  //       var link = document.createElement('a');
+  //       link.href = downloadURL;
+  //       link.download = "Quotation_1.pdf";
+  //       link.click();
+  //     this.successMessage = "Quotaion Downloaded Successfully......!!";
+  //     this.successModal.show();
+  //     }
+  //   })
+  // }
   
 }
