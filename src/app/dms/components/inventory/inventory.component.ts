@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import { MockInventoryService } from '../../services/mock-inventory.service';
+import { InventoryService } from '../../services/inventory.service';
 import { InventoryList, bookingIdFormat } from '../../services/inventory';
 import { MenuItem } from 'primeng/api/menuitem';
 
@@ -11,7 +12,7 @@ import { MenuItem } from 'primeng/api/menuitem';
 })
 export class InventoryComponent implements OnInit {
   loading: boolean;
-  constructor(private api: MockInventoryService) { }
+  constructor(private api: InventoryService) { }
   menuItems: MenuItem[] = [
     {
       label: 'On-Hand',

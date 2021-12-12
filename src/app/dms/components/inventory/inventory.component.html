@@ -81,6 +81,7 @@
                     
                 </div>
             </th>
+
             <!-- <th pSortableColumn="booking_id" class="text-center">
                 <div  style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
                     Current Booking
@@ -100,7 +101,7 @@
     <ng-template pTemplate="body" let-inventoryItem>
         <tr class="p-selectable-row">
             <td class="text-center">
-                {{ inventoryItem.serial_no | number:'5.' }}
+                {{ inventoryItem.serial_no | number:'3.' }}
             </td>
             <td class="text-center">
                 {{ inventoryItem.stock_keep_unit }}
