@@ -19,17 +19,31 @@ export class UserprofileService {
   constructor(private httpClient: HttpClient) { }
 
 
-  uploadSignatureImage(file): Observable<any> {
-    
+  uploadSignatureImage(signature): Observable<any> {
     // let data = {
-    //   signature:file
+    //   signature: signature
     // }
     let authToken = localStorage.getItem('auth-token');
-    return this.httpClient.post(this.apiURL + '/upload-signature',file, {
-     
+    return this.httpClient.post(this.apiURL + '/user/upload-signature',signature, {
       headers: {
-        'Content-Type': 'file',
+        'Content-Type':'file',
         'Authorization': authToken
+      },
+    })
+    .pipe(
+      tap((response: any) => {
+        console.log(response);               
+    }),
+      catchError(this.errorHandler)
+    )
+  }
+
+  getSignatureImage(): Observable<any> {
+    let authToken = localStorage.getItem('auth-token');
+    return this.httpClient.get(this.apiURL + '/user/get-signature', {
+      headers: {
+        'Authorization': authToken,
+        // responseType: 'blob'
       },
     })
     .pipe(
