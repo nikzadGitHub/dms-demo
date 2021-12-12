@@ -15,4 +15,7 @@ export class InventoryService implements InventoryInterface {
   getList(): Observable<InventoryList> {
     return this.apiClient.get<InventoryList>('inventory');
   }
+  getListSearch(data: any): Observable<InventoryList> {
+    return this.apiClient.get<InventoryList>('inventory/search?search=' + data);
+  }
 }

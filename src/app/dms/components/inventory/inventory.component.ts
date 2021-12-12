@@ -12,7 +12,7 @@ import { MenuItem } from 'primeng/api/menuitem';
 })
 export class InventoryComponent implements OnInit {
   loading: boolean;
-  constructor(private api: MockInventoryService) { }
+  constructor(private api: InventoryService) { }
   menuItems: MenuItem[] = [
     {
       label: 'On-Hand',
@@ -40,9 +40,8 @@ export class InventoryComponent implements OnInit {
         if (response as InventoryList) {
           this.inventoryList = response;
         }
-      console.log(response);
+      //console.log(response);
       this.loading = false;
-
     }, 
     err => {
       this.loading = false;
@@ -51,6 +50,10 @@ export class InventoryComponent implements OnInit {
   }
 
   onSearch() {
-    // console.log('searching for:', this.search_text);
+    this.api.getListSearch(this.search_text).subscribe((response) => {
+      if (response as InventoryList) {
+        this.inventoryList = response;
+      }
+	});
   }
 }

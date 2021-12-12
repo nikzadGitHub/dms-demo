@@ -46,4 +46,8 @@ export class MockInventoryService implements InventoryInterface {
   getList(): Observable<InventoryList> {
     return of(this.mockData);
   }
+
+  getListSearch(data: any): Observable<InventoryList> {
+    return of(this.mockData);
+  }
 }

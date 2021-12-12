@@ -15,7 +15,6 @@ import { BookingDetail } from '../../../services/booking-entity';
 })
 
 export class FormComponent implements OnInit{ 
-  editable: boolean;
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("foundModal") foundModal: ModalDirective;
