@@ -18,7 +18,7 @@
                         </label>
                         <div class="col-md-4">
                             <input type="text" [readonly]="true" formControlName="uuid" id="uuid" class="form-control">
-                            <app-form-error-presentation [displayError]="isFieldValid('uuid')" errorMsg="Uuid is rquired.">
+                            <app-form-error-presentation [displayError]="isFieldValid('uuid')" errorMsg="Uuid is required.">
                             </app-form-error-presentation>
                         </div>
 
@@ -39,7 +39,7 @@
                                 optionValue="id" styleClass="form-control" 
                                 placeholder="Select FPS Type" emptyMessage="No FPS Type Available">
                             </p-dropdown>
-                            <app-form-error-presentation [displayError]="isFieldValid('package_type_id')" errorMsg="FPS Type is rquired.">
+                            <app-form-error-presentation [displayError]="isFieldValid('package_type_id')" errorMsg="FPS Type is required.">
                             </app-form-error-presentation>
                             
                         </div>
@@ -61,7 +61,7 @@
                                 optionValue="iso3" styleClass="form-control" 
                                 placeholder="Select Country" emptyMessage="No Country Available">
                             </p-dropdown>
-                            <app-form-error-presentation [displayError]="isFieldValid('country_code')" errorMsg="Country is rquired.">
+                            <app-form-error-presentation [displayError]="isFieldValid('country_code')" errorMsg="Country is required.">
                             </app-form-error-presentation>
                         </div>
 
@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="col-md-9">
                                     <input type="number" step="0.1" id="interest_rate" *ngIf="has_interest.checked" formControlName="interest_rate"  class="form-control">
-                                    <app-form-error-presentation [displayError]="isFieldValid('interest_rate')" errorMsg="Interest Rate is rquired.">
+                                    <app-form-error-presentation [displayError]="isFieldValid('interest_rate')" errorMsg="Interest Rate is required.">
                                     </app-form-error-presentation>
                                 </div>
                             </div> 
@@ -92,7 +92,7 @@
                                 optionValue="id" styleClass="form-control" 
                                 placeholder="Select Institution" emptyMessage="No Institution Available">
                             </p-dropdown>
-                            <app-form-error-presentation [displayError]="isFieldValid('financier_id')" errorMsg="Financial Institution is rquired.">
+                            <app-form-error-presentation [displayError]="isFieldValid('financier_id')" errorMsg="Financial Institution is required.">
                             </app-form-error-presentation>
                         </div>
                     </div>
@@ -225,7 +225,7 @@
                         </label>
                         <div class="col-md-4">
                             <p-inputNumber id="required_tenure" formControlName="required_tenure"></p-inputNumber>
-                            <app-form-error-presentation [displayError]="isFieldValid('required_tenure')" errorMsg="Tenure is rquired.">
+                            <app-form-error-presentation [displayError]="isFieldValid('required_tenure')" errorMsg="Tenure is required.">
                             </app-form-error-presentation>
                         </div>
                     </div>

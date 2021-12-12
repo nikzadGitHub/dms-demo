@@ -120,7 +120,7 @@
                                     optionValue="value" styleClass="form-control" (onChange)="updateTenure()"
                                     placeholder="Select Frequency" id="fps_payment_frequency" emptyMessage="No Payment Frequency Available">
                                 </p-dropdown>
-                                <app-form-error-presentation [displayError]="isFieldValid('fps_payment_frequency')" errorMsg="Payment Frequency is rquired.">
+                                <app-form-error-presentation [displayError]="isFieldValid('fps_payment_frequency')" errorMsg="Payment Frequency is required.">
                                 </app-form-error-presentation>
                             </div>
     
@@ -131,7 +131,7 @@
                                 <p-dropdown formControlName="fps_tenure_id" id="fps_tenure_id" [options]="tenure_list" optionLabel="details_tenure"
                                     optionValue="id" styleClass="form-control" (onChange)="updateInterestRate()">
                                 </p-dropdown>
-                                <app-form-error-presentation [displayError]="isFieldValid('fps_tenure_id')" errorMsg="Tenure is rquired.">
+                                <app-form-error-presentation [displayError]="isFieldValid('fps_tenure_id')" errorMsg="Tenure is required.">
                                 </app-form-error-presentation>
                             </div>
                         </div>
@@ -145,7 +145,7 @@
                                     optionValue="id" styleClass="form-control" (onChange)="updateTenure()"
                                     placeholder="Select Institution" emptyMessage="No Institution Available">
                                 </p-dropdown>
-                                <app-form-error-presentation [displayError]="isFieldValid('fps_financier_id')" errorMsg="Financial Instititue is rquired.">
+                                <app-form-error-presentation [displayError]="isFieldValid('fps_financier_id')" errorMsg="Financial Instititue is required.">
                                 </app-form-error-presentation>
                                 
                             </div>
