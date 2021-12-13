@@ -4,12 +4,12 @@ export enum BookingStatus {
   draft = 'Draft',
   submitted = 'Submitted',
   reviewed = 'MSC Reviewed',
+  conflicted = 'Conflicted',
+  declined = 'Declined',
   endorsed = 'MSC Reviewed (+Country)',
   accepted = 'Provisionally Accepted',
   confirmed = 'Confirmed',
   archived = 'Archived',
-  declined = 'Declined',
-  conflicted = 'Conflicted',
 }
 
 export type BookingStatusKey = keyof BookingStatus;

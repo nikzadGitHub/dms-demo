@@ -8,7 +8,7 @@ import { AppService } from './app.service';
 })
 
 export class ListOpportunityComponent implements OnInit{
-
+loading:boolean
 	opportunities: [];
 	paginate: [];
 	pageItems: number = 200;
@@ -19,6 +19,7 @@ export class ListOpportunityComponent implements OnInit{
 	constructor(private appService: AppService) { }
 	
 	ngOnInit(): void {
+		this.loading=true
 		
 		this.icons = this.appService.getIconsView('cil');
 		
@@ -27,8 +28,11 @@ export class ListOpportunityComponent implements OnInit{
 			this.opportunities = data['data']['data'] ?? data['data']['items'];
       		this.paginate = data['data']['links'];
 			console.log("oppertunities-data: ", this.opportunities);
+			this.loading = false;
 			
-		})  
+		},error => {
+			this.loading = false;
+		  })  
 
 	}
 }

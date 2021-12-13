@@ -149,11 +149,12 @@ export const routes: Routes = [
           ),
       },
       {
-        path: "salestarget",
-        loadChildren: () =>
-          import("./views/coming-soon/coming-soon.module").then(
-            (m) => m.ComingSoonModule
-          ),
+        path: 'fps',
+        loadChildren: () => import('./fps/fps.module').then(m => m.FpsModule),
+      },
+      {
+        path: 'contact',
+        loadChildren: () => import('./views/contact/contact.module').then(m => m.ContactModule)
       },
       {
         path: "reports",

@@ -1,191 +1,572 @@
 <div class="animated fadeIn">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-body">
-            <form [formGroup]="formBooking" (ngSubmit)="onSave()" class="form-horizontal">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-md-4 col-form-label">Status</label>
-                    <div class="col-md-8">
-                      <p class="form-control-static">{{ bookingDetailList.status }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-md-4 col-form-label">Request Date</label>
-                    <div class="col-md-8">
-                      <p class="form-control-static">{{ bookingDetailList.request_date }}</p>
-                    </div>
-                  </div>
-                </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <form
+            [formGroup]="formBooking"
+            (ngSubmit)="onSave()"
+            class="form-horizontal"
+          >
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Status</label>
+              <div class="col-md-9">
+                <p class="form-control-static">DRAFT</p>
               </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-md-4 col-form-label" for="booking-reason">Booking reason</label>
-                    <div class="col-md-8">
-                      <select formControlName="booking_reason" class="form-control">
-                        <option value="">Please select</option>
-                        <option value="demo">Demo</option>
-                        <option value="events">Events</option>
-                        <option value="training">Training</option>
-                        <option value="contigencies">Contigencies</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-md-4 col-form-label">Booking No</label>
-                    <div class="col-md-8">
-                      <p class="form-control-static">{{ bookingDetailList.booking_no }}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2 col-form-label">Customer</label>
-                <div class="col-md-4">
-                  <select formControlName="customer" class="form-control" >
-                    <option value="">Please select</option>
-                    <option *ngFor="let customer of customers" value="{{customer.id}}">{{customer.company_name}}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2 col-form-label" for="branch">Branch/site</label>
-                <div class="col-md-4">
-                  <input type="text" formControlName="branch"  class="form-control">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group row">
-                        <label class="col-md-4 col-form-label" for="date-of-delivery">Preferred Date of Delivery </label>
-                        <div class="col-md-6">
-                          <input class="form-control" formControlName="date_of_delivery" type="datetime-local">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group row">
-                        <label class="col-md-4 col-form-label" for="date-of-collection">Preferred Date of Collection </label>
-                        <div class="col-md-6">
-                          <input class="form-control" formControlName="date_of_collection" type="datetime-local" [ngModel]="bookingDetailList.preferred_date_of_collection">
-                        </div>
-                    </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2 col-form-label" for="demo-duration">Demo Duration *</label>
-                <div class="col-md-2">
-                  <input type="number" formControlName="demo_duration" class="form-control">
-                </div>
-                <div class="col-md-2">
-                    Days
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-md-4 col-form-label" for="department">Ship-to Department/ Warde</label>
-                    <div class="col-md-8">
-                      <input type="text" formControlName="department" class="form-control" >
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-md-4 col-form-label" for="location">Ship-to location</label>
-                    <div class="col-md-8">
-                      <input type="text" formControlName="location" class="form-control" >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group row">
-                        <label class="col-md-4 col-form-label" for="contact-name">Ship to Contact Name </label>
-                        <div class="col-md-8">
-                          <input class="form-control" formControlName="contact_name" type="text" name="contact-name">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group row">
-                        <label class="col-md-4 col-form-label" for="contact-number">Ship-To Contact Number </label>
-                        <div class="col-md-6">
-                          <input class="form-control" formControlName="contact_number" type="text" name="contact-number">
-                        </div>
-                    </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2 col-form-label" for="remarks">Remarks</label>
-                <div class="col-md-9">
-                  <textarea formControlName="remarks" rows="9" class="form-control"></textarea>
-                </div>
-              </div>
-              <div class="custom-footer d-flex justify-content-center">
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Save</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div><!--/.row-->
-  </div>
-  <div
-    id="success"
-    bsModal
-    #successModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="myModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-success" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Success</h4>
-        </div>
-        <div class="modal-body">
-          <p>{{ alertBody }}</p>
-        </div>
-      </div>
-      <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="booking-reason"
+                >Booking reason</label
+              >
 
-  <div
-  bsModal
-  #dangerModal="bs-modal"
-  class="modal fade"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="myModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-danger" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Error</h4>
-      </div>
-      <div class="modal-body">
-        <p>{{ alertBody }}</p>
-      </div>
-      <div class="modal-footer">
+              <div class="col-md-4">
+                <select
+                  formControlName="booking_reason"
+                  (change)="changeReason($event.target.value)"
+                  class="form-control"
+                  [(ngModel)]="selectedBooking"
+                >
+                  <option
+                    [value]="reason.id"
+                    *ngFor="let reason of bookingReasons"
+                  >
+                    {{ reason.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Request Date</label>
+              <div class="col-md-9">
+                <p class="form-control-static">{{ curDate }}</p>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <form
+                          [formGroup]="formBooking"
+                          (ngSubmit)="onSave()"
+                          class="form-horizontal"
+                        >
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group row">
+                                <label class="col-md-4 col-form-label"
+                                  >Status</label
+                                >
+                                <div class="col-md-8">
+                                  <p class="form-control-static">
+                                    {{ bookingDetailList.status }}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group row">
+                                <label class="col-md-4 col-form-label"
+                                  >Request Date</label
+                                >
+                                <div class="col-md-8">
+                                  <p class="form-control-static">
+                                    {{ bookingDetailList.request_date }}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label
+                                class="col-md-4 col-form-label"
+                                for="booking-reason"
+                                >Booking reason</label
+                              >
+                              <div class="col-md-8">
+                                <select
+                                  formControlName="booking_reason"
+                                  class="form-control"
+                                >
+                                  <option value="">Please select</option>
+                                  <option value="demo">Demo</option>
+                                  <option value="events">Events</option>
+                                  <option value="training">Training</option>
+                                  <option value="contigencies">
+                                    Contigencies
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-md-4 col-form-label"
+                                >Booking No</label
+                              >
+                              <div class="col-md-8">
+                                <p class="form-control-static">
+                                  {{ bookingDetailList.booking_no }}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-2 col-form-label">Customer</label>
+                        <div class="col-md-4">
+                          <select
+                            formControlName="customer"
+                            class="form-control"
+                          >
+                            <option value="">Please select</option>
+                            <option
+                              *ngFor="let customer of customers"
+                              value="{{ customer.id }}"
+                            >
+                              {{ customer.company_name }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="branch"
+                          >Branch/site</label
+                        >
+                        <div class="col-md-4">
+                          <input
+                            type="text"
+                            formControlName="branch"
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label
+                              class="col-md-4 col-form-label"
+                              for="date-of-delivery"
+                              >Preferred Date of Delivery
+                            </label>
+                            <div class="col-md-4">
+                              <input
+                                class="form-control"
+                                formControlName="date_of_delivery"
+                                type="datetime-local"
+                                name="date-of-delivery"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label
+                              class="col-md-4 col-form-label"
+                              for="date-of-collection"
+                              >Preferred Date of Collection
+                            </label>
+                            <div class="col-md-6">
+                              <input
+                                class="form-control"
+                                formControlName="date_of_collection"
+                                type="datetime-local"
+                                name="date-of-collection"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label
+                          class="col-md-2 col-form-label"
+                          for="demo-duration"
+                          >Demo Duration *</label
+                        >
+                        <div class="col-md-2">
+                          <input
+                            type="number"
+                            formControlName="demo_duration"
+                            class="form-control"
+                          />
+                        </div>
+                        <div class="col-md-2">months</div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="department"
+                          >Ship-to Department/ Warde</label
+                        >
+                        <div class="col-md-4">
+                          <input
+                            type="text"
+                            formControlName="department"
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label
+                              class="col-md-4 col-form-label"
+                              for="contact-name"
+                              >Ship to Contact Name
+                            </label>
+                            <div class="col-md-8">
+                              <input
+                                class="form-control"
+                                formControlName="contact_name"
+                                type="text"
+                                name="contact-name"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label
+                              class="col-md-4 col-form-label"
+                              for="contact-number"
+                              >Ship-To Contact Number
+                            </label>
+                            <div class="col-md-6">
+                              <input
+                                class="form-control"
+                                formControlName="contact_number"
+                                type="text"
+                                name="contact-number"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        [ngClass]="
+                          selectedBooking == 2
+                            ? 'opportunityAppear'
+                            : 'opportunity'
+                        "
+                        [(ngModel)]="selectedBooking"
+                      >
+                        <p>
+                          <strong class="opportunityTitle">Opportunity</strong>
+                        </p>
+
+                        <hr />
+
+                        <div class="opportunityBoxes">
+                          <div class="opportunityBoxesSame">
+                            <div class="opportunityBoxesSameFirst">
+                              <label for="" class="opportunityBoxesLabel"
+                                >Opportunity ID-Version</label
+                              >
+                              <div>
+                                <input
+                                  type="text"
+                                  class="form-control oppoturiniIdIput"
+                                />
+                              </div>
+                            </div>
+                            <div class="opportunityBoxesSameFirst">
+                              <label for="" class="opportunityBoxesLabel"
+                                >Initiator</label
+                              >
+                              <select
+                                formControlName="default_initiator"
+                                (change)="changeAnswer($event.target.value)"
+                                class="form-control"
+                                [(ngModel)]="defaultAnswer"
+                              >
+                                <option
+                                  [value]="answer.id"
+                                  *ngFor="let answer of defaultAnswers"
+                                >
+                                  {{ answer.ans }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="opportunityBoxesSame">
+                            <div class="opportunityBoxesSameFirst">
+                              <label for="" class="opportunityBoxesLabel">
+                                Winning Probability
+                              </label>
+
+                              <select
+                                formControlName="default_percentage"
+                                (change)="changePercentage($event.target.value)"
+                                class="form-control"
+                                [(ngModel)]="selectedPercentage"
+                              >
+                                <option
+                                  [value]="percentage.id"
+                                  *ngFor="let percentage of defaultPercentages"
+                                >
+                                  {{ percentage.value }}
+                                </option>
+                              </select>
+                            </div>
+                            <div class="opportunityBoxesSameFirst">
+                              <label for="" class="opportunityBoxesLabel"
+                                >Competitor participate in Demo?</label
+                              >
+                              <select
+                                formControlName="default_answer"
+                                (change)="changeAnswer($event.target.value)"
+                                class="form-control"
+                                [(ngModel)]="defaultAnswer"
+                              >
+                                <option
+                                  [value]="answer.id"
+                                  *ngFor="let answer of defaultAnswers"
+                                >
+                                  {{ answer.ans }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="opportunityBoxesSame">
+                            <div class="opportunityBoxesSameFirst">
+                              <label for="" class="opportunityBoxesLabel"
+                                >Priority</label
+                              >
+                              <select
+                                formControlName="default_priority"
+                                (change)="changePrioritye($event.target.value)"
+                                class="form-control"
+                                [(ngModel)]="defaultPriority"
+                              >
+                                <option
+                                  [value]="priority.id"
+                                  *ngFor="let priority of defaultPriorities"
+                                >
+                                  {{ priority.value }}
+                                </option>
+                              </select>
+                            </div>
+                            <div class="opportunityBoxesSameFirst">
+                              <label for="" class="opportunityBoxesLabel"
+                                >IdsMed Sequence of Demo</label
+                              >
+                              <select
+                                formControlName="default_sequence"
+                                class="form-control"
+                                [(ngModel)]="defaultPriority"
+                              >
+                                <option
+                                  [value]="priority.id"
+                                  *ngFor="let priority of defaultPriorities"
+                                >
+                                  {{ priority.value }}
+                                </option>
+                              </select>
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <label
+                                      class="col-md-4 col-form-label"
+                                      for="date-of-delivery"
+                                      >Preferred Date of Delivery
+                                    </label>
+                                    <div class="col-md-6">
+                                      <input
+                                        class="form-control"
+                                        formControlName="date_of_delivery"
+                                        type="datetime-local"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <label
+                                      class="col-md-4 col-form-label"
+                                      for="date-of-collection"
+                                      >Preferred Date of Collection
+                                    </label>
+                                    <div class="col-md-6">
+                                      <input
+                                        class="form-control"
+                                        formControlName="date_of_collection"
+                                        type="datetime-local"
+                                        (change)="onDuration()"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label
+                                  class="col-md-2 col-form-label"
+                                  for="demo-duration"
+                                  >Demo Duration *</label
+                                >
+                                <div class="col-md-2">
+                                  <input
+                                    type="number"
+                                    formControlName="demo_duration"
+                                    class="form-control"
+                                    [value]="duration"
+                                  />
+                                </div>
+                                <div class="col-md-2">Days</div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <label
+                                      class="col-md-4 col-form-label"
+                                      for="department"
+                                      >Ship-to Department/ Warde</label
+                                    >
+                                    <div class="col-md-8">
+                                      <input
+                                        type="text"
+                                        formControlName="department"
+                                        class="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <label
+                                      class="col-md-4 col-form-label"
+                                      for="location"
+                                      >Ship-to location</label
+                                    >
+                                    <div class="col-md-8">
+                                      <input
+                                        type="text"
+                                        formControlName="location"
+                                        class="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="opportunitiesText">
+                                <div><label for="">Point Point</label></div>
+                                <div>
+                                  <textarea
+                                    name=""
+                                    id=""
+                                    cols="30"
+                                    rows="4"
+                                    style="resize: none"
+                                  ></textarea>
+                                </div>
+                              </div>
+
+                              <div class="opportunitiesText">
+                                <div>
+                                  <label for="">Features To highlight</label>
+                                </div>
+                                <div>
+                                  <textarea
+                                    name=""
+                                    id=""
+                                    cols="30"
+                                    rows="4"
+                                    style="resize: none"
+                                  ></textarea>
+                                </div>
+                              </div>
+
+                              <div class="opportunitiesText">
+                                <div><label for="">users Feedback</label></div>
+                                <div>
+                                  <textarea
+                                    name=""
+                                    id=""
+                                    cols="30"
+                                    rows="4"
+                                    style="resize: none"
+                                  ></textarea>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div
+                              class="
+                                custom-footer
+                                d-flex
+                                justify-content-center
+                              "
+                            >
+                              <button
+                                type="submit"
+                                class="btn btn-sm btn-primary"
+                              >
+                                <i class="fa fa-plus"></i> Save
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/.row-->
+                  </div>
+                  <div
+                    id="success"
+                    bsModal
+                    #successModal="bs-modal"
+                    class="modal fade"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="myModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog modal-success" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Success</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>{{ alertBody }}</p>
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                  </div>
+                  <!-- /.modal -->
+
+                  <div
+                    bsModal
+                    #dangerModal="bs-modal"
+                    class="modal fade"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="myModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog modal-danger" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Error</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>{{ alertBody }}</p>
+                        </div>
+                        <div class="modal-footer"></div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                  </div>
+                  <!-- /.modal -->
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-    <!-- /.modal-content -->
   </div>
-  <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->

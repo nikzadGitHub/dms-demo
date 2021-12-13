@@ -9,7 +9,10 @@ import {
 import {EquipmentList} from './equipment-entity';
 
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class EquipmentsService implements EquipmentsInterface {
 
   constructor(private apiClient: ApiClient) {
@@ -17,5 +20,9 @@ export class EquipmentsService implements EquipmentsInterface {
 
   findEquipments(query: EquipmentQuery): Observable<EquipmentList> {
     return this.apiClient.get<EquipmentList>('equipments/search?' + parameterize(query));
+  }
+
+  saveInventoryBooking(request:any): Observable<any> {
+    return this.apiClient.post<any>('inventory-booking/store', request);
   }
 }

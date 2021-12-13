@@ -16,6 +16,7 @@ export class BookingsComponent implements OnInit {
 	search_text: string = '';
 	icons = [];
   id="#"
+  loading: boolean;
 
   constructor(
     private api: BookingService,
@@ -24,16 +25,21 @@ export class BookingsComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.api.getList().subscribe((response) => {
       if (response as BookingList) {
         this.bookingList = response;
       }
-			console.log(response);
-		});
+      this.loading=false
+    
+		}, err => {
+      this.loading = false;
+    }
+    );
   }
 
   onSearch() {
-    console.log('searching for:', this.search_text);
+    // console.log('searching for:', this.search_text);
   }
 
   onCreate(event) {

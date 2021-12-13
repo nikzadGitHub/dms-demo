@@ -28,6 +28,7 @@ export class ProspectsIndexComponent implements OnInit {
     {'header':'Email','field':'email','type':'text'},
     {'header':'Phone','field':'phone','type':'text'}
   ];
+  loading: boolean;
   selectedId: any;
   modalHeader: any;
   modalBody: any;
@@ -40,10 +41,14 @@ export class ProspectsIndexComponent implements OnInit {
   }
 
   getList() {
+    this.loading=true
     this.prospectsService.getAll(this.pageItems,this.search_text).subscribe(data => {
       this.datasource = data['data']['data'];
       this.pages = data['data']['links'];
       this.totalRecords = data['data']['total'];
+      this.loading=false
+    }, err => {
+      this.loading = false;
     });
   }
 
