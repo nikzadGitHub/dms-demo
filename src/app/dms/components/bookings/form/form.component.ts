@@ -152,6 +152,7 @@ changePrioritye(id:number){
       contact_name: this.formBooking.get("contact_name").value,
       contact_number: this.formBooking.get("contact_number").value,
       remarks: this.formBooking.get("remarks").value,
+      booking_save: true,
 
       wo_con_req: this.formBooking.get("wo_con_req").value,
       wo_con_won: this.formBooking.get("wo_con_won").value,
