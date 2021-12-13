@@ -65,6 +65,8 @@ export class QuoteTemplateComponent implements OnInit {
   salesPersonSignature: any;
   productTotalPrice: any;
   productDetails: any;
+  discountedValue: any = 2000;
+  netTotal: number;
   constructor(private router: Router,
     private quoteService: QuoteService,
     private route: ActivatedRoute,
@@ -100,8 +102,8 @@ export class QuoteTemplateComponent implements OnInit {
       for(let i = 0; i < this.quotationsTemplateData.quotations.products.length; i++){
         this.productTotalPrice = parseFloat(this.productDetails[i].list_price);
         console.log('total product price =>',this.productTotalPrice);
-      
       }
+      this.netTotal = this.productTotalPrice - parseFloat(this.discountedValue)
       
       
       // console.log('quoatation content',this.quotationContentFooter)
