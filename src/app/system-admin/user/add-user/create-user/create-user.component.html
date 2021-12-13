@@ -43,24 +43,12 @@
           >
         </div>
         <div class="col-lg-10 col-md-10 col-sm-10">
-          <!-- *ngIf="!this.isEdit" -->
-          <p-dropdown
-            formControlName="companyName"
-            [options]="companies"
-            placeholder="Select company"
-            optionLabel="title"
-            optionValue="data_area_id"
-            [style]="{ width: '100%' }"
-          ></p-dropdown>
-          <!-- <p-dropdown
-          *ngIf="this.isEdit"
-          formControlName="companyName"
-          [options]="companies"
-          placeholder="Select company"
-          optionLabel="title"
-          optionValue="title"
-          [style]="{ width: '100%' }"
-        ></p-dropdown> -->
+    
+          <p-dropdown formControlName="companyName"   placeholder="Select company"
+           [options]="companies" [style]="{ width: '100%' }" 
+            optionLabel="title" 
+            optionValue="data_area_id"></p-dropdown>
+
         </div>
       </div>
 
@@ -90,7 +78,7 @@
             *ngIf="!this.isEdit"
             formControlName="userAccess"
             [options]="userRoleList"
-            placeholder="Select user"
+            placeholder="User Access"
             optionLabel="name"
             optionValue="id"
             [style]="{ width: '351px' }"
@@ -224,7 +212,7 @@
             placeholder="Select unit"
             [options]="units"
             placeholder="Units"
-            optionLabel="title"
+            optionLabel="code"
             optionValue="id"
             [style]="{ width: '351px' }"
           ></p-dropdown>
@@ -245,6 +233,7 @@
             optionLabel="status"
             optionValue="code"
             placeholder="Select Status"
+            optionValue="code"
             [style]="{ width: '340px' }"
             [required]="true"
           >
@@ -254,7 +243,7 @@
       </div>
       <!-- action-btn -->
       <div class="action-btn">
-        <button type="button" class="btn btn-outline-primary cancel-btn">
+        <button type="button" class="btn btn-outline-primary cancel-btn" (click)=back() >
           CANCEL
         </button>
         <button
@@ -265,10 +254,39 @@
         >
           SAVE
         </button>
-        <button type="button" class="btn btn-primary save-btn" *ngIf="isEdit">
+        <button type="button" class="btn btn-primary save-btn" (click)="updateUser()" *ngIf="isEdit">
           Update
         </button>
       </div>
     </div>
   </form>
+</div>
+
+<div id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
 </div>

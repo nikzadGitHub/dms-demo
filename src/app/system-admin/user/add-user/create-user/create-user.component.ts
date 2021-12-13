@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SystemAdminService } from "../../../system-admin.service";
 import { SociService } from "./../../../../soci/soci.service";
+import { ModalDirective } from "ngx-bootstrap/modal";
 
 @Component({
   selector: "app-create-user",
@@ -52,6 +53,10 @@ export class CreateUserComponent implements OnInit {
   isEdit: boolean;
   companies: Array<any> = [];
   units: Array<any>;
+  @ViewChild("successModal") successModal: ModalDirective;
+  @ViewChild("dangerModal") dangerModal: ModalDirective;
+  alertBody: string;
+  userRole: any;
   constructor(
     private systemAdminSerive: SystemAdminService,
     private router: Router,
@@ -78,23 +83,27 @@ export class CreateUserComponent implements OnInit {
       this.userRoleId = params.userRoleId;
       if (this.userRoleId) {
         this.isEdit = true;
+        this.getListOfRolePermission();
+        this.getUserRole();
         this.getUserRoleDetail(this.userRoleId);
+      } else {
+        this.getUserRole();
+        this.getListOfRolePermission();
       }
       //  else {
       //   this.getUserRole();
       //   this.getListOfRolePermission();
       // }
     });
-
-    // all user-roles
-    this.getUserRole();
-    // all user-role permission
-    this.getListOfRolePermission();
-    // all companies
-    this.getAllCompany();
-
-    // all units
-    this.getAllUnit();
+    this.systemAdminSerive.getAllCompamanies().subscribe((res: any) => {
+      res.data.forEach((ele) => {
+        this.companies.push(ele);
+      });
+    });
+    this.systemAdminSerive.getUnits().subscribe((res: any) => {
+      this.units = res.data;
+      console.log("units", res.data);
+    });
   }
 
   getListOfRolePermission() {
@@ -111,17 +120,34 @@ export class CreateUserComponent implements OnInit {
   }
 
   getUserRoleDetail(userRoleId) {
+    console.log("called");
     this.systemAdminSerive
-      .getQuery("/user-role/" + userRoleId + "/edit")
-      .subscribe((res: any) => {
-        console.log("detail-user:", res);
-        this.userRoleList = res?.data?.roles;
-        this.userform.patchValue({
-          name: res?.data?.full_name,
-          email: res?.data?.email,
-          phoneNumber: res?.data?.phone_number,
-        });
-      });
+      .getQuery("/auth/user/" + userRoleId + "/edit")
+      .subscribe(
+        (res: any) => {
+          console.log("detail-user:", res);
+          // this.userRole = res?.data?.roles;
+          // console.log("this.userRole:", this.userRole);
+          // console.log("userRole:", this.userRole[0].name);
+          setTimeout(() => {
+            this.userform.patchValue({
+              name: res?.data?.full_name,
+              email: res?.data?.email,
+              phoneNumber: res?.data?.phone_number,
+              discountMargin: res?.data?.discount_margin_percent,
+              profit: res?.data?.profit_percent,
+              status: "1",
+              userAccess: res?.data?.user_access_id,
+              approvedBy: Number(res?.data?.approved_by),
+              unit: Number(res?.data?.unit_id),
+              companyName: res?.data?.data_area_id,
+            });
+          }, 300);
+        },
+        (err) => {
+          console.log("error user get", err);
+        }
+      );
   }
 
   getAllCompany() {
@@ -140,7 +166,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   addUser() {
-    // companyName: this.userform.value.companyName,
+    console.log(this.userform.value, "user form");
     this.systemAdminSerive
       .postQuery("/auth/create-user", {
         full_name: this.userform.value.name,
@@ -153,13 +179,79 @@ export class CreateUserComponent implements OnInit {
         profit_percent: this.userform.value.profit,
         unit_id: this.userform.value.unit,
         is_active: this.userform.value.status,
-        status: this.userform.value.status,
       })
-      .subscribe((res) => {
-        console.log("add-user-res:", res);
-      });
+      .subscribe(
+        (res: any) => {
+          console.log("add-user-res:", res);
+          if (res.success) {
+            // let item = this.selectedAllUnits.find(x => x.id == res.data.id)
+            this.alertBody = "User Created successfully.";
+            this.successModal.show();
+
+            setTimeout(() => {
+              this.successModal.hide();
+              this.router.navigate(["/user/adduser"]);
+              this.resetForm();
+            }, 2000);
+          }
+        },
+        (err) => {
+          // this.alertBody = "Error";
+          this.dangerModal.show();
+          this.alertBody = "Error";
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
   }
 
+  updateUser() {
+    console.log(this.userform.value, "user form");
+    this.systemAdminSerive
+      .putQuery("/auth/update-user/" + this.userRoleId, {
+        full_name: this.userform.value.name,
+        phone_number: this.userform.value.phoneNumber,
+        discount_margin_percent: this.userform.value.discountMargin,
+        data_area_id: this.userform.value.companyName,
+        user_access_id: this.userform.value.userAccess,
+        email: this.userform.value.email,
+        // phoneNumber: "",
+        // discountMargin: this.userform.value.discountMargin,
+        approved_by: this.userform.value.approvedBy,
+        profit_percent: this.userform.value.profit,
+        unit_id: this.userform.value.unit,
+        is_active: this.userform.value.status,
+      })
+      .subscribe(
+        (res: any) => {
+          if (res.success) {
+            console.log("update-user-res:", res);
+            this.alertBody = "User Updated successfully.";
+            this.successModal.show();
+            this.resetForm();
+
+            setTimeout(() => {
+              this.successModal.hide();
+              this.router.navigate(["/user/adduser"]);
+            }, 2000);
+          }
+        },
+        (err) => {
+          this.dangerModal.show();
+          this.alertBody = "Error";
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+  }
+  filterProduct(event) {}
+  resetForm() {
+    this.userform.reset();
+    this.userform.markAsPristine();
+    this.userform.markAsUntouched();
+  }
   back() {
     // this.location.back();
     this.router.navigateByUrl("user/adduser");
