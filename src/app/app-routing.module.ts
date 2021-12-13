@@ -9,6 +9,7 @@ import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { LogoutComponent } from './views/logout/logout.component';
+import { ProfileComponent } from './views/profile/profile.component';
 import { RegisterComponent } from './views/register/register.component';
 
 export const routes: Routes = [
@@ -137,7 +138,8 @@ export const routes: Routes = [
       },
       {
         path: 'profile',
-        loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule)
+        // loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule)
+        component:ProfileComponent
       },
       {
         path: 'activities',
@@ -153,7 +155,7 @@ export const routes: Routes = [
       },
     ]
   },
-  { path: 'profile', loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule) },
+  // { path: 'profile', loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule) },
   { path: '**', component: P404Component }
 ];
 
