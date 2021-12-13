@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { UserActivitiesService } from './user-activities.service';
 
 @Component({
@@ -7,6 +8,15 @@ import { UserActivitiesService } from './user-activities.service';
   styleUrls: ['./user-activities.component.scss']
 })
 export class UserActivitiesComponent implements OnInit {
+
+  @ViewChild("confirmationExportExcelModal")
+  public confirmationExportExcelModal: ModalDirective;
+  @ViewChild("columnChooserModal")
+  public columnChooserModal: ModalDirective;
+
+
+
+
   loading:boolean
 	opportunities: [];
 	paginate: [];

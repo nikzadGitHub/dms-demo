@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { UserActivitiesService } from '../user-activities.service';
 
 @Component({
@@ -7,23 +8,43 @@ import { UserActivitiesService } from '../user-activities.service';
   styleUrls: ['./create-activity.component.scss']
 })
 export class CreateActivityComponent implements OnInit {
-  createlist: any;
-
-  constructor(public userAactivities: UserActivitiesService) { }
+  @ViewChild("createActivity")
+  public createActivity: ModalDirective;
+  @ViewChild("columnChooserModal")
+  public columnChooserModal: ModalDirective;
+  loading:boolean
+	opportunities: [];
+	paginate: [];
+	pageItems: number = 200;
+	search_text: string = '';
+  activitydata: any[] =[];
+  
+  closedData: any[];
+  openData: any[];
+  
+  constructor(public userAactivities: UserActivitiesService,) { }
 
   ngOnInit(): void {
-    // this.createList();
-  }
+		this.getActivitydata();
 
-
-//  createList() {
-   
-//     this.userAactivities.getCreatelist().subscribe(res => {
-//       this.createlist = res.data;
-//       console.log('this is res', res);
+	}
+  getActivitydata() {
+    this.loading=true
+    
+    this.userAactivities.getActivity().subscribe(res => {
+    
+      this.activitydata = res.data;
+      this.closedData =  this.activitydata.filter(function(item) {
+        return item.status == "CLOSED";
+      });
+      console.log('this is res', this.closedData);
       
-//     });
-//   }
-
-
+      this.openData =  this.activitydata.filter(function(item) {
+        return item.status != "CLOSED";
+      });
+      console.log('this is res', this.openData);
+      this.loading=false
+      
+    });
+  }
 }

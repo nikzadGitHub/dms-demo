@@ -9,6 +9,7 @@ import { CreateActivityComponent } from './create-activity/create-activity.compo
 import {TabViewModule} from 'primeng/tabview';
 import { AccordionModule } from 'primeng/accordion';
 import { TableModule } from 'primeng/table';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { PaginatorModule } from 'primeng/paginator';
 import { AddActivityComponent } from './add-activity/add-activity.component';
@@ -26,6 +27,7 @@ import { AddActivityComponent } from './add-activity/add-activity.component';
     CommonModule,
     UserActivitiesRoutingModule,
     PrimeNgModule,
+    ModalModule,
     AccordionModule,
     TabViewModule,
     PaginatorModule,
