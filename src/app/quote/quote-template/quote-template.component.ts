@@ -63,6 +63,8 @@ export class QuoteTemplateComponent implements OnInit {
   quotationContentHeader: any;
   salesPersonData: any;
   salesPersonSignature: any;
+  productTotalPrice: any;
+  productDetails: any;
   constructor(private router: Router,
     private quoteService: QuoteService,
     private route: ActivatedRoute,
@@ -90,9 +92,15 @@ export class QuoteTemplateComponent implements OnInit {
       this.salesPersonData = res["data"].quotations?.sales_person
       this.salesPersonSignature = this.salesPersonData?.signature_base64
       this.quotationContent = res["data"].quotations?.quotation_contents
+      this.productDetails = res["data"].quotations?.products
       if(this.quotationContent){
         this.quotationContentFooter = JSON.parse(this.quotationContent?.footer_content)
         this.quotationContentHeader = JSON.parse(this.quotationContent?.header_content)
+      }
+      for(let i = 0; i < this.quotationsTemplateData.quotations.products.length; i++){
+        this.productTotalPrice = parseFloat(this.productDetails[i].list_price);
+        console.log('total product price =>',this.productTotalPrice);
+      
       }
       
       
