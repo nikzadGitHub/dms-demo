@@ -232,7 +232,7 @@
             "
           >
             <thead>
-              <tr>
+              <!-- <tr>
                 <th
                   class="numberCol"
                   style="width: 50px; border: 1px solid black; font-weight: bold;"
@@ -275,54 +275,24 @@
                 >
                   TOTAL PRICE (RM)
                 </th>
-              </tr>
+              </tr> -->
+                <tr style="border: 2px solid black">
+                  <th style="border: 2px solid black" scope="col">BRAND</th>
+                  <th style="border: 2px solid black" scope="col">P/N</th>
+                  <th style="border: 2px solid black" scope="col">DESCRIPTION</th>
+                  <th style="border: 2px solid black" scope="col">PRICE LIST</th>
+                </tr>
             </thead>
             <tbody>
-              <tr
-                class="main-table-data"
-                *ngFor="
-                  let item of quotationsTemplateData?.quotations?.products
-                "
-              >
+              <tr class="main-table-data" style="border: 2px solid black"
+              *ngFor="let item of quotationsTemplateData?.quotations?.products">
                 <!-- there should be loop for all the products -->
-                <td
-                  class="numberCol"
-                  style="width: 50px; border: 1px solid black"
-                >
-                  1
-                </td>
-                <td
-                  class="descCol"
-                  style="width: 50px; border: 1px solid black"
-                >
-                  {{ item.name }}
-                </td>
-                <!-- <td class="numberCol" style="width: 50px; border: 1px solid black;">{{ item.name }}</td> -->
-                <td
-                  class="numberCol"
-                  style="width: 50px; border: 1px solid black"
-                >
-                  Unit
-                </td>
-                <td
-                  class="numberCol"
-                  style="width: 50px; border: 1px solid black"
-                >
-                  {{ item.quantity }}
-                </td>
-                <td
-                  class="unitPriceCol"
-                  style="width: 110px; border: 1px solid black"
-                >
-                  {{ item.unit_price }}
-                </td>
-                <td
-                  class="totalPriceCol"
-                  style="width: 110px; border: 1px solid black"
-                >
-                  {{ item.total_price }}
-                </td>
+                <td style="border: 2px solid black">No Data Available </td>
+                <td style="border: 2px solid black"> {{ item.name }} </td>
+                <td style="border: 2px solid black">{{ item.name }}</td>
+                <td style="border: 2px solid black">  {{item.list_price}} </td>
               </tr>
+
               <tr style="border-bottom: 2px solid black">
                 <td style="border-left: 2px solid;
                 border-right: 2px solid;
@@ -336,23 +306,21 @@
                 </td>
                 <td style="border-right: unset;"></td>
                 <td></td>
-                <td></td>
-                <td></td>
                 <td
                   style="border-left: 2px solid;
                   border-right: 2px solid;
                   border-top: 2px solid;"
                 ><ul style="list-style-type: none;font-weight: 600; margin: 0px;
-                padding: 0px;" [attr.contenteditable]="editable">
+                padding: 0px;">
 
-                  <li>16000</li>
-                  <li style="border-bottom: 2px solid;width: 104%; margin-left: -5px;" >2000</li>
-                  <li>14000</li>
-                  <li>0.00</li>
+                  <li>{{productTotalPrice}}</li>
+                  <li style="border-bottom: 2px solid;width: 104%; margin-left: -5px;" >-</li>
+                  <li>-</li>
+                  <li>-</li>
                   <li style="border-top: 2px solid;
                             width: 104%;
                             margin-left: -5px;
-                            margin-bottom: -4px;">14000</li>
+                            margin-bottom: -4px;">{{productTotalPrice}}</li>
                   </ul>
                 </td>
               </tr>
