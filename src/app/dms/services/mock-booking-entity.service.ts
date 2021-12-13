@@ -66,6 +66,13 @@ const mockBookingDetail: BookingDetail = {
     tnc_won:"",
     pdr_won:"",
     bme_booking_id:"",
+    bme_con_req: 1,
+    bme_pdi_re: 1,
+    bme_ins_req: 1,
+    bme_tnc_won: 1,
+    bme_trn_req: 1,
+    bme_war_req: 1,
+    bme_pdr_req: 1,
 };
 
 const mockOpportunitySummary: OpportunitySummary = {

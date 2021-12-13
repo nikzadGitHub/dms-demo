@@ -90,7 +90,7 @@ changePrioritye(id:number){
   changeReason(id: number) {
     //getted from event
     this.selectedBooking = id;
-    this.showBmeLogSec = true;
+    this.showBmeLogSec = id == 2 ? true : false;
     // console.log(id);
     // console.log('compare');
     // console.log(this.selectedBooking);
@@ -104,7 +104,11 @@ changePrioritye(id:number){
   // }
 
   ngOnInit(): void {
-    //this.editable = (this.bookingDetailList.booking_reason == '2') ? true : false;
+    if (this.bookingDetailList.booking_reason == '2') {
+      this.editable =  true;
+      this.showBmeLogSec = true;
+    }
+    
 
     this.apiCustomers.getList().subscribe(response => {
       this.customers = response;
@@ -123,20 +127,28 @@ changePrioritye(id:number){
       contact_name: new FormControl(this.bookingDetailList.ship_to_contact_name),
       contact_number: new FormControl(this.bookingDetailList.ship_to_contact_number),
       remarks:new FormControl(this.bookingDetailList.remarks),
-      wo_con_req:new FormControl(1),
+      wo_con_req:new FormControl(this.bookingDetailList.bme_con_req !== undefined ? this.bookingDetailList.bme_con_req : 1),
       wo_con_won:new FormControl(this.bookingDetailList.con_won),
-      wo_pdi_req:new FormControl(1),
+      wo_pdi_req:new FormControl(this.bookingDetailList.bme_pdi_re !== undefined ? this.bookingDetailList.bme_pdi_re : 1),
       wo_pdi_won:new FormControl(this.bookingDetailList.pdi_won),
-      wo_ins_req:new FormControl(1),
+      wo_ins_req:new FormControl(this.bookingDetailList.bme_ins_req !== undefined ? this.bookingDetailList.bme_ins_req : 1),
       wo_ins_won:new FormControl(this.bookingDetailList.ins_won),
-      wo_tnc_req:new FormControl(1),
+      wo_tnc_req:new FormControl(this.bookingDetailList.bme_tnc_won !== undefined ? this.bookingDetailList.bme_tnc_won : 1),
       wo_tnc_won:new FormControl(this.bookingDetailList.tnc_won),
-      wo_trn_req:new FormControl(1),
+      wo_trn_req:new FormControl(this.bookingDetailList.bme_trn_req !== undefined ? this.bookingDetailList.bme_trn_req : 1),
       wo_trn_won:new FormControl(this.bookingDetailList.trn_won),
-      wo_wq_req:new FormControl(1),
+      wo_wq_req:new FormControl(this.bookingDetailList.bme_war_req !== undefined ? this.bookingDetailList.bme_war_req : 1),
       wo_wq_won:new FormControl(this.bookingDetailList.war_won),
-      wo_pdr_req:new FormControl(1),
+      wo_pdr_req:new FormControl(this.bookingDetailList.bme_pdr_req !== undefined ? this.bookingDetailList.bme_pdr_req : 1),
       wo_pdr_won:new FormControl(this.bookingDetailList.pdr_won),
+      opportunity_code:new FormControl(),
+      customer_feedback:new FormControl(),
+      selling_points:new FormControl(),
+      initiator:new FormControl(),
+      probability:new FormControl(),
+      is_competitor_in_demo:new FormControl(),
+      priority:new FormControl(),
+      squence_of_demo:new FormControl()
     });
   }
   onSave(): void {
@@ -152,28 +164,20 @@ changePrioritye(id:number){
       contact_name: this.formBooking.get("contact_name").value,
       contact_number: this.formBooking.get("contact_number").value,
       remarks: this.formBooking.get("remarks").value,
-
       wo_con_req: this.formBooking.get("wo_con_req").value,
       wo_con_won: this.formBooking.get("wo_con_won").value,
-
       wo_pdi_req: this.formBooking.get("wo_pdi_req").value,
       wo_pdi_won: this.formBooking.get("wo_pdi_won").value,
-
       wo_ins_req: this.formBooking.get("wo_ins_req").value,
       wo_ins_won: this.formBooking.get("wo_ins_won").value,
-
       wo_tnc_req: this.formBooking.get("wo_tnc_req").value,
       wo_tnc_won: this.formBooking.get("wo_tnc_won").value,
-
       wo_trn_req: this.formBooking.get("wo_trn_req").value,
       wo_trn_won: this.formBooking.get("wo_trn_won").value,
-
       wo_wq_req: this.formBooking.get("wo_wq_req").value,
       wo_wq_won: this.formBooking.get("wo_wq_won").value,
-
       wo_pdr_req: this.formBooking.get("wo_pdr_req").value,
       wo_pdr_won: this.formBooking.get("wo_pdr_won").value
-
     }, this.bookingDetailList.id).subscribe((res) => {
         if (res.id) {
           this.editable = true;
