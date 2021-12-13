@@ -120,4 +120,23 @@ export class FpsService implements FpsInterface {
     return this.apiClient.post('minProcedure/checksum', data);
   }
 
+  saveMinUsage(data: any): Observable<SaveResult> {
+    return this.apiClient.post('minUsage/store', data);
+  }
+  
+  storeMinUsage(minUsage) {
+    this.saveMinUsage(minUsage).subscribe((res) => {
+      if (res.id) {
+        console.log("Min Usage Stored successfully.");
+      }
+    },
+    err => {
+      console.log(err);
+    });
+  }
+
+  minUsageCheckSum(data: any): Observable<SaveResult> {
+    return this.apiClient.post('minUsage/checksum', data);
+  }
+
 }

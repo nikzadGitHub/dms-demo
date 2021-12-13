@@ -38,6 +38,7 @@ export class CreateComponent implements OnInit {
   fps_user_list;
   agreement_mandatory = false;
   minProcedureAddForm: FormGroup;
+  minUsageAddForm: FormGroup;
 
   payment_frequency_list = [
     {'value': 'monthly_payment', 'label': 'Monthly'},
@@ -50,8 +51,8 @@ export class CreateComponent implements OnInit {
   current_apportunity_id : number;
   current_quot_id : number;
   countryCode : string = null;
-  has_consumable_usage: boolean = false;
-  has_min_procedure: boolean = false;
+  has_consumable_usage: boolean = true;
+  has_min_procedure: boolean = true;
 
   oppt_details : any = {
     opportunity_code: '',
@@ -107,11 +108,18 @@ export class CreateComponent implements OnInit {
       fps_total_financial_amount: new FormControl(),
       fps_min_payment_amount: new FormControl(),
       fps_required_docs: new FormControl(),
-      fps_data_area_id: new FormControl()
+      fps_data_area_id: new FormControl(),
+      fps_consumable_usage: new FormControl(),
+      fps_min_procedure: new FormControl(),
+      
     });
 
     this.minProcedureAddForm = this.fb.group({
       addMinProcedure: this.fb.array([]),
+    });
+
+    this.minUsageAddForm = this.fb.group({
+      addMinUsage: this.fb.array([]),
     });
 
     this.activatedRoute.queryParams.subscribe(params => {
@@ -213,11 +221,24 @@ export class CreateComponent implements OnInit {
             this.fpsService.storeMinProcedure(procedure);
           } 
 
+          let usages = this.minUsageAddForm.value.addMinUsage;
+          for(let x = 0; x <usages.length; x++) {
+            let usage = {
+              'id': null,
+              'fps_id': res.id,
+              'date': usages[x].date,
+              'usage': usages[x].usage,
+              'updated_by': usages[x].updated_by,
+              'updated_on': usages[x].updated_on,
+            }
+            this.fpsService.storeMinUsage(usage);
+          } 
+
           this.alertBody = "FPS saved successfully.";
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.router.navigateByUrl('/fps/fps-listing', {replaceUrl: true})
+            // this.router.navigateByUrl('/fps/fps-listing', {replaceUrl: true})
           }, 2000);
         }
       },
@@ -248,6 +269,8 @@ export class CreateComponent implements OnInit {
     this.fpsAddForm.controls.fps_adv_payment.setValue(result[0].min_payment_amount);
     this.fpsAddForm.controls.fps_min_payment_amount.setValue(result[0].min_payment_amount);
     this.fpsAddForm.controls.fps_required_docs.setValue(result[0].required_docs ?? '');
+    this.fpsAddForm.controls.fps_consumable_usage.setValue(result[0].consumable_usage);
+    this.fpsAddForm.controls.fps_min_procedure.setValue(result[0].min_procedure);
     this.has_consumable_usage = result[0].consumable_usage > 0;
     this.has_min_procedure = result[0].min_procedure > 0
     
@@ -347,5 +370,30 @@ export class CreateComponent implements OnInit {
   }
 
   //---------------- End of  Min Procedure -------------------
+
+  //---------------- Min Usage  -------------------
+  addMinUsage(): FormArray {
+    return this.minUsageAddForm.get("addMinUsage") as FormArray;
+  }
+
+  newMinUsage(): FormGroup {
+    return this.fb.group({
+      date: '',
+      usage: 12,
+      updated_by: 1,
+      updated_on: '',
+    });
+  }
+
+  addAddMinUsage() {
+    this.addMinUsage().push(this.newMinUsage());
+  }
+
+  removeAddMinUsage(i: number) {
+    this.addMinUsage().removeAt(i);
+  }
+
+  //---------------- End of  Min Usage -------------------
+  
 
 }
