@@ -238,7 +238,7 @@ export class CreateComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            // this.router.navigateByUrl('/fps/fps-listing', {replaceUrl: true})
+            this.router.navigateByUrl('/fps/fps-listing', {replaceUrl: true})
           }, 2000);
         }
       },
