@@ -61,11 +61,61 @@
                     (change)="updateDetail()"
                   />
                 </div>
+
+				<p-accordionTab>
+					<ng-template pTemplate="header"><i class="cil-columns c-icon"></i>&nbsp;&nbsp;Forecast</ng-template>
+					<form [formGroup]="forecastForm">
+						<div class="row">
+							<div class="col-md-12">
+								<table class="table m-0 no-outline">
+									<tr>
+										<td class="text-left w-25">Preferred Vendor</td>
+										<td class="w-25">
+											<select class="form-control" (change)="updateForecast()" formControlName="preferred_vendor">
+												<option *ngFor="let type of preferred_vendor_types; let i = index" value="{{type.id}}">{{type.title}}</option>
+											</select>
+										</td>
+										<td class="text-left w-25">Forecast Category</td>
+										<td class="w-25" style="vertical-align: middle;">
+											<progressbar [value]="forecast_category" class="progress-striped active" [animate]="true" [striped]="true">{{forecast_category}}%</progressbar>
+										</td>
+									</tr>
+									<tr>
+										<td class="text-left">Funding Status</td>
+										<td>
+											<select class="form-control" (change)="updateForecast()" formControlName="funding_status">
+												<option *ngFor="let status of funding_status; let i = index" value="{{status.id}}">{{status.title}}</option>
+											</select>
+										</td>
+										<td class="text-left">Reason for Loss</td>
+										<td><input type="text" class="form-control" (change)="updateForecast()" formControlName="reason"/></td>
+									</tr>
+									<tr>
+										<td class="text-left">Funding Source</td>
+										<td>
+											<select class="form-control" (change)="updateForecast()" formControlName="funding_source">
+												<option *ngFor="let source of funding_source; let i = index" value="{{source.id}}">{{source.title}}</option>
+											</select>
+										</td>
+										<td class="text-left">Loss to which competitor</td>
+										<td>
+											<select class="form-control" (change)="updateForecast()" formControlName="competitor_id">
+												<option *ngFor="let competitor of competitors; let i = index" value="{{competitor.id}}">{{competitor.name}}</option>
+											</select>
+
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</form>
+				</p-accordionTab>
+
                 <div>
                   <label>Created Date</label>
-
                   <div>{{ detail?.created_at | date: "dd-MMM-yyyy" }}</div>
                 </div>
+
                 <div>
                   <label>Primary Contact</label>
                   <div>
@@ -86,6 +136,7 @@
                     </select>
                   </div>
                 </div>
+
                 <div>
                   <label>Other Contact</label>
                   <div>
@@ -103,14 +154,16 @@
                     </select>
                   </div>
                 </div>
+
                 <div>
                   <label>Owner</label>
                 </div>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
+
+              </div><!-- d-flex -->
+            </div><!-- card-body -->
+          </div><!-- card -->
+        </form><!-- form -->
+      </div><!-- col-sm-12 col-md-12 -->
 
       <div class="col-md-12 form-group">
         <p-accordion
@@ -826,19 +879,9 @@
         </p-accordion>
       </div>
 
-      <div class="col-sm-12 col-md-12 form-group">
-        <h3>FPS Request</h3>
-        <!-- Here the fps list related to current opportunity is displayed -->
-        <app-fps-list></app-fps-list>
-    
-        <!-- Accordion for the fps list related to current opportunity -->
-        <!-- <p-accordionTab header="FPS Request">
-          <div class="row">
-            <app-fps-list></app-fps-list>
-          </div>
-        </p-accordionTab>		 -->
-      </div>
-      
+      <!-- Here the fps list related to current opportunity is displayed -->
+      <app-fps-list [current_opportunity_id]="opportunity_id" ></app-fps-list>
+
       <!-- Competitor List -->
       <div class="col-sm-12 col-md-12 form-group">
         <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
