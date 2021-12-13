@@ -43,13 +43,24 @@
           >
         </div>
         <div class="col-lg-10 col-md-10 col-sm-10">
+          <!-- *ngIf="!this.isEdit" -->
           <p-dropdown
             formControlName="companyName"
             [options]="companies"
-            placeholder="Select user"
-            optionLabel="company_name" optionValue="company_name"
+            placeholder="Select company"
+            optionLabel="title"
+            optionValue="data_area_id"
             [style]="{ width: '100%' }"
           ></p-dropdown>
+          <!-- <p-dropdown
+          *ngIf="this.isEdit"
+          formControlName="companyName"
+          [options]="companies"
+          placeholder="Select company"
+          optionLabel="title"
+          optionValue="title"
+          [style]="{ width: '100%' }"
+        ></p-dropdown> -->
         </div>
       </div>
 
@@ -76,20 +87,23 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
           <p-dropdown
+            *ngIf="!this.isEdit"
             formControlName="userAccess"
             [options]="userRoleList"
             placeholder="Select user"
             optionLabel="name"
+            optionValue="id"
             [style]="{ width: '351px' }"
           ></p-dropdown>
-          <!-- <p-multiSelect
-            [options]="cities"
-            [(ngModel)]="selectedCities"
+          <p-dropdown
+            *ngIf="this.isEdit"
+            formControlName="userAccess"
+            [options]="userRoleList"
             optionLabel="name"
-            optionValue="code"
+            optionValue="id"
             display="chip"
-            [style]="{ width: '100%' }"
-          ></p-multiSelect> -->
+            [style]="{ width: '351px' }"
+          ></p-dropdown>
         </div>
       </div>
 
@@ -167,6 +181,7 @@
             formControlName="approvedBy"
             [options]="userList"
             optionLabel="full_name"
+            optionValue="id"
             placeholder="Select Approve By"
             [style]="{ width: '351px' }"
             [required]="true"
@@ -206,10 +221,12 @@
           /> -->
           <p-dropdown
             formControlName="unit"
+            placeholder="Select unit"
             [options]="units"
             placeholder="Units"
-            optionLabel="code" optionValue="code"
-            style="width: 340px"
+            optionLabel="title"
+            optionValue="id"
+            [style]="{ width: '351px' }"
           ></p-dropdown>
         </div>
       </div>
@@ -226,6 +243,7 @@
             formControlName="status"
             [options]="status"
             optionLabel="status"
+            optionValue="code"
             placeholder="Select Status"
             [style]="{ width: '340px' }"
             [required]="true"

@@ -10,7 +10,7 @@ import {
 import { Router } from "@angular/router";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { SystemAdminService } from "../../system-admin.service";
-import { SociService} from './../../../soci/soci.service'
+import { SociService } from "./../../../soci/soci.service";
 
 @Component({
   selector: "app-user-setup",
@@ -38,17 +38,17 @@ export class UserSetupComponent implements OnInit {
   selectedCareArea: any[] = [];
   selectPrinciples: any[] = [];
   userList: any[] = [];
-  companies:Array<any>=[];
+  companies: Array<any> = [];
   allUnits;
-  company_Id = ''
-  unit_Name = ''
-  unit_Code = ''
-  isEditEnabled: boolean = false
-  editedUnit: any = []
+  company_Id = "";
+  unit_Name = "";
+  unit_Code = "";
+  isEditEnabled: boolean = false;
+  editedUnit: any = [];
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   alertBody;
-  selectedAllUnits: any = []
+  selectedAllUnits: any = [];
   constructor(
     private systemAdminService: SystemAdminService,
     private formBuilder: FormBuilder,
@@ -74,86 +74,81 @@ export class UserSetupComponent implements OnInit {
     this.getOpc();
     this.getCareArea();
     this.getPrinciples();
-    this.systemAdminService
-      .getAllCompamanies().subscribe((res:any) => {
-        res.data.forEach(ele => {
-          this.companies.push(ele)
-        });
-        
-      })
-    this.systemAdminService.getUnits().subscribe(res=>{
+    this.systemAdminService.getAllCompamanies().subscribe((res: any) => {
+      res.data.forEach((ele) => {
+        this.companies.push(ele);
+      });
+    });
+    // getUnits()
+    this.systemAdminService.getQuery("/units").subscribe((res) => {
       this.allUnits = res;
-      this.selectedAllUnits = this.allUnits?.data
-    })
+      this.selectedAllUnits = this.allUnits?.data;
+    });
   }
 
   createUnit() {
-    // if(this.isValidate()){
-      let body :any = {}
-      body = {
-       name: this.unit_Name,
-       code: this.unit_Code,
-       // unitUserId: 0,
-       dataAreaId: this.company_Id,
-       min_profit_margin_percentage: "0.00",
-       allowed_discount_percentage : "0.0",
-       // user: this.userSetupForm.value.user.id,
-       parent_unit: this.selectParentUnit?.dail_code,
-       agency: this.selectAgency,
-       manufactures: this.selectManufectures,
-       opc: this.selectOpc,
-       care_area: this.selectedCareArea,
-       principles: this.selectPrinciples,
-     }
-     if(this.isEditEnabled){
-       body.id = this.editedUnit.id
-       this.systemAdminService.updateUnit(body).subscribe((res:any)=>{
-         if (res.success) {
-           let item = this.selectedAllUnits.find(x => x.id == res.data.id)
-           if(item) this.selectedAllUnits[this.selectedAllUnits.indexOf(item)] = res.data
-           this.resetForm();
-           this.alertBody = "Unit Updated successfully.";
-           this.successModal.show();
-           setTimeout(() => {
-             this.successModal.hide();
-           }, 2000);
-         }
-       },(err)=>{
-         this.alertBody = "Error";
-           this.dangerModal.show();
-           setTimeout(() => {
-             this.dangerModal.hide();
-           }, 2000);
-       })
-     }else{
-       this.systemAdminService.createUnit(body).subscribe((res:any)=>{
-         if (res.success) {
-           this.selectedAllUnits.push(res.data)
-           this.resetForm();
-           this.alertBody = "Unit saved successfully.";
-           this.successModal.show();
-           setTimeout(() => {
-             this.successModal.hide();
-           }, 2000);
-         }
-       },(err)=>{
-         this.alertBody = "Error";
-         this.dangerModal.show();
-         setTimeout(() => {
-           this.dangerModal.hide();
-         }, 2000);
-       }) 
-     }
-    // }else {
-    //   this.alertBody = "Please fill all required fields.";
-    //   this.dangerModal.show();
-    //   setTimeout(() => {
-    //     this.dangerModal.hide();
-    //   }, 2000);
-    // }
+    let body: any = {};
+    body = {
+      name: this.unit_Name,
+      code: this.unit_Code,
+      dataAreaId: this.company_Id,
+      min_profit_margin_percentage: "0.00",
+      allowed_discount_percentage: "0.0",
+      parent_unit: this.selectParentUnit?.dail_code,
+      agency: this.selectAgency,
+      manufactures: this.selectManufectures,
+      opc: this.selectOpc,
+      care_area: this.selectedCareArea,
+      principles: this.selectPrinciples,
+    };
+    if (this.isEditEnabled) {
+      body.id = this.editedUnit.id;
+      this.systemAdminService.putQuery("/units", body).subscribe(
+        (res: any) => {
+          if (res.success) {
+            let item = this.selectedAllUnits.find((x) => x.id == res.data.id);
+            if (item)
+              this.selectedAllUnits[this.selectedAllUnits.indexOf(item)] =
+                res.data;
+            this.resetForm();
+            this.alertBody = "Unit Updated successfully.";
+            this.successModal.show();
+            setTimeout(() => {
+              this.successModal.hide();
+            }, 2000);
+          }
+        },
+        (err) => {
+          this.alertBody = "Error";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+    } else {
+      this.systemAdminService.postQuery("/units", body).subscribe(
+        (res: any) => {
+          if (res.success) {
+            this.selectedAllUnits.push(res.data);
+            this.resetForm();
+            this.alertBody = "Unit saved successfully.";
+            this.successModal.show();
+            setTimeout(() => {
+              this.successModal.hide();
+            }, 2000);
+          }
+        },
+        (err) => {
+          this.alertBody = "Error";
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+    }
   }
-
-  filterProduct(event) {}
 
   selectUser() {}
   // Parent-Unit
@@ -257,54 +252,118 @@ export class UserSetupComponent implements OnInit {
     this.selectPrinciples.push(principles);
   }
 
-  resetForm() {
-    this.userSetupForm.reset();
-    this.userSetupForm.markAsPristine();
-    this.userSetupForm.markAsUntouched();
-    this.selectParentUnit = null;
-    this.selectOpc = null;
-    this.selectPrinciples = null;
-    this.selectAgency = null;
-    this.unit_Code = ''
-    this.unit_Name=''
-    this.isEditEnabled = false
-    this.company_Id = ''
-    this.selectedCareArea = null;
-    this.selectManufectures = null;
-  }
-  back() {
-    this.router.navigateByUrl("user/adduser");
-  }
-  getUnit(id){
-    this.systemAdminService.getSingleUnit(id).subscribe((res:any)=>{
-      if (res.success) {
-        this.editedUnit = res.data
-        this.isEditEnabled = true
-        let data  = res.data
-        this.unit_Name = data.title
-        this.unit_Code = data.code
-        this.company_Id = data.data_area_id
-        this.selectAgency = data.unit_agencies
-        this.selectedCareArea = data.unit_care_areas
-        this.selectManufectures = data.unit_manufactures
-        this.selectOpc = data.unit_opcs
-        console.log("this is the response if ",res)
-      }
-    })
+  getUnit(id) {
+    // getSingleUnit(id)
+    this.systemAdminService
+      .getQuery("/units/" + id + "/edit")
+      .subscribe((res: any) => {
+        if (res.success) {
+          this.editedUnit = res.data;
+          this.isEditEnabled = true;
+          let data = res.data;
+          this.unit_Name = data.title;
+          this.unit_Code = data.code;
+          this.company_Id = data.data_area_id;
+          // agency
+          setTimeout(() => {
+            var agn = [];
+            data.unit_agencies.forEach((ele) => {
+              let agnArr = this.agency.filter((agnEle) => agnEle.id == ele.id);
+              agnArr.forEach((data) => {
+                agn.push(data);
+              });
+            });
+            this.selectAgency = agn;
+          }, 300);
+          // manufactures
+          setTimeout(() => {
+            var ag = [];
+            data.unit_manufactures.forEach((ele) => {
+              let arr = this.manufactures.filter((elem) => elem.id == ele.id);
+              arr.forEach((data) => {
+                ag.push(data);
+              });
+            });
+            this.selectManufectures = ag;
+          }, 300);
+          // opc
+          setTimeout(() => {
+            var opcArr = [];
+            data.unit_opcs.forEach((ele) => {
+              let newOpcArr = this.opc.filter((opcEle) => opcEle.id == ele.id);
+              newOpcArr.forEach((data) => {
+                opcArr.push(data);
+              });
+            });
+            this.selectOpc = opcArr;
+          }, 300);
+          this.selectOpc = data.unit_opcs;
+          // unit_care_areas
+          setTimeout(() => {
+            var careArr = [];
+            data.unit_care_areas.forEach((ele) => {
+              let care_arr = this.careArea.filter(
+                (careElem) => careElem.id == ele.id
+              );
+              care_arr.forEach((data) => {
+                careArr.push(data);
+              });
+            });
+            this.selectedCareArea = careArr;
+          }, 2000);
+
+          // principles
+          setTimeout(() => {
+            var prinArr = [];
+            data.unit_principals.forEach((ele) => {
+              let newPrinArr = this.principles.filter(
+                (prinEle) => prinEle.id == ele.id
+              );
+              newPrinArr.forEach((data) => {
+                prinArr.push(data);
+              });
+            });
+            this.selectPrinciples = prinArr;
+          }, 300);
+
+          console.log("this is the response if ", res);
+        }
+      });
   }
   isValidate() {
-    if (this.selectParentUnit != null &&
+    if (
+      this.selectParentUnit != null &&
       this.selectOpc != null &&
       this.selectPrinciples != null &&
       this.selectAgency != null &&
-      this.unit_Code != '' &&
-      this.unit_Name != '' &&
-      this.company_Id != '' &&
+      this.unit_Code != "" &&
+      this.unit_Name != "" &&
+      this.company_Id != "" &&
       this.selectedCareArea != null &&
-      this.selectManufectures != null) {
-      return true
+      this.selectManufectures != null
+    ) {
+      return true;
     } else {
-      return false
+      return false;
     }
+  }
+
+  resetForm() {
+    // this.userSetupForm.reset();
+    // this.userSetupForm.markAsPristine();
+    // this.userSetupForm.markAsUntouched();
+    // this.selectParentUnit = null;
+    // this.selectOpc = null;
+    // this.selectPrinciples = null;
+    // this.selectAgency = null;
+    // this.unit_Code = "";
+    // this.unit_Name = "";
+    // this.isEditEnabled = false;
+    // this.company_Id = "";
+    // this.selectedCareArea = null;
+    // this.selectManufectures = null;
+  }
+  back() {
+    this.router.navigateByUrl("user/adduser");
   }
 }
