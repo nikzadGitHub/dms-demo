@@ -1,6 +1,6 @@
 <div class="animated fadeIn">
 
-    <form [formGroup]="fpsAddForm" (ngSubmit)="onSave()"  class="form-horizontal">
+    <form [formGroup]="fpsAddForm" id="fpsAddForm" (ngSubmit)="onSave()"  class="form-horizontal">
         <div class="row">
             <div class="col-sm-12 col-md-12">
                 <div class="card">
@@ -17,7 +17,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <h3 class="bold">
-                                                    {{ oppt_details.bill_to.company_name }}
+                                                    {{ oppt_details.customer.company_name }}
                                                 </h3>
                                             </div>
                                         </div>
@@ -78,7 +78,8 @@
                                             <div class="form-group">
                                                 <label class="bold">Quote ID (Version)</label>
                                                 <div>
-                                                    ...
+                                                    {{current_quot_id}}
+                                                    <input type="hidden" formControlName="fps_quote_id"  class="form-control">
                                                     <!-- <input type="text" formControlName="fps_no"  class="form-control"> -->
                                                 </div>
                                             </div>
@@ -119,7 +120,7 @@
                                     optionValue="value" styleClass="form-control" (onChange)="updateTenure()"
                                     placeholder="Select Frequency" id="fps_payment_frequency" emptyMessage="No Payment Frequency Available">
                                 </p-dropdown>
-                                <app-form-error-presentation [displayError]="isFieldValid('fps_payment_frequency')" errorMsg="Payment Frequency is rquired.">
+                                <app-form-error-presentation [displayError]="isFieldValid('fps_payment_frequency')" errorMsg="Payment Frequency is required.">
                                 </app-form-error-presentation>
                             </div>
     
@@ -130,7 +131,7 @@
                                 <p-dropdown formControlName="fps_tenure_id" id="fps_tenure_id" [options]="tenure_list" optionLabel="details_tenure"
                                     optionValue="id" styleClass="form-control" (onChange)="updateInterestRate()">
                                 </p-dropdown>
-                                <app-form-error-presentation [displayError]="isFieldValid('fps_tenure_id')" errorMsg="Tenure is rquired.">
+                                <app-form-error-presentation [displayError]="isFieldValid('fps_tenure_id')" errorMsg="Tenure is required.">
                                 </app-form-error-presentation>
                             </div>
                         </div>
@@ -144,7 +145,7 @@
                                     optionValue="id" styleClass="form-control" (onChange)="updateTenure()"
                                     placeholder="Select Institution" emptyMessage="No Institution Available">
                                 </p-dropdown>
-                                <app-form-error-presentation [displayError]="isFieldValid('fps_financier_id')" errorMsg="Financial Instititue is rquired.">
+                                <app-form-error-presentation [displayError]="isFieldValid('fps_financier_id')" errorMsg="Financial Instititue is required.">
                                 </app-form-error-presentation>
                                 
                             </div>
@@ -286,23 +287,160 @@
                             </div>
                             
                         </div>
-    
-                        <div class="custom-footer d-flex justify-content-center">
-                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Save</button>
+                    </div>
+
+                    <hr />
+
+                    <div class="card-body" *ngIf="has_min_procedure" >
+                        <div class="form-group row">
+                            <div class="col-md-7">
+                                <h2>Procedure Usage </h2>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="col-form-label" for="booking-reason">
+                                    Minimum Procedure
+                                </label>
+                            </div>
+
+                            <div class="col-md-3">
+                                <input type="text"  [readonly]="true" formControlName="fps_min_procedure"  class="form-control">
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 form-group">
+                            <form [formGroup]="minProcedureAddForm">
+                                <div class="row">
+                                    <table class="table table-striped" formArrayName="addMinProcedure">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>No. Of Procedure</th>
+                                                <th>Updated By</th>
+                                                <th>Updated On</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let cost of addMinProcedure().controls; let i=index" [formGroupName]="i"
+                                                align="center">
+                                                <td style="width: 15%;">
+                                                    <input formControlName="date" class="form-control" type="date" >
+                                                </td>
+                                                <td style="width: 15%;">
+                                                    <input formControlName="no_procedure" size="1" class="form-control" type="number">
+                                                </td>
+                                                <td style="width: 10%;">
+                                                    <p-dropdown formControlName="updated_by" [options]="fps_user_list" optionLabel="full_name"
+                                                        optionValue="id" styleClass="form-control" 
+                                                        placeholder="Select User" emptyMessage="No User Available">
+                                                    </p-dropdown>
+                                                </td>
+                                                <td style="width: 15%;">
+                                                    <input formControlName="updated_on" class="form-control" type="date">
+                                                </td>
+                                                <td class="td-actions" style="width: 10%;">
+                                                    <a [routerLink]="" routerLinkActive="router-link-active"><i
+                                                            class="fa fa-edit"></i></a> &nbsp;
+                                                    <a [routerLink]="" (click)="removeAddMinProcedure(i)"
+                                                        routerLinkActive="router-link-active"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot align="center">
+                                            <tr>
+                                                <td class="td-actions" colspan="9" align="center">
+                                                    <i (click)="addAddMinProcedure()" class="icon-plus icons"></i>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </form>
                         </div>
                     </div>
+                    
+                    <div class="card-body" *ngIf="has_consumable_usage" >
+                        <div class="form-group row">
+                            <div class="col-md-7">
+                                <h2>Consumable Usage </h2>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="col-form-label" for="booking-reason">
+                                    Minimum Usage
+                                </label>
+                            </div>
+
+                            <div class="col-md-3">
+                                <input type="text"  [readonly]="true" formControlName="fps_consumable_usage"  class="form-control">
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 form-group">
+                            <form [formGroup]="minUsageAddForm">
+                                <div class="row">
+                                    <table class="table table-striped" formArrayName="addMinUsage">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Usage</th>
+                                                <th>Updated By</th>
+                                                <th>Updated On</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let cost of addMinUsage().controls; let i=index" [formGroupName]="i"
+                                                align="center">
+                                                <td style="width: 15%;">
+                                                    <input formControlName="date" class="form-control" type="date" >
+                                                </td>
+                                                <td style="width: 15%;">
+                                                    <input formControlName="usage" size="1" class="form-control" type="number">
+                                                </td>
+                                                <td style="width: 10%;">
+                                                    <p-dropdown formControlName="updated_by" [options]="fps_user_list" optionLabel="full_name"
+                                                        optionValue="id" styleClass="form-control" 
+                                                        placeholder="Select User" emptyMessage="No User Available">
+                                                    </p-dropdown>
+                                                </td>
+                                                <td style="width: 15%;">
+                                                    <input formControlName="updated_on" class="form-control" type="date">
+                                                </td>
+                                                <td class="td-actions" style="width: 10%;">
+                                                    <a [routerLink]="" routerLinkActive="router-link-active"><i
+                                                            class="fa fa-edit"></i></a> &nbsp;
+                                                    <a [routerLink]="" (click)="removeAddMinUsage(i)"
+                                                        routerLinkActive="router-link-active"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot align="center">
+                                            <tr>
+                                                <td class="td-actions" colspan="9" align="center">
+                                                    <i (click)="addAddMinUsage()" class="icon-plus icons"></i>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                
+                    <div class="col-sm-12 col-md-12 form-group">
+                        <div class="custom-footer d-flex justify-content-center">
+                            <!-- <button type="button" (click)="cancelSkuForm()" class="btn btn-sm btn-light"> CANCEL</button> -->
+                            <button type="submit" form="fpsAddForm" class="btn btn-sm btn-primary">Save</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-    
-            <br>
-    
-            <div class="col-sm-12 col-md-12 form-group">
-                <h3>Consumable Usage</h3>
-                <!-- Here the fps list related to current opportunity is displayed -->
-                <!-- <app-fps-list></app-fps-list> -->
-                <p>Work on this section will be done later</p>
-            </div>
-    
+
             <br>
     
             <div class="col-sm-12 col-md-12 form-group">

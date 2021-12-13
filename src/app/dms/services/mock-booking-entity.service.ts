@@ -57,7 +57,15 @@ const mockBookingDetail: BookingDetail = {
     ship_to_contact_number: "XXXXXXXX",
     remarks: "",
     loan_start_date: "",
-    loan_end_date: ""
+    loan_end_date: "",
+    con_won:"",
+    ins_won:"",
+    pdi_won:"",
+    trn_won:"",
+    war_won:"",
+    tnc_won:"",
+    pdr_won:"",
+    bme_booking_id:"",
 };
 
 const mockOpportunitySummary: OpportunitySummary = {

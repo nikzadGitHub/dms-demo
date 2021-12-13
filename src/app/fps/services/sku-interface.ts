@@ -1,24 +1,19 @@
-export interface SkuInterface {
-}
-
 import { Observable } from 'rxjs';
 
 export interface SkuItem {
-    id: bigint;
-    booking_no: string;
-    request_date: string;
-    // Here ...
+    
 }
 
 export type SkuList = SkuItem[];
 
 export interface SaveResult {
 id: any;
+code : number;
 }
 
 export interface SkuInterface {
-getList(): Observable<SkuList>;
-
-saveSku(form: any): Observable<SaveResult>;
+    getList(pageItems, search_text, sort): Observable<SkuList>;
+    saveSku(form: any): Observable<SaveResult>;
+    updateSkuPaymentMethod(data: any): Observable<any>;
 }
   

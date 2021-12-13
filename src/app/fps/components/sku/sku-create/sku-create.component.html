@@ -18,7 +18,7 @@
                         </label>
                         <div class="col-md-4">
                             <input type="text" [readonly]="true" formControlName="uuid" id="uuid" class="form-control">
-                            <app-form-error-presentation [displayError]="isFieldValid('uuid')" errorMsg="Uuid is rquired.">
+                            <app-form-error-presentation [displayError]="isFieldValid('uuid')" errorMsg="Uuid is required.">
                             </app-form-error-presentation>
                         </div>
 
@@ -39,7 +39,7 @@
                                 optionValue="id" styleClass="form-control" 
                                 placeholder="Select FPS Type" emptyMessage="No FPS Type Available">
                             </p-dropdown>
-                            <app-form-error-presentation [displayError]="isFieldValid('package_type_id')" errorMsg="FPS Type is rquired.">
+                            <app-form-error-presentation [displayError]="isFieldValid('package_type_id')" errorMsg="FPS Type is required.">
                             </app-form-error-presentation>
                             
                         </div>
@@ -57,11 +57,11 @@
                             Country<span class="asterisk"> * </span>
                         </label>
                         <div class="col-md-4">
-                            <p-dropdown formControlName="country_code" id="country_code" [options]="countryList" optionLabel="official_name"
-                                optionValue="code" styleClass="form-control" 
+                            <p-dropdown formControlName="country_code" id="country_code" (onChange)="countryChange()" [options]="countryList" optionLabel="official_name"
+                                optionValue="iso3" styleClass="form-control" 
                                 placeholder="Select Country" emptyMessage="No Country Available">
                             </p-dropdown>
-                            <app-form-error-presentation [displayError]="isFieldValid('country_code')" errorMsg="Country is rquired.">
+                            <app-form-error-presentation [displayError]="isFieldValid('country_code')" errorMsg="Country is required.">
                             </app-form-error-presentation>
                         </div>
 
@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="col-md-9">
                                     <input type="number" step="0.1" id="interest_rate" *ngIf="has_interest.checked" formControlName="interest_rate"  class="form-control">
-                                    <app-form-error-presentation [displayError]="isFieldValid('interest_rate')" errorMsg="Interest Rate is rquired.">
+                                    <app-form-error-presentation [displayError]="isFieldValid('interest_rate')" errorMsg="Interest Rate is required.">
                                     </app-form-error-presentation>
                                 </div>
                             </div> 
@@ -92,7 +92,7 @@
                                 optionValue="id" styleClass="form-control" 
                                 placeholder="Select Institution" emptyMessage="No Institution Available">
                             </p-dropdown>
-                            <app-form-error-presentation [displayError]="isFieldValid('financier_id')" errorMsg="Financial Institution is rquired.">
+                            <app-form-error-presentation [displayError]="isFieldValid('financier_id')" errorMsg="Financial Institution is required.">
                             </app-form-error-presentation>
                         </div>
                     </div>
@@ -152,7 +152,7 @@
                                 </label>
                                 <div class="col-md-8">
                                     <p-dropdown  [disabled]="!min_payment.checked" formControlName="currency_code" [options]="currencies_list" optionLabel="currency_code"
-                                        optionValue="id" styleClass="form-control"
+                                        optionValue="currency_code" styleClass="form-control"
                                         placeholder="$" emptyMessage="No Currency Available">
                                     </p-dropdown>
                                 </div>
@@ -165,7 +165,7 @@
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-md-8 col-form-label" for="booking-reason">
-                                    Minimum Usage<span class="asterisk"> * </span>
+                                    Consumable Usage<span class="asterisk"> * </span>
                                 </label>
 
                                 <div class="col-md-4">
@@ -210,31 +210,6 @@
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-md-8 col-form-label" for="booking-reason">
-                                    Consumable Usage<span class="asterisk"> * </span>
-                                </label>
-
-                                <div class="col-md-4">
-                                    <mat-slide-toggle #min_usage class="example-margin">
-                                    </mat-slide-toggle>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <label class="col-md-2 col-form-label" for="booking-reason" >
-                            Required Tenure<span class="asterisk"> * </span>
-                        </label>
-                        <div class="col-md-4">
-                            <p-inputNumber id="required_tenure" formControlName="required_tenure"></p-inputNumber>
-                            <app-form-error-presentation [displayError]="isFieldValid('required_tenure')" errorMsg="Tenure is rquired.">
-                            </app-form-error-presentation>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-md-8 col-form-label" for="booking-reason">
                                     Agreement Number Mandatory<span class="asterisk"> * </span>
                                 </label>
 
@@ -243,6 +218,21 @@
                                     </mat-slide-toggle>
                                 </div>
                             </div>
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason" >
+                            Required Tenure<span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <p-inputNumber id="required_tenure" formControlName="required_tenure"></p-inputNumber>
+                            <app-form-error-presentation [displayError]="isFieldValid('required_tenure')" errorMsg="Tenure is required.">
+                            </app-form-error-presentation>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            
                         </div>
 
                         <label class="col-md-2 col-form-label" for="booking-reason">
@@ -333,6 +323,7 @@
             <button type="submit" form="skuAddForm" class="btn btn-sm btn-primary">Save</button>
         </div>
     </div>
+    
   </div>
   <div
     id="success"

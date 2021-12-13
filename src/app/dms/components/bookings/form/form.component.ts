@@ -8,29 +8,29 @@ import { BookingService } from '../services/booking.service';
 import { CustomersService } from '../../../services/customers/customers.service';
 import { BookingDetail } from '../../../services/booking-entity';
 
-/**
- * For submit the booking form
- * @class
- */
 @Component({
   selector: "app-booking-form-submit",
   templateUrl: "./form.component.html",
   styleUrls: ["./form.component.scss"]
 })
-export class FormComponent implements OnInit {
+
+export class FormComponent implements OnInit{ 
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("foundModal") foundModal: ModalDirective;
   @Input() bookingDetailList: BookingDetail;
+
   alertBody: string;
   alertHeader: string;
   formBooking: FormGroup;
   curDate = new Date(Date.now()).toLocaleDateString();
   customers: CustomerList;
   duration: any;
+  editable: boolean;
+  showBmeLogSec: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: FormBuilder, 
     private bookingService: BookingService,
     private apiCustomers: CustomersService
   ) {}
@@ -63,8 +63,8 @@ export class FormComponent implements OnInit {
 
   defaultAnswers: any[] = [{ id: 1, ans: "Yes" }, { id: 2, ans: "No" }];
 
-  defaultPriorities:any[] = [ 
-    {id:1,value:"High"}, 
+  defaultPriorities:any[] = [
+    {id:1,value:"High"},
     {id:2,value:"Mid"},
     {id:3,value:'Low'}
   ];
@@ -79,7 +79,7 @@ changePrioritye(id:number){
 }
 
   changeAnswer(id: number) {
-    this.defaultAnswer = id; 
+    this.defaultAnswer = id;
   }
 
   changePercentage(id: number) {
@@ -90,6 +90,7 @@ changePrioritye(id:number){
   changeReason(id: number) {
     //getted from event
     this.selectedBooking = id;
+    this.showBmeLogSec = true;
     // console.log(id);
     // console.log('compare');
     // console.log(this.selectedBooking);
@@ -103,6 +104,8 @@ changePrioritye(id:number){
   // }
 
   ngOnInit(): void {
+    //this.editable = (this.bookingDetailList.booking_reason == '2') ? true : false;
+
     this.apiCustomers.getList().subscribe(response => {
       this.customers = response;
     });
@@ -120,6 +123,20 @@ changePrioritye(id:number){
       contact_name: new FormControl(this.bookingDetailList.ship_to_contact_name),
       contact_number: new FormControl(this.bookingDetailList.ship_to_contact_number),
       remarks:new FormControl(this.bookingDetailList.remarks),
+      wo_con_req:new FormControl(1),
+      wo_con_won:new FormControl(this.bookingDetailList.con_won),
+      wo_pdi_req:new FormControl(1),
+      wo_pdi_won:new FormControl(this.bookingDetailList.pdi_won),
+      wo_ins_req:new FormControl(1),
+      wo_ins_won:new FormControl(this.bookingDetailList.ins_won),
+      wo_tnc_req:new FormControl(1),
+      wo_tnc_won:new FormControl(this.bookingDetailList.tnc_won),
+      wo_trn_req:new FormControl(1),
+      wo_trn_won:new FormControl(this.bookingDetailList.trn_won),
+      wo_wq_req:new FormControl(1),
+      wo_wq_won:new FormControl(this.bookingDetailList.war_won),
+      wo_pdr_req:new FormControl(1),
+      wo_pdr_won:new FormControl(this.bookingDetailList.pdr_won),
     });
   }
   onSave(): void {
@@ -134,17 +151,40 @@ changePrioritye(id:number){
       location: this.formBooking.get("location").value,
       contact_name: this.formBooking.get("contact_name").value,
       contact_number: this.formBooking.get("contact_number").value,
-      remarks: this.formBooking.get("remarks").value
+      remarks: this.formBooking.get("remarks").value,
+
+      wo_con_req: this.formBooking.get("wo_con_req").value,
+      wo_con_won: this.formBooking.get("wo_con_won").value,
+
+      wo_pdi_req: this.formBooking.get("wo_pdi_req").value,
+      wo_pdi_won: this.formBooking.get("wo_pdi_won").value,
+
+      wo_ins_req: this.formBooking.get("wo_ins_req").value,
+      wo_ins_won: this.formBooking.get("wo_ins_won").value,
+
+      wo_tnc_req: this.formBooking.get("wo_tnc_req").value,
+      wo_tnc_won: this.formBooking.get("wo_tnc_won").value,
+
+      wo_trn_req: this.formBooking.get("wo_trn_req").value,
+      wo_trn_won: this.formBooking.get("wo_trn_won").value,
+
+      wo_wq_req: this.formBooking.get("wo_wq_req").value,
+      wo_wq_won: this.formBooking.get("wo_wq_won").value,
+
+      wo_pdr_req: this.formBooking.get("wo_pdr_req").value,
+      wo_pdr_won: this.formBooking.get("wo_pdr_won").value
+
     }, this.bookingDetailList.id).subscribe((res) => {
         if (res.id) {
+          this.editable = true;
           this.alertBody = "Booking saved successfully.";
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
           }, 2000);
         }
-      },
-      err => {
+      },  
+      err => { 
         console.log(err);
           this.alertBody = "The booking can't save";
           this.dangerModal.show();
@@ -159,9 +199,9 @@ changePrioritye(id:number){
     const date_of_delivery = this.formBooking.get("date_of_delivery").value;
     const date_of_collection = this.formBooking.get("date_of_collection").value;
     if(date_of_delivery != "" && date_of_collection != ""){
-      var date1 = new Date(date_of_delivery); 
-      var date2 = new Date(date_of_collection); 
-      var Time = date2.getTime() - date1.getTime(); 
+      var date1 = new Date(date_of_delivery);
+      var date2 = new Date(date_of_collection);
+      var Time = date2.getTime() - date1.getTime();
       var Days = Time / (1000 * 3600 * 24);
       this.duration =  Days;
     }
