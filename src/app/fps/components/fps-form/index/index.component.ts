@@ -34,6 +34,8 @@ export class IndexComponent implements OnInit {
   columns: Column[] = [
 
     {'header':'FPS Request  No','field':'fps_no','type':'string'},
+    {'header':'Opportunity ID','field':'fps_opportunity_id','type':'string'},
+    {'header':'Quote ID','field':'fps_quote_id','type':'string'},
     {'header':'Financial Institute','field':'title','type':'text'},
     {'header':'Total Financial Amount','field':'fps_total_financial_amount','type':'number'},
     {'header':'Tenure (Months)','field':'details_tenure','type':'number'},
@@ -95,5 +97,20 @@ export class IndexComponent implements OnInit {
         this.totalRecords = response.data.total;
       });     
     })  
+  }
+
+  deleteFps(fpsID) {
+    if (
+      confirm(
+        `Are you sure you want to delete FPS '${fpsID}'`
+      )
+    ) {
+      this.fpsService.deleteFps(fpsID)
+      .subscribe(res => {
+       alert("FPS remove successfully!");
+       window.location.reload()
+      });
+    }
+    
   }
 }

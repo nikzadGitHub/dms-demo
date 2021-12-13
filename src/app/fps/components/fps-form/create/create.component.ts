@@ -51,8 +51,8 @@ export class CreateComponent implements OnInit {
   current_apportunity_id : number;
   current_quot_id : number;
   countryCode : string = null;
-  has_consumable_usage: boolean = true;
-  has_min_procedure: boolean = true;
+  has_consumable_usage: boolean = false;
+  has_min_procedure: boolean = false;
 
   oppt_details : any = {
     opportunity_code: '',

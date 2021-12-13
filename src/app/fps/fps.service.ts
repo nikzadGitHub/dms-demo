@@ -5,10 +5,12 @@ import { ApiClientService } from './api-client.service';
 import { SystemConfig } from '@app/config/system-config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
-
+import { settings } from '../../environments/environment';
 @Injectable({providedIn: 'root'})
 
 export class FpsService implements FpsInterface {
+
+  private apiURL = settings.apiBaseUrl;
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -137,6 +139,10 @@ export class FpsService implements FpsInterface {
 
   minUsageCheckSum(data: any): Observable<SaveResult> {
     return this.apiClient.post('minUsage/checksum', data);
+  }
+
+  deleteFps(fpsID: number) {
+    return this.httpClient.delete(this.apiURL + '/fps/delete/' + fpsID, this.httpOptions)
   }
 
 }
