@@ -1,77 +1,78 @@
+<div class="main">
 
-
-
-
-<div class="animated fadeIn">
-    <div class="col-lg col-md-6">
-        <div class="card rcorners">
-            <div class="card-header row" style="background-color: #898485; color: white;">
-                <div style="padding-left: 20px;">
-                    <h2 style="    font-family: sans-serif;
-                    font-weight: 600;">Update Profile</h2>
-                </div>
-               
-            </div>
-            
-            </div>
-        </div>
+    <div class="heading">
+        Update Profile
     </div>
-    <form>
-    <div class="col-sm-8">
-    <div class="row">
-        <div class="col-md-5 text-header">
-            User Name
-        </div>
-        <div class="col-md-5">
-            <input style="margin-bottom: 10px;" pInputText formControlName="lead_owner" class="form-control" placeholder="Seion Lee" type="input">
-        </div>
-    </div>
-    </div>
-
-    <div class="col-sm-8">
-        <div class="row">
-            <div class="col-md-5 text-header">
-               Roles(s)
+    <div class="innerMain">
+        <div class="userInfo">
+            <div class="userName">
+                <label class="userLable" for="userName"> User Name </label>
+                <input *ngIf="userName" type="text" name="userName" value="{{userName}}" readonly>
+                <input *ngIf="!userName" type="text" name="userName" value="No Data Available">
             </div>
-            <div class="col-md-5">
-                <input style="margin-bottom: 10px;" pInputText formControlName="lead_owner" class="form-control" placeholder="FSSM" type="input">
-            </div>
-        </div>
-        </div>
-        <div class="col-sm-8">
-            <div class="row">
-                <div class="col-md-5 text-header">
-                   Signature
-                </div>
-                <div class="col-md-5">
-                    <input style="height: 10rem;" pInputText formControlName="lead_owner" class="form-control" placeholder="" type="input">
-                </div>
-            </div>
-            </div>
-
-            <div class="download-btn">
-                <input
-                  type="file"
-                  class="file-input"
-                  multiple
-                  (change)="onFileSelected($event)"
-                  #fileUpload
-                />
-                <button
-                  type="button"
-                  class="btn btn-primary btn-sm m-2 file-upload"
-                  role="button"
-                  rel="nofollow"
-                  target="_blank"
-                  (click)="fileUpload.click()"
-                >
-                  Upload Image
-                  <input #fileInput type="file" style="display: none" />
-                </button>
-              </div>
-    </form>
-
     
+            <div class="userName">
+                <label class="userLable" for="userRoles"> Role(s) </label>
+                <input *ngIf="!userName" type="text" name="userName" value="No Data Available">
+                <input *ngIf="userRoleName" type="text" name="userRoles" value="{{userRoleName}}" readonly>
+            </div>
+    
+            <div class="userSignature">
+                <label class="userLable" for="userSignature"> Signature </label>
+                <input type="file" (change) = "onImageUpload($event)"  name="userSignature" >
+                <span class="imageError" *ngIf="imageMsg"> Only PNG images are Allowed. </span>
+            </div>
+        </div>
 
-  
-  
+        <div #pdfTable *ngIf="url" class="pdfTable" id="pdfTable">
+            <div class="imageDisplayDiv" style="width: 100%; margin-top: 25px;">
+              <div class="show-image">
+                <img class="imageDisplayed" [src]="url" alt="" />
+              </div>
+            </div>
+          </div>
+          
+    </div>
+
+
+    <div class="uploadImage">
+        <div class="uploadBtn">
+        <button
+          type="button"
+          class="btn btn-primary btn-sm m-2 file-upload"
+          role="button"
+          rel="nofollow"
+          target="_blank"
+          (click)="saveSignatureImage()"
+        >
+          Save
+          <input type="file" style="display: none" />
+        </button>
+        </div>
+        <span class="imageError" *ngIf="uploadMessage"> Data Saved Successfully.... </span>
+      
+      </div>
+</div>
+
+<!-- display succes message -->
+<!-- <div
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ successMessage }}</p>
+      </div>
+    </div>
+  </div>
+</div> -->

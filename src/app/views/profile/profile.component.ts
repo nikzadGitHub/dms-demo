@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+import { UserprofileService } from './userprofile.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,61 +14,78 @@ export class ProfileComponent implements OnInit {
   imageWidth: number;
   imageHeight: number;
   url: string | ArrayBuffer;
+  userRoleName: any;
+  userName: any;
+  successMessage: string;
+  @ViewChild("successModal") successModal: ModalDirective;
+  imageMsg: any;
+  uploadMessage: boolean = false;
 
-  constructor() { }
+  constructor(private userProfileService:UserprofileService) { }
 
   ngOnInit(): void {
+    let userRole = JSON.parse(localStorage.getItem("userRole"));
+    if (userRole) {
+      this.userRoleName = userRole?.roles[0]?.name;
+      this.userName = userRole?.user.full_name;
+    }
   }
 
-  onFileSelected(event: any) {
+  ngAfterViewInit(): void{
+    this.getSignatureImage()
+  }
+  onImageUpload(event: any) {
     this.file = event.target.files[0];
     this.fileName = this.file.name;
     let extension = this.file.name.split('.').pop();
-    // console.log("this.file",this.file,'extension =>',extension)
-
-    if (this.file) {
-      this.check = true;
-      this.fileName = this.file.name;
-      var reader = new FileReader();
-      reader.readAsDataURL(this.file);
-      var self = this;
-      reader.onload = (event: any) => {
-        var image = new Image();
-        image.src = event.target.result;
-        image.onload = function () {
-          self.imageWidth = image.width;
-          self.imageHeight = image.height;
+    this.imageMsg = false
+    if(extension == 'png'){
+      if (this.file) {
+        this.check = true;
+        this.fileName = this.file.name;
+        var reader = new FileReader();
+        reader.readAsDataURL(this.file);
+        var self = this;
+        reader.onload = (event: any) => {
+          var image = new Image();
+          image.src = event.target.result;
+          image.onload = function () {
+            self.imageWidth = image.width;
+            self.imageHeight = image.height;
+          };
+  
+          this.url = reader.result;
         };
-
-        this.url = reader.result;
-      };
-
-      var formData = new FormData();
-      formData.append("file", this.file);
-      // this.alertHeader = "Image uploaded successfully";
-      // this.alertBody = "Do you want to download one pdf or two pdf ?";
+        // this.alertHeader = "Image uploaded successfully";
+        // this.alertBody = "Do you want to download one pdf or two pdf ?";
+        // this.successModal.show();
+      }
+    } else{
+      // this.successMessage = "Plz Select PNG files Only....";
       // this.successModal.show();
-    } 
-    // else {
-    //   this.alertHeader = "Image type error";
-    //   this.alertBody = "Please select png, jpg or jpeg image";
-    //   this.dangerModal.show();
-    // }
-    
-    // if (this.templateId && this.quotationId) {
-      // this.loaderService.loaderSet(true)
-    //   this.loader = true
-    //   this.quoteService.uploadTemplateImage(formData, this.quotationId, this.templateId).subscribe(state => {
-    //     if (state) {
-    //       // this.loaderService.loaderSet(false)
-    //   this.loader = false
+      this.imageMsg = true
+    }
+  }
 
-    //     }
-    //   })
-    // } else {
-    //   this.alertHeader = "Template Id Erroe";
-    //   this.alertBody = "Template Id is Missing.....";
-    //   this.dangerModal.show();
-    // }
+  getSignatureImage(){
+    this.userProfileService.getSignatureImage().subscribe(state=>{
+      this.url = state['data'].signature
+      
+    })
+  }
+
+  saveSignatureImage(){
+    var formData = new FormData();
+    formData.append("signature", this.file);
+    this.userProfileService.uploadSignatureImage(formData).subscribe(state=>{
+      this.uploadMessage = true
+      if(state){
+        setTimeout(() => {
+          this.uploadMessage = false
+        }, 1000);
+      }
+    })
+    // this.successMessage = "Plz Select PNG files Only....";
+    // this.successModal.show();
   }
 }

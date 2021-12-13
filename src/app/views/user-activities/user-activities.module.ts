@@ -8,6 +8,7 @@ import { PrimeNgModule } from '../../sharedModule/prime-ng.module';
 import { CreateActivityComponent } from './create-activity/create-activity.component';
 import {TabViewModule} from 'primeng/tabview';
 import { AccordionModule } from 'primeng/accordion';
+import { TableModule } from 'primeng/table';
 
 import { PaginatorModule } from 'primeng/paginator';
 import { AddActivityComponent } from './add-activity/add-activity.component';
@@ -28,6 +29,7 @@ import { AddActivityComponent } from './add-activity/add-activity.component';
     AccordionModule,
     TabViewModule,
     PaginatorModule,
+    TableModule,
     
     
     FormsModule,
