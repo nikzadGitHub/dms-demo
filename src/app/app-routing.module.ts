@@ -5,11 +5,12 @@ import { DefaultLayoutComponent } from "./containers";
 import { AuthGuard } from "./guards/auth.guard";
 import { AutoLoginGuard } from "./guards/auto-login.guard";
 
-import { P404Component } from "./views/error/404.component";
-import { P500Component } from "./views/error/500.component";
-import { LoginComponent } from "./views/login/login.component";
-import { LogoutComponent } from "./views/logout/logout.component";
-import { RegisterComponent } from "./views/register/register.component";
+import { P404Component } from './views/error/404.component';
+import { P500Component } from './views/error/500.component';
+import { LoginComponent } from './views/login/login.component';
+import { LogoutComponent } from './views/logout/logout.component';
+import { ProfileComponent } from './views/profile/profile.component';
+import { RegisterComponent } from './views/register/register.component';
 
 export const routes: Routes = [
   {
@@ -164,13 +165,6 @@ export const routes: Routes = [
           ),
       },
       {
-        path: "profile",
-        loadChildren: () =>
-          import("./views/coming-soon/coming-soon.module").then(
-            (m) => m.ComingSoonModule
-          ),
-      },
-      {
         path: "activities",
         loadChildren: () =>
           import("./views/coming-soon/coming-soon.module").then(
@@ -185,6 +179,12 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'profile',
+        // loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule)
+        component:ProfileComponent
+      },
+      {
+        
         path: "customers",
         loadChildren: () =>
           import("./views/customers/customers.module").then(
