@@ -45,8 +45,8 @@ export class CreateUserComponent implements OnInit {
   userList: any = [];
   userRoleList: any[] = [];
   status = [
-    { status: "Active", code: "1" },
-    { status: "Suspend", code: "2" },
+    { status: "Active", code: 1 },
+    { status: "Suspend", code: 0 },
   ];
   selectedCities: string[];
   userRoleId: any;
@@ -123,30 +123,31 @@ export class CreateUserComponent implements OnInit {
     console.log("called");
     this.systemAdminSerive
       .getQuery("/auth/user/" + userRoleId + "/edit")
-      .subscribe(
-        (res: any) => {
-          console.log("detail-user:", res);
-          // this.userRole = res?.data?.roles;
-          // console.log("this.userRole:", this.userRole);
-          // console.log("userRole:", this.userRole[0].name);
-          setTimeout(() => {
-            this.userform.patchValue({
-              name: res?.data?.full_name,
-              email: res?.data?.email,
-              phoneNumber: res?.data?.phone_number,
-              discountMargin: res?.data?.discount_margin_percent,
-              profit: res?.data?.profit_percent,
-              status: "1",
-              userAccess: res?.data?.user_access_id,
-              approvedBy: Number(res?.data?.approved_by),
-              unit: Number(res?.data?.unit_id),
-              companyName: res?.data?.data_area_id,
-            });
-          }, 300);
-        },
-        (err) => {
-          console.log("error user get", err);
-        }
+      .subscribe((res: any) => {
+        console.log("detail-user:", res);
+        // this.userRole = res?.data?.roles;
+        // console.log("this.userRole:", this.userRole);
+        // console.log("userRole:", this.userRole[0].name);
+        setTimeout(() => {
+          this.userform.patchValue({
+           
+            name: res?.data?.full_name,
+            email: res?.data?.email,
+            phoneNumber: res?.data?.phone_number,
+            discountMargin: res?.data?.discount_margin_percent,
+            profit: res?.data?.profit_percent,
+            status: res?.data?.is_active,
+            userAccess:  res?.data?.user_access_id,
+            approvedBy: Number(res?.data?.approved_by),
+            unit: Number(res?.data?.unit_id),
+            companyName: res?.data?.data_area_id
+            
+          });
+        }, 300);
+    
+      },(err)=>{
+        console.log('error user get', err)
+      }
       );
   }
 
@@ -198,7 +199,7 @@ export class CreateUserComponent implements OnInit {
         (err) => {
           // this.alertBody = "Error";
           this.dangerModal.show();
-          this.alertBody = "Error";
+          this.alertBody = "Error in Adding User";
           setTimeout(() => {
             this.dangerModal.hide();
           }, 2000);
@@ -236,14 +237,13 @@ export class CreateUserComponent implements OnInit {
               this.router.navigate(["/user/adduser"]);
             }, 2000);
           }
-        },
-        (err) => {
-          this.dangerModal.show();
-          this.alertBody = "Error";
-          setTimeout(() => {
-            this.dangerModal.hide();
-          }, 2000);
-        }
+      }, (err)=>{
+        this.dangerModal.show();
+        this.alertBody = "Error in Updating User";
+        setTimeout(() => {
+          this.dangerModal.hide();
+        }, 2000);
+      }
       );
   }
   filterProduct(event) {}
