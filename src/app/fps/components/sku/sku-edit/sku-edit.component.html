@@ -1,0 +1,488 @@
+<div class="animated fadeIn">
+
+    <div class="row" #skuEditFormContainer>
+        <div class="col-md-12">
+            <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <h2>Edit FPS SKU Management</h2>
+                </div>
+
+                <hr>
+               
+                <form [formGroup]="skuEditForm" id="skuEditForm" (ngSubmit)="onSave()"  class="form-horizontal">
+                
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            FPS SKU No <span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <input type="text" [readonly]="true" formControlName="uuid" id="uuid" class="form-control">
+                            <app-form-error-presentation [displayError]="isFieldValid('uuid')" errorMsg="Uuid is required.">
+                            </app-form-error-presentation>
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Validity Start Date<span class="asterisk"> * </span> 
+                        </label>
+                        <div class="col-md-4">
+                            <p-calendar [showTime]="false" dateFormat='yy-mm-dd' formControlName="validity_start_at"></p-calendar>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            FPS Type  <span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <p-dropdown formControlName="package_type_id" id="package_type_id" [options]="fpsTypeList" optionLabel="title"
+                                optionValue="id" styleClass="form-control" 
+                                placeholder="Select FPS Type" emptyMessage="No FPS Type Available">
+                            </p-dropdown>
+                            <app-form-error-presentation [displayError]="isFieldValid('package_type_id')" errorMsg="FPS Type is required.">
+                            </app-form-error-presentation>
+                            
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Validity End Date 
+                        </label>
+                        <div class="col-md-4">
+                            <p-calendar [showTime]="false" dateFormat='yy-mm-dd' formControlName="validity_end_at"></p-calendar>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" >
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Country<span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <p-dropdown formControlName="country_code" id="country_code" (onChange)="countryChange()" [options]="countryList" optionLabel="official_name"
+                                optionValue="iso3" styleClass="form-control" 
+                                placeholder="Select Country" emptyMessage="No Country Available">
+                            </p-dropdown>
+                            <app-form-error-presentation [displayError]="isFieldValid('country_code')" errorMsg="Country is required.">
+                            </app-form-error-presentation>
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Interest
+                        </label>
+                        <div class="col-md-4">
+                            <div class="form-group row" > 
+                                <div class="col-md-3">
+                                    <mat-slide-toggle formControlName="has_interest_flag"  #has_interest class="form-control" class="example-margin">
+                                    </mat-slide-toggle>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="number" step="0.1" id="interest_rate" *ngIf="has_interest.checked" formControlName="interest_rate"  class="form-control">
+                                    <app-form-error-presentation [displayError]="isFieldValid('interest_rate')" errorMsg="Interest Rate is required.">
+                                    </app-form-error-presentation>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <div class="form-group row" > 
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Financial Instititue<span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <p-dropdown formControlName="financier_id" id="financier_id" [options]="institutions_list"  optionLabel="title"
+                                optionValue="id" styleClass="form-control" 
+                                placeholder="Select Institution" emptyMessage="No Institution Available">
+                            </p-dropdown>
+                            <app-form-error-presentation [displayError]="isFieldValid('financier_id')" errorMsg="Financial Institution is required.">
+                            </app-form-error-presentation>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Payment Frequency
+                        </label>
+                        <div class="col-md-4">
+                            <div class="d-flex justify-content-between">
+                                
+                                <div class="d-flex">
+                                  <p-checkbox name="monthly_payment" [binary]="true" formControlName="monthly_payment" inputId="status1"></p-checkbox>
+                                  <label class="radio-label" for="status1">Monthly</label>
+                                </div>
+
+                                <div class="d-flex">
+                                    <p-checkbox name="quarterly_payment" [binary]="true" formControlName="quarterly_payment" inputId="status2"></p-checkbox>
+                                    <label class="radio-label" for="status2">Quarterly</label>
+                                </div>
+
+                                <div class="d-flex">
+                                    <p-checkbox name="half_yearly_payment" [binary]="true" formControlName="half_yearly_payment" inputId="status3"></p-checkbox>
+                                    <label class="radio-label" for="status3">Half-Yearly</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Mininumum Payment Amount
+                        </label>
+                        <div class="col-md-4">
+                            <input type="number" [readonly]="!min_payment.checked" formControlName="min_payment_amount"  class="form-control">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="form-group row" >
+                                <label class="col-md-8 col-form-label" for="booking-reason">
+                                    Mininumum Payment Amount
+                                </label>
+
+                                <div class="col-md-4">
+                                    <mat-slide-toggle formControlName="min_payment_amount_flag" #min_payment class="example-margin">
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label" for="booking-reason">
+                                    Min Payment Amount Currency
+                                </label>
+                                <div class="col-md-8">
+                                    <p-dropdown  [disabled]="!min_payment.checked" formControlName="currency_code" [options]="currencies_list" optionLabel="currency_code"
+                                        optionValue="currency_code" styleClass="form-control"
+                                        placeholder="$" emptyMessage="No Currency Available">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-md-8 col-form-label" for="booking-reason">
+                                    Consumable Usage <span class="asterisk"> * </span>
+                                </label>
+
+                                <div class="col-md-4">
+                                    <mat-slide-toggle #min_usage formControlName="has_consumable_usage" class="example-margin">
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Minimum Usage<span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <input type="number" [readonly]="!min_usage.checked" formControlName="consumable_usage" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-md-8 col-form-label" for="booking-reason">
+                                    Procedure Per Month<span class="asterisk"> * </span>
+                                </label>
+    
+                                <div class="col-md-4">
+                                    <mat-slide-toggle #min_procedure formControlName="has_min_procedure" class="example-margin">
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            Minimum Procedure<span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <input type="number" [readonly]="!min_procedure.checked" formControlName="min_procedure"  class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group row" >
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-md-8 col-form-label" for="booking-reason">
+                                    Agreement Number Mandatory<span class="asterisk"> * </span>
+                                </label>
+
+                                <div class="col-md-4">
+                                    <mat-slide-toggle formControlName="agreement_mandatory"  class="example-margin">
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason" >
+                            Required Tenure<span class="asterisk"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <p-inputNumber id="required_tenure" formControlName="required_tenure"></p-inputNumber>
+                            <app-form-error-presentation [displayError]="isFieldValid('required_tenure')" errorMsg="Tenure is required.">
+                            </app-form-error-presentation>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            
+                        </div>
+
+                        <label class="col-md-2 col-form-label" for="booking-reason">
+                            List of Document Required
+                        </label>
+
+                        <div class="col-md-4">
+                            <textarea formControlName="required_docs" data-lpignore="true" rows="9" class="form-control"></textarea>
+                        </div>
+                    </div>                
+                </form>
+            </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="col-sm-12 col-md-12 form-group">
+            <form [formGroup]="rateAddForm">
+                <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+                    <!-- FPS SKU Rate -->
+                    <p-accordionTab header="FPS SKU Rate">
+                        <div class="row">
+                            <table class="table table-borderless" id="sku_rate" formArrayName="addRates">
+                                <thead>
+                                    <tr>
+                                        <th>Rate No</th>
+                                        <th>Validity Start Date</th>
+                                        <th>Validity End Date</th>
+                                        <th>Status</th>
+                                        <th>Type</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let rate of addRates().controls; let i=index" [formGroupName]="i"
+                                        align="center">
+                                        <td style="width: 15%;">
+                                            <input formControlName="rate_no" size="1" class="form-control" type="number">
+                                        </td>
+                                        <td style="width: 15%;">
+                                            <input formControlName="validity_start_at" class="form-control" type="date" min="0">
+                                        </td>
+                                        <td style="width: 10%;">
+                                            <input formControlName="validity_end_at" class="form-control" type="date" min="0" step=".01">
+                                        </td>
+                                        <td style="width: 20%;">
+                                            <p-dropdown  formControlName="status" [options]="rateStatusList" optionLabel="title"
+                                                optionValue="id" styleClass="form-control" emptyMessage="No Status Available">
+                                            </p-dropdown>
+                                        </td>
+                                        <td style="width: 15%;">
+                                            <p-dropdown  formControlName="type" [options]="rateTypeOptions" optionLabel="label"
+                                                optionValue="value" styleClass="form-control" >
+                                            </p-dropdown>
+                                        </td>
+                                        <td class="td-actions" style="width: 10%;">
+                                            <a [routerLink]="" (click)="openAddRateDetailsModal(true, i)" routerLinkActive="router-link-active"><i
+                                                class="fa fa-plus" title="Add SKU Rate Details"></i></a> &nbsp;
+
+                                            <a [routerLink]="" (click)="removeAddRates(i)"
+                                                routerLinkActive="router-link-active"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot align="center">
+                                    <tr>
+                                        <td class="td-actions" colspan="9" align="center">
+                                            <a [routerLink]="" (click)="addAddRates()"
+                                                routerLinkActive="router-link-active">
+                                                <i class="icon-plus icons"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </p-accordionTab>
+                    <!-- End of FPS SKU Rate Accordion -->
+                </p-accordion>
+            </form>
+        </div>
+    </div><!--/.row-->
+
+    <div class="col-sm-12 col-md-12 form-group">
+        <div class="custom-footer d-flex justify-content-center">
+            <button type="button" (click)="cancelSkuForm()" class="btn btn-sm btn-light"> CANCEL</button>
+            <button type="submit" form="skuEditForm" class="btn btn-sm btn-primary">Save</button>
+        </div>
+    </div>
+    
+  </div>
+  <div
+    id="success"
+    bsModal
+    #successModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Success</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{ alertBody }}</p>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+  <div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- Add Product popup -->
+<div
+  bsModal
+  #addProductModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+<div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">FPS SKU Rate Details</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="addProductModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- top-info -->
+        <div class="top-info">
+          <div class="row form-group top-info-1">
+            <div class="col-md-6 info-text">Rate No.</div>
+            <div class="col-md-6">
+              <input type="text" [value]="currentRateNo" [disabled]="true" class="form-control" />
+            </div>
+          </div>
+          <div class="row form-group top-info-1">
+            <div class="col-md-6 info-text">Validity Start</div>
+            <div class="col-md-6">
+                <input type="text" [value]="currentRateStart" [disabled]="true" class="form-control" />
+            </div>
+          </div>
+          <div class="row form-group top-info-1">
+            <div class="col-md-6 info-text">Validity End</div>
+            <div class="col-md-6">
+                <input type="text" [value]="currentRateEnd" [disabled]="true" class="form-control" />
+            </div>
+          </div>
+          <div class="row form-group top-info-1">
+            <div class="col-md-6 info-text">Type</div>
+            <div class="col-md-6">
+                <input type="text" [value]="currentRateType" [disabled]="true" class="form-control" />
+            </div>
+          </div>
+        </div>
+        <hr />
+        <!-- table -->
+        <div class="table-div" >
+            <form [formGroup]="rateDatailAddForm" (ngSubmit)="onSaveRateDetails()">
+                <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+                    <!-- FPS SKU Rate -->
+                    <p-accordionTab header="Rate Details">
+                        <div class="row">
+                            <table class="table table-borderless" id="sku_rate_datails" formArrayName="addRateDetails">
+                                <thead>
+                                    <tr>
+                                        <th>Tenure</th>
+                                        <th>Interest Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let rate of addRateDetails().controls; let i=index" [formGroupName]="i"
+                                        align="center">
+                                        <td style="width: 45%;">
+                                            <input formControlName="details_tenure" size="1" class="form-control" type="number">
+                                        </td>
+                                        <td style="width: 45%;">
+                                            <input formControlName="details_interest_rate" size="1" class="form-control" type="number" step="0.1">
+                                        </td>
+                                        <td class="td-actions" style="width: 10%;">
+                                            <a [routerLink]="" (click)="removeAddRateDetails(i)"
+                                                routerLinkActive="router-link-active"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                     </tr>
+                                </tbody>
+                                <tfoot align="center">
+                                    <tr>
+                                        <td class="td-actions" colspan="3" align="center">
+                                            <a [routerLink]="" (click)="addAddRateDetails()"
+                                                routerLinkActive="router-link-active">
+                                                <i class="icon-plus icons"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-actions" colspan="3" >
+                                            <input type="submit" value="Submit" style="float: right;" class="btn btn-primary" />
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </p-accordionTab>
+                    <!-- End of FPS SKU Rate Accordion -->
+                </p-accordion>
+            </form>
+        </div>
+        <hr />
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>

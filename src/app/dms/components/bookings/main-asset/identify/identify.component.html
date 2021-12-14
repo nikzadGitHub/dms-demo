@@ -1,7 +1,7 @@
 <div class="form-group dms-identify">
   <div class="animated fadeIn">
     <div class="row">
-      <div class="card col-md-9">
+      <div class="card col-md-6">
         <div class="identify-header">
           <label for="search-pattern">
             <strong>Identify {{ title }}</strong>
@@ -29,7 +29,6 @@
                   <th class="col-2">No</th>
                   <th class="col-3">Product Name</th>
                   <th class="col-3">SKU ID</th>
-                  <th class="col-3 flex-fill">Demo SKU ID</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,7 +37,7 @@
                     <input *ngIf="maxPick === 1" type="radio" class="picker"
                            name="picker" [value]="i+1"
                            [checked]="equipment.isPicked"
-                           (change)="$event.target.checked && onSelect(i)">
+                           (change)="$event.target.checked && onSelect(i, equipment.id)">
                     <input *ngIf="!maxPick || (maxPick > 1 && list.length < maxPick)"
                            type="checkbox" class="picker"
                            [(ngModel)]="equipment.isPicked">
@@ -46,9 +45,6 @@
                   <td>{{ equipment.id }}</td>
                   <td>{{ equipment.name }}</td>
                   <td>{{ equipment.sku }}</td>
-                  <td><label><input type="text" class="form-control"
-                                    [(ngModel)]="equipment.newSku">
-                  </label></td>
                 </tr>
                 </tbody>
               </table>

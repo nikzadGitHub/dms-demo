@@ -7,9 +7,9 @@ import { MainAsset } from './asset-entity';
 export interface UserInfo {
   name: string;
   id: BigInt;
-}
+} 
 
-export interface ApprovalEntity {
+export interface ApprovalEntity { 
   description: string;
   status: string;
   user_list: UserInfo[];
@@ -34,6 +34,14 @@ export interface BookingDetail {
   remarks: string;
   loan_start_date: string;
   loan_end_date: string;
+  con_won:string;
+  pdi_won:string;
+  ins_won:string;
+  trn_won:string;
+  tnc_won:string;
+  war_won:string;
+  pdr_won:string;
+  bme_booking_id:string;
 }
 
 export interface OpportunitySummary {
@@ -59,7 +67,8 @@ export interface BookingEntity {
   approvalList: ApprovalList | null;
   bookingDetailList: BookingDetail;
   opportunitySummary: OpportunitySummary | null;
-  mainAsset: MainAsset | null
+  mainAsset: MainAsset | null;
+  access: boolean;
 }
 
 export type BookingEntityList = BookingEntity[];

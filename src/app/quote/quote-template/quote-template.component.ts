@@ -47,6 +47,7 @@ export class QuoteTemplateComponent implements OnInit {
   successMessage: string;
   templateId: any;
   loader: boolean;
+  blob: any;
   constructor(private router: Router,
     private quoteService: QuoteService,
     private route: ActivatedRoute,
@@ -79,6 +80,8 @@ export class QuoteTemplateComponent implements OnInit {
   onFileSelected(event: any) {
     this.file = event.target.files[0];
     this.fileName = this.file.name;
+    let extension = this.file.name.split('.').pop();
+    console.log("this.file",this.file,'extension =>',extension)
 
     if (this.file) {
       this.check = true;
@@ -269,6 +272,13 @@ export class QuoteTemplateComponent implements OnInit {
   downloadQuotationTemplate(){
     this.quoteService.downloadQuoteTemplate(this.quotationId,this.templateId).subscribe(state=>{
       if(state){
+        this.blob = new Blob([state as BlobPart], {type: 'application/pdf'});
+
+        var downloadURL = window.URL.createObjectURL(state);
+        var link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = "Quotation_1.pdf";
+        link.click();
       this.successMessage = "Quotaion Downloaded Successfully......!!";
       this.successModal.show();
       }

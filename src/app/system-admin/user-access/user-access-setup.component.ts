@@ -55,11 +55,16 @@ export class UserAccessSetupComponent implements OnInit {
         (res: any) => {
           console.log("add-role-res:", res);
           this.userRoleList.unshift(res.data);
+          let navigate: NavigationExtras = {
+            queryParams: {
+              roleId: res.data.id,
+            },
+          };
           this.alertBody = res.message;
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
-            this.router.navigate(["/useraccess/edit"]);
+            this.router.navigate(["/useraccess/edit"], navigate);
           }, 2000);
         },
         (error) => {

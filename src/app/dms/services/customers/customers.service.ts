@@ -16,3 +16,8 @@ export class CustomersService implements CustomersInterface {
     return this.apiClient.get<CustomerList>('customer-list');
   }
 }
+
+
+
+
+

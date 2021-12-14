@@ -19,6 +19,8 @@ import { NewOpportunityComponent } from './new-opportunity.component';
 import { EditOpportunityComponent } from './edit-opportunity.component';
 import { OpportunityBookingComponent } from './opportunity-booking/opportunity-booking.component';
 
+import { IndexComponent } from '@app/fps/components/fps-form/index/index.component';
+
 @NgModule({
   imports: [    
     CommonModule,
@@ -43,7 +45,8 @@ import { OpportunityBookingComponent } from './opportunity-booking/opportunity-b
     NewOpportunityComponent,
     EditOpportunityComponent,
     ListOpportunityComponent,
-    OpportunityBookingComponent    
+    OpportunityBookingComponent,
+    IndexComponent  
   ]
 })
 export class OpportunityModule { }

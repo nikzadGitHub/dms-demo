@@ -75,6 +75,7 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
           <p-dropdown
+            *ngIf="!this.isEdit"
             formControlName="userAccess"
             [options]="userRoleList"
             placeholder="User Access"
@@ -82,14 +83,15 @@
             optionValue="id"
             [style]="{ width: '351px' }"
           ></p-dropdown>
-          <!-- <p-multiSelect
-            [options]="cities"
-            [(ngModel)]="selectedCities"
+          <p-dropdown
+            *ngIf="this.isEdit"
+            formControlName="userAccess"
+            [options]="userRoleList"
             optionLabel="name"
-            optionValue="code"
+            optionValue="id"
             display="chip"
-            [style]="{ width: '100%' }"
-          ></p-multiSelect> -->
+            [style]="{ width: '351px' }"
+          ></p-dropdown>
         </div>
       </div>
 
@@ -207,6 +209,7 @@
           /> -->
           <p-dropdown
             formControlName="unit"
+            placeholder="Select unit"
             [options]="units"
             placeholder="Units"
             optionLabel="code"
@@ -228,6 +231,7 @@
             formControlName="status"
             [options]="status"
             optionLabel="status"
+            optionValue="code"
             placeholder="Select Status"
             optionValue="code"
             [style]="{ width: '340px' }"

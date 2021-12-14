@@ -21,6 +21,7 @@ export class IndexComponent implements OnInit {
   search_text: string = '';
   pages: any [];
   sort: any;
+  loading:boolean;
 
   private ngUnsubscribe = new Subject;
 
@@ -83,11 +84,16 @@ export class IndexComponent implements OnInit {
   }
 
   getList() {
+    this.loading=true
       this.customerService.getAll(this.pageItems,this.search_text, this.sort).subscribe(data => {
       this.datasource = data['data']['data'];
       this.pages = data['data']['links'];
       this.totalRecords = data['data']['total'];
-    });
+      this.loading=false
+    }, err => {
+      this.loading = false;
+    }
+    );
   }
 
   getAll(){

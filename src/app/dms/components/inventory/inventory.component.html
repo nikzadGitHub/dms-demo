@@ -2,7 +2,7 @@
 <p-tabMenu [model]="menuItems"
     [activeItem]="activeItem"></p-tabMenu>
 
-<p-table #dt [value]="inventoryList" styleClass="p-datatable-table" [rowHover]="true" [filterDelay]="0"
+<p-table  [loading]="loading" #dt [value]="inventoryList" styleClass="p-datatable-table" [rowHover]="true" [filterDelay]="0"
     [globalFilterFields]="['serial_no','stock_keep_unit','product_name']">
     <ng-template pTemplate="caption">
         <div class="table-header d-flex">
@@ -81,7 +81,8 @@
                     
                 </div>
             </th>
-            <th pSortableColumn="booking_id" class="text-center">
+
+            <!-- <th pSortableColumn="booking_id" class="text-center">
                 <div  style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
                     Current Booking
                     <div class="booking-icons">
@@ -91,7 +92,7 @@
                     </div>
                   
                 </div>
-            </th>
+            </th> -->
 
             <th [style]="{'width':'5%'}">
             </th>
@@ -100,7 +101,7 @@
     <ng-template pTemplate="body" let-inventoryItem>
         <tr class="p-selectable-row">
             <td class="text-center">
-                {{ inventoryItem.serial_no | number:'5.' }}
+                {{ inventoryItem.serial_no | number:'3.' }}
             </td>
             <td class="text-center">
                 {{ inventoryItem.stock_keep_unit }}
@@ -117,8 +118,16 @@
             <td class="text-center">
                 {{ inventoryItem.status }}
             </td>
-            <td class="text-center">
+            <!-- <td class="text-center">
                 {{ formatBooking(inventoryItem.booking_id) }}
+            </td> -->
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td style="text-align: center;" [attr.colspan]="6">
+                No records found
             </td>
         </tr>
     </ng-template>

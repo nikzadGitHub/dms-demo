@@ -46,64 +46,96 @@
     }
   }
 
-  .accordion {
+  .card-list {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    margin-bottom: 20px;
-    .agency-text {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      //   margin: 15px;
-      input {
-        margin-bottom: 7px;
-        border: none;
-        background: white;
-        padding-left: 15px;
+    .unit-card {
+      border: 1px solid lightgray;
+      width: 274px;
+      .card-header {
+        font-weight: bold;
+        font-size: 16px;
       }
-      input:disabled {
-        background-color: white;
-      }
-      input:focus {
-        color: white;
-        background: #2196f3;
-      }
-      input:hover {
-        cursor: pointer;
-        border-color: none;
-      }
-      input button {
-        border: none;
-        margin-bottom: 10px;
-      }
-      p {
-        cursor: pointer;
-        margin-bottom: 5px;
-        width: 100%;
-        line-height: 35px;
-        padding-left: 12px;
-        font-family: "Lato";
-      }
-      .p-1 {
-        padding-left: 12px !important;
-        background: #2196f3;
-        color: white;
-      }
-    }
-    .check-field {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: flex-start;
-      margin: 10px;
+      .card-body {
+        max-height: 300px;
+        overflow-x: auto;
+        // overflow: auto;
 
-      p-checkbox {
-        padding-right: 10px;
-        padding-left: 30px;
+        .check-field {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          justify-content: flex-start;
+          margin: 10px;
+
+          p-checkbox {
+            padding-right: 10px;
+            padding-left: 30px;
+          }
+        }
       }
     }
   }
+
+  // .accordion {
+  //   display: flex;
+  //   flex-direction: row;
+  //   justify-content: space-evenly;
+  //   margin-bottom: 20px;
+  //   .agency-text {
+  //     display: flex;
+  //     flex-direction: column;
+  //     align-items: flex-start;
+
+  //     input {
+  //       margin-bottom: 7px;
+  //       border: none;
+  //       background: white;
+  //       padding-left: 15px;
+  //     }
+  //     input:disabled {
+  //       background-color: white;
+  //     }
+  //     input:focus {
+  //       color: white;
+  //       background: #2196f3;
+  //     }
+  //     input:hover {
+  //       cursor: pointer;
+  //       border-color: none;
+  //     }
+  //     input button {
+  //       border: none;
+  //       margin-bottom: 10px;
+  //     }
+  //     p {
+  //       cursor: pointer;
+  //       margin-bottom: 5px;
+  //       width: 100%;
+  //       line-height: 35px;
+  //       padding-left: 12px;
+  //       font-family: "Lato";
+  //     }
+  //     .p-1 {
+  //       padding-left: 12px !important;
+  //       background: #2196f3;
+  //       color: white;
+  //     }
+  //   }
+  //   .check-field {
+  //     display: flex;
+  //     flex-direction: row;
+  //     align-items: flex-start;
+  //     justify-content: flex-start;
+  //     margin: 10px;
+
+  //     p-checkbox {
+  //       padding-right: 10px;
+  //       padding-left: 30px;
+  //     }
+  //   }
+  // }
 
   .action-btn {
     display: flex;

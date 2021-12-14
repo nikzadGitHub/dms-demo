@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SystemAdminService } from "../../../system-admin.service";
-import { SociService } from './../../../../soci/soci.service'
+import { SociService } from "./../../../../soci/soci.service";
 import { ModalDirective } from "ngx-bootstrap/modal";
 
 @Component({
@@ -51,8 +51,8 @@ export class CreateUserComponent implements OnInit {
   selectedCities: string[];
   userRoleId: any;
   isEdit: boolean;
-  companies:Array<any>=[];
-  units:Array<any>;
+  companies: Array<any> = [];
+  units: Array<any>;
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   alertBody: string;
@@ -84,29 +84,27 @@ export class CreateUserComponent implements OnInit {
       if (this.userRoleId) {
         this.isEdit = true;
         this.getListOfRolePermission();
-        this.getUserRole()
+        this.getUserRole();
         this.getUserRoleDetail(this.userRoleId);
-       ;
-        
       } else {
         this.getUserRole();
         this.getListOfRolePermission();
       }
+      //  else {
+      //   this.getUserRole();
+      //   this.getListOfRolePermission();
+      // }
     });
-    this.systemAdminSerive
-      .getAllCompamanies().subscribe((res:any) => {
-        res.data.forEach(ele => {
-          this.companies.push(ele)
-        });
+    this.systemAdminSerive.getAllCompamanies().subscribe((res: any) => {
+      res.data.forEach((ele) => {
+        this.companies.push(ele);
       });
-      this.systemAdminSerive.getUnits().subscribe((res:any)=>{
-        this.units = res.data
-        console.log('units', res.data)
-      })
+    });
+    this.systemAdminSerive.getUnits().subscribe((res: any) => {
+      this.units = res.data;
+      console.log("units", res.data);
+    });
   }
-
-
-  
 
   getListOfRolePermission() {
     this.systemAdminSerive.getQuery("/role").subscribe((res: any) => {
@@ -122,7 +120,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   getUserRoleDetail(userRoleId) {
-console.log('called')
+    console.log("called");
     this.systemAdminSerive
       .getQuery("/auth/user/" + userRoleId + "/edit")
       .subscribe((res: any) => {
@@ -153,14 +151,29 @@ console.log('called')
       );
   }
 
+  getAllCompany() {
+    this.systemAdminSerive
+      .getQuery("/data-area-id/all")
+      .subscribe((res: any) => {
+        console.log("Company-res:", res);
+        this.companies = res.data;
+      });
+  }
+
+  getAllUnit() {
+    this.systemAdminSerive.getQuery("/units").subscribe((res: any) => {
+      this.units = res.data;
+    });
+  }
+
   addUser() {
-    console.log(this.userform.value, 'user form')
+    console.log(this.userform.value, "user form");
     this.systemAdminSerive
       .postQuery("/auth/create-user", {
         full_name: this.userform.value.name,
         phone_number: this.userform.value.phoneNumber,
         discount_margin_percent: this.userform.value.discountMargin,
-        data_area_id:this.userform.value.companyName,
+        data_area_id: this.userform.value.companyName,
         user_access_id: this.userform.value.userAccess,
         email: this.userform.value.email,
         approved_by: this.userform.value.approvedBy,
@@ -168,38 +181,41 @@ console.log('called')
         unit_id: this.userform.value.unit,
         is_active: this.userform.value.status,
       })
-      .subscribe((res :any) => {
-        console.log("add-user-res:", res);
-        if (res.success) {
-          // let item = this.selectedAllUnits.find(x => x.id == res.data.id)
-          this.alertBody = "User Created successfully.";
-          this.successModal.show();
-       
-          setTimeout(() => {
-            this.successModal.hide();
-            this.resetForm()
-          }, 2000);
-        }
-      },(err)=>{
-        // this.alertBody = "Error";
+      .subscribe(
+        (res: any) => {
+          console.log("add-user-res:", res);
+          if (res.success) {
+            // let item = this.selectedAllUnits.find(x => x.id == res.data.id)
+            this.alertBody = "User Created successfully.";
+            this.successModal.show();
+
+            setTimeout(() => {
+              this.successModal.hide();
+              this.router.navigate(["/user/adduser"]);
+              this.resetForm();
+            }, 2000);
+          }
+        },
+        (err) => {
+          // this.alertBody = "Error";
           this.dangerModal.show();
           this.alertBody = "Error in Adding User";
           setTimeout(() => {
             this.dangerModal.hide();
           }, 2000);
-      })
-
+        }
+      );
   }
 
-  updateUser(){
-    console.log(this.userform.value, 'user form')
+  updateUser() {
+    console.log(this.userform.value, "user form");
     this.systemAdminSerive
-      .putQuery("/auth/update-user/"+this.userRoleId, {
+      .putQuery("/auth/update-user/" + this.userRoleId, {
         full_name: this.userform.value.name,
         phone_number: this.userform.value.phoneNumber,
         discount_margin_percent: this.userform.value.discountMargin,
-        data_area_id:this.userform.value.companyName,
-        user_access_id:this.userform.value.userAccess,
+        data_area_id: this.userform.value.companyName,
+        user_access_id: this.userform.value.userAccess,
         email: this.userform.value.email,
         // phoneNumber: "",
         // discountMargin: this.userform.value.discountMargin,
@@ -208,21 +224,19 @@ console.log('called')
         unit_id: this.userform.value.unit,
         is_active: this.userform.value.status,
       })
-      .subscribe((res:any) => {
-     
-        if (res.success){
-          console.log("update-user-res:", res);
-          this.alertBody = "User Updated successfully.";
-          this.successModal.show();
-          this.resetForm()
-          
-          setTimeout(() => {
-            this.successModal.hide();
-            this.router.navigate(["/user/adduser"]);
+      .subscribe(
+        (res: any) => {
+          if (res.success) {
+            console.log("update-user-res:", res);
+            this.alertBody = "User Updated successfully.";
+            this.successModal.show();
+            this.resetForm();
 
-          }, 2000);
-        
-        }
+            setTimeout(() => {
+              this.successModal.hide();
+              this.router.navigate(["/user/adduser"]);
+            }, 2000);
+          }
       }, (err)=>{
         this.dangerModal.show();
         this.alertBody = "Error in Updating User";
@@ -237,7 +251,6 @@ console.log('called')
     this.userform.reset();
     this.userform.markAsPristine();
     this.userform.markAsUntouched();
-
   }
   back() {
     // this.location.back();

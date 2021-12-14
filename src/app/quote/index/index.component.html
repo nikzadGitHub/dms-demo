@@ -1,4 +1,4 @@
-<p-table class="table table-hover table-striped" #dt [value]="quotes" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true" [lazy]="true"
+<p-table  [loading]="loading" class="table table-hover table-striped" #dt [value]="quotes" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true" [lazy]="true"
 (onLazyLoad)="SortColumn($event)"
 [filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']" (onFilter)='columnFilter($event)' [columns]="columns" (onColReorder)="columnOrder($event)">
   <ng-template pTemplate="caption">
@@ -140,6 +140,13 @@
       </td>
     </tr>
   </ng-template>
+  <ng-template pTemplate="emptymessage" let-columns>
+    <tr>
+        <td style="text-align: center;" [attr.colspan]="columns.length">
+            No records found
+        </td>
+    </tr>
+</ng-template>
 </p-table>
 <p-paginator
   (onPageChange)="paginate($event)"
@@ -148,3 +155,4 @@
   [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
 >
 </p-paginator>
+
