@@ -194,7 +194,11 @@
       <!-- price level approval -->
       <div class="price-action">
         <h4>Price Level Approval</h4>
-        <button
+      
+
+      
+        <br>
+                <button
           class="btn btn-icon btn-outline-primary"
           icon="pi pi-check"
           (click)="addPriceLevelApproval()"
@@ -202,67 +206,67 @@
           <i class="cil-plus c-icon"></i>
         </button>
       </div>
-      <div
-        class="price-level row mt-4"
-        *ngFor="let item of priceLevelApproval; let i = index"
-      >
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-3 mt-2">
-              <!-- Amount -->
-              <label>Amount: <span class="red-star">*</span></label>
-            </div>
-            <div class="col-9">
-              <p-inputNumber
-                name=""
-                formControlName="amount"
-                inputId="integeronly"
-                inputId="withoutgrouping"
-                [useGrouping]="false"
-                [style]="{ width: '380px' }"
-              >
-              </p-inputNumber>
-            </div>
-          </div>
+      <div formArrayName="priceApprovel">
 
-          <!-- <input type="text" class="form-control" formControlName="amount" /> -->
-        </div>
-        <!-- approve by -->
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-3 mt-2">
-              <label>Approve By: <span class="red-star">*</span></label>
+        <div *ngFor="let field of getPriceApprovelForm().controls; let i=index" [formGroupName]="i"   class="price-level row mt-4">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-3 mt-2">
+                <!-- Amount -->
+                <label>Amount: <span class="red-star">*</span></label>
+              </div>
+              <div class="col-9">
+                <p-inputNumber
+                  name=""
+                  formControlName="amount"
+                  inputId="integeronly"
+                  inputId="withoutgrouping"
+                  [style]="{ width: '380px' }"
+                >
+                </p-inputNumber>
+              </div>
             </div>
-            <div class="col-9">
-              <p-dropdown
-                id="opc"
-                name="picList"
-                formControlName="approveBy"
-                [options]="userList"
-                optionLabel="full_name"
-                placeholder="Select Approve By"
-                [style]="{ width: '300px' }"
-                [required]="true"
-              >
-              </p-dropdown>
-              <a
-                [routerLink]=""
-                routerLinkActive="router-link-active"
-                (click)="deletePriceLevelRow(i)"
-                ><i
-                  class="fa fa-trash"
-                  style="font-size: 18px; padding-left: 2rem"
-                ></i
-              ></a>
+  
+            <!-- <input type="text" class="form-control" formControlName="amount" /> -->
+          </div>
+          <!-- approve by -->
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-3 mt-2">
+                <label>Approve By: <span class="red-star">*</span></label>
+              </div>
+              <div class="col-9">
+                <p-dropdown
+                  id="opc"
+                  name="picList"
+                  formControlName="approvedBy"
+                  [options]="userList"
+                  optionLabel="full_name"
+                  placeholder="Select Approve By"
+                  [style]="{ width: '300px' }"
+                  [required]="true"
+                >
+                </p-dropdown>
+                <a
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="deletePriceLevelRow(i)"
+                  ><i
+                    class="fa fa-trash"
+                    style="font-size: 18px; padding-left: 2rem"
+                  ></i
+                ></a>
+              </div>
             </div>
           </div>
         </div>
+
       </div>
       <div class="action-btn">
         <button type="button" class="btn btn-outline-primary cancel-btn">
           CANCEL
         </button>
-        <button type="button" class="btn btn-primary save-btn">SAVE</button>
+        <button type="button" class="btn btn-primary save-btn" (click)="dynamicForm()" >SAVE</button>
       </div>
 
       <div class="authority-table">

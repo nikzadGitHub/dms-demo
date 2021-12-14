@@ -167,7 +167,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   addUser() {
-    console.log(this.userform.value, "user form");
+
     this.systemAdminSerive
       .postQuery("/auth/create-user", {
         full_name: this.userform.value.name,
@@ -217,8 +217,6 @@ export class CreateUserComponent implements OnInit {
         data_area_id: this.userform.value.companyName,
         user_access_id: this.userform.value.userAccess,
         email: this.userform.value.email,
-        // phoneNumber: "",
-        // discountMargin: this.userform.value.discountMargin,
         approved_by: this.userform.value.approvedBy,
         profit_percent: this.userform.value.profit,
         unit_id: this.userform.value.unit,

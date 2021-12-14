@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Location } from "@angular/common";
 import { SystemAdminService } from "../../system-admin.service";
@@ -13,6 +13,7 @@ export class UserLoaComponent implements OnInit {
   userList: any = [];
   priceLevelApproval = [{ amount: "", approveBy: "" }];
   authorityForm: FormGroup;
+  TeamEmailForm: FormGroup;
   dummy_data = [
     { name: "New York", code: "NY" },
     { name: "Rome", code: "RM" },
@@ -58,6 +59,7 @@ export class UserLoaComponent implements OnInit {
       discount: "",
       cellingPriceAmount: "",
       cellingPriceApproval: "",
+      priceApprovel : this.formBuilder.array([])
     });
   }
 
@@ -66,6 +68,11 @@ export class UserLoaComponent implements OnInit {
     this.dummyAuthorityData.forEach((value) => {
       value.created_at = new Date(value.created_at);
     });
+    this.TeamEmailForm = this.formBuilder.group({
+      priceApprovel : this.formBuilder.array([])
+    })
+    this.addPriceLevelApproval()
+ 
   }
 
   getUserRole() {
@@ -75,18 +82,35 @@ export class UserLoaComponent implements OnInit {
     });
   }
   addPriceLevelApproval() {
-    this.priceLevelApproval.push({
-      amount: this.authorityForm.value.amount,
-      approveBy: this.authorityForm.value.approveBy,
-    });
+    this.getPriceApprovelForm().push(this.newPriceApprovelFields())
+
+    // this.priceLevelApproval.push({
+    //   amount: this.authorityForm.value.amount,
+    //   approveBy: this.authorityForm.value.approveBy,
+    // });
   }
   deletePriceLevelRow(index) {
     // if (this.priceLevelApproval.length > 1) {
-    this.priceLevelApproval.splice(index, 1);
+    // this.getPriceApprovelForm().splice(index, 1);
+    this.getPriceApprovelForm().removeAt(index)
     // }
   }
   back() {
     // this.location.back();
     this.router.navigateByUrl("user/adduser");
+  }
+  getPriceApprovelForm(): FormArray{
+    return this.authorityForm.get('priceApprovel') as FormArray
+  }
+  newPriceApprovelFields(): FormGroup{
+     return this.formBuilder.group({
+      amount : '',
+      approvedBy: ''
+    })
+  }
+
+  dynamicForm(){
+    console.log('array form ',  this.authorityForm.value)
+
   }
 }
