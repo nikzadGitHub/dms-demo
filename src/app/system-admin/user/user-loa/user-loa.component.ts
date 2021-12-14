@@ -79,7 +79,7 @@ export class UserLoaComponent implements OnInit {
       celling_price_amount: this.authorityForm.value.cellingPriceAmount,
       celling_price_approval: this.authorityForm.value.cellingPriceApproval,
       person_charges: this.authorityForm.value.personCharges,
-      price_level_approva: [],
+      price_level_approva: this.priceLevelApproval,
     };
     this.systemAdminSerive
       .postQuery("/user-loa", data)
@@ -99,6 +99,7 @@ export class UserLoaComponent implements OnInit {
       amount: this.authorityForm.value.amount,
       approveBy: this.authorityForm.value.approveBy,
     });
+    console.log("priceLevelApproval:", this.priceLevelApproval);
   }
 
   getAllUnits() {
