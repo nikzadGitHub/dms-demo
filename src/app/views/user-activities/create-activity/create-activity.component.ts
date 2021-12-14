@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { UserActivitiesService } from '../user-activities.service';
 
@@ -25,8 +26,24 @@ export class CreateActivityComponent implements OnInit {
   isCompanyName: boolean = false;
   dangerBody: string = 'Company Name is Required...!';
   companyName: any;
+  isTypeOthers: any = false;
+
+  addActivityData = {
+    activityDesc:"",
+    activityDueDate:"",
+    activityCompletionDate:"",
+    activityStatus:"NEW",
+    activityType:"MEETING",
+    activityTypeOther:"",
+    activityRemarks:"",
+  }
+  companyId: any;
+  customer_id: any;
   
-  constructor(public userAactivities: UserActivitiesService,) { }
+  constructor(
+    public userAactivities: UserActivitiesService,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
 		this.getActivitydata();
@@ -39,6 +56,7 @@ export class CreateActivityComponent implements OnInit {
     this.userAactivities.getActivity().subscribe(res => {
     
       this.activitydata = res.data;
+      this.customer_id = res?.data[0]?.customer_id
       this.closedData =  this.activitydata.filter(function(item) {
         return item.status == "CLOSED";
       });
@@ -72,8 +90,27 @@ export class CreateActivityComponent implements OnInit {
   onSelect(event){
     if(event){
       console.log('event onselect',event);
+      this.companyId = event.id
       this.companyName = event.company_name
       this.isCompanyName = true
     }
+  }
+
+  activityTypeGet(event){
+    if(event.target.value == "others"){
+      this.isTypeOthers = true
+    } else {
+      this.isTypeOthers = false
+    }
+    console.log("event =>",event.target.value)
+  }
+
+  saveActivity(event){
+    console.log("getting activity data =>",this.addActivityData);
+    this.userAactivities.createActivity(this.customer_id,this.addActivityData).subscribe((res) => {
+      console.log('save activity data =>',res);
+      this.router.navigateByUrl("/activities", { replaceUrl: true});
+    })
+    
   }
 }

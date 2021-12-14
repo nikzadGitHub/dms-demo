@@ -32,6 +32,37 @@ export class UserActivitiesService {
       catchError(this.errorHandler)
     )
   }
+
+  createActivity(id,data): Observable<any> {
+    let authToken = localStorage.getItem('auth-token');
+    console.log('data====> ',data)
+    let body = {
+      "customer_id": id,
+      "activities": [
+          {
+              "subject": "subject",
+              "due_date": data.activityDueDate,
+              "description": data.activityDesc,
+              "type": data.activityType,
+              "status": data.activityStatus,
+              "completion_date": data.activityCompletionDate,
+              "remark": data.activityRemarks,
+              "is_open": "1"
+          }
+      ]
+  }
+    return this.httpClient.post(this.apiURL + '/activity/',body, {
+      headers: {
+        'Authorization': authToken,
+      },
+    })
+    .pipe(
+      tap((response: any) => {
+        console.log(response);               
+    }),
+      catchError(this.errorHandler)
+    )
+  }
   
   errorHandler(error) {
     let errorMessage = '';

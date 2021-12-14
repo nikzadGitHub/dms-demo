@@ -3,9 +3,9 @@
     <h2>Create Activity</h2>
   </div>
 </div>
-<div>
+<div style="overflow-y: hidden;">
   <div class="col-md-6">
-    <label style="color: black"><b>Company Name</b></label>
+    <label style="color: black"><b>Customer Name</b></label>
     <span class="p-input-icon-right" style="width: 100%; margin-bottom: 10px;">
       <p-autoComplete
         class="search_field"
@@ -71,7 +71,10 @@
     </tbody>
   </table>
 
-  <p-accordion styleClass="customColor">
+  <p-accordion
+      [multiple]="true"
+      styleClass="customColor"
+      activeIndex="0">
     <p-accordionTab header="Activities" activeIndex="0">
       <p-tabView>
         <p-tabPanel header="Open" [selected]="true">
@@ -489,6 +492,7 @@
                   type="text"
                   pInputText
                   class="form-control"
+                  [(ngModel)]="addActivityData.activityDesc"
                   required
                 />
               </div>
@@ -502,9 +506,10 @@
               </div>
               <div style="margin-bottom: 19px;" class="col-9">
                 <input
+                [(ngModel)]="addActivityData.activityDueDate"
                   id="description"
                   name="title"
-                  type="text"
+                  type="date"
                   pInputText
                   class="form-control"
                   required
@@ -520,9 +525,10 @@
               </div>
               <div class="col-9">
                 <input
+                [(ngModel)]="addActivityData.activityCompletionDate"
                   id="description"
                   name="title"
-                  type="text"
+                  type="date"
                   pInputText
                   class="form-control"
                   required
@@ -539,11 +545,12 @@
                 <select
                   class="form-control"
                   aria-label="Default select example"
+                  [(ngModel)]="addActivityData.activityStatus"
                 >
-                  <option value="1">NEW</option>
-                  <option value="2"> IN PROGRESS</option>
-                  <option value="2"> KIV/POSTPONE</option>
-                  <option value="2"> CLOSED</option>
+                  <option value="new">NEW</option>
+                  <option value="in progress"> IN PROGRESS</option>
+                  <option value="kiv/postpone"> KIV/POSTPONE</option>
+                  <option value="closed"> CLOSED</option>
 
 
                 </select>
@@ -557,18 +564,21 @@
               </div>
               <div style="margin-bottom: 19px;display: flex;" class="col-9">
                 <select
+                (change)="activityTypeGet($event)"
                   class="form-control"
                   aria-label="Default select example"
+                  [(ngModel)]="addActivityData.activityType"
                 >
-                  <option value="1">MEETING</option>
-                  <option value="2">CONTACT</option>
-                  <option value="2">FOLLOW UP</option>
-                  <option value="2"> OTHERS</option>
+                  <option value="meeting">MEETING</option>
+                  <option value="contact">CONTACT</option>
+                  <option value="follow up">FOLLOW UP</option>
+                  <option value="others"> OTHERS </option>
 
                   
 
                 </select>
-                <input style=" margin-left: 9px"  type="text" class="form-control" />
+                <input *ngIf="!isTypeOthers" style=" margin-left: 9px" placeholder="OTHERS" readonly  type="text" class="form-control" />
+                <input *ngIf="isTypeOthers" [(ngModel)]="addActivityData.activityType" style=" margin-left: 9px" type="text" class="form-control" />
               </div>
             </div>
 
@@ -580,6 +590,7 @@
               </div>
               <div style="margin-bottom: 21px" class="col-9">
                 <input
+                [(ngModel)]="addActivityData.activityRemarks"
                   style="height: 100px"
                   id="description"
                   name="title"
@@ -603,6 +614,7 @@
             </button>
             <button
               (click)="createActivity.hide()"
+              (click)="saveActivity($event)"
               class="btn btn-primary px-5"
               type="submit"
             >
