@@ -32,6 +32,7 @@ export class AppService {
     return this.httpClient.get(this.apiURL + query, this.httpOptions);
   }
 
+
   postQuery(url, req): Observable<object> {
     let query = url;
 

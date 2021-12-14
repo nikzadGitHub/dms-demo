@@ -1,0 +1,456 @@
+
+
+
+   <p-tabView>
+    <p-tabPanel header="Open" [selected]="true">
+    
+    
+
+         <p-table  [loading]="loading" class="table table-hover table-striped"   styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true"
+         responsiveLayout="scroll" [filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']"
+        >
+         <ng-template pTemplate="caption">
+             <div style="margin: 0px 41px 0px 37px" class="table-header">
+                 <span class="p-input-icon-left">
+                     Activities Listing
+                 </span>
+                 <div class="ml-2 mt-1">
+                     <a routerLink="create" routerLinkActive="router-link-active"
+                       ><i class="icon-plus icons" style="color: #ffffff"></i
+                     ></a>
+                   </div>
+                 <span style="margin: 0px 0px 0px 375px" class="p-input-icon-left">
+                     <i class="pi pi-search"></i>
+                     <input type="text" pInputText placeholder="Global Search" />
+                 </span>
+             <div>
+                 <img
+                 style="width: 25px;"
+                 src="../../../../assets/img/icons/Vector (2).svg"
+               />
+               <img
+                 style="width: 25px"
+                 src="../../../../assets/img/icons/Vector (1).svg"
+               />
+               <img
+                 style="width: 25px;"
+                 src="../../../../assets/img/icons/vertcalLines.svg"
+               />
+             </div>
+             </div>
+         </ng-template>
+         <ng-template pTemplate="header">
+             <tr>
+               <th pSortableColumn="created_date" class="text-center">
+                 <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+                  Description 
+                  
+                    
+                   <div class="date-icons">
+                     <p-sortIcon field="created_date"></p-sortIcon>
+                     <p-columnFilter
+                       type="date"
+                       field="created_date"
+                       display="menu"
+                       class="p-ml-auto"
+                     ></p-columnFilter>
+                   </div>
+                 </div>
+               </th>
+               <th pSortableColumn="op_id" class="text-center">
+                 <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+                   Type
+                   <div class="Opp-ID-icon">
+                     <p-sortIcon field="op_id"></p-sortIcon>
+                     <p-columnFilter
+                       type="text"
+                       field="op_id"
+                       display="menu"
+                       class="p-ml-auto"
+                     ></p-columnFilter>
+                   </div>
+                 </div>
+               </th>
+               <th pSortableColumn="topic" class="text-center">
+                 <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+                   Status
+                   <div class="topic-icons">
+                     <p-sortIcon field="topic"></p-sortIcon>
+                     <p-columnFilter
+                       type="text"
+                       field="topic"
+                       display="menu"
+                       class="p-ml-auto"
+                     ></p-columnFilter>
+                   </div>
+                 </div>
+               </th>
+               <th pSortableColumn="company_name" class="text-center">
+                 <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+                  Due Date
+                   <div class="company-name-icons">
+                     <p-sortIcon field="company_name"></p-sortIcon>
+                     <p-columnFilter
+                       type="text"
+                       field="company_name"
+                       display="menu"
+                       class="p-ml-auto"
+                     ></p-columnFilter>
+                   </div>
+                 </div>
+               </th>
+               <th pSortableColumn="status_id" class="text-center">
+                 <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+                   Completion Date
+                   <div class="status-icons">
+                     <p-sortIcon field="status_id"></p-sortIcon>
+                     <p-columnFilter
+                       type="text"
+                       field="status_id"
+                       display="menu"
+                       class="p-ml-auto"
+                     ></p-columnFilter>
+                   </div>
+                 </div>
+               </th>
+               <th [style]="{ width: '5%' }"></th>
+             </tr>
+             <tr align="center" *ngFor="let data of openData">
+               <td>
+                 {{data.description}}
+             </td>
+             <td>
+               {{data.activity_type}}
+           </td>
+           <td>
+             {{data.status}}
+         </td>
+         <td>
+           {{data.due_date | date: "dd-MMM-yyyy"}}
+       </td>
+       <td>
+         {{data.completion_date | date: "dd-MMM-yyyy"}}
+     </td>
+             </tr>
+           </ng-template>
+         
+     
+         <ng-template pTemplate="emptymessage" let-columns>
+             <tr>
+                 <td style="text-align: center;" *ngIf="columns" [attr.colspan]="columns.length">
+                     No records found
+                 </td>
+             </tr>
+         </ng-template>
+     </p-table>
+
+
+
+
+        
+    </p-tabPanel>
+
+    <p-tabPanel header="Close"> 
+   
+      <p-table  [loading]="loading" class="table table-hover table-striped"   styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true"
+    responsiveLayout="scroll" [filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']"
+   >
+    <ng-template pTemplate="caption">
+        <div style="margin: 0px 41px 0px 37px" class="table-header">
+            <span class="p-input-icon-left">
+                Activities Listing
+            </span>
+            <div class="ml-2 mt-1">
+                <a routerLink="create" routerLinkActive="router-link-active"
+                  ><i class="icon-plus icons" style="color: #ffffff"></i
+                ></a>
+              </div>
+            <span style="margin: 0px 0px 0px 375px" class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input type="text" pInputText placeholder="Global Search" />
+            </span>
+        <div>
+            <img
+            style="width: 25px;"
+            src="../../../../assets/img/icons/Vector (2).svg"
+          />
+          <img
+            style="width: 25px"
+            src="../../../../assets/img/icons/Vector (1).svg"
+          />
+          <img
+            style="width: 25px;"
+            src="../../../../assets/img/icons/vertcalLines.svg"
+          />
+        </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="created_date" class="text-center">
+            <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+             Description 
+             
+               
+              <div class="date-icons">
+                <p-sortIcon field="created_date"></p-sortIcon>
+                <p-columnFilter
+                  type="date"
+                  field="created_date"
+                  display="menu"
+                  class="p-ml-auto"
+                ></p-columnFilter>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="op_id" class="text-center">
+            <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+              Type
+              <div class="Opp-ID-icon">
+                <p-sortIcon field="op_id"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="op_id"
+                  display="menu"
+                  class="p-ml-auto"
+                ></p-columnFilter>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="topic" class="text-center">
+            <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+              Status
+              <div class="topic-icons">
+                <p-sortIcon field="topic"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="topic"
+                  display="menu"
+                  class="p-ml-auto"
+                ></p-columnFilter>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="company_name" class="text-center">
+            <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+             Due Date
+              <div class="company-name-icons">
+                <p-sortIcon field="company_name"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="company_name"
+                  display="menu"
+                  class="p-ml-auto"
+                ></p-columnFilter>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="status_id" class="text-center">
+            <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+              Completion Date
+              <div class="status-icons">
+                <p-sortIcon field="status_id"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="status_id"
+                  display="menu"
+                  class="p-ml-auto"
+                ></p-columnFilter>
+              </div>
+            </div>
+          </th>
+          <th [style]="{ width: '5%' }"></th>
+        </tr>
+        <tr align="center" *ngFor="let data of closedData">
+          <td>
+            {{data.description}}
+        </td>
+        <td>
+          {{data.activity_type}}
+      </td>
+      <td>
+        {{data.status}}
+    </td>
+    <td>
+      {{data.due_date | date: "dd-MMM-yyyy"}}
+  </td>
+  <td>
+    {{data.completion_date | date: "dd-MMM-yyyy"}}
+</td>
+        </tr>
+      </ng-template>
+    
+
+
+    
+   
+
+    <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td style="text-align: center;" *ngIf="columns" [attr.colspan]="columns.length">
+                No records found
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+
+
+    </p-tabPanel>
+   
+
+  </p-tabView>
+
+
+<!-- <p-table  [loading]="loading" class="table table-hover table-striped"   styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true"
+    responsiveLayout="scroll" [filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']"
+   >
+    <ng-template pTemplate="caption">
+        <div style="margin: 0px 41px 0px 37px" class="table-header">
+            <span class="p-input-icon-left">
+                Activities Listing
+            </span>
+            <div class="ml-2 mt-1">
+                <a routerLink="create" routerLinkActive="router-link-active"
+                  ><i class="icon-plus icons" style="color: #ffffff"></i
+                ></a>
+              </div>
+            <span style="margin: 0px 0px 0px 375px" class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input type="text" pInputText placeholder="Global Search" />
+            </span>
+        <div>
+            <img
+            style="width: 25px;"
+            src="../../../../assets/img/icons/Vector (2).svg"
+          />
+          <img
+            style="width: 25px"
+            src="../../../../assets/img/icons/Vector (1).svg"
+          />
+          <img
+            style="width: 25px;"
+            src="../../../../assets/img/icons/vertcalLines.svg"
+          />
+        </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="created_date" class="text-center">
+            <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+             Description 
+             
+               
+              <div class="date-icons">
+                <p-sortIcon field="created_date"></p-sortIcon>
+                <p-columnFilter
+                  type="date"
+                  field="created_date"
+                  display="menu"
+                  class="p-ml-auto"
+                ></p-columnFilter>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="op_id" class="text-center">
+            <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+              Type
+              <div class="Opp-ID-icon">
+                <p-sortIcon field="op_id"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="op_id"
+                  display="menu"
+                  class="p-ml-auto"
+                ></p-columnFilter>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="topic" class="text-center">
+            <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+              Status
+              <div class="topic-icons">
+                <p-sortIcon field="topic"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="topic"
+                  display="menu"
+                  class="p-ml-auto"
+                ></p-columnFilter>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="company_name" class="text-center">
+            <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+             Due Date
+              <div class="company-name-icons">
+                <p-sortIcon field="company_name"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="company_name"
+                  display="menu"
+                  class="p-ml-auto"
+                ></p-columnFilter>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="status_id" class="text-center">
+            <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+              Completion Date
+              <div class="status-icons">
+                <p-sortIcon field="status_id"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="status_id"
+                  display="menu"
+                  class="p-ml-auto"
+                ></p-columnFilter>
+              </div>
+            </div>
+          </th>
+          <th [style]="{ width: '5%' }"></th>
+        </tr>
+        <tr align="center" *ngFor="let data of activitydata">
+          <td>
+            {{data.description}}
+        </td>
+        <td>
+          {{data.activity_type}}
+      </td>
+      <td>
+        {{data.status}}
+    </td>
+    <td>
+      {{data.due_date | date: "dd-MMM-yyyy"}}
+  </td>
+  <td>
+    {{data.completion_date | date: "dd-MMM-yyyy"}}
+</td>
+        </tr>
+      </ng-template>
+    
+
+
+    
+   
+
+    <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td style="text-align: center;" *ngIf="columns" [attr.colspan]="columns.length">
+                No records found
+            </td>
+        </tr>
+    </ng-template>
+</p-table> -->
+
+
+
+
+<p-paginator
+  [rows]="pageItems"
+  [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
+>
+</p-paginator>
+

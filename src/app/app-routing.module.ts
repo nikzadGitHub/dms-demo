@@ -213,7 +213,8 @@ export const routes: Routes = [
       
     ],
   },
-  { path: "**", component: P404Component },
+  // { path: 'profile', loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule) },
+  { path: '**', component: P404Component }
 ];
 
 @NgModule({
