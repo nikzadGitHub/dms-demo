@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Location } from "@angular/common";
 import { SystemAdminService } from "../../system-admin.service";
@@ -13,6 +13,14 @@ export class UserLoaComponent implements OnInit {
   userList: any = [];
   priceLevelApproval = [{ amount: "", approveBy: "" }];
   authorityForm: FormGroup;
+  TeamEmailForm: FormGroup;
+  dummy_data = [
+    { name: "New York", code: "NY" },
+    { name: "Rome", code: "RM" },
+    { name: "London", code: "LDN" },
+    { name: "Istanbul", code: "IST" },
+    { name: "Paris", code: "PRS" },
+  ];
 
   allUnits: any[] = [];
 
@@ -32,6 +40,7 @@ export class UserLoaComponent implements OnInit {
       discount: "",
       cellingPriceAmount: "",
       cellingPriceApproval: "",
+      priceApprovel : this.formBuilder.array([])
     });
   }
 
@@ -91,11 +100,26 @@ export class UserLoaComponent implements OnInit {
   }
   deletePriceLevelRow(index) {
     // if (this.priceLevelApproval.length > 1) {
-    this.priceLevelApproval.splice(index, 1);
+    // this.getPriceApprovelForm().splice(index, 1);
+    this.getPriceApprovelForm().removeAt(index)
     // }
   }
   back() {
     // this.location.back();
     this.router.navigateByUrl("user/adduser");
+  }
+  getPriceApprovelForm(): FormArray{
+    return this.authorityForm.get('priceApprovel') as FormArray
+  }
+  newPriceApprovelFields(): FormGroup{
+     return this.formBuilder.group({
+      amount : '',
+      approvedBy: ''
+    })
+  }
+
+  dynamicForm(){
+    console.log('array form ',  this.authorityForm.value)
+
   }
 }
