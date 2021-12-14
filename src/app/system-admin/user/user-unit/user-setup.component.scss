@@ -46,33 +46,68 @@
     }
   }
 
+  .card-list-2 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 2px;
+    grid-auto-rows: auto;
+    margin-left: 87px;
+  }
   .card-list {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    .unit-card {
-      border: 1px solid lightgray;
-      width: 274px;
-      .card-header {
-        font-weight: bold;
-        font-size: 16px;
-      }
-      .card-body {
-        max-height: 300px;
-        overflow-x: auto;
-        // overflow: auto;
 
-        .check-field {
-          display: flex;
-          flex-direction: row;
-          align-items: flex-start;
-          justify-content: flex-start;
-          margin: 10px;
+    // .unit-card {
+    //   border: 1px solid lightgray;
+    //   width: 274px;
+    //   .card-header {
+    //     font-weight: bold;
+    //     font-size: 16px;
+    //   }
+    //   .card-body {
+    //     max-height: 300px;
+    //     overflow-x: auto;
+    //     // overflow: auto;
 
-          p-checkbox {
-            padding-right: 10px;
-            padding-left: 30px;
-          }
+    //     .check-field {
+    //       display: flex;
+    //       flex-direction: row;
+    //       align-items: flex-start;
+    //       justify-content: flex-start;
+    //       margin: 10px;
+
+    //       p-checkbox {
+    //         padding-right: 10px;
+    //         padding-left: 30px;
+    //       }
+    //     }
+    //   }
+    // }
+  }
+
+  .unit-card {
+    border: 1px solid lightgray;
+    width: 274px;
+    .card-header {
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .card-body {
+      max-height: 300px;
+      overflow-x: auto;
+      // overflow: auto;
+
+      .check-field {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+        margin: 10px;
+
+        p-checkbox {
+          padding-right: 10px;
+          padding-left: 30px;
         }
       }
     }
@@ -151,11 +186,26 @@
       margin-right: 10px;
     }
   }
+  .has-search .form-control {
+    padding-left: 2.375rem;
+  }
+
+  .has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+  }
 
   .authority-table {
     display: flex;
     flex-direction: row;
-    margin: 35px 20px 20px 20px;
+    margin: 3px 20px 20px 20px;
 
     .date-icons {
       display: flex;

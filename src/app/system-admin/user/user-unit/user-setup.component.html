@@ -49,13 +49,12 @@
       </div>
       <div class="col-lg-5 col-md-5 col-sm-5">
         <p-dropdown
-          class="customColor"
           placeholder="Select parent unit"
           [options]="parenUnit"
           [style]="{ width: '100%' }"
           [(ngModel)]="selectParentUnit"
-          optionLabel="official_name"
-          optionValue="dail_code"
+          optionLabel="title"
+          optionValue="id"
         ></p-dropdown>
       </div>
     </div>
@@ -93,9 +92,7 @@
     <div class="card-list">
       <!-- agency -->
       <div class="card unit-card">
-        <div class="card-header">
-          Agency
-        </div>
+        <div class="card-header">Agency</div>
         <div class="card-body">
           <div *ngFor="let item of agency" class="p-field-checkbox check-field">
             <p-checkbox
@@ -145,7 +142,7 @@
       </div>
     </div>
 
-    <div class="card-list">
+    <div class="card-list-2">
       <!-- care-area -->
       <div class="card unit-card">
         <div class="card-header">Care Area</div>
@@ -177,10 +174,10 @@
             <p-checkbox
               name="group2"
               [value]="item"
-              [inputId]="item.product_group_code"
               [(ngModel)]="selectPrinciples"
+              [inputId]="item.principal_code"
             ></p-checkbox>
-            <label>{{ item.product_group }}</label>
+            <label>{{ item.description }}</label>
           </div>
         </div>
       </div>
@@ -203,15 +200,32 @@
       </button>
     </div>
 
+    <div class="row mt-3">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="form-group has-search">
+          <span class="fa fa-search form-control-feedback"></span>
+          <input
+            type="text"
+            class="form-control ds-input"
+            id="search-input"
+            placeholder="Search..."
+            style="position: relative; vertical-align: top"
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+          />
+        </div>
+      </div>
+    </div>
     <div class="authority-table">
       <p-table
         #dt
         [value]="selectedAllUnits"
         styleClass="p-datatable-authority"
-        [rowHover]="true"
-        responsiveLayout="scroll"
-        [filterDelay]="0"
-        [globalFilterFields]="[]"
+        [globalFilterFields]="['created_at', 'code', 'title']"
+        [paginator]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[{ showAll: 'All' }, 10, 25, 50]"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       >
         <!-- Header -->
         <ng-template pTemplate="header">
@@ -240,10 +254,10 @@
                 <div class="column-design">
                   Unit Name
                   <div class="name-icons">
-                    <p-sortIcon field="unit_name"></p-sortIcon>
+                    <p-sortIcon field="title"></p-sortIcon>
                     <p-columnFilter
                       type="text"
-                      field="unit_name"
+                      field="title"
                       display="menu"
                       class="p-ml-auto"
                     ></p-columnFilter>
@@ -251,14 +265,14 @@
                 </div>
               </th>
               <!-- country -->
-              <th pSortableColumn="country" class="text-center">
+              <th pSortableColumn="code" class="text-center">
                 <div class="column-design">
-                  Country
+                  Unit Code
                   <div class="country-icons">
-                    <p-sortIcon field="country"></p-sortIcon>
+                    <p-sortIcon field="code"></p-sortIcon>
                     <p-columnFilter
                       type="text"
-                      field="country"
+                      field="code"
                       display="menu"
                       class="p-ml-auto"
                     ></p-columnFilter>
@@ -310,8 +324,10 @@
         <ng-template pTemplate="body" let-authority>
           <tr align="center">
             <td class="text-center">
-              <div></div>
-              {{ authority.created_at | date: "MM-dd-yyyy" || "" }}
+              <div *ngIf="authority.created_at">
+                {{ authority.created_at | date: "MM-dd-yyyy" || "" }}
+              </div>
+              <div *ngIf="!authority.created_at">_</div>
             </td>
             <td class="text-center">
               {{ authority.title || "" }}
@@ -319,12 +335,6 @@
             <td class="text-center">
               {{ authority.code || "" }}
             </td>
-            <!-- <td class="text-center">
-                {{ '' }}
-              </td>
-              <td class="text-center">
-                {{ '' }}
-              </td> -->
             <td class="text-center">
               <a
                 [routerLink]=""
@@ -341,6 +351,8 @@
   </div>
   <!-- </form> -->
 </div>
+
+<!-- model -->
 <div
   id="success"
   bsModal

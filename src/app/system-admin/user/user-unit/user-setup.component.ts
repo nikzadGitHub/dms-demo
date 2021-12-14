@@ -29,7 +29,7 @@ export class UserSetupComponent implements OnInit {
   opc: any[] = [];
   careArea: any[] = [];
   principles: any[] = [];
-  selectParentUnit: any;
+  selectParentUnit = "";
   selectAgency: any[] = [];
   selectManufectures: any[] = [];
   selectManufecturesData: any[] = [];
@@ -49,6 +49,7 @@ export class UserSetupComponent implements OnInit {
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   alertBody;
   selectedAllUnits: any = [];
+  unitId: string;
   constructor(
     private systemAdminService: SystemAdminService,
     private formBuilder: FormBuilder,
@@ -83,6 +84,11 @@ export class UserSetupComponent implements OnInit {
     this.systemAdminService.getQuery("/units").subscribe((res) => {
       this.allUnits = res;
       this.selectedAllUnits = this.allUnits?.data;
+      this.selectedAllUnits.forEach((element) => {
+        if (element.created_at) {
+          element.created_at = new Date(element.created_at);
+        }
+      });
     });
   }
 
@@ -93,28 +99,29 @@ export class UserSetupComponent implements OnInit {
       code: this.unit_Code,
       dataAreaId: this.company_Id,
       min_profit_margin_percentage: "0.00",
-      allowed_discount_percentage: "0.0",
-      parent_unit: this.selectParentUnit?.dail_code,
-      agency: this.selectAgency,
-      manufactures: this.selectManufectures,
-      opc: this.selectOpc,
-      care_area: this.selectedCareArea,
-      principles: this.selectPrinciples,
+      allowed_discount_percentage: "0.20",
+      parent_unit: this.selectParentUnit.toString(),
+      unit_agencies: this.selectAgency,
+      unit_manufactures: this.selectManufectures,
+      unit_opcs: this.selectOpc,
+      unit_care_areas: this.selectedCareArea,
+      unit_principals: this.selectPrinciples,
     };
     if (this.isEditEnabled) {
       body.id = this.editedUnit.id;
-      this.systemAdminService.putQuery("/units", body).subscribe(
+      this.systemAdminService.putQuery("/units/" + this.unitId, body).subscribe(
         (res: any) => {
           if (res.success) {
             let item = this.selectedAllUnits.find((x) => x.id == res.data.id);
             if (item)
               this.selectedAllUnits[this.selectedAllUnits.indexOf(item)] =
                 res.data;
-            this.resetForm();
+
             this.alertBody = "Unit Updated successfully.";
             this.successModal.show();
             setTimeout(() => {
               this.successModal.hide();
+              this.resetForm();
             }, 2000);
           }
         },
@@ -131,11 +138,12 @@ export class UserSetupComponent implements OnInit {
         (res: any) => {
           if (res.success) {
             this.selectedAllUnits.push(res.data);
-            this.resetForm();
+
             this.alertBody = "Unit saved successfully.";
             this.successModal.show();
             setTimeout(() => {
               this.successModal.hide();
+              this.resetForm();
             }, 2000);
           }
         },
@@ -152,21 +160,20 @@ export class UserSetupComponent implements OnInit {
 
   selectUser() {}
   // Parent-Unit
+  // /countries-list
   getParentUnit() {
-    this.systemAdminService
-      .getQuery("/countries-list")
-      .subscribe((res: any) => {
-        console.log("parent-unit:", res);
-        this.parenUnit = res.data.countries;
-      });
+    this.systemAdminService.getQuery("/units").subscribe((res: any) => {
+      console.log("parent-unit:", res);
+      this.parenUnit = res.data;
+    });
   }
 
-  addParentUnit(event, unit) {
-    console.log("Event:", event);
-    console.log("unit:", unit);
-    this.selectParentUnit = unit;
-    console.log("select:", this.selectParentUnit);
-  }
+  // addParentUnit(event, unit) {
+  //   console.log("Event:", event);
+  //   console.log("unit:", unit);
+  //   this.selectParentUnit = unit;
+  //   console.log("select:", this.selectParentUnit);
+  // }
 
   //Agency
 
@@ -239,7 +246,7 @@ export class UserSetupComponent implements OnInit {
   //Principles
   getPrinciples() {
     this.systemAdminService
-      .getQuery("/product-group/active-list")
+      .getQuery("/principal/active-list")
       .subscribe((res: any) => {
         console.log("principles-res:", res);
         this.principles = res.data;
@@ -254,6 +261,7 @@ export class UserSetupComponent implements OnInit {
 
   getUnit(id) {
     // getSingleUnit(id)
+    this.unitId = id;
     this.systemAdminService
       .getQuery("/units/" + id + "/edit")
       .subscribe((res: any) => {
@@ -261,14 +269,17 @@ export class UserSetupComponent implements OnInit {
           this.editedUnit = res.data;
           this.isEditEnabled = true;
           let data = res.data;
-          this.unit_Name = data.title;
-          this.unit_Code = data.code;
-          this.company_Id = data.data_area_id;
+          data.parent.id ? (this.selectParentUnit = data.parent.id) : "";
+          data.title ? (this.unit_Name = data.title) : "";
+          data.code ? (this.unit_Code = data.code) : "";
+          data.data_area_id ? (this.company_Id = data.data_area_id) : "";
           // agency
           setTimeout(() => {
             var agn = [];
             data.unit_agencies.forEach((ele) => {
-              let agnArr = this.agency.filter((agnEle) => agnEle.id == ele.id);
+              let agnArr = this.agency.filter(
+                (agnEle) => agnEle.id == ele.agency?.id
+              );
               agnArr.forEach((data) => {
                 agn.push(data);
               });
@@ -278,8 +289,11 @@ export class UserSetupComponent implements OnInit {
           // manufactures
           setTimeout(() => {
             var ag = [];
+
             data.unit_manufactures.forEach((ele) => {
-              let arr = this.manufactures.filter((elem) => elem.id == ele.id);
+              let arr = this.manufactures.filter(
+                (elem) => elem.id == ele.manufacturer?.id
+              );
               arr.forEach((data) => {
                 ag.push(data);
               });
@@ -290,7 +304,9 @@ export class UserSetupComponent implements OnInit {
           setTimeout(() => {
             var opcArr = [];
             data.unit_opcs.forEach((ele) => {
-              let newOpcArr = this.opc.filter((opcEle) => opcEle.id == ele.id);
+              let newOpcArr = this.opc.filter(
+                (opcEle) => opcEle.id == ele.opc?.id
+              );
               newOpcArr.forEach((data) => {
                 opcArr.push(data);
               });
@@ -303,7 +319,7 @@ export class UserSetupComponent implements OnInit {
             var careArr = [];
             data.unit_care_areas.forEach((ele) => {
               let care_arr = this.careArea.filter(
-                (careElem) => careElem.id == ele.id
+                (careElem) => careElem.id == ele.care_area?.id
               );
               care_arr.forEach((data) => {
                 careArr.push(data);
@@ -317,7 +333,7 @@ export class UserSetupComponent implements OnInit {
             var prinArr = [];
             data.unit_principals.forEach((ele) => {
               let newPrinArr = this.principles.filter(
-                (prinEle) => prinEle.id == ele.id
+                (prinEle) => prinEle.id == ele.principal?.id
               );
               newPrinArr.forEach((data) => {
                 prinArr.push(data);
@@ -349,19 +365,17 @@ export class UserSetupComponent implements OnInit {
   }
 
   resetForm() {
-    // this.userSetupForm.reset();
-    // this.userSetupForm.markAsPristine();
-    // this.userSetupForm.markAsUntouched();
-    // this.selectParentUnit = null;
-    // this.selectOpc = null;
-    // this.selectPrinciples = null;
-    // this.selectAgency = null;
-    // this.unit_Code = "";
-    // this.unit_Name = "";
-    // this.isEditEnabled = false;
-    // this.company_Id = "";
-    // this.selectedCareArea = null;
-    // this.selectManufectures = null;
+    this.selectParentUnit = null;
+    this.selectOpc = null;
+    this.selectPrinciples = null;
+    this.selectAgency = null;
+    this.unit_Code = "";
+    this.unit_Name = "";
+    this.isEditEnabled = false;
+    this.company_Id = "";
+    this.selectedCareArea = null;
+    this.selectManufectures = null;
+    this.selectPrinciples = null;
   }
   back() {
     this.router.navigateByUrl("user/adduser");
