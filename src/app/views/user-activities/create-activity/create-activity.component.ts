@@ -16,16 +16,21 @@ export class CreateActivityComponent implements OnInit {
 	opportunities: [];
 	paginate: [];
 	pageItems: number = 200;
-	search_text: string = '';
+	search_text: string;
   activitydata: any[] =[];
   
   closedData: any[];
   openData: any[];
+  filteredData: any;
+  isCompanyName: boolean = false;
+  dangerBody: string = 'Company Name is Required...!';
+  companyName: any;
   
   constructor(public userAactivities: UserActivitiesService,) { }
 
   ngOnInit(): void {
 		this.getActivitydata();
+    this.isCompanyName = false
 
 	}
   getActivitydata() {
@@ -46,5 +51,29 @@ export class CreateActivityComponent implements OnInit {
       this.loading=false
       
     });
+  }
+
+  searchName(event) {
+    let query = event.query;
+    this.userAactivities.getCumpanyDetails(query).subscribe((res) => {
+      if (res.success) {
+        if (res.data.length == 0) {
+          setTimeout(() => {
+            // this.alertBody = "Name is not Correct";
+            // this.dangerModal.show();
+            this.filteredData = ''
+          }, 2000);
+        } else {
+          this.filteredData = res.data;
+        }
+      }
+    });
+  }
+  onSelect(event){
+    if(event){
+      console.log('event onselect',event);
+      this.companyName = event.company_name
+      this.isCompanyName = true
+    }
   }
 }
