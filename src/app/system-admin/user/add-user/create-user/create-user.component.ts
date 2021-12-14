@@ -45,8 +45,8 @@ export class CreateUserComponent implements OnInit {
   userList: any = [];
   userRoleList: any[] = [];
   status = [
-    { status: "Active", code: "1" },
-    { status: "Suspend", code: "2" },
+    { status: "Active", code: 1 },
+    { status: "Suspend", code: 0 },
   ];
   selectedCities: string[];
   userRoleId: any;
@@ -138,7 +138,7 @@ console.log('called')
             phoneNumber: res?.data?.phone_number,
             discountMargin: res?.data?.discount_margin_percent,
             profit: res?.data?.profit_percent,
-            status: '1',
+            status: res?.data?.is_active,
             userAccess:  res?.data?.user_access_id,
             approvedBy: Number(res?.data?.approved_by),
             unit: Number(res?.data?.unit_id),
@@ -183,7 +183,7 @@ console.log('called')
       },(err)=>{
         // this.alertBody = "Error";
           this.dangerModal.show();
-          this.alertBody = "Error";
+          this.alertBody = "Error in Adding User";
           setTimeout(() => {
             this.dangerModal.hide();
           }, 2000);
@@ -225,7 +225,7 @@ console.log('called')
         }
       }, (err)=>{
         this.dangerModal.show();
-        this.alertBody = "Error";
+        this.alertBody = "Error in Updating User";
         setTimeout(() => {
           this.dangerModal.hide();
         }, 2000);
