@@ -61,6 +61,10 @@ export class MockBookingService implements BookingInterface {
     return of(mockBookingsData);
   }
 
+  getListSearch(data: any): Observable<BookingList> {
+    return of(mockBookingsData);
+  }
+
   create(form: any): Observable<SaveResult> {
     return of({
       id: 1

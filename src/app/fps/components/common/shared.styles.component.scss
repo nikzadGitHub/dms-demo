@@ -28,7 +28,6 @@ opp-opportunity-booking {
   }
   .p-accordion-content{
       padding: 0px;
-      overflow-x: hidden;
   }
 }
 
@@ -226,6 +225,16 @@ td {
   .p-disabled {
     background-color: #e4e7ea;
     opacity: 1;
+  }
+}
+
+:host ::ng-deep {
+  .p-dropdown .p-dropdown-label {
+      padding: 0px;
+  }
+  table#sku_rate {
+      width: 95%;
+      margin: auto;
   }
 }
 

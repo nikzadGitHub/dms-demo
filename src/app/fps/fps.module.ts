@@ -13,6 +13,7 @@ import { EditComponent } from './components/fps-form/edit/edit.component';
 import { SkuCreateComponent } from './components/sku/sku-create/sku-create.component';
 import { SkuEditComponent } from './components/sku/sku-edit/sku-edit.component';
 import { SkuIndexComponent } from './components/sku/sku-index/sku-index.component';
+import { FormErrorPresentationComponent } from './components/common/form-error-presentation/form-error-presentation.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { SkuIndexComponent } from './components/sku/sku-index/sku-index.componen
     EditComponent,
     SkuCreateComponent,
     SkuEditComponent,
-    SkuIndexComponent
+    SkuIndexComponent,
+    FormErrorPresentationComponent
   ],
   imports: [
     CommonModule,

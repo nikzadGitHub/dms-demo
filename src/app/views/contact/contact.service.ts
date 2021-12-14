@@ -47,9 +47,9 @@ export class ContactService {
     )
   }
 
-  
-  
-  
+
+
+
 
   update(data, id): Observable<any> {
     return this.httpClient.put(this.apiURL + '/contacts/' + id, JSON.stringify(data), this.httpOptions)
@@ -71,7 +71,7 @@ export class ContactService {
       catchError(this.errorHandler)
     )
   }
- 
+
 
 
 
@@ -81,7 +81,7 @@ export class ContactService {
   //     catchError(this.errorHandler)
   //   )
   // }
-  
+
 
   getCareAreas(): Observable<any> {
     return this.httpClient.get(this.apiURL+'/contacts/dropdown/care-area')

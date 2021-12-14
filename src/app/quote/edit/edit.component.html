@@ -30,8 +30,8 @@
       <div class="card-footer"></div>
     </div>
     <form [formGroup]="form" (ngSubmit)="submitSelect()">
+      <!-- Quotation Accordion -->
       <p-accordion [multiple]="true" styleClass="customColor">
-        <!-- Quotation Accordion -->
         <p-accordionTab header="Quotation">
           <div class="row">
             <table class="table table-borderless">
@@ -65,11 +65,26 @@
             </table>
           </div>
         </p-accordionTab>
-        <!-- End of Quotation Accordion -->
+      </p-accordion>
+      <!-- End of Quotation Accordion -->
 
-        <!-- Products Accordion -->
+      <!-- Products Accordion -->
+
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
         <p-accordionTab header="Products">
           <div class="row">
+          <p-tabView>
+            <p-tabPanel header="Option 1" [selected]="true">
+            
+                  <!-- <button style="width: 0px;border-radius: 50%; height: 26px;" class="btn btn-icon btn-outline-primary btn-in-tab">
+                    <i style="display: flex;
+                    flex-direction: row;
+                    justify-content: center;" class="cil-plus c-icon"></i>
+                  </button> -->
+                
+
+
+                <div class="row">
             <table class="table table-borderless" formArrayName="products">
               <thead>
                 <tr>
@@ -149,16 +164,53 @@
                 </tr>
               </tbody>
             </table>
+          </div> 
+             
+
+            
+            </p-tabPanel>
+
+            <p-tabPanel header="option 2"> Content 2 </p-tabPanel>
+            <p-tabPanel header="option 3"> Content 3 </p-tabPanel>
+           
+
+          </p-tabView>
           </div>
           <div class="row">
             <div class="card">
               <div class=""></div>
             </div>
           </div>
-        </p-accordionTab>
-        <!-- End of Products Accordion -->
 
-        <!-- Standard Terms Accrodion -->
+          <div style="float: right" class="card border-primary m-3 w-50">
+            <div class="card-body">
+              <table class="table table-borderless">
+                <tr>
+                  <td class="text-left w-50">Subtotal Before Tax</td>
+                  <td class="text-left">RP0.00</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Tax (SST)</td>
+                  <td class="text-left">RP0.00</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Discount</td>
+                  <td class="text-left">RP0.00</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Total Amount</td>
+                  <td class="text-left">RP0.00</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+
+      <!-- End of Products Accordion -->
+
+      <!-- Standard Terms Accrodion -->
+      <p-accordion [multiple]="true" styleClass="customColor">
         <p-accordionTab header="Standard Terms">
           <div class="row">
             <div class="col-md-5">
@@ -181,43 +233,45 @@
                 </div>
               </div>
             </div>
-        </div>
-        <form [formGroup]="form" >
-            <p-accordion [multiple]="true" styleClass="customColor">
-                <!-- Quotation Accordion -->
-                <p-accordionTab header="Quotation">
-                    <div class="row">
-                        <table class="table table-borderless">
-                            <thead>
-                                <tr>
-                                    <th>Created Date</th>
-                                    <th>Quotation ID</th>
-                                    <th>Validity Date</th>
-                                    <th>Status</th>
-                                    <th>Amount (MYR)</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let quoteId of quoteIdList" align="center">
-                                    <td>{{quoteId.created_at | date: 'dd-MMM-yyyy'}}</td>
-                                    <td>
-                                        <a [routerLink]="" routerLinkActive="router-link-active"
-                                            (click)='changeRev(quoteId.rev_number)'>
-                                            {{quoteId.quote_id}}
-                                        </a>
-                                    </td>
-                                    <td>{{quoteId.days}}</td>
-                                    <td><i class="icon-info icons"></i>{{quoteId.status}}</td>
-                                    <td>{{quoteId.amount}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </p-accordionTab>
-                <!-- End of Quotation Accordion -->
+            <div class="col-lg-5" style="text-align: middle">
+              Quotation Validity: {{ termSelected }} Days, From
+              <u>{{ fromDate | date: "dd-MMM-yyyy" }}</u> To
+              <u>{{ toDate | date: "dd-MMM-yyyy" }}</u>
+            </div>
+            <div class="col-lg-1" style="text-align: right">
+              <div (click)="show = !show">
+                <a
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  *ngIf="show"
+                  ><i class="cil-check-circle"></i
+                ></a>
+                <a
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  *ngIf="!show"
+                  ><i class="fa fa-edit"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="row grey">
+            <div class="col-md-3">
+              <b>(As Default)</b> Payment Terms: 30 Days
+            </div>
+            <div class="col-lg-5" style="text-align: right">
+              Quotation Validity: 30 Days, From
+              <u>{{ fromDate | date: "dd-MMM-yyyy" }}</u> To
+              <u>{{ toDate | date: "dd-MMM-yyyy" }}</u>
+            </div>
+            <div class="col-lg-1" style="text-align: right"></div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+      <!-- End of Payment Term Accordion -->
 
-        <!-- Billing Milestones Accordion -->
+      <!-- Billing Milestones Accordion -->
+      <p-accordion [multiple]="true" styleClass="customColor">
         <p-accordionTab header="Billing Milestones">
           <div class="row">
             <table class="table table-borderless" formArrayName="billings">
@@ -343,9 +397,11 @@
             </table>
           </div>
         </p-accordionTab>
-        <!-- End of Billing Milestones Accordion -->
+      </p-accordion>
+      <!-- End of Billing Milestones Accordion -->
 
-        <!-- Payment Schedules Accordion -->
+      <!-- Payment Schedules Accordion -->
+      <p-accordion [multiple]="true" styleClass="customColor">
         <p-accordionTab header="Payment Schedules">
           <div class="row">
             <table class="table table-borderless" formArrayName="payments">
@@ -471,9 +527,11 @@
             </table>
           </div>
         </p-accordionTab>
-        <!-- End of Payment Schedules Accordion -->
+      </p-accordion>
+      <!-- End of Payment Schedules Accordion -->
 
-        <!-- Additional Costs Accordion -->
+      <!-- Additional Costs Accordion -->
+      <p-accordion [multiple]="true" styleClass="customColor">
         <p-accordionTab header="Additional Costs">
           <div class="row">
             <table class="table table-borderless" formArrayName="addCosts">
@@ -579,9 +637,8 @@
             </div>
           </div>
         </p-accordionTab>
-        <!-- End of Additional Costs Accordion -->
       </p-accordion>
-      <div class="row"></div>
+      <!-- End of Additional Costs Accordion -->
 
       <div class="col-lg row" align="center">
         <div class="col-lg-4">
@@ -600,12 +657,31 @@
           <!-- <p-dropdown placeholder="Select Templates" [options]="selectTemplateData" formControlName="title">
                           
                         </p-dropdown> -->
-          <select 
+                        <button
+                        class="form-control"
+                        style="width: 70%"
+                        (click)="checkSignature()"
+                      >
+                        <i
+                          class="cil-check-circle"
+                          style="color: green"
+                          *ngIf="signatureStatus"
+                        ></i>
+                        <i
+                          class="icon-close"
+                          style="color: red"
+                          *ngIf="signatureStatus == false"
+                        ></i>
+                        Signature
+                      </button>
+                      <br><br>
+          <p><b>Select TemplateID</b></p>
+          <select
             style="width: 70%; margin-bottom: 9px"
             formControlName=""
             name=""
             class="form-control templateSelectedClass"
-            (input)='getTemplate($event)'
+            (input)="getTemplate($event)"
           >
             <option
               *ngFor="let item of selectTemplateData"
@@ -616,23 +692,7 @@
           </select>
           <!-- </ng-template> -->
 
-          <button
-            class="form-control"
-            style="width: 70%"
-            (click)="checkSignature()"
-          >
-            <i
-              class="cil-check-circle"
-              style="color: green"
-              *ngIf="signatureStatus"
-            ></i>
-            <i
-              class="icon-close"
-              style="color: red"
-              *ngIf="signatureStatus == false"
-            ></i>
-            Signature
-          </button>
+          
         </div>
         <div class="col-lg-4">
           <input
@@ -1017,7 +1077,7 @@
   <div class="modal-dialog modal-danger" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title"> {{alertHeader}} </h4>
+        <h4 class="modal-title">{{ alertHeader }}</h4>
       </div>
       <div class="modal-body">
         <p>{{ alertBody }}</p>

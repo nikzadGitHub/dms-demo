@@ -45,27 +45,43 @@ export class DefaultLayoutComponent {
           divider: true,
         },
         {
-          name: "Manager View",
-          url: "/managerview",
-          icon: "cil-group",
+          name: 'Manager View',
+          url: '/managerview',
+          icon: 'cil-group',
           children: [
             {
-              name: "Approval",
-              url: "/managerview/approval",
-            },
+              name: 'FPM',
+              url: '/managerview',
+              children: [
+                {
+                  name: 'Approval ',
+                  url: '/managerview/approval',
+                },
+                {
+                  name: 'Reassignment',
+                  url: '/managerview/reassignment',
+                },
+                {
+                  name: 'Deactivate/Active',
+                  url: '/managerview/active',
+                },
+                {
+                  name: 'Sales Target Setup',
+                  url: '/managerview/salestargetsetup',
+                },
+              ]
+            }, 
             {
-              name: "Reassignment",
-              url: "/managerview/reassignment",
-            },
-            {
-              name: "Deactivate/Active",
-              url: "/managerview/active",
-            },
-            {
-              name: "Sales Target Setup",
-              url: "/managerview/salestargetsetup",
-            },
-          ],
+              name: 'FPS',
+              url: '/fps',
+              children: [
+                {
+                  name: 'FPS Sku List',
+                  url: '/fps/sku-listing',
+                }
+              ]
+            }
+          ]
         }
       );
     } else if (

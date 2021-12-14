@@ -28,6 +28,7 @@ export class LeadsIndexComponent implements OnInit {
     {'header':'Phone','field':'phone','type':'text'},
     {'header':'Status','field':'status','type':'text'},
   ];
+  loading: boolean;
   constructor(
     public leadService: LeadsService
   ) { }
@@ -37,11 +38,14 @@ export class LeadsIndexComponent implements OnInit {
   }
 
   getList() {
+    this.loading = true;
     this.leadService.getAll(this.pageItems,this.search_text, this.sort).subscribe(data => {
       this.datasource = data['data']['data'];
       this.pages = data['data']['links'];
       this.totalRecords = data['data']['total'];
-      console.log("total-->", this.totalRecords);
+      this.loading = false;
+    }, err => {
+      this.loading = false;
     });
   }
 
