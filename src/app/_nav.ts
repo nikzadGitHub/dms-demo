@@ -66,10 +66,6 @@ export const navItems: INavData[] = [
     icon: 'cil-dollar',
     children: [
       {
-        name: 'Create FPS',
-        url: '/fps/fps-create',
-      },
-      {
         name: 'FPS Request List',
         url: '/fps/fps-listing',
       }
@@ -145,6 +141,49 @@ export const navItems: INavData[] = [
       }
     ]
   },
+  {
+    divider: true,
+  },
+  {
+    name: 'System Admin',
+    url: '/systemadmin',
+    icon: 'cil-settings',
+  },
+  {
+    name: 'User Access Setup',
+    url: '/useraccess/user-access-setup',
+    icon: 'cil-user-plus',
+  },
+  {
+    name: 'User',
+    url: '/user',
+    icon: 'cil-voice-over-record',
+    children: [
+      {
+        name: 'User',
+        url: '/user/adduser',
+      },
+      {
+        name: 'User LOA',
+        url: '/user/userloa',
+      },
+      // {
+      //   name: 'Unit Setup',
+      //   url: '/user/unitsetup',
+      // },
+    ]
+  },
+  {
+    name: 'Unit Setup',
+    url: '/user/unitsetup',
+    icon: 'cil-screen-smartphone',
+  },/*
+  {
+    name: 'SETTING',
+    url: '/setting',
+    icon: 'cil-cog',
+  },
+*/
   {
     divider: true,
   },

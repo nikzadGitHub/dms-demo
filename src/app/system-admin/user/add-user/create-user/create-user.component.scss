@@ -1,0 +1,67 @@
+.card {
+  background: none;
+  // color: black;
+  border: none;
+
+  .card-header {
+    background: none;
+    border: none;
+  }
+
+  .card-body {
+    padding: 0px;
+  }
+  .red-star {
+    color: red;
+  }
+  .page-heading-icon {
+    background: none;
+    color: black;
+    border: none;
+
+    .header-text {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      h2 {
+        font-weight: bold;
+        i {
+          margin-right: 15px;
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+
+  .title-text {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-start;
+    line-height: 35px;
+    font-weight: bold;
+    padding: 6px;
+    border-radius: 1px;
+    margin-bottom: 30px;
+    padding-left: 15px;
+    background-color: #f6f6f6;
+    i {
+      margin-right: 11px;
+    }
+  }
+  .action-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+
+    button {
+      width: 150px;
+    }
+    .cancel-btn {
+      margin-right: 10px;
+    }
+  }
+}

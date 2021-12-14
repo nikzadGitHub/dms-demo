@@ -1,0 +1,62 @@
+.card-header {
+  border: none;
+}
+
+.header-icon i {
+  float: left;
+  color: black;
+  margin-right: 15px;
+  font-size: 1.5rem;
+}
+
+.header-icon h3 {
+  text-align: left;
+}
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+
+.user-access-table .p-datatable-header {
+  background: none;
+  border: none;
+}
+
+.add-role-field {
+  display: flex;
+  flex-direction: row;
+  label {
+    color: black;
+    width: 100px;
+    margin: 10px;
+    font-weight: 600;
+  }
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+  button {
+    width: 150px;
+  }
+  .cancel-btn {
+    margin-right: 10px;
+  }
+}

@@ -20,7 +20,7 @@ export class DefaultLayoutComponent {
       this.userRoleName = userRole?.roles[0]?.name;
     }
     this.authService.getUserSession().then((res) => {
-      if (res.fullname) {
+      if (res?.fullname) {
         this.userFullname = res?.fullname || "";
       }
     });
