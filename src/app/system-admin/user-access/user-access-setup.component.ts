@@ -24,6 +24,9 @@ export class UserAccessSetupComponent implements OnInit {
   dataIsSelected: boolean;
   selectedRole: any[] = [];
   selectAllRoleList: any[] = [];
+  inputErrorClass = "";
+  isNameFieldError: boolean;
+  errorMessage: any;
 
   constructor(
     private systemAdminSerive: SystemAdminService,
@@ -46,7 +49,6 @@ export class UserAccessSetupComponent implements OnInit {
   //   this.router.navigate(["useraccess/add-user-access"]);
   // }
   addRole() {
-    this.addRoleModel.hide();
     this.systemAdminSerive
       .postQuery("/role", {
         name: this.roleName,
@@ -54,6 +56,7 @@ export class UserAccessSetupComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log("add-role-res:", res);
+          this.addRoleModel.hide();
           this.userRoleList.unshift(res.data);
           let navigate: NavigationExtras = {
             queryParams: {
@@ -68,12 +71,24 @@ export class UserAccessSetupComponent implements OnInit {
           }, 2000);
         },
         (error) => {
-          this.alertBody = error.error.message;
-          this.dangerModal.show();
+          this.inputErrorClass = "ng-invalid ng-dirty";
+          this.isNameFieldError = true;
+          this.errorMessage = error.error.message;
+          // this.alertBody = error.error.message;
+          // this.dangerModal.show();
+          // setTimeout(() => {
+          //   this.dangerModal.hide();
+          // }, 2000);
         }
       );
   }
-
+  enterName() {
+    if (this.roleName) {
+      this.inputErrorClass = "";
+      this.isNameFieldError = false;
+      this.errorMessage = "";
+    }
+  }
   editRole(roleId) {
     let navigate: NavigationExtras = {
       queryParams: {

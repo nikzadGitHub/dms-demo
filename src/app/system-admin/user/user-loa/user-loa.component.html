@@ -43,8 +43,9 @@
                 id="opc"
                 name="picList"
                 formControlName="unit"
-                [options]="dummy_data"
-                optionLabel="name"
+                [options]="allUnits"
+                optionLabel="title"
+                optionValue="id"
                 placeholder="Select Approve By"
                 [style]="{ width: '380px' }"
                 [required]="true"
@@ -68,6 +69,7 @@
                 formControlName="paymentTermApproval"
                 [options]="userList"
                 optionLabel="full_name"
+                optionValue="id"
                 placeholder="Select Approve By"
                 [style]="{ width: '380px' }"
                 [required]="true"
@@ -86,7 +88,16 @@
               <label>Profit Margin: <span class="red-star">*</span></label>
             </div>
             <div class="col-9">
-              <p-inputNumber
+              <input
+                type="text"
+                pInputText
+                placeholder="0"
+                formControlName="profitMargin"
+                inputId="integeronly"
+                inputId="withoutgrouping"
+                [style]="{ width: '380px' }"
+              />
+              <!-- <p-inputNumber
                 name=""
                 formControlName="profitMargin"
                 inputId="integeronly"
@@ -94,7 +105,7 @@
                 [useGrouping]="false"
                 [style]="{ width: '380px' }"
               >
-              </p-inputNumber>
+              </p-inputNumber> -->
             </div>
           </div>
         </div>
@@ -106,7 +117,16 @@
               <label>Approval Discount:<span class="red-star">*</span></label>
             </div>
             <div class="col-9">
-              <p-inputNumber
+              <input
+                type="text"
+                pInputText
+                placeholder="0"
+                formControlName="discount"
+                inputId="integeronly"
+                inputId="withoutgrouping"
+                [style]="{ width: '380px' }"
+              />
+              <!-- <p-inputNumber
                 name=""
                 formControlName="discount"
                 inputId="integeronly"
@@ -114,7 +134,7 @@
                 [useGrouping]="false"
                 [style]="{ width: '380px' }"
               >
-              </p-inputNumber>
+              </p-inputNumber> -->
             </div>
           </div>
         </div>
@@ -130,7 +150,16 @@
               >
             </div>
             <div class="col-9">
-              <p-inputNumber
+              <input
+                type="text"
+                pInputText
+                placeholder="0"
+                formControlName="cellingPriceAmount"
+                inputId="integeronly"
+                inputId="withoutgrouping"
+                [style]="{ width: '380px' }"
+              />
+              <!-- <p-inputNumber
                 name=""
                 formControlName="cellingPriceAmount"
                 inputId="integeronly"
@@ -138,7 +167,7 @@
                 [useGrouping]="false"
                 [style]="{ width: '380px' }"
               >
-              </p-inputNumber>
+              </p-inputNumber> -->
             </div>
           </div>
         </div>
@@ -158,6 +187,7 @@
                 formControlName="cellingPriceApproval"
                 [options]="userList"
                 optionLabel="full_name"
+                optionValue="id"
                 placeholder="Select celling price approval"
                 [style]="{ width: '380px' }"
                 [required]="true"
@@ -179,9 +209,10 @@
               <p-dropdown
                 id="opc"
                 name="picList"
-                formControlName="PersonCharges"
+                formControlName="personCharges"
                 [options]="userList"
                 optionLabel="full_name"
+                optionValue="id"
                 placeholder="Select Approve By"
                 [style]="{ width: '380px' }"
                 [required]="true"
@@ -213,7 +244,16 @@
               <label>Amount: <span class="red-star">*</span></label>
             </div>
             <div class="col-9">
-              <p-inputNumber
+              <input
+                type="text"
+                pInputText
+                placeholder="0"
+                formControlName="amount"
+                inputId="integeronly"
+                inputId="withoutgrouping"
+                [style]="{ width: '380px' }"
+              />
+              <!-- <p-inputNumber
                 name=""
                 formControlName="amount"
                 inputId="integeronly"
@@ -221,7 +261,7 @@
                 [useGrouping]="false"
                 [style]="{ width: '380px' }"
               >
-              </p-inputNumber>
+              </p-inputNumber> -->
             </div>
           </div>
 
@@ -240,6 +280,7 @@
                 formControlName="approveBy"
                 [options]="userList"
                 optionLabel="full_name"
+                optionValue="id"
                 placeholder="Select Approve By"
                 [style]="{ width: '300px' }"
                 [required]="true"
@@ -268,7 +309,7 @@
       <div class="authority-table">
         <p-table
           #dt
-          [value]="dummyAuthorityData"
+          [value]=""
           styleClass="p-datatable-authority"
           [rowHover]="true"
           responsiveLayout="scroll"

@@ -118,12 +118,31 @@
       <div class="modal-body">
         <div class="add-role-field">
           <label>Add Role:</label>
-          <input
+          <div class="name-field">
+            <input
+              id="username2"
+              type="username"
+              [(ngModel)]="roleName"
+              (input)="enterName()"
+              aria-describedby="username2-help"
+              [class]="inputErrorClass"
+              pInputText
+              style="width: 100%; height: 40px"
+            />
+            <small
+              id="username2-help"
+              class="p-error"
+              *ngIf="isNameFieldError"
+              >{{ errorMessage }}</small
+            >
+          </div>
+
+          <!-- <input
             type="text"
             pInputText
             [(ngModel)]="roleName"
             style="width: 100%; height: 40px"
-          />
+          /> -->
         </div>
       </div>
       <div class="action-btn">

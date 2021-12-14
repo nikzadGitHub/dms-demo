@@ -37,11 +37,20 @@
 .add-role-field {
   display: flex;
   flex-direction: row;
+  align-items: center;
   label {
     color: black;
-    width: 100px;
-    margin: 10px;
+    width: 82px;
     font-weight: 600;
+  }
+
+  .name-field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    small {
+      font-size: 12px;
+    }
   }
 }
 
@@ -50,8 +59,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-top: 10px;
+  margin-bottom: 40px;
 
   button {
     width: 150px;

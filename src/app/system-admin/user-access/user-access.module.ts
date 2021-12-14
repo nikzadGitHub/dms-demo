@@ -5,7 +5,6 @@ import { UserAccessRoutingModule } from "./user-access-routing.module";
 import { UserAccessSetupComponent } from "./user-access-setup.component";
 import { TableModule } from "primeng/table";
 import { EditRoleComponent } from "./edit-role/edit-role.component";
-import { AddUserAccessComponent } from "./add-user-access/add-user-access.component";
 import { ButtonModule } from "primeng/button";
 import { MultiSelectModule } from "primeng/multiselect";
 import { CheckboxModule } from "primeng/checkbox";
@@ -31,10 +30,6 @@ import { InputTextModule } from "primeng/inputtext";
     AutoCompleteModule,
     TableModule,
   ],
-  declarations: [
-    UserAccessSetupComponent,
-    EditRoleComponent,
-    AddUserAccessComponent,
-  ],
+  declarations: [UserAccessSetupComponent, EditRoleComponent],
 })
 export class userAccessModule {}

@@ -108,7 +108,6 @@ export class UserSetupComponent implements OnInit {
       unit_principals: this.selectPrinciples,
     };
     if (this.isEditEnabled) {
-      body.id = this.editedUnit.id;
       this.systemAdminService.putQuery("/units/" + this.unitId, body).subscribe(
         (res: any) => {
           if (res.success) {
@@ -126,7 +125,9 @@ export class UserSetupComponent implements OnInit {
           }
         },
         (err) => {
-          this.alertBody = "Error";
+          console.log("Error:", err);
+          
+          this.alertBody = err.error.message;
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
@@ -148,7 +149,8 @@ export class UserSetupComponent implements OnInit {
           }
         },
         (err) => {
-          this.alertBody = "Error";
+          console.log("Error:", err);
+          this.alertBody = err.error.message;
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
