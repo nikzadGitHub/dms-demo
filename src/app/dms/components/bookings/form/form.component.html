@@ -21,7 +21,7 @@
               <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-md-4 col-form-label" for="booking-reason">Booking reason</label>
-                    <div class="col-md-8">
+                    <div class="col-md-8" *ngIf="!editable">
                       <select
                         formControlName="booking_reason"
                         (change)="changeReason($event.target.value)"
@@ -31,12 +31,16 @@
                       >
                         <option
                           [value]="reason.id"
+                          [attr.selected] = "bookingDetailList.booking_reason == reason.id ? true : null"
                           *ngFor="let reason of bookingReasons"
                         >
                           {{ reason.name }}
                         </option>
 
                       </select>
+                    </div>
+                    <div *ngIf="editable">
+                      <input class="form-control" type="text" value="demo" disabled />
                     </div>
                   </div>
               </div>
@@ -199,12 +203,7 @@
             </div>
 
             <!-- Start Of Opportunity Section -->
-            <!-- <div
-              [ngClass]="
-                selectedBooking == 2 ? 'opportunityAppear' : 'opportunity'
-              "
-              [(ngModel)]="selectedBooking"
-            >
+            <div [ngClass]="selectedBooking == 2 ? 'opportunityAppear' : 'opportunity'">
               <p><strong class="opportunityTitle">Opportunity</strong></p>
 
               <hr />
@@ -351,7 +350,7 @@
                   ></textarea>
                 </div>
               </div>
-            </div>  -->
+            </div>
             <!-- End Of Opportunity Seciton -->
 
             <div class="form-group row">
@@ -362,7 +361,7 @@
             </div>
 
             <!-- bme log -->
-            <div class="form-group"  *ngIf="showBmeLogSec  == true || bookingDetailList.booking_reason == '2' ">
+            <div class="form-group"  *ngIf="showBmeLogSec  == true">
               <p-accordion class="p-accordion">
                   <p-accordionTab class="p-accordionTab" [selected]="true">
                       <p-header class="p-header">
