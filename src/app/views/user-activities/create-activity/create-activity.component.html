@@ -3,6 +3,8 @@
     <h2>Create Activity</h2>
   </div>
 </div>
+
+
 <div style="overflow-y: hidden;">
   <div style="width: 260px; margin-top: 14px">
     <label style="color: black"><b>Customer Name</b></label>
@@ -64,7 +66,7 @@
   </table>
 
   <p-accordion styleClass="customColor">
-    <p-accordionTab header="Activities" activeIndex="0">
+    <p-accordionTab header="Activities" [selected]="true" activeIndex="0">
       <p-tabView>
         <p-tabPanel header="Open" [selected]="true">
           <p-table

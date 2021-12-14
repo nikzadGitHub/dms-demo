@@ -105,6 +105,7 @@ export class LeadsEditComponent implements OnInit {
   }
 
   submit(){
+    console.log("this is the form value",this.form.value)
     this.leadsService.update(this.form.value, this.id).subscribe(res => {
       console.log(res);
       this.alertBody = res.message || 'Updated Successfully';
