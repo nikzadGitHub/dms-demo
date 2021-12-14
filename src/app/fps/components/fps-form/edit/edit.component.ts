@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { DialogService } from '@app/common/dialog/dialog.service';
 import { FpsService } from '@app/fps/fps.service';
@@ -40,6 +40,8 @@ export class EditComponent implements OnInit {
   fps_user_list;
   agreement_mandatory = false;
   fpsID: string;
+  minProcedureAddForm: FormGroup;
+  minUsageAddForm: FormGroup;
 
   payment_frequency_list = [
     {'value': 'monthly_payment', 'label': 'Monthly'},
@@ -50,7 +52,10 @@ export class EditComponent implements OnInit {
   institutions_list : [];
   tenure_list : [] = [];
   current_apportunity_id : number;
+  current_quot_id : number;
   countryCode : string = null;
+  has_consumable_usage: boolean = false;
+  has_min_procedure: boolean = false;
 
   oppt_details : any = {
     opportunity_code: '',
@@ -87,6 +92,14 @@ export class EditComponent implements OnInit {
       }
     });
 
+    this.minProcedureAddForm = this.fb.group({
+      addMinProcedure: this.fb.array([]),
+    });
+
+    this.minUsageAddForm = this.fb.group({
+      addMinUsage: this.fb.array([]),
+    });
+
     this.fpsEditForm = this.fb.group({
       fps_no: new FormControl('',[Validators.required]),
       fps_opportunity_id: new FormControl(),
@@ -112,12 +125,16 @@ export class EditComponent implements OnInit {
       fps_total_financial_amount: new FormControl(),
       fps_min_payment_amount: new FormControl(),
       fps_required_docs: new FormControl(),
-      fps_data_area_id: new FormControl()
+      fps_data_area_id: new FormControl(),
+      fps_consumable_usage: new FormControl(),
+      fps_min_procedure: new FormControl(),
     });
 
     this.route.queryParams.subscribe(params => {
       this.current_apportunity_id = params['opport_id'];
       this.fpsEditForm.controls.fps_opportunity_id.setValue(this.current_apportunity_id);
+      this.current_quot_id = params['quot_id'];
+      this.fpsEditForm.controls.fps_quote_id.setValue(this.current_quot_id);
     });
 
     // Get the opportity which PFS is going to be added to.
@@ -133,9 +150,7 @@ export class EditComponent implements OnInit {
           if (response.success) {
             this.zone.run(() => {
               this.countryCode = response.data.iso3;
-              setTimeout(() =>{
-                this.loadFpsDetails();
-              }, 2000)
+              this.loadFpsDetails();
             });
           } 
         }
@@ -178,12 +193,45 @@ export class EditComponent implements OnInit {
       
     }, this.fpsID).subscribe((res) => {
         if (res.id) {
+
+          let procedures = this.minProcedureAddForm.value.addMinProcedure;
+          let activeProcedureIDs = [];
+          for(let x = 0; x < procedures.length; x++) {
+            activeProcedureIDs.push(procedures[x].id);
+            let procedure = {
+              'id': procedures[x].id,
+              'fps_id': res.id,
+              'date': procedures[x].date,
+              'no_procedure': procedures[x].no_procedure,
+              'updated_by': procedures[x].updated_by,
+              'updated_on': procedures[x].updated_on,
+            }
+            this.fpsService.storeMinProcedure(procedure);
+          }
+          this.fpsService.minProcedureCheckSum({'activeProcedureIDs' : activeProcedureIDs, 'fps_id' : res.id}).subscribe();
+
+          let usages = this.minUsageAddForm.value.addMinUsage;
+          let activeUsageIDs = [];
+          for(let x = 0; x <usages.length; x++) {
+            activeUsageIDs.push(usages[x].id);
+            let usage = {
+              'id': usages[x].id,
+              'fps_id': res.id,
+              'date': usages[x].date,
+              'usage': usages[x].usage,
+              'updated_by': usages[x].updated_by,
+              'updated_on': usages[x].updated_on,
+            }
+            this.fpsService.storeMinUsage(usage);
+          } 
+          this.fpsService.minUsageCheckSum({'activeUsageIDs' : activeUsageIDs, 'fps_id' : res.id}).subscribe();
+
           this.alertBody = "FPS updated successfully.";
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
           }, 2000);
-          // this.router.navigateByUrl('/fps/fps-listing', {replaceUrl: true})
+          this.router.navigateByUrl('/fps/fps-listing', {replaceUrl: true})
         }
       },
       err => {
@@ -206,19 +254,27 @@ export class EditComponent implements OnInit {
 
   updateInterestRate() {
     let rateID = this.fpsEditForm.controls.fps_tenure_id.value;
-    var result = this.getFilteredCodes(this.tenure_list, "id", rateID);    
-    this.fpsEditForm.controls.fps_interest_rate.setValue(result[0].details_interest_rate);
-    this.fpsEditForm.controls.fps_min_payment_amount.setValue(result[0].min_payment_amount);
-    this.fpsEditForm.controls.fps_required_docs.setValue(result[0].required_docs ?? '');
+    var result = this.getFilteredCodes(this.tenure_list, "id", rateID);
     
-    if(result[0].agreement_mandatory == 0) {
-      this.agreement_mandatory = false;
-    }
-    else {
-      this.agreement_mandatory = true
+    if (result.length > 1) {
+      this.fpsEditForm.controls.fps_interest_rate.setValue(result[0].details_interest_rate);
+      this.fpsEditForm.controls.fps_min_payment_amount.setValue(result[0].min_payment_amount);
+      this.fpsEditForm.controls.fps_required_docs.setValue(result[0].required_docs ?? '');
+      this.fpsEditForm.controls.fps_consumable_usage.setValue(result[0].consumable_usage);
+      this.fpsEditForm.controls.fps_min_procedure.setValue(result[0].min_procedure);
+      this.has_consumable_usage = result[0].consumable_usage > 0;
+      this.has_min_procedure = result[0].min_procedure > 0
+      
+      if(result[0].agreement_mandatory == 0) {
+        this.agreement_mandatory = false;
+      }
+      else {
+        this.agreement_mandatory = true
+      }
+      
+      this.updateMontlyPayment();
     }
     
-    this.updateMontlyPayment();
   }
 
   updateMontlyPayment() {
@@ -248,6 +304,7 @@ export class EditComponent implements OnInit {
           res.unshift({'id': '', 'details_tenure' : 'No Tenure Available'})
         }
         this.tenure_list = res;
+        this.updateInterestRate();
       },
       err => {
         console.log(err);
@@ -297,8 +354,85 @@ export class EditComponent implements OnInit {
     this.fpsService.find(this.fpsID).subscribe((data)=>{
       this.updateTenure();
       this.fpsEditForm.patchValue(data.data);
+
+      data.data.min_procedures.forEach((addMinProcedure) => {
+        this.has_min_procedure = true;
+        this.addMinProcedure().push(this.existingMinProcedure(addMinProcedure));
+      });
+
+      data.data.min_usages.forEach((addMinUsage) => {
+        this.has_consumable_usage = true;
+        this.addMinUsage().push(this.existingMinUsage(addMinUsage));
+      });
       this.updateTenure();      
     });
   }
 
+  //---------------- Min Procedure  -------------------
+    addMinProcedure(): FormArray {
+      return this.minProcedureAddForm.get("addMinProcedure") as FormArray;
+    }
+  
+    newMinProcedure(): FormGroup {
+      return this.fb.group({
+        id:'',
+        date: '',
+        no_procedure: 12,
+        updated_by: 1,
+        updated_on: '',
+      });
+    }
+  
+    addAddMinProcedure() {
+      this.addMinProcedure().push(this.newMinProcedure());
+    }
+  
+    removeAddMinProcedure(i: number) {
+      this.addMinProcedure().removeAt(i);
+    }
+
+    existingMinProcedure(minProcedure): FormGroup {
+      return this.fb.group({
+        id: minProcedure.id,
+        date: minProcedure.date,
+        no_procedure: minProcedure.no_procedure,
+        updated_by: minProcedure.updated_by,
+        updated_on: minProcedure.updated_on,
+      });
+    }
+  
+  //---------------- End of  Min Procedure -------------------
+
+  //---------------- Min Usage  -------------------
+    addMinUsage(): FormArray {
+      return this.minUsageAddForm.get("addMinUsage") as FormArray;
+    }
+
+    newMinUsage(): FormGroup {
+      return this.fb.group({
+        date: '',
+        usage: 12,
+        updated_by: 1,
+        updated_on: '',
+      });
+    }
+
+    addAddMinUsage() {
+      this.addMinUsage().push(this.newMinUsage());
+    }
+
+    removeAddMinUsage(i: number) {
+      this.addMinUsage().removeAt(i);
+    }
+
+    existingMinUsage(minUsage): FormGroup {
+      return this.fb.group({
+        id: minUsage.id,
+        date: minUsage.date,
+        usage: minUsage.usage,
+        updated_by: minUsage.updated_by,
+        updated_on: minUsage.updated_on,
+      });
+    }
+  //---------------- End of  Min Usage -------------------
 }

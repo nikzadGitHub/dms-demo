@@ -21,6 +21,7 @@ import { FpsService } from '@app/fps/fps.service';
   ]
 })
 export class SkuEditComponent implements OnInit {
+  @ViewChild("addProductModal") addRateDetailsModal: ModalDirective;
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("foundModal") foundModal: ModalDirective;
@@ -29,6 +30,7 @@ export class SkuEditComponent implements OnInit {
 
   skuEditForm : FormGroup;
   rateAddForm: FormGroup;
+  rateDatailAddForm: FormGroup;
   alertBody: string;
   alertHeader: string;
   sku: SkuInterface;
@@ -41,6 +43,12 @@ export class SkuEditComponent implements OnInit {
   has_interest_flag : boolean = false;
   min_payment_amount_flag : boolean;
   skuID : string;
+  addLine: boolean;
+
+  currentRateNo : string;
+  currentRateStart : string;
+  currentRateEnd : string;
+  currentRateType : string;
 
   constructor(
     private countryService: CountryService,
@@ -55,9 +63,7 @@ export class SkuEditComponent implements OnInit {
     private datePipe: DatePipe,
     private router: Router,
 
-  ) {
-    
-   }
+  ) {}
 
   fpsTypeList = this.fpsService.getTransSactionTypeList();
   rateStatusList = this.fpsService.getrateStatusList();
@@ -70,6 +76,10 @@ export class SkuEditComponent implements OnInit {
 
     this.rateAddForm = this.fb.group({
       addRates: this.fb.array([]),
+    });
+
+    this.rateDatailAddForm = this.fb.group({
+      addRateDetails: this.fb.array([]),
     });
 
     this.route.paramMap.subscribe(params => {
@@ -94,12 +104,13 @@ export class SkuEditComponent implements OnInit {
       half_yearly_payment : new FormControl(),
       currency_code : new FormControl(),
       min_payment_amount : new FormControl('0'),
-      min_usage : new FormControl('0'),
       consumable_usage : new FormControl(),
-      procedure_per_month : new FormControl(),
+      min_procedure : new FormControl(),
       required_tenure : new FormControl('0'),
       required_docs: new FormControl(),
-      agreement_mandatory: new FormControl('0')
+      agreement_mandatory: new FormControl('0'),
+      has_min_procedure:  new FormControl('0'),
+      has_consumable_usage:  new FormControl('0'),
     });
 
     this.countryService.getCountry().subscribe({
@@ -155,11 +166,17 @@ export class SkuEditComponent implements OnInit {
       if(data.data.min_payment_amount > 0) {
         this.skuEditForm.controls.min_payment_amount_flag.setValue(true);
       }
-      
+      if(data.data.consumable_usage > 0) {
+        this.skuEditForm.controls.has_consumable_usage.setValue(true);
+      }
+      if(data.data.min_procedure > 0) {
+        this.skuEditForm.controls.has_min_procedure.setValue(true);
+      }
+
       // Set Rate values:
       data.data.rates.forEach((addCost) => {
-        this.rate_counter++;
-        this.addRates().push(this.existingCosts(addCost));
+        this.rate_counter = addCost.id;
+        this.addRates().push(this.existingRates(addCost));
       });
       
     });
@@ -189,11 +206,12 @@ export class SkuEditComponent implements OnInit {
       validity_start_at: this.datePipe.transform(this.skuEditForm.get("validity_start_at").value, "yyyy-MM-dd"),
       validity_end_at: this.datePipe.transform(this.skuEditForm.get("validity_end_at").value, "yyyy-MM-dd"),
       required_docs: this.skuEditForm.get("required_docs").value + "",
-      procedure_per_month: this.skuEditForm.get("procedure_per_month").value + "",
-      min_usage: this.skuEditForm.get("min_usage").value + "",
       required_tenure: this.skuEditForm.get("required_tenure").value + "",
       agreement_mandatory: this.skuEditForm.get("agreement_mandatory").value + "",
-      data_area_id : 'test_data_rea_id'
+      data_area_id : 'test_data_rea_id',
+      consumable_usage: this.skuEditForm.get("consumable_usage").value + "",
+      min_procedure: this.skuEditForm.get("min_procedure").value + "",
+      min_payment_amount: this.skuEditForm.get("min_payment_amount").value + ""
     
     }, this.skuID).subscribe((res) => {
         if (res.id) {
@@ -203,19 +221,23 @@ export class SkuEditComponent implements OnInit {
             this.successModal.hide();
 
             let rates = this.rateAddForm.value.addRates;
-            
+            let activeRateIDs = [];
             for(let x = 0; x <rates.length; x++) {
+              
+              activeRateIDs.push(rates[x].rate_no);
+
               let rate = {
                 'id': rates[x].rate_no,
                 'financial_package_id': res.id,
                 'validity_start_at': rates[x].validity_start_at,
                 'validity_end_at': rates[x].validity_end_at,
                 'status': rates[x].status,
-                'type': rates[x].rate_type,
+                'type': rates[x].type,
               }
               // Store rate.
               this.storeRates(rate);
-            }              
+            }    
+            this.rateCheckSum(activeRateIDs, res.id);          
             this.router.navigateByUrl('/fps/sku-listing', {replaceUrl: true})
           }, 2000);
           
@@ -231,19 +253,39 @@ export class SkuEditComponent implements OnInit {
       });
   }
 
-     //---------------- SKU Rate  -------------------
+  onSaveRateDetails() {
 
-   addRates(): FormArray {
+    let rateDetails = this.rateDatailAddForm.value.addRateDetails;
+    let rateDetailsData = [];
+    for(let x = 0; x <rateDetails.length; x++) {
+      if(rateDetails[x].details_tenure > 0 && rateDetails[x].details_interest_rate > 0) {
+        rateDetailsData.push({
+          'details_rate_no': this.currentRateNo,
+          'details_tenure': rateDetails[x].details_tenure,
+          'details_interest_rate': rateDetails[x].details_interest_rate,
+        });
+      }
+      
+    } 
+    // Store rate.
+    this.storeRatesDetails(rateDetailsData);
+    this.addRateDetailsModal.hide();
+    
+  }
+
+  //---------------- SKU Rate  -------------------
+
+  addRates(): FormArray {
     return this.rateAddForm.get("addRates") as FormArray;
   }
 
-  existingCosts(addRates): FormGroup {
+  existingRates(addRates): FormGroup {
     return this.fb.group({
       rate_no: addRates.id,
       validity_start_at: addRates.validity_start_at,
       validity_end_at: addRates.validity_end_at,
       status: addRates.status,
-      rate_type: addRates.rate_type
+      type: addRates.type
     });
   }
 
@@ -253,7 +295,7 @@ export class SkuEditComponent implements OnInit {
       validity_start_at: 0,
       validity_end_at: 0.0,
       status: 1,
-      rate_type: 'normal',
+      type: 'normal',
     });
   }
 
@@ -279,6 +321,8 @@ export class SkuEditComponent implements OnInit {
   //---------------- End of  SKU Rate -------------------
 
   countryChange() {
+
+    this.countryCode = this.skuEditForm.get("country_code").value;
   
     this.currencyService.getCurrencyList(this.countryCode).subscribe({
       next: (response) => {
@@ -325,4 +369,76 @@ export class SkuEditComponent implements OnInit {
     }
   }
 
+  // This function is going to remove removes rates of SKU except active ones.
+  rateCheckSum(activeRateIDs, skuID) {
+    this.SkuService.checksumRates({'activeRateIDs' : activeRateIDs, 'skuID' : skuID}).subscribe();
+  }
+
+  //---------------- Start of  SKU Rate Details -------------------
+
+  openAddRateDetailsModal(check, i) {
+
+    this.rateDatailAddForm = this.fb.group({
+      addRateDetails: this.fb.array([]),
+    });
+
+    this.currentRateNo = this.rateAddForm.value.addRates[i].rate_no;
+    this.currentRateStart = this.rateAddForm.value.addRates[i].validity_start_at;
+    this.currentRateEnd = this.rateAddForm.value.addRates[i].validity_end_at;
+    this.currentRateType = this.rateAddForm.value.addRates[i].type;
+
+    this.SkuService.loadRateDetails(this.currentRateNo).subscribe((data)=>{
+      
+      // Set Rate values:
+      data.data.rate_details.forEach((addRateDetails) => {
+        this.addRateDetails().push(this.existingRateDetails(addRateDetails));
+      });
+
+      this.addLine = check;
+      this.addRateDetailsModal.show();
+
+    },
+    err => {
+      alert("Details for new rates can be added only after saving. please save and re-edit.");
+    });
+
+  }
+
+  addRateDetails(): FormArray {
+    return this.rateDatailAddForm.get("addRateDetails") as FormArray;
+  }
+
+  existingRateDetails(addRateDetails): FormGroup {
+    return this.fb.group({
+      details_tenure: addRateDetails.details_tenure,
+      details_interest_rate: addRateDetails.details_interest_rate,
+    });
+  }
+
+  newAddRateDetails(): FormGroup {
+    return this.fb.group({
+      details_tenure: 0,
+      details_interest_rate: 0.0,
+    });
+  }
+
+  addAddRateDetails() {
+    this.addRateDetails().push(this.newAddRateDetails());
+  }
+
+  removeAddRateDetails(i: number) {
+    this.addRateDetails().removeAt(i);
+  }
+
+  storeRatesDetails(rate) {
+    this.SkuService.saveRateDetails(rate).subscribe((res) => {
+        if (res.id) {
+          console.log("Rate Details Stored successfully.");
+        }
+      },
+      err => {
+        console.log(err);
+      });
+  }
+  //---------------- End of  SKU Rate Details -------------------
 }
