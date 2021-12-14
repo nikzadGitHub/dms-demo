@@ -42,6 +42,13 @@ export interface BookingDetail {
   war_won:string;
   pdr_won:string;
   bme_booking_id:string;
+  bme_con_req: number;
+  bme_pdi_re: number;
+  bme_ins_req: number;
+  bme_tnc_won: number;
+  bme_trn_req: number;
+  bme_war_req: number;
+  bme_pdr_req: number;
 }
 
 export interface OpportunitySummary {
