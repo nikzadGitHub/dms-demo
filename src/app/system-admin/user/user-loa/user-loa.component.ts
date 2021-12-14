@@ -42,6 +42,7 @@ export class UserLoaComponent implements OnInit {
       report_to: "Mr C",
     },
   ];
+  allUnits: any[] = [];
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -51,7 +52,7 @@ export class UserLoaComponent implements OnInit {
     this.authorityForm = this.formBuilder.group({
       unit: "",
       paymentTermApproval: "",
-      PersonCharges: "",
+      personCharges: "",
       amount: "",
       approveBy: "",
       profitMargin: "",
@@ -63,9 +64,28 @@ export class UserLoaComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserRole();
+    this.getAllUnits();
     this.dummyAuthorityData.forEach((value) => {
       value.created_at = new Date(value.created_at);
     });
+  }
+
+  createUserLoa() {
+    let data = {
+      code: this.authorityForm.value.unit,
+      payment_approval: this.authorityForm.value.paymentTermApproval,
+      profit_margin: this.authorityForm.value.profitMargin,
+      approval_discount: this.authorityForm.value.discount,
+      celling_price_amount: this.authorityForm.value.cellingPriceAmount,
+      celling_price_approval: this.authorityForm.value.cellingPriceApproval,
+      person_charges: this.authorityForm.value.personCharges,
+      price_level_approva: [],
+    };
+    this.systemAdminSerive
+      .postQuery("/user-loa", data)
+      .subscribe((res: any) => {
+        console.log("user-loa-res:", res);
+      });
   }
 
   getUserRole() {
@@ -78,6 +98,13 @@ export class UserLoaComponent implements OnInit {
     this.priceLevelApproval.push({
       amount: this.authorityForm.value.amount,
       approveBy: this.authorityForm.value.approveBy,
+    });
+  }
+
+  getAllUnits() {
+    this.systemAdminSerive.getQuery("/units").subscribe((res: any) => {
+      console.log("Unit-res:", res);
+      this.allUnits = res.data;
     });
   }
   deletePriceLevelRow(index) {

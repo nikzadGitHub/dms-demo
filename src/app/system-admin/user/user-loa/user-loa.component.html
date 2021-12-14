@@ -6,23 +6,6 @@
         <i class="pi pi-user-plus"> </i>
         Level Of Approval
       </h2>
-      <!-- <div>
-        <p-button
-          styleClass="p-button-outlined"
-          class="back-p-btn"
-          (click)="back()"
-        >
-          <ng-template pTemplate="content">
-            <img
-              src="../../../../assets/img/icons/back-arrow.svg"
-              alt=""
-              style="width: 17px"
-            />
-          </ng-template>
-        </p-button>
-      </div> -->
-
-      <!-- <img src="../../../../assets/img/icons/back-arrow.svg" alt=""> -->
     </div>
   </div>
   <form [formGroup]="authorityForm">
@@ -43,8 +26,9 @@
                 id="opc"
                 name="picList"
                 formControlName="unit"
-                [options]="dummy_data"
-                optionLabel="name"
+                [options]="allUnits"
+                optionLabel="title"
+                optionValue="id"
                 placeholder="Select Approve By"
                 [style]="{ width: '380px' }"
                 [required]="true"
@@ -68,6 +52,7 @@
                 formControlName="paymentTermApproval"
                 [options]="userList"
                 optionLabel="full_name"
+                optionValue="id"
                 placeholder="Select Approve By"
                 [style]="{ width: '380px' }"
                 [required]="true"
@@ -158,6 +143,7 @@
                 formControlName="cellingPriceApproval"
                 [options]="userList"
                 optionLabel="full_name"
+                optionValue="id"
                 placeholder="Select celling price approval"
                 [style]="{ width: '380px' }"
                 [required]="true"
@@ -179,9 +165,10 @@
               <p-dropdown
                 id="opc"
                 name="picList"
-                formControlName="PersonCharges"
+                formControlName="personCharges"
                 [options]="userList"
                 optionLabel="full_name"
+                optionValue="id"
                 placeholder="Select Approve By"
                 [style]="{ width: '380px' }"
                 [required]="true"
