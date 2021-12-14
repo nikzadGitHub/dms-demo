@@ -28,6 +28,7 @@ export class BookingApprovalComponent implements OnInit {
   private _status = BookingStatus.unknown;
   statusText: string = 'Unknown';
   isConfirmed: boolean = false;
+  show_decline: boolean = false;
   buttons: Button[] = [];
 
   @Input() list: ApprovalList = [];
@@ -69,7 +70,7 @@ export class BookingApprovalComponent implements OnInit {
           { title: 'Decline', id: 1, status: '5' }
         ];
         break;
-      case '4':
+      case '6':
         this.buttons = [
           { title: 'Approve', id: 0, status: '7' },
           { title: 'Conflict', id: 1, status: '4' },
@@ -89,21 +90,27 @@ export class BookingApprovalComponent implements OnInit {
   }
 
   onButtonClick(status: any) {
-    this.api.updateStatus({
-      bookingId: this.route.snapshot.params.id,
-      status: status,
-    }).subscribe((res) => {
-        if (res) {
-          this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/dms/bookings', this.route.snapshot.params.id]);
-        }); 
+    if(status == 5){
+      this.show_decline = true;
+    }else{
+      this.api.updateStatus({
+        bookingId: this.route.snapshot.params.id,
+        status: status,
+      }).subscribe((res) => {
+          if (res) {
+            this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/dms/bookings', this.route.snapshot.params.id]);
+            }); 
+          }
+        },
+        err => {
+          console.log(err);
+            alert("error")
         }
-      },
-      err => {
-        console.log(err);
-          alert("error")
-      }
-    );
-    
+      );
+    }
+  }
+  onClose(){
+    this.show_decline = false;
   }
 }

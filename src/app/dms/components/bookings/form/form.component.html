@@ -89,6 +89,7 @@
                       formControlName="date_of_delivery"
                       type="datetime-local"
                       name="date-of-delivery"
+                      (change)="onDuration()"
                     />
                   </div>
                 </div>
@@ -106,6 +107,7 @@
                       formControlName="date_of_collection"
                       type="datetime-local"
                       name="date-of-collection"
+                      (change)="onDuration()"
                     />
                   </div>
                 </div>
@@ -122,9 +124,11 @@
                 <input
                   type="number"
                   formControlName="demo_duration"
-                  class="form-control"/>
+                  class="form-control"
+                  [value]="duration"
+                  />
               </div>
-              <div class="col-md-2">months</div>
+              <div class="col-md-2">Days</div>
             </div>
 
             <div class="form-group row">
@@ -195,7 +199,7 @@
             </div>
 
             <!-- Start Of Opportunity Section -->
-            <div
+            <!-- <div
               [ngClass]="
                 selectedBooking == 2 ? 'opportunityAppear' : 'opportunity'
               "
@@ -347,7 +351,7 @@
                   ></textarea>
                 </div>
               </div>
-            </div> 
+            </div>  -->
             <!-- End Of Opportunity Seciton -->
 
             <div class="form-group row">

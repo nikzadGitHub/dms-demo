@@ -33,6 +33,7 @@ import { ExpandPanelComponent } from './components/widgets/expand-panel/expand-p
 import { EquipmentTableComponent } from './components/bookings/main-asset/equipment-table/equipment-table.component';
 import { OpportunityBookingFormComponent } from './components/bookings/opportunity-booking-form/opportunity-booking-form.component';
 import { OpportunityFormComponent } from './components/bookings/opportunity-booking-form/opportunity-form/opportunity-form.component';
+import { DeclineReasonComponent } from './components/bookings/booking-approval/decline-reason/decline-reason.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { OpportunityFormComponent } from './components/bookings/opportunity-book
     EquipmentTableComponent,
     IdentifyComponent,
     OpportunityBookingFormComponent,
-    OpportunityFormComponent
+    OpportunityFormComponent,
+    DeclineReasonComponent
   ],
 
   imports: [

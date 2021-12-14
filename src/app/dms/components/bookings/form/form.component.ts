@@ -198,7 +198,8 @@ changePrioritye(id:number){
   onDuration(){
     const date_of_delivery = this.formBooking.get("date_of_delivery").value;
     const date_of_collection = this.formBooking.get("date_of_collection").value;
-    if(date_of_delivery != "" && date_of_collection != ""){
+    console.log(date_of_collection);
+    if(date_of_delivery != null && date_of_collection != null){
       var date1 = new Date(date_of_delivery);
       var date2 = new Date(date_of_collection);
       var Time = date2.getTime() - date1.getTime();
