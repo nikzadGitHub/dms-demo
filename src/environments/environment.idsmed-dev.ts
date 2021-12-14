@@ -5,5 +5,5 @@ export const environment = {
 };
 
 export const settings = {
-  apiBaseUrl: 'https://api-sparts-dev.idsmed.com/api/fmp/api'
+  apiBaseUrl: 'https://api-sparks-dev.idsmed.com/api/fmp/api'
 }
