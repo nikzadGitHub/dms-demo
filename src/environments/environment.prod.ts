@@ -5,5 +5,5 @@ export const environment = {
 };
 
 export const settings = {
-  apiBaseUrl: 'http://localhost:8000/api'
+  apiBaseUrl: 'https://api.idsmed.websight-app.com/api'
 }
