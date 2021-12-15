@@ -14,7 +14,7 @@ import { BookingDetail } from '../../../services/booking-entity';
   styleUrls: ["./form.component.scss"]
 })
 
-export class FormComponent implements OnInit{ 
+export class FormComponent implements OnInit{
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("foundModal") foundModal: ModalDirective;
@@ -30,7 +30,7 @@ export class FormComponent implements OnInit{
   showBmeLogSec: boolean = false;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private bookingService: BookingService,
     private apiCustomers: CustomersService
   ) {}
@@ -108,7 +108,7 @@ changePrioritye(id:number){
       this.editable =  true;
       this.showBmeLogSec = true;
     }
-    
+
 
     this.apiCustomers.getList().subscribe(response => {
       this.customers = response;
@@ -127,19 +127,19 @@ changePrioritye(id:number){
       contact_name: new FormControl(this.bookingDetailList.ship_to_contact_name),
       contact_number: new FormControl(this.bookingDetailList.ship_to_contact_number),
       remarks:new FormControl(this.bookingDetailList.remarks),
-      wo_con_req:new FormControl(this.bookingDetailList.bme_con_req !== undefined ? this.bookingDetailList.bme_con_req : 1),
+      wo_con_req:new FormControl(this.bookingDetailList.bme_con_req ? 1 : 0),
       wo_con_won:new FormControl(this.bookingDetailList.con_won),
-      wo_pdi_req:new FormControl(this.bookingDetailList.bme_pdi_re !== undefined ? this.bookingDetailList.bme_pdi_re : 1),
+      wo_pdi_req:new FormControl(this.bookingDetailList.bme_pdi_re ? 1 : 0),
       wo_pdi_won:new FormControl(this.bookingDetailList.pdi_won),
-      wo_ins_req:new FormControl(this.bookingDetailList.bme_ins_req !== undefined ? this.bookingDetailList.bme_ins_req : 1),
+      wo_ins_req:new FormControl(this.bookingDetailList.bme_ins_req ? 1 : 0),
       wo_ins_won:new FormControl(this.bookingDetailList.ins_won),
-      wo_tnc_req:new FormControl(this.bookingDetailList.bme_tnc_won !== undefined ? this.bookingDetailList.bme_tnc_won : 1),
+      wo_tnc_req:new FormControl(this.bookingDetailList.bme_tnc_won ? 1 : 0),
       wo_tnc_won:new FormControl(this.bookingDetailList.tnc_won),
-      wo_trn_req:new FormControl(this.bookingDetailList.bme_trn_req !== undefined ? this.bookingDetailList.bme_trn_req : 1),
+      wo_trn_req:new FormControl(this.bookingDetailList.bme_trn_req ? 1 : 0),
       wo_trn_won:new FormControl(this.bookingDetailList.trn_won),
-      wo_wq_req:new FormControl(this.bookingDetailList.bme_war_req !== undefined ? this.bookingDetailList.bme_war_req : 1),
+      wo_wq_req:new FormControl(this.bookingDetailList.bme_war_req ? 1 : 0),
       wo_wq_won:new FormControl(this.bookingDetailList.war_won),
-      wo_pdr_req:new FormControl(this.bookingDetailList.bme_pdr_req !== undefined ? this.bookingDetailList.bme_pdr_req : 1),
+      wo_pdr_req:new FormControl(this.bookingDetailList.bme_pdr_req ? 1 : 0),
       wo_pdr_won:new FormControl(this.bookingDetailList.pdr_won),
       opportunity_code:new FormControl(),
       customer_feedback:new FormControl(),
@@ -165,7 +165,7 @@ changePrioritye(id:number){
       contact_number: this.formBooking.get("contact_number").value,
       remarks: this.formBooking.get("remarks").value,
       booking_save: true,
-      
+
       wo_con_req: this.formBooking.get("wo_con_req").value,
       wo_con_won: this.formBooking.get("wo_con_won").value,
       wo_pdi_req: this.formBooking.get("wo_pdi_req").value,
@@ -189,8 +189,8 @@ changePrioritye(id:number){
             this.successModal.hide();
           }, 2000);
         }
-      },  
-      err => { 
+      },
+      err => {
         console.log(err);
           this.alertBody = "The booking can't save";
           this.dangerModal.show();
