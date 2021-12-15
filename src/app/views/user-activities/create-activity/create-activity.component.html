@@ -47,26 +47,12 @@
         <td>+889283232</td>
         <td>Lee</td>
         <td>
-          <a class="fa fa-edit"></a>
+          <!-- <a class="fa fa-edit"></a>
           <i
             class="fa fa-trash text-primary"
             aria-hidden="true"
             style="cursor: pointer"
-          ></i>
-        </td>
-      </tr>
-      <tr>
-        <td>11-DEC-2021</td>
-        <td>+6298754422</td>
-        <td>+889283232</td>
-        <td>Lee</td>
-        <td>
-          <a class="fa fa-edit"></a>
-          <i
-            class="fa fa-trash text-primary"
-            aria-hidden="true"
-            style="cursor: pointer"
-          ></i>
+          ></i> -->
         </td>
       </tr>
     </tbody>
@@ -220,7 +206,11 @@
                   {{ data.completion_date | date: "dd-MMM-yyyy" }}
                 </td>
                 <td>
-                  <a class="fa fa-edit"></a>
+                  <a
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="createActivity.show()" 
+                  class="fa fa-edit"></a>
                 </td>
               </tr>
             </ng-template>
@@ -548,10 +538,10 @@
                   aria-label="Default select example"
                   [(ngModel)]="addActivityData.activityStatus"
                 >
-                  <option value="new">NEW</option>
-                  <option value="in progress"> IN PROGRESS</option>
-                  <option value="kiv/postpone"> KIV/POSTPONE</option>
-                  <option value="closed"> CLOSED</option>
+                  <option value="NEW">NEW</option>
+                  <option value="IN PROGRESS"> IN PROGRESS</option>
+                  <option value="KIV/POSTPONE"> KIV/POSTPONE</option>
+                  <option value="CLOSED"> CLOSED</option>
 
 
                 </select>
@@ -570,10 +560,10 @@
                   aria-label="Default select example"
                   [(ngModel)]="addActivityData.activityType"
                 >
-                  <option value="meeting">MEETING</option>
-                  <option value="contact">CONTACT</option>
-                  <option value="follow up">FOLLOW UP</option>
-                  <option value="others"> OTHERS </option>
+                  <option value="MEETING">MEETING</option>
+                  <option value="CONTACT">CONTACT</option>
+                  <option value="FOLLOW UP">FOLLOW UP</option>
+                  <option value="OTHERS"> OTHERS </option>
 
                   
 
@@ -622,19 +612,35 @@
               SAVE
             </button>
           </div>
-
-          <!-- <div class="submit-btn">
-            <button class="cancel-btn" (click)="createActivity.hide()">
-              Cancel
-            </button>
-            <button class="save-btn" (click)="createActivity.hide()">
-              Save
-            </button>
-          </div> -->
         </div>
       </div>
       <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
   </div>
+</div>
+
+<!-- display succes message -->
+<div
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ successMessage }}</p>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
 </div>
