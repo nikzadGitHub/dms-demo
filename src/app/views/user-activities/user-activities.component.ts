@@ -53,6 +53,10 @@ export class UserActivitiesComponent implements OnInit {
     });
   }
 
+  selectedActivity(data){
+    console.log("selected Activity =>",data)
+  }
+
   }
 
 

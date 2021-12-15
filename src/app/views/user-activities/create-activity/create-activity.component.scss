@@ -1,0 +1,27 @@
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    background: #ffffff;
+    border-color: #2196F3;
+    color: #2196F3;
+    width: 100px;
+    margin-right: 15px;
+    height: 58px;
+    justify-content: center;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    border: solid #dee2e6;
+    border-width: 0 0 2px 0;
+    border-color: transparent transparent #dee2e6 transparent;
+    background: #ffffff;
+    color: #6c757d;
+    padding: 1rem;
+    font-weight: 600;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    transition: box-shadow 0.2s;
+    margin: 0 0 -2px 0;
+    width: 100px;
+    margin-right: 15px;
+    height: 58px;
+    justify-content: center;
+}

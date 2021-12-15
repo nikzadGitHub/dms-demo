@@ -132,7 +132,10 @@
                 {{data.completion_date | date: "dd-MMM-yyyy"}}
               </td>
               <td>
-                <a routerLink="create" class="fa fa-edit" style="cursor: pointer;"></a>
+                <a routerLink="create" 
+                (click)="selectedActivity(data)"
+                class="fa fa-edit"
+                style="cursor: pointer;"></a>
               </td>
              </tr>
            </ng-template>
@@ -267,19 +270,22 @@
         <tr align="center" *ngFor="let data of closedData">
           <td>
             {{data.description}}
-        </td>
-        <td>
-          {{data.activity_type}}
-      </td>
-      <td>
-        {{data.status}}
-    </td>
-    <td>
-      {{data.due_date | date: "dd-MMM-yyyy"}}
-  </td>
-  <td>
-    {{data.completion_date | date: "dd-MMM-yyyy"}}
-</td>
+          </td>
+          <td>
+            {{data.activity_type}}
+          </td>
+          <td>
+            {{data.status}}
+          </td>
+          <td>
+            {{data.due_date | date: "dd-MMM-yyyy"}}
+          </td>
+          <td>
+            {{data.completion_date | date: "dd-MMM-yyyy"}}
+          </td>
+          <td>
+            <a routerLink="create" (click)="selectedActivity(data)" class="fa fa-edit" style="cursor: pointer;"></a>
+          </td>
         </tr>
       </ng-template>
     
