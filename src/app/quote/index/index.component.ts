@@ -64,7 +64,6 @@ export class IndexComponent implements OnInit {
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe(res => {
          this.quotes = this.quotes.filter(item => item.id !== id);
-         console.log('Quote deleted successfully!');
     })
   }
 
@@ -94,17 +93,14 @@ export class IndexComponent implements OnInit {
   }
 
   columnFilter(event){
-    console.log("column-filter:",event)
   }
 
   SortColumn(event: LazyLoadEvent){
-    console.log(event)
     this.sort = {'field':event['sortField'],'order':event['sortOrder']}
     this.ngOnInit()
   }
 
   paginate(event){
-    console.log(event);
     this.pageItems = event.rows;
     this.onClick(parseInt(event.page) + 1);
   }
