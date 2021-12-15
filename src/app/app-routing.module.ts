@@ -212,6 +212,7 @@ export const routes: Routes = [
           import("./system-admin/user/user.module").then((m) => m.UserModule),
       },
       
+      
     ],
   },
   // { path: 'profile', loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule) },
