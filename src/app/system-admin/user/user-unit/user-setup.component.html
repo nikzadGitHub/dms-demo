@@ -1,0 +1,395 @@
+<div class="card main-div">
+  <div class="card-header page-heading-icon">
+    <!-- <h1>Level Of Authority</h1> -->
+    <div class="unit-head">
+      <h2>Unit Setup</h2>
+      <div>
+        <!-- back-btn -->
+        <p-button
+          styleClass="p-button-outlined"
+          class="back-p-btn"
+          (click)="back()"
+        >
+          <ng-template pTemplate="content">
+            <img
+              src="../../../../assets/img/icons/back-arrow.svg"
+              alt=""
+              style="width: 17px"
+            />
+          </ng-template>
+        </p-button>
+      </div>
+    </div>
+  </div>
+  <!-- [formGroup]="userSetupForm" -->
+  <!-- <form [formGroup]="userSetupForm"> -->
+  <div class="card-body">
+    <p class="title-text">
+      <!-- <i class="pi pi-user-plus"></i> -->
+      Details
+    </p>
+
+    <!-- Search-field -->
+    <div class="row mt-3 mb-3">
+      <div class="col-lg-1 col-md-1 col-sm-1 mt-2">
+        <label>Company:</label>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <p-dropdown
+          placeholder="Select Company"
+          [options]="companies"
+          [style]="{ width: '100%' }"
+          [(ngModel)]="company_Id"
+          optionLabel="title"
+          optionValue="data_area_id"
+        ></p-dropdown>
+      </div>
+      <div class="col-lg-1 col-md-1 col-sm-1 mt-2">
+        <label>Parent Unit:</label>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <p-dropdown
+          placeholder="Select parent unit"
+          [options]="parenUnit"
+          [style]="{ width: '100%' }"
+          [(ngModel)]="selectParentUnit"
+          optionLabel="title"
+          optionValue="id"
+        ></p-dropdown>
+      </div>
+    </div>
+    <!-- Name-field -->
+    <div class="row mb-5">
+      <div class="col-lg-1 col-md-1 col-sm-1 mt-2">
+        <label style="width: 100px">Unit Name:</label>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="unit_Name"
+          style="width: 100%"
+        />
+      </div>
+
+      <!-- code -->
+      <div class="col-lg-1 col-md-1 col-sm-1 mt-2">
+        <label>Code:<span class="red-star">*</span></label>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5">
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="unit_Code"
+          style="width: 100%"
+        />
+      </div>
+    </div>
+
+    <!-- div-1 -->
+    <div class="card-list">
+      <!-- agency -->
+      <div class="card unit-card">
+        <div class="card-header">Agency</div>
+        <div class="card-body">
+          <div *ngFor="let item of agency" class="p-field-checkbox check-field">
+            <p-checkbox
+              name="group2"
+              [value]="item"
+              [(ngModel)]="selectAgency"
+              [inputId]="item.agency_code"
+            ></p-checkbox>
+            <label>{{ item.agency }}</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Menufacturer -->
+      <div class="card unit-card">
+        <div class="card-header">Manufactures</div>
+        <div class="card-body">
+          <div
+            *ngFor="let item of manufactures"
+            class="p-field-checkbox check-field"
+          >
+            <p-checkbox
+              name="group2"
+              [value]="item"
+              [inputId]="item.manufacturer_code"
+              [(ngModel)]="selectManufectures"
+            ></p-checkbox>
+            <label>{{ item.manufacturer }}</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPC -->
+      <div class="card unit-card">
+        <div class="card-header">OPC</div>
+        <div class="card-body">
+          <div *ngFor="let item of opc" class="p-field-checkbox check-field">
+            <p-checkbox
+              name="group2"
+              [value]="item"
+              [inputId]="item.opc_code"
+              [(ngModel)]="selectOpc"
+            ></p-checkbox>
+            <label>{{ item.opc }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-list-2">
+      <!-- care-area -->
+      <div class="card unit-card">
+        <div class="card-header">Care Area</div>
+        <div class="card-body">
+          <div
+            class="p-field-checkbox check-field"
+            *ngFor="let item of careArea"
+          >
+            <p-checkbox
+              name="group2"
+              [value]="item"
+              [(ngModel)]="selectedCareArea"
+              [inputId]="item.code"
+            >
+            </p-checkbox>
+            <label>{{ item.care_area }}</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Principles -->
+      <div class="card unit-card">
+        <div class="card-header">Principles</div>
+        <div class="card-body">
+          <div
+            *ngFor="let item of principles"
+            class="p-field-checkbox check-field"
+          >
+            <p-checkbox
+              name="group2"
+              [value]="item"
+              [(ngModel)]="selectPrinciples"
+              [inputId]="item.principal_code"
+            ></p-checkbox>
+            <label>{{ item.description }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-btn">
+      <button
+        type="button"
+        class="btn btn-outline-primary cancel-btn"
+        (click)="resetForm()"
+      >
+        CANCEL
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary save-btn"
+        (click)="createUnit()"
+      >
+        {{ isEditEnabled ? "Update" : "Create" }}
+      </button>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="form-group has-search">
+          <span class="fa fa-search form-control-feedback"></span>
+          <input
+            type="text"
+            class="form-control ds-input"
+            id="search-input"
+            placeholder="Search..."
+            style="position: relative; vertical-align: top"
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="authority-table">
+      <p-table
+        #dt
+        [value]="selectedAllUnits"
+        styleClass="p-datatable-authority"
+        [globalFilterFields]="['created_at', 'code', 'title']"
+        [paginator]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[{ showAll: 'All' }, 10, 25, 50]"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      >
+        <!-- Header -->
+        <ng-template pTemplate="header">
+          <div class="table-header-column">
+            <tr
+              align="center"
+              style="background-color: #009aff !important; color: white"
+            >
+              <!-- created-date -->
+              <th pSortableColumn="created_at" class="text-center">
+                <div class="column-design">
+                  Created Date
+                  <div class="date-icons">
+                    <p-sortIcon field="created_at"></p-sortIcon>
+                    <p-columnFilter
+                      type="date"
+                      field="created_at"
+                      display="menu"
+                      class="p-ml-auto"
+                    ></p-columnFilter>
+                  </div>
+                </div>
+              </th>
+              <!-- unit_name -->
+              <th pSortableColumn="unit_name" class="text-center">
+                <div class="column-design">
+                  Unit Name
+                  <div class="name-icons">
+                    <p-sortIcon field="title"></p-sortIcon>
+                    <p-columnFilter
+                      type="text"
+                      field="title"
+                      display="menu"
+                      class="p-ml-auto"
+                    ></p-columnFilter>
+                  </div>
+                </div>
+              </th>
+              <!-- country -->
+              <th pSortableColumn="code" class="text-center">
+                <div class="column-design">
+                  Unit Code
+                  <div class="country-icons">
+                    <p-sortIcon field="code"></p-sortIcon>
+                    <p-columnFilter
+                      type="text"
+                      field="code"
+                      display="menu"
+                      class="p-ml-auto"
+                    ></p-columnFilter>
+                  </div>
+                </div>
+              </th>
+              <!-- main-unit -->
+              <!-- <th pSortableColumn="main_unit" class="text-center">
+                  <div class="column-design">
+                    Main Unit
+                    <div class="main_unit-icons">
+                      <p-sortIcon field="main_unit"></p-sortIcon>
+                      <p-columnFilter
+                        type="text"
+                        field="main_unit"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th> -->
+              <!-- sub-unit -->
+              <!-- <th pSortableColumn="sub_unit" class="text-center">
+                  <div class="column-design">
+                    Sub Unit
+                    <div class="sub_unit-icons">
+                      <p-sortIcon field="sub_unit"></p-sortIcon>
+                      <p-columnFilter
+                        type="text"
+                        field="sub_unit"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th> -->
+              <!-- action -->
+              <th pSortableColumn="action" class="text-center">
+                <div class="column-design">
+                  Action
+                  <div class="action-icons"></div>
+                </div>
+              </th>
+            </tr>
+          </div>
+        </ng-template>
+
+        <!-- Data -->
+        <ng-template pTemplate="body" let-authority>
+          <tr align="center">
+            <td class="text-center">
+              <div *ngIf="authority.created_at">
+                {{ authority.created_at | date: "MM-dd-yyyy" || "" }}
+              </div>
+              <div *ngIf="!authority.created_at">_</div>
+            </td>
+            <td class="text-center">
+              {{ authority.title || "" }}
+            </td>
+            <td class="text-center">
+              {{ authority.code || "" }}
+            </td>
+            <td class="text-center">
+              <a
+                [routerLink]=""
+                (click)="getUnit(authority.id)"
+                routerLinkActive="router-link-active"
+              >
+                <i class="fa fa-edit"></i>
+              </a>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <!-- </form> -->
+</div>
+
+<!-- model -->
+<div
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
