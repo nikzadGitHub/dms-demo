@@ -43,8 +43,24 @@ export class LeadsService {
   }
 
   store(data): Observable<any> {
+    let body={
+      company_name: data.company_name,
+      contact_name: data.contact_name,
+      department:data.department,
+      email:data.email,
+      mobile_number: data.mobile_number,
+      office_number:data.office_number,
+      address:data.address,
+      postcode:data.postcode,
+      state:data.state,
+      country:data.country,
+      prospect_type:data.prospect_type,
+      source:data.source,
+      other_source:data.other_source
+  }
+    
     return this.httpClient
-      .post(this.apiURL + "/lead", data, this.httpOptions)
+      .post(this.apiURL + "/lead", body, this.httpOptions)
       .pipe(
         tap((response: any) => {
           console.log(response);
