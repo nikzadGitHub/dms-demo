@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { UserActivitiesService } from '../user-activities.service';
@@ -12,6 +12,7 @@ export class CreateActivityComponent implements OnInit {
   @ViewChild("createActivity")
   public createActivity: ModalDirective;
   @ViewChild("columnChooserModal")
+  @ViewChild("successModal") successModal: ModalDirective;
   public columnChooserModal: ModalDirective;
   loading:boolean
 	opportunities: [];
@@ -39,6 +40,7 @@ export class CreateActivityComponent implements OnInit {
   }
   companyId: any;
   customer_id: any;
+  successMessage: string;
   
   constructor(
     public userAactivities: UserActivitiesService,
@@ -60,12 +62,10 @@ export class CreateActivityComponent implements OnInit {
       this.closedData =  this.activitydata.filter(function(item) {
         return item.status == "CLOSED";
       });
-      console.log('this is res', this.closedData);
       
       this.openData =  this.activitydata.filter(function(item) {
         return item.status != "CLOSED";
       });
-      console.log('this is res', this.openData);
       this.loading=false
       
     });
@@ -89,7 +89,6 @@ export class CreateActivityComponent implements OnInit {
   }
   onSelect(event){
     if(event){
-      console.log('event onselect',event);
       this.companyId = event.id
       this.companyName = event.company_name
       this.isCompanyName = true
@@ -102,14 +101,17 @@ export class CreateActivityComponent implements OnInit {
     } else {
       this.isTypeOthers = false
     }
-    console.log("event =>",event.target.value)
   }
 
   saveActivity(event){
-    console.log("getting activity data =>",this.addActivityData);
     this.userAactivities.createActivity(this.customer_id,this.addActivityData).subscribe((res) => {
-      console.log('save activity data =>',res);
-      this.router.navigateByUrl("/activities", { replaceUrl: true});
+      this.successMessage = "Data added Successfully...!!"
+      this.successModal.show()
+      setTimeout(() => {
+        if(res){
+          this.router.navigateByUrl("/activities", { replaceUrl: true});
+        }
+      }, 1000);
     })
     
   }
