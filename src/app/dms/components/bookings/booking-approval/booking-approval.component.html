@@ -87,12 +87,17 @@
         </div>
       </div>
       <br>
-      <div class="d-flex justify-content-center" *ngIf="access">
+      <div class="d-flex justify-content-center" *ngIf="access && !show_decline">
         <div *ngFor="let button of buttons; let i=index" class="pr-2">
           <button type="submit" class="btn btn-md btn-primary"
                   (click)="onButtonClick(button.status)">{{ button.title | uppercase }}</button>
         </div>
       </div>
+      <br>
+      <div>
+        <dms-decline-reason *ngIf="show_decline" (byClose)="onClose()"></dms-decline-reason>
+      </div>
+      
     </div>
   </div>
 </dms-expand-panel>
