@@ -14,7 +14,7 @@
         <!-- <i class="pi pi-user-plus"></i> -->
         Add Unit
       </p>
-      <div class="authority-text row mb-2">
+      <div class="authority-text row mb-3">
         <!-- ★ -->
         <div class="col-md-6">
           <div class="row">
@@ -63,7 +63,7 @@
       </div>
 
       <!-- profit-margin-approval-discount -->
-      <div class="authority-text-1 row mb-2">
+      <div class="authority-text-1 row mb-4">
         <!-- Approval Profit Margin -->
         <div class="col-md-6">
           <div class="row">
@@ -93,8 +93,31 @@
           </div>
         </div>
 
-        <!-- Approval Discount -->
+        <!-- Person Charges -->
+        <!-- <div class="authority-text-2 row mb-2"> -->
         <div class="col-md-6">
+          <div class="row">
+            <div class="col-3 mt-2">
+              <label> Person Charges:<span class="red-star">*</span></label>
+            </div>
+            <div class="col-9">
+              <p-dropdown
+                id="opc"
+                name="picList"
+                formControlName="personCharges"
+                [options]="userList"
+                optionLabel="full_name"
+                optionValue="id"
+                placeholder="Select Approve By"
+                [style]="{ width: '380px' }"
+                [required]="true"
+              ></p-dropdown>
+            </div>
+          </div>
+          <!-- </div> -->
+        </div>
+        <!-- Approval Discount -->
+        <!-- <div class="col-md-6">
           <div class="row">
             <div class="col-3 mt-2">
               <label>Approval Discount:<span class="red-star">*</span></label>
@@ -109,21 +132,16 @@
                 inputId="withoutgrouping"
                 [style]="{ width: '380px' }"
               />
-              <!-- <p-inputNumber
-                name=""
-                formControlName="discount"
-                inputId="integeronly"
-                inputId="withoutgrouping"
-                [useGrouping]="false"
-                [style]="{ width: '380px' }"
-              >
-              </p-inputNumber> -->
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- celling price amount and celling price approval -->
+      <div class="celling-approval">
+        <h4>Celling Level Approval</h4>
+      </div>
       <div class="authority-text-1 row mb-2">
+        
         <!-- Approval Profit Margin -->
         <div class="col-md-6">
           <div class="row">
@@ -172,31 +190,6 @@
                 optionLabel="full_name"
                 optionValue="id"
                 placeholder="Select celling price approval"
-                [style]="{ width: '380px' }"
-                [required]="true"
-              ></p-dropdown>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Person Charges -->
-      <div class="authority-text-2 row mb-2">
-        <!-- Person Charges -->
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-3 mt-2">
-              <label> Person Charges:<span class="red-star">*</span></label>
-            </div>
-            <div class="col-9">
-              <p-dropdown
-                id="opc"
-                name="picList"
-                formControlName="personCharges"
-                [options]="userList"
-                optionLabel="full_name"
-                optionValue="id"
-                placeholder="Select Approve By"
                 [style]="{ width: '380px' }"
                 [required]="true"
               ></p-dropdown>
@@ -294,10 +287,12 @@
           #dt
           [value]=""
           styleClass="p-datatable-authority"
-          [rowHover]="true"
-          responsiveLayout="scroll"
-          [filterDelay]="0"
-          [globalFilterFields]="[]"
+          [globalFilterFields]="['created_at', 'code', 'title']"
+          [paginator]="true"
+          [rows]="10"
+          [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[{ showAll: 'All' }, 10, 25, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         >
           <!-- Header -->
           <ng-template pTemplate="header">

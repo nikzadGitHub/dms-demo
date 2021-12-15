@@ -6,6 +6,13 @@
             <span class="p-input-icon-left">
                 Prospects Listing
             </span>
+    <div style="align-self: self-end;">
+        <a style="color: white;" href="#" [routerLink]="['/prospects/create']">
+        <i class="icon-plus icons"></i>
+      </a>
+    </div>
+
+            
             <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input type="text" pInputText placeholder="Global Search" (input)="getAll()" [(ngModel)]="search_text" />

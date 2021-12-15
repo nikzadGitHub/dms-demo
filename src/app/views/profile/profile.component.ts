@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { UserprofileService } from './userprofile.service';
+import { UserprofileService } from '../profile/userprofile.service';
 
 @Component({
   selector: 'app-profile',
