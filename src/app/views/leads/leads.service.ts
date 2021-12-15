@@ -43,18 +43,32 @@ export class LeadsService {
   }
 
   store(data): Observable<any> {
+    let body={
+      company_name: data.company_name,
+      contact_name: data.contact_name,
+      department:data.department,
+      email:data.email,
+      mobile_number: data.mobile_number,
+      office_number:data.office_number,
+      address:data.address,
+      postcode:data.postcode,
+      state:data.state,
+      country:data.country,
+      prospect_type:data.prospect_type,
+      source:data.source,
+      other_source:data.other_source
+  }
+    
     return this.httpClient
-      .post(this.apiURL + "/lead", data, this.httpOptions)
+      .post(this.apiURL + "/lead", body, this.httpOptions)
       .pipe(
         tap((response: any) => {
-          console.log(response);
         }),
         catchError(this.errorHandler)
       );
   }
 
   update(data, id): Observable<any> {
-    console.log("data ", data);
     let body = {
       able_to_contact: data.able_to_contact,
       additional_notes: data.additional_notes,
@@ -77,7 +91,6 @@ export class LeadsService {
       source: data.source,
       state: data.state,
     };
-    console.log(body,'this body')
     return this.httpClient
       .put(this.apiURL + "/lead/" + id, JSON.stringify(body), this.httpOptions)
       .pipe(catchError(this.errorHandler));
@@ -88,14 +101,12 @@ export class LeadsService {
       .post(this.apiURL + "/lead/create-prospect", id, this.httpOptions)
       .pipe(
         tap((response: any) => {
-          console.log(response);
         }),
         catchError(this.errorHandler)
       );
   }
 
   find(id): Observable<any> {
-    console.log(id);
     return this.httpClient
       .get(this.apiURL + "/lead/" + id)
       .pipe(catchError(this.errorHandler));
@@ -114,14 +125,12 @@ export class LeadsService {
   }
 
   searchContact(contact): Observable<any> {
-    console.log(contact);
     return this.httpClient
       .get(this.apiURL + "/lead/contact?contact_name=" + contact)
       .pipe(catchError(this.errorHandler));
   }
 
   searchCompany(company): Observable<any> {
-    console.log(company);
     return this.httpClient
       .get(this.apiURL + "/lead/customer?company_name=" + company)
       .pipe(catchError(this.errorHandler));
