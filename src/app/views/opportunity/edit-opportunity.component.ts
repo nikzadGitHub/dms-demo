@@ -762,7 +762,6 @@ export class EditOpportunityComponent implements OnInit {
         id: 9,
       })
       .subscribe((data) => {
-        console.log("approval-data: ", data);
       });
   }
 

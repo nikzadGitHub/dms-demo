@@ -90,10 +90,8 @@ export class QuoteTemplateComponent implements OnInit {
 
     this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
       this.quotationsTemplateData = res["data"]
-      // console.log('this is quotation-template',this.quotationsTemplateData);
       this.salesPersonData = res["data"].quotations?.sales_person
       this.salesPersonSignature = this.salesPersonData?.signature_base64
-      console.log('this.salesPersonData =>',this.salesPersonData)
       this.quotationContent = res["data"].quotations?.quotation_contents
       this.productDetails = res["data"].quotations?.products
       if(this.quotationContent){
@@ -102,13 +100,8 @@ export class QuoteTemplateComponent implements OnInit {
       }
       for(let i = 0; i < this.quotationsTemplateData.quotations.products.length; i++){
         this.productTotalPrice = parseFloat(this.productDetails[i].list_price);
-        console.log('total product price =>',this.productTotalPrice);
       }
       this.netTotal = this.productTotalPrice - parseFloat(this.discountedValue)
-      
-      
-      // console.log('quoatation content',this.quotationContentFooter)
-      // console.log('quoatation content',this.quotationContentHeader)
       
     })
     // this.router.navigateByUrl("quote/view/quote-template");
@@ -118,7 +111,6 @@ export class QuoteTemplateComponent implements OnInit {
     this.file = event.target.files[0];
     this.fileName = this.file.name;
     let extension = this.file.name.split('.').pop();
-    // console.log("this.file",this.file,'extension =>',extension)
 
     if (this.file) {
       this.check = true;
@@ -252,13 +244,11 @@ export class QuoteTemplateComponent implements OnInit {
   }
 
   onePDF() {
-    // console.log("One PDF working");
     this.successModal.hide();
     this.reset();
     this.single = true;
   }
   twoPDF() {
-    // console.log("Two PDF working");
     this.successModal.hide();
     this.reset();
     this.single = false;
@@ -311,9 +301,6 @@ export class QuoteTemplateComponent implements OnInit {
       servicing:this.servicingFooter.nativeElement.innerText,
     }
     let fullBody = this.bodyData.nativeElement.innerHTML
-    // console.log("Header =>",header)
-    // console.log("Footer =>",footer)
-    // console.log("fullBody =>",fullBody)
 
     this.quoteService.saveTemplateData(this.quotationId,JSON.stringify(header),JSON.stringify(footer),fullBody).subscribe(state=>{
     })
