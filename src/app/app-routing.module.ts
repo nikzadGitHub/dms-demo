@@ -75,7 +75,11 @@ export const routes: Routes = [
         loadChildren: () =>
           import("./views/chartjs/chartjs.module").then((m) => m.ChartJSModule),
       },
-      {
+
+     { 
+     
+
+      
         path: "dashboard",
         loadChildren: () =>
           import("./views/dashboard/dashboard.module").then(
@@ -165,6 +169,16 @@ export const routes: Routes = [
             (m) => m.ComingSoonModule
           ),
       },
+
+      {
+        path: "salestarget",
+        loadChildren: () =>
+          import("./views/coming-soon/coming-soon.module").then(
+            (m) => m.ComingSoonModule
+          ),
+      },
+
+
       {
         path: "activities",
         loadChildren: () =>

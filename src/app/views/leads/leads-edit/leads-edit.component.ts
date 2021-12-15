@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { LeadsService } from '../leads.service';
 import * as moment from 'moment';
+import { AuthService } from '@app/auth/auth.service';
 
 @Component({
   selector: 'app-leads-edit',
@@ -22,6 +23,7 @@ export class LeadsEditComponent implements OnInit {
     'Low Budget',
     'Scam',
   ];
+  fullName: string;
 
   get form_controls() {
     // console.log(this.form.controls)
@@ -34,6 +36,7 @@ export class LeadsEditComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public leadsService: LeadsService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -73,12 +76,17 @@ export class LeadsEditComponent implements OnInit {
         this.getModificationLog(this.id);
       }
     });
+    this.authService.getUserSession().then((res) => {
+      if (res.fullname) {
+        this.fullName = res.fullname
+      }      
+    });
   }
 
   getData(id) {
     this.leadsService.find(id).subscribe((data)=>{
+      
       this.form.patchValue(data.data);
-      console.log(data);
     })
   }
 
