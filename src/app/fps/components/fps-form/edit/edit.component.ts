@@ -111,14 +111,14 @@ export class EditComponent implements OnInit {
       fps_payment_frequency: new FormControl('',[Validators.required]),
       fps_status_id : new FormControl(1, [Validators.min(1)]),
       fps_tenure_id : new FormControl('',[Validators.required]),
-      fps_adv_payment : new FormControl('0'),
-      fps_adv_payment_percentage : new FormControl('0'),
-      fps_net_financing_amount : new FormControl('0'),
+      fps_adv_payment : new FormControl(0),
+      fps_adv_payment_percentage : new FormControl(0),
+      fps_net_financing_amount : new FormControl(0),
       fps_monthly_payment_amount : new FormControl(),
       fps_interest_rate : new FormControl(),
       fps_validated_by : new FormControl(),
       fps_approved_by : new FormControl(),
-      fps_leas_aggr_no : new FormControl('0'),
+      fps_leas_aggr_no : new FormControl(0),
       fps_internal_aggr_no : new FormControl(),
       fps_remarks : new FormControl(),
       fps_currency_code: new FormControl(),
@@ -249,6 +249,7 @@ export class EditComponent implements OnInit {
     let percentage = this.fpsEditForm.controls.fps_adv_payment_percentage.value;
     let adv_payment = totalAmount / 100 * percentage;
     
+    this.fpsEditForm.controls.fps_adv_payment.setValue(adv_payment);
     this.fpsEditForm.controls.fps_net_financing_amount.setValue(totalAmount - adv_payment);
   }
 

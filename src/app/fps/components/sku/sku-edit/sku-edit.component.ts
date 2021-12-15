@@ -37,6 +37,7 @@ export class SkuEditComponent implements OnInit {
   rate_counter = 0;
   countryList: Country[] = [];
   currencies_list = [];
+  existingRatesIds = [];
   institutions_list: FinancialInstitution[] = [];
   countryCode : string = '';
   data_area_id : string = '';
@@ -103,14 +104,14 @@ export class SkuEditComponent implements OnInit {
       quarterly_payment : new FormControl(),
       half_yearly_payment : new FormControl(),
       currency_code : new FormControl(),
-      min_payment_amount : new FormControl('0'),
+      min_payment_amount : new FormControl(0),
       consumable_usage : new FormControl(),
       min_procedure : new FormControl(),
-      required_tenure : new FormControl('0'),
+      required_tenure : new FormControl(0),
       required_docs: new FormControl(),
-      agreement_mandatory: new FormControl('0'),
-      has_min_procedure:  new FormControl('0'),
-      has_consumable_usage:  new FormControl('0'),
+      agreement_mandatory: new FormControl(0),
+      has_min_procedure:  new FormControl(0),
+      has_consumable_usage:  new FormControl(0),
     });
 
     this.countryService.getCountry().subscribe({
@@ -177,6 +178,8 @@ export class SkuEditComponent implements OnInit {
       data.data.rates.forEach((addCost) => {
         this.rate_counter = addCost.id;
         this.addRates().push(this.existingRates(addCost));
+        console.log("existing rate to push ", addCost)
+        this.existingRatesIds.push(addCost.id)
       });
       
     });
@@ -221,23 +224,18 @@ export class SkuEditComponent implements OnInit {
             this.successModal.hide();
 
             let rates = this.rateAddForm.value.addRates;
-            let activeRateIDs = [];
+            let rateData = [];
             for(let x = 0; x <rates.length; x++) {
-              
-              activeRateIDs.push(rates[x].rate_no);
-
-              let rate = {
-                'id': rates[x].rate_no,
+              rateData.push({
+                'id': this.existingRatesIds.includes(rates[x].rate_no) ? rates[x].rate_no : null,
                 'financial_package_id': res.id,
                 'validity_start_at': rates[x].validity_start_at,
                 'validity_end_at': rates[x].validity_end_at,
                 'status': rates[x].status,
                 'type': rates[x].type,
-              }
-              // Store rate.
-              this.storeRates(rate);
-            }    
-            this.rateCheckSum(activeRateIDs, res.id);          
+              });
+            }
+            this.storeRates(rateData);
             this.router.navigateByUrl('/fps/sku-listing', {replaceUrl: true})
           }, 2000);
           
@@ -367,11 +365,6 @@ export class SkuEditComponent implements OnInit {
         }
       })  
     }
-  }
-
-  // This function is going to remove removes rates of SKU except active ones.
-  rateCheckSum(activeRateIDs, skuID) {
-    this.SkuService.checksumRates({'activeRateIDs' : activeRateIDs, 'skuID' : skuID}).subscribe();
   }
 
   //---------------- Start of  SKU Rate Details -------------------

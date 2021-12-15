@@ -208,7 +208,9 @@
                                     </label>
                                     <div class="col-md-8">
                                         <!-- percentage field -->
-                                        <input type="number" formControlName="fps_adv_payment"  class="form-control">
+                                        <input type="number" formControlName="fps_adv_payment" id="fps_adv_payment" class="form-control">
+                                        <app-form-error-presentation [displayError]="isFieldValid('fps_adv_payment')" errorMsg="Advance Pyament can't be less than Minimum payment.">
+                                        </app-form-error-presentation>
                                     </div>
                                 </div>
     

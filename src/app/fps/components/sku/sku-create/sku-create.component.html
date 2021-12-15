@@ -71,7 +71,7 @@
                         <div class="col-md-4">
                             <div class="form-group row" > 
                                 <div class="col-md-3">
-                                    <mat-slide-toggle formControlName="has_interest"  class="form-control" #has_interest class="example-margin">
+                                    <mat-slide-toggle formControlName="has_interest_flag"  class="form-control" #has_interest class="example-margin">
                                     </mat-slide-toggle>
                                 </div>
                                 <div class="col-md-9">
@@ -202,7 +202,7 @@
                             Minimum Procedure<span class="asterisk"> * </span>
                         </label>
                         <div class="col-md-4">
-                            <input type="number" [readonly]="!min_procedure.checked" formControlName="procedure_per_month"  class="form-control">
+                            <input type="number" [readonly]="!min_procedure.checked" formControlName="min_procedure"  class="form-control">
                         </div>
                     </div>
 

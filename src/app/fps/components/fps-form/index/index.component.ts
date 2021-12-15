@@ -63,9 +63,7 @@ export class IndexComponent implements OnInit {
               this.pages = response.links;
               this.totalRecords = response.total;
             });
-          } else {
-            this.dialogService.showErrorDialog(response.message);
-          }
+          } 
         },
         error: (error) => {
           if (error.error.message != undefined) {

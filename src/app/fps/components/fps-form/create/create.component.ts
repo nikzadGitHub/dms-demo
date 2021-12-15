@@ -94,14 +94,14 @@ export class CreateComponent implements OnInit {
       fps_payment_frequency: new FormControl('',[Validators.required]),
       fps_status_id : new FormControl(1, [Validators.min(1)]),
       fps_tenure_id : new FormControl('',[Validators.required]),
-      fps_adv_payment : new FormControl('0'),
-      fps_adv_payment_percentage : new FormControl('0'),
-      fps_net_financing_amount : new FormControl('0'),
+      fps_adv_payment : new FormControl(0),
+      fps_adv_payment_percentage : new FormControl(0),
+      fps_net_financing_amount : new FormControl(0),
       fps_monthly_payment_amount : new FormControl(),
       fps_interest_rate : new FormControl(),
       fps_validated_by : new FormControl(),
       fps_approved_by : new FormControl(),
-      fps_leas_aggr_no : new FormControl('0'),
+      fps_leas_aggr_no : new FormControl(0),
       fps_internal_aggr_no : new FormControl(),
       fps_remarks : new FormControl(),
       fps_currency_code: new FormControl(),
@@ -256,7 +256,8 @@ export class CreateComponent implements OnInit {
     let totalAmount = this.fpsAddForm.controls.fps_total_financial_amount.value;
     let percentage = this.fpsAddForm.controls.fps_adv_payment_percentage.value;
     let adv_payment = totalAmount / 100 * percentage;
-    
+
+    this.fpsAddForm.controls.fps_adv_payment.setValue(adv_payment);
     this.fpsAddForm.controls.fps_net_financing_amount.setValue(totalAmount - adv_payment);
   }
 
@@ -264,7 +265,8 @@ export class CreateComponent implements OnInit {
     
     let rateID = this.fpsAddForm.controls.fps_tenure_id.value;
     var result = this.getFilteredCodes(this.tenure_list, "id", rateID);
-    
+
+    this.fpsAddForm.controls.fps_adv_payment.setValidators([Validators.min(result[0].min_payment_amount)]);
     this.fpsAddForm.controls.fps_interest_rate.setValue(result[0].details_interest_rate);
     this.fpsAddForm.controls.fps_adv_payment.setValue(result[0].min_payment_amount);
     this.fpsAddForm.controls.fps_min_payment_amount.setValue(result[0].min_payment_amount);
