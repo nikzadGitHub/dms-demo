@@ -11,6 +11,7 @@ import { LoginComponent } from './views/login/login.component';
 import { LogoutComponent } from './views/logout/logout.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import { RegisterComponent } from './views/register/register.component';
+import { UserActivitiesModule } from "./views/user-activities/user-activities.module";
 
 export const routes: Routes = [
   {
@@ -167,8 +168,8 @@ export const routes: Routes = [
       {
         path: "activities",
         loadChildren: () =>
-          import("./views/coming-soon/coming-soon.module").then(
-            (m) => m.ComingSoonModule
+          import("./views/user-activities/user-activities.module").then(
+            (m) => m.UserActivitiesModule
           ),
       },
       {
@@ -214,7 +215,8 @@ export const routes: Routes = [
       
     ],
   },
-  { path: "**", component: P404Component },
+  // { path: 'profile', loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule) },
+  { path: '**', component: P404Component }
 ];
 
 @NgModule({

@@ -1,0 +1,640 @@
+<div class="card-header row" style="background-color: #898485; color: white">
+  <div style="padding-left: 20px">
+    <h2>Create Activity</h2>
+  </div>
+</div>
+<div style="overflow-y: hidden;">
+<div>
+  <div class="col-md-6">
+    <label style="color: black"><b>Customer Name</b></label>
+    <span class="p-input-icon-right" style="width: 100%; margin-bottom: 10px;">
+      <p-autoComplete
+        class="search_field"
+        placeholder="Select Company Name..."
+        [inputStyle]="{ width: '100%' }"
+        [style]="{ width: '100%' }"
+        [suggestions]="filteredData"
+        (completeMethod)="searchName($event)"
+        (onSelect)="onSelect($event)"
+        [(ngModel)]="companyName"
+      >
+        <ng-template let-item pTemplate="item">
+          <div class="item">
+            <div>
+              {{ item.company_name}} 
+            </div>
+          </div>
+        </ng-template>
+      </p-autoComplete>
+      <i class="pi pi-search"></i>
+    </span>
+  </div>
+
+  <table class="table table-hover table-striped">
+    <thead style="background: lightgray; color: black">
+      <tr>
+        <th>Created date</th>
+        <th>Primary Contact</th>
+        <th>Other Contacts</th>
+        <th>Owner</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>11-DEC-2021</td>
+        <td>+6298754422</td>
+        <td>+889283232</td>
+        <td>Lee</td>
+        <td>
+          <a class="fa fa-edit"></a>
+          <i
+            class="fa fa-trash text-primary"
+            aria-hidden="true"
+            style="cursor: pointer"
+          ></i>
+        </td>
+      </tr>
+      <tr>
+        <td>11-DEC-2021</td>
+        <td>+6298754422</td>
+        <td>+889283232</td>
+        <td>Lee</td>
+        <td>
+          <a class="fa fa-edit"></a>
+          <i
+            class="fa fa-trash text-primary"
+            aria-hidden="true"
+            style="cursor: pointer"
+          ></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p-accordion
+      [multiple]="true"
+      styleClass="customColor"
+      activeIndex="0">
+    <p-accordionTab header="Activities" activeIndex="0">
+      <p-tabView>
+        <p-tabPanel header="Open" [selected]="true">
+          <p-table
+            class="table table-hover table-striped"
+            styleClass="p-datatable-customers"
+            [rowHover]="true"
+            [reorderableColumns]="true"
+            responsiveLayout="scroll"
+            [filterDelay]="0"
+            [globalFilterFields]="['quote_id', 'company', 'amount', 'status']"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th pSortableColumn="created_date" class="text-center">
+                  <div
+                    style="
+                      display: flex;
+                      white-space: nowrap;
+                      flex-direction: column;
+                      align-items: center;
+                    "
+                    class="p-d-flex p-jc-between p-ai-center"
+                  >
+                    Description
+
+                    <div class="date-icons">
+                      <p-sortIcon field="created_date"></p-sortIcon>
+                      <p-columnFilter
+                        type="date"
+                        field="created_date"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <th pSortableColumn="op_id" class="text-center">
+                  <div
+                    style="
+                      display: flex;
+                      white-space: nowrap;
+                      flex-direction: column;
+                      align-items: center;
+                    "
+                    class="p-d-flex p-jc-between p-ai-center"
+                  >
+                    Type
+                    <div class="Opp-ID-icon">
+                      <p-sortIcon field="op_id"></p-sortIcon>
+                      <p-columnFilter
+                        type="text"
+                        field="op_id"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <th pSortableColumn="topic" class="text-center">
+                  <div
+                    style="
+                      display: flex;
+                      white-space: nowrap;
+                      flex-direction: column;
+                      align-items: center;
+                    "
+                    class="p-d-flex p-jc-between p-ai-center"
+                  >
+                    Status
+                    <div class="topic-icons">
+                      <p-sortIcon field="topic"></p-sortIcon>
+                      <p-columnFilter
+                        type="text"
+                        field="topic"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <th pSortableColumn="company_name" class="text-center">
+                  <div
+                    style="
+                      display: flex;
+                      white-space: nowrap;
+                      flex-direction: column;
+                      align-items: center;
+                    "
+                    class="p-d-flex p-jc-between p-ai-center"
+                  >
+                    Due Date
+                    <div class="company-name-icons">
+                      <p-sortIcon field="company_name"></p-sortIcon>
+                      <p-columnFilter
+                        type="text"
+                        field="company_name"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <th pSortableColumn="status_id" class="text-center">
+                  <div
+                    style="
+                      display: flex;
+                      white-space: nowrap;
+                      flex-direction: column;
+                      align-items: center;
+                    "
+                    class="p-d-flex p-jc-between p-ai-center"
+                  >
+                    Completion Date
+                    <div class="status-icons">
+                      <p-sortIcon field="status_id"></p-sortIcon>
+                      <p-columnFilter
+                        type="text"
+                        field="status_id"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <th [style]="{ width: '5%' }"></th>
+              </tr>
+              <tr align="center" *ngFor="let data of openData">
+                <td>
+                  {{ data.description }}
+                </td>
+                <td>
+                  {{ data.activity_type }}
+                </td>
+                <td>
+                  {{ data.status }}
+                </td>
+                <td>
+                  {{ data.due_date | date: "dd-MMM-yyyy" }}
+                </td>
+                <td>
+                  {{ data.completion_date | date: "dd-MMM-yyyy" }}
+                </td>
+                <td>
+                  <a class="fa fa-edit"></a>
+                </td>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage" let-columns>
+              <tr>
+                <td
+                  style="text-align: center"
+                  *ngIf="columns"
+                  [attr.colspan]="columns.length"
+                >
+                  No records found
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+
+        <p-tabPanel header="Close">
+          <p-table
+            class="table table-hover table-striped"
+            styleClass="p-datatable-customers"
+            [rowHover]="true"
+            [reorderableColumns]="true"
+            responsiveLayout="scroll"
+            [filterDelay]="0"
+            [globalFilterFields]="['quote_id', 'company', 'amount', 'status']"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th pSortableColumn="created_date" class="text-center">
+                  <div
+                    style="
+                      display: flex;
+                      white-space: nowrap;
+                      flex-direction: column;
+                      align-items: center;
+                    "
+                    class="p-d-flex p-jc-between p-ai-center"
+                  >
+                    Description
+
+                    <div class="date-icons">
+                      <p-sortIcon field="created_date"></p-sortIcon>
+                      <p-columnFilter
+                        type="date"
+                        field="created_date"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <th pSortableColumn="op_id" class="text-center">
+                  <div
+                    style="
+                      display: flex;
+                      white-space: nowrap;
+                      flex-direction: column;
+                      align-items: center;
+                    "
+                    class="p-d-flex p-jc-between p-ai-center"
+                  >
+                    Type
+                    <div class="Opp-ID-icon">
+                      <p-sortIcon field="op_id"></p-sortIcon>
+                      <p-columnFilter
+                        type="text"
+                        field="op_id"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <th pSortableColumn="topic" class="text-center">
+                  <div
+                    style="
+                      display: flex;
+                      white-space: nowrap;
+                      flex-direction: column;
+                      align-items: center;
+                    "
+                    class="p-d-flex p-jc-between p-ai-center"
+                  >
+                    Status
+                    <div class="topic-icons">
+                      <p-sortIcon field="topic"></p-sortIcon>
+                      <p-columnFilter
+                        type="text"
+                        field="topic"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <th pSortableColumn="company_name" class="text-center">
+                  <div
+                    style="
+                      display: flex;
+                      white-space: nowrap;
+                      flex-direction: column;
+                      align-items: center;
+                    "
+                    class="p-d-flex p-jc-between p-ai-center"
+                  >
+                    Due Date
+                    <div class="company-name-icons">
+                      <p-sortIcon field="company_name"></p-sortIcon>
+                      <p-columnFilter
+                        type="text"
+                        field="company_name"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <th pSortableColumn="status_id" class="text-center">
+                  <div
+                    style="
+                      display: flex;
+                      white-space: nowrap;
+                      flex-direction: column;
+                      align-items: center;
+                    "
+                    class="p-d-flex p-jc-between p-ai-center"
+                  >
+                    Completion Date
+                    <div class="status-icons">
+                      <p-sortIcon field="status_id"></p-sortIcon>
+                      <p-columnFilter
+                        type="text"
+                        field="status_id"
+                        display="menu"
+                        class="p-ml-auto"
+                      ></p-columnFilter>
+                    </div>
+                  </div>
+                </th>
+                <th [style]="{ width: '5%' }"></th>
+              </tr>
+              <tr align="center" *ngFor="let data of closedData">
+                <td>
+                  {{ data.description }}
+                </td>
+                <td>
+                  {{ data.activity_type }}
+                </td>
+                <td>
+                  {{ data.status }}
+                </td>
+                <td>
+                  {{ data.due_date | date: "dd-MMM-yyyy" }}
+                </td>
+                <td>
+                  {{ data.completion_date | date: "dd-MMM-yyyy" }}
+                </td>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage" let-columns>
+              <tr>
+                <td
+                  style="text-align: center"
+                  *ngIf="columns"
+                  [attr.colspan]="columns.length"
+                >
+                  No records found
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+
+        <p-tabPanel>
+          <ng-template pTemplate="header">
+            <a
+              [routerLink]=""
+              routerLinkActive="router-link-active"
+              (click)="createActivity.show()"
+            >
+              <i class="icon-plus icons"></i>
+            </a>
+          </ng-template>
+        </p-tabPanel>
+      </p-tabView>
+    </p-accordionTab>
+  </p-accordion>
+
+  <!-- model -->
+  <div
+  bsModal
+  #createActivity="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+  *ngIf="!isCompanyName"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Warning</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ dangerBody }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="createActivity.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+  <div
+    bsModal
+    #createActivity="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+    *ngIf="isCompanyName"
+  >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add Activity</h4>
+          <button
+            type="button"
+            class="close"
+            (click)="createActivity.hide()"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div style="display: flex;
+        flex-direction: column;
+        align-items: center;" class="modal-body">
+          <div class="row mb-2">
+            <h5 class="col-12">
+              <label><b>Add Activity</b></label>
+            </h5>
+          </div>
+
+          <div class="col-6">
+            <div class="row">
+              <div class="col-3 mt-2">
+                <label style="display: flex;
+                " for="description">
+                  Description<span class="asterisk"> * </span>
+                </label>
+              </div>
+              <div style="margin-bottom: 19px" class="col-9">
+                <input
+                  id="description"
+                  name="title"
+                  type="text"
+                  pInputText
+                  class="form-control"
+                  [(ngModel)]="addActivityData.activityDesc"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3 mt-2">
+                <label style="display: flex;" for="description">
+                  Due Date<span class="asterisk"> * </span>
+                </label>
+              </div>
+              <div style="margin-bottom: 19px;" class="col-9">
+                <input
+                [(ngModel)]="addActivityData.activityDueDate"
+                  id="description"
+                  name="title"
+                  type="date"
+                  pInputText
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3 mt-2">
+                <label style="display: flex;" for="description">
+                  Completion Date<span class="asterisk"> * </span>
+                </label>
+              </div>
+              <div class="col-9">
+                <input
+                [(ngModel)]="addActivityData.activityCompletionDate"
+                  id="description"
+                  name="title"
+                  type="date"
+                  pInputText
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3 mt-2">
+                <label style="display: flex;" for="description">
+                  Status<span class="asterisk"> * </span>
+                </label>
+              </div>
+              <div style="margin-bottom: 19px" class="col-9">
+                <select
+                  class="form-control"
+                  aria-label="Default select example"
+                  [(ngModel)]="addActivityData.activityStatus"
+                >
+                  <option value="new">NEW</option>
+                  <option value="in progress"> IN PROGRESS</option>
+                  <option value="kiv/postpone"> KIV/POSTPONE</option>
+                  <option value="closed"> CLOSED</option>
+
+
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3 mt-2">
+                <label style="display: flex;" for="description">
+                  Type<span class="asterisk"> * </span>
+                </label>
+              </div>
+              <div style="margin-bottom: 19px;display: flex;" class="col-9">
+                <select
+                (change)="activityTypeGet($event)"
+                  class="form-control"
+                  aria-label="Default select example"
+                  [(ngModel)]="addActivityData.activityType"
+                >
+                  <option value="meeting">MEETING</option>
+                  <option value="contact">CONTACT</option>
+                  <option value="follow up">FOLLOW UP</option>
+                  <option value="others"> OTHERS </option>
+
+                  
+
+                </select>
+                <input *ngIf="!isTypeOthers" style=" margin-left: 9px" placeholder="OTHERS" readonly  type="text" class="form-control" />
+                <input *ngIf="isTypeOthers" [(ngModel)]="addActivityData.activityType" style=" margin-left: 9px" type="text" class="form-control" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3 mt-2">
+                <label style="display: flex;" for="description">
+                  Remarks<span class="asterisk"> * </span>
+                </label>
+              </div>
+              <div style="margin-bottom: 21px" class="col-9">
+                <input
+                [(ngModel)]="addActivityData.activityRemarks"
+                  style="height: 100px"
+                  id="description"
+                  name="title"
+                  type="text"
+                  pInputText
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div style="    margin: 0px 0px 0px 104px;
+        " class="form-group">
+            <button
+              (click)="createActivity.hide()"
+              class="btn btn-light mr-2 px-4"
+              type="reset"
+            >
+              CANCEL
+            </button>
+            <button
+              (click)="createActivity.hide()"
+              (click)="saveActivity($event)"
+              class="btn btn-primary px-5"
+              type="submit"
+            >
+              SAVE
+            </button>
+          </div>
+
+          <!-- <div class="submit-btn">
+            <button class="cancel-btn" (click)="createActivity.hide()">
+              Cancel
+            </button>
+            <button class="save-btn" (click)="createActivity.hide()">
+              Save
+            </button>
+          </div> -->
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+</div>
