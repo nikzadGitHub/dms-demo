@@ -141,9 +141,9 @@ export const navItems: INavData[] = [
       }
     ]
   },
-  {
-    divider: true,
-  },
+  // {
+  //   divider: true,
+  // },
   {
     name: 'System Admin',
     url: '/systemadmin',
@@ -167,26 +167,23 @@ export const navItems: INavData[] = [
         name: 'User LOA',
         url: '/user/userloa',
       },
-      // {
-      //   name: 'Unit Setup',
-      //   url: '/user/unitsetup',
-      // },
     ]
   },
   {
     name: 'Unit Setup',
     url: '/user/unitsetup',
     icon: 'cil-screen-smartphone',
-  },/*
+  },
+  /*
   {
     name: 'SETTING',
     url: '/setting',
     icon: 'cil-cog',
   },
 */
-  {
-    divider: true,
-  },
+  // {
+  //   divider: true,
+  // },
   {
     name: 'Profile',
     url: '/profile',
