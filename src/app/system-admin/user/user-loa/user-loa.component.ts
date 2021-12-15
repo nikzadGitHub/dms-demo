@@ -40,7 +40,7 @@ export class UserLoaComponent implements OnInit {
       discount: "",
       cellingPriceAmount: "",
       cellingPriceApproval: "",
-      priceApprovel : this.formBuilder.array([])
+      priceApprovel: this.formBuilder.array([]),
     });
   }
 
@@ -57,7 +57,8 @@ export class UserLoaComponent implements OnInit {
       code: this.authorityForm.value.unit,
       payment_approval: this.authorityForm.value.paymentTermApproval,
       profit_margin: this.authorityForm.value.profitMargin,
-      approval_discount: this.authorityForm.value.discount,
+      approval_discount: 0,
+      // approval_discount: this.authorityForm.value.discount,
       celling_price_amount: this.authorityForm.value.cellingPriceAmount,
       celling_price_approval: this.authorityForm.value.cellingPriceApproval,
       person_charges: this.authorityForm.value.personCharges,
@@ -101,25 +102,24 @@ export class UserLoaComponent implements OnInit {
   deletePriceLevelRow(index) {
     // if (this.priceLevelApproval.length > 1) {
     // this.getPriceApprovelForm().splice(index, 1);
-    this.getPriceApprovelForm().removeAt(index)
+    this.getPriceApprovelForm().removeAt(index);
     // }
   }
   back() {
     // this.location.back();
     this.router.navigateByUrl("user/adduser");
   }
-  getPriceApprovelForm(): FormArray{
-    return this.authorityForm.get('priceApprovel') as FormArray
+  getPriceApprovelForm(): FormArray {
+    return this.authorityForm.get("priceApprovel") as FormArray;
   }
-  newPriceApprovelFields(): FormGroup{
-     return this.formBuilder.group({
-      amount : '',
-      approvedBy: ''
-    })
+  newPriceApprovelFields(): FormGroup {
+    return this.formBuilder.group({
+      amount: "",
+      approvedBy: "",
+    });
   }
 
-  dynamicForm(){
-    console.log('array form ',  this.authorityForm.value)
-
+  dynamicForm() {
+    console.log("array form ", this.authorityForm.value);
   }
 }

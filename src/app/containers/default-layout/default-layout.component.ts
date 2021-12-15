@@ -13,6 +13,7 @@ export class DefaultLayoutComponent {
   showSideBar = true;
   userFullname: any;
   userRoleName: any;
+  // userRole: any;
 
   constructor(private router: Router, private authService: AuthService) {
     let userRole = JSON.parse(localStorage.getItem("userRole"));
@@ -24,6 +25,10 @@ export class DefaultLayoutComponent {
         this.userFullname = res?.fullname || "";
       }
     });
+    this.managerAndAdminViewAccess(userRole);
+  }
+
+  managerAndAdminViewAccess(userRole) {
     if (
       userRole?.is_fss == false ||
       userRole?.is_director == true ||
@@ -34,56 +39,129 @@ export class DefaultLayoutComponent {
       userRole?.is_project_director == true
     ) {
       var index = this.navItems.findIndex((p) => p.name == "Contact");
+      console.log("index:-->", index);
       var index1 = this.navItems.findIndex((p) => p.name == "Manager View");
+      console.log("index1:-->", index1);
+
       if (index1 > 0) {
         this.navItems.splice(index1, 1);
       }
+      var adminIndex = this.navItems.findIndex((p) => p.name == "System Admin");
+      console.log("adminIndex:-->", adminIndex);
+      if (adminIndex > 0) {
+        this.navItems.splice(adminIndex, 1);
+      }
+      var accessIndex = this.navItems.findIndex(
+        (p) => p.name == "User Access Setup"
+      );
+      console.log("accessIndex:-->", accessIndex);
+      if (accessIndex > 0) {
+        this.navItems.splice(accessIndex, 1);
+      }
+      var userIndex = this.navItems.findIndex((p) => p.name == "User");
+      console.log("userIndex:-->", userIndex);
+      if (userIndex > 0) {
+        this.navItems.splice(userIndex, 1);
+      }
+      var unitIndex = this.navItems.findIndex((p) => p.name == "Unit Setup");
+      console.log("unitIndex:-->", unitIndex);
+      if (unitIndex > 0) {
+        this.navItems.splice(unitIndex, 1);
+      }
+
       this.navItems.splice(
         index + 1,
         0,
+
+        // manager-view
         {
-          divider: true,
-        },
-        {
-          name: 'Manager View',
-          url: '/managerview',
-          icon: 'cil-group',
+          name: "Manager View",
+          url: "/managerview",
+          icon: "cil-group",
           children: [
             {
-              name: 'FPM',
-              url: '/managerview',
+              name: "FPM",
+              url: "/managerview",
               children: [
                 {
-                  name: 'Approval ',
-                  url: '/managerview/approval',
+                  name: "Approval ",
+                  url: "/managerview/approval",
                 },
                 {
-                  name: 'Reassignment',
-                  url: '/managerview/reassignment',
+                  name: "Reassignment",
+                  url: "/managerview/reassignment",
                 },
                 {
-                  name: 'Deactivate/Active',
-                  url: '/managerview/active',
+                  name: "Deactivate/Active",
+                  url: "/managerview/active",
                 },
                 {
-                  name: 'Sales Target Setup',
-                  url: '/managerview/salestargetsetup',
+                  name: "Sales Target Setup",
+                  url: "/managerview/salestargetsetup",
                 },
-              ]
-            }, 
+              ],
+            },
             {
-              name: 'FPS',
-              url: '/fps',
+              name: "FPS",
+              url: "/fps",
               children: [
                 {
-                  name: 'FPS Sku List',
-                  url: '/fps/sku-listing',
-                }
-              ]
-            }
-          ]
+                  name: "FPS Sku List",
+                  url: "/fps/sku-listing",
+                },
+              ],
+            },
+          ],
         }
       );
+
+      // unit_setup
+      this.navItems.splice(
+        userIndex + 1,
+        0,
+        {
+          name: "Unit Setup",
+          url: "/user/unitsetup",
+          icon: "cil-screen-smartphone",
+        },
+        {
+          divider: true,
+        }
+      );
+      // user
+      this.navItems.splice(accessIndex + 1, 0, {
+        name: "User",
+        url: "/user",
+        icon: "cil-voice-over-record",
+        children: [
+          {
+            name: "User",
+            url: "/user/adduser",
+          },
+          {
+            name: "User LOA",
+            url: "/user/userloa",
+          },
+        ],
+      });
+
+      // access-setup
+      this.navItems.splice(
+        adminIndex + 1,
+        0,
+        // user access
+        {
+          name: "User Access Setup",
+          url: "/useraccess/user-access-setup",
+          icon: "cil-user-plus",
+        }
+      );
+      // system-admin
+      this.navItems.splice(index1 + 1, 0, {
+        name: "System Admin",
+        url: "/systemadmin",
+        icon: "cil-settings",
+      });
     } else if (
       userRole?.is_fss == true &&
       userRole?.is_director == false &&
@@ -93,19 +171,37 @@ export class DefaultLayoutComponent {
       userRole?.is_product_specialist == false &&
       userRole?.is_project_director == false
     ) {
+      // manager-view
       var index1 = this.navItems.findIndex((p) => p.name == "Manager View");
+      console.log("index1:-->", index1);
       if (index1 > 0) {
         this.navItems.splice(index1, 1);
       }
+      // system-admin
+      var indexAdmin = this.navItems.findIndex((p) => p.name == "System Admin");
+      console.log("indexAdmin:-->", indexAdmin);
+      if (indexAdmin > 0) {
+        this.navItems.splice(indexAdmin, 1);
+      }
+      // User Access Setup
+      var accessIndex = this.navItems.findIndex(
+        (p) => p.name == "User Access Setup"
+      );
+      if (accessIndex > 0) {
+        this.navItems.splice(accessIndex, 1);
+      }
+      // user
+      var userIndex = this.navItems.findIndex((p) => p.name == "User");
+      if (userIndex > 0) {
+        this.navItems.splice(userIndex, 1);
+      }
+      // unit_setup
+      var unitIndex = this.navItems.findIndex((p) => p.name == "Unit Setup");
+      if (unitIndex > 0) {
+        this.navItems.splice(unitIndex, 1);
+      }
     }
-    // else{
-    //   var index1 = this.navItems.findIndex(p => p.name == "Manager View");
-    //   if(index1 > 0 ){
-    //     this.navItems.splice(index1,1)
-    //   }
-    // }
   }
-
   toggleMinimize(e) {
     this.sidebarMinimized = e;
   }
