@@ -11,9 +11,9 @@ import { UserActivitiesService } from '../user-activities.service';
 export class CreateActivityComponent implements OnInit {
   @ViewChild("createActivity")
   public createActivity: ModalDirective;
-  @ViewChild("columnChooserModal")
+  @ViewChild("columnChooserModal") public columnChooserModal: ModalDirective;
   @ViewChild("successModal") successModal: ModalDirective;
-  public columnChooserModal: ModalDirective;
+
   loading:boolean
 	opportunities: [];
 	paginate: [];
