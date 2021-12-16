@@ -1,422 +1,428 @@
 <div class="animated fadeIn">
-    <div class="col-lg col-md-6">
-      <div class="card rcorners">
-        <div
-          class="card-header row"
-          style="background-color: #898485; color: white"
-        >
-          <div style="padding-left: 20px">
-            <h2>Create Prospect</h2>
-          </div>
+  <div class="col-lg col-md-6">
+    <div class="card rcorners">
+      <div
+        class="card-header row"
+        style="background-color: #898485; color: white"
+      >
+        <div style="padding-left: 20px">
+          <h2>Create Prospect</h2>
         </div>
-        <div class="card-body">
-          <form >
-            <div class="form-group">
-              <div class="card-row">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="card-row">
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header">
-                             Prospect Owner
-                            </div>
-                            <div class="col-md-7">
-                              <span class="p-input-icon-right">
-                                <p-autoComplete
-                                  class="search_field"
-                                  [inputStyle]="{ width: '100%' }"
-                                  [style]="{ width: '100%' }"
-                                  formControlName="primary_customer"
-                                
-                               
-                                 
-                                >
-                                  <ng-template let-item pTemplate="item">
-                                    <div class="item">
-                                      <div>{{ item.label }}</div>
-                                    </div>
-                                  </ng-template>
-                                </p-autoComplete>
-                                <i class="pi pi-search"></i>
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header">Company Name</div>
-                            <div class="col-md-7">
-                              <!-- <input formControlName="solution" class="form-control" placeholder="Solution" type="input"> -->
-                              <p-dropdown
-                                optionValue="label"
-                               
-                                formControlName="solution"
-                                placeholder="Select Solution"
-                                [virtualScroll]="true"
-                                [itemSize]="31"
-                                [filter]="false"
-                                autoWidth="false"
-                                [style]="{ width: '100%' }"
-                              ></p-dropdown>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header">Conatct Name</div>
-                            <div class="col-md-7">
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <div class="card-row">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card-row">
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div class="col-md-4 text-header">Prospect Owner</div>
+                          <div class="col-md-7">
+                            <span class="p-input-icon-right">
                               <input
-                                pInputText
-                                formControlName="nickname"
-                                class="form-control"
-                                placeholder=""
-                                type="input"
-                              />
-                            </div>
+                              pInputText
+                              class="form-control"
+                              placeholder="Seion Lee"
+                              type="input"
+                              readonly
+                            />
+                            </span>
                           </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header">Department</div>
-                            <div class="col-md-7">
-                              <p-dropdown
-                                optionLabel="value"
-                                optionValue="value"
-                               
-                                formControlName="department"
-                                placeholder="Select Department"
-                                [virtualScroll]="true"
-                                [itemSize]="31"
-                                [filter]="false"
-                                autoWidth="false"
-                                [style]="{ width: '100%' }"
-                              ></p-dropdown>
-                            </div>
-                          </div>
-                        </div>
+                    </div>
+                    <div style="width: 100%; margin-left: 0px" class="row">
+                      <div class="col-md-4 text-header">Company Name</div>
+                      <div class="col-md-7">
+                        <span class="p-input-icon-right">
+                          <p-autoComplete
+                            class="search_field"
+                            formControlName=""
+                          >
+                          </p-autoComplete>
+                          <i class="pi pi-search"></i>
+                        </span>
                       </div>
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header required-field">
-                              Email
-                            </div>
-                            <div class="col-md-7">
-                              <input
-                                required
-                              
-                                pInputText
-                                formControlName="email"
-                                class="form-control"
-                                placeholder=""
-                                type="input"
-                              />
-                            </div>
-                            <div
-                              class="invalid-feedback col-md-7 offset-md-4"
+                    </div>
+
+                    <div style="width: 100%; margin-left: 0px" class="row">
+                      <div class="col-md-4 text-header">Contact Name</div>
+                      <div class="col-md-7">
+                        <span class="p-input-icon-right">
+                          <p-autoComplete
+                            class="search_field"
+                            formControlName=""
+                          >
+                          </p-autoComplete>
+                          <i class="pi pi-search"></i>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div class="col-md-4 text-header">Department</div>
+                          <div class="col-md-7">
+                            <p-dropdown
+                              optionLabel="value"
+                              optionValue="value"
+                              formControlName="department"
+                           
                             
-                            >
-                              <small class="p-invalid">Email is required.</small>
-                            </div>
+                              [style]="{ width: '100%' }"
+                            ></p-dropdown>
                           </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header">Mobile Number</div>
-                            <div class="col-md-7">
-                              <input
-                                pInputText
-                                formControlName="mobile_phone"
-                                class="form-control"
-                                placeholder=""
-                                type="input"
-                              />
-                            </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div class="col-md-4 text-header required-field">
+                            Email
+                          </div>
+                          <div class="col-md-7">
+                            <input
+                              required
+                              pInputText
+                              formControlName="email"
+                              class="form-control"
+                              placeholder=""
+                              type="input"
+                            />
                           </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header">Address </div>
-                            <div class="col-md-7">
-                              <input
-                                pInputText
-                                formControlName="address_1"
-                                class="form-control"
-                                placeholder=""
-                                type="input"
-                              />
-                            </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div class="col-md-4 text-header">Mobile Number</div>
+                          <div class="col-md-7">
+                            <input
+                              pInputText
+                              formControlName="mobile_phone"
+                              class="form-control"
+                              placeholder=""
+                              type="input"
+                            />
                           </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header">Address 3</div>
-                            <div class="col-md-7">
-                              <input
-                                pInputText
-                                formControlName="address_3"
-                                class="form-control"
-                                placeholder=""
-                                type="input"
-                              />
-                            </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div
+                            style="white-space: nowrap"
+                            class="col-md-4 text-header"
+                          >
+                            Office Phone Number
+                          </div>
+                          <div class="col-md-7">
+                            <input
+                              pInputText
+                              formControlName="address_1"
+                              class="form-control"
+                              placeholder=""
+                              type="input"
+                            />
                           </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header">Source</div>
-                            <div class="col-md-7">
-                              <input
-                                pInputText
-                                formControlName="state"
-                                class="form-control"
-                                placeholder=""
-                                type="input"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header">Hospital Class</div>
-                            <div class="col-md-7">
-                              <input
-                                pInputText
-                                formControlName="zipcode"
-                                class="form-control"
-                                placeholder=""
-                                type="input"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-12">
-                            <div class="row">
-                                <div class="col-xl-12">
-                                  <div class="row">
-                                    <div class="col-md-4 text-header">Segment</div>
-                                    <div class="col-md-7">
-                                      <!-- <input formControlName="solution" class="form-control" placeholder="Solution" type="input"> -->
-                                      <p-dropdown
-                                        optionValue="label"
-                                       
-                                        formControlName="solution"
-                                        placeholder="Select Solution"
-                                        [virtualScroll]="true"
-                                        [itemSize]="31"
-                                        [filter]="false"
-                                        autoWidth="false"
-                                        [style]="{ width: '100%' }"
-                                      ></p-dropdown>
-                                    </div>
-                                  </div>
-                                </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div class="col-md-4 text-header">Address</div>
+                          <div class="col-md-6">
+                            <textarea
+                              [rows]="5"
+                              style="width: 118%"
+                              pInputTextarea
+                              formControlName="address"
+                            ></textarea>
+                            <div class="d-inline-flex">
+                              <div style="margin-right: 5px">
+                                <input
+                                  pInputText
+                                  formControlName="postcode"
+                                  class="form-control"
+                                  placeholder="Zipcode"
+                                  type="input"
+                                />
                               </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header">Customer Category</div>
-                            <div class="col-md-7">
-                              <p-dropdown
-                                optionLabel="value"
-                                optionValue="value"
-                               
-                                formControlName="contact_type"
-                                placeholder="Select Contact Type"
-                                [virtualScroll]="true"
-                                [itemSize]="31"
-                                [filter]="false"
-                                autoWidth="false"
-                                [style]="{ width: '100%' }"
-                              ></p-dropdown>
+                              <div style="margin-right: 5px">
+                                <p-dropdown
+                                  formControlName="state"
+                                  placeholder="Select State"
+                                ></p-dropdown>
+                              </div>
+                              <div>
+                                <input
+                                  pInputText
+                                  formControlName="country"
+                                  class="form-control"
+                                  placeholder="Country"
+                                  type="input"
+                                />
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-  
-                  <div class="col-md-6">
-                    <div class="card-row">
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header">Customer SubCategory</div>
-                            <div class="col-md-7">
-                              <p-multiSelect
-                              
-                              
-                                formControlName="other_accounts"
-                                optionLabel="label"
-                                autoWidth="false"
+
+                    <div class="row">
+                      <div class="col-xl-8">
+                        <div class="row">
+                          <div class="col-md-5 text-header">Prospect type</div>
+                          <div style="margin-left: 26px;" class="col-md-6">
+                            <p-radioButton
+                              style="margin: 7px"
+                              name="prospect_type"
+                              value="individual"
+                              formControlName="prospect_type"
+                              inputId="prospect_type1"
+                            ></p-radioButton>
+                            <label class="radio-label" for="prospect_type1"
+                              >Individual</label
+                            >
+                            <p-radioButton
+                              style="margin: 7px"
+                              name="prospect_type"
+                              value="company"
+                              formControlName="prospect_type"
+                              inputId="prospect_type2"
+                            ></p-radioButton>
+                            <label class="radio-label" for="prospect_type2"
+                              >Company</label
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xl-8">
+                        <div class="row">
+                          <div class="col-md-5 text-header">Source</div>
+                          <div
+                            style="margin-left: 26px"
+                            class="col-md-6 d-inline-flex"
+                          >
+                            <div class="col-md-5" style="padding: 0px">
+                              <p-dropdown
+                                formControlName="source"
+                                placeholder="Partner"
                                 [style]="{ width: '100%' }"
-                              >
-                                <ng-template let-value pTemplate="selectedItems">
-                                  <div
-                                    class="selected-item selected-item-value"
-                                 
-                                  >
-                                   
-                                    <span
-                                      class="close"
-                                      
-                                      >&times;</span
-                                    >
-                                  </div>
-                                  <div
-                                   
-                                     
-                                    
-                                    class="placeholder"
-                                  >
-                                    Select a Accounts
-                                  </div>
-                                </ng-template>
-                              </p-multiSelect>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header required-field">
-                             Hospital Bed (Range)
-                            </div>
-                            <div class="col-md-7">
-                              <span class="p-input-icon-right">
-                                <p-autoComplete
-                                  class="search_field"
-                                  [inputStyle]="{ width: '100%' }"
-                                  [style]="{ width: '100%' }"
-                                  formControlName="full_name"
-                            
-                                >
-                                  <ng-template let-item pTemplate="item">
-                                    <div class="item">
-                                      <div>{{ item.label }}</div>
-                                    </div>
-                                  </ng-template>
-                                </p-autoComplete>
-                                <i class="pi pi-search"></i>
-                              </span>
+                              ></p-dropdown>
                             </div>
                             <div
-                              class="invalid-feedback col-md-7 offset-md-4"
-                            
+                              class="col-md-7"
+                              style="padding: 0px 0px 0px 10px"
                             >
-                           
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header required-field">
-                             Hospital Bed (Exact)
-                            </div>
-                            <div class="col-md-7">
                               <input
+                                style="margin: 3px 0px 0px 70px"
                                 pInputText
-                                formControlName="job_title"
+                                formControlName="other_source"
                                 class="form-control"
-                                placeholder=""
+                                placeholder="Others"
                                 type="input"
-                                required
                               />
                             </div>
-                            <div
-                              class="invalid-feedback col-md-7 offset-md-4"
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div class="col-md-4 text-header">Hospital Class</div>
+                          <div class="col-md-7">
+                            <p-dropdown
+                              optionLabel="value"
+                              optionValue="value"
+                              formControlName="contact_type"
+                              placeholder="Attentive hospital"
+                              [style]="{ width: '100%' }"
+                            ></p-dropdown>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div class="col-md-4 text-header">Segment</div>
+                          <div class="col-md-7">
+                            <p-dropdown
+                              optionLabel="value"
+                              optionValue="value"
+                              formControlName="contact_type"
+                              placeholder="Goverment"
+                              [style]="{ width: '100%' }"
+                            ></p-dropdown>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div class="col-md-4 text-header">
+                            Customer Category
+                          </div>
+                          <div class="col-md-7">
+                            <p-dropdown
+                              optionLabel="value"
+                              optionValue="value"
+                              formControlName="contact_type"
+                              placeholder="Price buyers"
+                            
+                              [style]="{ width: '100%' }"
+                            ></p-dropdown>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="card-row">
+
+
+                        <div class="row">
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div style="white-space: nowrap;" class="col-md-4 text-header">
+                           Customer SubCategory
+                          </div>
+                          <div class="col-md-7">
+                            <p-dropdown
+                              optionLabel="value"
+                              optionValue="value"
+                              formControlName="contact_type"
+                              placeholder="97-191"
+                          
+                            
+                              autoWidth="false"
+                              [style]="{ width: '100%' }"
+                            ></p-dropdown>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div class="col-md-4 text-header">
+                            Hospital Bed (Range)
+                          </div>
+                          <div class="col-md-7">
+                            <p-dropdown
+                              optionLabel="value"
+                              optionValue="value"
+                              formControlName="contact_type"
+                              placeholder="97-191"
                              
-                            >
-                            
-                            </div>
+                              autoWidth="false"
+                              [style]="{ width: '100%' }"
+                            ></p-dropdown>
                           </div>
                         </div>
                       </div>
-  
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header">Region ID</div>
-                            <div class="col-md-7">
-                              <input
-                                pInputText
-                                formControlName="specialization"
-                                class="form-control"
-                                placeholder=""
-                                type="input"
-                              />
-                            </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div class="col-md-4 text-header required-field">
+                            Hospital Bed (Exact)
+                          </div>
+                          <div class="col-md-7">
+                            <input
+                              pInputText
+                              formControlName="job_title"
+                              class="form-control"
+                              placeholder=""
+                              type="input"
+                              required
+                            />
+                          </div>
+                          <div
+                            class="invalid-feedback col-md-7 offset-md-4"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div class="col-md-4 text-header">Region ID</div>
+                          <div class="col-md-7">
+                            <p-dropdown
+                              optionLabel="value"
+                              optionValue="value"
+                              formControlName="contact_type"
+                              placeholder="Northern Region"
+                             
+                              autoWidth="false"
+                              [style]="{ width: '100%' }"
+                            ></p-dropdown>
                           </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <div class="row">
-                            <div class="col-md-4 text-header">Customer Tax</div>
-                            <div class="col-md-7">
-                              <input
-                                pInputText
-                                formControlName="business_phone"
-                                class="form-control"
-                                placeholder=""
-                                type="input"
-                                required
-                              />
-                            </div>
-                            <div
-                              class="invalid-feedback col-md-7 offset-md-4"
-                           
-                            >
-                            
-                            </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div class="col-md-4 text-header">
+                            Customer Category
+                          </div>
+                          <div class="col-md-7">
+                            <p-dropdown
+                              optionLabel="value"
+                              optionValue="value"
+                              formControlName="contact_type"
+                              placeholder="HCM_NONE"
+                             
+                              autoWidth="false"
+                              [style]="{ width: '100%' }"
+                            ></p-dropdown>
                           </div>
                         </div>
                       </div>
-                   
-                 
-                   
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-  
-            <div class="col-lg-9 submit-button" align="center">
-              <div class="form-group">
-                <a routerLink="contact/index" class="btn btn-secondary">CANCEL</a>
-                <button class="btn btn-success" type="submit">SAVE</button>
-                <button class="btn btn-primary" type="submit">Next</button>
+          </div>
 
-              </div>    
-            </div>
-          </form>
-        </div>
-        <div class="card-footer bg-transparent"></div>
+          <div class="col-lg-9 submit-button" align="center">
+            <div class="form-group">
+              <button class="btn btn-light mr-2 px-4" type="reset"><i class="pi pi-arrow-left mr-2"></i>CANCEL</button>
+              <button class="btn btn-light px-5" type="submit" >
+                  <i class="pi pi-save mr-2"></i>SAVE</button>
+                  <button style="margin-left: 7px" class="btn btn-primary px-5" type="submit">Next</button>
+          </div>
+          
+          </div>
+        </form>
       </div>
+      <div class="card-footer bg-transparent"></div>
     </div>
   </div>
+</div>
