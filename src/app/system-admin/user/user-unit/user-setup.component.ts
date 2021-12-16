@@ -47,7 +47,7 @@ export class UserSetupComponent implements OnInit {
   editedUnit: any = [];
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
-  alertBody;
+  alertBody='';
   selectedAllUnits: any = [];
   unitId: string;
   constructor(

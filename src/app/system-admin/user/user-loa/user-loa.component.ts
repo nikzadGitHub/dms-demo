@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Location } from "@angular/common";
 import { SystemAdminService } from "../../system-admin.service";
+import { ModalDirective } from "ngx-bootstrap/modal";
 
 @Component({
   selector: "app-user-loa",
@@ -11,19 +12,15 @@ import { SystemAdminService } from "../../system-admin.service";
 })
 export class UserLoaComponent implements OnInit {
   userList: any = [];
-  priceLevelApproval = [{ amount: "", approveBy: "" }];
+
   authorityForm: FormGroup;
   TeamEmailForm: FormGroup;
-  dummy_data = [
-    { name: "New York", code: "NY" },
-    { name: "Rome", code: "RM" },
-    { name: "London", code: "LDN" },
-    { name: "Istanbul", code: "IST" },
-    { name: "Paris", code: "PRS" },
-  ];
+  @ViewChild("successModal") successModal: ModalDirective;
+  @ViewChild("dangerModal") dangerModal: ModalDirective;
 
   allUnits: any[] = [];
-
+  unitId: string;
+  alertBody = "";
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -33,9 +30,9 @@ export class UserLoaComponent implements OnInit {
     this.authorityForm = this.formBuilder.group({
       unit: "",
       paymentTermApproval: "",
-      personCharges: "",
+      personInCharges: "",
       amount: "",
-      approveBy: "",
+      approve_by: "",
       profitMargin: "",
       discount: "",
       cellingPriceAmount: "",
@@ -47,28 +44,41 @@ export class UserLoaComponent implements OnInit {
   ngOnInit(): void {
     this.getUserRole();
     this.getAllUnits();
+    this.addPriceLevelApproval();
+    console.log("this.authorityForm.value =>", this.authorityForm.value);
     // this.dummyAuthorityData.forEach((value) => {
     //   value.created_at = new Date(value.created_at);
     // });
   }
 
-  createUserLoa() {
+  createUserLoad() {
     let data = {
-      code: this.authorityForm.value.unit,
-      payment_approval: this.authorityForm.value.paymentTermApproval,
+      parent_unit_id: this.authorityForm.value.unit,
+      pic_user_id: this.authorityForm.value.personInCharges,
       profit_margin: this.authorityForm.value.profitMargin,
-      approval_discount: 0,
-      // approval_discount: this.authorityForm.value.discount,
+      approval_discount: this.authorityForm.value.discount,
       celling_price_amount: this.authorityForm.value.cellingPriceAmount,
-      celling_price_approval: this.authorityForm.value.cellingPriceApproval,
-      person_charges: this.authorityForm.value.personCharges,
-      price_level_approva: this.priceLevelApproval,
+      celling_price_approval_id: this.authorityForm.value.cellingPriceApproval,
+      price_level_approval: this.authorityForm.value.priceApprovel,
     };
     this.systemAdminSerive
-      .postQuery("/user-loa", data)
-      .subscribe((res: any) => {
-        console.log("user-loa-res:", res);
-      });
+      .putQuery("/units/level-approval/" + this.unitId, data)
+      .subscribe(
+        (res: any) => {
+          console.log("user-loa-res:", res);
+          (this.alertBody = res.message), this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+            this.authorityForm.reset();
+          }, 2000);
+        },
+        (error) => {
+          console.log("Error:", error);
+
+          this.alertBody = error.error.message;
+          this.dangerModal.show();
+        }
+      );
   }
 
   getUserRole() {
@@ -77,49 +87,70 @@ export class UserLoaComponent implements OnInit {
       this.userList = res.data;
     });
   }
-  addPriceLevelApproval() {
-    this.priceLevelApproval.push({
-      amount: this.authorityForm.value.amount,
-      approveBy: this.authorityForm.value.approveBy,
-    });
-    console.log("priceLevelApproval:", this.priceLevelApproval);
-
-    // let index = this.priceLevelApproval.findIndex((ele) =>
-    //   console.log("ele:", ele)
-    // );
-    // if (this.priceLevelApproval.length > 1 && this.priceLevelApproval) {
-    //   this.authorityForm.get("amount").reset();
-    //   this.authorityForm.get("approveBy").reset();
-    // }
-  }
-
   getAllUnits() {
+    // /units/level-approval/1
     this.systemAdminSerive.getQuery("/units").subscribe((res: any) => {
       console.log("Unit-res:", res);
       this.allUnits = res.data;
     });
   }
+  goForEdit(authorityUnit) {
+    this.unitId = authorityUnit.id;
+    console.log("authorityUnit:", authorityUnit);
+    // debugger;
+
+    this.systemAdminSerive
+      .getQuery("/units/level-approval/" + this.unitId)
+      .subscribe((res: any) => {
+        if (this.authorityForm.value.priceApprovel.length) {
+          this.getPriceApprovelForm().removeAt(0);
+        }
+        res?.data?.price_levels.forEach((ele) => {
+          this.getPriceApprovelForm().push(
+            this.formBuilder.group({
+              amount: ele.level_amount,
+              approve_by: ele.approval_personel_id,
+            })
+          );
+        });
+
+        this.authorityForm.patchValue({
+          unit: res?.data?.parent_unit_id,
+          personInCharges: res?.data?.pic?.id,
+          // amount: "",
+          // approve_by: "",
+          profitMargin: res?.data?.min_profit_margin_percentage,
+          discount: res?.data?.allowed_discount_percentage,
+          cellingPriceAmount: res?.data?.ceiling?.ceiling_amount,
+          cellingPriceApproval: res?.data?.ceiling?.approval_personel_id,
+          // priceApprovel: res?.data?.price_levels,
+        });
+      });
+  }
+
+  addPriceLevelApproval() {
+    this.getPriceApprovelForm().push(this.newPriceApprovelFields());
+  }
+
   deletePriceLevelRow(index) {
-    // if (this.priceLevelApproval.length > 1) {
-    // this.getPriceApprovelForm().splice(index, 1);
     this.getPriceApprovelForm().removeAt(index);
-    // }
   }
-  back() {
-    // this.location.back();
-    this.router.navigateByUrl("user/adduser");
-  }
+
   getPriceApprovelForm(): FormArray {
     return this.authorityForm.get("priceApprovel") as FormArray;
   }
   newPriceApprovelFields(): FormGroup {
     return this.formBuilder.group({
       amount: "",
-      approvedBy: "",
+      approve_by: "",
     });
   }
 
   dynamicForm() {
     console.log("array form ", this.authorityForm.value);
+  }
+  back() {
+    // this.location.back();
+    this.router.navigateByUrl("user/adduser");
   }
 }

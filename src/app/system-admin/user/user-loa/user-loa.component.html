@@ -29,7 +29,7 @@
                 [options]="allUnits"
                 optionLabel="title"
                 optionValue="id"
-                placeholder="Select unit"
+                placeholder="Select parent unit"
                 [style]="{ width: '380px' }"
                 [required]="true"
               ></p-dropdown>
@@ -38,7 +38,7 @@
         </div>
 
         <!-- Payment Term Approval -->
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
           <div class="row">
             <div class="col-3 mt-2">
               <label
@@ -59,6 +59,30 @@
               ></p-dropdown>
             </div>
           </div>
+        </div> -->
+
+        <!-- Person Charges -->
+        <!-- <div class="authority-text-2 row mb-2"> -->
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-3 mt-2">
+              <label> Person Incharge:<span class="red-star">*</span></label>
+            </div>
+            <div class="col-9">
+              <p-dropdown
+                id="opc"
+                name="picList"
+                formControlName="personInCharges"
+                [options]="userList"
+                optionLabel="full_name"
+                optionValue="id"
+                placeholder="Select In-charges"
+                [style]="{ width: '380px' }"
+                [required]="true"
+              ></p-dropdown>
+            </div>
+          </div>
+          <!-- </div> -->
         </div>
       </div>
 
@@ -93,31 +117,8 @@
           </div>
         </div>
 
-        <!-- Person Charges -->
-        <!-- <div class="authority-text-2 row mb-2"> -->
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-3 mt-2">
-              <label> Person Incharge:<span class="red-star">*</span></label>
-            </div>
-            <div class="col-9">
-              <p-dropdown
-                id="opc"
-                name="picList"
-                formControlName="personCharges"
-                [options]="userList"
-                optionLabel="full_name"
-                optionValue="id"
-                placeholder="Select In-charges"
-                [style]="{ width: '380px' }"
-                [required]="true"
-              ></p-dropdown>
-            </div>
-          </div>
-          <!-- </div> -->
-        </div>
         <!-- Approval Discount -->
-        <!-- <div class="col-md-6">
+        <div class="col-md-6">
           <div class="row">
             <div class="col-3 mt-2">
               <label>Approval Discount:<span class="red-star">*</span></label>
@@ -134,7 +135,7 @@
               />
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
       <!-- celling price amount and celling price approval -->
       <div class="celling-approval">
@@ -208,68 +209,61 @@
           <i class="cil-plus c-icon"></i>
         </button>
       </div>
-      <div
-        class="price-level row mt-4"
-        *ngFor="let item of priceLevelApproval; let i = index"
-      >
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-3 mt-2">
-              <!-- Amount -->
-              <label>Amount: <span class="red-star">*</span></label>
-            </div>
-            <div class="col-9">
-              <input
-                type="text"
-                pInputText
-                placeholder="0"
-                formControlName="amount"
-                inputId="integeronly"
-                inputId="withoutgrouping"
-                [style]="{ width: '380px' }"
-              />
-              <!-- <p-inputNumber
-                name=""
-                formControlName="amount"
-                inputId="integeronly"
-                inputId="withoutgrouping"
-                [useGrouping]="false"
-                [style]="{ width: '380px' }"
-              >
-              </p-inputNumber> -->
-            </div>
-          </div>
 
-          <!-- <input type="text" class="form-control" formControlName="amount" /> -->
-        </div>
-        <!-- approve by -->
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-3 mt-2">
-              <label>Approve By: <span class="red-star">*</span></label>
+      <div formArrayName="priceApprovel">
+        <div
+          *ngFor="let field of getPriceApprovelForm().controls; let i = index"
+          [formGroupName]="i"
+          class="price-level row mt-4"
+        >
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-3 mt-2">
+                <!-- Amount -->
+                <label>Amount: <span class="red-star">*</span></label>
+              </div>
+              <div class="col-9">
+                <p-inputNumber
+                  name=""
+                  formControlName="amount"
+                  inputId="integeronly"
+                  inputId="withoutgrouping"
+                  [style]="{ width: '380px' }"
+                >
+                </p-inputNumber>
+              </div>
             </div>
-            <div class="col-9">
-              <p-dropdown
-                id="opc"
-                name="picList"
-                formControlName="approveBy"
-                [options]="userList"
-                optionLabel="full_name"
-                optionValue="id"
-                placeholder="Select Approve By"
-                [style]="{ width: '300px' }"
-                [required]="true"
-              >
-              </p-dropdown>
-              <a
-                [routerLink]=""
-                routerLinkActive="router-link-active"
-                (click)="deletePriceLevelRow(i)"
-                ><i
-                  class="fa fa-trash"
-                  style="font-size: 18px; padding-left: 2rem"
-                ></i
-              ></a>
+            <!-- <input type="text" class="form-control" formControlName="amount" /> -->
+          </div>
+          <!-- approve by -->
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-3 mt-2">
+                <label>Approve By: <span class="red-star">*</span></label>
+              </div>
+              <div class="col-9">
+                <p-dropdown
+                  id="opc"
+                  name="picList"
+                  formControlName="approve_by"
+                  [options]="userList"
+                  optionLabel="full_name"
+                  optionValue="id"
+                  placeholder="Select Approve By"
+                  [style]="{ width: '300px' }"
+                  [required]="true"
+                >
+                </p-dropdown>
+                <a
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="deletePriceLevelRow(i)"
+                  ><i
+                    class="fa fa-trash"
+                    style="font-size: 18px; padding-left: 2rem"
+                  ></i
+                ></a>
+              </div>
             </div>
           </div>
         </div>
@@ -278,13 +272,19 @@
         <button type="button" class="btn btn-outline-primary cancel-btn">
           CANCEL
         </button>
-        <button type="button" class="btn btn-primary save-btn">SAVE</button>
+        <button
+          type="button"
+          class="btn btn-primary save-btn"
+          (click)="createUserLoad()"
+        >
+          SAVE
+        </button>
       </div>
 
       <div class="authority-table">
         <p-table
           #dt
-          [value]=""
+          [value]="allUnits"
           styleClass="p-datatable-authority"
           [globalFilterFields]="['created_at', 'code', 'title']"
           [paginator]="true"
@@ -318,7 +318,7 @@
                 <!-- name -->
                 <th pSortableColumn="name" class="text-center">
                   <div class="column-design">
-                    Name
+                    UnitName
                     <div class="name-icons">
                       <p-sortIcon field="name"></p-sortIcon>
                       <p-columnFilter
@@ -333,72 +333,12 @@
                 <!-- Rate -->
                 <th pSortableColumn="rate" class="text-center">
                   <div class="column-design">
-                    Rate
+                    Unit Code
                     <div class="rate-icons">
                       <p-sortIcon field="rate"></p-sortIcon>
                       <p-columnFilter
                         type="text"
                         field="rate"
-                        display="menu"
-                        class="p-ml-auto"
-                      ></p-columnFilter>
-                    </div>
-                  </div>
-                </th>
-                <!-- country -->
-                <th pSortableColumn="country" class="text-center">
-                  <div class="column-design">
-                    Country
-                    <div class="country-icons">
-                      <p-sortIcon field="country"></p-sortIcon>
-                      <p-columnFilter
-                        type="text"
-                        field="country"
-                        display="menu"
-                        class="p-ml-auto"
-                      ></p-columnFilter>
-                    </div>
-                  </div>
-                </th>
-                <!-- main-unit -->
-                <th pSortableColumn="main_unit" class="text-center">
-                  <div class="column-design">
-                    Main Unit
-                    <div class="main_unit-icons">
-                      <p-sortIcon field="main_unit"></p-sortIcon>
-                      <p-columnFilter
-                        type="text"
-                        field="main_unit"
-                        display="menu"
-                        class="p-ml-auto"
-                      ></p-columnFilter>
-                    </div>
-                  </div>
-                </th>
-                <!-- sub-unit -->
-                <th pSortableColumn="sub_unit" class="text-center">
-                  <div class="column-design">
-                    Sub Unit
-                    <div class="sub_unit-icons">
-                      <p-sortIcon field="sub_unit"></p-sortIcon>
-                      <p-columnFilter
-                        type="text"
-                        field="sub_unit"
-                        display="menu"
-                        class="p-ml-auto"
-                      ></p-columnFilter>
-                    </div>
-                  </div>
-                </th>
-                <!-- report-to -->
-                <th pSortableColumn="report_to" class="text-center">
-                  <div class="column-design">
-                    Report To
-                    <div class="report_to-icons">
-                      <p-sortIcon field="report_to"></p-sortIcon>
-                      <p-columnFilter
-                        type="text"
-                        field="report_to"
                         display="menu"
                         class="p-ml-auto"
                       ></p-columnFilter>
@@ -417,31 +357,26 @@
           </ng-template>
 
           <!-- Data -->
-          <ng-template pTemplate="body" let-authority>
+          <ng-template pTemplate="body" let-authorityUnit>
             <tr align="center">
               <td class="text-center">
-                {{ authority.created_at | date: "MM-dd-yyyy" }}
+                <div *ngIf="authorityUnit.created_at">
+                  {{ authorityUnit.created_at | date: "MM-dd-yyyy" }}
+                </div>
+                <div *ngIf="!authorityUnit.created_at">_</div>
               </td>
               <td class="text-center">
-                {{ authority.name }}
+                {{ authorityUnit.title }}
               </td>
               <td class="text-center">
-                {{ authority.rate }}
+                {{ authorityUnit.code }}
               </td>
               <td class="text-center">
-                {{ authority.country }}
-              </td>
-              <td class="text-center">
-                {{ authority.main_unit }}
-              </td>
-              <td class="text-center">
-                {{ authority.sub_unit }}
-              </td>
-              <td class="text-center">
-                {{ authority.report_to }}
-              </td>
-              <td class="text-center">
-                <a [routerLink]="" routerLinkActive="router-link-active">
+                <a
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="goForEdit(authorityUnit)"
+                >
                   <i class="fa fa-edit"></i>
                 </a>
               </td>
@@ -451,4 +386,49 @@
       </div>
     </div>
   </form>
+</div>
+
+<!-- model -->
+
+<div
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
 </div>

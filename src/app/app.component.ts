@@ -54,6 +54,8 @@ export class AppComponent implements OnInit {
       window.scrollTo(0, 0);
     });
     this.loaderService.loaderGet().subscribe(state=>{
+      console.log("state------>", state);
+      
       this.isLoading = state
     })
   }

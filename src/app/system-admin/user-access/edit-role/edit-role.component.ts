@@ -99,18 +99,10 @@ export class EditRoleComponent implements OnInit {
     console.log("edit:-->", this.rolePermissionsList);
   }
   selectAll(event) {
-    console.log("Event:", event);
-    console.log("Array(event):", Array(event));
-    if (event.checked == true) {
-      this.selectedRolePermission = Array(event).filter(
-        (value) => value.checked
-      );
-      console.log("selectedRolePermission:", this.selectedRolePermission);
-    }
+
   }
   resetPermissions() {
-    this.selectedRolePermission = [];
-    this.rolePermissionsList = [];
+
   }
   back() {
     // this.location.back();
