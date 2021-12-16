@@ -103,10 +103,14 @@ export class QuoteService {
     return this.httpClient.get(this.apiURL + '/quote/quotation-template',this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
-    )
+    )   
   }
   getQuatation(id){
-    return this.httpClient.get(this.apiURL + '/quote/quotation-preview/'+ id, this.httpOptions)
+    let authToken = localStorage.getItem('auth-token');
+    return this.httpClient.get(this.apiURL + '/quote/quotation-preview/'+ id,  {
+      headers: {
+        'Authorization': authToken,
+      }})
     .pipe(
       catchError(this.errorHandler)
     )

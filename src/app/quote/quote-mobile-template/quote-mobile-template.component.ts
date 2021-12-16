@@ -13,6 +13,7 @@ import jsPDF from "jspdf";
 
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { AuthService } from "../../auth/auth.service";
+import { QuoteService } from "../quote.service";
 
 @Component({
   selector: "app-quote-mobile-template",
@@ -39,13 +40,24 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
   quotationId: number;
   templateId: number;
   userToken: any;
+  quotationsTemplateData: any;
+  salesPersonData: any;
+  salesPersonSignature: any;
+  quotationContent: any;
+  productDetails: any;
+  quotationContentFooter: any;
+  quotationContentHeader: any;
+  productTotalPrice: number;
+  netTotal: number;
+  discountedValue: string;
 
   constructor(
     @Inject(DOCUMENT) private document: any,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    private platform: Platform
+    private platform: Platform,
+    private quoteService:QuoteService
   ) {}
   ngAfterViewInit(): void {
     this.getMobileOperatingSystem();
@@ -77,9 +89,35 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
     element.forEach((el) => {
       el.style.visibility = "hidden";
     });
+      this.viewQuotationTemplate()
     // this.getMobileOperatingSystem();
-    this.toggleFullScreen();
     this.elem = document.documentElement;
+    this.toggleFullScreen();
+    // this.elem = document.documentElement;
+  }
+
+  viewQuotationTemplate() { 
+
+    this.quoteService.getQuatation(48).subscribe((res) =>{
+      this.quotationsTemplateData = res["data"]
+      this.salesPersonData = res["data"].quotations?.sales_person
+      this.salesPersonSignature = this.salesPersonData?.signature_base64
+      this.quotationContent = res["data"].quotations?.quotation_contents
+      this.productDetails = res["data"].quotations?.products
+      console.log("this.productDetails =>",this.productDetails)
+      if(this.quotationContent){
+        this.quotationContentFooter = JSON.parse(this.quotationContent?.footer_content)
+        this.quotationContentHeader = JSON.parse(this.quotationContent?.header_content)
+      }
+      for(let i = 0; i < this.quotationsTemplateData.quotations.products.length; i++){
+        this.productTotalPrice = parseFloat(this.productDetails[i].list_price);
+      }
+      this.netTotal = this.productTotalPrice - parseFloat(this.discountedValue)
+      
+    })
+    console.log('this.quotationsTemplateData =>',this.quotationsTemplateData);
+    
+    // this.router.navigateByUrl("quote/view/quote-template");
   }
 
   downloadPDF() {
@@ -228,8 +266,8 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
         (this.templateId = params.templateId),
         (this.userToken = params.token);
     });
-    localStorage.setItem("auth-token", this.userToken);
-    await this.authService.setAuthorizationToken(this.userToken);
+    // localStorage.setItem("auth-token", this.userToken);
+    // await this.authService.setAuthorizationToken(this.userToken);
   }
   onePDF() {
     this.successModal.hide();
