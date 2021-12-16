@@ -175,19 +175,21 @@ export class SkuCreateComponent implements OnInit {
         if (res.id) {
 
           let rates = this.rateAddForm.value.addRates;
-            
+          let rateData = [];
           for(let x = 0; x <rates.length; x++) {
-            let rate = {
+            rateData.push({
               'id': null,
               'financial_package_id': res.id,
               'validity_start_at': rates[x].validity_start_at,
               'validity_end_at': rates[x].validity_end_at,
               'status': rates[x].status,
               'type': rates[x].rate_type,
-            }
-            // Store rate.
-            this.storeRates(rate);
+            });
           } 
+
+          if(rateData.length > 0) {
+            this.storeRates(rateData);
+          }
 
           this.alertBody = "FPS saved successfully.";
           this.successModal.show();

@@ -209,31 +209,37 @@ export class CreateComponent implements OnInit {
     }).subscribe((res) => {
         if (res.id) {
           let procedures = this.minProcedureAddForm.value.addMinProcedure;
+          let procedureList = [];
           for(let x = 0; x <procedures.length; x++) {
-            let procedure = {
+            procedureList.push({
               'id': null,
               'fps_id': res.id,
               'date': procedures[x].date,
               'no_procedure': procedures[x].no_procedure,
               'updated_by': procedures[x].updated_by,
               'updated_on': procedures[x].updated_on,
-            }
-            this.fpsService.storeMinProcedure(procedure);
-          } 
-
+            });
+          }
+          if(procedureList.length > 0) {
+            this.fpsService.storeMinProcedure(procedureList);
+          }
+          
           let usages = this.minUsageAddForm.value.addMinUsage;
+          let usageList = [];
           for(let x = 0; x <usages.length; x++) {
-            let usage = {
+            usageList.push({
               'id': null,
               'fps_id': res.id,
               'date': usages[x].date,
               'usage': usages[x].usage,
               'updated_by': usages[x].updated_by,
               'updated_on': usages[x].updated_on,
-            }
-            this.fpsService.storeMinUsage(usage);
+            })
           } 
-
+          if(usageList.length > 0) {
+            this.fpsService.storeMinUsage(usageList);
+          }
+        
           this.alertBody = "FPS saved successfully.";
           this.successModal.show();
           setTimeout(() => {

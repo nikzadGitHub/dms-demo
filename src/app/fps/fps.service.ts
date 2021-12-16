@@ -118,9 +118,9 @@ export class FpsService implements FpsInterface {
     });
   }
 
-  minProcedureCheckSum(data: any): Observable<SaveResult> {
-    return this.apiClient.post('minProcedure/checksum', data);
-  }
+  // minProcedureCheckSum(data: any): Observable<SaveResult> {
+  //   return this.apiClient.post('minProcedure/checksum', data);
+  // }
 
   saveMinUsage(data: any): Observable<SaveResult> {
     return this.apiClient.post('minUsage/store', data);
@@ -137,9 +137,9 @@ export class FpsService implements FpsInterface {
     });
   }
 
-  minUsageCheckSum(data: any): Observable<SaveResult> {
-    return this.apiClient.post('minUsage/checksum', data);
-  }
+  // minUsageCheckSum(data: any): Observable<SaveResult> {
+  //   return this.apiClient.post('minUsage/checksum', data);
+  // }
 
   deleteFps(fpsID: number) {
     return this.httpClient.delete(this.apiURL + '/fps/delete/' + fpsID, this.httpOptions)

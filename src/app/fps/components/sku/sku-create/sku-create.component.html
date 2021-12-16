@@ -271,7 +271,7 @@
                                     <tr *ngFor="let cost of addRates().controls; let i=index" [formGroupName]="i"
                                         align="center">
                                         <td style="width: 15%;">
-                                            <input formControlName="rate_no" size="1" class="form-control" type="number">
+                                            <input formControlName="rate_no" [readonly]="true" size="1" class="form-control" type="number">
                                         </td>
                                         <td style="width: 15%;">
                                             <input formControlName="validity_start_at" class="form-control" type="date"
@@ -291,10 +291,8 @@
                                             </p-dropdown>
                                         </td>
                                         <td class="td-actions" style="width: 10%;">
-                                            <a [routerLink]="" routerLinkActive="router-link-active"><i
-                                                    class="fa fa-edit"></i></a> &nbsp;
-                                            <a [routerLink]="" (click)="removeAddRates(i)"
-                                                routerLinkActive="router-link-active"><i class="fa fa-trash"></i></a>
+                                            <i class="fa fa-edit"></i> &nbsp;
+                                            <i class="fa fa-trash" (click)="removeAddRates(i)"></i>
                                         </td>
                                     </tr>
                                 </tbody>

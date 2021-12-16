@@ -178,8 +178,7 @@ export class SkuEditComponent implements OnInit {
       data.data.rates.forEach((addCost) => {
         this.rate_counter = addCost.id;
         this.addRates().push(this.existingRates(addCost));
-        console.log("existing rate to push ", addCost)
-        this.existingRatesIds.push(addCost.id)
+        this.existingRatesIds.push(addCost.id);
       });
       
     });
@@ -235,7 +234,11 @@ export class SkuEditComponent implements OnInit {
                 'type': rates[x].type,
               });
             }
-            this.storeRates(rateData);
+
+            if(rateData.length > 0) {
+              this.storeRates(rateData);
+            }
+            
             this.router.navigateByUrl('/fps/sku-listing', {replaceUrl: true})
           }, 2000);
           

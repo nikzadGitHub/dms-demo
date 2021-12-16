@@ -42,6 +42,8 @@ export class EditComponent implements OnInit {
   fpsID: string;
   minProcedureAddForm: FormGroup;
   minUsageAddForm: FormGroup;
+  existingProcedureIds = [];
+  existingConsumeIds = [];
 
   payment_frequency_list = [
     {'value': 'monthly_payment', 'label': 'Monthly'},
@@ -195,37 +197,33 @@ export class EditComponent implements OnInit {
         if (res.id) {
 
           let procedures = this.minProcedureAddForm.value.addMinProcedure;
-          let activeProcedureIDs = [];
+          let procedureList = [];
           for(let x = 0; x < procedures.length; x++) {
-            activeProcedureIDs.push(procedures[x].id);
-            let procedure = {
-              'id': procedures[x].id,
+            procedureList.push({
+              'id': this.existingProcedureIds.includes(procedures[x].id) ? procedures[x].id : null,
               'fps_id': res.id,
               'date': procedures[x].date,
               'no_procedure': procedures[x].no_procedure,
               'updated_by': procedures[x].updated_by,
               'updated_on': procedures[x].updated_on,
-            }
-            this.fpsService.storeMinProcedure(procedure);
+            });
           }
-          this.fpsService.minProcedureCheckSum({'activeProcedureIDs' : activeProcedureIDs, 'fps_id' : res.id}).subscribe();
+          this.fpsService.storeMinProcedure(procedureList);
 
           let usages = this.minUsageAddForm.value.addMinUsage;
-          let activeUsageIDs = [];
+          let usageList = [];
           for(let x = 0; x <usages.length; x++) {
-            activeUsageIDs.push(usages[x].id);
-            let usage = {
-              'id': usages[x].id,
+            usageList.push({
+              'id': this.existingConsumeIds.includes(usages[x].id) ? usages[x].id : null,
               'fps_id': res.id,
               'date': usages[x].date,
               'usage': usages[x].usage,
               'updated_by': usages[x].updated_by,
               'updated_on': usages[x].updated_on,
-            }
-            this.fpsService.storeMinUsage(usage);
-          } 
-          this.fpsService.minUsageCheckSum({'activeUsageIDs' : activeUsageIDs, 'fps_id' : res.id}).subscribe();
-
+            });
+          }
+          this.fpsService.storeMinUsage(usageList);
+          
           this.alertBody = "FPS updated successfully.";
           this.successModal.show();
           setTimeout(() => {
@@ -258,6 +256,7 @@ export class EditComponent implements OnInit {
     var result = this.getFilteredCodes(this.tenure_list, "id", rateID);
     
     if (result.length > 1) {
+      
       this.fpsEditForm.controls.fps_interest_rate.setValue(result[0].details_interest_rate);
       this.fpsEditForm.controls.fps_min_payment_amount.setValue(result[0].min_payment_amount);
       this.fpsEditForm.controls.fps_required_docs.setValue(result[0].required_docs ?? '');
@@ -359,11 +358,13 @@ export class EditComponent implements OnInit {
       data.data.min_procedures.forEach((addMinProcedure) => {
         this.has_min_procedure = true;
         this.addMinProcedure().push(this.existingMinProcedure(addMinProcedure));
+        this.existingProcedureIds.push(addMinProcedure.id);
       });
 
       data.data.min_usages.forEach((addMinUsage) => {
         this.has_consumable_usage = true;
         this.addMinUsage().push(this.existingMinUsage(addMinUsage));
+        this.existingConsumeIds.push(addMinUsage.id);
       });
       this.updateTenure();      
     });
