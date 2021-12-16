@@ -5,9 +5,9 @@
 </div>
 <div style="overflow-y: hidden;">
 <div>
-  <div class="col-md-6">
+  <div class="col-md-6" style="display: grid;">
     <label style="color: black"><b>Customer Name</b></label>
-    <span class="p-input-icon-right" style="width: 100%; margin-bottom: 10px;">
+    <span class="p-input-icon-right" style="width: 61%; margin-bottom: 10px;">
       <p-autoComplete
         class="search_field"
         placeholder="Select Company Name..."
@@ -398,6 +398,7 @@
         <p-tabPanel>
           <ng-template pTemplate="header">
             <a 
+            class="customPlusIcon"
             *ngIf="!isCompanyName"
               [routerLink]=""
               routerLinkActive="router-link-active"
@@ -406,6 +407,7 @@
               <i class="icon-plus icons"></i>
             </a>
             <a 
+            class="customPlusIcon"
             *ngIf="isCompanyName"
               [routerLink]=""
               routerLinkActive="router-link-active"
@@ -597,7 +599,7 @@
                 </label>
               </div>
               <div style="margin-bottom: 21px" class="col-9">
-                <input
+                <textarea
                 [(ngModel)]="addActivityData.activityRemarks"
                   style="height: 100px"
                   id="description"
@@ -606,7 +608,8 @@
                   pInputText
                   class="form-control"
                   required
-                />
+                >
+                </textarea>
               </div>
             </div>
           </div>

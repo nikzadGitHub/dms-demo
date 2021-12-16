@@ -21,7 +21,39 @@
     transition: box-shadow 0.2s;
     margin: 0 0 -2px 0;
     width: 100px;
-    margin-right: 15px;
+    // margin-right: 15px;
     height: 58px;
     justify-content: center;
 }
+
+.customPlusIcon{
+    // margin-left: -77px;
+    font-size: 23px;
+    height: 23px;
+    // padding: 0px;
+}
+
+// .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+//     background: #ffffff;
+//     border-color: unset;
+//     color: #2196F3;
+//     width: 100px;
+//     height: 54px;
+//     justify-content: center;
+//     // border: unset;
+//     border-bottom: unset;
+// }
+
+// .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+//     outline: unset; 
+//     outline-offset: unset; 
+//     box-shadow: unset; 
+//     border-color: unset;
+//     // border: unset;
+//     border-bottom: unset;
+// }
+
+// .p-tabview .p-tabview-nav li:hover {
+//     margin-right: 0;
+//     border-bottom: unset;
+// }
