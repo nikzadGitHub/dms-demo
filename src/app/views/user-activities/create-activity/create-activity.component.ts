@@ -99,6 +99,16 @@ export class CreateActivityComponent implements OnInit {
       this.companyId = event.id
       this.companyName = event.company_name
       this.isCompanyName = true
+      this.activityMainHeading = "Add Activity"
+      this.activityHeading = "Add Activity"
+      this.activityButton = "Save"
+      //to make the values empty 
+    this.addActivityData.activityDesc = ""
+    this.addActivityData.activityType = "New"
+    this.addActivityData.activityStatus = "Meeting"
+    this.addActivityData.activityDueDate = ""
+    this.addActivityData.activityCompletionDate = ""
+    this.addActivityData.activityRemarks = ""
     }
   }
 
