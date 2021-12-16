@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthService } from "../../auth/auth.service";
 import { navItems } from "../../_nav";
@@ -7,9 +7,9 @@ import { navItems } from "../../_nav";
   selector: "app-dashboard",
   templateUrl: "./default-layout.component.html",
 })
-export class DefaultLayoutComponent {
+export class DefaultLayoutComponent implements OnDestroy {
   public sidebarMinimized = false;
-  public navItems = navItems;
+  public navItems = JSON.parse(JSON.stringify(navItems));
   showSideBar = true;
   userFullname: any;
   userRoleName: any;
@@ -25,10 +25,14 @@ export class DefaultLayoutComponent {
         this.userFullname = res?.fullname || "";
       }
     });
-    this.managerAndAdminViewAccess(userRole);
+    this.managerViewAccess(userRole);
+    this.adminViewAccess(userRole);
+  }
+  ngOnDestroy(): void {
+    this.navItems = JSON.parse(JSON.stringify(navItems));
   }
 
-  managerAndAdminViewAccess(userRole) {
+  managerViewAccess(userRole) {
     if (
       userRole?.is_fss == false ||
       userRole?.is_director == true ||
@@ -46,33 +50,10 @@ export class DefaultLayoutComponent {
       if (index1 > 0) {
         this.navItems.splice(index1, 1);
       }
-      var adminIndex = this.navItems.findIndex((p) => p.name == "System Admin");
-      console.log("adminIndex:-->", adminIndex);
-      if (adminIndex > 0) {
-        this.navItems.splice(adminIndex, 1);
-      }
-      var accessIndex = this.navItems.findIndex(
-        (p) => p.name == "User Access Setup"
-      );
-      console.log("accessIndex:-->", accessIndex);
-      if (accessIndex > 0) {
-        this.navItems.splice(accessIndex, 1);
-      }
-      var userIndex = this.navItems.findIndex((p) => p.name == "User");
-      console.log("userIndex:-->", userIndex);
-      if (userIndex > 0) {
-        this.navItems.splice(userIndex, 1);
-      }
-      var unitIndex = this.navItems.findIndex((p) => p.name == "Unit Setup");
-      console.log("unitIndex:-->", unitIndex);
-      if (unitIndex > 0) {
-        this.navItems.splice(unitIndex, 1);
-      }
 
       this.navItems.splice(
         index + 1,
         0,
-
         // manager-view
         {
           name: "Manager View",
@@ -114,54 +95,6 @@ export class DefaultLayoutComponent {
           ],
         }
       );
-
-      // unit_setup
-      this.navItems.splice(
-        userIndex + 1,
-        0,
-        {
-          name: "Unit Setup",
-          url: "/user/unitsetup",
-          icon: "cil-screen-smartphone",
-        },
-        {
-          divider: true,
-        }
-      );
-      // user
-      this.navItems.splice(accessIndex + 1, 0, {
-        name: "User",
-        url: "/user",
-        icon: "cil-voice-over-record",
-        children: [
-          {
-            name: "User",
-            url: "/user/adduser",
-          },
-          {
-            name: "User LOA",
-            url: "/user/userloa",
-          },
-        ],
-      });
-
-      // access-setup
-      this.navItems.splice(
-        adminIndex + 1,
-        0,
-        // user access
-        {
-          name: "User Access Setup",
-          url: "/useraccess/user-access-setup",
-          icon: "cil-user-plus",
-        }
-      );
-      // system-admin
-      this.navItems.splice(index1 + 1, 0, {
-        name: "System Admin",
-        url: "/systemadmin",
-        icon: "cil-settings",
-      });
     } else if (
       userRole?.is_fss == true &&
       userRole?.is_director == false &&
@@ -177,31 +110,94 @@ export class DefaultLayoutComponent {
       if (index1 > 0) {
         this.navItems.splice(index1, 1);
       }
-      // system-admin
-      var indexAdmin = this.navItems.findIndex((p) => p.name == "System Admin");
-      console.log("indexAdmin:-->", indexAdmin);
-      if (indexAdmin > 0) {
-        this.navItems.splice(indexAdmin, 1);
-      }
-      // User Access Setup
-      var accessIndex = this.navItems.findIndex(
-        (p) => p.name == "User Access Setup"
-      );
-      if (accessIndex > 0) {
-        this.navItems.splice(accessIndex, 1);
-      }
-      // user
-      var userIndex = this.navItems.findIndex((p) => p.name == "User");
-      if (userIndex > 0) {
-        this.navItems.splice(userIndex, 1);
-      }
-      // unit_setup
-      var unitIndex = this.navItems.findIndex((p) => p.name == "Unit Setup");
-      if (unitIndex > 0) {
-        this.navItems.splice(unitIndex, 1);
-      }
     }
   }
+
+  adminViewAccess(userRole) {
+    userRole?.roles.forEach((role) => {
+      console.log("role:", role);
+      if (role.name == "admin") {
+        // var adminIndex1 = this.navItems.findIndex(
+        //   (p) => p.name == "System Admin"
+        // );
+        let adminIndex = this.navItems.find((p) => p.name == "System Admin");
+        if (adminIndex > 0) {
+          this.navItems.push(adminIndex);
+        }
+
+        // if (adminIndex1 > 0) {
+        //   this.navItems.splice(adminIndex1, 1);
+        // }
+
+        // this.navItems.splice(
+        //   adminIndex1,
+        //   0,
+        //   // manager-view
+        //   {
+        //     name: "System Admin",
+        //     url: "/systemadmin",
+        //     icon: "cil-settings",
+        //   }
+        // );
+
+        // access - setup;
+        var accessIndex1 = this.navItems.find(
+          (p) => p.name == "User Access Setup"
+        );
+        console.log("accessIndex:-->", accessIndex1);
+        if (accessIndex1 > 0) {
+          this.navItems.push(accessIndex1);
+        }
+
+        // user
+        var userIndex1 = this.navItems.find((p) => p.name == "User");
+        console.log("userIndex:-->", userIndex1);
+        if (userIndex1 > 0) {
+          this.navItems.push(userIndex1);
+        }
+
+        // unit_setup
+        var unitIndex1 = this.navItems.find((p) => p.name == "Unit Setup");
+        console.log("unitIndex:-->", unitIndex1);
+        if (unitIndex1 > 0) {
+          this.navItems.push(unitIndex1);
+        }
+      } else {
+        // system-admin
+        let adminIndex = this.navItems.findIndex(
+          (p) => p.name == "System Admin"
+        );
+        console.log("adminIndex:-->", adminIndex);
+        if (adminIndex > 0) {
+          this.navItems.splice(adminIndex, 1);
+        }
+
+        // access - setup;
+        var accessIndex = this.navItems.findIndex(
+          (p) => p.name == "User Access Setup"
+        );
+        console.log("accessIndex:-->", accessIndex);
+        if (accessIndex > 0) {
+          this.navItems.splice(accessIndex, 1);
+        }
+
+        // user
+        var userIndex = this.navItems.findIndex((p) => p.name == "User");
+        console.log("userIndex:-->", userIndex);
+        if (userIndex > 0) {
+          this.navItems.splice(userIndex, 1);
+        }
+
+        // unit_setup
+        var unitIndex = this.navItems.findIndex((p) => p.name == "Unit Setup");
+        console.log("unitIndex:-->", unitIndex);
+        if (unitIndex > 0) {
+          this.navItems.splice(unitIndex, 1);
+        }
+      }
+    });
+  }
+
   toggleMinimize(e) {
     this.sidebarMinimized = e;
   }
@@ -211,6 +207,8 @@ export class DefaultLayoutComponent {
       .logoutUser()
       .toPromise()
       .then(() => {
+        // location.replace("/login")
+        this.navItems = JSON.parse(JSON.stringify(navItems));
         this.router.navigateByUrl("/login", { replaceUrl: true });
       });
 
@@ -218,6 +216,7 @@ export class DefaultLayoutComponent {
     localStorage.removeItem("user-json");
     localStorage.removeItem("auth-token");
     localStorage.clear();
+    // window.location.reload();
     return false;
   }
 }
