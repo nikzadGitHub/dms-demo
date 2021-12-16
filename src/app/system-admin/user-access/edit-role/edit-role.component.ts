@@ -39,8 +39,8 @@ export class EditRoleComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-        this.roleId = params.roleId;
-        this.getRoleDetail(this.roleId);
+      this.roleId = params.roleId;
+      this.getRoleDetail(this.roleId);
     });
     // this.route.params.subscribe((event) => {
     //   this.roleId = event.roleId;
@@ -74,6 +74,7 @@ export class EditRoleComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.router.navigateByUrl("useraccess/user-access-setup");
           }, 2000);
         },
         (error) => {
@@ -96,5 +97,23 @@ export class EditRoleComponent implements OnInit {
       }
     });
     console.log("edit:-->", this.rolePermissionsList);
+  }
+  selectAll(event) {
+    console.log("Event:", event);
+    console.log("Array(event):", Array(event));
+    if (event.checked == true) {
+      this.selectedRolePermission = Array(event).filter(
+        (value) => value.checked
+      );
+      console.log("selectedRolePermission:", this.selectedRolePermission);
+    }
+  }
+  resetPermissions() {
+    this.selectedRolePermission = [];
+    this.rolePermissionsList = [];
+  }
+  back() {
+    // this.location.back();
+    this.router.navigateByUrl("useraccess/user-access-setup");
   }
 }

@@ -12,7 +12,7 @@
     <div class="card-body">
       <p class="title-text">
         <!-- <i class="pi pi-user-plus"></i> -->
-        Add Unit
+        Add Level Of Approval
       </p>
       <div class="authority-text row mb-3">
         <!-- ★ -->
@@ -29,7 +29,7 @@
                 [options]="allUnits"
                 optionLabel="title"
                 optionValue="id"
-                placeholder="Select Approve By"
+                placeholder="Select unit"
                 [style]="{ width: '380px' }"
                 [required]="true"
               ></p-dropdown>
@@ -53,7 +53,7 @@
                 [options]="userList"
                 optionLabel="full_name"
                 optionValue="id"
-                placeholder="Select Approve By"
+                placeholder="Select payment term"
                 [style]="{ width: '380px' }"
                 [required]="true"
               ></p-dropdown>
@@ -98,7 +98,7 @@
         <div class="col-md-6">
           <div class="row">
             <div class="col-3 mt-2">
-              <label> Person Charges:<span class="red-star">*</span></label>
+              <label> Person Incharge:<span class="red-star">*</span></label>
             </div>
             <div class="col-9">
               <p-dropdown
@@ -108,7 +108,7 @@
                 [options]="userList"
                 optionLabel="full_name"
                 optionValue="id"
-                placeholder="Select Approve By"
+                placeholder="Select In-charges"
                 [style]="{ width: '380px' }"
                 [required]="true"
               ></p-dropdown>
@@ -141,7 +141,6 @@
         <h4>Celling Level Approval</h4>
       </div>
       <div class="authority-text-1 row mb-2">
-        
         <!-- Approval Profit Margin -->
         <div class="col-md-6">
           <div class="row">
