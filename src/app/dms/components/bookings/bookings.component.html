@@ -103,7 +103,7 @@
     <ng-template pTemplate="body" let-bookingItem>
       <tr class="p-selectable-row">
         <td class="text-center">
-            <a routerLink="{{ bookingItem.id }}" routerLinkActive="router-link-active">{{ bookingItem.booking_no }}</a>
+            <a routerLink="{{ bookingItem.id }}" routerLinkActive="router-link-active">{{ bookingItem.booking_no ? bookingItem.booking_no : 'Draft' }}</a>
         </td>
         <td class="text-center">
             {{ bookingItem.request_date }}

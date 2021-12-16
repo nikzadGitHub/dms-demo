@@ -17,7 +17,8 @@ export class BookingService implements BookingInterface {
   }
 
   getListSearch(data: any): Observable<BookingList> {
-    return this.apiClient.get<BookingList>('booking/search?search='+ data);
+    let params = (new URLSearchParams({search: data})).toString();
+    return this.apiClient.get<BookingList>('booking/search?'+ params);
   }
 
   create(data: any): Observable<SaveResult> {
