@@ -121,10 +121,36 @@
             {{ bookingItem.customer }}
         </td>
         <td class="text-center">
-            {{ bookingItem.booking_reason }}
+            {{ 
+              bookingItem.booking_reason == '1' ? 'event' : (
+                bookingItem.booking_reason == '2' ? 'demo' : (
+                  bookingItem.booking_reason == '3' ? 'training' : (
+                    bookingItem.booking_reason == '4' ? 'buyin' : bookingItem.booking_reason
+                  )
+                )
+              )
+            }}
         </td>
         <td class="text-center">
-          {{ bookingItem.status }}
+          {{
+            bookingItem.status == '1' ? 'approval request' : (
+              bookingItem.status == '2' ? 'approve' : (
+                bookingItem.status == '3' ? 'review' : (
+                  bookingItem.status == '4' ? 'endorse' : (
+                    bookingItem.status == '5' ? 'provision-ally approve' : (
+                      bookingItem.status == '6' ? 'decline' : (
+                        bookingItem.status == '7' ? 'conflict' : (
+                          bookingItem.status == '8' ? 'extension request' : (
+                            bookingItem.status == '9' ? 'demo item availability' : bookingItem.status
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          }}
         </td>
     </tr>
     </ng-template>
