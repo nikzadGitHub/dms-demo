@@ -127,6 +127,9 @@ export class CreateActivityComponent implements OnInit {
         this.createActivityModal.hide()
         this.successMessage = "Data Updated Successfully...!!"
         this.successModal.show()
+        setTimeout(() => {
+          this.getActivitydata()
+        }, 500);
         
       })
     }
