@@ -25,6 +25,21 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("fileUpload") fileUpload: ElementRef;
 
+  @ViewChild("bodyContent") bodyData: ElementRef;
+  @ViewChild("headerContent") headerData: ElementRef;
+  @ViewChild("headerQuoteNo") headerQuoteNo: ElementRef;
+  @ViewChild("headerRefNo") headerRefNo: ElementRef;
+  @ViewChild("headerDate") headerDate: ElementRef;
+
+  @ViewChild("footerContent") footerData: ElementRef;
+  @ViewChild("price") priceFooter: ElementRef;
+  @ViewChild("deliveryP") deliveryPFooter: ElementRef;
+  @ViewChild("validity") validityFooter: ElementRef;
+  @ViewChild("paymentTer") paymentTerFooter: ElementRef;
+  @ViewChild("manufacturer") manufacturerFooter: ElementRef;
+  @ViewChild("warranty") warrantyFooter: ElementRef;
+  @ViewChild("servicing") servicingFooter: ElementRef;
+
   alertBody: string;
   alertHeader: string;
   fileName = "";
@@ -50,6 +65,7 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
   productTotalPrice: number;
   netTotal: number;
   discountedValue: string;
+  successMessage: string;
 
   constructor(
     @Inject(DOCUMENT) private document: any,
@@ -283,4 +299,34 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
   reset() {
     this.fileUpload.nativeElement.value = null;
   }
+
+  savePreviewContent(){
+    // let header =  this.headerData.nativeElement.innerHTML
+    let header ={
+      quoteNo: this.headerQuoteNo.nativeElement.innerText,
+      refNo: this.headerRefNo.nativeElement.innerText,
+      date: this.headerDate.nativeElement.innerText,
+    }
+    // let footer = this.footerData.nativeElement.innerHTML
+    let footer = {
+      price:this.priceFooter.nativeElement.innerText,
+      deliveryP:this.deliveryPFooter.nativeElement.innerText,
+      validity:this.validityFooter.nativeElement.innerText,
+      paymentTer:this.paymentTerFooter.nativeElement.innerText,
+      manufacturer:this.manufacturerFooter.nativeElement.innerText,
+      warranty:this.warrantyFooter.nativeElement.innerText,
+      servicing:this.servicingFooter.nativeElement.innerText,
+    }
+    let fullBody = this.bodyData.nativeElement.innerHTML
+
+    console.log('footer =>',footer,'Header =>',header,'fullBody =>',fullBody);
+    
+
+    this.quoteService.saveTemplateData(this.quotationId,JSON.stringify(header),JSON.stringify(footer),fullBody).subscribe(state=>{
+    })
+
+      this.successMessage = "Data is Updated Successfully......!!";
+      this.successModal.show();
+  }
+
 }
