@@ -27,7 +27,7 @@ export class UserActivitiesService {
     })
     .pipe(
       tap((response: any) => {
-        console.log(response);               
+
     }),
       catchError(this.errorHandler)
     )
@@ -35,7 +35,6 @@ export class UserActivitiesService {
 
   createActivity(id,data): Observable<any> {
     let authToken = localStorage.getItem('auth-token');
-    console.log('data====> ',data)
     let body = {
       "customer_id": id,
       "activities": [
@@ -58,7 +57,31 @@ export class UserActivitiesService {
     })
     .pipe(
       tap((response: any) => {
-        console.log(response);               
+
+      }),
+      catchError(this.errorHandler)
+    )
+  }
+
+
+  updateActivity(id,data): Observable<any> {
+    let body ={
+      customer_id: 1,
+      completion_date: data.activityCompletionDate,
+      description: data.activityDesc,
+      due_date: data.activityDueDate,
+      remark: data.activityRemarks,
+      status: data.activityStatus,
+      activity_type: data.activityType
+  }
+    let authToken = localStorage.getItem('auth-token');
+    return this.httpClient.put(this.apiURL + '/activity/'+ id, body,{
+      headers: {
+        'Authorization': authToken,
+      },
+    })
+    .pipe(
+      tap((response: any) => {
     }),
       catchError(this.errorHandler)
     )

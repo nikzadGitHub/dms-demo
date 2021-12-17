@@ -17,6 +17,7 @@ export class BookingsComponent implements OnInit {
 	icons = [];
   id="#"
   loading: boolean;
+  searchTimerId: number;
 
   constructor(
     private api: BookingService,
@@ -38,11 +39,17 @@ export class BookingsComponent implements OnInit {
   }
 
   onSearch() {
-    this.api.getListSearch(this.search_text).subscribe((response) => {
-      if (response as BookingList) {
-        this.bookingList = response;
-      }
-	});
+    if (this.searchTimerId) {
+      clearTimeout(this.searchTimerId)
+    }
+    this.searchTimerId = setTimeout(() => {
+      console.log('once runs');
+      this.api.getListSearch(this.search_text).subscribe((response) => {
+        if (response as BookingList) {
+          this.bookingList = response;
+        }
+      })
+    },1000)
   }
 
   onCreate(event) {

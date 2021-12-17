@@ -87,7 +87,6 @@ export class QuoteTemplateComponent implements OnInit {
   }
 
   viewQuotationTemplate() {
-
     this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
       this.quotationsTemplateData = res["data"]
       this.salesPersonData = res["data"].quotations?.sales_person

@@ -5,9 +5,9 @@
 </div>
 <div style="overflow-y: hidden;">
 <div>
-  <div class="col-md-6">
+  <div class="col-md-6" style="display: grid;">
     <label style="color: black"><b>Customer Name</b></label>
-    <span class="p-input-icon-right" style="width: 100%; margin-bottom: 10px;">
+    <span class="p-input-icon-right" style="width: 61%; margin-bottom: 10px;">
       <p-autoComplete
         class="search_field"
         placeholder="Select Company Name..."
@@ -209,7 +209,7 @@
                   <a
                   [routerLink]=""
                   routerLinkActive="router-link-active"
-                  (click)="createActivity.show()" 
+                  (click)="selectedActivity(data)"
                   class="fa fa-edit"></a>
                 </td>
               </tr>
@@ -370,6 +370,14 @@
                 <td>
                   {{ data.completion_date | date: "dd-MMM-yyyy" }}
                 </td>
+                <td>
+                  <a
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="selectedActivity(data)"
+                  class="fa fa-edit">
+                </a>
+                </td>
               </tr>
             </ng-template>
 
@@ -389,10 +397,21 @@
 
         <p-tabPanel>
           <ng-template pTemplate="header">
-            <a
+            <a 
+            class="customPlusIcon"
+            *ngIf="!isCompanyName"
               [routerLink]=""
               routerLinkActive="router-link-active"
               (click)="createActivity.show()"
+            >
+              <i class="icon-plus icons"></i>
+            </a>
+            <a 
+            class="customPlusIcon"
+            *ngIf="isCompanyName"
+              [routerLink]=""
+              routerLinkActive="router-link-active"
+              (click)="createActivityModal.show()"
             >
               <i class="icon-plus icons"></i>
             </a>
@@ -438,22 +457,21 @@
 
   <div
     bsModal
-    #createActivity="bs-modal"
+    #createActivityModal="bs-modal"
     class="modal fade"
     tabindex="-1"
     role="dialog"
     aria-labelledby="myModalLabel"
     aria-hidden="true"
-    *ngIf="isCompanyName"
   >
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Add Activity</h4>
+          <h4 class="modal-title">{{activityMainHeading}}</h4>
           <button
             type="button"
             class="close"
-            (click)="createActivity.hide()"
+            (click)="createActivityModal.hide()"
             aria-label="Close"
           >
             <span aria-hidden="true">&times;</span>
@@ -464,7 +482,7 @@
         align-items: center;" class="modal-body">
           <div class="row mb-2">
             <h5 class="col-12">
-              <label><b>Add Activity</b></label>
+              <label><b>{{activityHeading}}</b></label>
             </h5>
           </div>
 
@@ -498,6 +516,7 @@
               <div style="margin-bottom: 19px;" class="col-9">
                 <input
                 [(ngModel)]="addActivityData.activityDueDate"
+                (change)="getDate($event)"
                   id="description"
                   name="title"
                   type="date"
@@ -580,7 +599,7 @@
                 </label>
               </div>
               <div style="margin-bottom: 21px" class="col-9">
-                <input
+                <textarea
                 [(ngModel)]="addActivityData.activityRemarks"
                   style="height: 100px"
                   id="description"
@@ -589,7 +608,8 @@
                   pInputText
                   class="form-control"
                   required
-                />
+                >
+                </textarea>
               </div>
             </div>
           </div>
@@ -597,19 +617,18 @@
           <div style="    margin: 0px 0px 0px 104px;
         " class="form-group">
             <button
-              (click)="createActivity.hide()"
+              (click)="createActivityModal.hide()"
               class="btn btn-light mr-2 px-4"
               type="reset"
             >
               CANCEL
             </button>
             <button
-              (click)="createActivity.hide()"
-              (click)="saveActivity($event)"
+              (click)="saveActivity($event,'Save')"
               class="btn btn-primary px-5"
               type="submit"
             >
-              SAVE
+              {{activityButton}}
             </button>
           </div>
         </div>

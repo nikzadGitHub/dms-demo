@@ -42,15 +42,17 @@ export class UserActivitiesComponent implements OnInit {
       this.closedData =  this.activitydata.filter(function(item) {
         return item.status == "CLOSED";
       });
-      console.log('this is res', this.closedData);
       
       this.openData =  this.activitydata.filter(function(item) {
         return item.status != "CLOSED";
       });
-      console.log('this is res', this.openData);
       this.loading=false
       
     });
+  }
+
+  selectedActivity(data){
+
   }
 
   }
