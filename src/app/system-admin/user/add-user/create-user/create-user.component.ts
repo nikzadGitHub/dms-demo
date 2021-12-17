@@ -28,6 +28,7 @@ export class CreateUserComponent implements OnInit {
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   alertBody: string;
   userRole: any;
+  userFormValue: boolean =true;
 
   constructor(
     private systemAdminSerive: SystemAdminService,
@@ -76,6 +77,9 @@ export class CreateUserComponent implements OnInit {
       this.units = res.data;
       console.log("units", res.data);
     });
+    if(this.userRoleId == undefined){
+      this.addUserUnit()
+    }
   }
 
   getListOfRolePermission() {
@@ -97,17 +101,23 @@ export class CreateUserComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log("detail-user:", res);
+          res.data.user_units.forEach(ele => {
+            this.unitUser().push(
+              this.formBuilder.group({
+                discount_percentage: ele.allowed_discount_percentage,
+                profit_margin: ele.min_profit_margin_percentage,
+                unit_id: ele.unit_id,
+              })
+            )
+          });
           setTimeout(() => {
             this.userform.patchValue({
               name: res?.data?.full_name,
               email: res?.data?.email,
               phoneNumber: res?.data?.phone_number,
-              discountMargin: res?.data?.discount_margin_percent,
-              profit: res?.data?.profit_percent,
               status: res?.data?.is_active,
               userAccess: res?.data?.user_access_id,
               approvedBy: Number(res?.data?.approved_by),
-              unit: Number(res?.data?.unit_id),
               companyName: res?.data?.data_area_id,
             });
           }, 300);
@@ -139,7 +149,17 @@ export class CreateUserComponent implements OnInit {
   }
 
   addUser() {
-    this.systemAdminSerive
+    let unitUserVal=this.unitUserForm.value.unitUserArray;
+    for(let i=0;i<unitUserVal.length;i++){
+      if(unitUserVal[i].discount_percentage == "" || unitUserVal[i].profit_margin == "" ){
+        this.userFormValue= false
+      }
+      else{
+        this.userFormValue=true
+      }
+    }
+    if(this.userFormValue ){
+      this.systemAdminSerive
       .postQuery("/auth/create-user", {
         full_name: this.userform.value.name,
         phone_number: this.userform.value.phoneNumber,
@@ -147,11 +167,7 @@ export class CreateUserComponent implements OnInit {
         user_access_id: this.userform.value.userAccess,
         email: this.userform.value.email,
         is_active: this.userform.value.status,
-        unit_user: this.unitUserForm.value.unitUserArray,
-        // approved_by: this.userform.value.approvedBy,
-        // profit_percent: this.userform.value.profit,
-        // unit_id: this.userform.value.unit,
-        // discount_margin_percent: this.userform.value.discountMargin,
+        unit_users: this.unitUserForm.value.unitUserArray,
       })
       .subscribe(
         (res: any) => {
@@ -178,6 +194,7 @@ export class CreateUserComponent implements OnInit {
           }, 2000);
         }
       );
+    }
   }
 
   updateUser() {
@@ -190,11 +207,7 @@ export class CreateUserComponent implements OnInit {
         user_access_id: this.userform.value.userAccess,
         email: this.userform.value.email,
         is_active: this.userform.value.status,
-        unit_user: this.unitUserForm.value.unitUserArray,
-        // discount_margin_percent: this.userform.value.discountMargin,
-        // approved_by: this.userform.value.approvedBy,
-        // profit_percent: this.userform.value.profit,
-        // unit_id: this.userform.value.unit,
+        unit_users: this.unitUserForm.value.unitUserArray,
       })
       .subscribe(
         (res: any) => {
@@ -250,7 +263,7 @@ export class CreateUserComponent implements OnInit {
     return this.formBuilder.group({
       discount_percentage: "",
       profit_margin: "",
-      unit: "",
+      unit_id: "",
     });
   }
 

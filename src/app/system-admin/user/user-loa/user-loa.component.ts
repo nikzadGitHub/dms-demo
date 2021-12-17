@@ -21,6 +21,7 @@ export class UserLoaComponent implements OnInit {
   allUnits: any[] = [];
   unitId: string;
   alertBody = "";
+  priceApprovalChk: boolean=true;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -61,7 +62,18 @@ export class UserLoaComponent implements OnInit {
       celling_price_approval_id: this.authorityForm.value.cellingPriceApproval,
       price_level_approval: this.authorityForm.value.priceApprovel,
     };
-    this.systemAdminSerive
+    let priceApprovel=data.price_level_approval;
+    for(let i=0;i<priceApprovel.length;i++){
+      console.log('alsdk',priceApprovel[i])
+      if(priceApprovel[i].amount == '' || priceApprovel[i].approve_by == ''){
+        this.priceApprovalChk= false
+      }
+      else{
+        this.priceApprovalChk=true
+      }
+    }
+    if(this.priceApprovalChk){
+      this.systemAdminSerive
       .putQuery("/units/level-approval/" + this.unitId, data)
       .subscribe(
         (res: any) => {
@@ -79,6 +91,7 @@ export class UserLoaComponent implements OnInit {
           this.dangerModal.show();
         }
       );
+    }
   }
 
   getUserRole() {
