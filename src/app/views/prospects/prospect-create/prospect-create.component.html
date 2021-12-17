@@ -23,12 +23,13 @@
                           <div class="col-md-7">
                             <span class="p-input-icon-right">
                               <input
-                              pInputText
-                              class="form-control"
-                              placeholder="Seion Lee"
-                              type="input"
-                              readonly
-                            />
+                                pInputText
+                                formControlName="prospect_owner"
+                                class="form-control"
+                                placeholder="Seion Lee"
+                                type="input"
+                                readonly
+                              />
                             </span>
                           </div>
                         </div>
@@ -40,7 +41,7 @@
                         <span class="p-input-icon-right">
                           <p-autoComplete
                             class="search_field"
-                            formControlName=""
+                            formControlName="company_name"
                           >
                           </p-autoComplete>
                           <i class="pi pi-search"></i>
@@ -54,8 +55,16 @@
                         <span class="p-input-icon-right">
                           <p-autoComplete
                             class="search_field"
-                            formControlName=""
+                            formControlName="contact_name"
+                            [suggestions]="departmentList"
+                            (completeMethod)="createProspect()"
+                            field="contact_name"
                           >
+                            <ng-template let-contact pTemplate="">
+                              <div class="quote-item">
+                                <div>{{ contact.contact_name }}</div>
+                              </div>
+                            </ng-template>
                           </p-autoComplete>
                           <i class="pi pi-search"></i>
                         </span>
@@ -68,11 +77,10 @@
                           <div class="col-md-4 text-header">Department</div>
                           <div class="col-md-7">
                             <p-dropdown
-                              optionLabel="value"
-                              optionValue="value"
+                              [options]="departmentList"
+                              optionLabel="department"
+                              optionValue="department"
                               formControlName="department"
-                           
-                            
                               [style]="{ width: '100%' }"
                             ></p-dropdown>
                           </div>
@@ -105,7 +113,7 @@
                           <div class="col-md-7">
                             <input
                               pInputText
-                              formControlName="mobile_phone"
+                              formControlName="mobile_number"
                               class="form-control"
                               placeholder=""
                               type="input"
@@ -126,7 +134,7 @@
                           <div class="col-md-7">
                             <input
                               pInputText
-                              formControlName="address_1"
+                              formControlName="office_phone_number"
                               class="form-control"
                               placeholder=""
                               type="input"
@@ -158,7 +166,10 @@
                               </div>
                               <div style="margin-right: 5px">
                                 <p-dropdown
+                                  [options]="departmentList"
                                   formControlName="state"
+                                  optionLabel="state"
+                                  optionValue="state"
                                   placeholder="Select State"
                                 ></p-dropdown>
                               </div>
@@ -181,7 +192,7 @@
                       <div class="col-xl-8">
                         <div class="row">
                           <div class="col-md-5 text-header">Prospect type</div>
-                          <div style="margin-left: 26px;" class="col-md-6">
+                          <div style="margin-left: 26px" class="col-md-6">
                             <p-radioButton
                               style="margin: 7px"
                               name="prospect_type"
@@ -217,9 +228,11 @@
                           >
                             <div class="col-md-5" style="padding: 0px">
                               <p-dropdown
+                                [options]="departmentList"
+                                optionLabel="source"
+                                optionValue="source"
                                 formControlName="source"
                                 placeholder="Partner"
-                                [style]="{ width: '100%' }"
                               ></p-dropdown>
                             </div>
                             <div
@@ -229,7 +242,6 @@
                               <input
                                 style="margin: 3px 0px 0px 70px"
                                 pInputText
-                                formControlName="other_source"
                                 class="form-control"
                                 placeholder="Others"
                                 type="input"
@@ -246,9 +258,10 @@
                           <div class="col-md-4 text-header">Hospital Class</div>
                           <div class="col-md-7">
                             <p-dropdown
-                              optionLabel="value"
-                              optionValue="value"
-                              formControlName="contact_type"
+                              [options]="departmentList"
+                              optionLabel="hospital_class_code"
+                              optionValue="hospital_class_code"
+                              formControlName="hospital_class"
                               placeholder="Attentive hospital"
                               [style]="{ width: '100%' }"
                             ></p-dropdown>
@@ -263,9 +276,10 @@
                           <div class="col-md-4 text-header">Segment</div>
                           <div class="col-md-7">
                             <p-dropdown
-                              optionLabel="value"
-                              optionValue="value"
-                              formControlName="contact_type"
+                              [options]="departmentList"
+                              optionLabel="segment_code"
+                              optionValue="segment_code"
+                              formControlName="segment"
                               placeholder="Goverment"
                               [style]="{ width: '100%' }"
                             ></p-dropdown>
@@ -282,11 +296,11 @@
                           </div>
                           <div class="col-md-7">
                             <p-dropdown
-                              optionLabel="value"
-                              optionValue="value"
-                              formControlName="contact_type"
+                              [options]="departmentList"
+                              optionLabel="category_code"
+                              optionValue="category_code"
+                              formControlName="customer_category"
                               placeholder="Price buyers"
-                            
                               [style]="{ width: '100%' }"
                             ></p-dropdown>
                           </div>
@@ -298,22 +312,22 @@
 
                 <div class="col-md-6">
                   <div class="card-row">
-
-
-                        <div class="row">
+                    <div class="row">
                       <div class="col-xl-12">
                         <div class="row">
-                          <div style="white-space: nowrap;" class="col-md-4 text-header">
-                           Customer SubCategory
+                          <div
+                            style="white-space: nowrap"
+                            class="col-md-4 text-header"
+                          >
+                            Customer SubCategory
                           </div>
                           <div class="col-md-7">
                             <p-dropdown
-                              optionLabel="value"
-                              optionValue="value"
-                              formControlName="contact_type"
+                              [options]="departmentList"
+                              optionLabel="subcategory_code"
+                              optionValue="subcategory_code"
+                              formControlName="customer_subcategory"
                               placeholder="97-191"
-                          
-                            
                               autoWidth="false"
                               [style]="{ width: '100%' }"
                             ></p-dropdown>
@@ -330,11 +344,11 @@
                           </div>
                           <div class="col-md-7">
                             <p-dropdown
-                              optionLabel="value"
-                              optionValue="value"
-                              formControlName="contact_type"
+                              [options]="departmentList"
+                              optionLabel="hospital_bed_value"
+                              optionValue="hospital_bed_value"
+                              formControlName="hospital_bed"
                               placeholder="97-191"
-                             
                               autoWidth="false"
                               [style]="{ width: '100%' }"
                             ></p-dropdown>
@@ -352,7 +366,7 @@
                           <div class="col-md-7">
                             <input
                               pInputText
-                              formControlName="job_title"
+                              formControlName="hospital_bed_exact"
                               class="form-control"
                               placeholder=""
                               type="input"
@@ -372,11 +386,11 @@
                           <div class="col-md-4 text-header">Region ID</div>
                           <div class="col-md-7">
                             <p-dropdown
-                              optionLabel="value"
-                              optionValue="value"
-                              formControlName="contact_type"
+                              [options]="departmentList"
+                              optionLabel="region_id"
+                              optionValue="region_id"
+                              formControlName="region_id"
                               placeholder="Northern Region"
-                             
                               autoWidth="false"
                               [style]="{ width: '100%' }"
                             ></p-dropdown>
@@ -389,15 +403,15 @@
                       <div class="col-xl-12">
                         <div class="row">
                           <div class="col-md-4 text-header">
-                            Customer Category
+                            Customer Tax Code
                           </div>
                           <div class="col-md-7">
                             <p-dropdown
-                              optionLabel="value"
-                              optionValue="value"
-                              formControlName="contact_type"
+                              [options]="departmentList"
+                              optionLabel="customer_tax_code"
+                              optionValue="customer_tax_code"
+                              formControlName="customer_tax_code"
                               placeholder="HCM_NONE"
-                             
                               autoWidth="false"
                               [style]="{ width: '100%' }"
                             ></p-dropdown>
@@ -413,12 +427,24 @@
 
           <div class="col-lg-9 submit-button" align="center">
             <div class="form-group">
-              <button class="btn btn-light mr-2 px-4" type="reset"><i class="pi pi-arrow-left mr-2"></i>CANCEL</button>
-              <button class="btn btn-light px-5" type="submit" >
-                  <i class="pi pi-save mr-2"></i>SAVE</button>
-                  <button style="margin-left: 7px" class="btn btn-primary px-5" type="submit">Next</button>
-          </div>
-          
+              <button class="btn btn-light mr-2 px-4" type="reset">
+                <i class="pi pi-arrow-left mr-2"></i>CANCEL
+              </button>
+              <button
+                class="btn btn-light px-5"
+                type="submit"
+                (click)="saveProspect()"
+              >
+                <i class="pi pi-save mr-2"></i>SAVE
+              </button>
+              <button
+                style="margin-left: 7px"
+                class="btn btn-primary px-5"
+                type="submit"
+              >
+                Next
+              </button>
+            </div>
           </div>
         </form>
       </div>
