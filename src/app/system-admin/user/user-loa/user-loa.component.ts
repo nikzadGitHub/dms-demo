@@ -22,6 +22,7 @@ export class UserLoaComponent implements OnInit {
   unitId: string;
   alertBody = "";
   isUserViewLoa: boolean;
+  priceApprovalChk: boolean = true;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -63,6 +64,39 @@ export class UserLoaComponent implements OnInit {
       price_level_approval: this.authorityForm.value.priceApprovel,
     };
     if (this.unitId) {
+      let priceApprovel = data.price_level_approval;
+      for (let i = 0; i < priceApprovel.length; i++) {
+        console.log("alsdk", priceApprovel[i]);
+        if (
+          priceApprovel[i].amount == "" ||
+          priceApprovel[i].approve_by == ""
+        ) {
+          this.priceApprovalChk = false;
+        } else {
+          this.priceApprovalChk = true;
+        }
+      }
+      if (this.priceApprovalChk) {
+        this.systemAdminSerive
+          .putQuery("/units/level-approval/" + this.unitId, data)
+          .subscribe(
+            (res: any) => {
+              console.log("user-loa-res:", res);
+              (this.alertBody = res.message), this.successModal.show();
+              setTimeout(() => {
+                this.successModal.hide();
+                this.authorityForm.reset();
+              }, 2000);
+            },
+            (error) => {
+              console.log("Error:", error);
+
+              this.alertBody = error.error.message;
+              this.dangerModal.show();
+            }
+          );
+      }
+
       this.systemAdminSerive
         .putQuery("/units/level-approval/" + this.unitId, data)
         .subscribe(
@@ -72,6 +106,8 @@ export class UserLoaComponent implements OnInit {
             setTimeout(() => {
               this.successModal.hide();
               this.authorityForm.reset();
+              this.getPriceApprovelForm().clear();
+              this.addPriceLevelApproval();
             }, 2000);
           },
           (error) => {
@@ -85,7 +121,6 @@ export class UserLoaComponent implements OnInit {
       this.dangerModal.show();
     }
   }
-
   getUserRole() {
     this.systemAdminSerive.getQuery("/user-role").subscribe((res: any) => {
       console.log("user-role-data:", res);
