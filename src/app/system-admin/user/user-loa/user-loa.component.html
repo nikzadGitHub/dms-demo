@@ -32,6 +32,7 @@
                 placeholder="Select parent unit"
                 [style]="{ width: '380px' }"
                 [required]="true"
+                [disabled]="isUserViewLoa"
               ></p-dropdown>
             </div>
           </div>
@@ -79,6 +80,7 @@
                 placeholder="Select In-charges"
                 [style]="{ width: '380px' }"
                 [required]="true"
+                [disabled]="isUserViewLoa"
               ></p-dropdown>
             </div>
           </div>
@@ -103,16 +105,8 @@
                 inputId="integeronly"
                 inputId="withoutgrouping"
                 [style]="{ width: '380px' }"
+                [attr.disabled]="isUserViewLoa ? '' : null"
               />
-              <!-- <p-inputNumber
-                name=""
-                formControlName="profitMargin"
-                inputId="integeronly"
-                inputId="withoutgrouping"
-                [useGrouping]="false"
-                [style]="{ width: '380px' }"
-              >
-              </p-inputNumber> -->
             </div>
           </div>
         </div>
@@ -132,6 +126,7 @@
                 inputId="integeronly"
                 inputId="withoutgrouping"
                 [style]="{ width: '380px' }"
+                [attr.disabled]="isUserViewLoa ? '' : null"
               />
             </div>
           </div>
@@ -159,6 +154,7 @@
                 inputId="integeronly"
                 inputId="withoutgrouping"
                 [style]="{ width: '380px' }"
+                [attr.disabled]="isUserViewLoa ? '' : null"
               />
               <!-- <p-inputNumber
                 name=""
@@ -192,6 +188,7 @@
                 placeholder="Select celling price approval"
                 [style]="{ width: '380px' }"
                 [required]="true"
+                [disabled]="isUserViewLoa"
               ></p-dropdown>
             </div>
           </div>
@@ -205,6 +202,7 @@
           class="btn btn-icon btn-outline-primary"
           icon="pi pi-check"
           (click)="addPriceLevelApproval()"
+          *ngIf="!isUserViewLoa"
         >
           <i class="cil-plus c-icon"></i>
         </button>
@@ -229,6 +227,7 @@
                   inputId="integeronly"
                   inputId="withoutgrouping"
                   [style]="{ width: '380px' }"
+                  [disabled]="isUserViewLoa"
                 >
                 </p-inputNumber>
               </div>
@@ -252,10 +251,12 @@
                   placeholder="Select Approve By"
                   [style]="{ width: '300px' }"
                   [required]="true"
+                  [disabled]="isUserViewLoa"
                 >
                 </p-dropdown>
                 <a
                   [routerLink]=""
+                  *ngIf="!isUserViewLoa"
                   routerLinkActive="router-link-active"
                   (click)="deletePriceLevelRow(i)"
                   ><i
@@ -269,13 +270,14 @@
         </div>
       </div>
       <div class="action-btn">
-        <button type="button" class="btn btn-outline-primary cancel-btn">
+        <button type="button" class="btn btn-outline-primary cancel-btn" (click)="resetForm()">
           CANCEL
         </button>
         <button
           type="button"
           class="btn btn-primary save-btn"
           (click)="createUserLoad()"
+          *ngIf="!isUserViewLoa"
         >
           SAVE
         </button>
@@ -373,9 +375,16 @@
               </td>
               <td class="text-center">
                 <a
+                  href="#"
+                  [routerLink]=""
+                  class="fa fa-eye"
+                  (click)="viewUserLoaDetail(authorityUnit.id)"
+                  style="margin: 10px"
+                ></a>
+                <a
                   [routerLink]=""
                   routerLinkActive="router-link-active"
-                  (click)="goForEdit(authorityUnit)"
+                  (click)="goForEdit(authorityUnit.id)"
                 >
                   <i class="fa fa-edit"></i>
                 </a>

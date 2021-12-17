@@ -250,6 +250,20 @@
     }
   }
 }
+
+// model
+.main-view-model {
+  label {
+    font-weight: bold;
+  }
+}
+.view-action-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
 // table
 :host ::ng-deep {
   .p-paginator {

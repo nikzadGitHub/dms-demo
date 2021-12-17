@@ -17,9 +17,9 @@ export class DefaultLayoutComponent implements OnDestroy {
 
   constructor(private router: Router, private authService: AuthService) {
     let userRole = JSON.parse(localStorage.getItem("userRole"));
-    if (userRole) {
-      this.userRoleName = userRole?.roles[0]?.name;
-    }
+    // if (userRole) {
+    //   this.userRoleName = userRole?.roles[0]?.name;
+    // }
     this.authService.getUserSession().then((res) => {
       if (res?.fullname) {
         this.userFullname = res?.fullname || "";
@@ -117,28 +117,10 @@ export class DefaultLayoutComponent implements OnDestroy {
     userRole?.roles.forEach((role) => {
       console.log("role:", role);
       if (role.name == "admin") {
-        // var adminIndex1 = this.navItems.findIndex(
-        //   (p) => p.name == "System Admin"
-        // );
         let adminIndex = this.navItems.find((p) => p.name == "System Admin");
         if (adminIndex > 0) {
           this.navItems.push(adminIndex);
         }
-
-        // if (adminIndex1 > 0) {
-        //   this.navItems.splice(adminIndex1, 1);
-        // }
-
-        // this.navItems.splice(
-        //   adminIndex1,
-        //   0,
-        //   // manager-view
-        //   {
-        //     name: "System Admin",
-        //     url: "/systemadmin",
-        //     icon: "cil-settings",
-        //   }
-        // );
 
         // access - setup;
         var accessIndex1 = this.navItems.find(

@@ -1,34 +1,36 @@
-import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpEvent, HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { HttpErrorResponse, HttpEvent, HttpClient } from "@angular/common/http";
+import { tap } from "rxjs/operators";
+import { BehaviorSubject, Observable, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
 // import * as forge from 'node-forge';
 
-import { getUniqueId } from '../common/common-function';
+import { getUniqueId } from "../common/common-function";
 
 // import { User } from './user';
-import { UserSession } from './user-session';
-import { SystemConfig } from '../config/system-config';
-import { Router } from '@angular/router';
-import { LocalStorageService } from '../_services/local-storage.service';
+import { UserSession } from "./user-session";
+import { SystemConfig } from "../config/system-config";
+import { Router } from "@angular/router";
+import { LocalStorageService } from "../_services/local-storage.service";
 // import { faUserNinja } from '@fortawesome/free-solid-svg-icons';
 
 export const USER_JSON = "user-json";
-export const TOKEN_KEY = 'auth-token';
-export const DEVICE_ID = 'device-id';
-export const FCM_CODE = 'fcm-code';
-export const RSA_PRIVATE_KEY = 'PP';
-export const RSA_PUBLIC_KEY = 'PPUB';
+export const TOKEN_KEY = "auth-token";
+export const DEVICE_ID = "device-id";
+export const FCM_CODE = "fcm-code";
+export const RSA_PRIVATE_KEY = "PP";
+export const RSA_PUBLIC_KEY = "PPUB";
 export const SERVER_PUB_KEY = "SPUB";
 
 // declare var Forge: any;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthService {
-  isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    null
+  );
   token: string = "";
   deviceId: string = "";
   fcmCode: string = "";
@@ -39,10 +41,9 @@ export class AuthService {
 
   constructor(
     private httpClient: HttpClient,
-    private storage: LocalStorageService, 
+    private storage: LocalStorageService,
     private router: Router
-  ) { 
-    
+  ) {
     // this.loadRSAKey();
     this.loadToken();
     this.loadDeviceId();
@@ -50,7 +51,7 @@ export class AuthService {
   }
 
   async loadToken() {
-    const token = this.storage.get(TOKEN_KEY);    
+    const token = this.storage.get(TOKEN_KEY);
     if (token) {
       // console.log('set token: ', token.value);
       this.token = token;
@@ -61,7 +62,7 @@ export class AuthService {
   }
 
   async loadDeviceId() {
-    const deviceId = this.storage.get(DEVICE_ID);    
+    const deviceId = this.storage.get(DEVICE_ID);
     if (deviceId) {
       this.deviceId = deviceId;
     } else {
@@ -86,7 +87,7 @@ export class AuthService {
   //     //Request for server public key.
   //     let res: any = this.httpClient.get(SystemConfig.apiBaseUrl + "/server-pub-key").toPromise();
   //     console.log(res);
-  //     if (res.success) { 
+  //     if (res.success) {
   //       this.serverPub = res.data.pub_key;
   //       let a = this.storage.set(SERVER_PUB_KEY, this.serverPub);
   //     }
@@ -115,7 +116,7 @@ export class AuthService {
   async setAuthorizationToken(authToken: string) {
     this.storage.set(TOKEN_KEY, authToken);
     this.token = authToken;
-    
+
     if (authToken == "") {
       this.storage.remove(TOKEN_KEY);
       this.isAuthenticated.next(false);
@@ -126,24 +127,23 @@ export class AuthService {
 
   async getUserSession(): Promise<UserSession> {
     let userSession: UserSession;
-    
+
     let stringUser = this.storage.get(USER_JSON); //JSON.parse(this.storage.get(USER_JSON));
 
-    if ((stringUser) && (stringUser.trim())) {
+    if (stringUser && stringUser.trim()) {
       let objUser = JSON.parse(stringUser);
       console.log(objUser);
       userSession = {
-        fullname: objUser.full_name, 
-        id: objUser.id, 
+        fullname: objUser.full_name,
+        id: objUser.id,
         isLocked: objUser.is_locked,
         isActive: objUser.is_active,
         email: objUser.email,
-        language: objUser.language
+        language: objUser.language,
       };
     }
 
     return userSession;
-
   }
 
   async removeUserSession(): Promise<any> {
@@ -151,9 +151,7 @@ export class AuthService {
   }
 
   async saveUserSession(userJson: string): Promise<any> {
-
     return this.storage.set(USER_JSON, userJson);
-
   }
 
   async removeFCMCode(): Promise<any> {
@@ -173,7 +171,7 @@ export class AuthService {
   async getFCMCode(): Promise<string> {
     let fcm_code = this.storage.get(FCM_CODE);
     if (fcm_code == null) {
-      fcm_code = '';
+      fcm_code = "";
     }
 
     this.fcmCode = fcm_code;
@@ -181,127 +179,145 @@ export class AuthService {
     return fcm_code;
   }
 
-  loginUser(credential: {username: string, password: string}): Observable<any>  {
+  loginUser(credential: {
+    username: string;
+    password: string;
+  }): Observable<any> {
     let os: string = "web"; //this.platform.platforms().join();
-    
+
     if (os.length > 50) {
-      os = os.substr(0,50);
+      os = os.substr(0, 50);
     }
-    
+
     let credentialSend = {
-      'username': credential.username,
-      'password': credential.password,
-      'device_id': this.deviceId,
-      'fcm_code': this.fcmCode,
-      'app_id': SystemConfig.appId,
-      'os': os
-    }
-    return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/login", credentialSend);
+      username: credential.username,
+      password: credential.password,
+      device_id: this.deviceId,
+      fcm_code: this.fcmCode,
+      app_id: SystemConfig.appId,
+      os: os,
+    };
+    return this.httpClient.post(
+      SystemConfig.apiBaseUrl + "/auth/login",
+      credentialSend
+    );
   }
 
-  refreshSession(): Observable<any>  {
+  refreshSession(): Observable<any> {
     let os: string = "web"; // this.platform.platforms().join();
-    
+
     if (os.length > 50) {
-      os = os.substr(0,50);
+      os = os.substr(0, 50);
     }
 
-    return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/refresh",{
-      'device_id': this.deviceId,
-      'fcm_code': this.fcmCode,
-      'app_id': SystemConfig.appId,
-      'os': os
+    return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/refresh", {
+      device_id: this.deviceId,
+      fcm_code: this.fcmCode,
+      app_id: SystemConfig.appId,
+      os: os,
     });
   }
 
   logoutUser(): Observable<any> {
-    return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/logout",{}).pipe(
-      tap(async (event: HttpEvent<any>) => {
-        console.log(event);
-        this.storage.remove(USER_JSON);
-        await this.setAuthorizationToken("");
-        this.storage.remove(TOKEN_KEY);
-      }),
-      catchError(async (error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          this.storage.remove(USER_JSON);  
-          await this.setAuthorizationToken("");  
-          this.storage.remove(TOKEN_KEY);  
-        }
-        return throwError(error);
-      })
-    );
-    
+    return this.httpClient
+      .post(SystemConfig.apiBaseUrl + "/auth/logout", {})
+      .pipe(
+        tap(async (event: HttpEvent<any>) => {
+          console.log(event);
+          this.storage.remove(USER_JSON);
+          await this.setAuthorizationToken("");
+          this.storage.remove(TOKEN_KEY);
+        }),
+        catchError(async (error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            this.storage.remove(USER_JSON);
+            await this.setAuthorizationToken("");
+            this.storage.remove(TOKEN_KEY);
+          }
+          return throwError(error);
+        })
+      );
   }
-  
+
   // changePassword(paswordInfo: {
   //   current_password: string, password: string, password_confirmation: string
   // }): Observable<any> {
   //   return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/change-password", paswordInfo).pipe();
   // }
 
-  updateFcmCodeToServer(fcmCode: string): Observable<any>  {
+  updateFcmCodeToServer(fcmCode: string): Observable<any> {
     let os: string = "web"; //this.platform.platforms().join();
-    
+
     if (os.length > 50) {
-      os = os.substr(0,50);
+      os = os.substr(0, 50);
     }
 
-    return this.httpClient.post(SystemConfig.apiBaseUrl + "/fcm-code/update",{
-      'device_id': this.deviceId,
-      'fcm_code': fcmCode,
-      'app_id': SystemConfig.appId,
-      'os': os
+    return this.httpClient.post(SystemConfig.apiBaseUrl + "/fcm-code/update", {
+      device_id: this.deviceId,
+      fcm_code: fcmCode,
+      app_id: SystemConfig.appId,
+      os: os,
     });
   }
 
-  removeFcmCodeFromServer(fcmCode: string): Observable<any>  {
-
-    return this.httpClient.post(SystemConfig.apiBaseUrl + "/fcm-code/remove",{
-      'device_id': this.deviceId,
-      'fcm_code': fcmCode,
-      'app_id': SystemConfig.appId
+  removeFcmCodeFromServer(fcmCode: string): Observable<any> {
+    return this.httpClient.post(SystemConfig.apiBaseUrl + "/fcm-code/remove", {
+      device_id: this.deviceId,
+      fcm_code: fcmCode,
+      app_id: SystemConfig.appId,
     });
   }
 
   getProfile(): Observable<any> {
-    return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/me", {}).pipe();
+    // return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/me", {}).pipe();
+    return this.httpClient.get(SystemConfig.apiBaseUrl + "/me", {}).pipe();
   }
 
   updateProfile(profile: {
-    email: string, first_name: string, last_name: string,
-    address_1: string, address_2: string, address_3: string, state: string, 
-    city:string, postcode: number
+    email: string;
+    first_name: string;
+    last_name: string;
+    address_1: string;
+    address_2: string;
+    address_3: string;
+    state: string;
+    city: string;
+    postcode: number;
   }): Observable<any> {
     let os: string = "web"; //this.platform.platforms().join();
-    
+
     if (os.length > 50) {
-      os = os.substr(0,50);
+      os = os.substr(0, 50);
     }
-    
+
     let profileSend = {
-      'email': profile.email,
-      'first_name': profile.first_name,
-      'last_name': profile.last_name,
-      'address_1': profile.address_1,
-      'address_2': profile.address_2,
-      'address_3': profile.address_3,
-      'state': profile.state,
-      'city': profile.city,
-      'postcode': profile.postcode,
-      'device_id': this.deviceId,
-      'fcm_code': this.fcmCode,
-      'app_id': SystemConfig.appId,
-      'os': os
-    }
-    return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/me/update", profileSend);
+      email: profile.email,
+      first_name: profile.first_name,
+      last_name: profile.last_name,
+      address_1: profile.address_1,
+      address_2: profile.address_2,
+      address_3: profile.address_3,
+      state: profile.state,
+      city: profile.city,
+      postcode: profile.postcode,
+      device_id: this.deviceId,
+      fcm_code: this.fcmCode,
+      app_id: SystemConfig.appId,
+      os: os,
+    };
+    return this.httpClient.post(
+      SystemConfig.apiBaseUrl + "/auth/me/update",
+      profileSend
+    );
   }
 
   loginAzureToken(azureToken: {
-    azure_token: string, fcm_code: string
+    azure_token: string;
+    fcm_code: string;
   }): Observable<any> {
-    
-    return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/azure-login", azureToken);
+    return this.httpClient.post(
+      SystemConfig.apiBaseUrl + "/auth/azure-login",
+      azureToken
+    );
   }
-
 }

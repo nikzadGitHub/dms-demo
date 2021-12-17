@@ -47,9 +47,11 @@ export class UserSetupComponent implements OnInit {
   editedUnit: any = [];
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
-  alertBody='';
+  // @ViewChild("viewUnitSetDetail") viewUnitSetDetail: ModalDirective;
+  alertBody = "";
   selectedAllUnits: any = [];
   unitId: string;
+  isViewUnit: boolean;
   constructor(
     private systemAdminService: SystemAdminService,
     private formBuilder: FormBuilder,
@@ -126,7 +128,7 @@ export class UserSetupComponent implements OnInit {
         },
         (err) => {
           console.log("Error:", err);
-          
+
           this.alertBody = err.error.message;
           this.dangerModal.show();
           setTimeout(() => {
@@ -365,8 +367,12 @@ export class UserSetupComponent implements OnInit {
       return false;
     }
   }
-
+  viewUnitSetDetail(id) {
+    this.isViewUnit = true;
+    this.getUnit(id);
+  }
   resetForm() {
+    this.isViewUnit = false;
     this.selectParentUnit = null;
     this.selectOpc = null;
     this.selectPrinciples = null;

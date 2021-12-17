@@ -21,6 +21,7 @@ export class UserLoaComponent implements OnInit {
   allUnits: any[] = [];
   unitId: string;
   alertBody = "";
+  isUserViewLoa: boolean;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -61,24 +62,28 @@ export class UserLoaComponent implements OnInit {
       celling_price_approval_id: this.authorityForm.value.cellingPriceApproval,
       price_level_approval: this.authorityForm.value.priceApprovel,
     };
-    this.systemAdminSerive
-      .putQuery("/units/level-approval/" + this.unitId, data)
-      .subscribe(
-        (res: any) => {
-          console.log("user-loa-res:", res);
-          (this.alertBody = res.message), this.successModal.show();
-          setTimeout(() => {
-            this.successModal.hide();
-            this.authorityForm.reset();
-          }, 2000);
-        },
-        (error) => {
-          console.log("Error:", error);
-
-          this.alertBody = error.error.message;
-          this.dangerModal.show();
-        }
-      );
+    if (this.unitId) {
+      this.systemAdminSerive
+        .putQuery("/units/level-approval/" + this.unitId, data)
+        .subscribe(
+          (res: any) => {
+            console.log("user-loa-res:", res);
+            (this.alertBody = res.message), this.successModal.show();
+            setTimeout(() => {
+              this.successModal.hide();
+              this.authorityForm.reset();
+            }, 2000);
+          },
+          (error) => {
+            console.log("Error:", error);
+            this.alertBody = error.error.message;
+            this.dangerModal.show();
+          }
+        );
+    } else {
+      this.alertBody = "Please select unit first";
+      this.dangerModal.show();
+    }
   }
 
   getUserRole() {
@@ -94,9 +99,8 @@ export class UserLoaComponent implements OnInit {
       this.allUnits = res.data;
     });
   }
-  goForEdit(authorityUnit) {
-    this.unitId = authorityUnit.id;
-    console.log("authorityUnit:", authorityUnit);
+  goForEdit(id) {
+    this.unitId = id;
     // debugger;
 
     this.systemAdminSerive
@@ -113,19 +117,26 @@ export class UserLoaComponent implements OnInit {
             })
           );
         });
-
         this.authorityForm.patchValue({
           unit: res?.data?.parent_unit_id,
           personInCharges: res?.data?.pic?.id,
-          // amount: "",
-          // approve_by: "",
           profitMargin: res?.data?.min_profit_margin_percentage,
           discount: res?.data?.allowed_discount_percentage,
           cellingPriceAmount: res?.data?.ceiling?.ceiling_amount,
           cellingPriceApproval: res?.data?.ceiling?.approval_personel_id,
-          // priceApprovel: res?.data?.price_levels,
         });
       });
+  }
+
+  resetForm() {
+    this.isUserViewLoa = false;
+    this.authorityForm.reset();
+    this.getPriceApprovelForm().clear();
+    this.addPriceLevelApproval();
+  }
+  viewUserLoaDetail(id) {
+    this.isUserViewLoa = true;
+    this.goForEdit(id);
   }
 
   addPriceLevelApproval() {
