@@ -45,6 +45,12 @@ export class EditComponent implements OnInit {
   minUsageAddForm: FormGroup;
   existingProcedureIds = [];
   existingConsumeIds = [];
+  fileUploadForm: FormGroup;
+  file;
+  fileName;
+  url: any;
+  formData = new FormData();
+  fileList : any = [];
 
   payment_frequency_list = [
     {'value': 'monthly_payment', 'label': 'Monthly'},
@@ -103,6 +109,17 @@ export class EditComponent implements OnInit {
     this.minUsageAddForm = this.fb.group({
       addMinUsage: this.fb.array([]),
     });
+
+    this.fileUploadForm = this.fb.group(
+      {
+        file_name: new FormControl('test 1'),
+        file_uploaded_by: new FormControl(1),
+        file_type: new FormControl(1),
+        file_valid_until: new FormControl(),
+        file_ramark: new FormControl('My remark'),
+        file : new FormControl(null),
+      }
+    );
 
     this.fpsEditForm = this.fb.group({
       fps_no: new FormControl('',[Validators.required]),
@@ -372,6 +389,11 @@ export class EditComponent implements OnInit {
         this.addMinUsage().push(this.existingMinUsage(addMinUsage));
         this.existingConsumeIds.push(addMinUsage.id);
       });
+
+      data.data.files.forEach((file) => {
+        this.fileList.push(file);
+      });
+
       this.updateTenure();      
     });
   }
@@ -443,4 +465,70 @@ export class EditComponent implements OnInit {
       });
     }
   //---------------- End of  Min Usage -------------------
+
+  //---------------- File Library  -------------------
+  
+  resetForm() {
+    
+  }
+
+  onFileSelect(event: any) {
+    this.file = event.target.files[0];
+
+    if (this.file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(this.file);
+      reader.onload = (event: any) => {
+        this.url = reader.result;
+      };
+      this.formData.append("file", this.file);
+    }
+  }
+
+  createFile() {
+    this.fileAddFormModal.show();
+  }
+
+  fileUpload() {
+
+    let file = {
+      file_name: this.fileUploadForm.get('file_name').value,
+      file_type: this.fileUploadForm.get('file_type').value,
+      file_valid_until: this.fileUploadForm.get('file_valid_until').value,
+      file_uploaded_by: this.fileUploadForm.get('file_uploaded_by').value,
+      file_uploaded_on: new Date(),
+      file_ramark: this.fileUploadForm.get('file_ramark').value,
+      file_size: this.file.size,
+    }
+
+    this.fileList.push(file);
+
+    this.formData.append("file_name", this.fileUploadForm.get('file_name').value);
+    this.formData.append("file_type", this.fileUploadForm.get('file_type').value);
+    this.formData.append("file_valid_until", this.fileUploadForm.get('file_valid_until').value);
+    this.formData.append("file_uploaded_by", this.fileUploadForm.get('file_uploaded_by').value);
+    this.formData.append("file_ramark", this.fileUploadForm.get('file_valid_until').value);
+    this.formData.append("fps_id", this.fpsID);
+    this.formData.append("file_size", this.convertSize(this.file.size));
+    
+    this.fpsService.storeFileLibrary(this.formData);
+    this.fileAddFormModal.hide();
+  }
+
+  showFileType(key) {
+    return this.fileTypeList.find(typeItem => typeItem.id == key).title; 
+  }
+
+  showUser(key) {
+    return this.fps_user_list.find(typeItem => typeItem.id == key).full_name; 
+  }
+
+  convertSize(size) {
+    if (typeof size === 'number' ){
+      return this.fpsService.humanFileSize(size);
+    }
+    else {
+      return size;
+    }
+  }
 }

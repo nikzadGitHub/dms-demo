@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import {FpsInterface, SaveResult} from './services/fps-interface';
 import { ApiClientService } from './api-client.service';
 import { SystemConfig } from '@app/config/system-config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
 import { settings } from '../../environments/environment';
+import { catchError } from "rxjs/operators";
+
 @Injectable({providedIn: 'root'})
 
 export class FpsService implements FpsInterface {
@@ -76,6 +78,16 @@ export class FpsService implements FpsInterface {
     ];
   }
 
+  getFileTypeList() {
+    return [
+      {'id': 1, 'title': 'Product Flyer' },
+      {'id': 2, 'title': 'Customer Documents' },
+      {'id': 3, 'title': 'Agreement ' },
+      {'id': 4, 'title': 'Forms' },
+      {'id': 5, 'title': 'Others' }
+    ];
+  }
+
   getTenureList(fps_type_id: number, financial_id: number, payment_frequency: string): Observable<any> {
     return this.httpClient.get(SystemConfig.apiBaseUrl + "/tenure-list/"+ fps_type_id + "/" + financial_id + "/" + payment_frequency).pipe();
   }
@@ -118,10 +130,6 @@ export class FpsService implements FpsInterface {
     });
   }
 
-  // minProcedureCheckSum(data: any): Observable<SaveResult> {
-  //   return this.apiClient.post('minProcedure/checksum', data);
-  // }
-
   saveMinUsage(data: any): Observable<SaveResult> {
     return this.apiClient.post('minUsage/store', data);
   }
@@ -137,12 +145,71 @@ export class FpsService implements FpsInterface {
     });
   }
 
-  // minUsageCheckSum(data: any): Observable<SaveResult> {
-  //   return this.apiClient.post('minUsage/checksum', data);
-  // }
-
   deleteFps(fpsID: number) {
     return this.httpClient.delete(this.apiURL + '/fps/delete/' + fpsID, this.httpOptions)
   }
+
+  saveFile(formData: any): Observable<any> {
+    // return this.apiClient.post('fileLibrary/store', data).pipe(catchError(this.errorHandler));
+    return this.httpClient
+    .post(this.apiURL + "/fps/fileLibrary/store", formData, {
+      headers: new HttpHeaders({ "Content-Type": "file", Accept: "file" }),
+    })
+    .pipe(catchError(this.errorHandler));
+
+  }
+
+  errorHandler(error) {
+    let errorMessage = "";
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = error.error.message;
+    } else {
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    return throwError(errorMessage);
+  }
+
+  storeFileLibrary(data) {
+    this.saveFile(data).subscribe((res) => {
+      if (res.id) {
+        console.log("Files stored successfully.");
+      }
+    },
+    err => {
+      console.log(err);
+    });
+  }
+
+/**
+ * Format bytes as human-readable text.
+ * 
+ * @param bytes Number of bytes.
+ * @param si True to use metric (SI) units, aka powers of 1000. False to use 
+ *           binary (IEC), aka powers of 1024.
+ * @param dp Number of decimal places to display.
+ * 
+ * @return Formatted string.
+ * 
+ * @Credit goes to https://stackoverflow.com/a/14919494
+ */
+humanFileSize(bytes, dp=1) {
+  const thresh = 1000;
+
+  if (Math.abs(bytes) < thresh) {
+    return bytes + ' B';
+  }
+
+  const units = ['kB', 'MB'];
+  let u = -1;
+  const r = 10**dp;
+
+  do {
+    bytes /= thresh;
+    ++u;
+  } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
+
+
+  return bytes.toFixed(dp) + ' ' + units[u];
+}
 
 }
