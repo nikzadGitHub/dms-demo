@@ -32,6 +32,7 @@ export class EditComponent implements OnInit {
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("foundModal") foundModal: ModalDirective;
+  @ViewChild("createModal") fileAddFormModal: ModalDirective;
   @ViewChild('fpsEditFormContainer') fpsEditFormContainerRef: ElementRef;
 
   fpsEditForm : FormGroup;
@@ -81,6 +82,7 @@ export class EditComponent implements OnInit {
 
   fpsTypeList = this.fpsService.getTransSactionTypeList();
   fpsStatusList = this.fpsService.getFpsStatusList();
+  fileTypeList = this.fpsService.getFileTypeList();
 
   get form_controls() {
     return this.fpsEditForm.controls;
@@ -208,7 +210,9 @@ export class EditComponent implements OnInit {
               'updated_on': procedures[x].updated_on,
             });
           }
+          if(procedureList.length > 0) {
           this.fpsService.storeMinProcedure(procedureList);
+          }
 
           let usages = this.minUsageAddForm.value.addMinUsage;
           let usageList = [];
@@ -222,7 +226,9 @@ export class EditComponent implements OnInit {
               'updated_on': usages[x].updated_on,
             });
           }
+          if(usageList.length > 0) {
           this.fpsService.storeMinUsage(usageList);
+          }
           
           this.alertBody = "FPS updated successfully.";
           this.successModal.show();
