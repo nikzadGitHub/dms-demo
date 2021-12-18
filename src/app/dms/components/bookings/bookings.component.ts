@@ -21,6 +21,23 @@ export class BookingsComponent implements OnInit {
   loading: boolean;
   alertBody: string;
   searchTimerId: number;
+  bookingReasonsNames = [
+    'event',
+    'demo',
+    'training',
+    'buyin'
+  ];
+  bookingStatusNames = [
+    'approval request',
+    'approve',
+    'review',
+    'endorse',
+    'provision-ally approve',
+    'decline',
+    'conflict',
+    'extension request',
+    'demo item availability'
+  ]
 
   constructor(
     private api: BookingService,
