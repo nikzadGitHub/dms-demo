@@ -63,10 +63,9 @@ export class UserLoaComponent implements OnInit {
       celling_price_approval_id: this.authorityForm.value.cellingPriceApproval,
       price_level_approval: this.authorityForm.value.priceApprovel,
     };
-    if (this.unitId) {
+    // if (this.unitId) {
       let priceApprovel = data.price_level_approval;
       for (let i = 0; i < priceApprovel.length; i++) {
-        console.log("alsdk", priceApprovel[i]);
         if (
           priceApprovel[i].amount == "" ||
           priceApprovel[i].approve_by == ""
@@ -78,7 +77,7 @@ export class UserLoaComponent implements OnInit {
       }
       if (this.priceApprovalChk) {
         this.systemAdminSerive
-          .putQuery("/units/level-approval/" + this.unitId, data)
+          .putQuery("/units/level-approval/" + data.parent_unit_id, data)
           .subscribe(
             (res: any) => {
               console.log("user-loa-res:", res);
@@ -98,7 +97,7 @@ export class UserLoaComponent implements OnInit {
       }
 
       this.systemAdminSerive
-        .putQuery("/units/level-approval/" + this.unitId, data)
+        .putQuery("/units/level-approval/" + data.parent_unit_id, data)
         .subscribe(
           (res: any) => {
             console.log("user-loa-res:", res);
@@ -116,10 +115,10 @@ export class UserLoaComponent implements OnInit {
             this.dangerModal.show();
           }
         );
-    } else {
-      this.alertBody = "Please select unit first";
-      this.dangerModal.show();
-    }
+    // } else {
+    //   this.alertBody = "Please select unit first";
+    //   this.dangerModal.show();
+    // }
   }
   getUserRole() {
     this.systemAdminSerive.getQuery("/user-role").subscribe((res: any) => {
