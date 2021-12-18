@@ -75,6 +75,7 @@ export class SkuIndexComponent implements OnInit {
 
   fpsTypeList = this.fpsService.getTransSactionTypeList();
 
+  getAll(){}
   showFPSType(key) {
     return this.fpsTypeList.find(typeItem => typeItem.id == key).title; 
   }

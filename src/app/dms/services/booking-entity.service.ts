@@ -22,4 +22,8 @@ export class BookingEntityService implements BookingEntityInterface {
     return this.apiClient.post<any>('booking/status/update', data);
   }
 
+  decline_booking(data: any): Observable<any> {
+    return this.apiClient.post<any>('booking/status/decline', data);
+  }
+
 }
