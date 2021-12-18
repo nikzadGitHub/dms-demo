@@ -3,7 +3,6 @@ import {
   Input, Output, EventEmitter
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { ApprovalList } from '../../../services/booking-entity';
 import { BookingEntityService } from '../../../services/booking-entity.service';
 import {BookingStatus, statusToText} from '../../../services/booking-status.enum';
@@ -26,10 +25,13 @@ export class ButtonEvent {
 })
 export class BookingApprovalComponent implements OnInit {
   private _status = BookingStatus.unknown;
+  private _bookingReason: any;
+
   statusText: string = 'Unknown';
   isConfirmed: boolean = false;
   show_decline: boolean = false;
   buttons: Button[] = [];
+  is_demo: boolean = false;
 
   @Input() list: ApprovalList = [];
   @Input() access: boolean = false;
@@ -42,6 +44,14 @@ export class BookingApprovalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+  }
+
+  @Input() public get bookingReason(): any{
+    return this._bookingReason;
+  }
+  public set bookingReason(value: any) {
+    this._bookingReason = value;
+    this.is_demo = value == '2' ? true : false;
   }
 
   @Input() public get status(): any {
@@ -58,6 +68,7 @@ export class BookingApprovalComponent implements OnInit {
       case '1':
         this.buttons = [{ title: 'Submit for Approval', id: 0, status: '2' }];
         break;
+      case '9':
       case '2':
         this.buttons = [
           { title: 'MSC Reviewed', id: 0, status: '3' },
@@ -97,6 +108,7 @@ export class BookingApprovalComponent implements OnInit {
         bookingId: this.route.snapshot.params.id,
         status: status,
       }).subscribe((res) => {
+        console.log(res);
           if (res) {
             this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
               this.router.navigate(['/dms/bookings', this.route.snapshot.params.id]);

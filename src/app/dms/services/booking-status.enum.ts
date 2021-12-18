@@ -9,7 +9,8 @@ export enum BookingStatus {
   endorsed = 'MSC Reviewed (+Country)',
   accepted = 'Provisionally Accepted',
   confirmed = 'Confirmed',
-  archived = 'Archived',
+  //archived = 'Archived',
+  approved = 'Submitted',
 }
 
 export type BookingStatusKey = keyof BookingStatus;
