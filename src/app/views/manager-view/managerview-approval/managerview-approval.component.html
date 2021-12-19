@@ -619,7 +619,62 @@
       <td class="text-center" >
        
         <div *ngIf="data.status">
-          {{ data.status}}
+      
+
+          <p-badge
+          value="Rejected"
+          *ngIf="data.status == 0"
+          severity="danger"
+          styleClass="p-mr-2"
+          class="soci-list-badges"
+        ></p-badge>
+        <p-badge
+          value="Approved"
+          severity="success"
+          *ngIf="data.status == 1"
+          styleClass="p-mr-2"
+          class="soci-list-badges"
+        ></p-badge>
+        <p-badge
+          value="Pending Approval"
+          *ngIf="data.status == 2"
+          severity="warning"
+          styleClass="p-mr-2"
+          class="soci-list-badges"
+        ></p-badge>
+
+        <p-badge
+        value="Closed"
+        *ngIf="data.status == 3"
+        severity="warning"
+        styleClass="p-mr-2"
+        class="soci-list-badges"
+      ></p-badge>
+        
+
+        <p-badge
+          value="Preferred"
+          *ngIf="data.status == 4"
+          severity="info"
+          styleClass="p-mr-2"
+          class="soci-list-badges"
+        ></p-badge>
+
+        <p-badge
+        value="Initial"
+        *ngIf="data.status == 5"
+        severity="info"
+        styleClass="p-mr-2"
+        class="soci-list-badges"
+      ></p-badge>
+      <p-badge
+      value="In Progress"
+      *ngIf="data.status == 6"
+      severity="info"
+      styleClass="p-mr-2"
+      class="soci-list-badges"
+    ></p-badge>
+
         </div>
         <div *ngIf="!data.status">_</div>
     </td>
