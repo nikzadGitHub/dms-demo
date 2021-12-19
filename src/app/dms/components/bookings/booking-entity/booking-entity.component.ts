@@ -32,7 +32,7 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
   bookingDetailList: BookingDetail;
   opportunitySummary: OpportunitySummary;
   mainAsset: MainAsset;
-
+  bookingReason: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,6 +59,7 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
               this.opportunitySummary = response.opportunitySummary;
               this.mainAsset = response.mainAsset;
               this.access = response.access;
+              this.bookingReason = this.bookingDetailList.booking_reason;
             }
             console.log('api: entity', this.bookingId, response);
           });
@@ -91,8 +92,10 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
       '3 Raising Booking Request - MSC Reviewed',
       '4 Raising Booking Request - conflict',
       '5 Raising Booking Request - declined',
-      '6 Raising Booking Request - Provisionally Accepted',
-      '7 Raising Booking Request - Confirmed'
+      '6 Raising Booking Request - MSC Reviewed (+Country)',
+      '7 Raising Booking Request - Provisionally Accepted',
+      '8 Raising Booking Request - Confirmed',
+      '9 Raising Booking Request - submitted'
     ]
     if(status != '' && status != null){
       return statusList[status];
