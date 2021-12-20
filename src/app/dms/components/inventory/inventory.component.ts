@@ -12,6 +12,8 @@ import { MenuItem } from 'primeng/api/menuitem';
 })
 export class InventoryComponent implements OnInit {
   loading: boolean;
+  searchTimerId: number;
+
   constructor(private api: InventoryService) { }
   menuItems: MenuItem[] = [
     {
@@ -50,10 +52,15 @@ export class InventoryComponent implements OnInit {
   }
 
   onSearch() {
-    this.api.getListSearch(this.search_text).subscribe((response) => {
-      if (response as InventoryList) {
-        this.inventoryList = response;
-      }
-	});
+    if (this.searchTimerId) {
+      clearTimeout(this.searchTimerId)
+    }
+    this.searchTimerId = window.setTimeout(() => {
+      this.api.getListSearch(this.search_text).subscribe((response) => {
+        if (response as InventoryList) {
+          this.inventoryList = response;
+        }
+      });
+    },1500)
   }
 }
