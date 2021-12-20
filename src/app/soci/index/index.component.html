@@ -106,7 +106,7 @@
         class="text-center"
         *ngIf="checkItem('company_name')"
       >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+        <div style="white-space: nowrap;flex-direction: column;align-items: center;overflow: hidden;word-break: break-all;text-overflow: ellipsis;"  class="p-d-flex p-jc-between p-ai-center">
           Individual/Company Name
           <div class="name-icons">  
             <p-sortIcon field="customer.company_name"></p-sortIcon>
@@ -292,22 +292,7 @@
           </div>
         </div>
       </th>
-      <th>
-        <div
-          style="
-            display: flex;
-            white-space: nowrap;
-            flex-direction: column;
-            align-items: center;
-          "
-          class="p-d-flex p-jc-between p-ai-center"
-        >
-        Action
-        </div>
-
-      </th>
-
-      <th [style]="{ width: '5%' }"></th>
+      <th [style]="{ width: '7%' }">Action</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-soci>
@@ -422,7 +407,7 @@
           *ngIf="soci.status == 2"
           severity="warning"
           styleClass="p-mr-2"
-          class="soci-list-badges"
+          class="soci-list-badges badge"
         ></p-badge>
 
         <input

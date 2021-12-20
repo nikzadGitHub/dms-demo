@@ -151,7 +151,7 @@ export class EditComponent implements OnInit {
   type = "soci";
   accordianComment: any;
   commentList: any[] = [];
-  isShipTo = false;
+  isShipTo: boolean;
   enableShipToedit = true;
   isSoldTo = false;
   enableSoldToedit = true;
@@ -370,19 +370,114 @@ export class EditComponent implements OnInit {
     });
   }
 
+  openModel(value) {
+    console.log("value:", value);
+    this.section = value;
+    this.comment_header = "Comment";
+
+    if (value == "po_detail") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "soci_detail") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "standard_terms") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "billing_milestone") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "payment_schedule") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "additional_cost") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "billing_instruction") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "additional_instruction") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "additional_charges") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "product") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "soci_attachment") {
+      this.commentModal.show();
+      this.getCommentList();
+    }
+  }
+  getCommentList() {
+    this.sociService
+      .getcomment(
+        "/comment?type=" +
+          this.type +
+          "&type_id=" +
+          this.soci_id +
+          "&section=" +
+          this.section
+      )
+      .subscribe((res: any) => {
+        console.log("comment-res:", res);
+        this.commentList = res.data;
+      });
+  }
+
+  addComment() {
+    this.sociService
+      .postQuery(
+        "/comment?type=" +
+          this.type +
+          "&type_id=" +
+          this.soci_id +
+          "&section=" +
+          this.section,
+        {
+          comment: this.accordianComment,
+        }
+      )
+      .subscribe(
+        (res: any) => {
+          console.log("comment-res:", res);
+          this.accordianComment = "";
+          this.commentList.push(res.data);
+
+          // this.commentModal.hide();
+          // this.alertBody = res.message;
+          // this.successModal.show();
+          // setTimeout(() => {
+          //   this.successModal.hide();
+          // }, 2000);
+        }
+        // (error) => {
+        //   this.alertBody = error.error.message;
+        //   this.dangerModal.show();
+        //   setTimeout(() => {
+        //     this.dangerModal.hide();
+        //   }, 2000);
+        // }
+      );
+  }
+  resetModel() {
+    this.commentList = null;
+    this.accordianComment = ''
+  }
+
   // soci-detail
   enableEditSociDetail(value) {
     if (value == "ship_to") {
       this.isShipTo = true;
       this.enableShipToedit = false;
+    } else if (value == "sold_to") {
+      this.isSoldTo = true;
+      this.enableSoldToedit = false;
+    } else if (value == "bill_to") {
+      this.isBillTo = true;
+      this.enableBillToedit = false;
     }
-    //  else if (value == "sold_to") {
-    //   this.isSoldTo = true;
-    //   this.enableSoldToedit = false;
-    // } else if (value == "bill_to") {
-    //   this.isBillTo = true;
-    //   this.enableBillToedit = false;
-    // }
   }
   disableEditing(value) {
     if (value == "ship_to") {
@@ -512,65 +607,6 @@ export class EditComponent implements OnInit {
     this.is_delivery_term_eidt = false;
   }
 
-  openModel(value) {
-    console.log("value:", value);
-    this.section = value;
-    this.comment_header = "Comment";
-
-    if (value == "po_detail") {
-      this.commentModal.show();
-      this.getCommentList();
-    }
-  }
-
-  addComment() {
-    this.sociService
-      .postQuery(
-        "/comment?type=" +
-          this.type +
-          "&type_id=" +
-          this.soci_id +
-          "&section=" +
-          this.section,
-        {
-          comment: this.accordianComment,
-        }
-      )
-      .subscribe(
-        (res: any) => {
-          console.log("comment-res:", res);
-          this.commentModal.hide();
-          this.alertBody = res.message;
-          this.successModal.show();
-          setTimeout(() => {
-            this.successModal.hide();
-          }, 2000);
-        },
-        (error) => {
-          this.alertBody = error.error.message;
-          this.dangerModal.show();
-          setTimeout(() => {
-            this.dangerModal.hide();
-          }, 2000);
-        }
-      );
-  }
-
-  getCommentList() {
-    this.sociService
-      .getcomment(
-        "/comment?type=" +
-          this.type +
-          "&type_id=" +
-          this.soci_id +
-          "&section=" +
-          this.section
-      )
-      .subscribe((res: any) => {
-        console.log("comment-res:", res);
-        this.commentList = res.data;
-      });
-  }
   // End Standard Term
 
   // ADD Billing_Milestone
@@ -1216,7 +1252,7 @@ export class EditComponent implements OnInit {
         quantity: this.form.value.quantity,
         cost: this.product_cost,
         margin: 2,
-        total_price: this.form.value.quantity.total_price,
+        total_price: this.form.value.quantity?.total_price,
         product_id: this.product_id,
         discount: this.form.value.discount,
         amount: this.form.value.amount,
@@ -1254,14 +1290,13 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
   }
 
   productDetails(product, check) {
-    console.log("Product:", product);
-
     this.productCheck = check;
     this.external_product_number = product.external_product_number;
     this.product_data_area_id = product.data_area_id;
@@ -1736,5 +1771,11 @@ export class EditComponent implements OnInit {
 
   back() {
     this.location.back();
+  }
+  modalClassRomve() {
+    let body = document.querySelector("body");
+    if (body.classList.contains("modal-open")) {
+      body.classList.remove("modal-open");
+    }
   }
 }

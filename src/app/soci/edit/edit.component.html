@@ -142,8 +142,9 @@
         </p-accordionTab>
       </p-accordion>
       <br />
+      <!-- End PO details -->
       <!-- SOCI Detaail -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <!-- header="PO Details" -->
         <p-accordionTab>
           <ng-template pTemplate="header">
@@ -176,7 +177,6 @@
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3">0</div>
           </div>
-          <hr />
           <div class="row">
             <div
               class="col-lg-3 col-md-3 col-sm-3 grey"
@@ -293,17 +293,28 @@
             >
               <b>Ship To </b>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="!isShipTo">
-              {{ soci_data?.quote?.opportunity?.ship_to?.company_name }}
+            <div class="col-lg-2 col-md-2 col-sm-2 mr-4">
+              <div *ngIf="isShipTo">
+                <input
+                type="text"
+                class="form-control"
+                formControlName="ship_to"
+                style="width: 175px;"
+              />
+              </div>
+              <div *ngIf="!isShipTo">
+                {{ soci_data?.quote?.opportunity?.ship_to?.company_name }}
+              </div>
+              
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="isShipTo">
+            <!-- <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="isShipTo">
               <input
                 type="text"
                 class="form-control"
                 formControlName="ship_to"
                 style="width: 175px;"
               />
-            </div>
+            </div> -->
             <div class="action-icon">
               <a
                 [routerLink]=""
@@ -417,7 +428,7 @@
           </div>
         </p-accordionTab>
       </p-accordion>
-      <!-- End PO details -->
+       <!--End SOCI Detaail -->
       <br />
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <!-- Standard Term Accordion -->
@@ -3430,6 +3441,7 @@
 
 <div
   bsModal
+  (onHide)="resetModel()"
   #commentModal="bs-modal"
   class="modal fade"
   tabindex="-1"
@@ -3454,11 +3466,14 @@
       </div>
 
       <div class="modal-body comment-body">
-        <div class="row" *ngFor="let item of commentList">
-          <div class="col-lg-12 col-md-12 col-sm-12">
-            <label>{{ item.name }}</label>
+        <div class="row comment-list" *ngFor="let item of commentList">
+          <div class="col-lg-12 col-md-12 col-sm-12 ">
+            <label>{{ item.name }}
+              <p>({{item.created_at  | date: "dd-MMM-yyyy h:mm a" }})</p>
+            </label>
             <p>{{ item.comment }}</p>
           </div>
+          <hr>
         </div>
         <textarea
           placeholder="Comment"
