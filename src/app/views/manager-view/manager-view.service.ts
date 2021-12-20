@@ -37,4 +37,25 @@ export class ManagerViewService {
     }
     return throwError(errorMessage);
   }
+ 
+  getPendingQuotationApproval(pageItems, search_text, sort): Observable<Quote[]> {
+    let query =
+    "/quote/pending-approval-listing?page_items=" + pageItems + "&search_text=" + search_text;
+    if (sort && sort["field"] != null) {
+      query += "&field=" + sort.field + "&order=" + sort.order;
+    }
+    return this.httpClient
+      .get<Quote[]>(this.apiURL + query, this.httpOptions)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  quotationApproval(id): Observable<object> {
+
+    return this.httpClient.post(this.apiURL+"/quote/approval/" + id, this.httpOptions);
+  }
+
+  quotationEscalate(id): Observable<object> {
+
+    return this.httpClient.post(this.apiURL+"/quote/escalate/" + id, this.httpOptions);
+  }
 }

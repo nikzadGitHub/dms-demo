@@ -269,8 +269,8 @@ export class AuthService {
   }
 
   getProfile(): Observable<any> {
-    // return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/me", {}).pipe();
-    return this.httpClient.get(SystemConfig.apiBaseUrl + "/me", {}).pipe();
+    return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/me", {}).pipe();
+    // return this.httpClient.get(SystemConfig.apiBaseUrl + "/me", {}).pipe();
   }
 
   updateProfile(profile: {

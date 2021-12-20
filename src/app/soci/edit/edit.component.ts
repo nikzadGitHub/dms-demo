@@ -1410,7 +1410,7 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          this.alertBody = data.message + " Release Id " + data.data.id;
+          this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();

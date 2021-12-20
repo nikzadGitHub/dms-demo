@@ -108,7 +108,7 @@ export const navItems: INavData[] = [
     icon: "cil-group",
     children: [
       {
-        name: "FPM",
+        name: "FMP",
         url: "/managerview",
         children: [
           {
