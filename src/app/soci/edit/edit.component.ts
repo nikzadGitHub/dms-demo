@@ -150,8 +150,13 @@ export class EditComponent implements OnInit {
   section: any;
   type = "soci";
   accordianComment: any;
-  commentList: any[]=[];
-  isShipTo: boolean;
+  commentList: any[] = [];
+  isShipTo = false;
+  enableShipToedit = true;
+  isSoldTo = false;
+  enableSoldToedit = true;
+  isBillTo = false;
+  enableBillToedit = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -180,6 +185,7 @@ export class EditComponent implements OnInit {
       discount: "",
       bill_to: "",
       ship_to: "",
+      sold_to: "",
       soci_title: "",
       tender: "",
       cost_item: "",
@@ -365,21 +371,42 @@ export class EditComponent implements OnInit {
   }
 
   // soci-detail
-  enableEditSociDetail(value){
-    if(value == 'ship_to'){
-      this.isShipTo = true
+  enableEditSociDetail(value) {
+    if (value == "ship_to") {
+      this.isShipTo = true;
+      this.enableShipToedit = false;
+    }
+    //  else if (value == "sold_to") {
+    //   this.isSoldTo = true;
+    //   this.enableSoldToedit = false;
+    // } else if (value == "bill_to") {
+    //   this.isBillTo = true;
+    //   this.enableBillToedit = false;
+    // }
+  }
+  disableEditing(value) {
+    if (value == "ship_to") {
+      this.isShipTo = false;
+      this.enableShipToedit = true;
+    } else if (value == "sold_to") {
+      this.isSoldTo = false;
+      this.enableSoldToedit = true;
+    } else if (value == "bill_to") {
+      this.isBillTo = false;
+      this.enableBillToedit = true;
     }
   }
-  updateSociDetail(value) {
-    if(value == 'ship_to'){
-      this.isShipTo = true
-    }
-    this.sociService.postQuery("/soci/" + this.soci_id, {
-      ship_to: this.form.value.ship_to,
-      remarks: this.form.value.sociRemarks,
-    })
-  }
+  updateSociDetail() {
+    console.log("working", this.form.value.ship_to);
 
+    // this.sociService.postQuery("/soci/" + this.soci_id, {
+    //   ship_to: this.form.value.ship_to,
+    //   remarks: this.form.value.sociRemarks,
+    // }).subscribe((res:any) => {
+    //   console.log("Res-->", res);
+
+    // });
+  }
 
   // Standard Term
 
@@ -541,7 +568,7 @@ export class EditComponent implements OnInit {
       )
       .subscribe((res: any) => {
         console.log("comment-res:", res);
-        this.commentList = res.data
+        this.commentList = res.data;
       });
   }
   // End Standard Term

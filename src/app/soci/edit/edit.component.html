@@ -223,15 +223,42 @@
             >
               <b>Sold To </b>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 mr-5">
+            <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="enableSoldToedit">
               {{ soci_data?.quote?.opportunity?.sold_to?.company_name }}
             </div>
-            <div
-              style="display: flex; flex-direction: row; align-items: center"
-            >
-              <a [routerLink]="" routerLinkActive="router-link-active"
-                ><i class="fa fa-edit"></i
+            <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="isSoldTo">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="sold_to"
+                style="width: 175px;"
+              />
+            </div>
+            <div class="action-icon">
+              <a
+                [routerLink]=""
+                routerLinkActive="router-link-active"
+                *ngIf="isSoldTo"
+                (click)="updateSociDetail()"
+                ><i class="cil-check-circle"></i
               ></a>
+              <a
+                [routerLink]=""
+                routerLinkActive="router-link-active"
+                *ngIf="enableSoldToedit"
+                (click)="enableEditSociDetail('sold_to')"
+              >
+                <i class="fa fa-edit"></i>
+              </a>
+              &nbsp;
+              <a
+                [routerLink]=""
+                routerLinkActive="router-link-active"
+                *ngIf="isSoldTo"
+                (click)="disableEditing('sold_to')"
+              >
+                <i class="pi pi-times"></i>
+              </a>
             </div>
           </div>
           <div class="row">
@@ -266,34 +293,43 @@
             >
               <b>Ship To </b>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 mr-5">
+            <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="!isShipTo">
               {{ soci_data?.quote?.opportunity?.ship_to?.company_name }}
             </div>
-            <!-- <div class="col-lg-2 col-md-2 col-sm-2 mr-5">
-              <input type="text" class="form-control" formControlName="ship_to">
-            </div> -->
+            <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="isShipTo">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="ship_to"
+                style="width: 175px;"
+              />
+            </div>
             <div class="action-icon">
-              <a [routerLink]="" routerLinkActive="router-link-active"
+              <a
+                [routerLink]=""
+                routerLinkActive="router-link-active"
+                *ngIf="isShipTo"
+                (click)="updateSociDetail()"
                 ><i class="cil-check-circle"></i
               ></a>
-              <a [routerLink]="" routerLinkActive="router-link-active">
+              <a
+                [routerLink]=""
+                routerLinkActive="router-link-active"
+                *ngIf="enableShipToedit"
+                (click)="enableEditSociDetail('ship_to')"
+              >
                 <i class="fa fa-edit"></i>
               </a>
               &nbsp;
               <a
                 [routerLink]=""
                 routerLinkActive="router-link-active"
+                *ngIf="isShipTo"
+                (click)="disableEditing('ship_to')"
               >
                 <i class="pi pi-times"></i>
               </a>
             </div>
-            <!-- <div
-              style="display: flex; flex-direction: row; align-items: center"
-            >
-              <a [routerLink]="" routerLinkActive="router-link-active" (click)="updateSociDetail('ship_to')"
-                ><i class="fa fa-edit"></i
-              ></a>
-            </div> -->
           </div>
           <div class="row">
             <div
@@ -325,15 +361,42 @@
             >
               <b> Bill To </b>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 mr-5">
+            <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="!isBillTo">
               {{ soci_data?.quote?.opportunity?.bill_to?.company_name }}
             </div>
-            <div
-              style="display: flex; flex-direction: row; align-items: center"
-            >
-              <a [routerLink]="" routerLinkActive="router-link-active"
-                ><i class="fa fa-edit"></i
+            <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="isBillTo">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="bill_to"
+                style="width: 175px;"
+              />
+            </div>
+            <div class="action-icon">
+              <a
+                [routerLink]=""
+                routerLinkActive="router-link-active"
+                *ngIf="isBillTo"
+                (click)="updateSociDetail()"
+                ><i class="cil-check-circle"></i
               ></a>
+              <a
+                [routerLink]=""
+                routerLinkActive="router-link-active"
+                *ngIf="enableBillToedit"
+                (click)="enableEditSociDetail('bill_to')"
+              >
+                <i class="fa fa-edit"></i>
+              </a>
+              &nbsp;
+              <a
+                [routerLink]=""
+                routerLinkActive="router-link-active"
+                *ngIf="isBillTo"
+                (click)="disableEditing('bill_to')"
+              >
+                <i class="pi pi-times"></i>
+              </a>
             </div>
           </div>
           <div class="row">
