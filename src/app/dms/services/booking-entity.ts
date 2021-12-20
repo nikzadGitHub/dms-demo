@@ -24,6 +24,7 @@ export interface BookingDetail {
   booking_reason: string;
   request_date: string;
   customer: string;
+  customer_id: bigint|null;
   preferred_date_of_delivery: string;
   preferred_date_of_collection: string;
   demo_duration: string;
@@ -49,6 +50,15 @@ export interface BookingDetail {
   bme_trn_req: number;
   bme_war_req: number;
   bme_pdr_req: number;
+  priority: string|null,
+  probability: string|null,
+  initiator: string|null,
+  is_competitor_in_demo: boolean|null,
+  squence_of_demo: string|null,
+  opportunity_code: string|null,
+  selling_points: string|null,
+  customer_feedback: string|null,
+  pain_points: string|null,
 }
 
 export interface OpportunitySummary {
@@ -84,6 +94,7 @@ export interface BookingEntityInterface {
   getEntity(bookingId: BigInt): Observable<BookingEntity>;
   // getApprovals(bookingId: BigInt): Observable<ApprovalList>;
   // getBookingDetail(bookingId: BigInt): Observable<BookingDetail>;
+  // getOpportunity(bookingId: BigInt): Observable<bookingOpportunity>;
   // getOpportunitySummary(bookingId: BigInt): Observable<OpportunitySummary>;
   // getMainAsset(bookingId: BigInt): Observable<MainAsset>;
 }
