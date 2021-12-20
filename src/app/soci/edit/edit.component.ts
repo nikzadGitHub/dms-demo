@@ -1142,6 +1142,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve()
           }, 2000);
         }
       );
@@ -1622,5 +1623,14 @@ export class EditComponent implements OnInit {
 
   back() {
     this.location.back();
+  }
+  modalClassRomve(){
+    let body=document.querySelector('body')
+    if(body.classList.contains('modal-open')){
+      body.classList.remove('modal-open');
+    }
+  }
+  openModel(){
+    
   }
 }

@@ -6,14 +6,8 @@
   [rowHover]="true"
   responsiveLayout="scroll"
   [filterDelay]="0"
-  [globalFilterFields]="[
-
-    'quote_id',
-    'company',
-    'amount',
-    'status'
-  ]"
-  (onFilter)='columnFilter($event)'
+  [globalFilterFields]="['quote_id', 'company', 'amount', 'status']"
+  (onFilter)="columnFilter($event)"
 >
   <ng-template pTemplate="caption">
     <div class="table-header">
@@ -60,21 +54,25 @@
         class="text-center"
         *ngIf="checkItem('c_date')"
       >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="
+            display: flex;
+            white-space: nowrap;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           Created Date
           <div class="date-icons">
-            
-              <p-sortIcon field="created_at"></p-sortIcon>
-              <p-columnFilter
-                type="date"
-                field="created_at"
-                display="menu"
-                class="p-ml-auto"
-              ></p-columnFilter>
-            
-           
+            <p-sortIcon field="created_at"></p-sortIcon>
+            <p-columnFilter
+              type="date"
+              field="created_at"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
           </div>
-       
         </div>
       </th>
       <th
@@ -82,7 +80,15 @@
         class="text-center"
         *ngIf="checkItem('soci_id')"
       >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="
+            display: flex;
+            white-space: nowrap;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           SOCI ID
           <div class="soci-icons">
             <p-sortIcon field="soci_id"></p-sortIcon>
@@ -93,7 +99,6 @@
               class="p-ml-auto"
             ></p-columnFilter>
           </div>
-         
         </div>
       </th>
       <th
@@ -110,8 +115,8 @@
               field="customer.company_name"
               display="menu"
               class="p-ml-auto"
-            ></p-columnFilter></div>
-        
+            ></p-columnFilter>
+          </div>
         </div>
       </th>
       <th
@@ -130,7 +135,6 @@
               class="p-ml-auto"
             ></p-columnFilter>
           </div>
-       
         </div>
       </th>
       <th
@@ -138,7 +142,15 @@
         class="text-center"
         *ngIf="checkItem('quote_date')"
       >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="
+            display: flex;
+            white-space: nowrap;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           Quote Date
           <div class="Q-Date-icons">
             <p-sortIcon field="quote_date"></p-sortIcon>
@@ -149,26 +161,6 @@
               class="p-ml-auto"
             ></p-columnFilter>
           </div>
-         
-        </div>
-      </th>
-      <th
-        pSortableColumn="po_amount"
-        class="text-center"
-        *ngIf="checkItem('po_amount')"
-      >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
-          Doc Amount
-          <div class="amount-icons">
-            <p-sortIcon field="po_amount"></p-sortIcon>
-            <p-columnFilter
-              type="numeric"
-              field="po_amount"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
-          </div>
-        
         </div>
       </th>
       <th
@@ -176,10 +168,10 @@
         class="text-center"
         *ngIf="checkItem('po_no')"
       >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
-          Doc No
-          <div class="PO-icons">
-            <p-sortIcon field="po_no"></p-sortIcon>
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+          Doc Amount
+          <div class="amount-icons">
+            <p-sortIcon field="po_amount"></p-sortIcon>
             <p-columnFilter
               type="text"
               field="po_no"
@@ -187,9 +179,27 @@
               class="p-ml-auto"
             ></p-columnFilter>
           </div>
-        
         </div>
       </th>
+      <th
+        pSortableColumn="po_amount"
+        class="text-center"
+        *ngIf="checkItem('po_amount')"
+      >
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+          Doc No
+          <div class="PO-icons">
+            <p-sortIcon field="po_no"></p-sortIcon>
+            <p-columnFilter
+              type="numeric"
+              field="po_amount"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+        </div>
+      </th>
+
       <th
         pSortableColumn="po_date"
         class="text-center"
@@ -206,7 +216,6 @@
               class="p-ml-auto"
             ></p-columnFilter>
           </div>
-         
         </div>
       </th>
       <th
@@ -214,7 +223,15 @@
         class="text-center"
         *ngIf="checkItem('fo_order_number')"
       >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="
+            display: flex;
+            white-space: nowrap;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           FO Number
           <div class="fo-icons">
             <p-sortIcon field="fo_order_number"></p-sortIcon>
@@ -225,7 +242,6 @@
               class="p-ml-auto"
             ></p-columnFilter>
           </div>
-         
         </div>
       </th>
 
@@ -255,7 +271,15 @@
         class="text-center"
         *ngIf="checkItem('status_desc')"
       >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="
+            display: flex;
+            white-space: nowrap;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           Status
           <div class="status-icons">
             <p-sortIcon field="status_desc"></p-sortIcon>
@@ -266,10 +290,8 @@
               class="p-ml-auto"
             ></p-columnFilter>
           </div>
-         
         </div>
       </th>
-
       <th [style]="{ width: '7%' }">Action</th>
     </tr>
   </ng-template>
@@ -278,7 +300,7 @@
       <!-- {{ opportunity.created_date | date: "dd-MMM-yyyy" }} -->
       <td class="text-center" *ngIf="checkItem('c_date')">
         <span class="p-column-title">Created Date</span>
-        {{ soci.created_at | date: "MM-dd-yyyy"}}
+        {{ soci.created_at | date: "MM-dd-yyyy" }}
       </td>
       <td class="text-center" *ngIf="checkItem('soci_id')">
         <a href="" [routerLink]="['/soci/', soci.id, 'edit']">
@@ -300,16 +322,6 @@
         <span class="p-column-title">Quote Sate</span>
         {{ soci.quote_date | date: "MM-dd-yyyy" }}
       </td>
-      <td class="text-center" *ngIf="checkItem('po_amount')">
-        <div *ngIf="soci.po_amount">
-          <span class="p-column-title"> Amount</span>
-          {{ soci.po_amount }}
-        </div>
-        <div *ngIf="!soci.po_amount">
-          <span class="p-column-title"> Amount</span>
-          0
-        </div>
-      </td>
 
       <td class="text-center" *ngIf="checkItem('po_no')">
         <a
@@ -323,6 +335,16 @@
         <div *ngIf="soci.po_no">
           <span class="p-column-title">Po no</span>
           {{ soci.po_no }}
+        </div>
+      </td>
+      <td class="text-center" *ngIf="checkItem('po_amount')">
+        <div *ngIf="soci.po_amount">
+          <span class="p-column-title"> Amount</span>
+          {{ soci.po_amount }}
+        </div>
+        <div *ngIf="!soci.po_amount">
+          <span class="p-column-title"> Amount</span>
+          0
         </div>
       </td>
       <td class="text-center" *ngIf="checkItem('po_date')">

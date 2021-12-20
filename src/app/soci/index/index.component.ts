@@ -27,7 +27,7 @@ export class IndexComponent implements OnInit {
   private ngUnsubscribe = new Subject();
   sort: any;
   search_text: string = "";
-  pageItems: number = 25;
+  pageItems: number = 10;
   totalRecords: number;
   datasource: any;
   pages: any[];
