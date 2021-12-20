@@ -115,8 +115,8 @@ export class FormComponent implements OnInit{
       customer: new FormControl(this.bookingDetailList.customer_id),
       booking_reason: new FormControl(this.bookingDetailList.booking_reason),
       branch: new FormControl(this.bookingDetailList.branch),
-      date_of_delivery: new FormControl(this.bookingDetailList.preferred_date_of_delivery),
-      date_of_collection: new FormControl(this.bookingDetailList.preferred_date_of_collection),
+      date_of_delivery: new FormControl(this.dateToHtmlString(new Date(this.bookingDetailList.preferred_date_of_delivery))),
+      date_of_collection: new FormControl(this.dateToHtmlString(new Date(this.bookingDetailList.preferred_date_of_collection))),
       demo_duration : new FormControl(this.duration),
       department: new FormControl(this.bookingDetailList.department),
       location: new FormControl(this.bookingDetailList.location),
@@ -208,6 +208,35 @@ export class FormComponent implements OnInit{
           }, 2000);
         }
       );
+  }
+
+  dateToHtmlString(date: Date) : string {
+    let month = date.getMonth()+1+''
+    month = month.length < 2 ? '0'+month : month;
+
+    let day = date.getDate()+''
+    day = day.length < 2 ? '0'+day : day;
+
+    let hours = date.getHours()+''
+    hours = hours.length < 2 ? '0'+hours : hours;
+
+    let minutes = date.getMinutes()+''
+    minutes = minutes.length < 2 ? '0'+minutes : minutes;
+
+    return date.getFullYear()+'-'+month+'-'+day+'T'+hours+':'+minutes;
+  }
+
+  durationChanged() {
+    const date_of_delivery = this.formBooking.get("date_of_delivery").value;
+    const demo_duration = this.formBooking.get('demo_duration').value;
+
+    if(date_of_delivery != null && demo_duration > 0){
+      var date1 = new Date(date_of_delivery);
+      date1.setTime(date1.getTime() + (demo_duration*86400000))
+      let new_collection_date: string = this.dateToHtmlString(date1);
+      console.log(new_collection_date)
+      this.formBooking.get("date_of_collection").setValue(new_collection_date);
+    }
   }
 
   onDuration(){
