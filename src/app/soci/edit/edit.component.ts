@@ -44,6 +44,8 @@ export class EditComponent implements OnInit {
   public confirmationRejectModal: ModalDirective;
   @ViewChild("confirmationRemarksUpdatedModal")
   public confirmationRemarksUpdatedModal: ModalDirective;
+  @ViewChild("commentModal")
+  public commentModal: ModalDirective;
 
   cost_item_id: any;
   alertBody: string;
@@ -144,6 +146,7 @@ export class EditComponent implements OnInit {
   isRemarksAdded: boolean = true;
   isRemarksUpdated: boolean;
   badgeColor = "";
+  comment_header = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -458,6 +461,15 @@ export class EditComponent implements OnInit {
   setTermsConditions() {
     this.is_payment_term_eidt = false;
     this.is_delivery_term_eidt = false;
+  }
+
+  openModel(value) {
+    console.log("value:", value);
+    this.comment_header = "Comment";
+    
+    if (value == "po_detail") {
+      this.commentModal.show();
+    }
   }
   // End Standard Term
 
@@ -1148,6 +1160,8 @@ export class EditComponent implements OnInit {
   }
 
   productDetails(product, check) {
+    console.log("Product:", product);
+
     this.productCheck = check;
     this.external_product_number = product.external_product_number;
     this.product_data_area_id = product.data_area_id;

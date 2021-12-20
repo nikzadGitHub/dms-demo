@@ -42,7 +42,11 @@
           <div class="col-lg-2">
             <div class="status">
               <label style="color: black"><b>Status: </b></label>
-              <p-badge [value]="soci_data?.status_desc" [severity]="badgeColor" styleClass="p-mr-2"></p-badge>
+              <p-badge
+                [value]="soci_data?.status_desc"
+                [severity]="badgeColor"
+                styleClass="p-mr-2"
+              ></p-badge>
             </div>
           </div>
           <!-- <div class="col-lg" align='right'><b>Status</b><br><p>{{f.status.value}}</p></div> -->
@@ -53,21 +57,27 @@
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Create Date</b></label>
-              <p *ngIf="soci_data?.created_at">{{ soci_data?.created_at | date: "dd-MMM-yyyy" }}</p>
+              <p *ngIf="soci_data?.created_at">
+                {{ soci_data?.created_at | date: "dd-MMM-yyyy" }}
+              </p>
               <p *ngIf="!soci_data?.created_at">_</p>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Contact Name</b></label>
-              <p *ngIf="soci_data?.quote?.opportunity?.ownner?.full_name">{{ soci_data?.quote?.opportunity?.ownner?.full_name }}</p>
+              <p *ngIf="soci_data?.quote?.opportunity?.ownner?.full_name">
+                {{ soci_data?.quote?.opportunity?.ownner?.full_name }}
+              </p>
               <p *ngIf="!soci_data?.quote?.opportunity?.ownner?.full_name">_</p>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Email</b></label>
-              <p *ngIf="soci_data?.quote?.opportunity?.ownner?.email">{{ soci_data?.quote?.opportunity?.ownner?.email }}</p>
+              <p *ngIf="soci_data?.quote?.opportunity?.ownner?.email">
+                {{ soci_data?.quote?.opportunity?.ownner?.email }}
+              </p>
               <p *ngIf="!soci_data?.quote?.opportunity?.ownner?.email">_</p>
             </div>
           </div>
@@ -83,7 +93,18 @@
     <form [formGroup]="form">
       <!-- PO details -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
-        <p-accordionTab header="PO Details">
+        <!-- header="PO Details" -->
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <div class="accordian-div">
+              PO Details
+              <img
+                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                alt=""
+                (click)="openModel('po_detail')"
+              />
+            </div>
+          </ng-template>
           <div class="row">
             <!-- formArrayName="addCosts" -->
             <table class="table table-borderless">
@@ -101,7 +122,7 @@
                       {{ soci_data?.po_no }}
                     </div>
                     <div *ngIf="!soci_data?.po_no">_</div>
-                    </td>
+                  </td>
                   <td class="text-center">
                     <div *ngIf="soci_data?.po_date">
                       {{ soci_data?.po_date | date: "dd-MMM-yyyy" }}
@@ -124,7 +145,19 @@
       <br />
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <!-- Standard Term Accordion -->
-        <p-accordionTab header="Standard Terms">
+        <!-- header="Standard Terms" -->
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <div class="accordian-div">
+              Standard Terms
+              <img
+                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                alt="comment"
+                (click)="openModel('standerd_term')"
+              />
+            </div>
+          </ng-template>
+
           <div class="row grey">
             <div class="col-md-5">
               <b>Payment Terms: </b>{{ this.standerd_payment_term + " days" }}
@@ -210,7 +243,18 @@
       <br />
       <!-- Billing Milestone -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
-        <p-accordionTab header="Billing Milestones">
+        <!-- header="Billing Milestones" -->
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <div class="accordian-div">
+              Billing Milestones
+              <img
+                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                alt=""
+                (click)="openModel('billing_milestone')"
+              />
+            </div>
+          </ng-template>
           <div class="row">
             <!-- formArrayName="billings" -->
             <table class="table table-borderless">
@@ -223,7 +267,13 @@
                   <th>Notes</th>
                   <th></th>
                   <th *ngIf="is_preview_check"></th>
-                  <th *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">Action</th>
+                  <th
+                    *ngIf="
+                      !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                    "
+                  >
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -332,7 +382,9 @@
                   <td
                     class="text-center td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+                    *ngIf="
+                      !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                    "
                   >
                     <div class="action-icon">
                       <a
@@ -384,7 +436,12 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+                <tr
+                  align="center"
+                  *ngIf="
+                    !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                  "
+                >
                   <td style="width: 15%">
                     <input
                       formControlName="billing_id"
@@ -456,7 +513,18 @@
 
       <!-- Payment Schedules Accordion -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
-        <p-accordionTab header="Payment Schedules">
+        <!-- header="Payment Schedules" -->
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <div class="accordian-div">
+              Payment Schedules
+              <img
+                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                alt=""
+                (click)="openModel('payment_schedule')"
+              />
+            </div>
+          </ng-template>
           <div class="row">
             <!-- formArrayName="payments" -->
             <table class="table table-borderless">
@@ -470,7 +538,13 @@
                   <th>Amount ({{ soci_data?.currency }})</th>
                   <th>Notes</th>
                   <th *ngIf="is_preview_check"></th>
-                  <th *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">Action</th>
+                  <th
+                    *ngIf="
+                      !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                    "
+                  >
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -625,7 +699,9 @@
                   <td
                     class="td-actions"
                     style="width: 10%; padding: none"
-                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+                    *ngIf="
+                      !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                    "
                   >
                     <div class="action-icon">
                       <a
@@ -667,7 +743,12 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+                <tr
+                  align="center"
+                  *ngIf="
+                    !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                  "
+                >
                   <td style="width: 15%; padding: 6px">
                     <select
                       formControlName="billing_id"
@@ -776,7 +857,18 @@
       <br />
       <!-- Additional Costs Accordion -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
-        <p-accordionTab header="Additional Costs">
+        <!-- header="Additional Costs" -->
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <div class="accordian-div">
+              Additional Costs
+              <img
+                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                alt=""
+                (click)="openModel('additional_cost')"
+              />
+            </div>
+          </ng-template>
           <div class="row">
             <!-- formArrayName="addCosts" -->
             <table class="table table-borderless">
@@ -789,7 +881,13 @@
                   <th>Notes</th>
                   <th></th>
                   <th></th>
-                  <th *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">Action</th>
+                  <th
+                    *ngIf="
+                      !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                    "
+                  >
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -913,7 +1011,9 @@
                   <td
                     class="td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+                    *ngIf="
+                      !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                    "
                   >
                     <div class="action-icon">
                       <a
@@ -960,7 +1060,12 @@
                 </tr>
                 <!-- *ngFor="let cost of addCosts().controls; let i = index"
                 [formGroupName]="i" -->
-                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+                <tr
+                  align="center"
+                  *ngIf="
+                    !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                  "
+                >
                   <td style="width: 15%">
                     <input
                       formControlName="description"
@@ -1046,7 +1151,18 @@
 
       <!-- Billing Instruction Accordion -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
-        <p-accordionTab header="Billing Instruction">
+        <!-- header="Billing Instruction" -->
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <div class="accordian-div">
+              Billing Instruction
+              <img
+                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                alt=""
+                (click)="openModel('billing_instruction')"
+              />
+            </div>
+          </ng-template>
           <div class="row">
             <table class="table table-borderless">
               <thead>
@@ -1058,7 +1174,13 @@
                   <th>Status</th> -->
                   <th>Note</th>
                   <th></th>
-                  <th *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">Action</th>
+                  <th
+                    *ngIf="
+                      !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                    "
+                  >
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -1165,7 +1287,9 @@
                   <td
                     class="td-actions"
                     style="width: 10%"
-                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+                    *ngIf="
+                      !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                    "
                   >
                     <div class="action-icon">
                       <a
@@ -1215,7 +1339,12 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+                <tr
+                  align="center"
+                  *ngIf="
+                    !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                  "
+                >
                   <td>
                     <input
                       formControlName="schedule"
@@ -1280,7 +1409,18 @@
 
       <!-- Additional Instruction and Information Accordion -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
-        <p-accordionTab header="Additional Instruction and Information">
+        <!-- header="Additional Instruction and Information" -->
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <div class="accordian-div">
+              Additional Instruction and Information
+              <img
+                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                alt=""
+                (click)="openModel('additional_information')"
+              />
+            </div>
+          </ng-template>
           <!-- Heading -->
           <div class="row grey">
             <div class="col-3">
@@ -1393,7 +1533,9 @@
 
           <!-- Add additional_instruction -->
 
-          <div *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+          <div
+            *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+          >
             <div>
               <div class="row">
                 <div class="col-md-3">
@@ -1451,7 +1593,18 @@
 
       <!-- Additional/Reduction Charges -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
-        <p-accordionTab header="Additional/Reduction Charges">
+        <!-- header="Additional/Reduction Charges" -->
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <div class="accordian-div">
+              Additional/Reduction Charges
+              <img
+                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                alt=""
+                (click)="openModel('additional_charges')"
+              />
+            </div>
+          </ng-template>
           <!-- Heading -->
           <div class="row grey">
             <div class="col-md-3" style="text-align: center">
@@ -1631,7 +1784,9 @@
               <div
                 class="col-md-1"
                 style="text-align: right"
-                *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+                *ngIf="
+                  !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                "
               >
                 <div class="row">
                   <!-- //action -->
@@ -1684,7 +1839,9 @@
             </div>
           </div>
           <!-- input data fields -->
-          <div *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+          <div
+            *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+          >
             <div class="row">
               <div class="col-md-2">
                 <div class="">
@@ -1798,7 +1955,18 @@
       <br />
       <!-- Product -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
-        <p-accordionTab header="Products">
+        <!-- header="Products" -->
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <div class="accordian-div">
+              Products
+              <img
+                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                alt=""
+                (click)="openModel('product')"
+              />
+            </div>
+          </ng-template>
           <div class="row">
             <!-- formArrayName="products" -->
             <table class="table table-bordered table-striped">
@@ -1957,7 +2125,9 @@
                   <td
                     class="td-actions"
                     style="width: 5%"
-                    *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+                    *ngIf="
+                      !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                    "
                   >
                     <!-- //action -->
                     <div class="action-icon" style="display: flex">
@@ -1981,7 +2151,12 @@
                     </div>
                   </td>
                 </tr>
-                <tr align="center" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+                <tr
+                  align="center"
+                  *ngIf="
+                    !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+                  "
+                >
                   <!-- {{ i + 1 }} -->
                   <td></td>
                   <td style="size: 20%">
@@ -2113,7 +2288,18 @@
       <br />
       <!-- SOCI PO Attachments -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
-        <p-accordionTab header="SOCI Attachments">
+        <!-- header="SOCI Attachments" -->
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <div class="accordian-div">
+              SOCI Attachments
+              <img
+                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                alt=""
+                (click)="openModel('soci_attachment')"
+              />
+            </div>
+          </ng-template>
           <table class="table table-bordered table-striped">
             <thead>
               <tr>
@@ -2157,9 +2343,19 @@
         </p-accordionTab>
       </p-accordion>
       <br />
-      <div class="soci-remarks" [style.justifyContent]="!is_preview_check && (sociStatus == 1 || sociStatus == 7) ? 'space-between' : 'end'">
+      <div
+        class="soci-remarks"
+        [style.justifyContent]="
+          !is_preview_check && (sociStatus == 1 || sociStatus == 7)
+            ? 'space-between'
+            : 'end'
+        "
+      >
         <!-- Remarks taxbox -->
-        <div class="remarks-texbox" *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)">
+        <div
+          class="remarks-texbox"
+          *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+        >
           <div class="remarks-btn">
             <label>Remarks</label>
             <button
@@ -2940,7 +3136,9 @@
         <button
           type="button"
           class="btn btn-secondary"
-          (click)="confirmationRemarksUpdatedModal.hide(); confirmationModal.show()"
+          (click)="
+            confirmationRemarksUpdatedModal.hide(); confirmationModal.show()
+          "
         >
           No
         </button>
@@ -2950,4 +3148,73 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- comment-model -->
+
+<div
+  bsModal
+  #commentModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header comment-header">
+        <h4 class="modal-title">
+          {{ comment_header }}
+        </h4>
+        <button
+          type="button"
+          class="close"
+          (click)="commentModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body comment-body">
+        <textarea placeholder="Comment"></textarea>
+        <!-- <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-send"
+          class="p-button-rounded"
+        ></button> -->
+      </div>
+
+      <div class="modal-footer">
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Cancel"
+          class="p-button-secondary"
+          (click)="commentModal.hide()"
+        ></button>
+        <!-- <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="commentModal.hide()"
+        >
+          CANCEL
+        </button> -->
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Send"
+          class="p-button-info"
+        ></button>
+        <!-- <button type="button" class="btn btn-primary">SEND</button> -->
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
 </div>
