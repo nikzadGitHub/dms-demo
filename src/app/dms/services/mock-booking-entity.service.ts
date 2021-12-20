@@ -40,6 +40,7 @@ const mockApproval: ApprovalList = [
   },
 ];
 
+
 const mockBookingDetail: BookingDetail = {
     id: BigInt(1),
     status: "2 Raising Booking Request - Submitted",
@@ -48,6 +49,7 @@ const mockBookingDetail: BookingDetail = {
     booking_reason: "Demo",
     request_date: "9/3/2021",
     customer: "Parkway Singapore",
+    customer_id: BigInt(1),
     preferred_date_of_delivery: "10/13/2021",
     preferred_date_of_collection: "12/13/2021",
     demo_duration: "2 months",
@@ -73,6 +75,15 @@ const mockBookingDetail: BookingDetail = {
     bme_trn_req: 1,
     bme_war_req: 1,
     bme_pdr_req: 1,
+    priority: "",
+    probability: "",
+    initiator: "",
+    is_competitor_in_demo: false,
+    squence_of_demo: "",
+    opportunity_code: "",
+    selling_points: "",
+    customer_feedback: "",
+    pain_points: "",
 };
 
 const mockOpportunitySummary: OpportunitySummary = {

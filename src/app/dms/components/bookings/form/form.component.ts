@@ -61,31 +61,26 @@ export class FormComponent implements OnInit{
     { id: 3, value: "50%" }
   ];
 
-  defaultAnswers: any[] = [{ id: 1, ans: "Yes" }, { id: 2, ans: "No" }];
+  participateInDemoAns: any[] = [{ value: '1', ans: "Yes" }, { value: '0', ans: "No" }];
 
-  defaultPriorities:any[] = [
-    {id:1,value:"High"},
-    {id:2,value:"Mid"},
-    {id:3,value:'Low'}
+  initiatorValues: any[] = [
+    { id: 1, ans: "FSS" },
+    { id: 2, ans: "Customer" }
   ];
 
-  defaultPriority:number= 1;
-  defaultAnswer: number = 1;
+  sequenceOfDemoValues: any[] = [
+    { value: 'first', ans: "First" },
+    { value: 'middle', ans: "Middle" },
+    { value: 'last', ans: "Last" }
+  ];
+
+  defaultPriorities:any[] = [
+    {id:1,value:"High",name:"high"},
+    {id:2,value:"Medium",name:"medium"},
+    {id:3,value:'Low',name:"low"}
+  ];
+
   selectedBooking: number = 1;
-  selectedPercentage: number = 1;
-
-changePrioritye(id:number){
-  this.defaultPriority = id;
-}
-
-  changeAnswer(id: number) {
-    this.defaultAnswer = id;
-  }
-
-  changePercentage(id: number) {
-    this.selectedPercentage = id;
-    console.log(id);
-  }
 
   changeReason(id: number) {
     //getted from event
@@ -106,6 +101,7 @@ changePrioritye(id:number){
   ngOnInit(): void {
     if (this.bookingDetailList.booking_reason == '2') {
       this.editable =  true;
+      this.selectedBooking = Number(this.bookingDetailList.booking_reason);
       this.showBmeLogSec = true;
     }
     
@@ -116,7 +112,7 @@ changePrioritye(id:number){
     this.duration = this.bookingDetailList.demo_duration;
     this.formBooking = this.fb.group({
 
-      customer: new FormControl(this.bookingDetailList.customer),
+      customer: new FormControl(this.bookingDetailList.customer_id),
       booking_reason: new FormControl(this.bookingDetailList.booking_reason),
       branch: new FormControl(this.bookingDetailList.branch),
       date_of_delivery: new FormControl(this.bookingDetailList.preferred_date_of_delivery),
@@ -141,14 +137,17 @@ changePrioritye(id:number){
       wo_wq_won:new FormControl(this.bookingDetailList.war_won),
       wo_pdr_req:new FormControl(this.bookingDetailList.bme_pdr_req !== undefined ? this.bookingDetailList.bme_pdr_req : 1),
       wo_pdr_won:new FormControl(this.bookingDetailList.pdr_won),
-      opportunity_code:new FormControl(),
-      customer_feedback:new FormControl(),
-      selling_points:new FormControl(),
-      initiator:new FormControl(),
-      probability:new FormControl(),
-      is_competitor_in_demo:new FormControl(),
-      priority:new FormControl(),
-      squence_of_demo:new FormControl()
+
+      // Booking Opportunity section
+      opportunity_code:new FormControl(this.bookingDetailList.opportunity_code),
+      priority: new FormControl(this.bookingDetailList.priority) ,
+      probability: new FormControl(this.bookingDetailList.probability) ,
+      initiator: new FormControl(this.bookingDetailList.initiator) ,
+      is_competitor_in_demo: new FormControl(this.bookingDetailList.is_competitor_in_demo) ,
+      squence_of_demo: new FormControl(this.bookingDetailList.squence_of_demo) ,
+      selling_points: new FormControl(this.bookingDetailList.selling_points) ,
+      customer_feedback: new FormControl(this.bookingDetailList.customer_feedback) ,
+      pain_points: new FormControl(this.bookingDetailList.pain_points)
     });
   }
   onSave(): void {
@@ -165,6 +164,16 @@ changePrioritye(id:number){
       contact_number: this.formBooking.get("contact_number").value,
       remarks: this.formBooking.get("remarks").value,
       booking_save: true,
+      
+      // Booking Opportunity Section by Hossainy
+      priority: this.formBooking.get("priority").value,
+      probability: this.formBooking.get("probability").value,
+      initiator: this.formBooking.get("initiator").value,
+      is_competitor_in_demo: this.formBooking.get("is_competitor_in_demo").value,
+      squence_of_demo: this.formBooking.get("squence_of_demo").value,
+      selling_points: this.formBooking.get("selling_points").value,
+      customer_feedback: this.formBooking.get("customer_feedback").value,
+      pain_points: this.formBooking.get("pain_points").value,
       
       wo_con_req: this.formBooking.get("wo_con_req").value,
       wo_con_won: this.formBooking.get("wo_con_won").value,
