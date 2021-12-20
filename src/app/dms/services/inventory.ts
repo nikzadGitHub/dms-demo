@@ -22,4 +22,5 @@ export type InventoryList = InventoryItem[];
 
 export interface InventoryInterface {
   getList(): Observable<InventoryList>;
+  getListSearch(data: any): Observable<InventoryList>;
 }

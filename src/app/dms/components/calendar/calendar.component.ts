@@ -1,34 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import {
-  CalendarOptions, DateSelectArg, EventClickArg, EventApi
-} from '@fullcalendar/angular';
+  CalendarOptions,
+  DateSelectArg,
+  EventClickArg,
+  EventApi
+} from "@fullcalendar/angular";
 
-import { INITIAL_EVENTS, createEventId } from './events';
-
-@Component({
-  selector: 'dms-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+import { INITIAL_EVENTS, createEventId } from "./events";
+import { formatDate } from "@fullcalendar/angular";
+import { GetInventoryBookingService } from "../../services/get-inventory-booking.service";
+@Component({    
+  selector: "dms-calendar",
+  templateUrl: "./calendar.component.html",
+  styleUrls: ["./calendar.component.scss"]
 })
 export class CalendarComponent implements OnInit {
-
   calendarOptions: CalendarOptions = {
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-    },
-    initialView: 'dayGridMonth',
+    // headerToolbar: {
+    //   left: 'prev,next today',
+    //   center: 'title',
+    //   right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+    // },
+    // initialView: 'dayGridMonth',
     // TODO: maybe set `events`, instead of `initialEvents` (to auto fetch).
-    initialEvents: INITIAL_EVENTS,
-    weekends: true,
-    editable: true,
-    selectable: true,
-    selectMirror: true,
-    dayMaxEvents: true,
-    select: this.handleDateSelect.bind(this),
-    eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this),
+    // initialEvents: INITIAL_EVENTS,
+    // weekends: true,
+    // editable: true,
+    // selectable: true,
+    // selectMirror: true,
+    // dayMaxEvents: true,
+    // select: this.handleDateSelect.bind(this),
+    // eventClick: this.handleEventClick.bind(this),
+    // eventsSet: this.handleEvents.bind(this),
     // Database-edit helper callbacks.
     /*
     eventAdd:
@@ -36,12 +39,25 @@ export class CalendarComponent implements OnInit {
     eventRemove:
     */
   };
-  currentEvents: EventApi[] = [];
 
-  constructor() { }
+  currentEvents: EventApi[] = []; 
+
+  constructor(private getinventorybookingservice: GetInventoryBookingService) {}
 
   ngOnInit(): void {
-  }
+    // console.log("we are initializing")
+    this.getInventories();
+    // console.log("after init")
+  } 
+
+  inventories: any; 
+
+  getInventories() { 
+   this.getinventorybookingservice.getInventories().subscribe((res:any)=>{ 
+      this.inventories = res;
+    });  
+    console.log("INV",this.inventories)
+  }   
 
   handleWeekendsToggle() {
     const { calendarOptions } = this;
@@ -49,7 +65,7 @@ export class CalendarComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
+    const title = prompt("Please enter a new title for your event");
     const calendarApi = selectInfo.view.calendar;
 
     calendarApi.unselect(); // clear date selection
@@ -66,10 +82,14 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+    if (
+      confirm(
+        `Are you sure you want to delete the event '${clickInfo.event.title}'`
+      )
+    ) {
       clickInfo.event.remove();
     }
-  }
+  } 
 
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;

@@ -1,4 +1,4 @@
-<p-table   class="table table-hover table-striped"  #dt [value]="datasource" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true"
+<p-table  [loading]="loading" class="table table-hover table-striped"  #dt [value]="datasource" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true"
     responsiveLayout="scroll" [filterDelay]="0" [globalFilterFields]="['quote_id','company','amount','status']"
     [columns]="columns">
     <ng-template pTemplate="caption">
@@ -6,12 +6,35 @@
             <span class="p-input-icon-left">
                 Prospects Listing
             </span>
+    <div style="align-self: self-end;margin: 0px 430px 0px 10px">
+        <a  style="color: white;" href="#" [routerLink]="['/prospects/create']">
+        <i class="icon-plus icons"></i>
+      </a>
+    </div>
+
             <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
-                <input type="text" pInputText placeholder="Global Search" (input)="getAll()" [(ngModel)]="search_text" />
+                <input type="text" pInputText placeholder="Global Search"  />
             </span>
+            <div style="margin: auto;">
+       
+                <img
+                  style="width: 22px; margin: 0px 8px 0px 0px"
+                  src="../../../../assets/img/icons/Vector (2).svg"
+                />
+                <img
+                  style="width: 22px"
+                  src="../../../../assets/img/icons/Vector (1).svg"
+                />
+                <img
+                  style="width: 22px; margin: 7px"
+                  src="../../../../assets/img/icons/vertcalLines.svg"
+                />
+              </div>
         </div>
+        
     </ng-template>
+
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let column of columns" pSortableColumn="{{column.field}}" class="text-center"
@@ -63,6 +86,14 @@
                   <a href="#" [routerLink]="['/prospects/', data.id, 'edit']" class="fa fa-edit mr-2"></a>
                   <a href="javascript:void(0)" (click)="showConfirmationDialog(data.id)" class="fa fa-trash"></a>
                 </div>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td style="text-align: center;" [attr.colspan]="columns.length">
+                No records found
             </td>
         </tr>
     </ng-template>

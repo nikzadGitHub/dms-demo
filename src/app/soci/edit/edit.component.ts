@@ -147,6 +147,11 @@ export class EditComponent implements OnInit {
   isRemarksUpdated: boolean;
   badgeColor = "";
   comment_header = "";
+  section: any;
+  type = "soci";
+  accordianComment: any;
+  commentList: any[]=[];
+  isShipTo: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -359,6 +364,23 @@ export class EditComponent implements OnInit {
     });
   }
 
+  // soci-detail
+  enableEditSociDetail(value){
+    if(value == 'ship_to'){
+      this.isShipTo = true
+    }
+  }
+  updateSociDetail(value) {
+    if(value == 'ship_to'){
+      this.isShipTo = true
+    }
+    this.sociService.postQuery("/soci/" + this.soci_id, {
+      ship_to: this.form.value.ship_to,
+      remarks: this.form.value.sociRemarks,
+    })
+  }
+
+
   // Standard Term
 
   editStandardPaymentTerm() {
@@ -465,11 +487,62 @@ export class EditComponent implements OnInit {
 
   openModel(value) {
     console.log("value:", value);
+    this.section = value;
     this.comment_header = "Comment";
-    
+
     if (value == "po_detail") {
       this.commentModal.show();
+      this.getCommentList();
     }
+  }
+
+  addComment() {
+    this.sociService
+      .postQuery(
+        "/comment?type=" +
+          this.type +
+          "&type_id=" +
+          this.soci_id +
+          "&section=" +
+          this.section,
+        {
+          comment: this.accordianComment,
+        }
+      )
+      .subscribe(
+        (res: any) => {
+          console.log("comment-res:", res);
+          this.commentModal.hide();
+          this.alertBody = res.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+          }, 2000);
+        },
+        (error) => {
+          this.alertBody = error.error.message;
+          this.dangerModal.show();
+          setTimeout(() => {
+            this.dangerModal.hide();
+          }, 2000);
+        }
+      );
+  }
+
+  getCommentList() {
+    this.sociService
+      .getcomment(
+        "/comment?type=" +
+          this.type +
+          "&type_id=" +
+          this.soci_id +
+          "&section=" +
+          this.section
+      )
+      .subscribe((res: any) => {
+        console.log("comment-res:", res);
+        this.commentList = res.data
+      });
   }
   // End Standard Term
 
@@ -1424,7 +1497,7 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          this.alertBody = data.message + " Release Id " + data.data.id;
+          this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();

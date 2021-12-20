@@ -187,6 +187,11 @@ i {
   display: flex;
 
 }
+:host ::ng-deep {
+  .p-datatable {
+      min-height: 500px !important;
+  }
+}
 
 @media screen and (max-width: 960px) {
   :host ::ng-deep {

@@ -27,7 +27,7 @@ export class IndexComponent implements OnInit {
   private ngUnsubscribe = new Subject();
   sort: any;
   search_text: string = "";
-  pageItems: number = 25;
+  pageItems: number = 10;
   totalRecords: number;
   datasource: any;
   pages: any[];
@@ -51,16 +51,19 @@ export class IndexComponent implements OnInit {
     { name: "PO No:", key: "po_no" },
     { name: "PO Date:", key: "po_date" },
     { name: "FO Number:", key: "fo_order_number" },
+    { name: "FO Status:", key: "backend_status" },
     { name: "Status:", key: "status_desc" },
   ];
   isTooltipSown: any = "";
   sociDate: any;
+  loading:boolean
 
   constructor(public sociService: SociService, private router: Router) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    this.loading = true 
     this.sociService
-      .getAll(this.pageItems, this.search_text, this.sort)
+      .getAll(this.pageItems, this.search_text, this.sort) 
       .subscribe((data) => {
 
         data["data"]["soci"]["data"].forEach((value) => {
@@ -76,18 +79,26 @@ export class IndexComponent implements OnInit {
         this.pages = data["data"]["soci"]["links"];
         this.totalRecords = data["data"]["soci"]["total"];
         this.checkPermission();
-      });
+        this.loading = false 
+
+      },error => {
+          this.loading = false;
+        });
     setTimeout(() => {
-      this.selectedValues = this.columnValue.slice(0, 10);
+      this.selectedValues = this.columnValue.slice(0, 11);
     }, 1000);
   }
 
   getAll() {
+    // this.loading=true
     this.sociService
       .getAll(this.pageItems, this.search_text, this.sort)
       .subscribe((data) => {
         this.socis = data["data"]["soci"]["data"];
         this.totalRecords = data["data"]["soci"]["total"];
+      //   this.loading=false
+      // },error => {
+      //   this.loading = false;
       });
   }
   addPo(check) {

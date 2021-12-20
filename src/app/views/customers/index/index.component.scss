@@ -231,6 +231,12 @@ hr {
   display: flex;
   align-items: center;
 }
+:host ::ng-deep {
+  .p-datatable {
+      min-height: 500px !important;
+  }
+}
+
 
 @media (min-width: 576px) {
   .modal-dialog {

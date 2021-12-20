@@ -2,13 +2,16 @@ import {
   Component, OnInit,
   Input, Output, EventEmitter
 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ApprovalList } from '../../../services/booking-entity';
+import { BookingEntityService } from '../../../services/booking-entity.service';
 import {BookingStatus, statusToText} from '../../../services/booking-status.enum';
 
 export interface Button {
   title: string;
   id?: number;
+  status?: any;
 }
 
 export class ButtonEvent {
@@ -25,20 +28,26 @@ export class BookingApprovalComponent implements OnInit {
   private _status = BookingStatus.unknown;
   statusText: string = 'Unknown';
   isConfirmed: boolean = false;
+  show_decline: boolean = false;
   buttons: Button[] = [];
 
   @Input() list: ApprovalList = [];
+  @Input() access: boolean = false;
   @Output() buttonAction = new EventEmitter<ButtonEvent>();
 
-  constructor() { }
+  constructor(
+    private api: BookingEntityService,
+    private route: ActivatedRoute,
+    private router: Router, 
+  ) {}
 
   ngOnInit(): void {
   }
 
-  @Input() public get status(): BookingStatus {
+  @Input() public get status(): any {
     return this._status;
   }
-  public set status(value: BookingStatus) {
+  public set status(value: any) {
     this._status = value;
     this.statusText = statusToText(value);
     // Defaults.
@@ -46,44 +55,62 @@ export class BookingApprovalComponent implements OnInit {
     this.buttons = [];
     // Update buttons.
     switch (value) {
-      case BookingStatus.draft:
-        this.buttons = [{ title: 'Submit for Approval', id: 0 }];
+      case '1':
+        this.buttons = [{ title: 'Submit for Approval', id: 0, status: '2' }];
         break;
-      case BookingStatus.submitted:
+      case '2':
         this.buttons = [
-          { title: 'MSC Reviewed', id: 0 },
-          { title: 'Decline', id: 1 }
+          { title: 'MSC Reviewed', id: 0, status: '3' },
+          { title: 'Decline', id: 1, status: '5' }
         ];
         break;
-      case BookingStatus.reviewed:
+      case '3':
         this.buttons = [
-          { title: 'Endorse', id: 0 },
-          { title: 'Decline', id: 1 }
+          { title: 'Endorse', id: 0, status: '6' },
+          { title: 'Decline', id: 1, status: '5' }
         ];
         break;
-      case BookingStatus.endorsed:
+      case '6':
         this.buttons = [
-          { title: 'Approve', id: 0 },
-          { title: 'Conflict', id: 1 },
-          { title: 'Decline', id: 2 },
+          { title: 'Approve', id: 0, status: '7' },
+          { title: 'Conflict', id: 1, status: '4' },
+          { title: 'Decline', id: 2, status: '5' },
         ];
         break;
-      case BookingStatus.accepted:
+      case '7':
         this.buttons = [
-          { title: 'Confirm', id: 0 },
-          { title: 'Decline', id: 1 },
+          { title: 'Confirm', id: 0, status: '8' },
+          { title: 'Decline', id: 1, status: '5' },
         ];
         break;
-      case BookingStatus.confirmed:
+      case '8':
         this.isConfirmed = true;
         break;
     }
   }
 
-  onButtonClick(index: number) {
-    const event = new ButtonEvent();
-    event.index = index;
-    event.button = this.buttons[index];
-    this.buttonAction.emit(event);
+  onButtonClick(status: any) {
+    if(status == 5){
+      this.show_decline = true;
+    }else{
+      this.api.updateStatus({
+        bookingId: this.route.snapshot.params.id,
+        status: status,
+      }).subscribe((res) => {
+          if (res) {
+            this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/dms/bookings', this.route.snapshot.params.id]);
+            }); 
+          }
+        },
+        err => {
+          console.log(err);
+            alert("error")
+        }
+      );
+    }
+  }
+  onClose(){
+    this.show_decline = false;
   }
 }

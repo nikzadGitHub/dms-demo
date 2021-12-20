@@ -1,4 +1,6 @@
-import { environment, settings } from '../../environments/environment';
+import { environment, settings } from "environments/environment";
+
+// import { environment, settings } from '../../environments/environment.prod';
 export class SystemConfig {
     public static version: string = "1.0.1";
     public static appName: string = "SPARKS";

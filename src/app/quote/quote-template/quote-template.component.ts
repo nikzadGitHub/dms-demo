@@ -27,7 +27,18 @@ export class QuoteTemplateComponent implements OnInit {
   @ViewChild("fileUpload") fileUpload: ElementRef;
   @ViewChild("bodyContent") bodyData: ElementRef;
   @ViewChild("headerContent") headerData: ElementRef;
+  @ViewChild("headerQuoteNo") headerQuoteNo: ElementRef;
+  @ViewChild("headerRefNo") headerRefNo: ElementRef;
+  @ViewChild("headerDate") headerDate: ElementRef;
+
   @ViewChild("footerContent") footerData: ElementRef;
+  @ViewChild("price") priceFooter: ElementRef;
+  @ViewChild("deliveryP") deliveryPFooter: ElementRef;
+  @ViewChild("validity") validityFooter: ElementRef;
+  @ViewChild("paymentTer") paymentTerFooter: ElementRef;
+  @ViewChild("manufacturer") manufacturerFooter: ElementRef;
+  @ViewChild("warranty") warrantyFooter: ElementRef;
+  @ViewChild("servicing") servicingFooter: ElementRef;
   alertBody: string;
   alertHeader: string;
   fileName = "";
@@ -40,13 +51,22 @@ export class QuoteTemplateComponent implements OnInit {
   elem;
   imageWidth: any;
   imageHeight: number;
-  single: boolean;
+  single: boolean = true;
   userToken: any;
   quotationId: any;
   quotationContent: any;
   successMessage: string;
   templateId: any;
   loader: boolean;
+  blob: any;
+  quotationContentFooter: any;
+  quotationContentHeader: any;
+  salesPersonData: any;
+  salesPersonSignature: any;
+  productTotalPrice: any;
+  productDetails: any;
+  discountedValue: any = 2000;
+  netTotal: number;
   constructor(private router: Router,
     private quoteService: QuoteService,
     private route: ActivatedRoute,
@@ -67,10 +87,20 @@ export class QuoteTemplateComponent implements OnInit {
   }
 
   viewQuotationTemplate() {
-
     this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
       this.quotationsTemplateData = res["data"]
-      this.quotationContent = res["data"].quotations.quotation_contents
+      this.salesPersonData = res["data"].quotations?.sales_person
+      this.salesPersonSignature = this.salesPersonData?.signature_base64
+      this.quotationContent = res["data"].quotations?.quotation_contents
+      this.productDetails = res["data"].quotations?.products
+      if(this.quotationContent){
+        this.quotationContentFooter = JSON.parse(this.quotationContent?.footer_content)
+        this.quotationContentHeader = JSON.parse(this.quotationContent?.header_content)
+      }
+      for(let i = 0; i < this.quotationsTemplateData.quotations.products.length; i++){
+        this.productTotalPrice = parseFloat(this.productDetails[i].list_price);
+      }
+      this.netTotal = this.productTotalPrice - parseFloat(this.discountedValue)
       
     })
     // this.router.navigateByUrl("quote/view/quote-template");
@@ -79,6 +109,7 @@ export class QuoteTemplateComponent implements OnInit {
   onFileSelected(event: any) {
     this.file = event.target.files[0];
     this.fileName = this.file.name;
+    let extension = this.file.name.split('.').pop();
 
     if (this.file) {
       this.check = true;
@@ -108,50 +139,50 @@ export class QuoteTemplateComponent implements OnInit {
       this.dangerModal.show();
     }
     
-    if (this.templateId && this.quotationId) {
-      // this.loaderService.loaderSet(true)
-      this.loader = true
-      this.quoteService.uploadTemplateImage(formData, this.quotationId, this.templateId).subscribe(state => {
-        if (state) {
-          // this.loaderService.loaderSet(false)
-      this.loader = false
+    // if (this.templateId && this.quotationId) {
+    //   // this.loaderService.loaderSet(true)
+    //   this.loader = true
+    //   this.quoteService.uploadTemplateImage(formData, this.quotationId, this.templateId).subscribe(state => {
+    //     if (state) {
+    //       // this.loaderService.loaderSet(false)
+    //   this.loader = false
 
-        }
-      })
-    } else {
-      this.alertHeader = "Template Id Erroe";
-      this.alertBody = "Template Id is Missing.....";
-      this.dangerModal.show();
-    }
+    //     }
+    //   })
+    // } else {
+    //   this.alertHeader = "Template Id Erroe";
+    //   this.alertBody = "Template Id is Missing.....";
+    //   this.dangerModal.show();
+    // }
   }
 
   downloadUploadedPDF() {
-    if(this.templateId && this.quotationId){
-      this.quoteService.downloadUploadedPdfTemplate(this.quotationId,1).subscribe(state=>{
+    // if(this.templateId && this.quotationId){
+    //   this.quoteService.downloadUploadedPdfTemplate(this.quotationId,1).subscribe(state=>{
         
-      })
-    } else{
-      this.alertHeader = "Template Id Erroe";
-      this.alertBody = "Template Id is Missing.....";
-      this.dangerModal.show();
-    }
-    // if (this.single == true) {
-    //   this.generateCompletePDF();
-    // } else {
-    //   if (this.url) {
-    //     this.generateTemplatePDF();
-    //     this.generateQuotationImagePDF();
-    //   } else {
-    //     this.generateTemplatePDF();
-    //   }
+    //   })
+    // } else{
+    //   this.alertHeader = "Template Id Erroe";
+    //   this.alertBody = "Template Id is Missing.....";
+    //   this.dangerModal.show();
     // }
+    if (this.single == true) {
+      this.generateCompletePDF();
+    } else {
+      if (this.url) {
+        this.generateTemplatePDF();
+        this.generateQuotationImagePDF();
+      } else {
+        this.generateTemplatePDF();
+      }
+    }
   }
   generateCompletePDF() {
     let data = document.getElementById("pdfTable");
     html2canvas(data).then((canvas) => {
       var imgData = canvas.toDataURL("image/png");
       var imgWidth = 210;
-      var pageHeight = 300;
+      var pageHeight = 1200;
       var imgHeight = (canvas.height * imgWidth) / canvas.width;
       var heightLeft = imgHeight;
       var doc = new jsPDF("p", "mm");
@@ -212,13 +243,11 @@ export class QuoteTemplateComponent implements OnInit {
   }
 
   onePDF() {
-    console.log("One PDF working");
     this.successModal.hide();
     this.reset();
     this.single = true;
   }
   twoPDF() {
-    console.log("Two PDF working");
     this.successModal.hide();
     this.reset();
     this.single = false;
@@ -254,25 +283,45 @@ export class QuoteTemplateComponent implements OnInit {
     this.fileUpload.nativeElement.value = null;
   }
   savePreviewContent(){
-    let header =  this.headerData.nativeElement.innerText
-    let footer = this.footerData.nativeElement.innerText
+    // let header =  this.headerData.nativeElement.innerHTML
+    let header ={
+      quoteNo: this.headerQuoteNo.nativeElement.innerText,
+      refNo: this.headerRefNo.nativeElement.innerText,
+      date: this.headerDate.nativeElement.innerText,
+    }
+    // let footer = this.footerData.nativeElement.innerHTML
+    let footer = {
+      price:this.priceFooter.nativeElement.innerText,
+      deliveryP:this.deliveryPFooter.nativeElement.innerText,
+      validity:this.validityFooter.nativeElement.innerText,
+      paymentTer:this.paymentTerFooter.nativeElement.innerText,
+      manufacturer:this.manufacturerFooter.nativeElement.innerText,
+      warranty:this.warrantyFooter.nativeElement.innerText,
+      servicing:this.servicingFooter.nativeElement.innerText,
+    }
     let fullBody = this.bodyData.nativeElement.innerHTML
 
-
-    this.quoteService.saveTemplateData(this.quotationId,header,footer,fullBody).subscribe(state=>{
+    this.quoteService.saveTemplateData(this.quotationId,JSON.stringify(header),JSON.stringify(footer),fullBody).subscribe(state=>{
     })
 
       this.successMessage = "Data is Updated Successfully......!!";
       this.successModal.show();
   }
 
-  downloadQuotationTemplate(){
-    this.quoteService.downloadQuoteTemplate(this.quotationId,this.templateId).subscribe(state=>{
-      if(state){
-      this.successMessage = "Quotaion Downloaded Successfully......!!";
-      this.successModal.show();
-      }
-    })
-  }
+  // downloadQuotationTemplate(){
+  //   this.quoteService.downloadQuoteTemplate(this.quotationId,this.templateId).subscribe(state=>{
+  //     if(state){
+  //       this.blob = new Blob([state as BlobPart], {type: 'application/pdf'});
+
+  //       var downloadURL = window.URL.createObjectURL(state);
+  //       var link = document.createElement('a');
+  //       link.href = downloadURL;
+  //       link.download = "Quotation_1.pdf";
+  //       link.click();
+  //     this.successMessage = "Quotaion Downloaded Successfully......!!";
+  //     this.successModal.show();
+  //     }
+  //   })
+  // }
   
 }

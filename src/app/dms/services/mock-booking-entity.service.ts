@@ -57,7 +57,22 @@ const mockBookingDetail: BookingDetail = {
     ship_to_contact_number: "XXXXXXXX",
     remarks: "",
     loan_start_date: "",
-    loan_end_date: ""
+    loan_end_date: "",
+    con_won:"",
+    ins_won:"",
+    pdi_won:"",
+    trn_won:"",
+    war_won:"",
+    tnc_won:"",
+    pdr_won:"",
+    bme_booking_id:"",
+    bme_con_req: 1,
+    bme_pdi_re: 1,
+    bme_ins_req: 1,
+    bme_tnc_won: 1,
+    bme_trn_req: 1,
+    bme_war_req: 1,
+    bme_pdr_req: 1,
 };
 
 const mockOpportunitySummary: OpportunitySummary = {
@@ -160,7 +175,8 @@ export class MockBookingEntityService implements BookingEntityInterface {
       approvalList: mockApproval,
       bookingDetailList: mockBookingDetail,
       opportunitySummary: mockOpportunitySummary,
-      mainAsset: mockMainAsset
+      mainAsset: mockMainAsset,
+      access: false
     }
   ];
 

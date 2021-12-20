@@ -1,0 +1,101 @@
+
+
+// new scss
+
+:host ::ng-deep {
+    .p-paginator {
+        .p-paginator-current {
+            margin-left: auto;
+        }
+    }
+    
+  
+    
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+    }
+   
+    
+    
+    
+    .p-datatable.p-datatable-customers {
+        .p-datatable-header {
+            padding: 1rem;
+            text-align: left;
+            font-size: 1.5rem;
+            background-color: #898485; 
+            color: white;
+        }
+    
+        .p-paginator {
+            padding: 1rem;
+        }
+    
+        .p-datatable-thead > tr > th {
+            text-align: left;
+        }
+    
+        .p-datatable-tbody > tr > td {
+            cursor: auto;
+        }
+    
+        .p-dropdown-label:not(.p-placeholder) {
+            text-transform: uppercase;
+        }
+    }
+    
+    /* Responsive */
+    .p-datatable-customers .p-datatable-tbody > tr > td .p-column-title {
+        display: none;
+    }
+}
+
+
+
+
+
+:host ::ng-deep {
+    .p-datatable {
+        min-height: 500px !important;
+    }
+}
+
+:host ::ng-deep {
+    .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+        background: #ffffff;
+        border-color: #2196F3;
+        color: #2196F3;
+        width: 100px;
+        margin-right: 10px;
+        justify-content: center;
+    }
+    
+    
+    .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+        border: solid #dee2e6;
+        border-width: 0 0 2px 0;
+        border-color: transparent transparent #dee2e6 transparent;
+        background: #ffffff;
+        color: #6c757d;
+        padding: 1rem;
+        font-weight: 600;
+        border-top-right-radius: 3px;
+        border-top-left-radius: 3px;
+        transition: box-shadow 0.2s;
+        margin: 0 0 -2px 0;
+        width: 100px;
+        margin-right: 10px;
+        justify-content: center;
+
+    }
+}
+
+
+
+.customPlusIcon{
+    // margin-left: -77px;
+    font-size: 23px;
+    height: 23px;
+    // padding: 0px;
+}

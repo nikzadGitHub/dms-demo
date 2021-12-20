@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 
-import { settings } from '../../../environments/environment';
+import { settings } from '../../../environments/environment.prod';
 import {ApiJsonResponse} from './api-client';
 
 /**
@@ -13,13 +13,13 @@ import {ApiJsonResponse} from './api-client';
   // FIXME: not even a single module-service should be provided directly in Root-App.
   providedIn: 'root'
 })
-export class ApiClient {
+export class ApiClient { 
   private baseUrl = settings.apiBaseUrl + '/dms/';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     })
-  };
+  }; 
 
   constructor(private httpClient: HttpClient) { }
 
@@ -75,5 +75,5 @@ export class ApiClient {
       errorMessage = `Error Code: ${response.status}\nMessage: ${response.message}`;
     }
     return throwError(errorMessage);
-  }
+  } 
 }

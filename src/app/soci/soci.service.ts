@@ -48,22 +48,22 @@ export class SociService {
     // "/opportunity/get-all-products?search_text="
     return (
       this.httpClient
-      .get(
-        this.apiURL +
-          "/soci/get-product?search_text=" +
-          filter +
-          "&customer_id=" +
-          customer_id,
-        this.httpOptions
-      )
-        // .get(
-        //   this.apiURL +
-        //     "/opportunity/get-product?search_text=" +
-        //     filter +
-        //     "&external_id=" +
-        //     external_id,
-        //   this.httpOptions
-        // )
+      // .get(
+      //   this.apiURL +
+      //     "/soci/get-product?search_text=" +
+      //     filter +
+      //     "&customer_id=" +
+      //     customer_id,
+      //   this.httpOptions
+      // )
+        .get(
+          this.apiURL +
+            "/opportunity/get-product?search_text=" +
+            filter +
+            "&external_id=" +
+            external_id,
+          this.httpOptions
+        )
         .pipe(catchError(this.errorHandler))
     );
   }
@@ -103,6 +103,11 @@ export class SociService {
     if (pageItems != null) {
       query += "?page_items=" + pageItems;
     }
+
+    return this.httpClient.get(this.apiURL + query, this.httpOptions);
+  }
+  getcomment(url): Observable<object> {
+    let query = url;
 
     return this.httpClient.get(this.apiURL + query, this.httpOptions);
   }

@@ -1,0 +1,397 @@
+<div class="card main-div">
+  <div class="card-header page-heading-icon">
+    <!-- <h1>Level Of Authority</h1> -->
+    <div class="header-text">
+      <h2 *ngIf="!isEdit">Add User</h2>
+      <h2 *ngIf="isEdit">Edit User</h2>
+      <div>
+        <!-- back-btn -->
+        <p-button
+          styleClass="p-button-outlined"
+          class="back-p-btn"
+          (click)="back()"
+        >
+          <ng-template pTemplate="content">
+            <img
+              src="../../../../assets/img/icons/back-arrow.svg"
+              alt=""
+              style="width: 17px"
+            />
+          </ng-template>
+        </p-button>
+      </div>
+
+      <!-- <img src="../../../../assets/img/icons/back-arrow.svg" alt=""> -->
+    </div>
+  </div>
+  <form [formGroup]="userform">
+    <div class="card-body">
+      <p class="title-text" *ngIf="isEdit">
+        <i class="pi pi-user-plus"> </i>
+        <!-- <i class="pi pi-user-plus"></i> -->
+        Edit User
+      </p>
+      <p class="title-text" *ngIf="!isEdit">
+        <i class="pi pi-user-plus"> </i>
+        <!-- <i class="pi pi-user-plus"></i> -->
+        Add User
+      </p>
+      <div class="row mt-3 mb-3">
+        <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >Company <span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-10">
+          <p-dropdown
+            formControlName="companyName"
+            placeholder="Select company"
+            [options]="companies"
+            [style]="{ width: '100%' }"
+            optionLabel="title"
+            optionValue="data_area_id"
+          ></p-dropdown>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-1 col-md-1 col-sm-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >Name <span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5">
+          <input
+            type="text"
+            formControlName="name"
+            pInputText
+            style="width: 340px"
+          />
+        </div>
+
+        <!-- user-access -->
+        <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >User Access <span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <p-dropdown
+            *ngIf="!this.isEdit"
+            formControlName="userAccess"
+            [options]="userRoleList"
+            placeholder="User Access"
+            optionLabel="name"
+            optionValue="id"
+            [style]="{ width: '351px' }"
+          ></p-dropdown>
+          <p-dropdown
+            *ngIf="this.isEdit"
+            formControlName="userAccess"
+            [options]="userRoleList"
+            optionLabel="name"
+            optionValue="id"
+            display="chip"
+            [style]="{ width: '351px' }"
+          ></p-dropdown>
+        </div>
+      </div>
+
+      <!-- <div class="row mt-4">
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >User Access <span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-md-10">
+          <p-dropdown
+            [options]="userRoleList"
+            placeholder="Select user"
+            optionLabel="name"
+            [style]="{ width: '100%' }"
+          ></p-dropdown>
+        </div>
+      </div> -->
+
+      <!-- email-and-phone-field -->
+      <div class="row mt-4">
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >Email <span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-md-5">
+          <input
+            type="email"
+            formControlName="email"
+            pInputText
+            placeholder="example@gmail.com"
+            style="width: 340px"
+          />
+        </div>
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >Phone Number<span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-md-4">
+          <input
+            type="text"
+            pInputText
+            formControlName="phoneNumber"
+            placeholder="0"
+            style="width: 351px"
+          />
+        </div>
+      </div>
+
+      <!-- Discount-fields -->
+      <div class="row mt-4">
+        <!-- <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >Approved By<span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-md-4">
+          <p-dropdown
+            formControlName="approvedBy"
+            [options]="userList"
+            optionLabel="full_name"
+            optionValue="id"
+            placeholder="Select Approve By"
+            [style]="{ width: '351px' }"
+            [required]="true"
+          >
+          </p-dropdown>
+        </div> -->
+
+        <!-- status-field -->
+        <div class="col-md-1 mt-2 mr-3">
+          <label style="width: 100px"
+            >Status <span class="red-star">*</span></label
+          >
+        </div>
+        <div class="col-md-5">
+          <p-dropdown
+            formControlName="status"
+            [options]="status"
+            optionLabel="status"
+            optionValue="code"
+            placeholder="Select Status"
+            optionValue="code"
+            [style]="{ width: '340px' }"
+            [required]="true"
+          >
+          </p-dropdown>
+          <!-- <input type="text" pInputText placeholder="" style="width: 340px" /> -->
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!--  -->
+  <!--  -->
+  <!-- profit-&-unit -->
+  <!-- (click)="userUnit()" -->
+
+  <form [formGroup]="unitUserForm">
+    <div class="user-unit">
+      <h4>Unit User</h4>
+      <button
+        class="btn btn-icon btn-outline-primary"
+        icon="pi pi-check"
+        (click)="addUserUnit()"
+      >
+        <i class="cil-plus c-icon"></i>
+      </button>
+    </div>
+    <div formArrayName="unitUserArray">
+      <div *ngFor="let employee of unitUser().controls; let i = index">
+        <div [formGroupName]="i">
+          <div class="row mt-4">
+            <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-3">
+              <label style="width: 100px"
+                >Profit Percentage %<span class="red-star">*</span></label
+              >
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2">
+              <input
+                type="text"
+                pInputText
+                formControlName="profit_margin"
+                placeholder="0"
+                style="width: 150px"
+              />
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-3">
+              <label style="width: 100px"
+                >Discount Margin %<span class="red-star">*</span></label
+              >
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2">
+              <input
+                type="text"
+                pInputText
+                formControlName="discount_percentage"
+                placeholder="0"
+                style="width: 150px"
+              />
+            </div>
+
+            <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-1">
+              <label style="width: 100px"
+                >Unit<span class="red-star">*</span></label
+              >
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <p-dropdown
+                formControlName="unit_id"
+                placeholder="Select unit"
+                [options]="units"
+                placeholder="Units"
+                optionLabel="code"
+                optionValue="id"
+                [style]="{ width: '285px' }"
+              ></p-dropdown>
+            </div>
+            <div class="col-lg-1 mt-2">
+              <!-- (click)="deleteUserUnitRow(i)" -->
+              <a [routerLink]="" routerLinkActive="router-link-active"
+                ><i
+                  class="fa fa-trash"
+                  style="font-size: 18px; padding-left: 2rem"
+                ></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <p>
+      <button type="button" (click)="addUserUnit()">Add Employee</button>
+    </p> -->
+  </form>
+  <!-- *ngFor="let item of addUserUnit; let i = index" -->
+  <!-- <div class="row mt-4">
+    <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-3">
+      <label style="width: 100px"
+        >Profit Percentage %<span class="red-star">*</span></label
+      >
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2">
+      <input
+        type="text"
+        pInputText
+        formControlName="profit_margin"
+        placeholder="0"
+        style="width: 150px"
+      />
+    </div>
+    <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-3">
+      <label style="width: 100px"
+        >Discount Margin %<span class="red-star">*</span></label
+      >
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2">
+      <input
+        type="text"
+        pInputText
+        formControlName="discount_percentage"
+        placeholder="0"
+        style="width: 150px"
+      />
+    </div>
+
+    <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-1">
+      <label style="width: 100px">Unit<span class="red-star">*</span></label>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3">
+      <p-dropdown
+        formControlName="unit"
+        placeholder="Select unit"
+        [options]="units"
+        placeholder="Units"
+        optionLabel="code"
+        optionValue="id"
+        [style]="{ width: '285px' }"
+      ></p-dropdown>
+    </div>
+    <div class="col-lg-1 mt-2">
+
+      <a [routerLink]="" routerLinkActive="router-link-active"
+        ><i class="fa fa-trash" style="font-size: 18px; padding-left: 2rem"></i
+      ></a>
+    </div>
+  </div> -->
+
+  <!-- action-btn -->
+  <div class="action-btn">
+    <button
+      type="button"
+      class="btn btn-outline-primary cancel-btn"
+      (click)="back()"
+    >
+      CANCEL
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary save-btn"
+      *ngIf="!isEdit"
+      (click)="addUser()"
+    >
+      SAVE
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary save-btn"
+      (click)="updateUser()"
+      *ngIf="isEdit"
+    >
+      Update
+    </button>
+  </div>
+</div>
+
+<div
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>

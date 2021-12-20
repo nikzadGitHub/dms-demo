@@ -64,7 +64,6 @@ export class AuthInterceptor implements HttpInterceptor {
           let newToken = event.headers.get("x-new-token");
 
           if (newToken !== null) {
-            console.log("found new token");
             await this.auth.setAuthorizationToken(newToken)
           }
         } 

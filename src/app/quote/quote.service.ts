@@ -5,7 +5,7 @@ import {  Observable, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
   
 import { Quote } from './quote';
-import { settings } from '../../environments/environment';
+import { settings } from '../../environments/environment.prod';
    
 @Injectable({
   providedIn: 'root'
@@ -103,10 +103,14 @@ export class QuoteService {
     return this.httpClient.get(this.apiURL + '/quote/quotation-template',this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
-    )
+    )   
   }
   getQuatation(id){
-    return this.httpClient.get(this.apiURL + '/quote/quotation-preview/'+ id,this.httpOptions)
+    let authToken = localStorage.getItem('auth-token');
+    return this.httpClient.get(this.apiURL + '/quote/quotation-preview/'+ id,  {
+      headers: {
+        'Authorization': authToken,
+      }})
     .pipe(
       catchError(this.errorHandler)
     )
@@ -217,14 +221,31 @@ uploadTemplateImage(filePath,Q_id,T_id){
 }
 
 downloadUploadedPdfTemplate(Q_id,T_id){
-  return this.httpClient.get(this.apiURL + '/quote/quotation-preview-merge/'+ Q_id +'/' + T_id + '/')
+  let authToken = localStorage.getItem('auth-token');
+
+  const httpOptions = {
+    responseType: 'blob' as 'json',
+    headers: new HttpHeaders({
+      'Authorization': authToken,
+    })
+  };
+  return this.httpClient.get(this.apiURL + '/quote/quotation-preview-merge/'+ Q_id +'/' + T_id + '/',httpOptions)
   .pipe(
     catchError(this.errorHandler)
   )
 }
 
 downloadQuoteTemplate(Q_id,T_id){
-  return this.httpClient.get(this.apiURL + '/quote/quotation-preview-download/'+ Q_id +'/' + T_id + '/')
+  let authToken = localStorage.getItem('auth-token');
+
+  const httpOptions = {
+    responseType: 'blob' as 'json',
+    headers: new HttpHeaders({
+      'Authorization': authToken,
+    })
+  };
+  let body= {}
+  return this.httpClient.post(this.apiURL + '/quote/quotation-preview-download/'+ Q_id +'/' + T_id + '/',body,httpOptions)
   .pipe(
     catchError(this.errorHandler)
   )

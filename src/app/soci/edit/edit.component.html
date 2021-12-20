@@ -141,6 +141,219 @@
           </div>
         </p-accordionTab>
       </p-accordion>
+      <br />
+      <!-- SOCI Detaail -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+        <!-- header="PO Details" -->
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <div class="accordian-div">
+              SOCI Details
+              <img
+                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                alt=""
+                (click)="openModel('soci_detail')"
+              />
+            </div>
+          </ng-template>
+          <div class="row">
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b>Payemt Term </b>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              {{
+                this.standerd_payment_term ? this.standerd_payment_term : "_"
+              }}
+            </div>
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b>Hospital Bed (Exact Number)</b>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">0</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b>Hospital Class</b>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b>Geographical Zone</b>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">0</div>
+          </div>
+          <div class="row">
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b> Credit Limit </b>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">0</div>
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b>Customer Tax Code </b>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+          </div>
+          <div class="row">
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b>Segment </b>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b>Sold To </b>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 mr-5">
+              {{ soci_data?.quote?.opportunity?.sold_to?.company_name }}
+            </div>
+            <div
+              style="display: flex; flex-direction: row; align-items: center"
+            >
+              <a [routerLink]="" routerLinkActive="router-link-active"
+                ><i class="fa fa-edit"></i
+              ></a>
+            </div>
+          </div>
+          <div class="row">
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b>Customer Category </b>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b>Sold To Address </b>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              {{ soci_data?.quote?.opportunity?.sold_to?.address }}
+            </div>
+          </div>
+          <div class="row">
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b>Customer Subcategory </b>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b>Ship To </b>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 mr-5">
+              {{ soci_data?.quote?.opportunity?.ship_to?.company_name }}
+            </div>
+            <!-- <div class="col-lg-2 col-md-2 col-sm-2 mr-5">
+              <input type="text" class="form-control" formControlName="ship_to">
+            </div> -->
+            <div class="action-icon">
+              <a [routerLink]="" routerLinkActive="router-link-active"
+                ><i class="cil-check-circle"></i
+              ></a>
+              <a [routerLink]="" routerLinkActive="router-link-active">
+                <i class="fa fa-edit"></i>
+              </a>
+              &nbsp;
+              <a
+                [routerLink]=""
+                routerLinkActive="router-link-active"
+              >
+                <i class="pi pi-times"></i>
+              </a>
+            </div>
+            <!-- <div
+              style="display: flex; flex-direction: row; align-items: center"
+            >
+              <a [routerLink]="" routerLinkActive="router-link-active" (click)="updateSociDetail('ship_to')"
+                ><i class="fa fa-edit"></i
+              ></a>
+            </div> -->
+          </div>
+          <div class="row">
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b> Hospital Bed (Range) </b>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b>Ship To Address </b>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              {{ soci_data?.quote?.opportunity?.ship_to?.address }}
+            </div>
+          </div>
+          <div class="row">
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            ></div>
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b> Bill To </b>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 mr-5">
+              {{ soci_data?.quote?.opportunity?.bill_to?.company_name }}
+            </div>
+            <div
+              style="display: flex; flex-direction: row; align-items: center"
+            >
+              <a [routerLink]="" routerLinkActive="router-link-active"
+                ><i class="fa fa-edit"></i
+              ></a>
+            </div>
+          </div>
+          <div class="row">
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            ></div>
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div
+              class="col-lg-3 col-md-3 col-sm-3 grey"
+              style="line-height: 50px"
+            >
+              <b> Bill To Address </b>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              {{ soci_data?.quote?.opportunity?.bill_to?.address }}
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
       <!-- End PO details -->
       <br />
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
@@ -153,7 +366,7 @@
               <img
                 src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
                 alt="comment"
-                (click)="openModel('standerd_term')"
+                (click)="openModel('standard_terms')"
               />
             </div>
           </ng-template>
@@ -1417,7 +1630,7 @@
               <img
                 src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
                 alt=""
-                (click)="openModel('additional_information')"
+                (click)="openModel('additional_instruction')"
               />
             </div>
           </ng-template>
@@ -3178,14 +3391,16 @@
       </div>
 
       <div class="modal-body comment-body">
-        <textarea placeholder="Comment"></textarea>
-        <!-- <button
-          pButton
-          pRipple
-          type="button"
-          icon="pi pi-send"
-          class="p-button-rounded"
-        ></button> -->
+        <div class="row" *ngFor="let item of commentList">
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <label>{{ item.name }}</label>
+            <p>{{ item.comment }}</p>
+          </div>
+        </div>
+        <textarea
+          placeholder="Comment"
+          [(ngModel)]="accordianComment"
+        ></textarea>
       </div>
 
       <div class="modal-footer">
@@ -3197,21 +3412,14 @@
           class="p-button-secondary"
           (click)="commentModal.hide()"
         ></button>
-        <!-- <button
-          type="button"
-          class="btn btn-secondary"
-          (click)="commentModal.hide()"
-        >
-          CANCEL
-        </button> -->
         <button
           pButton
           pRipple
           type="button"
           label="Send"
           class="p-button-info"
+          (click)="addComment()"
         ></button>
-        <!-- <button type="button" class="btn btn-primary">SEND</button> -->
       </div>
     </div>
     <!-- /.modal-content -->

@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 
 import {  Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { settings } from '../../../environments/environment';
+import { settings } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -85,6 +85,32 @@ export class ProspectsService {
       catchError(this.errorHandler)
     )
   }
+
+  getProspectCreate(){
+    return this.httpClient.get(this.apiURL + '/prospect' , this.httpOptions)
+    .pipe(
+      tap((response: any) =>{
+        console.log(response)
+      }),
+      catchError(this.errorHandler)
+    )
+    }
+
+    storeProspect(data): Observable<any> {
+   
+      
+      return this.httpClient
+        .post(this.apiURL + "/prospect", data, this.httpOptions)
+        .pipe(
+          tap((response: any) => {
+          }),
+          catchError(this.errorHandler)
+        );
+    }
+
+
+
+
 
   deleteContact(prospectId, contactId){
     return this.httpClient.post(this.apiURL + '/prospect/' + prospectId + '/contacts/remove', { contact_id: contactId }, this.httpOptions)

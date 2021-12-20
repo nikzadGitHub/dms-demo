@@ -1,4 +1,4 @@
-<p-table #dt [value]="bookingList" styleClass="p-datatable-table" [rowHover]="true" [filterDelay]="0" [globalFilterFields]="['code','request_date','requester']">
+<p-table  [loading]="loading" #dt [value]="bookingList" styleClass="p-datatable-table" [rowHover]="true" [filterDelay]="0" [globalFilterFields]="['code','request_date','requester']">
     <ng-template pTemplate="caption">
       <div class="table-header d-flex">
           <div class="d-flex">
@@ -103,7 +103,7 @@
     <ng-template pTemplate="body" let-bookingItem>
       <tr class="p-selectable-row">
         <td class="text-center">
-            <a routerLink="{{ bookingItem.id }}" routerLinkActive="router-link-active">{{ bookingItem.booking_no }}</a>
+            <a routerLink="{{ bookingItem.id }}" routerLinkActive="router-link-active">{{ bookingItem.booking_no ? bookingItem.booking_no : 'Draft' }}</a>
         </td>
         <td class="text-center">
             {{ bookingItem.request_date }}
@@ -128,6 +128,15 @@
         </td>
     </tr>
     </ng-template>
+
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+          <td style="text-align: center;" [attr.colspan]="8">
+              No records found
+          </td>
+      </tr>
+  </ng-template>
+
   </p-table>
   <p-paginator [rows]="pageItems" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
   </p-paginator>
