@@ -8,6 +8,7 @@ import { BillingList } from "@app/quote/edit/billing-list";
 import { Quote } from "@app/quote/quote";
 import { QuoteService } from "@app/quote/quote.service";
 import { ModalDirective } from "ngx-bootstrap/modal";
+import { ManagerViewService } from "../manager-view.service";
 
 @Component({
   selector: 'app-edit-quotation-approval',
@@ -21,6 +22,7 @@ export class EditQuotationApprovalComponent implements OnInit {
   @ViewChild("infoModal") infoModal: ModalDirective;
   @ViewChild("paymentRemarkModal") paymentRemarkModal: ModalDirective;
   @ViewChild("billingRemarkModal") billingRemarkModal: ModalDirective;
+  @ViewChild("confirmationApproveModal") confirmationApproveModal: ModalDirective;
 
   signatureStatus: boolean;
   show: boolean;
@@ -56,6 +58,7 @@ export class EditQuotationApprovalComponent implements OnInit {
 
   constructor(
     private quoteService: QuoteService,
+    private managerViewService: ManagerViewService,
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -672,5 +675,19 @@ export class EditQuotationApprovalComponent implements OnInit {
 
   getTemplate(e){
     this.templateId = e.target.value
+  }
+
+  approveQuotation(){
+    this.managerViewService.quotationApproval(this.id).subscribe(res=>{
+      console.log("this.quotation response =>",res)
+    })
+    this.confirmationApproveModal.hide()
+  }
+
+  escalateQuotation(){
+    this.managerViewService.quotationEscalate(this.id).subscribe(res=>{
+      console.log("Escalate Quotation response =>",res)
+    })
+    this.confirmationApproveModal.hide()
   }
 }

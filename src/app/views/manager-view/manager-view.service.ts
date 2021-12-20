@@ -48,4 +48,14 @@ export class ManagerViewService {
       .get<Quote[]>(this.apiURL + query, this.httpOptions)
       .pipe(catchError(this.errorHandler));
   }
+
+  quotationApproval(id): Observable<object> {
+
+    return this.httpClient.post(this.apiURL+"/quote/approval/" + id, this.httpOptions);
+  }
+
+  quotationEscalate(id): Observable<object> {
+
+    return this.httpClient.post(this.apiURL+"/quote/escalate/" + id, this.httpOptions);
+  }
 }
