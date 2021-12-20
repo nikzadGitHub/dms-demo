@@ -1104,7 +1104,7 @@ export class EditComponent implements OnInit {
         quantity: this.form.value.quantity,
         cost: this.product_cost,
         margin: 2,
-        total_price: this.form.value.quantity.total_price,
+        total_price: this.form.value.quantity?.total_price,
         product_id: this.product_id,
         discount: this.form.value.discount,
         amount: this.form.value.amount,

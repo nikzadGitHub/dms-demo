@@ -88,7 +88,7 @@ tr {
 
 .row-icon {
   display: flex;
-  padding-left: 15px;
+  // padding-left: 15px;
   a {
     margin-right: 12px;
   }
@@ -124,7 +124,7 @@ i {
   height: 1.5rem;
   line-height: 1.5rem;
   cursor: pointer;
-  width: 100px;
+  width: 70px;
 }
 
 .reject-badge:focus-visible {
@@ -230,4 +230,7 @@ i {
       }
     }
   }
+}
+.badge{
+  margin-left: -30px;
 }
