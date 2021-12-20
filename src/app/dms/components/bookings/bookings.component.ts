@@ -42,7 +42,7 @@ export class BookingsComponent implements OnInit {
     if (this.searchTimerId) {
       clearTimeout(this.searchTimerId)
     }
-    this.searchTimerId = setTimeout(() => {
+    this.searchTimerId = window.setTimeout(() => {
       console.log('once runs');
       this.api.getListSearch(this.search_text).subscribe((response) => {
         if (response as BookingList) {
