@@ -585,6 +585,9 @@
         </div>
       </div>
     </th>
+    <th>
+
+    </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-data>
@@ -684,6 +687,10 @@
         {{ data.amount}}
       </div>
       <div *ngIf="!data.amount">_</div>
+  </td>
+
+  <td>
+    <a [routerLink]="['/managerview/edit-approval/',data.id]" class="fa fa-edit"></a>
   </td>
       
     </tr>

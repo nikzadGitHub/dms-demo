@@ -114,6 +114,19 @@ export class ManagerviewApprovalComponent implements OnInit {
     };
     this.router.navigate(["/soci/", soci_id, "edit"], navigate);
   }
+
+  // goToEditApproval(approvalId) {
+  //   alert(approvalId)
+  //   // this.is_approval_view_check = true;
+  //   // let navigate: NavigationExtras = {
+  //   //   queryParams: {
+  //   //     is_approval_view_check: true,
+  //   //   },
+  //   // };
+  //   this.router.navigate(["managerview/edit-approval"]);
+  //   // this.router.navigate(["/approval/", soci_id, "edit"], navigate);
+  // }
+
   searchSoci() {
     this.managerView
       .getPendingSOCI(this.pageItems, this.search_text, this.sort)
