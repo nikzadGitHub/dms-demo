@@ -153,7 +153,7 @@ export class EditComponent implements OnInit {
   commentList: any[] = [];
   isShipTo: boolean;
   enableShipToedit = true;
-  isSoldTo = false;
+  isSoldTo: boolean = false;
   enableSoldToedit = true;
   isBillTo = false;
   enableBillToedit = true;
@@ -344,8 +344,8 @@ export class EditComponent implements OnInit {
       // products
       this.product = res["data"]["products"];
       this.product.forEach((values) => {
-        this.products_discount_values += values["discount"];
-        this.product_subtotal_before_tax += values["total_price"];
+        values["discount"]? this.products_discount_values += values["discount"]:0;
+        values["total_price"]?this.product_subtotal_before_tax += values["total_price"]:0;
         this.product_total_net_amount += values["amount"];
         this.tax_rate = values["tax_rate"];
       });
@@ -463,7 +463,7 @@ export class EditComponent implements OnInit {
   }
   resetModel() {
     this.commentList = null;
-    this.accordianComment = ''
+    this.accordianComment = "";
   }
 
   // soci-detail
@@ -835,9 +835,9 @@ export class EditComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.additional_costs.push(data["data"]);
-          this.total_additional_costs_amount += data["data"]["total_price"];
-          this.additional_cost_and_charges += data["data"]["total_price"];
-          this.total_cost += data["data"]["total_price"];
+          data["data"]["total_price"]?this.total_additional_costs_amount += data["data"]["total_price"]:0;
+          data["data"]["total_price"]?this.additional_cost_and_charges += data["data"]["total_price"]:0;
+          data["data"]["total_price"]? this.total_cost += data["data"]["total_price"]:0;
           this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();

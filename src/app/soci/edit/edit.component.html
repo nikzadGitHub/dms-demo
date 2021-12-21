@@ -223,7 +223,7 @@
             >
               <b>Sold To </b>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="enableSoldToedit">
+            <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="!isSoldTo">
               {{ soci_data?.quote?.opportunity?.sold_to?.company_name }}
             </div>
             <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="isSoldTo">
@@ -2278,135 +2278,27 @@
                 >
                   <td class="text-center">{{ i + 1 }}</td>
                   <td class="text-center">
-                    <!-- <input
-                      class="text-left form-control"
-                      type="text"
-                      readonly
-                      [(ngModel)]="item.name"
-                      *ngIf="
-                        editableRowIndex !== i ||
-                        selectedId !== 'additionalCharges'
-                      "
-                      [attr.disabled]="
-                        enableEdit['product'] && controller == item ? null : ''
-                      "
-                      [ngModelOptions]="{ standalone: true }"
-                      placeholder="Enter Item"
-                    /> -->
+
                     {{ item.name }}
                   </td>
                   <td class="text-center">
-                    <!-- <input
-                      class="text-left form-control"
-                      type="text"
-                      readonly
-                      style="text-align: center;"
-                      [(ngModel)]="item.sku"
-                      *ngIf="
-                        editableRowIndex !== i ||
-                        selectedId !== 'additionalCharges'
-                      "
-                      [attr.disabled]="
-                        enableEdit['product'] && controller == item ? null : ''
-                      "
-                      [ngModelOptions]="{ standalone: true }"
-                      placeholder="Enter Item"
-                    /> -->
                     {{ item.sku }}
                   </td>
                   <td class="text-center">
-                    <!-- <input
-                      class="text-left form-control"
-                      type="text"
-                      style="text-align: center !important;"
-                      readonly
-                      [(ngModel)]="item.quantity"
-                      *ngIf="
-                        editableRowIndex !== i ||
-                        selectedId !== 'additionalCharges'
-                      "
-                      [attr.disabled]="
-                        enableEdit['product'] && controller == item ? null : ''
-                      "
-                      [ngModelOptions]="{ standalone: true }"
-                      placeholder="Enter Item"
-                    /> -->
                     {{ item.quantity }}
                   </td>
                   <td class="text-center">
-                    <!-- <input
-                      class="text-left form-control"
-                      type="text"
-                      style="text-align: right !important; width: 100% ;"
-                      readonly
-                      [(ngModel)]="item.unit_price"
-                      *ngIf="
-                        editableRowIndex !== i ||
-                        selectedId !== 'additionalCharges'
-                      "
-                      [attr.disabled]="
-                        enableEdit['product'] && controller == item ? null : ''
-                      "
-                      [ngModelOptions]="{ standalone: true }"
-                      placeholder="Enter Item"
-                    /> -->
+
                     {{ item.unit_price | number: "1.2" }}
                   </td>
                   <td class="text-center">
-                    <!-- <input
-                      class="text-left form-control"
-                      style="text-align: right !important; width: 100%;"
-                      type="text"
-                      readonly
-                      [(ngModel)]="item.total_price"
-                      *ngIf="
-                        editableRowIndex !== i ||
-                        selectedId !== 'additionalCharges'
-                      "
-                      [attr.disabled]="
-                        enableEdit['product'] && controller == item ? null : ''
-                      "
-                      [ngModelOptions]="{ standalone: true }"
-                      placeholder="Enter Item"
-                    /> -->
+     
                     {{ item.total_price | number: "1.2" }}
                   </td>
                   <td class="text-center">
-                    <!-- <input
-                      class="text-left form-control"
-                      type="text"
-                      style="text-align: center !important;"
-                      readonly
-                      [(ngModel)]="item.discount"
-                      *ngIf="
-                        editableRowIndex !== i ||
-                        selectedId !== 'additionalCharges'
-                      "
-                      [attr.disabled]="
-                        enableEdit['product'] && controller == item ? null : ''
-                      "
-                      [ngModelOptions]="{ standalone: true }"
-                      placeholder="Enter Item"
-                    /> -->
                     {{ item.discount }}
                   </td>
                   <td class="text-center">
-                    <!-- <input
-                      class="text-left form-control"
-                      style="text-align: right !important; width: 100%;"
-                      type="text"
-                      readonly
-                      [(ngModel)]="item.amount"
-                      *ngIf="
-                        editableRowIndex !== i ||
-                        selectedId !== 'additionalCharges'
-                      "
-                      [attr.disabled]="
-                        enableEdit['product'] && controller == item ? null : ''
-                      "
-                      [ngModelOptions]="{ standalone: true }"
-                      placeholder="Enter Item"
-                    /> -->
                     {{ item.amount | number: "1.2" }}
                   </td>
                   <td
@@ -2545,25 +2437,25 @@
                 <tr>
                   <td class="text-left"><b> Subtotal Before Tax</b></td>
                   <td class="text-right">
-                    {{ product_subtotal_before_tax | number: "1.2" }}
+                    {{ product_subtotal_before_tax?product_subtotal_before_tax:0 | number: "1.2" }}
                   </td>
                 </tr>
                 <tr>
                   <td class="text-left">
                     <b>Tax ({{ soci_data?.currency }})</b>
                   </td>
-                  <td class="text-right">{{ tax_rate | number: "1.2" }}</td>
+                  <td class="text-right">{{ tax_rate?tax_rate:0 | number: "1.2" }}</td>
                 </tr>
                 <tr>
                   <td class="text-left"><b>Discount Value</b></td>
                   <td class="text-right">
-                    {{ products_total_discount_values | number: "1.2" }}
+                    {{ products_total_discount_values?products_total_discount_values:0 | number: "1.2" }}
                   </td>
                 </tr>
                 <tr>
                   <td class="text-left"><b>Total Amount</b></td>
                   <td class="text-right">
-                    {{ product_total_net_amount | number: "1.2" }}
+                    {{ product_total_net_amount?product_total_net_amount:0 | number: "1.2" }}
                   </td>
                 </tr>
               </table>
@@ -2676,28 +2568,28 @@
                 <tr>
                   <td class="text-left">Subtotal Before Tax</td>
                   <td class="text-right">
-                    {{ product_subtotal_before_tax | number: "1.2" }}
+                    {{ product_subtotal_before_tax?product_subtotal_before_tax:0 | number: "1.2" }}
                   </td>
                 </tr>
                 <tr>
                   <td class="text-left">Discount Value</td>
                   <td class="text-right">
-                    {{ products_total_discount_values | number: "1.2" }}
+                    {{ products_total_discount_values?products_total_discount_values:0 | number: "1.2" }}
                   </td>
                 </tr>
                 <tr>
-                  <td class="text-left">({{ soci_data?.currency }}) Tax</td>
+                  <td class="text-left">{{ (soci_data?.currency)?(soci_data?.currency):'' }} Tax</td>
                   <td class="text-right">0.00</td>
                 </tr>
                 <tr>
                   <td class="text-left">Additional Cost & Charges</td>
                   <td class="text-right">
-                    {{ additional_cost_and_charges | number: "1.2" }}
+                    {{ additional_cost_and_charges?additional_cost_and_charges:0 | number: "1.2" }}
                   </td>
                 </tr>
                 <tr>
                   <td class="text-left">Total Cost</td>
-                  <td class="text-right">{{ total_cost | number: "1.2" }}</td>
+                  <td class="text-right">{{ total_cost?total_cost:0 | number: "1.2" }}</td>
                 </tr>
               </table>
             </p-accordionTab>
