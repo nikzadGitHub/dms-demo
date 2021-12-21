@@ -24,6 +24,7 @@ export class EditQuotationApprovalComponent implements OnInit {
   @ViewChild("billingRemarkModal") billingRemarkModal: ModalDirective;
   @ViewChild("confirmationApproveModal") confirmationApproveModal: ModalDirective;
   @ViewChild("confirmationEscalateModal") confirmationEscalateModal: ModalDirective;
+  @ViewChild("confirmationRejectModal") confirmationRejectModal: ModalDirective;
 
   signatureStatus: boolean;
   show: boolean;
@@ -693,6 +694,6 @@ export class EditQuotationApprovalComponent implements OnInit {
   rejectQuotation(){
     this.managerViewService.quotationReject(this.id).subscribe(res=>{
     })
-    this.confirmationEscalateModal.hide()
+    this.confirmationRejectModal.hide()
   }
 }
