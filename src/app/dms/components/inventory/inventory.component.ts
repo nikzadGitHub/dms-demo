@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-
+import {Location} from '@angular/common'; 
 import { InventoryService } from '../../services/inventory.service';
 import { InventoryList, bookingIdFormat } from '../../services/inventory';
 import { MenuItem } from 'primeng/api/menuitem';
@@ -13,42 +12,53 @@ import { MenuItem } from 'primeng/api/menuitem';
 export class InventoryComponent implements OnInit {
   loading: boolean;
   searchTimerId: number;
-
-  constructor(private api: InventoryService) { }
+  current_tab: string = 'available'; 
+  pageItems: number = 10;
+  search_text: string = '';
   menuItems: MenuItem[] = [
     {
       label: 'On-Hand',
       icon: 'pi pi-home',
+      routerLink: ['available'],
+      command: event => {
+        this.changeInvList(0, 'available');
+      }
     }, {
       label: 'Incoming',
       icon: 'pi pi-clock',
+      routerLink: ['incoming'],
+      command: event => {
+        this.changeInvList(1, 'incoming');
+      }
+    },{
+      label: 'AFS',
+      icon: 'pi pi-bookmark',
+      routerLink: ['afs'],
+      command: event => {
+        this.changeInvList(2, 'afs');
+      }
     }, {
       label: 'Archived',
       icon: 'pi pi-file-excel',
+      routerLink: ['archived'],
+      command: event => {
+        this.changeInvList(3, 'archived');
+      }
     }
   ];
   activeItem: MenuItem = this.menuItems[0];
-
   inventoryList: InventoryList;
-  pageItems: number = 10;
-  search_text: string = '';
-
   formatBooking: (id: number) => string = bookingIdFormat;
 
+  constructor(
+    private api: InventoryService,
+    private location: Location,
+  ) { }
+
+
   ngOnInit(): void {
-    this.loading = true;
-    this.api.getList().subscribe(
-      (response) => {
-        if (response as InventoryList) {
-          this.inventoryList = response;
-        }
-      //console.log(response);
-      this.loading = false;
-    }, 
-    err => {
-      this.loading = false;
-    }
-    );
+    this.changeInvList(0 , 'available');
+    this.location.replaceState("/dms/inventory/available");
   }
 
   onSearch() {
@@ -56,11 +66,31 @@ export class InventoryComponent implements OnInit {
       clearTimeout(this.searchTimerId)
     }
     this.searchTimerId = window.setTimeout(() => {
-      this.api.getListSearch(this.search_text).subscribe((response) => {
+      this.api.getList(this.current_tab, this.search_text).subscribe((response) => {
         if (response as InventoryList) {
           this.inventoryList = response;
+          console.log(this.current_tab);
         }
       });
     },1500)
+  }
+
+  public changeInvList(tabNo: number, tabName: string) {
+    this.activeItem[tabNo];
+    this.current_tab = tabName;
+    this.loading = true;
+    this.api.getList(tabName).subscribe(
+      (response) => {
+        if (response as InventoryList) {
+          this.inventoryList = response;
+        }
+        console.log(response);
+        this.loading = false;
+      }, 
+      err => {
+        this.loading = false;
+      }
+    );
+    
   }
 }
