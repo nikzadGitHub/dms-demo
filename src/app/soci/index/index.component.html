@@ -125,6 +125,42 @@
         *ngIf="checkItem('quote_full_id')"
       >
         <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+          Country
+          <div class="quote-icons">
+            <p-sortIcon field="quote_full_id"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="quote_full_id"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+        </div>
+      </th>
+      <th
+        pSortableColumn="quote_full_id"
+        class="text-center"
+        *ngIf="checkItem('quote_full_id')"
+      >
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+          Unit
+          <div class="quote-icons">
+            <p-sortIcon field="quote_full_id"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="quote_full_id"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+        </div>
+      </th>
+      <th
+        pSortableColumn="quote_full_id"
+        class="text-center"
+        *ngIf="checkItem('quote_full_id')"
+      >
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
           Quote ID
           <div class="quote-icons">
             <p-sortIcon field="quote_full_id"></p-sortIcon>
@@ -314,6 +350,8 @@
           {{ soci?.customer?.company_name }}
         </a>
       </td>
+      <td class="text-center">-</td>
+      <td class="text-center">-</td>
       <td class="text-center" *ngIf="checkItem('quote_full_id')">
         <span class="p-column-title">Quote Id</span>
         {{ soci.quote_full_id }}

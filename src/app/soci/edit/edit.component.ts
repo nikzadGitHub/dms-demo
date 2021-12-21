@@ -44,6 +44,8 @@ export class EditComponent implements OnInit {
   public confirmationRejectModal: ModalDirective;
   @ViewChild("confirmationRemarksUpdatedModal")
   public confirmationRemarksUpdatedModal: ModalDirective;
+  @ViewChild("searchModal")
+  public searchModal: ModalDirective;
 
   cost_item_id: any;
   alertBody: string;
@@ -1085,12 +1087,14 @@ export class EditComponent implements OnInit {
 
   // ADD Product
   filterProduct(event) {
+    this.searchModal.show();
     let query = event.query;
     this.sociService
       .getFilteredProducts(query, this.customer_id, this.external_id)
       .subscribe((data) => {
         this.filteredProducts = data["data"];
       });
+      console.log("DATA",this.filteredProducts)
   }
 
   addPrductData() {
@@ -1632,5 +1636,8 @@ export class EditComponent implements OnInit {
   }
   openModel(){
     
+  }
+  get(event){
+    console.log('EVENT',event)
   }
 }
