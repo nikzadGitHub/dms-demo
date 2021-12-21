@@ -23,6 +23,7 @@ export class EditQuotationApprovalComponent implements OnInit {
   @ViewChild("paymentRemarkModal") paymentRemarkModal: ModalDirective;
   @ViewChild("billingRemarkModal") billingRemarkModal: ModalDirective;
   @ViewChild("confirmationApproveModal") confirmationApproveModal: ModalDirective;
+  @ViewChild("confirmationEscalateModal") confirmationEscalateModal: ModalDirective;
 
   signatureStatus: boolean;
   show: boolean;
@@ -104,42 +105,42 @@ export class EditQuotationApprovalComponent implements OnInit {
   }
 
   setInitialValue() {
-    this.company_details["company_name"] = this.quotations.company;
-    this.company_details["quote_id"] = this.quotations.quote_id;
-    this.f.id.setValue(this.quotations.id);
-    this.f.data_area_id.setValue(this.quotations.data_area_id);
-    this.f.external_id.setValue(this.quotations.external_id);
-    this.f.quote_id.setValue(this.quotations.quote_id);
+    this.company_details["company_name"] = this.quotations?.company;
+    this.company_details["quote_id"] = this.quotations?.quote_id;
+    this.f.id.setValue(this.quotations?.id);
+    this.f.data_area_id.setValue(this.quotations?.data_area_id);
+    this.f.external_id.setValue(this.quotations?.external_id);
+    this.f.quote_id.setValue(this.quotations?.quote_id);
     this.f.standard_payment_term.setValue(
-      this.quotations.standard_payment_term
+      this.quotations?.standard_payment_term
     );
-    this.f.fromDate.setValue(this.quotations.fromDate);
-    this.f.toDate.setValue(this.quotations.toDate);
-    this.f.status.setValue(this.quotations.status);
-    this.f.company.setValue(this.quotations.company);
+    this.f.fromDate.setValue(this.quotations?.fromDate);
+    this.f.toDate.setValue(this.quotations?.toDate);
+    this.f.status.setValue(this.quotations?.status);
+    this.f.company.setValue(this.quotations?.company);
 
-    this.fromDate = this.quotations.fromDate;
-    this.toDate = this.quotations.toDate;
-    this.requested_date = this.quotations.requested_date;
-    this.approved_date = this.quotations.approved_date;
-    this.cancelled_date = this.quotations.cancelled_date;
-    this.termSelected = this.terms.find(
-      (x) => x.id == this.quotations.standard_payment_term
-    ).no_of_days;
+    this.fromDate = this.quotations?.fromDate;
+    this.toDate = this.quotations?.toDate;
+    this.requested_date = this.quotations?.requested_date;
+    this.approved_date = this.quotations?.approved_date;
+    this.cancelled_date = this.quotations?.cancelled_date;
+    this.termSelected = this.terms?.find(
+      (x) => x.id == this.quotations?.standard_payment_term
+    )?.no_of_days;
     this.dateInit();
   }
 
   initData() {
-    this.quotations.billing_milestones.forEach((billing) => {
+    this.quotations?.billing_milestones.forEach((billing) => {
       this.billings().push(this.existingBillings(billing));
     });
-    this.quotations.payment_schedules.forEach((payment) => {
+    this.quotations?.payment_schedules.forEach((payment) => {
       this.payments().push(this.existingPayments(payment));
     });
-    this.quotations.additional_costs.forEach((addCost) => {
+    this.quotations?.additional_costs.forEach((addCost) => {
       this.addCosts().push(this.existingCosts(addCost));
     });
-    this.quotations.products.forEach((product) => {
+    this.quotations?.products.forEach((product) => {
       this.products().push(this.existingProducts(product));
     });
     this.subTotal(this.addCosts().controls);
@@ -679,15 +680,19 @@ export class EditQuotationApprovalComponent implements OnInit {
 
   approveQuotation(){
     this.managerViewService.quotationApproval(this.id).subscribe(res=>{
-      console.log("this.quotation response =>",res)
     })
     this.confirmationApproveModal.hide()
   }
 
   escalateQuotation(){
     this.managerViewService.quotationEscalate(this.id).subscribe(res=>{
-      console.log("Escalate Quotation response =>",res)
     })
-    this.confirmationApproveModal.hide()
+    this.confirmationEscalateModal.hide()
+  }
+
+  rejectQuotation(){
+    this.managerViewService.quotationReject(this.id).subscribe(res=>{
+    })
+    this.confirmationEscalateModal.hide()
   }
 }

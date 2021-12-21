@@ -50,12 +50,23 @@ export class ManagerViewService {
   }
 
   quotationApproval(id): Observable<object> {
-
-    return this.httpClient.post(this.apiURL+"/quote/approval/" + id, this.httpOptions);
+    let body ={
+      "quoteId": id
+    }
+    return this.httpClient.post(this.apiURL+"/quote/approval/",body, this.httpOptions);
   }
 
   quotationEscalate(id): Observable<object> {
+    let body ={
+      "id": id
+    }
+    return this.httpClient.post(this.apiURL+"/quote/escalate/",body, this.httpOptions);
+  }
 
-    return this.httpClient.post(this.apiURL+"/quote/escalate/" + id, this.httpOptions);
+  quotationReject(id): Observable<object> {
+    let body ={
+      "quoteId": id
+    }
+    return this.httpClient.post(this.apiURL+"/quote/request-rejected",body, this.httpOptions);
   }
 }
