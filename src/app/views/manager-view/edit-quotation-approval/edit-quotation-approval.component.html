@@ -1167,7 +1167,6 @@
               type="text"
               class="form-control"
               formControlName="cancelled_remarks"
-              (input)="addCancelRemarks()"
             ></textarea>
           </div>
         </form>
@@ -1183,8 +1182,7 @@
         <button
           type="button"
           class="btn btn-info"
-          [attr.disabled]="isCancelRemarks ? null : ''"
-          (click)="rejectSOCI()"
+          (click)="rejectQuotation()"
         >
           Yes
         </button>
