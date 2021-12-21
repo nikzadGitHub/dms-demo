@@ -26,7 +26,7 @@ export class ProspectsService {
     // }
     return this.httpClient.get<any[]>(this.apiURL + query,this.httpOptions)
     .pipe(
-      catchError(this.errorHandler)
+      catchError(this.errorHandler) 
     )
   }
 

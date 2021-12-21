@@ -61,7 +61,7 @@ export class DefaultLayoutComponent implements OnDestroy {
           icon: "cil-group",
           children: [
             {
-              name: "FPM",
+              name: "FMP",
               url: "/managerview",
               children: [
                 {

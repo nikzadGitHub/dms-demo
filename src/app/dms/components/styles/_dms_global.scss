@@ -58,17 +58,17 @@
     .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
       background-color: white;
     }
-    .table>tbody>tr:nth-child(odd)>td{
-      background-color: white;
-    }
+    // .table>tbody>tr:nth-child(odd)>td{
+    //   background-color: white;
+    // }
 
-    .table>tbody tr td:nth-child(odd){
+    .table>tbody tr:nth-child(odd){
         background-color: #fbfbfb;
     }
 
-    .table>tbody>tr:nth-child(even)>td{
-        background-color: #F6F6F6;
-    }
+    // .table>tbody>tr:nth-child(even)>td{
+    //     background-color: #F6F6F6;
+    // }
   }
 
 @import '../widgets/expand-panel/global';

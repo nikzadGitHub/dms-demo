@@ -20,13 +20,13 @@ export class LeadsIndexComponent implements OnInit {
   pages: any[];
   totalRecords:number;
   columns: Column[] = [
-    {'header':'Created Date','field':'created_date','type':'date'},
-    {'header':'Lead ID','field':'lead_id','type':'text'},
+    {'header':'Created Date','field':'created_at','type':'date'},
+    {'header':'Lead ID','field':'id','type':'text'},
     {'header':'Company Name','field':'company_name','type':'text'},
-    {'header':'Individual Name','field':'individual_name','type':'text'},
+    {'header':'Individual Name','field':'contact_name','type':'text'},
     {'header':'Email','field':'email','type':'text'},
-    {'header':'Phone','field':'phone','type':'text'},
-    {'header':'Status','field':'status','type':'text'},
+    {'header':'Phone','field':'mobile_number','type':'text'},
+    {'header':'Status','field':'lead_status','type':'text'},
   ];
   loading: boolean;
   constructor(
@@ -41,6 +41,9 @@ export class LeadsIndexComponent implements OnInit {
     this.loading = true;
     this.leadService.getAll(this.pageItems,this.search_text, this.sort).subscribe(data => {
       this.datasource = data['data']['data'];
+      this.datasource.forEach(value => {
+        value.created_at = new Date(value.created_at)
+      });
       this.pages = data['data']['links'];
       this.totalRecords = data['data']['total'];
       this.loading = false;
