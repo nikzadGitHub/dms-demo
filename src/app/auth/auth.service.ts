@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpErrorResponse, HttpEvent, HttpClient } from "@angular/common/http";
+import { HttpErrorResponse, HttpEvent, HttpClient, HttpHeaders } from "@angular/common/http";
 import { tap } from "rxjs/operators";
 import { BehaviorSubject, Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
@@ -28,6 +28,11 @@ export const SERVER_PUB_KEY = "SPUB";
   providedIn: "root",
 })
 export class AuthService {
+  httpOptions = {
+    headers: new HttpHeaders({
+      "Content-Type": "application/json",
+    }),
+  };
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     null
   );
@@ -41,6 +46,7 @@ export class AuthService {
 
   constructor(
     private httpClient: HttpClient,
+    
     private storage: LocalStorageService,
     private router: Router
   ) {
@@ -75,39 +81,6 @@ export class AuthService {
   getDeviceId(): string {
     return this.deviceId;
   }
-
-  // async loadRSAKey() {
-  //   const privateKey = this.storage.get(RSA_PRIVATE_KEY);
-  //   const pubKey = this.storage.get(RSA_PUBLIC_KEY);
-  //   const serverPubKey = this.storage.get(SERVER_PUB_KEY);
-
-  //   if (serverPubKey) {
-  //     this.serverPub = serverPubKey;
-  //   } else {
-  //     //Request for server public key.
-  //     let res: any = this.httpClient.get(SystemConfig.apiBaseUrl + "/server-pub-key").toPromise();
-  //     console.log(res);
-  //     if (res.success) {
-  //       this.serverPub = res.data.pub_key;
-  //       let a = this.storage.set(SERVER_PUB_KEY, this.serverPub);
-  //     }
-  //   }
-
-  //   if ((privateKey) && (pubKey)) {
-  //     this.rsaPub = pubKey;
-  //     this.rsaKey = privateKey;
-  //   } else {
-  //     var keypair = forge.pki.rsa.generateKeyPair({bits: 2048});
-  //     this.rsaPub = forge.pki.publicKeyToPem(keypair.publicKey,72);
-  //     this.rsaKey = forge.pki.encryptRsaPrivateKey(keypair.privateKey,SystemConfig.rsaPass);
-
-  //     this.storage.set(RSA_PUBLIC_KEY, this.rsaPub);
-  //     this.storage.set(RSA_PRIVATE_KEY, this.rsaKey);
-
-  //     //TODO: send local public key to server
-  //     await this.updateRSAPubKey();
-  //   }
-  // }
 
   getAuthorizationToken(): string {
     return this.token;
@@ -271,6 +244,20 @@ export class AuthService {
   getProfile(): Observable<any> {
     return this.httpClient.post(SystemConfig.apiBaseUrl + "/auth/me", {}).pipe();
     // return this.httpClient.get(SystemConfig.apiBaseUrl + "/me", {}).pipe();
+  }
+  getQuery(url): Observable<object> {
+    let query = url;
+
+    return this.httpClient.get(SystemConfig.apiBaseUrl + query, this.httpOptions);
+  }
+
+  putQuery(url, req): Observable<object> {
+    let query = url;
+    return this.httpClient.put(
+      SystemConfig.apiBaseUrl + query,
+      JSON.stringify(req),
+      this.httpOptions
+    );
   }
 
   updateProfile(profile: {

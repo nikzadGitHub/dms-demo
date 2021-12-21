@@ -2568,7 +2568,7 @@
                 <tr>
                   <td class="text-left">Subtotal Before Tax</td>
                   <td class="text-right">
-                    {{ product_subtotal_before_tax?product_subtotal_before_tax:0 | number: "1.2" }}
+                    {{ product_subtotal_before_tax?product_subtotal_before_tax:'0.0' | number: "1.2" }}
                   </td>
                 </tr>
                 <tr>
@@ -2589,7 +2589,7 @@
                 </tr>
                 <tr>
                   <td class="text-left">Total Cost</td>
-                  <td class="text-right">{{ total_cost?total_cost:0 | number: "1.2" }}</td>
+                  <td class="text-right">{{ total_cost | number: "1.2" }}</td>
                 </tr>
               </table>
             </p-accordionTab>

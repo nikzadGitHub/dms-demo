@@ -1,6 +1,7 @@
 import { INavData } from "@coreui/angular";
 
 export const navItems: INavData[] = [
+  { divider: true },
   {
     name: "Home",
     url: "/dashboard",
