@@ -46,7 +46,7 @@ export class AppService {
   }
 
   putQuery(url, req): Observable<Object> {
-      console.log("req:", req);
+     
 
     let query = url;
     return this.httpClient.put(

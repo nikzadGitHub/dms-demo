@@ -46,7 +46,7 @@ export class UserActivitiesComponent implements OnInit {
       });
       
       this.openData =  this.activitydata.filter(function(item) {
-        console.log("filter:", item);
+       
         
      
         return item.status != "CLOSED";
