@@ -51,6 +51,7 @@ export class IndexComponent implements OnInit {
     { name: "PO No:", key: "po_no" },
     { name: "PO Date:", key: "po_date" },
     { name: "FO Number:", key: "fo_order_number" },
+    { name: "FO Status:", key: "backend_status" },
     { name: "Status:", key: "status_desc" },
   ];
   isTooltipSown: any = "";
@@ -84,7 +85,7 @@ export class IndexComponent implements OnInit {
           this.loading = false;
         });
     setTimeout(() => {
-      this.selectedValues = this.columnValue.slice(0, 10);
+      this.selectedValues = this.columnValue.slice(0, 11);
     }, 1000);
   }
 

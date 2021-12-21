@@ -102,7 +102,7 @@
         *ngIf="checkItem('company_name')"
       >
         <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
-          Company Name
+          Individual/Company Name
           <div class="name-icons">  
             <p-sortIcon field="customer.company_name"></p-sortIcon>
             <p-columnFilter
@@ -120,7 +120,7 @@
         *ngIf="checkItem('quote_full_id')"
       >
         <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
-          Quotation ID
+          Quote ID
           <div class="quote-icons">
             <p-sortIcon field="quote_full_id"></p-sortIcon>
             <p-columnFilter
@@ -158,7 +158,7 @@
         *ngIf="checkItem('po_amount')"
       >
         <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
-          Amount (MYR)
+          Doc Amount
           <div class="amount-icons">
             <p-sortIcon field="po_amount"></p-sortIcon>
             <p-columnFilter
@@ -177,7 +177,7 @@
         *ngIf="checkItem('po_no')"
       >
         <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
-          PO No
+          Doc No
           <div class="PO-icons">
             <p-sortIcon field="po_no"></p-sortIcon>
             <p-columnFilter
@@ -196,7 +196,7 @@
         *ngIf="checkItem('po_date')"
       >
         <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
-          PO Date
+          Doc Date
           <div class="PO_date-icons">
             <p-sortIcon field="po_date"></p-sortIcon>
             <p-columnFilter
@@ -228,6 +228,28 @@
          
         </div>
       </th>
+
+
+      <th
+        pSortableColumn="backend_status"
+        class="text-center"
+        *ngIf="checkItem('backend_status')"
+      >
+        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+          FO Status
+          <div class="status-icons">
+            <p-sortIcon field="backend_status"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="backend_status"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+         
+        </div>
+      </th>
+
       <th
         pSortableColumn="status_desc"
         class="text-center"
@@ -327,6 +349,22 @@
           _
         </div>
       </td>
+
+      <td class="text-center" *ngIf="checkItem('backend_status')">
+        <div *ngIf="soci.backend_status == 1">
+          <span class="p-column-title">backend status</span>
+          Success
+        </div>
+        <div *ngIf="!soci.backend_status || soci.backend_status == -1">
+          <span class="p-column-title">backend status</span>
+          _
+        </div>
+        <div *ngIf="soci.backend_status && soci.backend_status != 1 && soci.backend_status != -1">
+          <span class="p-column-title">backend status</span>
+          Failed
+        </div>
+      </td>
+
       <td class="text-center" *ngIf="checkItem('status_desc')">
         <p-badge
           [value]="soci.status_desc"
