@@ -46,6 +46,8 @@ export class EditComponent implements OnInit {
   public confirmationRemarksUpdatedModal: ModalDirective;
   @ViewChild("searchModal")
   public searchModal: ModalDirective;
+  @ViewChild("commentModal")
+  public commentModal: ModalDirective;
 
   cost_item_id: any;
   alertBody: string;
@@ -146,6 +148,17 @@ export class EditComponent implements OnInit {
   isRemarksAdded: boolean = true;
   isRemarksUpdated: boolean;
   badgeColor = "";
+  comment_header = "";
+  section: any;
+  type = "soci";
+  accordianComment: any;
+  commentList: any[] = [];
+  isShipTo: boolean;
+  enableShipToedit = true;
+  isSoldTo: boolean = false;
+  enableSoldToedit = true;
+  isBillTo = false;
+  enableBillToedit = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -174,6 +187,7 @@ export class EditComponent implements OnInit {
       discount: "",
       bill_to: "",
       ship_to: "",
+      sold_to: "",
       soci_title: "",
       tender: "",
       cost_item: "",
@@ -332,8 +346,10 @@ export class EditComponent implements OnInit {
       // products
       this.product = res["data"]["products"];
       this.product.forEach((values) => {
-        this.products_discount_values += values["discount"];
-        this.product_subtotal_before_tax += values["total_price"];
+        values["discount"]
+          ? (this.products_discount_values += values["discount"])
+          : 0;
+        this.product_subtotal_before_tax += parseFloat(values["total_price"]);
         this.product_total_net_amount += values["amount"];
         this.tax_rate = values["tax_rate"];
       });
@@ -355,7 +371,141 @@ export class EditComponent implements OnInit {
         this.products_total_discount_values +
         this.product_subtotal_before_tax +
         this.additional_cost_and_charges;
+      console.log("total_cost:", this.total_cost);
     });
+  }
+
+  openModel(value) {
+    console.log("value:", value);
+    this.section = value;
+    this.comment_header = "Comment";
+
+    if (value == "po_detail") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "soci_detail") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "standard_terms") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "billing_milestone") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "payment_schedule") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "additional_cost") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "billing_instruction") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "additional_instruction") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "additional_charges") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "product") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "soci_attachment") {
+      this.commentModal.show();
+      this.getCommentList();
+    }
+  }
+  getCommentList() {
+    this.sociService
+      .getcomment(
+        "/comment?type=" +
+          this.type +
+          "&type_id=" +
+          this.soci_id +
+          "&section=" +
+          this.section
+      )
+      .subscribe((res: any) => {
+        console.log("comment-res:", res);
+        this.commentList = res.data;
+      });
+  }
+
+  addComment() {
+    this.sociService
+      .postQuery(
+        "/comment?type=" +
+          this.type +
+          "&type_id=" +
+          this.soci_id +
+          "&section=" +
+          this.section,
+        {
+          comment: this.accordianComment,
+        }
+      )
+      .subscribe(
+        (res: any) => {
+          console.log("comment-res:", res);
+          this.accordianComment = "";
+          this.commentList.push(res.data);
+
+          // this.commentModal.hide();
+          // this.alertBody = res.message;
+          // this.successModal.show();
+          // setTimeout(() => {
+          //   this.successModal.hide();
+          // }, 2000);
+        }
+        // (error) => {
+        //   this.alertBody = error.error.message;
+        //   this.dangerModal.show();
+        //   setTimeout(() => {
+        //     this.dangerModal.hide();
+        //   }, 2000);
+        // }
+      );
+  }
+  resetModel() {
+    this.commentList = null;
+    this.accordianComment = "";
+  }
+
+  // soci-detail
+  enableEditSociDetail(value) {
+    if (value == "ship_to") {
+      this.isShipTo = true;
+      this.enableShipToedit = false;
+    } else if (value == "sold_to") {
+      this.isSoldTo = true;
+      this.enableSoldToedit = false;
+    } else if (value == "bill_to") {
+      this.isBillTo = true;
+      this.enableBillToedit = false;
+    }
+  }
+  disableEditing(value) {
+    if (value == "ship_to") {
+      this.isShipTo = false;
+      this.enableShipToedit = true;
+    } else if (value == "sold_to") {
+      this.isSoldTo = false;
+      this.enableSoldToedit = true;
+    } else if (value == "bill_to") {
+      this.isBillTo = false;
+      this.enableBillToedit = true;
+    }
+  }
+  updateSociDetail() {
+    console.log("working", this.form.value.ship_to);
+
+    // this.sociService.postQuery("/soci/" + this.soci_id, {
+    //   ship_to: this.form.value.ship_to,
+    //   remarks: this.form.value.sociRemarks,
+    // }).subscribe((res:any) => {
+    //   console.log("Res-->", res);
+
+    // });
   }
 
   // Standard Term
@@ -461,6 +611,7 @@ export class EditComponent implements OnInit {
     this.is_payment_term_eidt = false;
     this.is_delivery_term_eidt = false;
   }
+
   // End Standard Term
 
   // ADD Billing_Milestone
@@ -691,7 +842,9 @@ export class EditComponent implements OnInit {
           this.additional_costs.push(data["data"]);
           this.total_additional_costs_amount += data["data"]["total_price"];
           this.additional_cost_and_charges += data["data"]["total_price"];
-          this.total_cost += data["data"]["total_price"];
+          data["data"]["total_price"]
+            ? (this.total_cost += data["data"]["total_price"])
+            : 0;
           this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
@@ -1146,7 +1299,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
-            this.modalClassRomve()
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1628,16 +1781,10 @@ export class EditComponent implements OnInit {
   back() {
     this.location.back();
   }
-  modalClassRomve(){
-    let body=document.querySelector('body')
-    if(body.classList.contains('modal-open')){
-      body.classList.remove('modal-open');
+  modalClassRomve() {
+    let body = document.querySelector("body");
+    if (body.classList.contains("modal-open")) {
+      body.classList.remove("modal-open");
     }
-  }
-  openModel(){
-    
-  }
-  get(event){
-    console.log('EVENT',event)
   }
 }
