@@ -489,7 +489,7 @@
             <div class="col-md-5">
               <b>Payment Terms: </b>{{ this.standerd_payment_term + " days" }}
             </div>
-            <div class="col-lg-6" style="text-align: middle">
+            <div class="col-lg-6" style="text-align: end">
               Quotation Validity: <b>From</b>
               <u>{{ payment_term_from | date: "dd-MMM-yyyy" }}</u> <b>To</b>
               <u>{{ payment_term_to | date: "dd-MMM-yyyy" }}</u>
@@ -499,7 +499,7 @@
               style="text-align: right"
               *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
             >
-              <div>
+              <div style="text-align: center;">
                 <a
                   [routerLink]=""
                   routerLinkActive="router-link-active"
@@ -514,7 +514,7 @@
               <b>(As Default) Payment Terms: </b
               >{{ default_payment_term + " Days" }}
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" style="text-align: end">
               Quotation Validity: <b>From</b>
               <u>{{ default_payment_term_from | date: "dd-MMM-yyyy" }}</u>
               <b>To</b>
@@ -529,14 +529,14 @@
             <div class="col-md-5">
               <b>Delivery Terms: </b>{{ this.standard_delivery_term + " days" }}
             </div>
-            <div class="col-lg-6" style="text-align: middle">
+            <div class="col-lg-6" style="text-align: end">
               Quotation Validity: <b>From</b>
               <u>{{ delivery_term_from | date: "dd-MMM-yyyy" }}</u> <b>To</b>
               <u>{{ delivery_term_to | date: "dd-MMM-yyyy" }}</u>
             </div>
             <div
               class="col-lg-1"
-              style="text-align: right"
+              style="text-align: center"
               *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
             >
               <div>
@@ -554,7 +554,7 @@
               <b>(As Default) Delivery Terms: </b
               >{{ default_delivery_term + " Days" }}
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" style="text-align: end">
               Quotation Validity: <b>From</b>
               <u>{{ default_delivery_term_from | date: "dd-MMM-yyyy" }}</u>
               <b>To</b>
@@ -2375,27 +2375,28 @@
                 >
                   <!-- {{ i + 1 }} -->
                   <td></td>
-                  <td style="size: 20%">
+                  <td style="size: 20%;display: flex;border: none;">
                     <!-- [(ngModel)]="selectedProductAdvanced[i]" -->
-                    <p-autoComplete
+                      <p-autoComplete
                       formControlName="name"
-                      [suggestions]="filteredProducts"
-                      (completeMethod)="filterProduct($event)"
                       field="name"
-                      [dropdown]="true"
+                      [dropdown]="false"
                       [style]="{ width: '100%' }"
-                      [inputStyle]="{ width: '100%' }"
-                    >
-                      <ng-template let-product pTemplate="item">
+                      [inputStyle]="{ width: '90%' }"
+                      >
+                      <!-- <ng-template let-product pTemplate="item">
                         <div
-                          class="product-item"
-                          (click)="productDetails(product, 'add_product')"
+                        class="product-item"
+                        (click)="productDetails(product, 'add_product')"
                         >
-                          <div>{{ product.name }}</div>
-                        </div>
-                      </ng-template>
-                    </p-autoComplete>
-                  </td>
+                        <div>{{ product.name }}</div>
+                      </div>
+                    </ng-template> -->
+                  </p-autoComplete>
+                  <div class="product_search" (click)="filterProduct(name)">
+                    <i class="pi pi-search" style="font-size: larger;"></i>
+                  </div>
+                </td>
                   <td style="width: 14%">
                     <input
                       class="form-control"
@@ -3455,6 +3456,79 @@
           label="Send"
           class="p-button-info"
           (click)="addComment()"
+        ></button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+
+<div
+  bsModal
+  #searchModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" style="height: 80vh;overflow-y: auto;">
+      <div class="modal-header search-header">
+        <h2 class="modal-title">
+          Search Product
+        </h2>
+        <!-- <button
+          type="button"
+          class="close text-white"
+          (click)="searchModal.hide()"
+          aria-label="Close"
+        > 
+          <span aria-hidden="true">&times;</span>
+        </button>-->
+      </div>
+
+      <div class="modal-body search-body">
+        <input
+          type="text"
+          pInputText
+          placeholder="SOCI Search"
+          class="p-2"
+        />
+        <hr>
+        <div class='w-100 d-flex flex-column pl-3'>
+        <h1><strong >Search Product</strong></h1>
+        <span>Name: </span>
+        <span>SKU</span>
+        <span>Tax Rate</span>
+        <span>UOM</span>
+        <span>Unit Price</span>
+        <span>List Price</span>
+        <span>Floor Price</span>
+        <span>Cost Price</span>
+     
+      </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Done"
+          class="p-button-primary"
+          style="padding: 8px 8vh;"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Close"
+          class="p-button-danger"
+          style="padding: 8px 8vh;"
         ></button>
       </div>
     </div>
