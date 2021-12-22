@@ -122,7 +122,7 @@
         </td>
         <td class="text-center">
             {{ 
-              bookingReasonsNames[bookingItem.booking_reason] ? bookingReasonsNames[bookingItem.booking_reason] : 'Null'
+              bookingReasonsNames[bookingItem.booking_reason - 1] ? bookingReasonsNames[bookingItem.booking_reason - 1] : 'Null'
             }}
         </td>
         <td class="text-center">
