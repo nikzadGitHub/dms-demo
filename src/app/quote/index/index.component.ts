@@ -45,6 +45,8 @@ export class IndexComponent implements OnInit {
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe(data=>{
       this.datasource = data['data'];
+      
+      
       this.quotes = data['data']['quotes']['data'];
       this.pages = data['data']['quotes']['links'];
       this.totalRecords = data['data']['quotes']['total'];

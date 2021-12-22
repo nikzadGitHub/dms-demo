@@ -3,11 +3,7 @@
 // new scss
 
 :host ::ng-deep {
-    .p-paginator {
-        .p-paginator-current {
-            margin-left: auto;
-        }
-    }
+    
     
   
     
@@ -98,4 +94,9 @@
     font-size: 23px;
     height: 23px;
     // padding: 0px;
+}
+
+.description-icons {
+    display: flex;
+    align-items: center;
 }

@@ -46,7 +46,7 @@ export class AppService {
   }
 
   putQuery(url, req): Observable<Object> {
-      console.log("req:", req);
+     
 
     let query = url;
     return this.httpClient.put(
@@ -65,4 +65,13 @@ export class AppService {
   toKebabCase(str) {
     return str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2").toLowerCase();
   }
+
+  getPage(url,pageItems,search_text){
+    let query = '&page_items=' + pageItems + '&search_text=' + search_text;
+    return this.httpClient.get(url + query,this.httpOptions)
+   
+  }
+
+
 }
+
