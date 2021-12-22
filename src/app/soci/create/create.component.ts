@@ -112,6 +112,8 @@ export class CreateComponent implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((data: any) => {
         this.filteredQuotes = data["data"];
+        console.log(this.filteredQuotes,'this is filter quotes');
+        
       });
   }
 

@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { UserActivitiesService } from './user-activities.service';
 
 @Component({
@@ -14,13 +16,14 @@ export class UserActivitiesComponent implements OnInit {
   @ViewChild("columnChooserModal")
   public columnChooserModal: ModalDirective;
 
-
-
-
+  private ngUnsubscribe = new Subject;
+  pageItems: number = 10;
+  datasource: any;
+  pages: any[];
+  totalRecords: number;
   loading:boolean
-	opportunities: [];
+	activities: [];
 	paginate: [];
-	pageItems: number = 200;
 	search_text: string = '';
   activitydata: any[] =[];
   
@@ -36,21 +39,43 @@ export class UserActivitiesComponent implements OnInit {
   getActivitydata() {
     this.loading=true
     
-    this.userAactivities.getActivity().subscribe(res => {
-    
+    this.userAactivities.getActivity().subscribe((res:any) => {
       this.activitydata = res.data;
       this.closedData =  this.activitydata.filter(function(item) {
         return item.status == "CLOSED";
       });
-      console.log('this is res', this.closedData);
       
       this.openData =  this.activitydata.filter(function(item) {
+       
+        
+     
         return item.status != "CLOSED";
       });
-      console.log('this is res', this.openData);
       this.loading=false
       
     });
+  }
+  pagination(event){
+    this.pageItems = event.rows;
+    this.onClick(parseInt(event.page) + 1);
+  }
+
+
+  onClick(pageNo){
+    let url =this.pages[pageNo].url
+    this.userAactivities.getPage(url,this.pageItems,this.search_text)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe((data)=>{
+      console.log(data,'page data');
+      
+      this.activities = data['data']['data'];
+      this.pages = data['data']['links'];
+    })
+  }
+
+
+  selectedActivity(data){
+
   }
 
   }

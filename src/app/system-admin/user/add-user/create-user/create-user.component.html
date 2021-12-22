@@ -43,12 +43,14 @@
           >
         </div>
         <div class="col-lg-10 col-md-10 col-sm-10">
-    
-          <p-dropdown formControlName="companyName"   placeholder="Select company"
-           [options]="companies" [style]="{ width: '100%' }" 
-            optionLabel="title" 
-            optionValue="data_area_id"></p-dropdown>
-
+          <p-dropdown
+            formControlName="companyName"
+            placeholder="Select company"
+            [options]="companies"
+            [style]="{ width: '100%' }"
+            optionLabel="title"
+            optionValue="data_area_id"
+          ></p-dropdown>
         </div>
       </div>
 
@@ -143,23 +145,9 @@
         </div>
       </div>
 
-      <!-- amount-fields -->
+      <!-- Discount-fields -->
       <div class="row mt-4">
-        <div class="col-md-1 mt-2 mr-3">
-          <label style="width: 100px"
-            >Discount Margin %<span class="red-star">*</span></label
-          >
-        </div>
-        <div class="col-md-5">
-          <input
-            type="text"
-            pInputText
-            formControlName="discountMargin"
-            placeholder="0"
-            style="width: 340px"
-          />
-        </div>
-        <div class="col-md-1 mt-2 mr-3">
+        <!-- <div class="col-md-1 mt-2 mr-3">
           <label style="width: 100px"
             >Approved By<span class="red-star">*</span></label
           >
@@ -175,52 +163,9 @@
             [required]="true"
           >
           </p-dropdown>
-        </div>
-      </div>
+        </div> -->
 
-      <!-- profit-&-unit -->
-      <div class="row mt-4">
-        <div class="col-md-1 mt-2 mr-3">
-          <label style="width: 100px"
-            >Profit Percentage %<span class="red-star">*</span></label
-          >
-        </div>
-        <div class="col-md-5">
-          <input
-            type="text"
-            pInputText
-            formControlName="profit"
-            placeholder="0"
-            style="width: 340px"
-          />
-        </div>
-        <div class="col-md-1 mt-2 mr-3">
-          <label style="width: 100px"
-            >Unit<span class="red-star">*</span></label
-          >
-        </div>
-        <div class="col-md-4">
-          <!-- <input
-            type="text"
-            pInputText
-            formControlName="unit"
-            placeholder="0"
-            style="width: 340px"
-          /> -->
-          <p-dropdown
-            formControlName="unit"
-            placeholder="Select unit"
-            [options]="units"
-            placeholder="Units"
-            optionLabel="code"
-            optionValue="id"
-            [style]="{ width: '351px' }"
-          ></p-dropdown>
-        </div>
-      </div>
-
-      <!-- status-field -->
-      <div class="row mt-4">
+        <!-- status-field -->
         <div class="col-md-1 mt-2 mr-3">
           <label style="width: 100px"
             >Status <span class="red-star">*</span></label
@@ -241,29 +186,183 @@
           <!-- <input type="text" pInputText placeholder="" style="width: 340px" /> -->
         </div>
       </div>
-      <!-- action-btn -->
-      <div class="action-btn">
-        <button type="button" class="btn btn-outline-primary cancel-btn" (click)=back() >
-          CANCEL
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary save-btn"
-          *ngIf="!isEdit"
-          (click)="addUser()"
-        >
-          SAVE
-        </button>
-        <button type="button" class="btn btn-primary save-btn" (click)="updateUser()" *ngIf="isEdit">
-          Update
-        </button>
-      </div>
     </div>
   </form>
+
+  <!--  -->
+  <!--  -->
+  <!-- profit-&-unit -->
+  <!-- (click)="userUnit()" -->
+
+  <form [formGroup]="unitUserForm">
+    <div class="user-unit">
+      <h4>Unit User</h4>
+      <button
+        class="btn btn-icon btn-outline-primary"
+        icon="pi pi-check"
+        (click)="addUserUnit()"
+      >
+        <i class="cil-plus c-icon"></i>
+      </button>
+    </div>
+    <div formArrayName="unitUserArray">
+      <div *ngFor="let employee of unitUser().controls; let i = index">
+        <div [formGroupName]="i">
+          <div class="row mt-4">
+            <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-3">
+              <label style="width: 100px"
+                >Profit Percentage %<span class="red-star">*</span></label
+              >
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2">
+              <input
+                type="text"
+                pInputText
+                formControlName="profit_margin"
+                placeholder="0"
+                style="width: 150px"
+              />
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-3">
+              <label style="width: 100px"
+                >Discount Margin %<span class="red-star">*</span></label
+              >
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2">
+              <input
+                type="text"
+                pInputText
+                formControlName="discount_percentage"
+                placeholder="0"
+                style="width: 150px"
+              />
+            </div>
+
+            <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-1">
+              <label style="width: 100px"
+                >Unit<span class="red-star">*</span></label
+              >
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <p-dropdown
+                formControlName="unit_id"
+                placeholder="Select unit"
+                [options]="units"
+                placeholder="Units"
+                optionLabel="code"
+                optionValue="id"
+                [style]="{ width: '285px' }"
+              ></p-dropdown>
+            </div>
+            <div class="col-lg-1 mt-2">
+              <!-- (click)="deleteUserUnitRow(i)" -->
+              <a [routerLink]="" routerLinkActive="router-link-active"
+                ><i
+                  class="fa fa-trash"
+                  style="font-size: 18px; padding-left: 2rem"
+                ></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <p>
+      <button type="button" (click)="addUserUnit()">Add Employee</button>
+    </p> -->
+  </form>
+  <!-- *ngFor="let item of addUserUnit; let i = index" -->
+  <!-- <div class="row mt-4">
+    <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-3">
+      <label style="width: 100px"
+        >Profit Percentage %<span class="red-star">*</span></label
+      >
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2">
+      <input
+        type="text"
+        pInputText
+        formControlName="profit_margin"
+        placeholder="0"
+        style="width: 150px"
+      />
+    </div>
+    <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-3">
+      <label style="width: 100px"
+        >Discount Margin %<span class="red-star">*</span></label
+      >
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2">
+      <input
+        type="text"
+        pInputText
+        formControlName="discount_percentage"
+        placeholder="0"
+        style="width: 150px"
+      />
+    </div>
+
+    <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-1">
+      <label style="width: 100px">Unit<span class="red-star">*</span></label>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3">
+      <p-dropdown
+        formControlName="unit"
+        placeholder="Select unit"
+        [options]="units"
+        placeholder="Units"
+        optionLabel="code"
+        optionValue="id"
+        [style]="{ width: '285px' }"
+      ></p-dropdown>
+    </div>
+    <div class="col-lg-1 mt-2">
+
+      <a [routerLink]="" routerLinkActive="router-link-active"
+        ><i class="fa fa-trash" style="font-size: 18px; padding-left: 2rem"></i
+      ></a>
+    </div>
+  </div> -->
+
+  <!-- action-btn -->
+  <div class="action-btn">
+    <button
+      type="button"
+      class="btn btn-outline-primary cancel-btn"
+      (click)="back()"
+    >
+      CANCEL
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary save-btn"
+      *ngIf="!isEdit"
+      (click)="addUser()"
+    >
+      SAVE
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary save-btn"
+      (click)="updateUser()"
+      *ngIf="isEdit"
+    >
+      Update
+    </button>
+  </div>
 </div>
 
-<div id="success" bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
-  aria-labelledby="myModalLabel" aria-hidden="true">
+<div
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -275,8 +374,15 @@
     </div>
   </div>
 </div>
-<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
+<div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-danger" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -285,8 +391,7 @@
       <div class="modal-body">
         <p>{{ alertBody }}</p>
       </div>
-      <div class="modal-footer">
-      </div>
+      <div class="modal-footer"></div>
     </div>
   </div>
 </div>

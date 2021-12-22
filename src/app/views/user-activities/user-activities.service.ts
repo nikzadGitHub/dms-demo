@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { settings } from 'environments/environment';
 import { Observable, throwError } from 'rxjs';
@@ -8,6 +8,13 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserActivitiesService {
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+  }
+  
   private apiURL = settings.apiBaseUrl
   constructor(private httpClient: HttpClient) { }
 
@@ -27,15 +34,21 @@ export class UserActivitiesService {
     })
     .pipe(
       tap((response: any) => {
-        console.log(response);               
+
     }),
+      catchError(this.errorHandler)
+    )
+  }
+  getPage(url,pageItems,search_text){
+    let query = '&page_items=' + pageItems + '&search_text=' + search_text;
+    return this.httpClient.get(url + query,this.httpOptions)
+    .pipe(
       catchError(this.errorHandler)
     )
   }
 
   createActivity(id,data): Observable<any> {
     let authToken = localStorage.getItem('auth-token');
-    console.log('data====> ',data)
     let body = {
       "customer_id": id,
       "activities": [
@@ -58,7 +71,31 @@ export class UserActivitiesService {
     })
     .pipe(
       tap((response: any) => {
-        console.log(response);               
+
+      }),
+      catchError(this.errorHandler)
+    )
+  }
+
+
+  updateActivity(id,data): Observable<any> {
+    let body ={
+      customer_id: 1,
+      completion_date: data.activityCompletionDate,
+      description: data.activityDesc,
+      due_date: data.activityDueDate,
+      remark: data.activityRemarks,
+      status: data.activityStatus,
+      activity_type: data.activityType
+  }
+    let authToken = localStorage.getItem('auth-token');
+    return this.httpClient.put(this.apiURL + '/activity/'+ id, body,{
+      headers: {
+        'Authorization': authToken,
+      },
+    })
+    .pipe(
+      tap((response: any) => {
     }),
       catchError(this.errorHandler)
     )

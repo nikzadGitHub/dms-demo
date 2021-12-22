@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormBuilder, FormArray } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SystemAdminService } from "../../../system-admin.service";
 import { SociService } from "./../../../../soci/soci.service";
@@ -11,37 +11,8 @@ import { ModalDirective } from "ngx-bootstrap/modal";
   styleUrls: ["./create-user.component.scss"],
 })
 export class CreateUserComponent implements OnInit {
-  filtereduser: any[];
   userform: FormGroup;
-  dummy_data = [
-    { name: "New York", code: "NY" },
-    { name: "Rome", code: "RM" },
-    { name: "London", code: "LDN" },
-    { name: "Istanbul", code: "IST" },
-    { name: "Paris", code: "PRS" },
-  ];
-
-  dummyAuthorityData = [
-    {
-      created_at: new Date("2021-12-02 00:37:32"),
-      name: "Jack Lee",
-      rate: "FSS",
-      country: "Malaysia",
-      main_unit: "Care Area",
-      sub_unit: "West Malaysia",
-      report_to: "Methew Chan",
-    },
-
-    {
-      created_at: new Date("2021-10-05 00:37:32"),
-      name: "Lee Chain",
-      rate: "FSS-2",
-      country: "Singapre",
-      main_unit: "Agancy",
-      sub_unit: "GE Healtcare",
-      report_to: "Mr C",
-    },
-  ];
+  unitUserForm: FormGroup;
   userList: any = [];
   userRoleList: any[] = [];
   status = [
@@ -57,6 +28,8 @@ export class CreateUserComponent implements OnInit {
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   alertBody: string;
   userRole: any;
+  userFormValue: boolean =true;
+
   constructor(
     private systemAdminSerive: SystemAdminService,
     private router: Router,
@@ -70,11 +43,15 @@ export class CreateUserComponent implements OnInit {
       userAccess: "",
       email: "",
       phoneNumber: "",
-      discountMargin: "",
+      // discount_percentage: "",
       approvedBy: "",
-      profit: "",
-      unit: "",
+      // profit_margin: "",
+      // unit: "",
       status: "",
+    });
+
+    this.unitUserForm = this.formBuilder.group({
+      unitUserArray: this.formBuilder.array([]),
     });
   }
 
@@ -100,6 +77,9 @@ export class CreateUserComponent implements OnInit {
       this.units = res.data;
       console.log("units", res.data);
     });
+    if(this.userRoleId == undefined){
+      this.addUserUnit()
+    }
   }
 
   getListOfRolePermission() {
@@ -121,17 +101,23 @@ export class CreateUserComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log("detail-user:", res);
+          res.data.user_units.forEach(ele => {
+            this.unitUser().push(
+              this.formBuilder.group({
+                discount_percentage: ele.allowed_discount_percentage,
+                profit_margin: ele.min_profit_margin_percentage,
+                unit_id: ele.unit_id,
+              })
+            )
+          });
           setTimeout(() => {
             this.userform.patchValue({
               name: res?.data?.full_name,
               email: res?.data?.email,
               phoneNumber: res?.data?.phone_number,
-              discountMargin: res?.data?.discount_margin_percent,
-              profit: res?.data?.profit_percent,
               status: res?.data?.is_active,
               userAccess: res?.data?.user_access_id,
               approvedBy: Number(res?.data?.approved_by),
-              unit: Number(res?.data?.unit_id),
               companyName: res?.data?.data_area_id,
             });
           }, 300);
@@ -163,19 +149,25 @@ export class CreateUserComponent implements OnInit {
   }
 
   addUser() {
-
-    this.systemAdminSerive
+    let unitUserVal=this.unitUserForm.value.unitUserArray;
+    for(let i=0;i<unitUserVal.length;i++){
+      if(unitUserVal[i].discount_percentage == "" || unitUserVal[i].profit_margin == "" ){
+        this.userFormValue= false
+      }
+      else{
+        this.userFormValue=true
+      }
+    }
+    if(this.userFormValue ){
+      this.systemAdminSerive
       .postQuery("/auth/create-user", {
         full_name: this.userform.value.name,
         phone_number: this.userform.value.phoneNumber,
-        discount_margin_percent: this.userform.value.discountMargin,
         data_area_id: this.userform.value.companyName,
         user_access_id: this.userform.value.userAccess,
         email: this.userform.value.email,
-        approved_by: this.userform.value.approvedBy,
-        profit_percent: this.userform.value.profit,
-        unit_id: this.userform.value.unit,
         is_active: this.userform.value.status,
+        unit_users: this.unitUserForm.value.unitUserArray,
       })
       .subscribe(
         (res: any) => {
@@ -202,6 +194,7 @@ export class CreateUserComponent implements OnInit {
           }, 2000);
         }
       );
+    }
   }
 
   updateUser() {
@@ -210,14 +203,11 @@ export class CreateUserComponent implements OnInit {
       .putQuery("/auth/update-user/" + this.userRoleId, {
         full_name: this.userform.value.name,
         phone_number: this.userform.value.phoneNumber,
-        discount_margin_percent: this.userform.value.discountMargin,
         data_area_id: this.userform.value.companyName,
         user_access_id: this.userform.value.userAccess,
         email: this.userform.value.email,
-        approved_by: this.userform.value.approvedBy,
-        profit_percent: this.userform.value.profit,
-        unit_id: this.userform.value.unit,
         is_active: this.userform.value.status,
+        unit_users: this.unitUserForm.value.unitUserArray,
       })
       .subscribe(
         (res: any) => {
@@ -243,7 +233,17 @@ export class CreateUserComponent implements OnInit {
         }
       );
   }
-  filterProduct(event) {}
+  // userUnit() {
+  //   const tmpData = JSON.parse(JSON.stringify(this.userform.value))
+  //   this.addUserUnit.push({
+  //     profit_margin: tmpData.profit_margin,
+  //     discount_percentage: tmpData.discount_percentage,
+  //     unit: tmpData.unit,
+  //   });
+  // }
+  // deleteUserUnitRow(index) {
+  //   this.addUserUnit.splice(index, 1);
+  // }
   resetForm() {
     this.userform.reset();
     this.userform.markAsPristine();
@@ -252,5 +252,28 @@ export class CreateUserComponent implements OnInit {
   back() {
     // this.location.back();
     this.router.navigateByUrl("user/adduser");
+  }
+
+  ////
+  unitUser(): FormArray {
+    return this.unitUserForm.get("unitUserArray") as FormArray;
+  }
+
+  newUnitUser(): FormGroup {
+    return this.formBuilder.group({
+      discount_percentage: "",
+      profit_margin: "",
+      unit_id: "",
+    });
+  }
+
+  addUserUnit() {
+    console.log("Adding a employee");
+    this.unitUser().push(this.newUnitUser());
+    console.log("form:", this.unitUserForm.value);
+  }
+
+  removeEmployee(index: number) {
+    this.unitUser().removeAt(index);
   }
 }

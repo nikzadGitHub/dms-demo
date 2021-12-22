@@ -89,6 +89,12 @@ export class UserAccessSetupComponent implements OnInit {
       this.errorMessage = "";
     }
   }
+  resetModel() {
+    this.roleName = "";
+    this.inputErrorClass = "";
+    this.isNameFieldError = false;
+    this.errorMessage = "";
+  }
   editRole(roleId) {
     let navigate: NavigationExtras = {
       queryParams: {

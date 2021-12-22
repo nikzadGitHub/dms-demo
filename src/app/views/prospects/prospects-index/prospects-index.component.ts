@@ -18,15 +18,15 @@ export class ProspectsIndexComponent implements OnInit {
   search_text: string = '';
   pageItems: number = 10;
   datasource:any;
-  pages: [];
+  pages: any[];
   totalRecords:number;
   columns: any[] = [
-    {'header':'Created Date','field':'created_date','type':'date'},
-    {'header':'Prospect ID','field':'prospect_id','type':'text'},
+    {'header':'Created Date','field':'created_at','type':'date'},
+    {'header':'Prospect ID','field':'id','type':'text'},
     {'header':'Company Name','field':'company_name','type':'text'},
-    {'header':'Individual Name','field':'individual_name','type':'text'},
+    {'header':'Individual Name','field':'contact_name','type':'text'},
     {'header':'Email','field':'email','type':'text'},
-    {'header':'Phone','field':'phone','type':'text'}
+    {'header':'Phone','field':'mobile_number','type':'text'}
   ];
   loading: boolean;
   selectedId: any;
@@ -57,6 +57,9 @@ export class ProspectsIndexComponent implements OnInit {
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((data)=>{
       this.datasource = data['data']['data'];
+      this.datasource.forEach(value => {
+        value.created_at = new Date(value.created_at)
+      });
       this.pages = data['data']['links'];
       this.totalRecords = data['data']['total'];
     })
@@ -73,9 +76,12 @@ export class ProspectsIndexComponent implements OnInit {
   }
 
   onClick(pageNo){
-    this.prospectsService.getPage(pageNo,this.pageItems,this.search_text)
+    let url =this.pages[pageNo].url
+    this.prospectsService.getPage(url,this.pageItems,this.search_text)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe((data)=>{
+      console.log(data,'page data');
+      
       this.datasource = data['data']['data'];
       this.pages = data['data']['links'];
     })

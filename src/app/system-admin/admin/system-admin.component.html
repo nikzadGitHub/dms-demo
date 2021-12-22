@@ -10,13 +10,13 @@
           <h3 class="title text-dark"><b>System Admin</b></h3>
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1">
-          <button
+          <!-- <button
             type="submit"
             class="btn btn-primary btn-fill pull-right form-control"
             (click)="addSystemAdmin()"
           >
             <i class="pi pi-plus"></i>
-          </button>
+          </button> -->
         </div>
       </div>
       <div class="card-header row" style="background-color: #f6f6f6">
@@ -28,7 +28,7 @@
         <div class="col-le-12 col-md-12 col-sm-12">
           <p-table
             #dt
-            [value]=""
+            [value]="adminRole"
             styleClass="p-datatable-gridlines"
             [globalFilterFields]="['full_name', 'status', 'created_at']"
             [paginator]="true"
@@ -38,14 +38,30 @@
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
             <ng-template pTemplate="header">
-              <tr>
-                <th width="40%">User Name</th>
-                <th class="text-center" width="20%">Status</th>
+              <tr align="center">
+                <th width="20%" class="text-center">User Name</th>
+                <th class="text-center" width="20%">Role</th>
                 <th class="text-center" width="20%">Creaed Date</th>
                 <th class="text-center" width="15%">Action</th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-user> </ng-template>
+            <ng-template pTemplate="body" let-role>
+              <tr align="center">
+                <td class="text-center">{{ role.users.full_name }}</td>
+                <td class="text-center">{{ role.role.name }}</td>
+                <td class="text-center">
+                  <div *ngIf="role.created_at">
+                    {{ role.created_at | date: "MM-dd-yyyy" || "" }}
+                  </div>
+                  <div *ngIf="!role.created_at">_</div>
+                </td>
+                <td class="text-center">
+                  <a [routerLink]="" routerLinkActive="router-link-active">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                </td>
+              </tr>
+            </ng-template>
           </p-table>
         </div>
       </div>
@@ -127,13 +143,13 @@
                 <label for="reset_password">Reset Password</label>
               </td>
             </tr>
-            <tr>
+            <!-- <tr>
               <td colspan="6">
                 <input class="check-box mr-3" type="checkbox" name="web_app" />
                 <label for="web_app">Web Application</label>
               </td>
-            </tr>
-            <tr>
+            </tr> -->
+            <!-- <tr>
               <td colspan="6">
                 <input
                   class="check-box mr-3"
@@ -142,7 +158,7 @@
                 />
                 <label for="mobile_app">Mobile Application</label>
               </td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>

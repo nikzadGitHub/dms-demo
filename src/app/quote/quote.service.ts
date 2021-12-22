@@ -13,6 +13,7 @@ import { settings } from '../../environments/environment.prod';
 export class QuoteService {
    
   private apiURL = settings.apiBaseUrl;
+  // id = new Subject<any>();
    
   httpOptions = {
     headers: new HttpHeaders({
@@ -103,10 +104,14 @@ export class QuoteService {
     return this.httpClient.get(this.apiURL + '/quote/quotation-template',this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
-    )
+    )   
   }
   getQuatation(id){
-    return this.httpClient.get(this.apiURL + '/quote/quotation-preview/'+ id, this.httpOptions)
+    let authToken = localStorage.getItem('auth-token');
+    return this.httpClient.get(this.apiURL + '/quote/quotation-preview/'+ id,  {
+      headers: {
+        'Authorization': authToken,
+      }})
     .pipe(
       catchError(this.errorHandler)
     )
@@ -246,5 +251,12 @@ downloadQuoteTemplate(Q_id,T_id){
     catchError(this.errorHandler)
   )
 }
+
+  // public quotationIdSet(value) {
+  //   this.id.next(value)
+  // }
+  // public quotationIdGet(): Observable<any> {
+  //   return this.id.asObservable();
+  // }
 
 }

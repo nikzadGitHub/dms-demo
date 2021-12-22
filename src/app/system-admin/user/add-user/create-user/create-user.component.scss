@@ -64,4 +64,27 @@
       margin-right: 10px;
     }
   }
+
+  .user-unit {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-start;
+    margin-top: 12px;
+    h4 {
+      margin-top: 20px;
+      margin-right: 10px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .btn-outline-primary {
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      i {
+        margin: -6px;
+        font-size: 16px;
+      }
+    }
+  }
 }

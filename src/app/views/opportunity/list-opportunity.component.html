@@ -43,7 +43,9 @@
 	</div>
   </div> -->
 
-<p-table  [loading]="loading" class="table table-hover table-striped"
+<p-table
+  [loading]="loading"
+  class="table table-hover table-striped"
   #dt
   [value]="opportunities"
   styleClass="p-datatable-opportunity"
@@ -75,27 +77,48 @@
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="created_date" class="text-center">
-        <div style="display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="display: flex; flex-direction: column; align-items: center"
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           Created Date
-          <div style=" display: flex;
-        
-          align-items: center;">
-             <p-sortIcon field="created_date"></p-sortIcon>
+          <div
+            style="
+              display: flex;
+
+              align-items: center;
+            "
+          >
+            <p-sortIcon field="created_date"></p-sortIcon>
             <p-columnFilter
               type="date"
               field="created_date"
               display="menu"
               class="p-ml-auto"
-            ></p-columnFilter></div>
+            ></p-columnFilter>
+          </div>
         </div>
       </th>
       <th pSortableColumn="op_id" class="text-center">
-        <div  style="width:100% ;white-space: nowrap;display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="
+            width: 100%;
+            white-space: nowrap;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           Opportunity ID
-          <div style=" display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;">
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
             <p-sortIcon field="op_id"></p-sortIcon>
             <p-columnFilter
               type="text"
@@ -104,78 +127,126 @@
               class="p-ml-auto"
             ></p-columnFilter>
           </div>
-         
         </div>
       </th>
       <th pSortableColumn="topic" class="text-center">
-        <div style="width:100% ;white-space: nowrap;display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="
+            width: 100%;
+            white-space: nowrap;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           Topic
-          <div style=" display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;">
-             <p-sortIcon field="topic"></p-sortIcon>
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <p-sortIcon field="topic"></p-sortIcon>
             <p-columnFilter
               type="text"
               field="topic"
               display="menu"
               class="p-ml-auto"
-            ></p-columnFilter></div>
-         
+            ></p-columnFilter>
+          </div>
         </div>
       </th>
-      <th pSortableColumn="company_name" class="text-center">
-        <div style="width:100% ;white-space: nowrap;display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+      <th pSortableColumn="company" class="text-center">
+        <div
+          style="
+            width: 100%;
+            white-space: nowrap;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           Company Name
-          <div style=" display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;">
-            <p-sortIcon field="company_name"></p-sortIcon>
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <p-sortIcon field="company"></p-sortIcon>
             <p-columnFilter
               type="text"
-              field="company_name"
+              field="company"
               display="menu"
               class="p-ml-auto"
             ></p-columnFilter>
           </div>
-         
         </div>
       </th>
       <th pSortableColumn="status_id" class="text-center">
-        <div style="width:100% ;white-space: nowrap;display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="
+            width: 100%;
+            white-space: nowrap;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           Status
-          <div style=" display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;">
-            <p-sortIcon field="status_id"></p-sortIcon>
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <p-sortIcon field="status"></p-sortIcon>
             <p-columnFilter
               type="text"
-              field="status_id"
+              field="status"
               display="menu"
               class="p-ml-auto"
             ></p-columnFilter>
           </div>
-         
         </div>
       </th>
       <th pSortableColumn="amount" class="text-center">
-        <div style="width:100% ;white-space: nowrap;display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="
+            width: 100%;
+            white-space: nowrap;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           Amount (MYR)
-          <div  style=" display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;">
-            <p-sortIcon field="amount"></p-sortIcon>
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <p-sortIcon field="est_value"></p-sortIcon>
             <p-columnFilter
               type="numeric"
-              field="amount"
+              field="est_value"
               display="menu"
               class="p-ml-auto"
             ></p-columnFilter>
           </div>
-         
         </div>
       </th>
 
@@ -218,7 +289,7 @@
         </div>
 
         <!-- <div> -->
-          <!-- <i class="pi pi-copy copy-icon"></i> -->
+        <!-- <i class="pi pi-copy copy-icon"></i> -->
         <!-- </div> -->
       </td>
       <!-- <td><i class="pi pi-copy"></i></td> -->
@@ -226,14 +297,16 @@
   </ng-template>
   <ng-template pTemplate="emptymessage" let-columns>
     <tr>
-        <td style="text-align: center;" [attr.colspan]="columns.length">
-            No records found
-        </td>
+      <td style="text-align: center" [attr.colspan]="columns.length">
+        No records found
+      </td>
     </tr>
-</ng-template>
+  </ng-template>
 </p-table>
 <p-paginator
+  (onPageChange)="pagination($event)"
   [rows]="pageItems"
+  [totalRecords]="totalRecords"
   [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
 >
 </p-paginator>

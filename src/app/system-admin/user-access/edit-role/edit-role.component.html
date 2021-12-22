@@ -2,14 +2,18 @@
   <!-- <form> -->
   <div class="col-md-12">
     <div class="row header pt-3 pb-3">
-      <div class="col-lg-10 mr-5">
+      <div class="col-lg-11 mr-4">
         <span class="header-icon">
           <h3 class="title text-dark"><b>User Access Setup</b></h3>
         </span>
       </div>
       <div class="top-btn">
         <!-- back-btn -->
-        <p-button styleClass="p-button-outlined" class="back-p-btn">
+        <p-button
+          styleClass="p-button-outlined"
+          class="back-p-btn"
+          (click)="back()"
+        >
           <ng-template pTemplate="content">
             <img
               src="../../../../assets/img/icons/back-arrow.svg"
@@ -74,7 +78,10 @@
           <ng-template pTemplate="header">
             <tr>
               <th width="100%">All Permissions</th>
-              <th width="15%" class="text-center">Check</th>
+              <th width="15%" class="text-center">
+                Check
+                <!-- <p-checkbox (onChange)="selectAll($event)"></p-checkbox> -->
+              </th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-permission>
@@ -90,12 +97,6 @@
                   [inputId]="permission.key"
                   (onChange)="updatePermissionArray($event, permission)"
                 ></p-checkbox>
-                <!-- <p-tableCheckbox
-                name="group2"
-                  [value]="permission"
-                  [(ngModel)]="selectedValues"
-                  [inputId]="permission.kay"
-                ></p-tableCheckbox> -->
               </td>
             </tr>
           </ng-template>
@@ -104,7 +105,11 @@
     </div>
   </div>
   <div class="action-btn">
-    <button type="button" class="btn btn-outline-primary cancel-btn">
+    <button
+      type="button"
+      class="btn btn-outline-primary cancel-btn"
+      (click)="resetPermissions()"
+    >
       CANCEL
     </button>
     <button
@@ -112,7 +117,8 @@
       class="btn btn-primary save-btn"
       (click)="updateRolePermission()"
     >
-      SAVE
+      <div *ngIf="roleId">UPDATE</div>
+      <div *ngIf="!roleId">SAVE</div>
     </button>
   </div>
 

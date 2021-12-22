@@ -60,9 +60,9 @@
             <!-- <h5>4015{{quotationsTemplateData?.quotations?.companies?.address}}</h5> -->
             <div class="phoneFax" style="display: flex ;margin-left: 105px; color: black;">
               <h5>
-                <span><b>Telephone:{{quotationsTemplateData?.quotations?.companies?.telephone_number}} </b></span>
+                <span><b>Telephone: {{quotationsTemplateData?.quotations?.companies?.telephone_number}} </b></span>
               </h5>
-              <h5 class="fax" style="margin-left: 50px; color: black;">
+              <h5 class="fax" style="margin-left: 30px; color: black;">
                 <span><b> Fax: {{quotationsTemplateData?.quotations?.companies?.fax}} </b></span>
               </h5>
             </div>
@@ -127,91 +127,138 @@
         <div *ngIf="quotationsTemplateData?.quotations?.customer?.address">
           {{ quotationsTemplateData?.quotations?.customer?.address }}
         </div>
+        <div *ngIf="quotationsTemplateData?.quotations?.customer?.address">
+          {{ quotationsTemplateData?.quotations?.customer?.state }}
+          {{ quotationsTemplateData?.quotations?.customer?.postal_code }}
+        </div>
+
+        <div >
+            <p>Malayisia</p>
+        </div>
       </div>
       <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px" id="headerContent" #headerContent>
         <table style="color: black;">
           <tr>
+            <th style="width: 170px">
+              <h5 style="margin-bottom: 15px">Date:</h5>
+            </th>
+            <th style="width: 170px" class="addressDetatilKey">
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerDate>{{quotationContentHeader?.date}}</h5>
+            </th>
+          </tr>
+          <tr>
             <th >
-              <h5 style="margin-bottom: 15px">Quotation No</h5>
+              <h5 style="margin-bottom: 15px">Quotation No:</h5>
             </th>
             <th  class="addressDetatilKey">
               <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
             </th>
           </tr>
           <tr>
+            <th >
+              <h5 style="margin-bottom: 15px">Revision No:</h5>
+            </th>
+            <th  class="addressDetatilKey">
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerRevisionNo>{{quotationContentHeader?.quoteNo}}</h5>
+            </th>
+          </tr>
+          <tr>
             <th>
-              <h5 style="margin-bottom: 15px">Your Ref</h5>
+              <h5 style="margin-bottom: 15px">Your Ref:</h5>
             </th>
             <th  class="addressDetatilKey">
               <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerRefNo>{{quotationContentHeader?.refNo}}</h5>
             </th>
           </tr>
+
           <tr>
-            <th style="width: 170px">
-              <h5 style="margin-bottom: 15px">Date</h5>
+            <th>
+              <h5 style="margin-bottom: 15px">Quote Expiry Date:</h5>
             </th>
-            <th style="width: 170px" class="addressDetatilKey">
-              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerDate>{{quotationContentHeader?.date}}</h5>
+            <th  class="addressDetatilKey">
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerExpDate>{{quotationContentHeader?.refNo}}</h5>
             </th>
           </tr>
+          
         </table>
       </div>
     </div>
     <div class="card-body" style="margin: 0px 30px;">
-      <!-- <div class="initial-info">
-        <table class="table table-borderless">
-          <tbody>
-            <tr class="all-th-td-padding-bottom-none">
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr class="all-th-td-padding-top-bottom-none">
-              <th scope="row"><b>No. Ref: </b></th>
-              <td>
-                <span>:&nbsp;&nbsp;&nbsp;</span
-                >{{ quotationsTemplateData?.quotations?.quote_id }}
-              </td>
-              <th class="date-field-label"><b>Date :</b></th>
-              <td class="date-field-data">
-                {{
-                  quotationsTemplateData?.quotations?.created_at
-                    | date: "dd/MM/yyyy"
-                }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div> -->
 
-      <div class="attentionRelated" style="color: black;">
-        <div class="nameEmail">
-          <div class="name" style="display: flex">
-            <h5 style="width: 115px"><b>Attention &nbsp;&nbsp;:</b></h5>
-            <h5 style="margin-left: 40px">
-              <b>Sister Mimi Aizura - Ward 2B</b>
-            </h5>
-          </div>
-          <div class="email" style="display: flex">
-            <h5 style="width: 115px"><b>Email &nbsp;&nbsp;:</b></h5>
-            <span style="margin-left: 40px">
-              <b> {{ quotationsTemplateData?.quotations?.companies?.email }}</b>
-            </span>
-          </div>
+      <div class="attentionRelated col-12" style="color: black; display: flex;">
+        <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px;" >
+          <table style="color: black;">
+            <tr>
+              <th style="width: 170px">
+                <h5 style="margin-bottom: 15px">Attention :</h5>
+              </th>
+              <th style="width: 170px" class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerAttention>{{quotationContentHeader?.attention}}</h5>
+              </th>
+            </tr>
+            <tr>
+              <th >
+                <h5 style="margin-bottom: 15px">Email :</h5>
+              </th>
+              <th  class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerAttentionEmail>{{quotationContentHeader?.attentionEmail}}</h5>
+              </th>
+            </tr>
+            <tr>
+              <th >
+                <h5 style="margin-bottom: 15px">Telephone :</h5>
+              </th>
+              <th  class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerAttentionPhone>{{quotationContentHeader?.attentionPhone}}</h5>
+              </th>
+            </tr>
+            <tr>
+              <th>
+                <h5 style="margin-bottom: 15px">FAX :</h5>
+              </th>
+              <th  class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerAttentionFax>{{quotationContentHeader?.attentionFax}}</h5>
+              </th>
+            </tr>
+  
+          </table>
         </div>
-        <div class="phoneFax" style="display: flex">
-          <div class="email" style="display: flex">
-            <span style="width: 115px"> <b>Telephone &nbsp;&nbsp;:</b> </span>
-            <span style="margin-left: 40px; width: 200px">
-              <b>{{quotationsTemplateData?.quotations?.companies?.telephone_number}} </b>
-            </span>
-          </div>
-          <div class="email" style="display: flex">
-            <span style="width: 115px"> <b>Fax &nbsp;&nbsp;:</b> </span>
-            <span style="margin-left: 40px; width: 200px">
-              <b>{{quotationsTemplateData?.quotations?.companies?.fax}}</b>
-            </span>
-          </div>
+        <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px; margin-left: 40px;">
+          <table style="color: black;">
+            <tr>
+              <th style="width: 170px">
+                <h5 style="margin-bottom: 15px">Sales Person :</h5>
+              </th>
+              <th style="width: 170px" class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerSalesPerson>{{quotationContentHeader?.salesPersonName}}</h5>
+              </th>
+            </tr>
+            <tr>
+              <th >
+                <h5 style="margin-bottom: 15px">Email :</h5>
+              </th>
+              <th  class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerSalesPersonEmail>{{quotationContentHeader?.salesPersonEmail}}</h5>
+              </th>
+            </tr>
+            <tr>
+              <th >
+                <h5 style="margin-bottom: 15px">Telephone :</h5>
+              </th>
+              <th  class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerSalesPersonPhone>{{quotationContentHeader?.salesPersonPhone}}</h5>
+              </th>
+            </tr>
+            <tr>
+              <th>
+                <h5 style="margin-bottom: 15px">FAX :</h5>
+              </th>
+              <th  class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerSalesPersonFax>{{quotationContentHeader?.salesPersonFax}}</h5>
+              </th>
+            </tr>
+  
+          </table>
         </div>
       </div>
 
@@ -232,7 +279,7 @@
             "
           >
             <thead>
-              <!-- <tr>
+              <tr>
                 <th
                   class="numberCol"
                   style="width: 50px; border: 1px solid black; font-weight: bold;"
@@ -252,44 +299,54 @@
                   style="width: 50px; border: 1px solid black; font-weight: bold;"
                   scope="col"
                 >
-                  UOM
+                  Quantity
                 </th>
                 <th
                   class="numberCol"
                   style="width: 50px; border: 1px solid black; font-weight: bold;"
                   scope="col"
                 >
-                  QTY
+                  UOM
                 </th>
                 <th
                   class="unitPriceCol"
                   style="width: 110px; border: 1px solid black; font-weight: bold;"
                   scope="col"
                 >
-                  UNIT PRICE (RM)
+                  UNIT PRICE
+                </th>
+                <th
+                  class="discountCol"
+                  style="width: 110px; border: 1px solid black; font-weight: bold;"
+                  scope="col"
+                >
+                  Discount
                 </th>
                 <th
                   class="totalPriceCol"
                   style="width: 110px; border: 1px solid black; font-weight: bold;"
                   scope="col"
                 >
-                  TOTAL PRICE (RM)
+                  TOTAL PRICE
                 </th>
-              </tr> -->
-                <tr style="border: 2px solid black">
+              </tr>
+                <!-- <tr style="border: 2px solid black">
                   <th style="border: 2px solid black" scope="col">BRAND</th>
                   <th style="border: 2px solid black" scope="col">P/N</th>
                   <th style="border: 2px solid black" scope="col">DESCRIPTION</th>
                   <th style="border: 2px solid black" scope="col">PRICE LIST</th>
-                </tr>
+                </tr> -->
             </thead>
             <tbody>
               <tr class="main-table-data" style="border: 2px solid black"
               *ngFor="let item of quotationsTemplateData?.quotations?.products">
                 <!-- there should be loop for all the products -->
                 <td style="border: 2px solid black">No Data Available </td>
-                <td style="border: 2px solid black"> {{ item.name }} </td>
-                <td style="border: 2px solid black">{{ item.name }}</td>
+                <td style="border: 2px solid black">  {{ item.name }} </td>
+                <td style="border: 2px solid black">  {{ item.name }}  </td>
+                <td style="border: 2px solid black">  {{item.list_price}} </td>
+                <td style="border: 2px solid black">  {{item.list_price}} </td>
+                <td style="border: 2px solid black">  {{item.list_price}} </td>
                 <td style="border: 2px solid black">  {{item.list_price}} </td>
               </tr>
 
@@ -305,6 +362,9 @@
                 </ul>
                 </td>
                 <td style="border-right: unset;"></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td></td>
                 <td
                   style="border-left: 2px solid;
@@ -377,6 +437,7 @@
         <br>
         <br>
         <br>
+        <br><br>
         <br><br>
         <br>
         <br>

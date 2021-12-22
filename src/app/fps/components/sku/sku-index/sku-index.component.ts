@@ -40,7 +40,7 @@ export class SkuIndexComponent implements OnInit {
     {'header':'Quarterly','field':'quarterly_payment','type':'boolean'},
     {'header':'Half-Yearly','field':'half_yearly_payment','type':'boolean'},
     {'header':'Min Usage','field':'min_usage','type':'number'},
-    {'header':'Min Procedure','field':'procedure_per_month','type':'number'}
+    {'header':'Min Procedure','field':'min_procedure','type':'number'}
 
   ];
 

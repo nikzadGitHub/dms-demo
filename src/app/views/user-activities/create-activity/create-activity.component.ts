@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { UserActivitiesService } from '../user-activities.service';
@@ -6,14 +6,17 @@ import { UserActivitiesService } from '../user-activities.service';
 @Component({
   selector: 'app-create-activity',
   templateUrl: './create-activity.component.html',
-  styleUrls: ['./create-activity.component.scss']
+  styleUrls: ['./create-activity.component.scss'],
+  encapsulation : ViewEncapsulation.None
 })
 export class CreateActivityComponent implements OnInit {
   @ViewChild("createActivity")
   public createActivity: ModalDirective;
-  @ViewChild("columnChooserModal") public columnChooserModal: ModalDirective;
+  @ViewChild("createActivityModal")
+  public createActivityModal: ModalDirective;
+  @ViewChild("columnChooserModal")
+  public columnChooserModal: ModalDirective;
   @ViewChild("successModal") successModal: ModalDirective;
-
   loading:boolean
 	opportunities: [];
 	paginate: [];
@@ -29,7 +32,7 @@ export class CreateActivityComponent implements OnInit {
   companyName: any;
   isTypeOthers: any = false;
 
-  addActivityData = {
+  addActivityData :any = {
     activityDesc:"",
     activityDueDate:"",
     activityCompletionDate:"",
@@ -41,9 +44,13 @@ export class CreateActivityComponent implements OnInit {
   companyId: any;
   customer_id: any;
   successMessage: string;
+  activityMainHeading: string = "Add Activity";
+  activityHeading: string = "Add Activity";
+  activityButton: string = "Save";
+  selectedActivityId: any;
   
   constructor(
-    public userAactivities: UserActivitiesService,
+    public userAactivitiesService: UserActivitiesService,
     private router: Router
     ) { }
 
@@ -55,7 +62,7 @@ export class CreateActivityComponent implements OnInit {
   getActivitydata() {
     this.loading=true
     
-    this.userAactivities.getActivity().subscribe(res => {
+    this.userAactivitiesService.getActivity().subscribe(res => {
     
       this.activitydata = res.data;
       this.customer_id = res?.data[0]?.customer_id
@@ -73,7 +80,7 @@ export class CreateActivityComponent implements OnInit {
 
   searchName(event) {
     let query = event.query;
-    this.userAactivities.getCumpanyDetails(query).subscribe((res) => {
+    this.userAactivitiesService.getCumpanyDetails(query).subscribe((res) => {
       if (res.success) {
         if (res.data.length == 0) {
           setTimeout(() => {
@@ -92,6 +99,16 @@ export class CreateActivityComponent implements OnInit {
       this.companyId = event.id
       this.companyName = event.company_name
       this.isCompanyName = true
+      this.activityMainHeading = "Add Activity"
+      this.activityHeading = "Add Activity"
+      this.activityButton = "Save"
+      //to make the values empty 
+    this.addActivityData.activityDesc = ""
+    this.addActivityData.activityType = "New"
+    this.addActivityData.activityStatus = "Meeting"
+    this.addActivityData.activityDueDate = ""
+    this.addActivityData.activityCompletionDate = ""
+    this.addActivityData.activityRemarks = ""
     }
   }
 
@@ -103,16 +120,48 @@ export class CreateActivityComponent implements OnInit {
     }
   }
 
-  saveActivity(event){
-    this.userAactivities.createActivity(this.customer_id,this.addActivityData).subscribe((res) => {
-      this.successMessage = "Data added Successfully...!!"
-      this.successModal.show()
-      setTimeout(() => {
-        if(res){
-          this.router.navigateByUrl("/activities", { replaceUrl: true});
-        }
-      }, 1000);
-    })
+  saveActivity(event,type){
+    if(this.activityButton == type){
+      this.userAactivitiesService.createActivity(this.customer_id,this.addActivityData).subscribe((res) => {
+        this.createActivityModal.hide()
+        this.successMessage = "Data added Successfully...!!"
+        this.successModal.show()
+        setTimeout(() => {
+          if(res){
+            this.router.navigateByUrl("/activities", { replaceUrl: true});
+          }
+        }, 1000);
+      })
+    } else {
+      this.userAactivitiesService.updateActivity(this.selectedActivityId,this.addActivityData).subscribe(state=>{
+        this.createActivityModal.hide()
+        this.successMessage = "Data Updated Successfully...!!"
+        this.successModal.show()
+        setTimeout(() => {
+          this.getActivitydata()
+        }, 500);
+        
+      })
+    }
     
+  }
+
+  selectedActivity(data){
+    this.selectedActivityId = data.id
+    this.activityMainHeading = "Update Activity"
+    this.activityHeading = "Update Activity"
+    this.activityButton = "Update"
+    this.createActivityModal.show()
+    this.addActivityData.activityDesc = data.description
+    this.addActivityData.activityType = data.activity_type
+    this.addActivityData.activityStatus = data.status
+    this.addActivityData.activityDueDate = data.due_date.slice(0,10)
+    this.addActivityData.activityCompletionDate = data.completion_date.slice(0,10)
+    this.addActivityData.activityRemarks = data.remark
+
+  }
+  
+  getDate(date){
+
   }
 }

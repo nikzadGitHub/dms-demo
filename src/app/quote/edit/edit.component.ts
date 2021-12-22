@@ -53,6 +53,7 @@ export class EditComponent implements OnInit {
   selectTemplateData: any[]=[];
   templateId: any;
   alertHeader: string;
+  quotationId: any;
 
   constructor(
     private quoteService: QuoteService,
@@ -72,6 +73,7 @@ export class EditComponent implements OnInit {
       this.id = event.quoteId; // fetch ID from url
       this.quoteService.find(this.id).subscribe((data) => {
         this.quotations = data["data"]["quotation"];
+        this.quotationId = data["data"]["quotation"].id
         this.latestQuotation = data["data"]["quotation"];
         this.quotationRevisions = data["data"]["quotationRevision"];
         this.setInitialValue();
