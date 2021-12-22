@@ -66,15 +66,8 @@ export class FormComponent implements OnInit{
     { id: 2, ans: "No" },
   ];
 
-  defaultPriorities: any[] = [
-    { id: 1, value: "High" },
-    { id: 2, value: "Mid" },
-    { id: 3, value: "Low" },
-  ];
-
   defaultPriority: number = 1;
   defaultAnswer: number = 1;
-  selectedBooking: number = 1;
   selectedPercentage: number = 1;
 
   changePrioritye(id: number) {
