@@ -8,9 +8,9 @@
 .file-input {
   display: none;
 }
-[contenteditable] {
-  padding: 10px;
-}
+// [contenteditable] {
+//   padding: 10px;
+// }
 [contenteditable]:focus {
   outline: 1px solid lightgray;
   border-radius: 3px;

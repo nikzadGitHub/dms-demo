@@ -30,6 +30,16 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
   @ViewChild("headerQuoteNo") headerQuoteNo: ElementRef;
   @ViewChild("headerRefNo") headerRefNo: ElementRef;
   @ViewChild("headerDate") headerDate: ElementRef;
+  @ViewChild("headerRevisionNo") headerRevisionNo: ElementRef;
+  @ViewChild("headerExpDate") headerExpDate: ElementRef;
+  @ViewChild("headerAttention") headerAttention: ElementRef;
+  @ViewChild("headerAttentionEmail") headerAttentionEmail: ElementRef;
+  @ViewChild("headerAttentionPhone") headerAttentionPhone: ElementRef;
+  @ViewChild("headerAttentionFax") headerAttentionFax: ElementRef;
+  @ViewChild("headerSalesPerson") headerSalesPerson: ElementRef;
+  @ViewChild("headerSalesPersonEmail") headerSalesPersonEmail: ElementRef;
+  @ViewChild("headerSalesPersonPhone") headerSalesPersonPhone: ElementRef;
+  @ViewChild("headerSalesPersonFax") headerSalesPersonFax: ElementRef;
 
   @ViewChild("footerContent") footerData: ElementRef;
   @ViewChild("price") priceFooter: ElementRef;
@@ -96,6 +106,13 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.quotationId = params.quotationId;
+      this.templateId = params.templateId;
+      this.viewQuotationTemplate()
+    })
+
     this.setToken();
     let element = Array.from(
       document.getElementsByTagName(
@@ -105,22 +122,20 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
     element.forEach((el) => {
       el.style.visibility = "hidden";
     });
-      this.viewQuotationTemplate()
     // this.getMobileOperatingSystem();
     this.elem = document.documentElement;
-    this.toggleFullScreen();
+    // this.toggleFullScreen();
     // this.elem = document.documentElement;
   }
 
   viewQuotationTemplate() { 
 
-    this.quoteService.getQuatation(48).subscribe((res) =>{
+    this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
       this.quotationsTemplateData = res["data"]
       this.salesPersonData = res["data"].quotations?.sales_person
       this.salesPersonSignature = this.salesPersonData?.signature_base64
       this.quotationContent = res["data"].quotations?.quotation_contents
       this.productDetails = res["data"].quotations?.products
-      console.log("this.productDetails =>",this.productDetails)
       if(this.quotationContent){
         this.quotationContentFooter = JSON.parse(this.quotationContent?.footer_content)
         this.quotationContentHeader = JSON.parse(this.quotationContent?.header_content)
@@ -131,22 +146,16 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
       this.netTotal = this.productTotalPrice - parseFloat(this.discountedValue)
       
     })
-    console.log('this.quotationsTemplateData =>',this.quotationsTemplateData);
     
     // this.router.navigateByUrl("quote/view/quote-template");
   }
 
-  downloadPDF() {
-    if (this.single == true) {
-      this.generateCompletePDF();
-    } else {
+  downloadUploadedPDF() {
       if (this.url) {
-        this.generateTemplatePDF();
-        this.generateQuotationImagePDF();
+        this.generateCompletePDF();
       } else {
         this.generateTemplatePDF();
       }
-    }
   }
 
   onFileSelected(event: any) {
@@ -175,7 +184,7 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
       };
       const formData = new FormData();
       formData.append("file", this.file);
-      this.alertBody = "Image uploaded successfully";
+      this.successMessage = "Image uploaded successfully";
       this.successModal.show();
     } else {
       this.alertHeader = "Image type error";
@@ -306,6 +315,16 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
       quoteNo: this.headerQuoteNo.nativeElement.innerText,
       refNo: this.headerRefNo.nativeElement.innerText,
       date: this.headerDate.nativeElement.innerText,
+      revisionNo: this.headerRevisionNo.nativeElement.innerText,
+      expDate: this.headerExpDate.nativeElement.innerText,
+      attention: this.headerAttention.nativeElement.innerText,
+      attentionEmail: this.headerAttentionEmail.nativeElement.innerText,
+      attentionPhone: this.headerAttentionPhone.nativeElement.innerText,
+      attentionFax: this.headerAttentionFax.nativeElement.innerText,
+      salesPersonName: this.headerSalesPerson.nativeElement.innerText,
+      salesPersonEmail: this.headerSalesPersonEmail.nativeElement.innerText,
+      salesPersonPhone: this.headerSalesPersonPhone.nativeElement.innerText,
+      salesPersonFax: this.headerSalesPersonFax.nativeElement.innerText,
     }
     // let footer = this.footerData.nativeElement.innerHTML
     let footer = {
@@ -319,7 +338,6 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
     }
     let fullBody = this.bodyData.nativeElement.innerHTML
 
-    console.log('footer =>',footer,'Header =>',header,'fullBody =>',fullBody);
     
 
     this.quoteService.saveTemplateData(this.quotationId,JSON.stringify(header),JSON.stringify(footer),fullBody).subscribe(state=>{
