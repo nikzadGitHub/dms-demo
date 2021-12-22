@@ -62,7 +62,7 @@
               <h5>
                 <span><b>Telephone: {{quotationsTemplateData?.quotations?.companies?.telephone_number}} </b></span>
               </h5>
-              <h5 class="fax" style="margin-left: 50px; color: black;">
+              <h5 class="fax" style="margin-left: 30px; color: black;">
                 <span><b> Fax: {{quotationsTemplateData?.quotations?.companies?.fax}} </b></span>
               </h5>
             </div>
@@ -159,7 +159,7 @@
               <h5 style="margin-bottom: 15px">Revision No:</h5>
             </th>
             <th  class="addressDetatilKey">
-              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerRevisionNo>{{quotationContentHeader?.quoteNo}}</h5>
             </th>
           </tr>
           <tr>
@@ -176,7 +176,7 @@
               <h5 style="margin-bottom: 15px">Quote Expiry Date:</h5>
             </th>
             <th  class="addressDetatilKey">
-              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerRefNo>{{quotationContentHeader?.refNo}}</h5>
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerExpDate>{{quotationContentHeader?.refNo}}</h5>
             </th>
           </tr>
           
@@ -186,14 +186,14 @@
     <div class="card-body" style="margin: 0px 30px;">
 
       <div class="attentionRelated col-12" style="color: black; display: flex;">
-        <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px;" id="headerContent" #headerContent>
+        <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px;" >
           <table style="color: black;">
             <tr>
               <th style="width: 170px">
                 <h5 style="margin-bottom: 15px">Attention :</h5>
               </th>
               <th style="width: 170px" class="addressDetatilKey">
-                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerDate>{{quotationContentHeader?.date}}</h5>
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerAttention>{{quotationContentHeader?.attention}}</h5>
               </th>
             </tr>
             <tr>
@@ -201,7 +201,7 @@
                 <h5 style="margin-bottom: 15px">Email :</h5>
               </th>
               <th  class="addressDetatilKey">
-                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerAttentionEmail>{{quotationContentHeader?.attentionEmail}}</h5>
               </th>
             </tr>
             <tr>
@@ -209,7 +209,7 @@
                 <h5 style="margin-bottom: 15px">Telephone :</h5>
               </th>
               <th  class="addressDetatilKey">
-                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerAttentionPhone>{{quotationContentHeader?.attentionPhone}}</h5>
               </th>
             </tr>
             <tr>
@@ -217,20 +217,20 @@
                 <h5 style="margin-bottom: 15px">FAX :</h5>
               </th>
               <th  class="addressDetatilKey">
-                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerRefNo>{{quotationContentHeader?.refNo}}</h5>
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerAttentionFax>{{quotationContentHeader?.attentionFax}}</h5>
               </th>
             </tr>
   
           </table>
         </div>
-        <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px; margin-left: 40px;" id="headerContent" #headerContent>
+        <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px; margin-left: 40px;">
           <table style="color: black;">
             <tr>
               <th style="width: 170px">
                 <h5 style="margin-bottom: 15px">Sales Person :</h5>
               </th>
               <th style="width: 170px" class="addressDetatilKey">
-                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerDate>{{quotationContentHeader?.date}}</h5>
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerSalesPerson>{{quotationContentHeader?.salesPersonName}}</h5>
               </th>
             </tr>
             <tr>
@@ -238,7 +238,7 @@
                 <h5 style="margin-bottom: 15px">Email :</h5>
               </th>
               <th  class="addressDetatilKey">
-                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerSalesPersonEmail>{{quotationContentHeader?.salesPersonEmail}}</h5>
               </th>
             </tr>
             <tr>
@@ -246,7 +246,7 @@
                 <h5 style="margin-bottom: 15px">Telephone :</h5>
               </th>
               <th  class="addressDetatilKey">
-                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerSalesPersonPhone>{{quotationContentHeader?.salesPersonPhone}}</h5>
               </th>
             </tr>
             <tr>
@@ -254,7 +254,7 @@
                 <h5 style="margin-bottom: 15px">FAX :</h5>
               </th>
               <th  class="addressDetatilKey">
-                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerRefNo>{{quotationContentHeader?.refNo}}</h5>
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerSalesPersonFax>{{quotationContentHeader?.salesPersonFax}}</h5>
               </th>
             </tr>
   
@@ -437,6 +437,7 @@
         <br>
         <br>
         <br>
+        <br><br>
         <br><br>
         <br>
         <br>

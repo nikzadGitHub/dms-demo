@@ -1,5 +1,5 @@
-<div class="main-content">
-  <div class="download-btn" align="center">
+<div class="main-content" style="width: 315px; margin-left: -7px;">
+  <!-- <div class="download-btn" align="center">
     <input
       type="file"
       class="file-input"
@@ -17,11 +17,11 @@
       Upload Image
       <input #fileInput type="file" style="display: none" />
     </button>
-    <button class="btn btn-primary btn-sm" (click)="downloadPDF()">
+    <button class="btn btn-primary btn-sm" (click)="downloadUploadedPDF()">
       Download Quotation
     </button>
-  </div>
-  <div class="card">
+  </div> -->
+  <div class="card" id="bodyContent" #bodyContent>
     <div #pdfTable class="main-div" style="width: 100%" id="pdfTable">
       <div class="template-header" align="center">
         <div class="img-text">
@@ -34,7 +34,7 @@
           </div>
           <div class="vl"></div>
           <div class="v2"></div>
-          <div class="info-text" [attr.contenteditable]="editable">
+          <div class="info-text" contenteditable="true">
             <p>{{quotationsTemplateData?.quotations?.companies?.title}}</p>
             <p>Registration No:000220168192</p>
             <p>Telephone:{{quotationsTemplateData?.quotations?.companies?.telephone_number}}</p>
@@ -44,137 +44,132 @@
           </div>
         </div>
       </div>
-      <!-- <div class="address-title">
-        <p [attr.contenteditable]="editable">
-          Kepada Yth,<br />PT.Aditana Intiperdana <br />
-          Ruko Rungkut Megah Raya M-23
-          <br />
-          Surabaya
-        </p>
-      </div> -->
       
-      <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px; margin-left: -10px" id="headerContent" #headerContent>
-        <table style="color: black;">
-          <tr>
-            <th style="width: 135px">
-              <h5 style="margin-bottom: 15px; font-size: 12px;">Date:</h5>
-            </th>
-            <th style="width: 135px" class="addressDetatilKey">
-              <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" [attr.contenteditable]="editable" #headerDate>{{quotationContentHeader?.date}}</h5>
-            </th>
-          </tr>
-          <tr>
-            <th >
-              <h5 style="margin-bottom: 15px; font-size: 12px;">Quotation No:</h5>
-            </th>
-            <th  class="addressDetatilKey">
-              <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
-            </th>
-          </tr>
-          <tr>
-            <th >
-              <h5 style="margin-bottom: 15px; font-size: 12px;">Revision No:</h5>
-            </th>
-            <th  class="addressDetatilKey">
-              <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
-            </th>
-          </tr>
-          <tr>
-            <th>
-              <h5 style="margin-bottom: 15px; font-size: 12px;">Your Ref:</h5>
-            </th>
-            <th  class="addressDetatilKey">
-              <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" [attr.contenteditable]="editable" #headerRefNo>{{quotationContentHeader?.refNo}}</h5>
-            </th>
-          </tr>
-
-          <tr>
-            <th>
-              <h5 style="margin-bottom: 15px; font-size: 12px;">Quote Expiry Date:</h5>
-            </th>
-            <th  class="addressDetatilKey">
-              <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" [attr.contenteditable]="editable" #headerRefNo>{{quotationContentHeader?.refNo}}</h5>
-            </th>
-          </tr>
-          
-        </table>
-      </div>
+      
 
       <div class="card-body">
         <div class="attentionRelated" style="color: black;margin-left: -15px;">
-          <div class="addressDetails" style="margin-top: 15px;" id="headerContent" #headerContent>
-            <table style="color: black;">
-              <tr>
-                <th style="width: 135px">
-                  <h5 style="margin-bottom: 15px; font-size: 12px;">Attention :</h5>
-                </th>
-                <th style="width: 135px" class="addressDetatilKey">
-                  <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" [attr.contenteditable]="editable" #headerDate>{{quotationContentHeader?.date}}</h5>
-                </th>
-              </tr>
-              <tr>
-                <th >
-                  <h5 style="margin-bottom: 15px; font-size: 12px;">Email :</h5>
-                </th>
-                <th  class="addressDetatilKey">
-                  <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
-                </th>
-              </tr>
-              <tr>
-                <th >
-                  <h5 style="margin-bottom: 15px; font-size: 12px;">Telephone :</h5>
-                </th>
-                <th  class="addressDetatilKey">
-                  <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
-                </th>
-              </tr>
-              <tr>
-                <th>
-                  <h5 style="margin-bottom: 15px; font-size: 12px;">FAX :</h5>
-                </th>
-                <th  class="addressDetatilKey">
-                  <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" [attr.contenteditable]="editable" #headerRefNo>{{quotationContentHeader?.refNo}}</h5>
-                </th>
-              </tr>
-    
-            </table>
-          </div>
-          <div class="addressDetails" style="margin-top: 15px;" id="headerContent" #headerContent>
-            <table style="color: black;">
-              <tr>
-                <th style="width: 135px">
-                  <h5 style="margin-bottom: 15px; font-size: 12px;">Sales Person :</h5>
-                </th>
-                <th style="width: 135px" class="addressDetatilKey">
-                  <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" [attr.contenteditable]="editable" #headerDate>{{quotationContentHeader?.date}}</h5>
-                </th>
-              </tr>
-              <tr>
-                <th >
-                  <h5 style="margin-bottom: 15px; font-size: 12px;">Email :</h5>
-                </th>
-                <th  class="addressDetatilKey">
-                  <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
-                </th>
-              </tr>
-              <tr>
-                <th >
-                  <h5 style="margin-bottom: 15px; font-size: 12px;">Telephone :</h5>
-                </th>
-                <th  class="addressDetatilKey">
-                  <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
-                </th>
-              </tr>
-              <tr>
-                <th>
-                  <h5 style="margin-bottom: 15px; font-size: 12px;">FAX :</h5>
-                </th>
-                <th  class="addressDetatilKey">
-                  <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" [attr.contenteditable]="editable" #headerRefNo>{{quotationContentHeader?.refNo}}</h5>
-                </th>
-              </tr>
-    
-            </table>
+          <div class="headerContentMain" id="headerContent" #headerContent>
+            <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px; margin-left: -10px; width: 285px;" >
+              <table style="color: black;">
+                <tr>
+                  <th style="width: 135px">
+                    <h5 style="margin-bottom: 15px; font-size: 12px;">Date:</h5>
+                  </th>
+                  <th style="width: 135px" class="addressDetatilKey">
+                    <h5 style="width: 135%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" contenteditable="true" #headerDate>{{quotationContentHeader?.date}}</h5>
+                  </th>
+                </tr>
+                <tr>
+                  <th >
+                    <h5 style="margin-bottom: 15px; font-size: 12px;">Quotation No:</h5>
+                  </th>
+                  <th  class="addressDetatilKey">
+                    <h5 style="width: 135%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" contenteditable="true" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
+                  </th>
+                </tr>
+                <tr>
+                  <th >
+                    <h5 style="margin-bottom: 15px; font-size: 12px;">Revision No:</h5>
+                  </th>
+                  <th  class="addressDetatilKey">
+                    <h5 style="width: 135%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" contenteditable="true" #headerRevisionNo>{{quotationContentHeader?.revisionNo}}</h5>
+                  </th>
+                </tr>
+                <tr>
+                  <th>
+                    <h5 style="margin-bottom: 15px; font-size: 12px;">Your Ref:</h5>
+                  </th>
+                  <th  class="addressDetatilKey">
+                    <h5 style="width: 135%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" contenteditable="true" #headerRefNo>{{quotationContentHeader?.refNo}}</h5>
+                  </th>
+                </tr>
+      
+                <tr>
+                  <th>
+                    <h5 style="margin-bottom: 15px; font-size: 12px;">Quote Expiry Date:</h5>
+                  </th>
+                  <th  class="addressDetatilKey">
+                    <h5 style="width: 135%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" contenteditable="true" #headerExpDate>{{quotationContentHeader?.expDate}}</h5>
+                  </th>
+                </tr>
+                
+              </table>
+            </div>
+              <div class="addressDetails" style="margin-top: 15px;" >
+                <table style="color: black;">
+                  <tr>
+                    <th style="width: 135px">
+                      <h5 style="margin-bottom: 15px; font-size: 12px;">Attention :</h5>
+                    </th>
+                    <th style="width: 135px" class="addressDetatilKey">
+                      <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" contenteditable="true" #headerAttention>{{quotationContentHeader?.attention}}</h5>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th >
+                      <h5 style="margin-bottom: 15px; font-size: 12px;">Email :</h5>
+                    </th>
+                    <th  class="addressDetatilKey">
+                      <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" contenteditable="true" #headerAttentionEmail>{{quotationContentHeader?.attentionEmail}}</h5>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th >
+                      <h5 style="margin-bottom: 15px; font-size: 12px;">Telephone :</h5>
+                    </th>
+                    <th  class="addressDetatilKey">
+                      <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" contenteditable="true" #headerAttentionPhone>{{quotationContentHeader?.attentionPhone}}</h5>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>
+                      <h5 style="margin-bottom: 15px; font-size: 12px;">FAX :</h5>
+                    </th>
+                    <th  class="addressDetatilKey">
+                      <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" contenteditable="true" #headerAttentionFax>{{quotationContentHeader?.attentionFax}}</h5>
+                    </th>
+                  </tr>
+        
+                </table>
+              </div>
+              <div class="addressDetails" style="margin-top: 15px;">
+                <table style="color: black;">
+                  <tr>
+                    <th style="width: 135px">
+                      <h5 style="margin-bottom: 15px; font-size: 12px;">Sales Person :</h5>
+                    </th>
+                    <th style="width: 135px" class="addressDetatilKey">
+                      <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" contenteditable="true" #headerSalesPerson>{{quotationContentHeader?.salesPersonName}}</h5>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th >
+                      <h5 style="margin-bottom: 15px; font-size: 12px;">Email :</h5>
+                    </th>
+                    <th  class="addressDetatilKey">
+                      <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" contenteditable="true" #headerSalesPersonEmail>{{quotationContentHeader?.salesPersonEmail}}</h5>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th >
+                      <h5 style="margin-bottom: 15px; font-size: 12px;">Telephone :</h5>
+                    </th>
+                    <th  class="addressDetatilKey">
+                      <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" contenteditable="true" #headerSalesPersonPhone>{{quotationContentHeader?.salesPersonPhone}}</h5>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>
+                      <h5 style="margin-bottom: 15px; font-size: 12px;">FAX :</h5>
+                    </th>
+                    <th  class="addressDetatilKey">
+                      <h5 style="width: 125%;height: 25px;padding: 3px;border: 1px solid lightgray; margin-left:-25px" contenteditable="true" #headerSalesPersonFax>{{quotationContentHeader?.salesPersonFax}}</h5>
+                    </th>
+                  </tr>
+        
+                </table>
+              </div>
           </div>
         </div>
         
@@ -240,7 +235,7 @@
                   style="width: 110px; border: 1px solid black; font-weight: bold; font-size: 8px;"
                   scope="col"
                 >
-                  TOTAL PRICE
+                  TOTAL
                 </th>
               </tr>
                 <!-- <tr style="border: 2px solid black">
@@ -318,7 +313,7 @@
               </tbody>
             </table> -->
           </div>
-          <!-- <div class="list-detail" [attr.contenteditable]="editable">
+          <!-- <div class="list-detail" contenteditable="true">
             <p class="list-detail-p">
               Bootstrap sets basic global display, typography, and link styles:
             </p>
@@ -358,13 +353,13 @@
             <li style="width: 100px;height: 25px; margin-bottom: 3px;"> <b> SERVICING </b> </li>
           </ul>
           <ul style="list-style-type: none;margin-bottom: 20px; padding-left: 0px;" >
-            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 150px;height: 25px;" [attr.contenteditable]="editable" #price>{{quotationContentFooter?.price}}</li>
-            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 150px;height: 25px;" [attr.contenteditable]="editable" #deliveryP>{{quotationContentFooter?.deliveryP}}</li>
-            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 150px;height: 25px;" [attr.contenteditable]="editable" #validity>{{quotationContentFooter?.validity}}</li>
-            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 150px;height: 25px;" [attr.contenteditable]="editable" #paymentTer>{{quotationContentFooter?.paymentTer}}</li>
-            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 150px;height: 25px;" [attr.contenteditable]="editable" #manufacturer>{{quotationContentFooter?.manufacturer}}</li>
-            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 150px;height: 25px;" [attr.contenteditable]="editable" #warranty>{{quotationContentFooter?.warranty}}</li>
-            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 150px;height: 25px;" [attr.contenteditable]="editable" #servicing>{{quotationContentFooter?.servicing}}</li>  
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 150px;height: 25px; padding-left: 5px; font-size: 15px;" contenteditable="true" #price>{{quotationContentFooter?.price}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 150px;height: 25px; padding-left: 5px; font-size: 15px;" contenteditable="true" #deliveryP>{{quotationContentFooter?.deliveryP}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 150px;height: 25px; padding-left: 5px; font-size: 15px;" contenteditable="true" #validity>{{quotationContentFooter?.validity}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 150px;height: 25px; padding-left: 5px; font-size: 15px;" contenteditable="true" #paymentTer>{{quotationContentFooter?.paymentTer}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 150px;height: 25px; padding-left: 5px; font-size: 15px;" contenteditable="true" #manufacturer>{{quotationContentFooter?.manufacturer}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 150px;height: 25px; padding-left: 5px; font-size: 15px;" contenteditable="true" #warranty>{{quotationContentFooter?.warranty}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 150px;height: 25px; padding-left: 5px; font-size: 15px;" contenteditable="true" #servicing>{{quotationContentFooter?.servicing}}</li>  
           </ul>
         </div>
 
@@ -669,31 +664,7 @@
         <h4 class="modal-title">{{ alertHeader }}</h4>
       </div>
       <div class="modal-body">
-        <p>{{ alertBody }}</p>
-      </div>
-      <div class="modal-footer">
-        <div class="form-check">
-          <label class="form-check-label">
-            <input
-              type="radio"
-              class="form-check-input"
-              value=""
-              name="optradio"
-              (click)="onePDF()"
-            />One pdf
-          </label>
-        </div>
-        <div class="form-check">
-          <label class="form-check-label">
-            <input
-              type="radio"
-              class="form-check-input"
-              value=""
-              name="optradio"
-              (click)="twoPDF()"
-            />Two pdf
-          </label>
-        </div>
+        <p>{{ successMessage }}</p>
       </div>
     </div>
     <!-- /.modal-content -->
