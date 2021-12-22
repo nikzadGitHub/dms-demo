@@ -70,3 +70,4 @@ export class ManagerViewService {
     return this.httpClient.post(this.apiURL+"/quote/request-rejected",body, this.httpOptions);
   }
 }
+

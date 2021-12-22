@@ -30,16 +30,16 @@ export class ListOpportunityComponent implements OnInit {
 
     this.appService.getQuery(this.listUrl, this.pageItems).subscribe(
       (data) => {
-        console.log("data---->", data);
+      
         this.opportunities = data["data"]["data"] ?? data["data"]["items"];
         this.pages = data["data"]["links"];
 		this.totalRecords = data['data']['total'];
 		this.opportunities.forEach((value:any) => {
-			console.log("value:", value.created_date);
+			
 			
 			value.created_date = new Date(value.created_date)
 		})
-        console.log("oppertunities-data: ", this.opportunities);
+     
         this.loading = false;
       },
       (error) => {
@@ -58,8 +58,7 @@ export class ListOpportunityComponent implements OnInit {
       .getPage(url, this.pageItems, this.search_text)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((data) => {
-        console.log(data, "page data");
-
+      
         this.opportunities = data["data"]["data"];
         this.pages = data["data"]["links"];
       });

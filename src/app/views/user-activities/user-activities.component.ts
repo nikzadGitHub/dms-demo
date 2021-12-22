@@ -41,6 +41,11 @@ export class UserActivitiesComponent implements OnInit {
     
     this.userAactivities.getActivity().subscribe((res:any) => {
       this.activitydata = res.data;
+      this.activitydata.forEach((value) => {
+        value.completion_date = new Date(value.completion_date);
+        value.due_date = new Date(value.due_date)
+      });
+      
       this.closedData =  this.activitydata.filter(function(item) {
         return item.status == "CLOSED";
       });
