@@ -17,7 +17,6 @@ import { Quote } from "../../quote/quote";
 import { QuoteService } from "../../quote/quote.service";
 import { SociService } from "../soci.service";
 import { SystemConfig } from "../../config/system-config";
-import * as moment from "moment";
 
 @Component({
   selector: "app-edit",
@@ -25,7 +24,6 @@ import * as moment from "moment";
   styleUrls: ["./edit.component.scss"],
 })
 export class EditComponent implements OnInit {
-  moment: any = moment;
   @ViewChild("billingRemarkModal") billingRemarkModal: ModalDirective;
   @ViewChild("paymentRemarkModal") paymentRemarkModal: ModalDirective;
   @ViewChild("successModal") successModal: ModalDirective;
@@ -157,6 +155,9 @@ export class EditComponent implements OnInit {
   enableSoldToedit = true;
   isBillTo = false;
   enableBillToedit = true;
+  filteredCompanyData: any = [];
+  opp_id: any;
+  companyId: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -185,7 +186,7 @@ export class EditComponent implements OnInit {
       discount: "",
       bill_to: "",
       ship_to: "",
-      sold_to: "",
+      company_name: "",
       soci_title: "",
       tender: "",
       cost_item: "",
@@ -234,9 +235,10 @@ export class EditComponent implements OnInit {
   }
 
   getSociData(soci_id) {
-    this.sociService.getSpecificSoci(soci_id).subscribe(async (res) => {
+    this.sociService.getSpecificSoci(soci_id).subscribe(async (res: any) => {
       //PO Details
       this.soci_data = res["data"];
+      this.opp_id = res.data.quote.opportunity.id;
       this.form.patchValue({
         sociRemarks: this.soci_data?.remarks,
       });
@@ -470,6 +472,25 @@ export class EditComponent implements OnInit {
   }
 
   // soci-detail
+
+  searchCompanyName(event) {
+    console.log("event:", event);
+
+    this.sociService.getQuery("/dms/customer-list").subscribe((res: any) => {
+      console.log("search-res:", res);
+      this.filteredCompanyData = res.data;
+    });
+  }
+
+  selectCompany(company, check) {
+    console.log("company:", company);
+    this.companyId = company.id;
+    console.log(
+      "data--->",
+      this.soci_data?.quote?.opportunity?.bill_to?.company_name
+    );
+  }
+
   enableEditSociDetail(value) {
     if (value == "ship_to") {
       this.isShipTo = true;
@@ -494,18 +515,82 @@ export class EditComponent implements OnInit {
       this.enableBillToedit = true;
     }
   }
-  updateSociDetail() {
-    console.log("working", this.form.value.ship_to);
-
-    // this.sociService.postQuery("/soci/" + this.soci_id, {
-    //   ship_to: this.form.value.ship_to,
-    //   remarks: this.form.value.sociRemarks,
-    // }).subscribe((res:any) => {
-    //   console.log("Res-->", res);
-
-    // });
+  updateSoldToDetail() {
+    this.sociService
+      .postQuery("/opportunity/update-sold-to/" + this.opp_id, {
+        sold_to: this.companyId,
+      })
+      .subscribe(
+        (res: any) => {
+          console.log("selected-res-->", res);
+          this.soci_data.quote.opportunity.sold_to.company_name =res.data.sold_to.company_name
+          this.soci_data.quote.opportunity.sold_to.address = res.data.sold_to.address
+          this.isShipTo = false;
+      this.enableShipToedit = true;
+          this.alertBody = res.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+          }, 2000);
+        },
+        (error: any) => {
+          console.log("error:", error);
+          this.alertBody = error.error.message;
+          this.dangerModal.hide();
+        }
+      );
+  }
+  updateShipToDetail() {
+    this.sociService
+      .postQuery("/opportunity/update-ship-to/" + this.opp_id, {
+        ship_to: this.companyId,
+      })
+      .subscribe(
+        (res: any) => {
+          console.log("selected-res-->", res);
+          this.soci_data.quote.opportunity.ship_to.company_name =res.data.ship_to.company_name
+          this.soci_data.quote.opportunity.ship_to.address = res.data.ship_to.address
+          this.isShipTo = false;
+          this.enableShipToedit = true;
+          this.alertBody = res.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+          }, 2000);
+        },
+        (error: any) => {
+          console.log("error:", error);
+          this.alertBody = error.error.message;
+          this.dangerModal.hide();
+        }
+      );
   }
 
+  updateBillToDetail() {
+    this.sociService
+      .postQuery("/opportunity/update-bill-to/" + this.opp_id, {
+        bill_to: this.companyId,
+      })
+      .subscribe(
+        (res: any) => {
+          console.log("selected-res-->", res);
+          this.soci_data.quote.opportunity.bill_to.company_name = res.data.bill_to.company_name;
+            this.soci_data.quote.opportunity.bill_to.address = res.data.bill_to.address
+          this.isBillTo = false;
+          this.enableBillToedit = true;
+          this.alertBody = res.message;
+          this.successModal.show();
+          setTimeout(() => {
+            this.successModal.hide();
+          }, 2000);
+        },
+        (error: any) => {
+          console.log("error:", error);
+          this.alertBody = error.error.message;
+          this.dangerModal.hide();
+        }
+      );
+  }
   // Standard Term
 
   editStandardPaymentTerm() {

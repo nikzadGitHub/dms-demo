@@ -144,7 +144,7 @@
       <br />
       <!-- End PO details -->
       <!-- SOCI Detaail -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
         <!-- header="PO Details" -->
         <p-accordionTab>
           <ng-template pTemplate="header">
@@ -223,23 +223,40 @@
             >
               <b>Sold To </b>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="!isSoldTo">
-              {{ soci_data?.quote?.opportunity?.sold_to?.company_name }}
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="isSoldTo">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="sold_to"
-                style="width: 175px;"
-              />
+            <div class="col-lg-2 col-md-2 col-sm-2 mr-4">
+              <div *ngIf="!isSoldTo">
+                {{ soci_data?.quote?.opportunity?.sold_to?.company_name }}
+              </div>
+              <div *ngIf="isSoldTo">
+                <span class="p-input-icon-right" style="width: 100%">
+                  <p-autoComplete
+                    class="search_field"
+                    formControlName="company_name"
+                    field="company_name"
+                    (completeMethod)="searchCompanyName($event)"
+                    [suggestions]="filteredCompanyData"
+                    [inputStyle]="{ width: '100%' }"
+                    [style]="{ width: '100%' }"
+                  >
+                    <ng-template let-item pTemplate="item">
+                      <div
+                        class="item"
+                        (click)="selectCompany(item, 'company_name')"
+                      >
+                        <div>{{ item.company_name }}</div>
+                      </div>
+                    </ng-template>
+                  </p-autoComplete>
+                  <i class="pi pi-search search-country-name-icon"></i>
+                </span>
+              </div>
             </div>
             <div class="action-icon">
               <a
                 [routerLink]=""
                 routerLinkActive="router-link-active"
                 *ngIf="isSoldTo"
-                (click)="updateSociDetail()"
+                (click)="updateSoldToDetail()"
                 ><i class="cil-check-circle"></i
               ></a>
               <a
@@ -295,32 +312,38 @@
             </div>
             <div class="col-lg-2 col-md-2 col-sm-2 mr-4">
               <div *ngIf="isShipTo">
-                <input
-                type="text"
-                class="form-control"
-                formControlName="ship_to"
-                style="width: 175px;"
-              />
+                <span class="p-input-icon-right" style="width: 100%">
+                  <p-autoComplete
+                    class="search_field"
+                    formControlName="company_name"
+                    field="company_name"
+                    (completeMethod)="searchCompanyName($event)"
+                    [suggestions]="filteredCompanyData"
+                    [inputStyle]="{ width: '100%' }"
+                    [style]="{ width: '100%' }"
+                  >
+                    <ng-template let-item pTemplate="item">
+                      <div
+                        class="item"
+                        (click)="selectCompany(item, 'company_name')"
+                      >
+                        <div>{{ item.company_name }}</div>
+                      </div>
+                    </ng-template>
+                  </p-autoComplete>
+                  <i class="pi pi-search search-country-name-icon"></i>
+                </span>
               </div>
               <div *ngIf="!isShipTo">
                 {{ soci_data?.quote?.opportunity?.ship_to?.company_name }}
               </div>
-              
             </div>
-            <!-- <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="isShipTo">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="ship_to"
-                style="width: 175px;"
-              />
-            </div> -->
             <div class="action-icon">
               <a
                 [routerLink]=""
                 routerLinkActive="router-link-active"
                 *ngIf="isShipTo"
-                (click)="updateSociDetail()"
+                (click)="updateShipToDetail()"
                 ><i class="cil-check-circle"></i
               ></a>
               <a
@@ -372,23 +395,40 @@
             >
               <b> Bill To </b>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="!isBillTo">
-              {{ soci_data?.quote?.opportunity?.bill_to?.company_name }}
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 mr-4" *ngIf="isBillTo">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="bill_to"
-                style="width: 175px;"
-              />
+            <div class="col-lg-2 col-md-2 col-sm-2 mr-4">
+              <div *ngIf="!isBillTo">
+                {{ soci_data?.quote?.opportunity?.bill_to?.company_name }}
+              </div>
+              <div *ngIf="isBillTo">
+                <span class="p-input-icon-right" style="width: 100%">
+                  <p-autoComplete
+                    class="search_field"
+                    formControlName="company_name"
+                    field="company_name"
+                    (completeMethod)="searchCompanyName($event)"
+                    [suggestions]="filteredCompanyData"
+                    [inputStyle]="{ width: '100%' }"
+                    [style]="{ width: '100%' }"
+                  >
+                    <ng-template let-item pTemplate="item">
+                      <div
+                        class="item"
+                        (click)="selectCompany(item, 'company_name')"
+                      >
+                        <div>{{ item.company_name }}</div>
+                      </div>
+                    </ng-template>
+                  </p-autoComplete>
+                  <i class="pi pi-search search-country-name-icon"></i>
+                </span>
+              </div>
             </div>
             <div class="action-icon">
               <a
                 [routerLink]=""
                 routerLinkActive="router-link-active"
                 *ngIf="isBillTo"
-                (click)="updateSociDetail()"
+                (click)="updateBillToDetail()"
                 ><i class="cil-check-circle"></i
               ></a>
               <a
@@ -428,7 +468,7 @@
           </div>
         </p-accordionTab>
       </p-accordion>
-       <!--End SOCI Detaail -->
+      <!--End SOCI Detaail -->
       <br />
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <!-- Standard Term Accordion -->
@@ -2278,7 +2318,6 @@
                 >
                   <td class="text-center">{{ i + 1 }}</td>
                   <td class="text-center">
-
                     {{ item.name }}
                   </td>
                   <td class="text-center">
@@ -2288,11 +2327,9 @@
                     {{ item.quantity }}
                   </td>
                   <td class="text-center">
-
                     {{ item.unit_price | number: "1.2" }}
                   </td>
                   <td class="text-center">
-     
                     {{ item.total_price | number: "1.2" }}
                   </td>
                   <td class="text-center">
@@ -2437,25 +2474,39 @@
                 <tr>
                   <td class="text-left"><b> Subtotal Before Tax</b></td>
                   <td class="text-right">
-                    {{ product_subtotal_before_tax?product_subtotal_before_tax:0 | number: "1.2" }}
+                    {{
+                      product_subtotal_before_tax
+                        ? product_subtotal_before_tax
+                        : (0 | number: "1.2")
+                    }}
                   </td>
                 </tr>
                 <tr>
                   <td class="text-left">
                     <b>Tax ({{ soci_data?.currency }})</b>
                   </td>
-                  <td class="text-right">{{ tax_rate?tax_rate:0 | number: "1.2" }}</td>
+                  <td class="text-right">
+                    {{ tax_rate ? tax_rate : (0 | number: "1.2") }}
+                  </td>
                 </tr>
                 <tr>
                   <td class="text-left"><b>Discount Value</b></td>
                   <td class="text-right">
-                    {{ products_total_discount_values?products_total_discount_values:0 | number: "1.2" }}
+                    {{
+                      products_total_discount_values
+                        ? products_total_discount_values
+                        : (0 | number: "1.2")
+                    }}
                   </td>
                 </tr>
                 <tr>
                   <td class="text-left"><b>Total Amount</b></td>
                   <td class="text-right">
-                    {{ product_total_net_amount?product_total_net_amount:0 | number: "1.2" }}
+                    {{
+                      product_total_net_amount
+                        ? product_total_net_amount
+                        : (0 | number: "1.2")
+                    }}
                   </td>
                 </tr>
               </table>
@@ -2568,23 +2619,37 @@
                 <tr>
                   <td class="text-left">Subtotal Before Tax</td>
                   <td class="text-right">
-                    {{ product_subtotal_before_tax?product_subtotal_before_tax:'0.0' | number: "1.2" }}
+                    {{
+                      product_subtotal_before_tax
+                        ? product_subtotal_before_tax
+                        : ("0.0" | number: "1.2")
+                    }}
                   </td>
                 </tr>
                 <tr>
                   <td class="text-left">Discount Value</td>
                   <td class="text-right">
-                    {{ products_total_discount_values?products_total_discount_values:0 | number: "1.2" }}
+                    {{
+                      products_total_discount_values
+                        ? products_total_discount_values
+                        : (0 | number: "1.2")
+                    }}
                   </td>
                 </tr>
                 <tr>
-                  <td class="text-left">{{ (soci_data?.currency)?(soci_data?.currency):'' }} Tax</td>
+                  <td class="text-left">
+                    {{ soci_data?.currency ? soci_data?.currency : "" }} Tax
+                  </td>
                   <td class="text-right">0.00</td>
                 </tr>
                 <tr>
                   <td class="text-left">Additional Cost & Charges</td>
                   <td class="text-right">
-                    {{ additional_cost_and_charges?additional_cost_and_charges:0 | number: "1.2" }}
+                    {{
+                      additional_cost_and_charges
+                        ? additional_cost_and_charges
+                        : (0 | number: "1.2")
+                    }}
                   </td>
                 </tr>
                 <tr>
@@ -3359,13 +3424,14 @@
 
       <div class="modal-body comment-body">
         <div class="row comment-list" *ngFor="let item of commentList">
-          <div class="col-lg-12 col-md-12 col-sm-12 ">
-            <label>{{ item.name }}
-              <p>({{item.created_at  | date: "dd-MMM-yyyy h:mm a" }})</p>
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <label
+              >{{ item.name }}
+              <p>({{ item.created_at | date: "dd-MMM-yyyy h:mm a" }})</p>
             </label>
             <p>{{ item.comment }}</p>
           </div>
-          <hr>
+          <hr />
         </div>
         <textarea
           placeholder="Comment"
