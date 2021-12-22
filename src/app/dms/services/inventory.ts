@@ -21,6 +21,5 @@ export function bookingIdFormat(booking_id: number) : string {
 export type InventoryList = InventoryItem[];
 
 export interface InventoryInterface {
-  getList(): Observable<InventoryList>;
-  getListSearch(data: any): Observable<InventoryList>;
+  getList(tabName: string, search: string): Observable<InventoryList>;
 }
