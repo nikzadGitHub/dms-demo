@@ -232,8 +232,6 @@ export class EditComponent implements OnInit {
     if (localStorage.getItem("auth-token")) {
       this.token = localStorage.getItem("auth-token");
     }
-
-    this.url = SystemConfig.apiBaseUrl;
   }
 
   getSociData(soci_id) {
@@ -477,11 +475,13 @@ export class EditComponent implements OnInit {
 
   searchCompanyName(event) {
     console.log("event:", event);
-
-    this.sociService.getQuery("/dms/customer-list").subscribe((res: any) => {
-      console.log("search-res:", res);
-      this.filteredCompanyData = res.data;
-    });
+    let query = event;
+    this.sociService
+      .getQuery("/dms/customer-list-search?search_text=" + query)
+      .subscribe((res: any) => {
+        console.log("search-res:", res);
+        this.filteredCompanyData = res.data;
+      });
   }
 
   selectCompany(company, check) {
@@ -525,10 +525,12 @@ export class EditComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log("selected-res-->", res);
-          this.soci_data.quote.opportunity.sold_to.company_name =res.data.sold_to.company_name
-          this.soci_data.quote.opportunity.sold_to.address = res.data.sold_to.address
+          this.soci_data.quote.opportunity.sold_to.company_name =
+            res.data.sold_to.company_name;
+          this.soci_data.quote.opportunity.sold_to.address =
+            res.data.sold_to.address;
           this.isShipTo = false;
-      this.enableShipToedit = true;
+          this.enableShipToedit = true;
           this.alertBody = res.message;
           this.successModal.show();
           setTimeout(() => {
@@ -550,8 +552,10 @@ export class EditComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log("selected-res-->", res);
-          this.soci_data.quote.opportunity.ship_to.company_name =res.data.ship_to.company_name
-          this.soci_data.quote.opportunity.ship_to.address = res.data.ship_to.address
+          this.soci_data.quote.opportunity.ship_to.company_name =
+            res.data.ship_to.company_name;
+          this.soci_data.quote.opportunity.ship_to.address =
+            res.data.ship_to.address;
           this.isShipTo = false;
           this.enableShipToedit = true;
           this.alertBody = res.message;
@@ -576,8 +580,10 @@ export class EditComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log("selected-res-->", res);
-          this.soci_data.quote.opportunity.bill_to.company_name = res.data.bill_to.company_name;
-            this.soci_data.quote.opportunity.bill_to.address = res.data.bill_to.address
+          this.soci_data.quote.opportunity.bill_to.company_name =
+            res.data.bill_to.company_name;
+          this.soci_data.quote.opportunity.bill_to.address =
+            res.data.bill_to.address;
           this.isBillTo = false;
           this.enableBillToedit = true;
           this.alertBody = res.message;
@@ -1332,7 +1338,7 @@ export class EditComponent implements OnInit {
       .subscribe((data) => {
         this.filteredProducts = data["data"];
       });
-      console.log("DATA",this.filteredProducts)
+    console.log("DATA", this.filteredProducts);
   }
 
   addPrductData() {

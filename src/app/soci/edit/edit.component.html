@@ -84,7 +84,7 @@
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Owner</b></label>
-              <p>{{ soci_data?.quote?.opportunity?.ownner?.full_name }}</p>
+              <p>{{ soci_data?.owner_info?.full_name }}</p>
             </div>
           </div>
         </div>
@@ -165,9 +165,7 @@
               <b>Payemt Term </b>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3">
-              {{
-                this.standerd_payment_term ? this.standerd_payment_term : "_"
-              }}
+              {{soci_data?.quote?.opportunity?.payment_term?soci_data?.quote?.opportunity?.payment_term:'_'}}
             </div>
             <div
               class="col-lg-3 col-md-3 col-sm-3 grey"
@@ -499,7 +497,7 @@
               style="text-align: right"
               *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
             >
-              <div style="text-align: center;">
+              <div style="text-align: center">
                 <a
                   [routerLink]=""
                   routerLinkActive="router-link-active"
@@ -860,8 +858,8 @@
                   <th>Billing ID</th>
                   <th>Percentage %</th>
                   <th>Schedule</th>
-                  <th>SOC Payment Terms</th>
-                  <th>Status</th>
+                  <!-- <th>SOC Payment Terms</th>
+                  <th>Status</th> -->
                   <th>Amount ({{ soci_data?.currency }})</th>
                   <th>Notes</th>
                   <th *ngIf="is_preview_check"></th>
@@ -947,7 +945,7 @@
                     </div>
                     <!-- {{ payment.schedule | date: "dd-MMM-yyyy" }} -->
                   </td>
-                  <td>
+                  <!-- <td>
                     <input
                       type="number"
                       class="form-control"
@@ -974,7 +972,7 @@
                           : ''
                       "
                     />
-                  </td>
+                  </td> -->
                   <td>
                     <div
                       *ngIf="editableRowIndex !== i || selectedId !== 'payment'"
@@ -1115,7 +1113,7 @@
                       type="date"
                     />
                   </td>
-                  <td style="width: 10%; padding: 6px">
+                  <!-- <td style="width: 10%; padding: 6px">
                     <input
                       class="form-control"
                       style="width: 80px"
@@ -1133,7 +1131,7 @@
                       placeholder=""
                       type="input"
                     />
-                  </td>
+                  </td> -->
                   <td style="width: 10%; padding: 6px">
                     <!-- (keyup)="changePaymentValue(i)" -->
                     <input
@@ -1755,9 +1753,14 @@
                 <div class="col-5"><b>Title</b></div>
               </div>
             </div>
-            <div class="col-lg-6" style="text-align: middle">
+            <div class="col-lg-7" style="text-align: middle">
               <div class="col-md-8">
                 <b> Description</b>
+              </div>
+            </div>
+            <div class="col-lg-2" style="text-align: end">
+              <div class="col-md-12">
+                <b> Action</b>
               </div>
             </div>
           </div>
@@ -1892,8 +1895,8 @@
                   </div>
                 </div>
 
-                <div class="col-md-1" style="text-align: right">
-                  <div class="row">
+                <div class="col-md-1" style="text-align: -webkit-center">
+                  <div class="row" style="width: 100%">
                     <div class="action-icon">
                       <!-- <a [routerLink]="" routerLinkActive="router-link-active"
                       ><i class="cil-check-circle"></i
@@ -2375,15 +2378,15 @@
                 >
                   <!-- {{ i + 1 }} -->
                   <td></td>
-                  <td style="size: 20%;display: flex;border: none;">
+                  <td style="size: 20%; display: flex; border: none">
                     <!-- [(ngModel)]="selectedProductAdvanced[i]" -->
-                      <p-autoComplete
+                    <p-autoComplete
                       formControlName="name"
                       field="name"
                       [dropdown]="false"
                       [style]="{ width: '100%' }"
                       [inputStyle]="{ width: '90%' }"
-                      >
+                    >
                       <!-- <ng-template let-product pTemplate="item">
                         <div
                         class="product-item"
@@ -2392,11 +2395,12 @@
                         <div>{{ product.name }}</div>
                       </div>
                     </ng-template> -->
-                  </p-autoComplete>
-                  <div class="product_search" (click)="filterProduct(name)">
-                    <i class="pi pi-search" style="font-size: larger;"></i>
-                  </div>
-                </td>
+                    </p-autoComplete>
+                    <!-- (click)="filterProduct(name)" -->
+                    <div class="product_search" >
+                      <i class="pi pi-search" style="font-size: larger"></i>
+                    </div>
+                  </td>
                   <td style="width: 14%">
                     <input
                       class="form-control"
@@ -3464,8 +3468,6 @@
   <!-- /.modal-dialog -->
 </div>
 
-
-
 <div
   bsModal
   #searchModal="bs-modal"
@@ -3476,11 +3478,9 @@
   aria-hidden="true"
 >
   <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="height: 80vh;overflow-y: auto;">
+    <div class="modal-content" style="height: 80vh; overflow-y: auto">
       <div class="modal-header search-header">
-        <h2 class="modal-title">
-          Search Product
-        </h2>
+        <h2 class="modal-title">Search Product</h2>
         <!-- <button
           type="button"
           class="close text-white"
@@ -3492,25 +3492,19 @@
       </div>
 
       <div class="modal-body search-body">
-        <input
-          type="text"
-          pInputText
-          placeholder="SOCI Search"
-          class="p-2"
-        />
-        <hr>
-        <div class='w-100 d-flex flex-column pl-3'>
-        <h1><strong >Search Product</strong></h1>
-        <span>Name: </span>
-        <span>SKU</span>
-        <span>Tax Rate</span>
-        <span>UOM</span>
-        <span>Unit Price</span>
-        <span>List Price</span>
-        <span>Floor Price</span>
-        <span>Cost Price</span>
-     
-      </div>
+        <input type="text" pInputText placeholder="SOCI Search" class="p-2" />
+        <hr />
+        <div class="w-100 d-flex flex-column pl-3">
+          <h1><strong>Search Product</strong></h1>
+          <span>Name: </span>
+          <span>SKU</span>
+          <span>Tax Rate</span>
+          <span>UOM</span>
+          <span>Unit Price</span>
+          <span>List Price</span>
+          <span>Floor Price</span>
+          <span>Cost Price</span>
+        </div>
       </div>
 
       <div class="modal-footer">
@@ -3520,7 +3514,7 @@
           type="button"
           label="Done"
           class="p-button-primary"
-          style="padding: 8px 8vh;"
+          style="padding: 8px 8vh"
         ></button>
         <button
           pButton
@@ -3528,7 +3522,7 @@
           type="button"
           label="Close"
           class="p-button-danger"
-          style="padding: 8px 8vh;"
+          style="padding: 8px 8vh"
         ></button>
       </div>
     </div>
