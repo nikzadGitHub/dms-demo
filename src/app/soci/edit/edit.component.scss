@@ -744,7 +744,7 @@ h4 {
     cursor: pointer;
     height: 41px;
     background: lightgray;
-    margin-left: -13px;
+    margin-left: -15px;
     border-radius: 0px 5px 5px 0px;
 }
 .search-header {
@@ -763,5 +763,37 @@ h4 {
     font-size: 21px;
     // position: absolute;
     top: 20px;
+  }
+}
+.d-flex{
+  span{
+    color: black;
+  }
+}
+.search-bar-body{
+  border-radius: 0px 7px 7px 0px;
+    background: lightgray;
+  i{
+    width: 43px;
+    height: 30px;
+    cursor: pointer;
+    padding-top: 6px;
+  }
+  input{
+    border: none;
+  }
+}
+.search-body{
+  p-autoComplete{
+    width: 95%;
+    }
+}
+tr{
+  td{
+    font-size: 16px;
+    strong{
+      font-weight: 600;
+      font-size: 17px;
+    }
   }
 }

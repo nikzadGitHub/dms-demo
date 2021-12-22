@@ -2340,25 +2340,16 @@
                   <td></td>
                   <td style="size: 20%;display: flex;border: none;">
                     <!-- [(ngModel)]="selectedProductAdvanced[i]" -->
-                      <p-autoComplete
-                      formControlName="name"
-                      field="name"
-                      [dropdown]="false"
-                      [style]="{ width: '100%' }"
-                      [inputStyle]="{ width: '90%' }"
-                      >
-                      <!-- <ng-template let-product pTemplate="item">
-                        <div
-                        class="product-item"
-                        (click)="productDetails(product, 'add_product')"
-                        >
-                        <div>{{ product.name }}</div>
+                    <span class="p-input-icon-right d-flex">
+                      <!-- <input type="text" pInputText  #search placeholder="Search">-->
+                      <div >
+                        <input type="text" disabled value="{{selectedProductName}}" style="width: 100%;padding: 4px;border: 1px solid lightgray;">
                       </div>
-                    </ng-template> -->
-                  </p-autoComplete>
-                  <div class="product_search" (click)="filterProduct(name)">
-                    <i class="pi pi-search" style="font-size: larger;"></i>
-                  </div>
+                      <div class="search-bar-body" (click)="searchBar()">
+                        <i class="pi pi-search" style="font-size: 20px;"></i>
+                      </div>
+                  </span>
+                  
                 </td>
                   <td style="width: 14%">
                     <input
@@ -2673,25 +2664,26 @@
           <label for="">Please search product or add dummy sku.</label>
 
           <!-- product-search -->
+          <!-- (completeMethod)="filterProduct($event)" -->
           <div class="search-product">
             <label for="">Product Name</label>
             <p-autoComplete
               formControlName="name"
               [suggestions]="filteredProducts"
-              (completeMethod)="filterProduct($event)"
+             
               field="name"
               [dropdown]="true"
               [style]="{ width: '100%' }"
               [inputStyle]="{ width: '100%' }"
             >
-              <ng-template let-product pTemplate="item">
+              <!-- <ng-template let-product pTemplate="item">
                 <div
                   class="product-item"
                   (click)="productDetails(product, 'update_product')"
                 >
                   <div>{{ product.name }}</div>
                 </div>
-              </ng-template>
+              </ng-template> -->
             </p-autoComplete>
           </div>
           <hr />
@@ -3399,7 +3391,7 @@
 </div>
 
 
-
+<!-- search product modal -->
 <div
   bsModal
   #searchModal="bs-modal"
@@ -3410,40 +3402,77 @@
   aria-hidden="true"
 >
   <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="height: 80vh;overflow-y: auto;">
+    <div class="modal-content" style="height: fit-content;">
       <div class="modal-header search-header">
         <h2 class="modal-title">
           Search Product
         </h2>
-        <!-- <button
-          type="button"
-          class="close text-white"
-          (click)="searchModal.hide()"
-          aria-label="Close"
-        > 
-          <span aria-hidden="true">&times;</span>
-        </button>-->
       </div>
 
       <div class="modal-body search-body">
-        <input
-          type="text"
-          pInputText
-          placeholder="SOCI Search"
-          class="p-2"
-        />
+        <p-autoComplete
+              [(ngModel)]="productName"
+              [suggestions]="filteredProducts"
+              (completeMethod)="filterProduct($event)"
+              field="name"
+              [dropdown]="false"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+              [ngModelOptions]="{standalone: true}"
+              
+            >
+              <ng-template let-product pTemplate="item">
+                <div
+                  class="product-item"
+                  (click)="productDetails(product, 'update_product')"
+                >
+                  <div>{{ product.name }}</div>
+                </div>
+              </ng-template>
+            </p-autoComplete>
+            <!-- <div *ngIf="searchProductName != ''" style="margin: 16px 0;width: 69%;margin-right: 190px;">
+              <input type="text" value="{{searchProductName}}">
+              
+            </div> -->
         <hr>
         <div class='w-100 d-flex flex-column pl-3'>
-        <h1><strong >Search Product</strong></h1>
-        <span>Name: </span>
-        <span>SKU</span>
-        <span>Tax Rate</span>
-        <span>UOM</span>
-        <span>Unit Price</span>
-        <span>List Price</span>
-        <span>Floor Price</span>
-        <span>Cost Price</span>
-     
+          <h2 *ngIf="searchProductName != ''" style="padding-bottom: 15px;">Product Detail</h2>
+          <table *ngIf="searchProductName != ''">
+            <tbody>
+              <tr>
+                <td><strong>Name: </strong></td>
+                <td>{{searchProductDetails?.name}}</td>
+              </tr>
+              <tr>
+                <td><strong>SKU: </strong></td>
+                <td>{{searchProductDetails?.sku}}</td>
+              </tr>
+              <tr>
+                <td><strong>Tax Rate: </strong></td>
+                <td>{{searchProductDetails?.tax_rate}}</td>
+              </tr>
+              <tr>
+                <td><strong>UOM: </strong></td>
+                <td>{{searchProductDetails?.UOM}}</td>
+              </tr>
+              <tr>
+                <td><strong>Unit Price: </strong></td>
+                <td>{{searchProductDetails?.unit_price}}</td>
+              </tr>
+              <tr>
+                <td><strong>List Price: </strong></td>
+                <td>{{searchProductDetails?.list_price}}</td>
+              </tr>
+              <tr>
+                <td><strong>Floor Price: </strong></td>
+                <td> {{searchProductDetails?.floor_price}}</td>
+              </tr>
+              <tr>
+                <td><strong>Cost Price: </strong></td>
+                <td>{{searchProductDetails?.cost_price}}</td>
+              </tr>
+            </tbody>
+          </table>
       </div>
       </div>
 
@@ -3452,9 +3481,10 @@
           pButton
           pRipple
           type="button"
-          label="Done"
+          label="Ok"
           class="p-button-primary"
           style="padding: 8px 8vh;"
+          (click)="modalOkButton()"
         ></button>
         <button
           pButton
@@ -3463,6 +3493,7 @@
           label="Close"
           class="p-button-danger"
           style="padding: 8px 8vh;"
+          (click)="searchModal.hide()"
         ></button>
       </div>
     </div>

@@ -159,6 +159,11 @@ export class EditComponent implements OnInit {
   enableSoldToedit = true;
   isBillTo = false;
   enableBillToedit = true;
+  searchProductName: any ="";
+  searchProductDetails: any;
+  searchValue: string;
+  productName:any;
+  selectedProductName: any="";
 
   constructor(
     private route: ActivatedRoute,
@@ -279,7 +284,7 @@ export class EditComponent implements OnInit {
       );
       this.quotation_validity_payment_term_to.setDate(
         this.quotation_validity_payment_term_to.getDate() +
-          this.default_payment_term
+        this.default_payment_term
       );
       // Delivery_terms
       this.default_delivery_term = res["data"]["standard_terms"][
@@ -307,7 +312,7 @@ export class EditComponent implements OnInit {
       );
       this.quotation_validity_delivery_term_to.setDate(
         this.quotation_validity_delivery_term_to.getDate() +
-          this.default_delivery_term
+        this.default_delivery_term
       );
       // billing_milestone
       this.billing_milestone = res["data"]["billing_milestones"];
@@ -419,11 +424,11 @@ export class EditComponent implements OnInit {
     this.sociService
       .getcomment(
         "/comment?type=" +
-          this.type +
-          "&type_id=" +
-          this.soci_id +
-          "&section=" +
-          this.section
+        this.type +
+        "&type_id=" +
+        this.soci_id +
+        "&section=" +
+        this.section
       )
       .subscribe((res: any) => {
         console.log("comment-res:", res);
@@ -435,11 +440,11 @@ export class EditComponent implements OnInit {
     this.sociService
       .postQuery(
         "/comment?type=" +
-          this.type +
-          "&type_id=" +
-          this.soci_id +
-          "&section=" +
-          this.section,
+        this.type +
+        "&type_id=" +
+        this.soci_id +
+        "&section=" +
+        this.section,
         {
           comment: this.accordianComment,
         }
@@ -558,6 +563,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("days").reset();
             this.form.get("fromDate").reset();
           }, 2000);
@@ -567,6 +573,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -587,13 +594,14 @@ export class EditComponent implements OnInit {
           this.delivery_term_to = new Date(this.delivery_term_from);
           this.delivery_term_to.setDate(
             this.delivery_term_to.getDate() +
-              parseInt(this.form.value.delivery_days)
+            parseInt(this.form.value.delivery_days)
           );
           this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("delivery_days").reset();
             this.form.get("delivery_fromDate").reset();
           }, 2000);
@@ -603,6 +611,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -636,6 +645,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("stage").reset();
             this.form.get("amount").reset();
             this.form.get("remarks").reset();
@@ -646,6 +656,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -688,6 +699,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -695,6 +707,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -716,6 +729,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -723,6 +737,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -753,6 +768,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("percentage").reset();
             this.form.get("schedule").reset();
             this.form.get("soc_payment_term").reset();
@@ -766,6 +782,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -786,6 +803,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -793,6 +811,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -813,6 +832,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -820,6 +840,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -850,6 +871,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("description").reset();
             this.form.get("quantity").reset();
             this.form.get("unit_price").reset();
@@ -862,6 +884,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -902,6 +925,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -909,6 +933,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -927,6 +952,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -934,6 +960,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -960,6 +987,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("schedule").reset();
             this.form.get("percentage").reset();
             this.form.get("amount").reset();
@@ -971,6 +999,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -993,6 +1022,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -1000,6 +1030,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1018,6 +1049,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -1025,6 +1057,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1047,6 +1080,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("soci_title").reset();
             this.form.get("description").reset();
           }, 2000);
@@ -1056,6 +1090,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1076,6 +1111,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -1083,6 +1119,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1098,6 +1135,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -1105,6 +1143,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1135,6 +1174,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("cost_item_id").reset();
             this.form.get("description").reset();
             this.form.get("quantity").reset();
@@ -1147,6 +1187,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1199,6 +1240,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -1206,6 +1248,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1225,6 +1268,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -1232,6 +1276,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1240,17 +1285,16 @@ export class EditComponent implements OnInit {
 
   // ADD Product
   filterProduct(event) {
-    this.searchModal.show();
     let query = event.query;
     this.sociService
       .getFilteredProducts(query, this.customer_id, this.external_id)
       .subscribe((data) => {
         this.filteredProducts = data["data"];
       });
-      console.log("DATA",this.filteredProducts)
   }
 
   addPrductData() {
+    this.selectedProductName=""
     this.sociService
       .postQuery("/soci/product", {
         external_product_number: this.external_product_number,
@@ -1283,6 +1327,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("name").reset();
             this.form.get("sku").reset();
             this.form.get("quantity").reset();
@@ -1300,12 +1345,15 @@ export class EditComponent implements OnInit {
           setTimeout(() => {
             this.dangerModal.hide();
             this.modalClassRomve();
+            this.modalClassRomve();
           }, 2000);
         }
       );
   }
 
   productDetails(product, check) {
+    this.searchProductDetails=product
+    this.searchProductName=product.name;
     this.productCheck = check;
     this.external_product_number = product.external_product_number;
     this.product_data_area_id = product.data_area_id;
@@ -1465,6 +1513,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error: any) => {
@@ -1474,6 +1523,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1495,6 +1545,7 @@ export class EditComponent implements OnInit {
         this.successModal.show();
         setTimeout(() => {
           this.successModal.hide();
+          this.modalClassRomve();
         }, 2000);
       },
       (error) => {
@@ -1502,6 +1553,7 @@ export class EditComponent implements OnInit {
         this.dangerModal.show();
         setTimeout(() => {
           this.dangerModal.hide();
+          this.modalClassRomve();
         }, 2000);
       }
     );
@@ -1544,6 +1596,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.request_approval = true;
             this.router.navigate(["/soci/index"]);
           }, 2000);
@@ -1554,6 +1607,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1572,6 +1626,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.request_approval = true;
             this.router.navigate(["/soci/index"]);
             this.is_released = false;
@@ -1582,6 +1637,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1603,6 +1659,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.request_approval = true;
             this.managerViewAction();
             // this.router.navigate(["/managerview/approval"], navigate);
@@ -1613,6 +1670,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1629,6 +1687,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.request_approval = true;
             this.managerViewAction();
             // this.router.navigate(["/managerview/approval"]);
@@ -1639,6 +1698,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1656,6 +1716,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.request_approval = true;
             this.managerViewAction();
             // this.router.navigate(["/managerview/approval"]);
@@ -1666,6 +1727,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
             this.form.get("cancelled_remarks").reset();
           }, 2000);
         }
@@ -1678,6 +1740,7 @@ export class EditComponent implements OnInit {
       },
     };
     this.successModal.hide();
+    this.modalClassRomve();
     this.request_approval = true;
     this.router.navigate(["/managerview/approval"], navigate);
   }
@@ -1760,6 +1823,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             if (showApprovalFlag) this.confirmationModal.show();
           }, 2000);
         },
@@ -1769,6 +1833,7 @@ export class EditComponent implements OnInit {
           this.isRemarksAdded = false;
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1786,5 +1851,22 @@ export class EditComponent implements OnInit {
     if (body.classList.contains("modal-open")) {
       body.classList.remove("modal-open");
     }
+  }
+  searchBar(val){
+    this.searchValue=val;
+    this.searchModal.show();
+  }
+  modalOkButton(){
+    this.selectedProductName=this.searchProductName
+    if(this.searchProductName !== ''){
+      let sku=this.searchProductDetails.sku;
+      let unit_price =this.searchProductDetails.unit_price
+      this.form.patchValue({
+        sku: sku,
+        unit_price: unit_price,
+        amount: 0.0,
+      });
+    }
+    this.searchModal.hide()
   }
 }
