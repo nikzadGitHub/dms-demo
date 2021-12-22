@@ -13,6 +13,7 @@ import { settings } from '../../environments/environment.prod';
 export class QuoteService {
    
   private apiURL = settings.apiBaseUrl;
+  // id = new Subject<any>();
    
   httpOptions = {
     headers: new HttpHeaders({
@@ -250,5 +251,12 @@ downloadQuoteTemplate(Q_id,T_id){
     catchError(this.errorHandler)
   )
 }
+
+  // public quotationIdSet(value) {
+  //   this.id.next(value)
+  // }
+  // public quotationIdGet(): Observable<any> {
+  //   return this.id.asObservable();
+  // }
 
 }

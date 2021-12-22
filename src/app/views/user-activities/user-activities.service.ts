@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { settings } from 'environments/environment';
 import { Observable, throwError } from 'rxjs';
@@ -8,6 +8,13 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserActivitiesService {
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+  }
+  
   private apiURL = settings.apiBaseUrl
   constructor(private httpClient: HttpClient) { }
 
@@ -29,6 +36,13 @@ export class UserActivitiesService {
       tap((response: any) => {
 
     }),
+      catchError(this.errorHandler)
+    )
+  }
+  getPage(url,pageItems,search_text){
+    let query = '&page_items=' + pageItems + '&search_text=' + search_text;
+    return this.httpClient.get(url + query,this.httpOptions)
+    .pipe(
       catchError(this.errorHandler)
     )
   }
