@@ -21,7 +21,8 @@
     "lib": [
       "esnext",
       "dom"
-    ]
+    ],
+    "resolveJsonModule": true
   },
   "angularCompilerOptions": {
     "strictTemplates": true,

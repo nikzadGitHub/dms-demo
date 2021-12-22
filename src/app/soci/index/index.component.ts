@@ -44,48 +44,51 @@ export class IndexComponent implements OnInit {
   columnValue = [
     { name: "Created date:", key: "c_date" },
     { name: "SOCI ID:", key: "soci_id" },
-    { name: "Company Name:", key: "company_name" },
     { name: "Quotation ID:", key: "quote_full_id" },
     { name: "Quotation Date:", key: "quote_date" },
-    { name: "Amount:", key: "po_amount" },
-    { name: "PO No:", key: "po_no" },
-    { name: "PO Date:", key: "po_date" },
+    { name: "Status:", key: "status_desc" },
+    { name: "Customer PO Amount:", key: "po_amount" },
+    { name: "Customer PO No:", key: "po_no" },
     { name: "FO Number:", key: "fo_order_number" },
     { name: "FO Status:", key: "backend_status" },
-    { name: "Status:", key: "status_desc" },
+    { name: "Country", key: "country" },
+    { name: "Unit", key: "unit" },
+    { name: "Individual/Company Name:", key: "company_name" },
+    { name: "Customer PO Date:", key: "po_date" },
   ];
   isTooltipSown: any = "";
   sociDate: any;
-  loading:boolean
+  loading: boolean;
 
   constructor(public sociService: SociService, private router: Router) {}
 
-  ngOnInit(): void { 
-    this.loading = true 
+  ngOnInit(): void {
+    this.loading = true;
     this.sociService
-      .getAll(this.pageItems, this.search_text, this.sort) 
-      .subscribe((data) => {
-
-        data["data"]["soci"]["data"].forEach((value) => {
-          value.created_at = new Date(value.created_at);
-          if (value.po_date != null) {
-            value.po_date = new Date(value.po_date);
-          }
-          if(value.quote_date != null){
-            value.quote_date = new Date(value.quote_date)
-          }
-        });
-        this.socis = data["data"]["soci"]["data"];
-        this.pages = data["data"]["soci"]["links"];
-        this.totalRecords = data["data"]["soci"]["total"];
-        this.checkPermission();
-        this.loading = false 
-
-      },error => {
+      .getAll(this.pageItems, this.search_text, this.sort)
+      .subscribe(
+        (data) => {
+          data["data"]["soci"]["data"].forEach((value) => {
+            value.created_at = new Date(value.created_at);
+            if (value.po_date != null) {
+              value.po_date = new Date(value.po_date);
+            }
+            if (value.quote_date != null) {
+              value.quote_date = new Date(value.quote_date);
+            }
+          });
+          this.socis = data["data"]["soci"]["data"];
+          this.pages = data["data"]["soci"]["links"];
+          this.totalRecords = data["data"]["soci"]["total"];
+          this.checkPermission();
           this.loading = false;
-        });
+        },
+        (error) => {
+          this.loading = false;
+        }
+      );
     setTimeout(() => {
-      this.selectedValues = this.columnValue.slice(0, 11);
+      this.selectedValues = this.columnValue.slice(0,7);
     }, 1000);
   }
 
@@ -96,9 +99,9 @@ export class IndexComponent implements OnInit {
       .subscribe((data) => {
         this.socis = data["data"]["soci"]["data"];
         this.totalRecords = data["data"]["soci"]["total"];
-      //   this.loading=false
-      // },error => {
-      //   this.loading = false;
+        //   this.loading=false
+        // },error => {
+        //   this.loading = false;
       });
   }
   addPo(check) {

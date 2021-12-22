@@ -1,5 +1,4 @@
-
-<p-table 
+<p-table
   #dt
   [value]="socis"
   styleClass="p-datatable-customers"
@@ -106,9 +105,19 @@
         class="text-center"
         *ngIf="checkItem('company_name')"
       >
-        <div style="white-space: nowrap;flex-direction: column;align-items: center;overflow: hidden;word-break: break-all;text-overflow: ellipsis;"  class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="
+            white-space: nowrap;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            word-break: break-all;
+            text-overflow: ellipsis;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           Individual/Company Name
-          <div class="name-icons">  
+          <div class="name-icons">
             <p-sortIcon field="customer.company_name"></p-sortIcon>
             <p-columnFilter
               type="text"
@@ -124,43 +133,15 @@
         class="text-center"
         *ngIf="checkItem('quote_full_id')"
       >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
-          Country
-          <div class="quote-icons">
-            <p-sortIcon field="quote_full_id"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="quote_full_id"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
-          </div>
-        </div>
-      </th>
-      <th
-        pSortableColumn="quote_full_id"
-        class="text-center"
-        *ngIf="checkItem('quote_full_id')"
-      >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
-          Unit
-          <div class="quote-icons">
-            <p-sortIcon field="quote_full_id"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="quote_full_id"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
-          </div>
-        </div>
-      </th>
-      <th
-        pSortableColumn="quote_full_id"
-        class="text-center"
-        *ngIf="checkItem('quote_full_id')"
-      >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="
+            display: flex;
+            white-space: nowrap;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           Quote ID
           <div class="quote-icons">
             <p-sortIcon field="quote_full_id"></p-sortIcon>
@@ -204,15 +185,23 @@
       <th
         pSortableColumn="po_no"
         class="text-center"
-        *ngIf="checkItem('po_no')"
+        *ngIf="checkItem('po_amount')"
       >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
-          Doc Amount
+        <div
+          style="
+            display: flex;
+            white-space: nowrap;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
+          Customer PO Amount
           <div class="amount-icons">
             <p-sortIcon field="po_amount"></p-sortIcon>
             <p-columnFilter
               type="text"
-              field="po_no"
+              field="po_amount"
               display="menu"
               class="p-ml-auto"
             ></p-columnFilter>
@@ -220,17 +209,25 @@
         </div>
       </th>
       <th
-        pSortableColumn="po_amount"
+        pSortableColumn="po_no"
         class="text-center"
-        *ngIf="checkItem('po_amount')"
+        *ngIf="checkItem('po_no')"
       >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
-          Doc No
+        <div
+          style="
+            display: flex;
+            white-space: nowrap;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
+          Customer PO No
           <div class="PO-icons">
             <p-sortIcon field="po_no"></p-sortIcon>
             <p-columnFilter
-              type="numeric"
-              field="po_amount"
+              type="text"
+              field="po_no"
               display="menu"
               class="p-ml-auto"
             ></p-columnFilter>
@@ -243,8 +240,16 @@
         class="text-center"
         *ngIf="checkItem('po_date')"
       >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
-          Doc Date
+        <div
+          style="
+            display: flex;
+            white-space: nowrap;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
+        Customer PO Date
           <div class="PO_date-icons">
             <p-sortIcon field="po_date"></p-sortIcon>
             <p-columnFilter
@@ -283,13 +288,20 @@
         </div>
       </th>
 
-
       <th
         pSortableColumn="backend_status"
         class="text-center"
         *ngIf="checkItem('backend_status')"
       >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="
+            display: flex;
+            white-space: nowrap;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           FO Status
           <div class="status-icons">
             <p-sortIcon field="backend_status"></p-sortIcon>
@@ -300,7 +312,50 @@
               class="p-ml-auto"
             ></p-columnFilter>
           </div>
-         
+        </div>
+      </th>
+      <th pSortableColumn="" class="text-center" *ngIf="checkItem('country')">
+        <div
+          style="
+            display: flex;
+            white-space: nowrap;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
+          Country
+          <div class="quote-icons">
+            <p-sortIcon field=""></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field=""
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+        </div>
+      </th>
+      <th pSortableColumn="" class="text-center" *ngIf="checkItem('unit')">
+        <div
+          style="
+            display: flex;
+            white-space: nowrap;
+            flex-direction: column;
+            align-items: center;
+          "
+          class="p-d-flex p-jc-between p-ai-center"
+        >
+          Unit
+          <div class="quote-icons">
+            <p-sortIcon field=""></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field=""
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
         </div>
       </th>
 
@@ -349,20 +404,30 @@
       <td class="text-center" *ngIf="checkItem('company_name')">
         <a href="/#/soci/index">
           <span class="p-column-title"> Company Name</span>
-          {{ soci?.customer?.company_name }}
+          {{
+            soci?.customer?.company_name ? soci?.customer?.company_name : "_"
+          }}
         </a>
       </td>
-      <td class="text-center">-</td>
-      <td class="text-center">-</td>
       <td class="text-center" *ngIf="checkItem('quote_full_id')">
         <span class="p-column-title">Quote Id</span>
         {{ soci.quote_full_id }}
       </td>
       <td class="text-center" *ngIf="checkItem('quote_date')">
-        <span class="p-column-title">Quote Sate</span>
+        <span class="p-column-title">Quote Date</span>
         {{ soci.quote_date | date: "MM-dd-yyyy" }}
       </td>
 
+      <td class="text-center" *ngIf="checkItem('po_amount')">
+        <div *ngIf="soci.po_amount">
+          <span class="p-column-title"> Amount</span>
+          {{ soci.po_amount ? soci.po_amount : 0 }}
+        </div>
+        <!-- <div *ngIf="!soci.po_amount">
+          <span class="p-column-title"> Amount</span>
+          0
+        </div> -->
+      </td>
       <td class="text-center" *ngIf="checkItem('po_no')">
         <a
           [routerLink]=""
@@ -377,16 +442,7 @@
           {{ soci.po_no }}
         </div>
       </td>
-      <td class="text-center" *ngIf="checkItem('po_amount')">
-        <div *ngIf="soci.po_amount">
-          <span class="p-column-title"> Amount</span>
-          {{ soci.po_amount }}
-        </div>
-        <div *ngIf="!soci.po_amount">
-          <span class="p-column-title"> Amount</span>
-          0
-        </div>
-      </td>
+
       <td class="text-center" *ngIf="checkItem('po_date')">
         <a
           [routerLink]=""
@@ -402,14 +458,14 @@
         </div>
       </td>
       <td class="text-center" *ngIf="checkItem('fo_order_number')">
-        <div *ngIf="soci.fo_order_number">
+        <div>
           <span class="p-column-title">Fo Number</span>
-          {{ soci.fo_order_number }}
+          {{ soci.fo_order_number ? soci.fo_order_number : "_" }}
         </div>
-        <div *ngIf="!soci.fo_order_number">
+        <!-- <div *ngIf="!soci.fo_order_number">
           <span class="p-column-title">Fo Number</span>
           _
-        </div>
+        </div> -->
       </td>
 
       <td class="text-center" *ngIf="checkItem('backend_status')">
@@ -421,12 +477,19 @@
           <span class="p-column-title">backend status</span>
           _
         </div>
-        <div *ngIf="soci.backend_status && soci.backend_status != 1 && soci.backend_status != -1">
+        <div
+          *ngIf="
+            soci.backend_status &&
+            soci.backend_status != 1 &&
+            soci.backend_status != -1
+          "
+        >
           <span class="p-column-title">backend status</span>
           Failed
         </div>
       </td>
-
+      <td class="text-center" *ngIf="checkItem('country')">_</td>
+      <td class="text-center" *ngIf="checkItem('unit')">_</td>
       <td class="text-center" *ngIf="checkItem('status_desc')">
         <p-badge
           [value]="soci.status_desc"
@@ -487,17 +550,14 @@
       </td>
     </tr>
   </ng-template>
- 
+
   <ng-template pTemplate="emptymessage" let-columns>
     <tr>
-        <td style="text-align: center;" [attr.colspan]="columns?.length">
-            No records found
-        </td>
+      <td style="text-align: center" [attr.colspan]="columns?.length">
+        No records found
+      </td>
     </tr>
-</ng-template>
-
-
-
+  </ng-template>
 </p-table>
 <p-paginator
   (onPageChange)="paginate($event)"

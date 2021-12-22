@@ -2,6 +2,7 @@ import { Component, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthService } from "../../auth/auth.service";
 import { navItems } from "../../_nav";
+import { version } from '../../../../package.json';
 
 @Component({
   selector: "app-dashboard",
@@ -9,18 +10,19 @@ import { navItems } from "../../_nav";
 })
 export class DefaultLayoutComponent implements OnDestroy {
   public sidebarMinimized = false;
+  public version: string = version;
   public navItems = JSON.parse(JSON.stringify(navItems));
   showSideBar = true;
   userFullname: any;
   userRoleName: any;
-  allUnits: any[]=[];
+  allUnits: any[] = [];
   currentUnit: any;
   // userRole: any;
 
   constructor(private router: Router, private authService: AuthService) {
-    // this.navItems.push('UU-I');
+    console.log("version:", this.version);
     let userRole = JSON.parse(localStorage.getItem("userRole"));
-   
+
     if (userRole) {
       this.userRoleName = userRole?.roles[0]?.name;
     }
@@ -31,7 +33,7 @@ export class DefaultLayoutComponent implements OnDestroy {
     });
     this.managerViewAccess(userRole);
     this.adminViewAccess(userRole);
-    this.getUserUnit(userRole)
+    this.getUserUnit(userRole);
   }
   ngOnDestroy(): void {
     this.navItems = JSON.parse(JSON.stringify(navItems));
@@ -190,25 +192,26 @@ export class DefaultLayoutComponent implements OnDestroy {
     this.sidebarMinimized = e;
   }
 
-  getUserUnit(userRole){
+  getUserUnit(userRole) {
     console.log("userRole:", userRole);
-    
-    this.authService.getQuery("/unit-users-listing").subscribe((res:any) => {
+
+    this.authService.getQuery("/unit-users-listing").subscribe((res: any) => {
       console.log("unit-res:", res);
-      
+
       this.allUnits = res.data;
-      this.allUnits.push({id:2, title:"new"})
+      this.allUnits.push({ id: 2, title: "new" });
     });
   }
 
   changeUnit(event) {
     console.log("event:", event);
-    this.authService.putQuery("/units/switch", {
-      unit_id: event.value
-    }).subscribe((res:any) => {
-      console.log("change-unit-res:", res);
-      
-    })
+    this.authService
+      .putQuery("/units/switch", {
+        unit_id: event.value,
+      })
+      .subscribe((res: any) => {
+        console.log("change-unit-res:", res);
+      });
   }
   logout() {
     this.authService

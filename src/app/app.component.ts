@@ -9,7 +9,6 @@ import { filter } from "rxjs/operators";
 import { AuthService } from "./auth/auth.service";
 import { navItems } from "./_nav";
 
-
 @Component({
   // tslint:disable-next-line
 
@@ -20,6 +19,7 @@ import { navItems } from "./_nav";
 })
 export class AppComponent implements OnInit {
   isLoading = false;
+
   public navItems = JSON.parse(JSON.stringify(navItems));
   constructor(
     private router: Router,
@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
   ) {
     // iconSet singleton
     iconSet.icons = { ...freeSet };
+   
     
   }
 
