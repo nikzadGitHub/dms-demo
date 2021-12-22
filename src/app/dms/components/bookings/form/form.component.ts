@@ -86,10 +86,26 @@ export class FormComponent implements OnInit{
     this.defaultAnswer = id;
   }
 
-  changePercentage(id: number) {
-    this.selectedPercentage = id;
-    console.log(id);
-  }
+  participateInDemoAns: any[] = [{ value: '1', ans: "Yes" }, { value: '0', ans: "No" }];
+
+  initiatorValues: any[] = [
+    { id: 1, ans: "FSS" },
+    { id: 2, ans: "Customer" }
+  ];
+
+  sequenceOfDemoValues: any[] = [
+    { value: 'first', ans: "First" },
+    { value: 'middle', ans: "Middle" },
+    { value: 'last', ans: "Last" }
+  ];
+
+  defaultPriorities:any[] = [
+    {id:1,value:"High",name:"high"},
+    {id:2,value:"Medium",name:"medium"},
+    {id:3,value:'Low',name:"low"}
+  ];
+
+  selectedBooking: number = 1;
 
   changeReason(id: number) {
     //getted from event
@@ -110,6 +126,7 @@ export class FormComponent implements OnInit{
   ngOnInit(): void {
     if (this.bookingDetailList.booking_reason == '2') {
       this.editable =  true;
+      this.selectedBooking = Number(this.bookingDetailList.booking_reason);
       this.showBmeLogSec = true;
     }
 
@@ -119,16 +136,12 @@ export class FormComponent implements OnInit{
     });
     this.duration = this.bookingDetailList.demo_duration;
     this.formBooking = this.fb.group({
-      customer: new FormControl(this.bookingDetailList.customer),
+      customer: new FormControl(this.bookingDetailList.customer_id),
       booking_reason: new FormControl(this.bookingDetailList.booking_reason),
       branch: new FormControl(this.bookingDetailList.branch),
-      date_of_delivery: new FormControl(
-        this.bookingDetailList.preferred_date_of_delivery
-      ),
-      date_of_collection: new FormControl(
-        this.bookingDetailList.preferred_date_of_collection
-      ),
-      demo_duration: new FormControl(this.duration),
+      date_of_delivery: new FormControl(this.bookingDetailList.preferred_date_of_delivery ? this.dateToHtmlString(new Date(this.bookingDetailList.preferred_date_of_delivery)) : null),
+      date_of_collection: new FormControl(this.bookingDetailList.preferred_date_of_collection ? this.dateToHtmlString(new Date(this.bookingDetailList.preferred_date_of_collection)): null),
+      demo_duration : new FormControl(this.duration),
       department: new FormControl(this.bookingDetailList.department),
       location: new FormControl(this.bookingDetailList.location),
       contact_name: new FormControl(this.bookingDetailList.ship_to_contact_name),
@@ -148,14 +161,17 @@ export class FormComponent implements OnInit{
       wo_wq_won:new FormControl(this.bookingDetailList.war_won),
       wo_pdr_req:new FormControl(this.bookingDetailList.bme_pdr_req ? 1 : 0),
       wo_pdr_won:new FormControl(this.bookingDetailList.pdr_won),
-      opportunity_code:new FormControl(),
-      customer_feedback:new FormControl(),
-      selling_points:new FormControl(),
-      initiator:new FormControl(),
-      probability:new FormControl(),
-      is_competitor_in_demo:new FormControl(),
-      priority:new FormControl(),
-      squence_of_demo:new FormControl()
+
+      // Booking Opportunity section
+      opportunity_code:new FormControl(this.bookingDetailList.opportunity_code),
+      priority: new FormControl(this.bookingDetailList.priority) ,
+      probability: new FormControl(this.bookingDetailList.probability) ,
+      initiator: new FormControl(this.bookingDetailList.initiator) ,
+      is_competitor_in_demo: new FormControl(this.bookingDetailList.is_competitor_in_demo) ,
+      squence_of_demo: new FormControl(this.bookingDetailList.squence_of_demo) ,
+      selling_points: new FormControl(this.bookingDetailList.selling_points) ,
+      customer_feedback: new FormControl(this.bookingDetailList.customer_feedback) ,
+      pain_points: new FormControl(this.bookingDetailList.pain_points)
     });
   }
 
@@ -173,6 +189,16 @@ export class FormComponent implements OnInit{
       contact_number: this.formBooking.get("contact_number").value,
       remarks: this.formBooking.get("remarks").value,
       booking_save: true,
+
+      // Booking Opportunity Section by Hossainy
+      priority: this.formBooking.get("priority").value,
+      probability: this.formBooking.get("probability").value,
+      initiator: this.formBooking.get("initiator").value,
+      is_competitor_in_demo: this.formBooking.get("is_competitor_in_demo").value,
+      squence_of_demo: this.formBooking.get("squence_of_demo").value,
+      selling_points: this.formBooking.get("selling_points").value,
+      customer_feedback: this.formBooking.get("customer_feedback").value,
+      pain_points: this.formBooking.get("pain_points").value,
 
       wo_con_req: this.formBooking.get("wo_con_req").value,
       wo_con_won: this.formBooking.get("wo_con_won").value,
@@ -209,7 +235,36 @@ export class FormComponent implements OnInit{
       );
   }
 
-  onDuration() {
+  dateToHtmlString(date: Date) : string {
+    let month = date.getMonth()+1+''
+    month = month.length < 2 ? '0'+month : month;
+
+    let day = date.getDate()+''
+    day = day.length < 2 ? '0'+day : day;
+
+    let hours = date.getHours()+''
+    hours = hours.length < 2 ? '0'+hours : hours;
+
+    let minutes = date.getMinutes()+''
+    minutes = minutes.length < 2 ? '0'+minutes : minutes;
+
+    return date.getFullYear()+'-'+month+'-'+day+'T'+hours+':'+minutes;
+  }
+
+  durationChanged() {
+    const date_of_delivery = this.formBooking.get("date_of_delivery").value;
+    const demo_duration = this.formBooking.get('demo_duration').value;
+
+    if(date_of_delivery != null && demo_duration > 0){
+      var date1 = new Date(date_of_delivery);
+      date1.setTime(date1.getTime() + (demo_duration*86400000))
+      let new_collection_date: string = this.dateToHtmlString(date1);
+      console.log(new_collection_date)
+      this.formBooking.get("date_of_collection").setValue(new_collection_date);
+    }
+  }
+
+  onDuration(){
     const date_of_delivery = this.formBooking.get("date_of_delivery").value;
     const date_of_collection = this.formBooking.get("date_of_collection").value;
     console.log(date_of_collection);
