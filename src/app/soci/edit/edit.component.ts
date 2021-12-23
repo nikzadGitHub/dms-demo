@@ -228,7 +228,7 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllDropdowns()
+    this.getAllDropdowns();
     this.route.queryParams.subscribe((params) => {
       this.is_approval_view_check = params.is_approval_view_check;
       this.is_preview_check = params.is_preview_check;
@@ -453,47 +453,34 @@ export class EditComponent implements OnInit {
           comment: this.accordianComment,
         }
       )
-      .subscribe(
-        (res: any) => {
-          console.log("comment-res:", res);
-          this.accordianComment = "";
-          this.commentList.push(res.data);
-          if(res.data?.section == 'soci_detail'){
-            this.soci_data.comment_type_count.soci_detail +=1
-          }
-          else if(res.data?.section =='po_detail'){
-            this.soci_data.comment_type_count.po_detail +=1
-          }
-          else if(res.data?.section == 'standard_terms'){
-            this.soci_data.comment_type_count.standard_terms +=1
-          }
-          else if(res.data?.section == 'billing_milestone'){
-            this.soci_data.comment_type_count.billing_milestone +=1
-          }
-          else if(res.data?.section == 'payment_schedule'){
-            this.soci_data.comment_type_count.payment_schedule +=1
-          }
-          else if(res.data?.section == 'additional_cost'){
-            this.soci_data.comment_type_count.additional_cost +=1
-          }
-          else if(res.data?.section == 'billing_instruction'){
-            this.soci_data.comment_type_count.billing_instruction +=1
-          }
-          else if(res.data?.section == 'additional_instruction'){
-            this.soci_data.comment_type_count.additional_instruction +=1
-          }
-          else if(res.data?.section == 'additional_charges'){
-            this.soci_data.comment_type_count.additional_charges +=1
-          }
-          else if(res.data?.section == 'product'){
-            this.soci_data.comment_type_count.product +=1
-          }
-          else if(res.data?.section == 'soci_attachment'){
-            this.soci_data.comment_type_count.soci_attachment +=1
-          }
-
+      .subscribe((res: any) => {
+        console.log("comment-res:", res);
+        this.accordianComment = "";
+        this.commentList.push(res.data);
+        if (res.data?.section == "soci_detail") {
+          this.soci_data.comment_type_count.soci_detail += 1;
+        } else if (res.data?.section == "po_detail") {
+          this.soci_data.comment_type_count.po_detail += 1;
+        } else if (res.data?.section == "standard_terms") {
+          this.soci_data.comment_type_count.standard_terms += 1;
+        } else if (res.data?.section == "billing_milestone") {
+          this.soci_data.comment_type_count.billing_milestone += 1;
+        } else if (res.data?.section == "payment_schedule") {
+          this.soci_data.comment_type_count.payment_schedule += 1;
+        } else if (res.data?.section == "additional_cost") {
+          this.soci_data.comment_type_count.additional_cost += 1;
+        } else if (res.data?.section == "billing_instruction") {
+          this.soci_data.comment_type_count.billing_instruction += 1;
+        } else if (res.data?.section == "additional_instruction") {
+          this.soci_data.comment_type_count.additional_instruction += 1;
+        } else if (res.data?.section == "additional_charges") {
+          this.soci_data.comment_type_count.additional_charges += 1;
+        } else if (res.data?.section == "product") {
+          this.soci_data.comment_type_count.product += 1;
+        } else if (res.data?.section == "soci_attachment") {
+          this.soci_data.comment_type_count.soci_attachment += 1;
         }
-      );
+      });
   }
   resetModel() {
     this.commentList = null;
@@ -553,12 +540,13 @@ export class EditComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log("selected-res-->", res);
+          this.isSoldTo = false;
+          this.enableSoldToedit = true;
           this.soci_data.quote.opportunity.sold_to.company_name =
             res.data.sold_to.company_name;
           this.soci_data.quote.opportunity.sold_to.address =
             res.data.sold_to.address;
-          this.isShipTo = false;
-          this.enableShipToedit = true;
+
           this.alertBody = res.message;
           this.successModal.show();
           setTimeout(() => {
@@ -1910,7 +1898,7 @@ export class EditComponent implements OnInit {
   //Update Remarks
   remarksAdded() {
     this.form.value.sociRemarks ||
-      this.soci_data?.remarks !== this.form.value.sociRemarks
+    this.soci_data?.remarks !== this.form.value.sociRemarks
       ? (this.isRemarksAdded = false)
       : (this.isRemarksAdded = true);
   }
@@ -1971,10 +1959,10 @@ export class EditComponent implements OnInit {
     this.searchModal.show();
   }
   modalOkButton() {
-    this.selectedProductName = this.searchProductName
-    if (this.searchProductName !== '') {
+    this.selectedProductName = this.searchProductName;
+    if (this.searchProductName !== "") {
       let sku = this.searchProductDetails.sku;
-      let unit_price = this.searchProductDetails.unit_price
+      let unit_price = this.searchProductDetails.unit_price;
       this.form.patchValue({
         sku: sku,
         unit_price: unit_price,
@@ -1984,8 +1972,8 @@ export class EditComponent implements OnInit {
     this.searchModal.hide();
   }
   getAllDropdowns() {
-    this.sociService.getQuery('/soci/all-dropdown').subscribe(data => {
-      this.payment_termValue = data['data'].payment_terms;
-    })
+    this.sociService.getQuery("/soci/all-dropdown").subscribe((data) => {
+      this.payment_termValue = data["data"].payment_terms;
+    });
   }
 }
