@@ -38,24 +38,24 @@
     />
   </div>
 </div> -->
-
-<p-table
-  #dt
-  [value]="pendingSOCI"
-  styleClass="p-datatable-customers"
-  [rowHover]="true"
-  responsiveLayout="scroll"
-  [filterDelay]="0"
-  [globalFilterFields]="['quote_id', 'company', 'amount', 'status']"
-  (onFilter)="columnFilter($event)"
-  *ngIf="is_soci_view"
->
-  <ng-template pTemplate="caption">
-    <div class="table-header">
-      <span>
-        <h2>Pending SOCI</h2>
-      </span>
-      <!-- <button
+<div *ngIf="is_soci_view">
+  <p-table
+    #dt
+    [value]="pendingSOCI"
+    styleClass="p-datatable-customers"
+    [rowHover]="true"
+    responsiveLayout="scroll"
+    [filterDelay]="0"
+    [globalFilterFields]="['quote_id', 'company', 'amount', 'status']"
+    (onFilter)="columnFilter($event)"
+    *ngIf="is_soci_view"
+  >
+    <ng-template pTemplate="caption">
+      <div class="table-header">
+        <span>
+          <h2>Pending SOCI</h2>
+        </span>
+        <!-- <button
       pButton
       label="Clear"
       class="p-button-outlined"
@@ -63,639 +63,555 @@
       (click)="clear(dt)"
       style="color: #f8f9fa"
     ></button> -->
-      <span class="p-input-icon-left input-span-icon">
-        <i class="pi pi-search"></i>
-        <input
-          pInputText
-          placeholder="SOCI Search"
-          type="text"
-          (input)="searchSoci()"
-          [(ngModel)]="search_text"
-        />
-        <span>
-          <!--  -->
-          <i (click)="confirmationExportExcelModal.show()"
-            ><img
-              style="margin: 8px"
-              src="../../../../assets/img/icons/Vector (2).svg"
-          /></i>
-          <!-- (click)="columnChooserModal.show()" -->
-          <i (click)="columnChooserModal.show()">
-            <img
-              src="../../../assets/img/icons/vertcalLines.svg"
-              style="width: 25px; margin: 7px"
-            />
-          </i>
+        <span class="p-input-icon-left input-span-icon">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            placeholder="SOCI Search"
+            type="text"
+            (input)="searchSoci()"
+            [(ngModel)]="search_text"
+          />
+          <span>
+            <!--  -->
+            <i (click)="confirmationExportExcelModal.show()"
+              ><img
+                style="margin: 8px"
+                src="../../../../assets/img/icons/Vector (2).svg"
+            /></i>
+            <!-- (click)="columnChooserModal.show()" -->
+            <i (click)="columnChooserModal.show()">
+              <img
+                src="../../../assets/img/icons/vertcalLines.svg"
+                style="width: 25px; margin: 7px"
+              />
+            </i>
+          </span>
         </span>
-      </span>
-    </div>
-  </ng-template>
-  <ng-template pTemplate="header">
-    <tr>
-      <!-- SOCI ID -->
-      <!-- *ngIf="checkItem('soci_id')" -->
-      <th
-        pSortableColumn="soci_id"
-        class="text-center"
-        *ngIf="checkItem('soci_id')"
-      >
-        <div
-          style="
-            display: flex;
-            white-space: nowrap;
-            flex-direction: column;
-            align-items: center;
-          "
-          class="p-d-flex p-jc-between p-ai-center"
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <!-- SOCI ID -->
+        <!-- *ngIf="checkItem('soci_id')" -->
+        <th
+          pSortableColumn="soci_id"
+          class="text-center"
+          *ngIf="checkItem('soci_id')"
         >
-          SOCI ID
-          <div class="soci-icons">
-            <p-sortIcon field="soci_id"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="soci_id"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            SOCI ID
+            <div class="soci-icons">
+              <p-sortIcon field="soci_id"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="soci_id"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
           </div>
-        </div>
-      </th>
+        </th>
 
-      <!-- Create Date -->
-      <!-- *ngIf="checkItem('c_date')" -->
-      <th
-        pSortableColumn="created_at"
-        class="text-center"
-        *ngIf="checkItem('c_date')"
-      >
-        <div
-          style="
-            display: flex;
-            white-space: nowrap;
-            flex-direction: column;
-            align-items: center;
-          "
-          class="p-d-flex p-jc-between p-ai-center"
+        <!-- Create Date -->
+        <!-- *ngIf="checkItem('c_date')" -->
+        <th
+          pSortableColumn="created_at"
+          class="text-center"
+          *ngIf="checkItem('c_date')"
         >
-          Created Date
-          <div class="date-icons">
-            <p-sortIcon field="created_at"></p-sortIcon>
-            <p-columnFilter
-              type="date"
-              field="created_at"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Created Date
+            <div class="date-icons">
+              <p-sortIcon field="created_at"></p-sortIcon>
+              <p-columnFilter
+                type="date"
+                field="created_at"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
           </div>
-        </div>
-      </th>
-      <!-- FSS Name -->
-      <!-- *ngIf="checkItem('quote_date')" -->
-      <th pSortableColumn="fss_name" class="text-center">
-        <div
-          style="
-            display: flex;
-            white-space: nowrap;
-            flex-direction: column;
-            align-items: center;
-          "
-          class="p-d-flex p-jc-between p-ai-center"
+        </th>
+        <!-- FSS Name -->
+        <!-- *ngIf="checkItem('quote_date')" -->
+        <th pSortableColumn="fss_name" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            FSS Name
+            <div class="Q-Date-icons">
+              <p-sortIcon field="fss_name"></p-sortIcon>
+              <p-columnFilter
+                type="date"
+                field="fss_name"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
+        <!-- Quotation ID -->
+        <!-- *ngIf="checkItem('quote_full_id')" -->
+        <th
+          pSortableColumn="quote_full_id"
+          class="text-center"
+          *ngIf="checkItem('quote_full_id')"
         >
-          FSS Name
-          <div class="Q-Date-icons">
-            <p-sortIcon field="fss_name"></p-sortIcon>
-            <p-columnFilter
-              type="date"
-              field="fss_name"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Quotation ID
+            <div class="quote-icons">
+              <p-sortIcon field="quote_full_id"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="quote_full_id"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
           </div>
-        </div>
-      </th>
-      <!-- Quotation ID -->
-      <!-- *ngIf="checkItem('quote_full_id')" -->
-      <th
-        pSortableColumn="quote_full_id"
-        class="text-center"
-        *ngIf="checkItem('quote_full_id')"
-      >
-        <div
-          style="
-            display: flex;
-            white-space: nowrap;
-            flex-direction: column;
-            align-items: center;
-          "
-          class="p-d-flex p-jc-between p-ai-center"
+        </th>
+        <!-- Company Name -->
+        <!-- *ngIf="checkItem('company_name')" -->
+        <th
+          pSortableColumn="customer.company_name"
+          class="text-center"
+          *ngIf="checkItem('company_name')"
         >
-          Quotation ID
-          <div class="quote-icons">
-            <p-sortIcon field="quote_full_id"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="quote_full_id"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Company Name
+            <div class="name-icons">
+              <p-sortIcon field="customer.company_name"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="customer.company_name"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
           </div>
-        </div>
-      </th>
-      <!-- Company Name -->
-      <!-- *ngIf="checkItem('company_name')" -->
-      <th
-        pSortableColumn="customer.company_name"
-        class="text-center"
-        *ngIf="checkItem('company_name')"
-      >
-        <div
-          style="
-            display: flex;
-            white-space: nowrap;
-            flex-direction: column;
-            align-items: center;
-          "
-          class="p-d-flex p-jc-between p-ai-center"
-        >
-          Company Name
-          <div class="name-icons">
-            <p-sortIcon field="customer.company_name"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="customer.company_name"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
-          </div>
-        </div>
-      </th>
+        </th>
 
-      <!-- Status -->
-      <!-- *ngIf="checkItem('status_desc')" -->
-      <th
-        pSortableColumn="status_desc"
-        class="text-center"
-        *ngIf="checkItem('status_desc')"
-      >
-        <div
-          style="
-            display: flex;
-            white-space: nowrap;
-            flex-direction: column;
-            align-items: center;
-          "
-          class="p-d-flex p-jc-between p-ai-center"
+        <!-- Status -->
+        <!-- *ngIf="checkItem('status_desc')" -->
+        <th
+          pSortableColumn="status_desc"
+          class="text-center"
+          *ngIf="checkItem('status_desc')"
         >
-          Status
-          <div class="status-icons">
-            <p-sortIcon field="status_desc"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="status_desc"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Status
+            <div class="status-icons">
+              <p-sortIcon field="status"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="status"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
           </div>
-        </div>
-      </th>
+        </th>
 
-      <th [style]="{ width: '5%' }"></th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-soci>
-    <tr class="p-selectable-row">
-      <td class="text-center" *ngIf="checkItem('soci_id')">
-        <a href="" [routerLink]="" (click)="goToApproval(soci.id)">
-          {{ soci.soci_id }}
-        </a>
-      </td>
-      <td class="text-center" *ngIf="checkItem('c_date')">
-        <div *ngIf="soci.created_at">
-          {{ soci.created_at | date: "dd-MMM-yyy" }}
-        </div>
-        <div *ngIf="!soci.created_at">_</div>
-      </td>
-      <td class="text-center">_</td>
-      <td class="text-center" *ngIf="checkItem('quote_full_id')">
-        {{ soci.quote_full_id }}
-      </td>
+        <th [style]="{ width: '5%' }"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-soci>
+      <tr class="p-selectable-row">
+        <td class="text-center" *ngIf="checkItem('soci_id')">
+          <a href="" [routerLink]="" (click)="goToApproval(soci.id)">
+            {{ soci.soci_id }}
+          </a>
+        </td>
+        <td class="text-center" *ngIf="checkItem('c_date')">
+          <div *ngIf="soci.created_at">
+            {{ soci.created_at | date: "dd-MMM-yyy" }}
+          </div>
+          <div *ngIf="!soci.created_at">_</div>
+        </td>
+        <td class="text-center">_</td>
+        <td class="text-center" *ngIf="checkItem('quote_full_id')">
+          {{ soci.quote_full_id }}
+        </td>
 
-      <td class="text-center" *ngIf="checkItem('company_name')">
-        <div *ngIf="soci.customer?.company_name">
-          {{ soci.customer?.company_name }}
-        </div>
-        <div *ngIf="!soci.customer?.company_name">_</div>
-      </td>
-      <td class="text-center" *ngIf="checkItem('status_desc')">
-        <p-badge
-          [value]="soci.status_desc"
-          *ngIf="soci.status == 2"
-          severity="warning"
-          styleClass="p-mr-2"
-        ></p-badge>
-      </td>
-      <td class="text-center">
-        <a
-          href="#"
-          [routerLink]=""
-          (click)="goToApproval(soci.id)"
-          class="fa fa-edit"
-        ></a>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+        <td class="text-center" *ngIf="checkItem('company_name')">
+          <div *ngIf="soci.customer?.company_name">
+            {{ soci.customer?.company_name }}
+          </div>
+          <div *ngIf="!soci.customer?.company_name">_</div>
+        </td>
+        <td class="text-center" *ngIf="checkItem('status_desc')">
+          <p-badge
+            [value]="soci.status_desc"
+            *ngIf="soci.status == 2"
+            severity="warning"
+            styleClass="p-mr-2"
+          ></p-badge>
+        </td>
+        <td class="text-center">
+          <a
+            href="#"
+            [routerLink]=""
+            (click)="goToApproval(soci.id)"
+            class="fa fa-edit"
+          ></a>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
 
-<!-- <table class="table table-hover table-striped" *ngIf="is_soci_view">
-  <thead>
-    <tr align="center">
-      <th>SOCI ID</th>
-      <th>Created date</th>
-      <th>FSS Name</th>
-      <th>Qutation ID</th>
-      <th>Company Name</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr align="center" *ngFor="let item of pendingSOCI">
-      <td>
-        <a href="#" [routerLink]="" (click)="goToApproval(item.id)">
-          {{ item.soci_id }}
-        </a>
-      </td>
-      <td>{{ item.created_at | date: "dd-MMM-yyy" }}</td>
-      <td>_</td>
-      <td>{{ item.quote_full_id }}</td>
-      <td>{{ item.customer?.company_name }}</td>
-      <td>
-        <p-badge
-          [value]="item.status_desc"
-          *ngIf="item.status == 4"
-          severity="success"
-          styleClass="p-mr-2"
-        ></p-badge>
-        <p-badge
-          [value]="item.status_desc"
-          *ngIf="item.status == 1"
-          severity="info"
-          styleClass="p-mr-2"
-        ></p-badge>
-        <p-badge
-          [value]="item.status_desc"
-          *ngIf="item.status == 2"
-          severity="warning"
-          styleClass="p-mr-2"
-        ></p-badge>
-        <p-badge
-          [value]="item.status_desc"
-          *ngIf="item.status == 7"
-          severity="danger"
-        ></p-badge>
-      </td>
-      <td>
-        <a
-          href="#"
-          [routerLink]=""
-          (click)="goToApproval(item.id)"
-          class="fa fa-edit"
-        ></a>
-      </td>
-    </tr>
-  </tbody>
-</table> -->
-<!-- End SOCI pending list table -->
+
 
 <!-- Quotation list table -->
-<div
-  class=" row"
-  *ngIf="is_quotation_view"
->
- 
+<div class="row" *ngIf="is_quotation_view">
   <p-table
-  [loading]="quotationApprovalLoading"
-  [value]="pendingQuotationApproval"
-  styleClass="p-datatable-customers"
-  [rowHover]="true"
-  responsiveLayout="scroll"
-  [filterDelay]="0"
-  (onFilter)="columnFilter($event)"
-  *ngIf="!is_soci_view"
->
-  <ng-template pTemplate="caption">
-    <div class="table-header">
-      <span>
-        <h2>Pending Quotation</h2>
-      </span>
-     
-      <span class="p-input-icon-left input-span-icon">
-        <i class="pi pi-search"></i>
-        <input
-          pInputText
-          placeholder="Pending Quotation Search"
-          type="text"
-          (input)="searchSoci()"
-          [(ngModel)]="search_text"
-        />
-        
-      </span>
-    </div>
-  </ng-template>
-  <ng-template pTemplate="header">
-    <tr>
-      <th
-        class="text-center"
-      >
-        <div
-          style="
-            display: flex;
-            white-space: nowrap;
-            flex-direction: column;
-            align-items: center;
-          "
-          class="p-d-flex p-jc-between p-ai-center"
-        >
-        Created Date
-          <div class="soci-icons">
-            <p-sortIcon field="created_at"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="created_at"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
-          </div>
-        </div>
-      </th>
+    [loading]="quotationApprovalLoading"
+    [value]="pendingQuotationApproval"
+    styleClass="p-datatable-customers"
+    [globalFilterFields]="['quote_id', 'company', 'amount', 'status']"
+    [rowHover]="true"
+    responsiveLayout="scroll"
+    [filterDelay]="0"
+    (onFilter)="columnFilter($event)"
+    *ngIf="!is_soci_view"
+  >
+    <ng-template pTemplate="caption">
+      <div class="table-header">
+        <span>
+          <h2>Pending Quotation</h2>
+        </span>
 
-      <!-- Create Date -->
-      <!-- *ngIf="checkItem('c_date')" -->
-      <th
-        pSortableColumn="quote_id"
-        class="text-center"
-      >
-        <div
-          style="
-            display: flex;
-            white-space: nowrap;
-            flex-direction: column;
-            align-items: center;
-          "
-          class="p-d-flex p-jc-between p-ai-center"
-        >
-        Quotation ID
-          <div class="date-icons">
-            <p-sortIcon field="quote_id"></p-sortIcon>
-            <p-columnFilter
-              type="date"
-              field="quote_id"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
-          </div>
-        </div>
-      </th>
-      <!-- FSS Name -->
-      <!-- *ngIf="checkItem('quote_date')" -->
-      <th pSortableColumn="company" class="text-center">
-        <div
-          style="
-            display: flex;
-            white-space: nowrap;
-            flex-direction: column;
-            align-items: center;
-          "
-          class="p-d-flex p-jc-between p-ai-center"
-        >
-        Company Name
-          <div class="Q-Date-icons">
-            <p-sortIcon field="company"></p-sortIcon>
-            <p-columnFilter
-              type="date"
-              field="company"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
-          </div>
-        </div>
-      </th>
-      <!-- Quotation ID -->
-      <!-- *ngIf="checkItem('quote_full_id')" -->
-      <th
-        pSortableColumn="validity_date"
-        class="text-center"
-      >
-        <div
-          style="
-            display: flex;
-            white-space: nowrap;
-            flex-direction: column;
-            align-items: center;
-          "
-          class="p-d-flex p-jc-between p-ai-center"
-        >
-        Validity Date
-          <div class="quote-icons">
-            <p-sortIcon field="validity_date"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="validity_date"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
-          </div>
-        </div>
-      </th>
-      <!-- Company Name -->
-      <!-- *ngIf="checkItem('company_name')" -->
-      <th
-        pSortableColumn="cancelled_remarks"
-        class="text-center"
-      >
-        <div
-          style="
-            display: flex;
-            white-space: nowrap;
-            flex-direction: column;
-            align-items: center;
-          "
-          class="p-d-flex p-jc-between p-ai-center"
-        >
-        Reason
-          <div class="name-icons">
-            <p-sortIcon field="cancelled_remarks"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="cancelled_remarks"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
-          </div>
-        </div>
-      </th>
-
-      <th
-        pSortableColumn="status"
-        class="text-center"
-      >
-        <div
-          style="
-            display: flex;
-            white-space: nowrap;
-            flex-direction: column;
-            align-items: center;
-          "
-          class="p-d-flex p-jc-between p-ai-center"
-        >
-          Status
-          <div class="status-icons">
-            <p-sortIcon field="status"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="status"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
-          </div>
-        </div>
-      </th>
-
-      <th
-      pSortableColumn="amount"
-      class="text-center"
-    >
-      <div
-        style="
-          display: flex;
-          white-space: nowrap;
-          flex-direction: column;
-          align-items: center;
-        "
-        class="p-d-flex p-jc-between p-ai-center"
-      >
-      Amount (MYR)
-        <div class="status-icons">
-          <p-sortIcon field="amount"></p-sortIcon>
-          <p-columnFilter
+        <span class="p-input-icon-left input-span-icon">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            placeholder="Pending Quotation Search"
             type="text"
-            field="amount"
-            display="menu"
-            class="p-ml-auto"
-          ></p-columnFilter>
-        </div>
+            (input)="searchSoci()"
+            [(ngModel)]="search_text"
+          />
+        </span>
       </div>
-    </th>
-    <th>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="created_at" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Created Date
+            <div class="soci-icons">
+              <p-sortIcon field="created_at"></p-sortIcon>
+              <p-columnFilter
+                type="date"
+                field="created_at"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
 
-    </th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-data>
-    <tr class="p-selectable-row">
-      <td class="text-center">
-          {{ data.created_at | date: "dd-MMM-yyy"}}
-      </td>
-      <td class="text-center" *ngIf="checkItem('c_date')">
-        <div *ngIf="data.quote_id">
-          {{ data.quote_id }}
-        </div>
-        <div *ngIf="!data.quote_id">_</div>
-      </td>
+        <!-- Create Date -->
+        <!-- *ngIf="checkItem('c_date')" -->
+        <th pSortableColumn="quote_id" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Quotation ID
+            <div class="date-icons">
+              <p-sortIcon field="quote_id"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="quote_id"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
+        <!-- FSS Name -->
+        <!-- *ngIf="checkItem('quote_date')" -->
+        <th pSortableColumn="company" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Company Name
+            <div class="Q-Date-icons">
+              <p-sortIcon field="company"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="company"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
+        <!-- Quotation ID -->
+        <!-- *ngIf="checkItem('quote_full_id')" -->
+        <th pSortableColumn="validity_date" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Validity Date
+            <div class="quote-icons">
+              <p-sortIcon field="validity_date"></p-sortIcon>
+              <p-columnFilter
+                type="date"
+                field="validity_date"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
+        <!-- Company Name -->
+        <!-- *ngIf="checkItem('company_name')" -->
+        <th pSortableColumn="cancelled_remarks" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Reason
+            <div class="name-icons">
+              <p-sortIcon field="cancelled_remarks"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="cancelled_remarks"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
 
-      <td class="text-center">
-        {{ data.company }}
-      
-      </td>
+        <th pSortableColumn="status_desc" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Status
+            <div class="status-icons">
+              <p-sortIcon field="status_desc"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="status_desc"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
 
-      <td class="text-center">
-        <div *ngIf="data.validity_date">
-          {{ data.validity_date | date: "dd-MMM-yyy"}}
-        </div>
-        <div *ngIf="!data.validity_date">_</div>
-      </td>
-      <td class="text-center" >
+        <th pSortableColumn="amount" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Amount (MYR)
+            <div class="status-icons">
+              <p-sortIcon field="amount"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="amount"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-data>
+      <tr class="p-selectable-row">
+        <td class="text-center">
+          {{ data.created_at | date: "dd-MMM-yyy" }}
+        </td>
+        <td class="text-center" *ngIf="checkItem('c_date')">
+          <div *ngIf="data.quote_id">
+            {{ data.quote_id }}
+          </div>
+          <div *ngIf="!data.quote_id">_</div>
+        </td>
+
+        <td class="text-center">
+          {{ data.company }}
+        </td>
+
+        <td class="text-center">
+          <div *ngIf="data.validity_date">
+            {{ data.validity_date | date: "dd-MMM-yyy" }}
+          </div>
+          <div *ngIf="!data.validity_date">_</div>
+        </td>
+        <td class="text-center">
           <div *ngIf="data.cancelled_remarks">
-            {{ data.cancelled_remarks}}
+            {{ data.cancelled_remarks }}
           </div>
           <div *ngIf="!data.cancelled_remarks">_</div>
-      </td>
-      <td class="text-center" >
-       
-        <div *ngIf="data.status">
-      
+        </td>
+        <td class="text-center">
+          <div *ngIf="data.status">
+            <p-badge
+              value="Rejected"
+              *ngIf="data.status == 1"
+              severity="danger"
+              styleClass="p-mr-2"
+              class="soci-list-badges"
+            ></p-badge>
+            <p-badge
+              value="Approved"
+              severity="success"
+              *ngIf="data.status == 2"
+              styleClass="p-mr-2"
+              class="soci-list-badges"
+            ></p-badge>
+            <p-badge
+              value="Pending Approval"
+              *ngIf="data.status == 3"
+              severity="warning"
+              styleClass="p-mr-2"
+              class="soci-list-badges"
+            ></p-badge>
 
-          <p-badge
-          value="Rejected"
-          *ngIf="data.status == 0"
-          severity="danger"
-          styleClass="p-mr-2"
-          class="soci-list-badges"
-        ></p-badge>
-        <p-badge
-          value="Approved"
-          severity="success"
-          *ngIf="data.status == 1"
-          styleClass="p-mr-2"
-          class="soci-list-badges"
-        ></p-badge>
-        <p-badge
-          value="Pending Approval"
-          *ngIf="data.status == 2"
-          severity="warning"
-          styleClass="p-mr-2"
-          class="soci-list-badges"
-        ></p-badge>
+            <p-badge
+              value="Closed"
+              *ngIf="data.status == 4"
+              severity="warning"
+              styleClass="p-mr-2"
+              class="soci-list-badges"
+            ></p-badge>
 
-        <p-badge
-        value="Closed"
-        *ngIf="data.status == 3"
-        severity="warning"
-        styleClass="p-mr-2"
-        class="soci-list-badges"
-      ></p-badge>
-        
+            <p-badge
+              value="Preferred"
+              *ngIf="data.status == 5"
+              severity="info"
+              styleClass="p-mr-2"
+              class="soci-list-badges"
+            ></p-badge>
 
-        <p-badge
-          value="Preferred"
-          *ngIf="data.status == 4"
-          severity="info"
-          styleClass="p-mr-2"
-          class="soci-list-badges"
-        ></p-badge>
+            <p-badge
+              value="Initial"
+              *ngIf="data.status == 6"
+              severity="info"
+              styleClass="p-mr-2"
+              class="soci-list-badges"
+            ></p-badge>
+            <p-badge
+              value="In Progress"
+              *ngIf="data.status == 7"
+              severity="info"
+              styleClass="p-mr-2"
+              class="soci-list-badges"
+            ></p-badge>
+          </div>
+          <div *ngIf="!data.status">_</div>
+        </td>
 
-        <p-badge
-        value="Initial"
-        *ngIf="data.status == 5"
-        severity="info"
-        styleClass="p-mr-2"
-        class="soci-list-badges"
-      ></p-badge>
-      <p-badge
-      value="In Progress"
-      *ngIf="data.status == 6"
-      severity="info"
-      styleClass="p-mr-2"
-      class="soci-list-badges"
-    ></p-badge>
+        <td class="text-center">
+          <div *ngIf="data.amount">
+            {{ data.amount }}
+          </div>
+          <div *ngIf="!data.amount">_</div>
+        </td>
 
-        </div>
-        <div *ngIf="!data.status">_</div>
-    </td>
-
-    <td class="text-center" >
-      <div *ngIf="data.amount">
-        {{ data.amount}}
-      </div>
-      <div *ngIf="!data.amount">_</div>
-  </td>
-
-  <td>
-    <a [routerLink]="['/managerview/edit-approval/',data.id]" class="fa fa-edit"></a>
-  </td>
-      
-    </tr>
-  </ng-template>
-</p-table>
+        <td>
+          <a
+            [routerLink]="['/managerview/edit-approval/', data.id]"
+            class="fa fa-edit"
+          ></a>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 
   <!-- <img
     style="width: 22px; margin: 0px 8px 0px 0px"
@@ -707,7 +623,6 @@
     src="../../../../assets/img/icons/vertcalLines.svg"
   /> -->
 </div>
-
 <p-paginator
   (onPageChange)="paginate($event)"
   [rows]="pageItems"
@@ -715,7 +630,6 @@
   [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
 >
 </p-paginator>
-
 <!-- export excel popup -->
 <div
   bsModal

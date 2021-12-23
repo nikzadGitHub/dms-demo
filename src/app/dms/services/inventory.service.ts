@@ -12,10 +12,8 @@ export class InventoryService implements InventoryInterface {
 
   constructor(private apiClient: ApiClient) { }
 
-  getList(): Observable<InventoryList> {
-    return this.apiClient.get<InventoryList>('inventory');
+  getList(tabName: string, search: string = null): Observable<InventoryList> {
+    return this.apiClient.get<InventoryList>('inventories/'+tabName+ (search ? '?search=' + search : '') );
   }
-  getListSearch(data: any): Observable<InventoryList> {
-    return this.apiClient.get<InventoryList>('inventory/search?search=' + data);
-  }
+
 }

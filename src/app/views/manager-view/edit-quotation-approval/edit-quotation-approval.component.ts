@@ -1,5 +1,5 @@
 import { DatePipe } from "@angular/common";
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
@@ -25,6 +25,7 @@ export class EditQuotationApprovalComponent implements OnInit {
   @ViewChild("confirmationApproveModal") confirmationApproveModal: ModalDirective;
   @ViewChild("confirmationEscalateModal") confirmationEscalateModal: ModalDirective;
   @ViewChild("confirmationRejectModal") confirmationRejectModal: ModalDirective;
+  @ViewChild("cancelled_remarks") cancelled_remarks: ElementRef
 
   signatureStatus: boolean;
   show: boolean;
@@ -692,7 +693,8 @@ export class EditQuotationApprovalComponent implements OnInit {
   }
 
   rejectQuotation(){
-    this.managerViewService.quotationReject(this.id).subscribe(res=>{
+    let reason = this.cancelled_remarks.nativeElement.value
+    this.managerViewService.quotationReject(this.id,reason).subscribe(res=>{
     })
     this.confirmationRejectModal.hide()
   }

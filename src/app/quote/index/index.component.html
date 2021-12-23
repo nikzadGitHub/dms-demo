@@ -1,152 +1,318 @@
-<p-table  [loading]="loading" class="table table-hover table-striped" #dt [value]="quotes" styleClass="p-datatable-customers" [rowHover]="true" [reorderableColumns]="true" [lazy]="true"
-(onLazyLoad)="SortColumn($event)"
-[filterDelay]="0" [globalFilterFields]="[ 'quote_id','company','amount','status']" (onFilter)='columnFilter($event)' [columns]="columns" (onColReorder)="columnOrder($event)">
-  <ng-template pTemplate="caption">
-    <div class="table-header">
-      Quotation Listing
-      <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input
-          type="text"
-          pInputText
-          placeholder="Global Search"
-          (input)="getAll()"
-          [(ngModel)]="search_text"
-        />
-      </span>
-    </div>
-  </ng-template>
-  <ng-template pTemplate="header">
-    <tr>
-      <th
-        *ngFor="let col of columns"
-        pSortableColumn="{{ col.field }}"
-        class="text-center"
-        pReorderableColumn
-      >
-        <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
-          {{ col.header }}
-          <div class="icons">
-            <p-sortIcon field="{{ col.field }}"></p-sortIcon>
-            <p-columnFilter
-              type="{{ col.type }}"
-              field="{{ col.field }}"
-              display="menu"
-              class="p-ml-auto"
-            ></p-columnFilter>
-          </div>
-        </div>
-      </th>
-      <!-- <th pSortableColumn="created_date" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
-            Created Date
-            <p-sortIcon field="created_date"></p-sortIcon>
-            <p-columnFilter type="date" field="created_date" display="menu" class="p-ml-auto"></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="quote_id" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
-            Quotation ID
-            <p-sortIcon field="quote_id"></p-sortIcon>
-            <p-columnFilter type="text" field="quote_id" display="menu" class="p-ml-auto"></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="company" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
-            Company Name
-            <p-sortIcon field="company"></p-sortIcon>
-            <p-columnFilter type="text" field="company" display="menu" class="p-ml-auto"></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="validity_date" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
-            Validity Date
-            <p-sortIcon field="validity_date"></p-sortIcon>
-            <p-columnFilter type="date" field="validity_date" display="menu" class="p-ml-auto"></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="remarks" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
-            Reason
-            <p-sortIcon field="remarks"></p-sortIcon>
-            <p-columnFilter type="text" field="remarks" display="menu" class="p-ml-auto"></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="status" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
-            Status
-            <p-sortIcon field="status"></p-sortIcon>
-            <p-columnFilter type="text" field="status" display="menu" class="p-ml-auto"></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="amount" class="text-center">
-        <div class="p-d-flex p-jc-between p-ai-center">
-            Amount (MYR)
-            <p-sortIcon field="amount"></p-sortIcon>
-            <p-columnFilter type="numeric" field="amount" display="menu" class="p-ml-auto"></p-columnFilter>
-        </div>
-      </th> -->
-      <th [style]="{ width: '5%' }"></th>
-    </tr>
-  </ng-template>
-  <ng-template
-    pTemplate="body"
-    let-quote
-    let-rowData
-    let-columns="columns"
-    let-index="rowIndex"
+<!-- Quotation list table -->
+<div class="row">
+  <p-table
+    [loading]="loading"
+    [value]="quotes"
+    styleClass="p-datatable-customers"
+    [globalFilterFields]="['quote_id', 'company', 'amount', 'status']"
+    [rowHover]="true"
+    responsiveLayout="scroll"
+    [filterDelay]="0"
+
   >
-    <tr class="p-selectable-row" [pReorderableRow]="index">
-      <td class="text-center" *ngFor="let col of columns">
-        <span class="p-column-title">{{ col.header }}</span>
-        {{ rowData[col.field] }}
-      </td>
-      <!-- <td class="text-center">
-        <span class="p-column-title">Created Date</span>
-        {{ quote.created_at | date:'dd-MMM-yyyy' }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title">Quotation ID</span>
-        {{ quote.quote_id }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title">Company</span>
-        {{ quote.company }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title">Validity Date</span>
-        {{ quote.validity_date | date:'dd-MMM-yyyy' }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title">Reason</span>
-        {{ quote.cancelled_remarks }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title">Status</span>
-        {{ quote.status }}
-      </td>
-      <td class="text-center">
-        <span class="p-column-title">Amount (MYR)</span>
-        {{ quote.amount }}
-      </td> -->
-      <td class="text-center">
-        <span class="p-column-title">Action</span>
-        <a
-          href="#"
-          [routerLink]="['/quote/', quote.id, 'edit']"
-          class="fa fa-edit"
-        ></a>
-      </td>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="emptymessage" let-columns>
-    <tr>
-        <td style="text-align: center;" [attr.colspan]="columns.length">
-            No records found
+    <ng-template pTemplate="caption">
+      <div class="table-header">
+        <span>
+          <h2>Quotation Listing</h2>
+        </span>
+
+        <span class="p-input-icon-left input-span-icon">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            placeholder="Pending Quotation Search"
+            type="text"
+            [(ngModel)]="search_text"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="created_at" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Created Date
+            <div class="soci-icons">
+              <p-sortIcon field="created_at"></p-sortIcon>
+              <p-columnFilter
+                type="date"
+                field="created_at"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
+
+        <!-- Create Date -->
+        <!-- *ngIf="checkItem('c_date')" -->
+        <th pSortableColumn="quote_id" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Quotation ID
+            <div class="date-icons">
+              <p-sortIcon field="quote_id"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="quote_id"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
+        <!-- FSS Name -->
+        <!-- *ngIf="checkItem('quote_date')" -->
+        <th pSortableColumn="amount" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Amount (MYR)
+            <div class="status-icons">
+              <p-sortIcon field="amount"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="amount"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
+        
+        <th pSortableColumn="company" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Company Name
+            <div class="Q-Date-icons">
+              <p-sortIcon field="company"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="company"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
+        <!-- Quotation ID -->
+        <!-- *ngIf="checkItem('quote_full_id')" -->
+        <th pSortableColumn="validity_date" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Validity Date
+            <div class="quote-icons">
+              <p-sortIcon field="validity_date"></p-sortIcon>
+              <p-columnFilter
+                type="date"
+                field="validity_date"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
+        <!-- Company Name -->
+        <!-- *ngIf="checkItem('company_name')" -->
+        <th pSortableColumn="cancelled_remarks" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Reason
+            <div class="name-icons">
+              <p-sortIcon field="cancelled_remarks"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="cancelled_remarks"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
+
+        <th pSortableColumn="status" class="text-center">
+          <div
+            style="
+              display: flex;
+              white-space: nowrap;
+              flex-direction: column;
+              align-items: center;
+            "
+            class="p-d-flex p-jc-between p-ai-center"
+          >
+            Status
+            <div class="status-icons">
+              <p-sortIcon field="status"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="status"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter>
+            </div>
+          </div>
+        </th>
+
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-data>
+      <tr class="p-selectable-row">
+        <td class="text-center">
+          {{ data.created_at | date: "dd-MMM-yyy" }}
         </td>
-    </tr>
-</ng-template>
-</p-table>
+        <td class="text-center">
+          <div *ngIf="data.quote_id">
+            {{ data.quote_id }}
+          </div>
+          <div *ngIf="!data.quote_id">_</div>
+        </td>
+        <td class="text-center">
+          <div *ngIf="data.amount">
+            {{ data.amount }}
+          </div>
+          <div *ngIf="!data.amount">_</div>
+        </td>
+
+        <td class="text-center">
+          {{ data.company }}
+        </td>
+
+        <td class="text-center">
+          <div *ngIf="data.validity_date">
+            {{ data.validity_date | date: "dd-MMM-yyy" }}
+          </div>
+          <div *ngIf="!data.validity_date">_</div>
+        </td>
+        <td class="text-center">
+          <div *ngIf="data.cancelled_remarks">
+            {{ data.cancelled_remarks }}
+          </div>
+          <div *ngIf="!data.cancelled_remarks">_</div>
+        </td>
+        <td class="text-center">
+          <div *ngIf="data.status">
+            <!-- <p-badge
+              value="{{data.status_desc}}"
+              *ngIf="data.status == 1"
+              severity="danger"
+              styleClass="p-mr-2"
+              class="soci-list-badges"
+            > </p-badge> -->
+            <input
+            type="text"
+            pTooltip="{{data.cancelled_remarks}}"
+            tooltipPosition="top"
+            value="{{data.status_desc}}"
+            *ngIf="data.status == 1"
+            readonly
+            tooltipEvent="focus"
+            class="reject-badge"
+          />
+            <p-badge
+              value="{{data.status_desc}}"
+              severity="success"
+              *ngIf="data.status == 2"
+              styleClass="p-mr-2"
+              class="soci-list-badges"
+            > </p-badge>
+            <p-badge
+              value="{{data.status_desc}}"
+              *ngIf="data.status == 3"
+              severity="warning"
+              styleClass="p-mr-2"
+              class="soci-list-badges"
+            > </p-badge>
+
+            <p-badge
+              value="{{data.status_desc}}"
+              *ngIf="data.status == 4"
+              severity="warning"
+              styleClass="p-mr-2"
+              class="soci-list-badges"
+            > </p-badge>
+
+            <p-badge
+              value="{{data.status_desc}}"
+              *ngIf="data.status == 5"
+              severity="info"
+              styleClass="p-mr-2"
+              class="soci-list-badges"
+            > </p-badge>
+
+            <p-badge
+              value="{{data.status_desc}}"
+              *ngIf="data.status == 6"
+              severity="info"
+              styleClass="p-mr-2"
+              class="soci-list-badges"
+            > </p-badge>
+            <p-badge
+              value="{{data.status_desc}}"
+              *ngIf="data.status == 7"
+              severity="info"
+              styleClass="p-mr-2"
+              class="soci-list-badges"
+            ></p-badge>
+          </div>
+          <div *ngIf="!data.status">_</div>
+        </td>
+
+
+        <td>
+          <a
+          [routerLink]="['/quote/', data.id, 'edit']"
+            class="fa fa-edit"
+          ></a>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</div>
+
 <p-paginator
   (onPageChange)="paginate($event)"
   [rows]="pageItems"
@@ -154,4 +320,3 @@
   [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
 >
 </p-paginator>
-

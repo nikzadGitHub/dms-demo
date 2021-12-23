@@ -87,7 +87,7 @@
                     for="date-of-delivery">
                     Preferred Date of Delivery
                   </label>
-                  <div class="col-md-4">
+                  <div class="col-md-6">
                     <input
                       class="form-control"
                       formControlName="date_of_delivery"
@@ -129,6 +129,7 @@
                   type="number"
                   formControlName="demo_duration"
                   class="form-control"
+                  (change)="durationChanged()"
                   [value]="duration"
                   />
               </div>
@@ -181,25 +182,6 @@
                   </div>
                 </div>
               </div>
-            </div>   
-            
-            <div class="row">
-              <div class="col-md-6">
-                  <div class="form-group row">
-                      <label class="col-md-4 col-form-label" for="contact-name">Ship to Contact Name </label>
-                      <div class="col-md-8">
-                        <input class="form-control" formControlName="contact_name" type="text" name="contact-name">
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-6">
-                  <div class="form-group row">
-                      <label class="col-md-4 col-form-label" for="contact-number">Ship-To Contact Number </label>
-                      <div class="col-md-6">
-                        <input class="form-control" formControlName="contact_number" type="text" name="contact-number">
-                      </div>
-                  </div>
-              </div>
             </div>
 
             <!-- Start Of Opportunity Section -->
@@ -216,8 +198,11 @@
                     > 
                     <div>
                       <input
+                        formControlName="opportunity_code"
                         type="text"
-                        class="form-control oppoturiniIdIput"
+                        class="form-control oppoturiniIdIput disabled"
+                        [disabled]="true"
+                        placeholder="EX: BKYXXXX"
                       />
                     </div>
                   </div>
@@ -227,13 +212,11 @@
                     >
                     <select
                       formControlName="initiator"
-                      (change)="changeAnswer($event.target.value)"
                       class="form-control"
-                      [(ngModel)]="defaultAnswer"
                     >
                       <option
-                        [value]="defaultAnswer"
-                        *ngFor="let answer of defaultAnswers"
+                        [value]="answer.ans"
+                        *ngFor="let answer of initiatorValues"
                         >{{ answer.ans }}</option
                       >
                     </select>
@@ -248,12 +231,10 @@
 
                     <select
                       formControlName="probability"
-                      (change)="changePercentage($event.target.value)"
                       class="form-control"
-                      [(ngModel)]="selectedPercentage"
                     >
                       <option
-                        [value]="percentage.id"
+                        [value]="percentage.value"
                         *ngFor="let percentage of defaultPercentages"
                         >{{ percentage.value }}</option
                       >
@@ -265,13 +246,11 @@
                     >
                     <select
                       formControlName="is_competitor_in_demo"
-                      (change)="changeAnswer($event.target.value)"
                       class="form-control"
-                      [(ngModel)]="defaultAnswer"
                     >
                       <option
-                        [value]="answer.id"
-                        *ngFor="let answer of defaultAnswers"
+                        [value]="answer.value"
+                        *ngFor="let answer of participateInDemoAns"
                         >{{ answer.ans }}</option
                       >
                     </select>
@@ -282,12 +261,10 @@
                     <label for="" class="opportunityBoxesLabel">Priority</label>
                     <select
                       formControlName="priority"
-                      (change)="changePrioritye($event.target.value)"
                       class="form-control"
-                      [(ngModel)]="defaultPriority"
                     >
                       <option
-                        [value]="priority.id"
+                        [value]="priority.name"
                         *ngFor="let priority of defaultPriorities"
                         >{{ priority.value }}</option
                       >
@@ -299,14 +276,12 @@
                     >
                     <select
                       formControlName="squence_of_demo"
-                      (change)="changePriority($event.target.value)"
                       class="form-control"
-                      [(ngModel)]="defaultPriority"
                     >
                       <option
-                        [value]="priority.id"
-                        *ngFor="let priority of defaultPriorities"
-                        >{{ priority.value }}</option
+                        *ngFor="let sod of sequenceOfDemoValues"
+                        [value]="sod.value"
+                        >{{ sod.ans }}</option
                       >
                     </select>
                   </div>
@@ -314,7 +289,21 @@
               </div>
 
               <div class="opportunitiesText">
-                <div><label for="selling_points">Point Point</label></div>
+                <div><label for="pain_points">Pain Point</label></div>
+                <div>
+                  <textarea
+                    formControlName="pain_points"
+                    cols="30"
+                    rows="4"
+                    style="resize:none;"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="opportunitiesText">
+                <div>
+                  <label for="selling_points">Features To highlight</label>
+                </div>
                 <div>
                   <textarea
                     formControlName="selling_points"
@@ -326,24 +315,10 @@
               </div>
 
               <div class="opportunitiesText">
-                <div>
-                  <label for="customer_feedback">Features To highlight</label>
-                </div>
+                <div><label for="customer_feedback">users Feedback</label></div>
                 <div>
                   <textarea
                     formControlName="customer_feedback"
-                    cols="30"
-                    rows="4"
-                    style="resize:none;"
-                  ></textarea>
-                </div>
-              </div>
-
-              <div class="opportunitiesText">
-                <div><label for="opportunity_code">users Feedback</label></div>
-                <div>
-                  <textarea
-                    formControlName="opportunity_code"
                     cols="30"
                     rows="4"
                     style="resize:none;"

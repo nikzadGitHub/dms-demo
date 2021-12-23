@@ -157,7 +157,11 @@ export class CreateActivityComponent implements OnInit {
     this.addActivityData.activityStatus = data.status
     this.addActivityData.activityDueDate = data.due_date.slice(0,10)
     this.addActivityData.activityCompletionDate = data.completion_date.slice(0,10)
+    
     this.addActivityData.activityRemarks = data.remark
+    console.log(data.due_date.slice(0,10),'date with slice');
+    console.log(data.due_date,'date');
+    
 
   }
   

@@ -63,10 +63,12 @@ export class ManagerViewService {
     return this.httpClient.post(this.apiURL+"/quote/escalate/",body, this.httpOptions);
   }
 
-  quotationReject(id): Observable<object> {
+  quotationReject(id,reason): Observable<object> {
     let body ={
+      "cancelled_remarks":reason,
       "quoteId": id
     }
-    return this.httpClient.post(this.apiURL+"/quote/request-rejected",body, this.httpOptions);
+    return this.httpClient.post(this.apiURL+"/quote/request-rejected",JSON.stringify(body), this.httpOptions);
   }
 }
+

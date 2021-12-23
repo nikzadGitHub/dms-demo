@@ -1,18 +1,10 @@
 {
-  "name": "@lajwardco/idsmed-frontend",
+  "name": "idsmed-frontend",
   "version": "1.0.0",
   "description": "idsMED Web Frontend",
-  "author": {
-    "name": "LajwardCo",
-    "github": "https://github.com/LajwardCo"
-  },
   "contributors": [
-    {
-      "name": "Ehsan Yaqubi",
-      "url": "https://github.com/ehsan-yaqubi"
-    }
   ],
-  "homepage": "https://github.com/LajwardCo/iDSMED-frontend",
+  "homepage": "https://gitlab.com/websight-idsmed/web/idsmed-sales-funnel-web-frontend",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
