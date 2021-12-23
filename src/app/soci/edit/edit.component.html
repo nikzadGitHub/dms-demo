@@ -116,11 +116,21 @@
           <ng-template pTemplate="header">
             <div class="accordian-div">
               PO Details
-              <img
-                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-                alt=""
-                (click)="openModel('po_detail')"
-              />
+              <div>
+                <p-badge
+                  class="soci-comment-badges"
+                  [value]="
+                    soci_data?.comment_type_count?.po_detail
+                      ? soci_data?.comment_type_count?.po_detail
+                      : zero
+                  "
+                ></p-badge>
+                <img
+                  src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                  alt=""
+                  (click)="openModel('po_detail')"
+                />
+              </div>
             </div>
           </ng-template>
           <div class="row">
@@ -162,17 +172,27 @@
       <br />
       <!-- End PO details -->
       <!-- SOCI Detaail -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <!-- header="PO Details" -->
         <p-accordionTab>
           <ng-template pTemplate="header">
             <div class="accordian-div">
               SOCI Details
-              <img
-                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-                alt=""
-                (click)="openModel('soci_detail')"
-              />
+              <div>
+                <p-badge
+                  class="soci-comment-badges"
+                  [value]="
+                    soci_data?.comment_type_count?.soci_detail
+                      ? soci_data?.comment_type_count?.soci_detail
+                      : zero
+                  "
+                ></p-badge>
+                <img
+                  src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                  alt=""
+                  (click)="openModel('soci_detail')"
+                />
+              </div>
             </div>
           </ng-template>
           <div class="row">
@@ -527,11 +547,21 @@
           <ng-template pTemplate="header">
             <div class="accordian-div">
               Standard Terms
-              <img
-                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-                alt="comment"
-                (click)="openModel('standard_terms')"
-              />
+              <div>
+                <p-badge
+                  class="soci-comment-badges"
+                  [value]="
+                    soci_data?.comment_type_count?.standard_terms
+                      ? soci_data?.comment_type_count?.standard_terms
+                      : zero
+                  "
+                ></p-badge>
+                <img
+                  src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                  alt="comment"
+                  (click)="openModel('standard_terms')"
+                />
+              </div>
             </div>
           </ng-template>
 
@@ -625,11 +655,21 @@
           <ng-template pTemplate="header">
             <div class="accordian-div">
               Billing Milestones
-              <img
-                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-                alt=""
-                (click)="openModel('billing_milestone')"
-              />
+              <div>
+                <p-badge
+                  class="soci-comment-badges"
+                  [value]="
+                    soci_data?.comment_type_count?.billing_milestone
+                      ? soci_data?.comment_type_count?.billing_milestone
+                      : zero
+                  "
+                ></p-badge>
+                <img
+                  src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                  alt=""
+                  (click)="openModel('billing_milestone')"
+                />
+              </div>
             </div>
           </ng-template>
           <div class="row">
@@ -666,9 +706,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="
-                        billing.billing_id ? billing.billing_id : dash
-                      "
+                      [(ngModel)]="billing.billing_id"
                       [ngModelOptions]="{ standalone: true }"
                       readonly
                       [attr.disabled]="
@@ -683,7 +721,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="billing.stage ? billing.stage : dash"
+                      [(ngModel)]="billing.stage"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['billingMilestone'] && controller == billing
@@ -698,9 +736,7 @@
                       type="text"
                       class="form-control"
                       style="text-align: right"
-                      [(ngModel)]="
-                        billing.percentage ? billing.percentage : dash
-                      "
+                      [(ngModel)]="billing.percentage"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['billingMilestone'] && controller == billing
@@ -721,11 +757,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [ngModel]="
-                          billing.amount
-                            ? billing.amount
-                            : (zero | number: '1.2')
-                        "
+                        [ngModel]="billing.amount | number: '1.2'"
                         [ngModelOptions]="{ standalone: true }"
                         [attr.disabled]="
                           enableEdit['billingMilestone'] &&
@@ -740,7 +772,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [(ngModel)]="billing.amount ? billing.amount : zero"
+                        [(ngModel)]="billing.amount"
                         [ngModelOptions]="{ standalone: true }"
                         [attr.disabled]="
                           enableEdit['billingMilestone'] &&
@@ -757,7 +789,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="billing.remarks ? billing.remarks : dash"
+                      [(ngModel)]="billing.remarks"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['billingMilestone'] && controller == billing
@@ -765,7 +797,6 @@
                           : ''
                       "
                     />
-                    <!-- {{ billing.remarks }} -->
                   </td>
                   <td class="text-center"></td>
                   <td
@@ -907,11 +938,21 @@
           <ng-template pTemplate="header">
             <div class="accordian-div">
               Payment Schedules
-              <img
-                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-                alt=""
-                (click)="openModel('payment_schedule')"
-              />
+              <div>
+                <p-badge
+                  class="soci-comment-badges"
+                  [value]="
+                    soci_data?.comment_type_count?.payment_schedule
+                      ? soci_data?.comment_type_count?.payment_schedule
+                      : zero
+                  "
+                ></p-badge>
+                <img
+                  src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                  alt=""
+                  (click)="openModel('payment_schedule')"
+                />
+              </div>
             </div>
           </ng-template>
           <div class="row">
@@ -1265,11 +1306,21 @@
           <ng-template pTemplate="header">
             <div class="accordian-div">
               Additional Costs
-              <img
-                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-                alt=""
-                (click)="openModel('additional_cost')"
-              />
+              <div>
+                <p-badge
+                  class="soci-comment-badges"
+                  [value]="
+                    soci_data?.comment_type_count?.additional_cost
+                      ? soci_data?.comment_type_count?.additional_cost
+                      : zero
+                  "
+                ></p-badge>
+                <img
+                  src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                  alt=""
+                  (click)="openModel('additional_cost')"
+                />
+              </div>
             </div>
           </ng-template>
           <div class="row">
@@ -1575,11 +1626,22 @@
           <ng-template pTemplate="header">
             <div class="accordian-div">
               Billing Instruction
+              <div>
+                <p-badge
+                class="soci-comment-badges"
+                [value]="
+                  soci_data?.comment_type_count?.billing_instruction
+                    ? soci_data?.comment_type_count?.billing_instruction
+                    : zero
+                "
+              ></p-badge>
               <img
-                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-                alt=""
-                (click)="openModel('billing_instruction')"
-              />
+              src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+              alt=""
+              (click)="openModel('billing_instruction')"
+            />
+              </div>
+
             </div>
           </ng-template>
           <div class="row">
@@ -1843,11 +1905,22 @@
           <ng-template pTemplate="header">
             <div class="accordian-div">
               Additional Instruction and Information
+              <div>
+                <p-badge
+                class="soci-comment-badges"
+                [value]="
+                  soci_data?.comment_type_count?.additional_instruction
+                    ? soci_data?.comment_type_count?.additional_instruction
+                    : zero
+                "
+              ></p-badge>
               <img
-                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-                alt=""
-                (click)="openModel('additional_instruction')"
-              />
+              src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+              alt=""
+              (click)="openModel('additional_instruction')"
+            />
+              </div>
+        
             </div>
           </ng-template>
           <!-- Heading -->
@@ -2032,11 +2105,22 @@
           <ng-template pTemplate="header">
             <div class="accordian-div">
               Additional/Reduction Charges
+              <div>
+                <p-badge
+                class="soci-comment-badges"
+                [value]="
+                  soci_data?.comment_type_count?.additional_charges
+                    ? soci_data?.comment_type_count?.additional_charges
+                    : zero
+                "
+              ></p-badge>
               <img
-                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-                alt=""
-                (click)="openModel('additional_charges')"
-              />
+              src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+              alt=""
+              (click)="openModel('additional_charges')"
+            />
+              </div>
+     
             </div>
           </ng-template>
           <!-- Heading -->
@@ -2412,11 +2496,22 @@
           <ng-template pTemplate="header">
             <div class="accordian-div">
               Products
+              <div>
+                <p-badge
+                class="soci-comment-badges"
+                [value]="
+                  soci_data?.comment_type_count?.product
+                    ? soci_data?.comment_type_count?.product
+                    : zero
+                "
+              ></p-badge>
               <img
-                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-                alt=""
-                (click)="openModel('product')"
-              />
+              src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+              alt=""
+              (click)="openModel('product')"
+            />
+              </div>
+       
             </div>
           </ng-template>
           <div class="row">
@@ -2668,11 +2763,22 @@
           <ng-template pTemplate="header">
             <div class="accordian-div">
               SOCI Attachments
+              <div>
+                <p-badge
+                class="soci-comment-badges"
+                [value]="
+                  soci_data?.comment_type_count?.soci_attachment
+                    ? soci_data?.comment_type_count?.soci_attachment
+                    : zero
+                "
+              ></p-badge>
               <img
-                src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-                alt=""
-                (click)="openModel('soci_attachment')"
-              />
+              src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+              alt=""
+              (click)="openModel('soci_attachment')"
+            />
+              </div>
+        
             </div>
           </ng-template>
           <table class="table table-bordered table-striped">
@@ -2688,33 +2794,31 @@
             </thead>
             <tbody>
               <tr align="center" *ngFor="let item of sociAttachment">
-                  <!-- <td></td>
+                <!-- <td></td>
                 <td></td> -->
-                  <td>
-                    <div>
-                      {{ soci_data?.po_no ? soci_data?.po_no : dash }}
-                    </div>
-                  </td>
-                  <!-- <td>_</td> -->
-                  <td>
-                    {{
-                      item.original_file_name ? item.original_file_name : dash
-                    }}
-                  </td>
-                  <td>{{ item.file_type ? item.file_type : dash }}</td>
-                  <td>
-                    <a
-                      href="{{
-                        url +
-                          '/soci/attachment-download/' +
-                          item.fileName +
-                          '?token=' +
-                          token
-                      }}"
-                      target="_blank"
-                      >Download</a
-                    >
-                  </td>
+                <td>
+                  <div>
+                    {{ soci_data?.po_no ? soci_data?.po_no : dash }}
+                  </div>
+                </td>
+                <!-- <td>_</td> -->
+                <td>
+                  {{ item.original_file_name ? item.original_file_name : dash }}
+                </td>
+                <td>{{ item.file_type ? item.file_type : dash }}</td>
+                <td>
+                  <a
+                    href="{{
+                      url +
+                        '/soci/attachment-download/' +
+                        item.fileName +
+                        '?token=' +
+                        token
+                    }}"
+                    target="_blank"
+                    >Download</a
+                  >
+                </td>
               </tr>
             </tbody>
           </table>
