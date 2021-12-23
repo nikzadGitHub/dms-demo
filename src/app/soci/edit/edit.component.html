@@ -2380,7 +2380,6 @@
                   <td></td>
                   <td style="size: 20%; display: flex; border: none">
                     <!-- [(ngModel)]="selectedProductAdvanced[i]" -->
-<<<<<<< HEAD
                     <span class="p-input-icon-right d-flex">
                       <!-- <input type="text" pInputText  #search placeholder="Search">-->
                       <div >
@@ -2392,29 +2391,6 @@
                   </span>
                   
                 </td>
-=======
-                    <p-autoComplete
-                      formControlName="name"
-                      field="name"
-                      [dropdown]="false"
-                      [style]="{ width: '100%' }"
-                      [inputStyle]="{ width: '90%' }"
-                    >
-                      <!-- <ng-template let-product pTemplate="item">
-                        <div
-                        class="product-item"
-                        (click)="productDetails(product, 'add_product')"
-                        >
-                        <div>{{ product.name }}</div>
-                      </div>
-                    </ng-template> -->
-                    </p-autoComplete>
-                    <!-- (click)="filterProduct(name)" -->
-                    <div class="product_search" >
-                      <i class="pi pi-search" style="font-size: larger"></i>
-                    </div>
-                  </td>
->>>>>>> 89630b8eeef166a25a67f16551f49b4a6416ee99
                   <td style="width: 14%">
                     <input
                       class="form-control"
@@ -3318,7 +3294,7 @@
           <div class="payment-form">
             <div class="days-field">
               <label for="">Days</label>
-              <input type="text" class="form-control" formControlName="days" />
+              <p-dropdown [options]="payment_termValue" class="days" formControlName="days"  optionLabel="description" optionValue="no_of_days"></p-dropdown>
             </div>
             <div class="date-field">
               <label for="">From Date</label>

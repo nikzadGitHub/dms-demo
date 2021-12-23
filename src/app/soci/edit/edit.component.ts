@@ -157,15 +157,15 @@ export class EditComponent implements OnInit {
   enableSoldToedit = true;
   isBillTo = false;
   enableBillToedit = true;
-  searchProductName: any ="";
+  searchProductName: any = "";
   searchProductDetails: any;
   searchValue: string;
-  productName:any;
-  selectedProductName: any="";
+  productName: any;
+  selectedProductName: any = "";
   filteredCompanyData: any = [];
   opp_id: any;
   companyId: any;
-
+  payment_termValue: [];
   constructor(
     private route: ActivatedRoute,
     private quoteService: QuoteService,
@@ -225,6 +225,7 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAllDropdowns()
     this.route.queryParams.subscribe((params) => {
       this.is_approval_view_check = params.is_approval_view_check;
       this.is_preview_check = params.is_preview_check;
@@ -1385,7 +1386,7 @@ export class EditComponent implements OnInit {
   }
 
   addPrductData() {
-    this.selectedProductName=""
+    this.selectedProductName = ""
     this.sociService
       .postQuery("/soci/product", {
         external_product_number: this.external_product_number,
@@ -1443,8 +1444,8 @@ export class EditComponent implements OnInit {
   }
 
   productDetails(product, check) {
-    this.searchProductDetails=product
-    this.searchProductName=product.name;
+    this.searchProductDetails = product
+    this.searchProductName = product.name;
     this.productCheck = check;
     this.external_product_number = product.external_product_number;
     this.product_data_area_id = product.data_area_id;
@@ -1887,7 +1888,7 @@ export class EditComponent implements OnInit {
   //Update Remarks
   remarksAdded() {
     this.form.value.sociRemarks ||
-    this.soci_data?.remarks !== this.form.value.sociRemarks
+      this.soci_data?.remarks !== this.form.value.sociRemarks
       ? (this.isRemarksAdded = false)
       : (this.isRemarksAdded = true);
   }
@@ -1943,15 +1944,15 @@ export class EditComponent implements OnInit {
       body.classList.remove("modal-open");
     }
   }
-  searchBar(val){
-    this.searchValue=val;
+  searchBar(val) {
+    this.searchValue = val;
     this.searchModal.show();
   }
-  modalOkButton(){
-    this.selectedProductName=this.searchProductName
-    if(this.searchProductName !== ''){
-      let sku=this.searchProductDetails.sku;
-      let unit_price =this.searchProductDetails.unit_price
+  modalOkButton() {
+    this.selectedProductName = this.searchProductName
+    if (this.searchProductName !== '') {
+      let sku = this.searchProductDetails.sku;
+      let unit_price = this.searchProductDetails.unit_price
       this.form.patchValue({
         sku: sku,
         unit_price: unit_price,
@@ -1959,5 +1960,10 @@ export class EditComponent implements OnInit {
       });
     }
     this.searchModal.hide()
+  }
+  getAllDropdowns() {
+    this.sociService.getQuery('/soci/all-dropdown').subscribe(data => {
+      this.payment_termValue = data['data'].payment_terms;
+    })
   }
 }
