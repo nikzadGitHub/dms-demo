@@ -166,6 +166,7 @@ export class EditComponent implements OnInit {
   opp_id: any;
   companyId: any;
   payment_termValue: [];
+  delivery_termValue: [];
   constructor(
     private route: ActivatedRoute,
     private quoteService: QuoteService,
@@ -1964,6 +1965,7 @@ export class EditComponent implements OnInit {
   getAllDropdowns() {
     this.sociService.getQuery('/soci/all-dropdown').subscribe(data => {
       this.payment_termValue = data['data'].payment_terms;
+      this.delivery_termValue = data['data'].delivery_terms;
     })
   }
 }

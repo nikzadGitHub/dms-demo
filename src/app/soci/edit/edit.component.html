@@ -136,8 +136,8 @@
       </p-accordion>
       <br />
       <!-- End PO details -->
-      <!-- SOCI Detaail -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+      <!-- SOCI Detail -->
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
         <!-- header="PO Details" -->
         <p-accordionTab>
           <ng-template pTemplate="header">
@@ -337,8 +337,8 @@
       </p-accordion>
       <!--End SOCI Detaail -->
       <br />
+      <!-- Standard Term Accordion -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
-        <!-- Standard Term Accordion -->
         <!-- header="Standard Terms" -->
         <p-accordionTab>
           <ng-template pTemplate="header">
@@ -368,7 +368,7 @@
           </div>
           <div class="row">
             <div class="col-md-5">
-              <b>(As Default) Payment Terms: </b>{{ default_payment_term + " Days" }}
+              <b>(As Default) Payment Terms: </b>{{ default_payment_term ? default_payment_term : 0 + " Days" }}
             </div>
             <div class="col-md-6" style="text-align: end">
               Quotation Validity: <b>From</b>
@@ -448,7 +448,7 @@
               </thead>
               <tbody>
                 <tr align="center" *ngFor="let billing of billing_milestone; let i = index">
-                  <td>
+                  <td *ngIf="billing.billing_id">
                     <input type="text" class="form-control" [(ngModel)]="billing.billing_id"
                       [ngModelOptions]="{ standalone: true }" readonly [attr.disabled]="
                         enableEdit['billingMilestone'] && controller == billing
@@ -457,7 +457,8 @@
                       " />
                     <!-- {{ billing.billing_id }} -->
                   </td>
-                  <td>
+                  <td *ngIf="!billing.billing_id">_</td>
+                  <td *ngIf="billing.stage">
                     <input type="text" class="form-control" [(ngModel)]="billing.stage"
                       [ngModelOptions]="{ standalone: true }" [attr.disabled]="
                         enableEdit['billingMilestone'] && controller == billing
@@ -466,7 +467,8 @@
                       " />
                     <!-- {{ billing.stage }} -->
                   </td>
-                  <td>
+                  <td *ngIf="!billing.stage">_</td>
+                  <td *ngIf="billing.percentage">
                     <input type="text" class="form-control" style="text-align: right" [(ngModel)]="billing.percentage"
                       [ngModelOptions]="{ standalone: true }" [attr.disabled]="
                         enableEdit['billingMilestone'] && controller == billing
@@ -475,7 +477,8 @@
                       " />
                     <!-- {{ billing.percentage }} -->
                   </td>
-                  <td>
+                  <td *ngIf="!billing.percentage">_</td>
+                  <td *ngIf="billing.amount">
                     <div *ngIf="
                         editableRowIndex !== i ||
                         selectedId !== 'billingMilestone'
@@ -501,7 +504,8 @@
 
                     <!-- {{ billing.amount }} -->
                   </td>
-                  <td style="width: 20%">
+                  <td *ngIf="!billing.amount">_</td>
+                  <td style="width: 20%" *ngIf="billing.remarks">
                     <input type="text" class="form-control" [(ngModel)]="billing.remarks"
                       [ngModelOptions]="{ standalone: true }" [attr.disabled]="
                         enableEdit['billingMilestone'] && controller == billing
@@ -510,6 +514,7 @@
                       " />
                     <!-- {{ billing.remarks }} -->
                   </td>
+                  <td *ngIf="!billing.remarks">_</td>
                   <td class="text-center"></td>
                   <td class="text-center td-actions" style="width: 10%" *ngIf="
                       !is_preview_check && (sociStatus == 1 || sociStatus == 7)
@@ -611,7 +616,7 @@
               </thead>
               <tbody>
                 <tr align="center" *ngFor="let payment of payment_schedules; let i = index">
-                  <td>
+                  <td *ngIf="billing_id">
                     <!-- formControlName="billing_id" -->
                     <select [(ngModel)]="billing_id" [ngModelOptions]="{ standalone: true }" [attr.disabled]="
                         enableEdit['payment'] && controller == payment
@@ -632,7 +637,8 @@
                       readonly
                     /> -->
                   </td>
-                  <td>
+                  <td *ngIf="!billing_id">_</td>
+                  <td *ngIf="payment.percentage">
                     <input type="text" class="form-control" style="text-align: right; width: 100px"
                       [(ngModel)]="payment.percentage" [ngModelOptions]="{ standalone: true }" [attr.disabled]="
                         enableEdit['payment'] && controller == payment
@@ -641,6 +647,7 @@
                       " />
                     <!-- {{ payment.percentage }} -->
                   </td>
+                  <td *ngIf="!payment.percentage">_</td>
                   <td>
                     <input type="date" style="width: 79%" class="form-control" [ngModel]="new_payment_schedule_date"
                       (ngModelChange)="changePaymentSchdule($event)" [ngModelOptions]="{ standalone: true }"
@@ -683,7 +690,7 @@
                       "
                     />
                   </td> -->
-                  <td>
+                  <td *ngIf="payment.amount">
                     <div *ngIf="editableRowIndex !== i || selectedId !== 'payment'">
                       <input type="text" class="form-control" style="text-align: right; width: 100px"
                         [ngModel]="payment.amount | number: '1.2'" [ngModelOptions]="{ standalone: true }"
@@ -704,7 +711,8 @@
 
                     <!-- {{ payment.amount }} -->
                   </td>
-                  <td style="width: 16%">
+                  <td *ngIf="!payment.amount"></td>
+                  <td style="width: 16%" *ngIf="payment.remarks">
                     <input type="text" class="form-control" [(ngModel)]="payment.remarks"
                       [ngModelOptions]="{ standalone: true }" [attr.disabled]="
                         enableEdit['payment'] && controller == payment
@@ -713,6 +721,7 @@
                       " />
                     <!-- {{ payment.remarks }} -->
                   </td>
+                  <td *ngIf="!payment.remarks"></td>
                   <td class="td-actions" style="width: 10%; padding: none" *ngIf="
                       !is_preview_check && (sociStatus == 1 || sociStatus == 7)
                     ">
@@ -839,13 +848,14 @@
               </thead>
               <tbody>
                 <tr align="center" *ngFor="let cost of additional_costs; let i = index">
-                  <td>
+                  <td *ngIf="cost.description">
                     <input type="text" class="form-control" [(ngModel)]="cost.description" [attr.disabled]="
                         enableEdit['addCost'] && controller == cost ? null : ''
                       " [ngModelOptions]="{ standalone: true }" />
                     <!-- {{ cost.description }} -->
                   </td>
-                  <td>
+                  <td *ngIf="!cost.description">_</td>
+                  <td *ngIf="cost.quantity">
                     <!-- (input)="changeQuantity()" -->
                     <input type="text" class="form-control" style="text-align: right; width: 65px"
                       (input)="changeCostvalues(cost)" [(ngModel)]="cost.quantity"
@@ -854,6 +864,7 @@
                       " />
                     <!-- {{ cost.quantity }} -->
                   </td>
+                  <td *ngIf="!cost.quantity">_</td>
                   <td>
                     <!-- (input)="costUnitValue()" -->
                     <div *ngIf="editableRowIndex !== i || selectedId !== 'addCost'">
@@ -876,7 +887,7 @@
 
                     <!-- {{ cost.unit_price }} -->
                   </td>
-                  <td>
+                  <td *ngIf="cost.total_price">
                     <div *ngIf="editableRowIndex !== i || selectedId !== 'addCost'">
                       <input type="text" class="form-control" style="text-align: right"
                         [ngModel]="cost.total_price | number: '1.2'" [ngModelOptions]="{ standalone: true }" readonly
@@ -897,13 +908,15 @@
 
                     <!-- {{ cost.total_price }} -->
                   </td>
-                  <td>
+                  <td *ngIf="!cost.total_price">_</td>
+                  <td *ngIf="cost.remarks">
                     <input type="text" class="form-control" [(ngModel)]="cost.remarks"
                       [ngModelOptions]="{ standalone: true }" [attr.disabled]="
                         enableEdit['addCost'] && controller == cost ? null : ''
                       " />
                     <!-- {{ cost.remarks }} -->
                   </td>
+                  <td *ngIf="!cost.remarks">_</td>
                   <td class="text-center"></td>
                   <td class="text-center"></td>
                   <td class="td-actions" style="width: 10%" *ngIf="
@@ -1035,7 +1048,8 @@
                     </div>
                     <!-- {{ item.schedule }} -->
                   </td>
-                  <td>
+                  <!-- <td *ngIf="!new_billing_instruction_date">_</td> -->
+                  <td *ngIf="item.percentage">
                     <input type="text" class="form-control" style="text-align: right; width: 100px"
                       [(ngModel)]="item.percentage" [attr.disabled]="
                         enableEdit['addBillInstruction'] && controller == item
@@ -1044,6 +1058,7 @@
                       " [ngModelOptions]="{ standalone: true }" />
                     <!-- {{ item.percentage }} -->
                   </td>
+                  <td *ngIf="!item.percentage">_</td>
                   <td>
                     <div *ngIf="
                         editableRowIndex !== i ||
@@ -1068,7 +1083,7 @@
                     <!-- {{ item.amount }} -->
                   </td>
 
-                  <td>
+                  <td *ngIf="item.remarks">
                     <input type="text" class="form-control" [(ngModel)]="item.remarks" [attr.disabled]="
                         enableEdit['addBillInstruction'] && controller == item
                           ? null
@@ -1076,6 +1091,7 @@
                       " [ngModelOptions]="{ standalone: true }" />
                     <!-- {{ item.remarks }} -->
                   </td>
+                  <td *ngIf="!item.remarks">_</td>
                   <td></td>
                   <td class="td-actions" style="width: 10%" *ngIf="
                       !is_preview_check && (sociStatus == 1 || sociStatus == 7)
@@ -1181,7 +1197,7 @@
 
           <div class="row" *ngFor="let item of additional_instructions; let i = index">
             <div class="col-md-3">
-              <div class="col-md-10">
+              <div class="col-md-10" *ngIf="item.soci">
                 <!-- [value]="item.soci" -->
                 <input class="text-left form-control" style="width: 146px" type="text" [(ngModel)]="item.soci"
                   [attr.disabled]="
@@ -1190,9 +1206,10 @@
                       : ''
                   " [ngModelOptions]="{ standalone: true }" placeholder="" />
               </div>
+              <div *ngIf="!item.soci">_</div>
             </div>
             <div class="col-md-8">
-              <div class="col-md-10">
+              <div class="col-md-10" *ngIf="item.description">
                 <input class="text-left form-control" style="width: 600px" type="text" [(ngModel)]="item.description"
                   [attr.disabled]="
                     enableEdit['additionalInstruction'] && controller == item
@@ -1200,6 +1217,7 @@
                       : ''
                   " [ngModelOptions]="{ standalone: true }" placeholder="" />
               </div>
+              <div *ngIf="!item.description">_</div>
             </div>
 
             <div class="col-md-1" style="text-align: right"
@@ -1341,7 +1359,7 @@
               <!-- Description -->
               <div class="col-md-4">
                 <div class="">
-                  <div class="col-md-10">
+                  <div class="col-md-10" *ngIf="item.description">
                     <input class="text-left form-control" style="width: 360px" type="text"
                       [(ngModel)]="item.description" [attr.disabled]="
                         enableEdit['additionalCharges'] && controller == item
@@ -1349,12 +1367,13 @@
                           : ''
                       " [ngModelOptions]="{ standalone: true }" placeholder="" />
                   </div>
+                  <div class="col-md-10" *ngIf="!item.description">_</div>
                 </div>
               </div>
               <!-- qty -->
               <div class="col-md-1">
                 <div class="qty">
-                  <div class="col-md-10">
+                  <div class="col-md-10" *ngIf="item.quantity">
                     <input class="text-left form-control" type="number"
                       style="width: 65px; text-align: right !important" (input)="updateChargesQuantity(item)"
                       [(ngModel)]="item.quantity" [attr.disabled]="
@@ -1363,12 +1382,13 @@
                           : ''
                       " [ngModelOptions]="{ standalone: true }" placeholder="0" />
                   </div>
+                  <div class="col-md-10" *ngIf="!item.quantity">_</div>
                 </div>
               </div>
 
               <!-- unit -->
               <div class="col-md-2">
-                <div class="unit">
+                <div class="unit" *ngIf="item.unit_price">
                   <div class="col-md-10" *ngIf="editableRowIndex == i">
                     <input class="text-left form-control" type="text" style="
                         width: 160px !important;
@@ -1394,6 +1414,7 @@
                     <!-- {{item.unit_price  | number: '1.2'}} -->
                   </div>
                 </div>
+                <div class="unit" *ngIf="!item.unit_price">_</div>
               </div>
 
               <!-- Amount -->
@@ -1862,19 +1883,18 @@
           <label for="">Please search product or add dummy sku.</label>
 
           <!-- product-search -->
-          <!-- (completeMethod)="filterProduct($event)" -->
           <div class="search-product">
             <label for="">Product Name</label>
             <p-autoComplete formControlName="name" [suggestions]="filteredProducts" field="name" [dropdown]="true"
-              [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }">
-              <!-- <ng-template let-product pTemplate="item">
+              [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }" (completeMethod)="filterProduct($event)">
+              <ng-template let-product pTemplate="item">
                 <div
                   class="product-item"
                   (click)="productDetails(product, 'update_product')"
                 >
                   <div>{{ product.name }}</div>
                 </div>
-              </ng-template> -->
+              </ng-template>
             </p-autoComplete>
           </div>
           <hr />
@@ -2223,7 +2243,9 @@
           <div class="payment-form">
             <div class="days-field">
               <label for="">Days</label>
-              <input type="text" class="form-control" formControlName="delivery_days" />
+              <!-- <input type="text" class="form-control" formControlName="delivery_days" /> -->
+              <p-dropdown [options]="delivery_termValue" class="days" formControlName="delivery_days" optionLabel="description" optionValue="num_of_days"></p-dropdown>
+
             </div>
             <div class="date-field">
               <label for="">From Date</label>
