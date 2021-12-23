@@ -41,6 +41,29 @@ export const bookingsChildren: Routes = [
   },
 ];
 
+export const inventoryChildren: Routes = [
+  {
+    path: ':tabName',
+    component: BookingsComponent,
+    pathMatch: 'full',
+  },
+  // {
+  //   path: 'incoming',
+  //   component: InventoryComponent,
+  //   data: {
+  //     title: 'Incoming',
+  //   },
+  // },
+  // {
+  //   path: 'afs',
+  //   component: InventoryComponent,
+  // },
+  // {
+  //   path: 'archived',
+  //   component: InventoryComponent,
+  // },
+];
+
 export const mainChildren: Routes = [
   {
     path: '',
@@ -53,6 +76,7 @@ export const mainChildren: Routes = [
     data: {
       title: 'Inventory',
     },
+    children: inventoryChildren,
   },
   {
     path: 'bookings',
