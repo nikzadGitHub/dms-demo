@@ -41,6 +41,8 @@ export class IndexComponent implements OnInit {
   sociStatus: any;
   badgeColor = "";
   selectedValues: any[] = [];
+  dash='_'
+  zero = 0
   columnValue = [
     { name: "Created date:", key: "c_date" },
     { name: "SOCI ID:", key: "soci_id" },
@@ -161,17 +163,17 @@ export class IndexComponent implements OnInit {
     let exportArr: Array<any> = [];
     for (let i = 0; i < dupArr.length; i++) {
       let compObj: any = {};
-      compObj.created_at = dupArr[i].created_at;
-      compObj.company_name = dupArr[i].customer.company_name
+      compObj.created_at = dupArr[i].created_at?dupArr[i].created_at:this.dash;
+      compObj.company_name = dupArr[i].customer?.company_name
         ? dupArr[i].customer.company_name
-        : "";
-      compObj.soci_id = dupArr[i].soci_id;
-      compObj.quote_full_id = dupArr[i].quote_full_id;
-      compObj.quote_date = dupArr[i].quote_date;
+        : "_";
+      compObj.soci_id = dupArr[i].soci_id?dupArr[i].soci_id:this.dash;
+      compObj.quote_full_id = dupArr[i].quote_full_id?dupArr[i].quote_full_id:this.dash;
+      compObj.quote_date = dupArr[i].quote_date?dupArr[i].quote_date:this.dash;
       compObj.amount = dupArr[i].po_amount ? dupArr[i].po_amount : 0;
-      compObj.po_no = dupArr[i].po_no;
-      compObj.po_date = dupArr[i].po_date;
-      compObj.fo_order_number = dupArr[i].fo_order_number;
+      compObj.po_no = dupArr[i].po_no?dupArr[i].po_no:this.dash;
+      compObj.po_date = dupArr[i].po_date?dupArr[i].po_date:this.dash;
+      compObj.fo_order_number = dupArr[i].fo_order_number?dupArr[i].fo_order_number:this.dash;
       exportArr.push(compObj);
     }
     const fileName = "SOCI_Listing.xlsx";

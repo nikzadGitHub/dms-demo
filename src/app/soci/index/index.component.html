@@ -393,12 +393,12 @@
       <!-- {{ opportunity.created_date | date: "dd-MMM-yyyy" }} -->
       <td class="text-center" *ngIf="checkItem('c_date')">
         <span class="p-column-title">Created Date</span>
-        {{ soci.created_at | date: "MM-dd-yyyy" }}
+        {{ soci.created_at?soci.created_at:dash | date: "MM-dd-yyyy" }}
       </td>
       <td class="text-center" *ngIf="checkItem('soci_id')">
         <a href="" [routerLink]="['/soci/', soci.id, 'edit']">
           <span class="p-column-title"> Soci Id</span>
-          {{ soci.soci_id }}
+          {{ soci.soci_id?soci.soci_id:dash }}
         </a>
       </td>
       <td class="text-center" *ngIf="checkItem('company_name')">
@@ -411,17 +411,17 @@
       </td>
       <td class="text-center" *ngIf="checkItem('quote_full_id')">
         <span class="p-column-title">Quote Id</span>
-        {{ soci.quote_full_id }}
+        {{ soci.quote_full_id?soci.quote_full_id:dash }}
       </td>
       <td class="text-center" *ngIf="checkItem('quote_date')">
         <span class="p-column-title">Quote Date</span>
-        {{ soci.quote_date | date: "MM-dd-yyyy" }}
+        {{ soci.quote_date?soci.quote_date:dash | date: "MM-dd-yyyy" }}
       </td>
 
       <td class="text-center" *ngIf="checkItem('po_amount')">
-        <div *ngIf="soci.po_amount">
+        <div>
           <span class="p-column-title"> Amount</span>
-          {{ soci.po_amount ? soci.po_amount : 0 }}
+          {{ soci.po_amount ? soci.po_amount:zero }}
         </div>
         <!-- <div *ngIf="!soci.po_amount">
           <span class="p-column-title"> Amount</span>
@@ -454,7 +454,7 @@
         </a>
         <div *ngIf="soci.po_date">
           <span class="p-column-title">Po. date</span>
-          {{ soci.po_date | date: "MM-dd-yyyy" }}
+          {{ soci.po_date?soci.po_date:dash | date: "MM-dd-yyyy" }}
         </div>
       </td>
       <td class="text-center" *ngIf="checkItem('fo_order_number')">

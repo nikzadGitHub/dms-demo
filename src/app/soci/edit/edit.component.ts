@@ -168,6 +168,7 @@ export class EditComponent implements OnInit {
   dash = "_";
   zero = 0;
 
+  payment_termValue: [];
   constructor(
     private route: ActivatedRoute,
     private quoteService: QuoteService,
@@ -227,6 +228,7 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAllDropdowns()
     this.route.queryParams.subscribe((params) => {
       this.is_approval_view_check = params.is_approval_view_check;
       this.is_preview_check = params.is_preview_check;
@@ -1888,7 +1890,7 @@ export class EditComponent implements OnInit {
   //Update Remarks
   remarksAdded() {
     this.form.value.sociRemarks ||
-    this.soci_data?.remarks !== this.form.value.sociRemarks
+      this.soci_data?.remarks !== this.form.value.sociRemarks
       ? (this.isRemarksAdded = false)
       : (this.isRemarksAdded = true);
   }
@@ -1944,15 +1946,15 @@ export class EditComponent implements OnInit {
       body.classList.remove("modal-open");
     }
   }
-  searchBar(val) {
-    this.searchValue = val;
+  searchBar() {
+    // this.searchValue = val;
     this.searchModal.show();
   }
   modalOkButton() {
-    this.selectedProductName = this.searchProductName;
-    if (this.searchProductName !== "") {
+    this.selectedProductName = this.searchProductName
+    if (this.searchProductName !== '') {
       let sku = this.searchProductDetails.sku;
-      let unit_price = this.searchProductDetails.unit_price;
+      let unit_price = this.searchProductDetails.unit_price
       this.form.patchValue({
         sku: sku,
         unit_price: unit_price,
@@ -1960,5 +1962,10 @@ export class EditComponent implements OnInit {
       });
     }
     this.searchModal.hide();
+  }
+  getAllDropdowns() {
+    this.sociService.getQuery('/soci/all-dropdown').subscribe(data => {
+      this.payment_termValue = data['data'].payment_terms;
+    })
   }
 }

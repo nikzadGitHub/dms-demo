@@ -8,7 +8,7 @@
         <div class="row">
           <div class="col-lg-4">
             <div class="chead">
-              {{ soci_data?.company_name?soci_data?.company_name:'__________' }}
+              {{ soci_data?.company_name ? soci_data?.company_name : "_ _" }}
             </div>
             <!-- <label class="form-control no-border"><h2><b>{{company_details['company_name']}}</b></h2></label> -->
           </div>
@@ -16,7 +16,9 @@
             <div class="bg-opp text-white p-1">
               SOCI ID:
               <span
-                ><p>{{ soci_data?.soci_id?soci_data?.soci_id:dash }}</p></span
+                ><p>
+                  {{ soci_data?.soci_id ? soci_data?.soci_id : dash }}
+                </p></span
               >
             </div>
             <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
@@ -25,7 +27,11 @@
             <div class="bg-opp text-white p-1">
               Quote ID:
               <span>
-                <p>{{ soci_data?.quote_full_id?soci_data?.quote_full_id:dash }}</p>
+                <p>
+                  {{
+                    soci_data?.quote_full_id ? soci_data?.quote_full_id : dash
+                  }}
+                </p>
               </span>
             </div>
             <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
@@ -34,7 +40,13 @@
             <div class="bg-opp text-white p-1">
               Opport ID:
               <span>
-                <p>{{ soci_data?.quote?.opportunity?.opportunity_code?soci_data?.quote?.opportunity?.opportunity_code:dash }}</p>
+                <p>
+                  {{
+                    soci_data?.quote?.opportunity?.opportunity_code
+                      ? soci_data?.quote?.opportunity?.opportunity_code
+                      : dash
+                  }}
+                </p>
               </span>
             </div>
             <!-- <label class="form-control no-border"><b>Quote ID: {{company_details['quote_id']}}</b></label> -->
@@ -43,7 +55,7 @@
             <div class="status">
               <label style="color: black"><b>Status: </b></label>
               <p-badge
-                [value]="soci_data?.status_desc?soci_data?.status_desc:dash"
+                [value]="soci_data?.status_desc ? soci_data?.status_desc : dash"
                 [severity]="badgeColor"
                 styleClass="p-mr-2"
               ></p-badge>
@@ -84,7 +96,13 @@
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Owner</b></label>
-              <p>{{ soci_data?.owner_info?.full_name?soci_data?.owner_info?.full_name:dash }}</p>
+              <p>
+                {{
+                  soci_data?.owner_info?.full_name
+                    ? soci_data?.owner_info?.full_name
+                    : dash
+                }}
+              </p>
             </div>
           </div>
         </div>
@@ -165,7 +183,11 @@
               <b>Payemt Term </b>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3">
-              {{soci_data?.quote?.opportunity?.payment_term?soci_data?.quote?.opportunity?.payment_term:'_'}}
+              {{
+                soci_data?.quote?.opportunity?.payment_term
+                  ? soci_data?.quote?.opportunity?.payment_term
+                  : "_"
+              }}
             </div>
             <div
               class="col-lg-3 col-md-3 col-sm-3 grey"
@@ -182,7 +204,7 @@
             >
               <b>Hospital Class</b>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div class="col-lg-3 col-md-3 col-sm-3">_</div>
             <div
               class="col-lg-3 col-md-3 col-sm-3 grey"
               style="line-height: 50px"
@@ -205,7 +227,7 @@
             >
               <b>Customer Tax Code </b>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div class="col-lg-3 col-md-3 col-sm-3">_</div>
           </div>
           <div class="row">
             <div
@@ -214,7 +236,7 @@
             >
               <b>Segment </b>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div class="col-lg-3 col-md-3 col-sm-3">_</div>
             <div
               class="col-lg-3 col-md-3 col-sm-3 grey"
               style="line-height: 50px"
@@ -223,7 +245,11 @@
             </div>
             <div class="col-lg-2 col-md-2 col-sm-2 mr-4">
               <div *ngIf="!isSoldTo">
-                {{ soci_data?.quote?.opportunity?.sold_to?.company_name?soci_data?.quote?.opportunity?.sold_to?.company_name:'_' }}
+                {{
+                  soci_data?.quote?.opportunity?.sold_to?.company_name
+                    ? soci_data?.quote?.opportunity?.sold_to?.company_name
+                    : "_"
+                }}
               </div>
               <div *ngIf="isSoldTo">
                 <span class="p-input-icon-right" style="width: 100%">
@@ -241,11 +267,13 @@
                         class="item"
                         (click)="selectCompany(item, 'company_name')"
                       >
-                        <div>{{ item.company_name?item.company_name:'_' }}</div>
+                        <div>
+                          {{ item.company_name ? item.company_name : "_" }}
+                        </div>
                       </div>
                     </ng-template>
                   </p-autoComplete>
-                  <i class="pi pi-search search-country-name-icon"></i>
+                  <i class="pi pi-search search-country-name-icon">_</i>
                 </span>
               </div>
             </div>
@@ -283,7 +311,7 @@
             >
               <b>Customer Category </b>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div class="col-lg-3 col-md-3 col-sm-3">_</div>
             <div
               class="col-lg-3 col-md-3 col-sm-3 grey"
               style="line-height: 50px"
@@ -291,7 +319,11 @@
               <b>Sold To Address </b>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3">
-              {{ soci_data?.quote?.opportunity?.sold_to?.address?soci_data?.quote?.opportunity?.sold_to?.address:'_' }}
+              {{
+                soci_data?.quote?.opportunity?.sold_to?.address
+                  ? soci_data?.quote?.opportunity?.sold_to?.address
+                  : "_"
+              }}
             </div>
           </div>
           <div class="row">
@@ -301,7 +333,7 @@
             >
               <b>Customer Subcategory </b>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div class="col-lg-3 col-md-3 col-sm-3">_</div>
             <div
               class="col-lg-3 col-md-3 col-sm-3 grey"
               style="line-height: 50px"
@@ -325,7 +357,9 @@
                         class="item"
                         (click)="selectCompany(item, 'company_name')"
                       >
-                        <div>{{ item.company_name?item.company_name:'_' }}</div>
+                        <div>
+                          {{ item.company_name ? item.company_name : "_" }}
+                        </div>
                       </div>
                     </ng-template>
                   </p-autoComplete>
@@ -333,7 +367,11 @@
                 </span>
               </div>
               <div *ngIf="!isShipTo">
-                {{ soci_data?.quote?.opportunity?.ship_to?.company_name?soci_data?.quote?.opportunity?.ship_to?.company_name:'_' }}
+                {{
+                  soci_data?.quote?.opportunity?.ship_to?.company_name
+                    ? soci_data?.quote?.opportunity?.ship_to?.company_name
+                    : "_"
+                }}
               </div>
             </div>
             <div class="action-icon">
@@ -370,7 +408,7 @@
             >
               <b> Hospital Bed (Range) </b>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div class="col-lg-3 col-md-3 col-sm-3">_</div>
             <div
               class="col-lg-3 col-md-3 col-sm-3 grey"
               style="line-height: 50px"
@@ -378,7 +416,11 @@
               <b>Ship To Address </b>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3">
-              {{ soci_data?.quote?.opportunity?.ship_to?.address?soci_data?.quote?.opportunity?.ship_to?.address:'_' }}
+              {{
+                soci_data?.quote?.opportunity?.ship_to?.address
+                  ? soci_data?.quote?.opportunity?.ship_to?.address
+                  : "_"
+              }}
             </div>
           </div>
           <div class="row">
@@ -395,7 +437,11 @@
             </div>
             <div class="col-lg-2 col-md-2 col-sm-2 mr-4">
               <div *ngIf="!isBillTo">
-                {{ soci_data?.quote?.opportunity?.bill_to?.company_name?soci_data?.quote?.opportunity?.bill_to?.company_name:'_' }}
+                {{
+                  soci_data?.quote?.opportunity?.bill_to?.company_name
+                    ? soci_data?.quote?.opportunity?.bill_to?.company_name
+                    : "_"
+                }}
               </div>
               <div *ngIf="isBillTo">
                 <span class="p-input-icon-right" style="width: 100%">
@@ -413,7 +459,9 @@
                         class="item"
                         (click)="selectCompany(item, 'company_name')"
                       >
-                        <div>{{ item.company_name?item.company_name:'_' }}</div>
+                        <div>
+                          {{ item.company_name ? item.company_name : "_" }}
+                        </div>
                       </div>
                     </ng-template>
                   </p-autoComplete>
@@ -461,7 +509,11 @@
               <b> Bill To Address </b>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3">
-              {{ soci_data?.quote?.opportunity?.bill_to?.address?soci_data?.quote?.opportunity?.bill_to?.address:'_' }}
+              {{
+                soci_data?.quote?.opportunity?.bill_to?.address
+                  ? soci_data?.quote?.opportunity?.bill_to?.address
+                  : "_"
+              }}
             </div>
           </div>
         </p-accordionTab>
@@ -588,7 +640,11 @@
                   <th>Billing ID</th>
                   <th>Stage</th>
                   <th>Percentage %</th>
-                  <th>Amount ({{ soci_data?.currency?soci_data?.currency:dash }})</th>
+                  <th>
+                    Amount ({{
+                      soci_data?.currency ? soci_data?.currency : dash
+                    }})
+                  </th>
                   <th>Notes</th>
                   <th></th>
                   <th *ngIf="is_preview_check"></th>
@@ -610,7 +666,9 @@
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="billing.billing_id?billing.billing_id:dash"
+                      [(ngModel)]="
+                        billing.billing_id ? billing.billing_id : dash
+                      "
                       [ngModelOptions]="{ standalone: true }"
                       readonly
                       [attr.disabled]="
@@ -625,7 +683,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="billing.stage?billing.stage:dash"
+                      [(ngModel)]="billing.stage ? billing.stage : dash"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['billingMilestone'] && controller == billing
@@ -640,7 +698,9 @@
                       type="text"
                       class="form-control"
                       style="text-align: right"
-                      [(ngModel)]="billing.percentage?billing.percentage:dash"
+                      [(ngModel)]="
+                        billing.percentage ? billing.percentage : dash
+                      "
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['billingMilestone'] && controller == billing
@@ -661,7 +721,11 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [ngModel]="billing.amount?billing.amount:zero | number: '1.2'"
+                        [ngModel]="
+                          billing.amount
+                            ? billing.amount
+                            : (zero | number: '1.2')
+                        "
                         [ngModelOptions]="{ standalone: true }"
                         [attr.disabled]="
                           enableEdit['billingMilestone'] &&
@@ -676,7 +740,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [(ngModel)]="billing.amount?billing.amount:zero"
+                        [(ngModel)]="billing.amount ? billing.amount : zero"
                         [ngModelOptions]="{ standalone: true }"
                         [attr.disabled]="
                           enableEdit['billingMilestone'] &&
@@ -693,7 +757,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="billing.remarks?billing.remarks:dash"
+                      [(ngModel)]="billing.remarks ? billing.remarks : dash"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['billingMilestone'] && controller == billing
@@ -860,7 +924,11 @@
                   <th>Schedule</th>
                   <!-- <th>SOC Payment Terms</th>
                   <th>Status</th> -->
-                  <th>Amount ({{ soci_data?.currency?soci_data?.currency:dash }})</th>
+                  <th>
+                    Amount ({{
+                      soci_data?.currency ? soci_data?.currency : dash
+                    }})
+                  </th>
                   <th>Notes</th>
                   <th *ngIf="is_preview_check"></th>
                   <th
@@ -880,7 +948,7 @@
                   <td>
                     <!-- formControlName="billing_id" -->
                     <select
-                      [(ngModel)]="billing_id?billing_id:dash"
+                      [(ngModel)]="billing_id ? billing_id : dash"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['payment'] && controller == payment
@@ -912,7 +980,9 @@
                       type="text"
                       class="form-control"
                       style="text-align: right; width: 100px"
-                      [(ngModel)]="payment.percentage?payment.percentage:zero"
+                      [(ngModel)]="
+                        payment.percentage ? payment.percentage : zero
+                      "
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['payment'] && controller == payment
@@ -927,7 +997,11 @@
                       type="date"
                       style="width: 79%"
                       class="form-control"
-                      [ngModel]="new_payment_schedule_date?new_payment_schedule_date:dash"
+                      [ngModel]="
+                        new_payment_schedule_date
+                          ? new_payment_schedule_date
+                          : dash
+                      "
                       (ngModelChange)="changePaymentSchdule($event)"
                       [ngModelOptions]="{ standalone: true }"
                       *ngIf="enableEdit['payment'] && controller == payment"
@@ -981,7 +1055,11 @@
                         type="text"
                         class="form-control"
                         style="text-align: right; width: 100px"
-                        [ngModel]="payment.amount?payment.amount:zero | number: '1.2'"
+                        [ngModel]="
+                          payment.amount
+                            ? payment.amount
+                            : (zero | number: '1.2')
+                        "
                         [ngModelOptions]="{ standalone: true }"
                         [attr.disabled]="
                           enableEdit['payment'] && controller == payment
@@ -995,7 +1073,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right; width: 100px"
-                        [(ngModel)]="payment.amount?payment.amount:zero"
+                        [(ngModel)]="payment.amount ? payment.amount : zero"
                         [ngModelOptions]="{ standalone: true }"
                         [attr.disabled]="
                           enableEdit['payment'] && controller == payment
@@ -1011,7 +1089,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="payment.remarks?payment.remarks:dash"
+                      [(ngModel)]="payment.remarks ? payment.remarks : dash"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['payment'] && controller == payment
@@ -1201,8 +1279,16 @@
                 <tr>
                   <th>Description</th>
                   <th>Quantity</th>
-                  <th>Unit Price ({{ soci_data?.currency?soci_data?.currency:dash }})</th>
-                  <th>Total Price ({{ soci_data?.currency?soci_data?.currency:dash }})</th>
+                  <th>
+                    Unit Price ({{
+                      soci_data?.currency ? soci_data?.currency : dash
+                    }})
+                  </th>
+                  <th>
+                    Total Price ({{
+                      soci_data?.currency ? soci_data?.currency : dash
+                    }})
+                  </th>
                   <th>Notes</th>
                   <th></th>
                   <th></th>
@@ -1224,7 +1310,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="cost.description?cost.description:dash"
+                      [(ngModel)]="cost.description ? cost.description : dash"
                       [attr.disabled]="
                         enableEdit['addCost'] && controller == cost ? null : ''
                       "
@@ -1239,7 +1325,7 @@
                       class="form-control"
                       style="text-align: right; width: 65px"
                       (input)="changeCostvalues(cost)"
-                      [(ngModel)]="cost.quantity?cost.quantity:zero"
+                      [(ngModel)]="cost.quantity ? cost.quantity : zero"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['addCost'] && controller == cost ? null : ''
@@ -1256,7 +1342,11 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [ngModel]="cost.unit_price?cost.unit_price:zero | number: '1.2'"
+                        [ngModel]="
+                          cost.unit_price
+                            ? cost.unit_price
+                            : (zero | number: '1.2')
+                        "
                         [ngModelOptions]="{ standalone: true }"
                         [attr.disabled]="
                           enableEdit['addCost'] && controller == cost
@@ -1270,7 +1360,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [(ngModel)]="cost.unit_price?cost.unit_price:zero"
+                        [(ngModel)]="cost.unit_price ? cost.unit_price : zero"
                         (input)="changeCostvalues(cost)"
                         [ngModelOptions]="{ standalone: true }"
                         [attr.disabled]="
@@ -1291,7 +1381,11 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [ngModel]="cost.total_price?cost.total_price:zero | number: '1.2'"
+                        [ngModel]="
+                          cost.total_price
+                            ? cost.total_price
+                            : (zero | number: '1.2')
+                        "
                         [ngModelOptions]="{ standalone: true }"
                         readonly
                         [attr.disabled]="
@@ -1306,7 +1400,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [(ngModel)]="cost.total_price?cost.total_price:zero"
+                        [(ngModel)]="cost.total_price ? cost.total_price : zero"
                         [ngModelOptions]="{ standalone: true }"
                         readonly
                         [attr.disabled]="
@@ -1323,7 +1417,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="cost.remarks?cost.remarks:dash"
+                      [(ngModel)]="cost.remarks ? cost.remarks : dash"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['addCost'] && controller == cost ? null : ''
@@ -1494,7 +1588,11 @@
                 <tr>
                   <th>Schedule</th>
                   <th>Percentage %</th>
-                  <th>Amount ({{ soci_data?.currency?soci_data?.currency:dash }})</th>
+                  <th>
+                    Amount ({{
+                      soci_data?.currency ? soci_data?.currency : dash
+                    }})
+                  </th>
                   <!-- <th>SOC Payment Terms</th>
                   <th>Status</th> -->
                   <th>Note</th>
@@ -1519,7 +1617,11 @@
                       type="date"
                       class="form-control"
                       style="width: 89%"
-                      [(ngModel)]="new_billing_instruction_date?new_billing_instruction_date:dash"
+                      [(ngModel)]="
+                        new_billing_instruction_date
+                          ? new_billing_instruction_date
+                          : dash
+                      "
                       (ngModelChange)="changeBillingSchdule($event)"
                       *ngIf="
                         enableEdit['addBillInstruction'] && controller == item
@@ -1546,7 +1648,7 @@
                       type="text"
                       class="form-control"
                       style="text-align: right; width: 100px"
-                      [(ngModel)]="item.percentage?item.percentage:zero"
+                      [(ngModel)]="item.percentage ? item.percentage : zero"
                       [attr.disabled]="
                         enableEdit['addBillInstruction'] && controller == item
                           ? null
@@ -1567,7 +1669,9 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [ngModel]="item.amount?item.amount:zero | number: '1.2'"
+                        [ngModel]="
+                          item.amount ? item.amount : (zero | number: '1.2')
+                        "
                         [attr.disabled]="
                           enableEdit['addBillInstruction'] && controller == item
                             ? null
@@ -1581,7 +1685,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [(ngModel)]="item.amount?item.amount:zero"
+                        [(ngModel)]="item.amount ? item.amount : zero"
                         [attr.disabled]="
                           enableEdit['addBillInstruction'] && controller == item
                             ? null
@@ -1598,7 +1702,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="item.remarks?item.remarks:dash"
+                      [(ngModel)]="item.remarks ? item.remarks : dash"
                       [attr.disabled]="
                         enableEdit['addBillInstruction'] && controller == item
                           ? null
@@ -1777,7 +1881,7 @@
                   class="text-left form-control"
                   style="width: 146px"
                   type="text"
-                  [(ngModel)]="item.soci?item.soci:dash"
+                  [(ngModel)]="item.soci ? item.soci : dash"
                   [attr.disabled]="
                     enableEdit['additionalInstruction'] && controller == item
                       ? null
@@ -1794,7 +1898,7 @@
                   class="text-left form-control"
                   style="width: 600px"
                   type="text"
-                  [(ngModel)]="item.description?item.description:dash"
+                  [(ngModel)]="item.description ? item.description : dash"
                   [attr.disabled]="
                     enableEdit['additionalInstruction'] && controller == item
                       ? null
@@ -1954,12 +2058,18 @@
             </div>
             <div class="col-lg-2" style="text-align: center">
               <div class="col-md-12">
-                <b> Unit ({{ soci_data?.currency?soci_data?.currency:dash }}) </b>
+                <b>
+                  Unit ({{ soci_data?.currency ? soci_data?.currency : dash }})
+                </b>
               </div>
             </div>
             <div class="col-lg-2" style="text-align: center">
               <div class="col-md-12">
-                <b> Amount ({{ soci_data?.currency?soci_data?.currency:dash }})</b>
+                <b>
+                  Amount ({{
+                    soci_data?.currency ? soci_data?.currency : dash
+                  }})</b
+                >
               </div>
             </div>
             <div
@@ -1982,7 +2092,7 @@
                   <!-- formControlName="cost_item_id" -->
                   <div class="col-md-10">
                     <select
-                      [(ngModel)]="cost_item_id?cost_item_id:dash"
+                      [(ngModel)]="cost_item_id ? cost_item_id : dash"
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control"
                       style="width: 140px"
@@ -2007,7 +2117,7 @@
                       class="text-left form-control"
                       style="width: 360px"
                       type="text"
-                      [(ngModel)]="item.description?item.description:dash"
+                      [(ngModel)]="item.description ? item.description : dash"
                       [attr.disabled]="
                         enableEdit['additionalCharges'] && controller == item
                           ? null
@@ -2028,7 +2138,7 @@
                       type="number"
                       style="width: 65px; text-align: right !important"
                       (input)="updateChargesQuantity(item)"
-                      [(ngModel)]="item.quantity?item.quantity:zero"
+                      [(ngModel)]="item.quantity ? item.quantity : zero"
                       [attr.disabled]="
                         enableEdit['additionalCharges'] && controller == item
                           ? null
@@ -2052,7 +2162,7 @@
                         width: 160px !important;
                         text-align: right !important;
                       "
-                      [(ngModel)]="item.unit_price?item.unit_price:zero"
+                      [(ngModel)]="item.unit_price ? item.unit_price : zero"
                       (input)="updateChargesUnitPrice(item)"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
@@ -2074,7 +2184,11 @@
                       class="text-left form-control"
                       type="text"
                       style="width: 160px; text-align: right !important"
-                      [ngModel]="item.unit_price?item.unit_price:zero | number: '1.2'"
+                      [ngModel]="
+                        item.unit_price
+                          ? item.unit_price
+                          : (zero | number: '1.2')
+                      "
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['additionalCharges'] && controller == item
@@ -2097,7 +2211,11 @@
                       class="text-left form-control"
                       type="text"
                       style="width: 140px; text-align: right !important"
-                      [ngModel]="item.total_price?item.total_price:zero | number: '1.2'"
+                      [ngModel]="
+                        item.total_price
+                          ? item.total_price
+                          : (zero | number: '1.2')
+                      "
                       readonly
                       [attr.disabled]="
                         enableEdit['additionalCharges'] && controller == item
@@ -2188,7 +2306,7 @@
                         *ngFor="let item of additional_costs; let i = index"
                         value="{{ item.id }}"
                       >
-                        {{ item.description?item.description:'_' }}
+                        {{ item.description ? item.description : "_" }}
                       </option>
                     </select>
                   </div>
@@ -2268,12 +2386,16 @@
           <div class="col-lg-12" align="right">
             <div class="form-group charges">
               <p><b>TotaL </b></p>
-              <p>({{soci_data?.currency?soci_data?.currency:dash}})</p>
+              <p>({{ soci_data?.currency ? soci_data?.currency : dash }})</p>
               <input
                 type="text"
                 class="form-control"
                 readonly
-                value=" {{ total_additional_charges_amount? total_additional_charges_amount:0 | number: '1.2' }}"
+                value=" {{
+                  total_additional_charges_amount
+                    ? total_additional_charges_amount
+                    : (0 | number: '1.2')
+                }}"
               />
               <!-- value=" {{ total_additional_charges_amount | number: "1.2-2" }}" -->
               <!-- {{ sub_total | number: "1.2-2" }} -->
@@ -2306,10 +2428,22 @@
                   <th>Product Name</th>
                   <th>SKU ID</th>
                   <th>Quantity</th>
-                  <th>Unit Price ({{ soci_data?.currency?soci_data?.currency:dash }})</th>
-                  <th>Total Price ({{ soci_data?.currency?soci_data?.currency:dash }})</th>
+                  <th>
+                    Unit Price ({{
+                      soci_data?.currency ? soci_data?.currency : dash
+                    }})
+                  </th>
+                  <th>
+                    Total Price ({{
+                      soci_data?.currency ? soci_data?.currency : dash
+                    }})
+                  </th>
                   <th>Discount %</th>
-                  <th>Net Amount ({{ soci_data?.currency?soci_data?.currency:dash }})</th>
+                  <th>
+                    Net Amount ({{
+                      soci_data?.currency ? soci_data?.currency : dash
+                    }})
+                  </th>
                   <th *ngIf="!is_preview_check && sociStatus == 1">Action</th>
                 </tr>
               </thead>
@@ -2321,25 +2455,29 @@
                 >
                   <td class="text-center">{{ i + 1 }}</td>
                   <td class="text-center">
-                    {{ item.name?item.name:dash }}
+                    {{ item.name ? item.name : dash }}
                   </td>
                   <td class="text-center">
-                    {{ item.sku?item.sku:dash }}
+                    {{ item.sku ? item.sku : dash }}
                   </td>
                   <td class="text-center">
-                    {{ item.quantity?item.quantity:zero }}
+                    {{ item.quantity ? item.quantity : zero }}
                   </td>
                   <td class="text-center">
-                    {{ item.unit_price?item.unit_price:0 | number: "1.2" }}
+                    {{
+                      item.unit_price ? item.unit_price : (0 | number: "1.2")
+                    }}
                   </td>
                   <td class="text-center">
-                    {{ item.total_price?item.total_price:0 | number: "1.2" }}
+                    {{
+                      item.total_price ? item.total_price : (0 | number: "1.2")
+                    }}
                   </td>
                   <td class="text-center">
-                    {{ item.discount?item.discount:zero }}
+                    {{ item.discount ? item.discount : zero }}
                   </td>
                   <td class="text-center">
-                    {{ item.amount?item.amount:zero | number: "1.2" }}
+                    {{ item.amount ? item.amount : (zero | number: "1.2") }}
                   </td>
                   <td
                     class="td-actions"
@@ -2380,18 +2518,24 @@
                   <td></td>
                   <td style="size: 20%; display: flex; border: none">
                     <!-- [(ngModel)]="selectedProductAdvanced[i]" -->
-                    <p-autoComplete
-                      formControlName="name"
-                      field="name"
-                      [dropdown]="false"
-                      [style]="{ width: '100%' }"
-                      [inputStyle]="{ width: '90%' }"
-                    >
-                    </p-autoComplete>
-                    <!-- (click)="filterProduct(name)" -->
-                    <div class="product_search" >
-                      <i class="pi pi-search" style="font-size: larger"></i>
-                    </div>
+                    <span class="p-input-icon-right d-flex">
+                      <!-- <input type="text" pInputText  #search placeholder="Search">-->
+                      <div>
+                        <input
+                          type="text"
+                          disabled
+                          value="{{ selectedProductName }}"
+                          style="
+                            width: 100%;
+                            padding: 4px;
+                            border: 1px solid lightgray;
+                          "
+                        />
+                      </div>
+                      <div class="search-bar-body" (click)="searchBar()">
+                        <i class="pi pi-search" style="font-size: 20px"></i>
+                      </div>
+                    </span>
                   </td>
                   <td style="width: 14%">
                     <input
@@ -2480,7 +2624,11 @@
                 </tr>
                 <tr>
                   <td class="text-left">
-                    <b>Tax ({{ soci_data?.currency?soci_data?.currency:dash }})</b>
+                    <b
+                      >Tax ({{
+                        soci_data?.currency ? soci_data?.currency : dash
+                      }})</b
+                    >
                   </td>
                   <td class="text-right">
                     {{ tax_rate ? tax_rate : (0 | number: "1.2") }}
@@ -2540,30 +2688,33 @@
             </thead>
             <tbody>
               <tr align="center" *ngFor="let item of sociAttachment">
-                <!-- <td></td>
+                  <!-- <td></td>
                 <td></td> -->
-                <td>
-                  <div *ngIf="soci_data?.po_no">
-                    {{ soci_data?.po_no }}
-                  </div>
-                  <div *ngIf="!soci_data?.po_no">_</div>
-                </td>
-                <!-- <td>_</td> -->
-                <td>{{ item.original_file_name }}</td>
-                <td>{{ item.file_type }}</td>
-                <td>
-                  <a
-                    href="{{
-                      url +
-                        '/soci/attachment-download/' +
-                        item.fileName +
-                        '?token=' +
-                        token
-                    }}"
-                    target="_blank"
-                    >Download</a
-                  >
-                </td>
+                  <td>
+                    <div>
+                      {{ soci_data?.po_no ? soci_data?.po_no : dash }}
+                    </div>
+                  </td>
+                  <!-- <td>_</td> -->
+                  <td>
+                    {{
+                      item.original_file_name ? item.original_file_name : dash
+                    }}
+                  </td>
+                  <td>{{ item.file_type ? item.file_type : dash }}</td>
+                  <td>
+                    <a
+                      href="{{
+                        url +
+                          '/soci/attachment-download/' +
+                          item.fileName +
+                          '?token=' +
+                          token
+                      }}"
+                      target="_blank"
+                      >Download</a
+                    >
+                  </td>
               </tr>
             </tbody>
           </table>
@@ -2740,7 +2891,6 @@
             <p-autoComplete
               formControlName="name"
               [suggestions]="filteredProducts"
-             
               field="name"
               [dropdown]="true"
               [style]="{ width: '100%' }"
@@ -3296,7 +3446,13 @@
           <div class="payment-form">
             <div class="days-field">
               <label for="">Days</label>
-              <input type="text" class="form-control" formControlName="days" />
+              <p-dropdown
+                [options]="payment_termValue"
+                class="days"
+                formControlName="days"
+                optionLabel="description"
+                optionValue="no_of_days"
+              ></p-dropdown>
             </div>
             <div class="date-field">
               <label for="">From Date</label>
@@ -3461,7 +3617,6 @@
   <!-- /.modal-dialog -->
 </div>
 
-
 <!-- search product modal -->
 <div
   bsModal
@@ -3473,78 +3628,121 @@
   aria-hidden="true"
 >
   <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="height: fit-content;">
+    <div class="modal-content" style="height: fit-content">
       <div class="modal-header search-header">
-        <h2 class="modal-title">
-          Search Product
-        </h2>
+        <h2 class="modal-title">Search Product</h2>
       </div>
 
       <div class="modal-body search-body">
         <p-autoComplete
-              [(ngModel)]="productName"
-              [suggestions]="filteredProducts"
-              (completeMethod)="filterProduct($event)"
-              field="name"
-              [dropdown]="false"
-              [style]="{ width: '100%' }"
-              [inputStyle]="{ width: '100%' }"
-              [ngModelOptions]="{standalone: true}"
-              
+          [(ngModel)]="productName"
+          [suggestions]="filteredProducts"
+          (completeMethod)="filterProduct($event)"
+          field="name"
+          [dropdown]="false"
+          [style]="{ width: '100%' }"
+          [inputStyle]="{ width: '100%' }"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <ng-template let-product pTemplate="item">
+            <div
+              class="product-item"
+              (click)="productDetails(product, 'update_product')"
             >
-              <ng-template let-product pTemplate="item">
-                <div
-                  class="product-item"
-                  (click)="productDetails(product, 'update_product')"
-                >
-                  <div>{{ product.name }}</div>
-                </div>
-              </ng-template>
-            </p-autoComplete>
-            <!-- <div *ngIf="searchProductName != ''" style="margin: 16px 0;width: 69%;margin-right: 190px;">
+              <div>{{ product.name }}</div>
+            </div>
+          </ng-template>
+        </p-autoComplete>
+        <!-- <div *ngIf="searchProductName != ''" style="margin: 16px 0;width: 69%;margin-right: 190px;">
               <input type="text" value="{{searchProductName}}">
               
             </div> -->
-        <hr>
-        <div class='w-100 d-flex flex-column pl-3'>
-          <h2 *ngIf="searchProductName != ''" style="padding-bottom: 15px;">Product Detail</h2>
-          <table *ngIf="searchProductName != ''">
+        <hr />
+        <div class="w-100 d-flex flex-column pl-3">
+          <h2 *ngIf="searchProductName != ''" style="padding-bottom: 15px">
+            Product Detail
+          </h2>
+          <table class="table" *ngIf="searchProductName != ''">
             <tbody>
               <tr>
                 <td><strong>Name: </strong></td>
-                <td>{{searchProductDetails?.name}}</td>
+                <td>
+                  {{
+                    searchProductDetails?.name
+                      ? searchProductDetails?.name
+                      : dash
+                  }}
+                </td>
               </tr>
               <tr>
                 <td><strong>SKU: </strong></td>
-                <td>{{searchProductDetails?.sku}}</td>
+                <td>
+                  {{
+                    searchProductDetails?.sku ? searchProductDetails?.sku : dash
+                  }}
+                </td>
               </tr>
               <tr>
                 <td><strong>Tax Rate: </strong></td>
-                <td>{{searchProductDetails?.tax_rate}}</td>
+                <td>
+                  {{
+                    searchProductDetails?.tax_rate
+                      ? searchProductDetails?.tax_rate
+                      : zero
+                  }}
+                </td>
               </tr>
               <tr>
                 <td><strong>UOM: </strong></td>
-                <td>{{searchProductDetails?.UOM}}</td>
+                <td>
+                  {{
+                    searchProductDetails?.UOM ? searchProductDetails?.UOM : dash
+                  }}
+                </td>
               </tr>
               <tr>
                 <td><strong>Unit Price: </strong></td>
-                <td>{{searchProductDetails?.unit_price}}</td>
+                <td>
+                  {{
+                    searchProductDetails?.unit_price
+                      ? searchProductDetails?.unit_price
+                      : zero
+                  }}
+                </td>
               </tr>
               <tr>
                 <td><strong>List Price: </strong></td>
-                <td>{{searchProductDetails?.list_price}}</td>
+                <td>
+                  {{
+                    searchProductDetails?.list_price
+                      ? searchProductDetails?.list_price
+                      : zero
+                  }}
+                </td>
               </tr>
               <tr>
                 <td><strong>Floor Price: </strong></td>
-                <td> {{searchProductDetails?.floor_price}}</td>
+                <td>
+                  {{
+                    searchProductDetails?.floor_price
+                      ? searchProductDetails?.floor_price
+                      : zero
+                  }}
+                </td>
               </tr>
               <tr>
                 <td><strong>Cost Price: </strong></td>
-                <td>{{searchProductDetails?.cost_price}}</td>
+                <td>
+                  {{
+                    searchProductDetails?.cost_price
+                      ? searchProductDetails?.cost_price
+                      : zero
+                  }}
+                </td>
               </tr>
             </tbody>
           </table>
-      </div>
+        </div>
       </div>
 
       <div class="modal-footer">
@@ -3554,7 +3752,7 @@
           type="button"
           label="Ok"
           class="p-button-primary"
-          style="padding: 8px 8vh;"
+          style="padding: 8px 8vh"
           (click)="modalOkButton()"
         ></button>
         <button
@@ -3563,7 +3761,7 @@
           type="button"
           label="Close"
           class="p-button-danger"
-          style="padding: 8px 8vh;"
+          style="padding: 8px 8vh"
           (click)="searchModal.hide()"
         ></button>
       </div>
