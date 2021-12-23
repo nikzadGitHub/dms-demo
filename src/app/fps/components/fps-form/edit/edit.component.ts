@@ -340,7 +340,7 @@ export class EditComponent implements OnInit {
       next: (response) => {
         if (response.success) {
           this.zone.run(() => {
-            this.institutions_list = response.data.institutions;
+            this.institutions_list = response.data;
           });
         } else {
           this.dialogService.showErrorDialog(response.message);

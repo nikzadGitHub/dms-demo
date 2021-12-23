@@ -90,7 +90,7 @@
                         <div class="col-md-4">
                             <p-dropdown formControlName="financier_id" id="financier_id" [options]="institutions_list"  optionLabel="title"
                                 optionValue="id" styleClass="form-control" 
-                                placeholder="Select Institution" emptyMessage="No Institution Available">
+                                emptyMessage="No Institution Available">
                             </p-dropdown>
                             <app-form-error-presentation [displayError]="isFieldValid('financier_id')" errorMsg="Financial Institution is required.">
                             </app-form-error-presentation>
