@@ -17,7 +17,7 @@ import { Quote } from "../../quote/quote";
 import { QuoteService } from "../../quote/quote.service";
 import { SociService } from "../soci.service";
 import { SystemConfig } from "../../config/system-config";
-import * as moment from "moment";
+import { settings } from "environments/environment";
 
 @Component({
   selector: "app-edit",
@@ -25,7 +25,6 @@ import * as moment from "moment";
   styleUrls: ["./edit.component.scss"],
 })
 export class EditComponent implements OnInit {
-  moment: any = moment;
   @ViewChild("billingRemarkModal") billingRemarkModal: ModalDirective;
   @ViewChild("paymentRemarkModal") paymentRemarkModal: ModalDirective;
   @ViewChild("successModal") successModal: ModalDirective;
@@ -44,6 +43,10 @@ export class EditComponent implements OnInit {
   public confirmationRejectModal: ModalDirective;
   @ViewChild("confirmationRemarksUpdatedModal")
   public confirmationRemarksUpdatedModal: ModalDirective;
+  @ViewChild("searchModal")
+  public searchModal: ModalDirective;
+  @ViewChild("commentModal")
+  public commentModal: ModalDirective;
 
   cost_item_id: any;
   alertBody: string;
@@ -136,7 +139,7 @@ export class EditComponent implements OnInit {
   sociAttachment: any[] = [];
   fileType: any;
   token: any;
-  url: any;
+  url = settings.apiBaseUrl;
   selected_date: any;
   isCancelRemarks: boolean;
   sociDetailId: any;
@@ -144,7 +147,31 @@ export class EditComponent implements OnInit {
   isRemarksAdded: boolean = true;
   isRemarksUpdated: boolean;
   badgeColor = "";
+  comment_header = "";
+  section: any;
+  type = "soci";
+  accordianComment: any;
+  commentList: any[] = [];
+  isShipTo: boolean;
+  enableShipToedit = true;
+  isSoldTo: boolean = false;
+  enableSoldToedit = true;
+  isBillTo = false;
+  enableBillToedit = true;
+  searchProductName: any = "";
+  searchProductDetails: any;
+  searchValue: string;
+  productName: any;
+  selectedProductName: any = "";
+  filteredCompanyData: any = [];
+  opp_id: any;
+  companyId: any;
+  dash = "_";
+  zero = 0;
 
+  payment_termValue: [];
+  delivery_termValue: [];
+  extended_warranty: any[] = [];
   constructor(
     private route: ActivatedRoute,
     private quoteService: QuoteService,
@@ -172,6 +199,7 @@ export class EditComponent implements OnInit {
       discount: "",
       bill_to: "",
       ship_to: "",
+      company_name: "",
       soci_title: "",
       tender: "",
       cost_item: "",
@@ -203,6 +231,7 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAllDropdowns();
     this.route.queryParams.subscribe((params) => {
       this.is_approval_view_check = params.is_approval_view_check;
       this.is_preview_check = params.is_preview_check;
@@ -215,14 +244,13 @@ export class EditComponent implements OnInit {
     if (localStorage.getItem("auth-token")) {
       this.token = localStorage.getItem("auth-token");
     }
-
-    this.url = SystemConfig.apiBaseUrl;
   }
 
   getSociData(soci_id) {
-    this.sociService.getSpecificSoci(soci_id).subscribe(async (res) => {
+    this.sociService.getSpecificSoci(soci_id).subscribe(async (res: any) => {
       //PO Details
       this.soci_data = res["data"];
+      this.opp_id = res.data.quote.opportunity.id;
       this.form.patchValue({
         sociRemarks: this.soci_data?.remarks,
       });
@@ -330,8 +358,10 @@ export class EditComponent implements OnInit {
       // products
       this.product = res["data"]["products"];
       this.product.forEach((values) => {
-        this.products_discount_values += values["discount"];
-        this.product_subtotal_before_tax += values["total_price"];
+        values["discount"]
+          ? (this.products_discount_values += values["discount"])
+          : 0;
+        this.product_subtotal_before_tax += parseFloat(values["total_price"]);
         this.product_total_net_amount += values["amount"];
         this.tax_rate = values["tax_rate"];
       });
@@ -353,9 +383,234 @@ export class EditComponent implements OnInit {
         this.products_total_discount_values +
         this.product_subtotal_before_tax +
         this.additional_cost_and_charges;
+
     });
   }
 
+  openModel(value) {
+
+    this.section = value;
+    this.comment_header = "Comment";
+
+    if (value == "po_detail") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "soci_detail") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "standard_terms") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "billing_milestone") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "payment_schedule") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "additional_cost") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "billing_instruction") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "additional_instruction") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "additional_charges") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "product") {
+      this.commentModal.show();
+      this.getCommentList();
+    } else if (value == "soci_attachment") {
+      this.commentModal.show();
+      this.getCommentList();
+    }
+  }
+  getCommentList() {
+    this.sociService
+      .getcomment(
+        "/comment?type=" +
+          this.type +
+          "&type_id=" +
+          this.soci_id +
+          "&section=" +
+          this.section
+      )
+      .subscribe((res: any) => {
+        this.commentList = res.data;
+      });
+  }
+
+  addComment() {
+    this.sociService
+      .postQuery(
+        "/comment?type=" +
+          this.type +
+          "&type_id=" +
+          this.soci_id +
+          "&section=" +
+          this.section,
+        {
+          comment: this.accordianComment,
+        }
+      )
+      .subscribe((res: any) => {
+  
+        this.accordianComment = "";
+        this.commentList.push(res.data);
+        if (res.data?.section == "soci_detail") {
+          this.soci_data.comment_type_count.soci_detail += 1;
+        } else if (res.data?.section == "po_detail") {
+          this.soci_data.comment_type_count.po_detail += 1;
+        } else if (res.data?.section == "standard_terms") {
+          this.soci_data.comment_type_count.standard_terms += 1;
+        } else if (res.data?.section == "billing_milestone") {
+          this.soci_data.comment_type_count.billing_milestone += 1;
+        } else if (res.data?.section == "payment_schedule") {
+          this.soci_data.comment_type_count.payment_schedule += 1;
+        } else if (res.data?.section == "additional_cost") {
+          this.soci_data.comment_type_count.additional_cost += 1;
+        } else if (res.data?.section == "billing_instruction") {
+          this.soci_data.comment_type_count.billing_instruction += 1;
+        } else if (res.data?.section == "additional_instruction") {
+          this.soci_data.comment_type_count.additional_instruction += 1;
+        } else if (res.data?.section == "additional_charges") {
+          this.soci_data.comment_type_count.additional_charges += 1;
+        } else if (res.data?.section == "product") {
+          this.soci_data.comment_type_count.product += 1;
+        } else if (res.data?.section == "soci_attachment") {
+          this.soci_data.comment_type_count.soci_attachment += 1;
+        }
+      });
+  }
+  resetModel() {
+    this.commentList = null;
+    this.accordianComment = "";
+  }
+  // soci-detail
+
+  searchCompanyName(event) {
+
+    let query = event.query;
+    this.sociService
+      .getQuery("/dms/customer-list-search?search_text=" + query)
+      .subscribe((res: any) => {
+
+        this.filteredCompanyData = res.data;
+      });
+  }
+
+  selectCompany(company, check) {
+    this.companyId = company.id;
+  }
+
+  enableEditSociDetail(value) {
+    if (value == "ship_to") {
+      this.isShipTo = true;
+      this.enableShipToedit = false;
+    } else if (value == "sold_to") {
+      this.isSoldTo = true;
+      this.enableSoldToedit = false;
+    } else if (value == "bill_to") {
+      this.isBillTo = true;
+      this.enableBillToedit = false;
+    }
+  }
+  disableEditing(value) {
+    if (value == "ship_to") {
+      this.isShipTo = false;
+      this.enableShipToedit = true;
+    } else if (value == "sold_to") {
+      this.isSoldTo = false;
+      this.enableSoldToedit = true;
+    } else if (value == "bill_to") {
+      this.isBillTo = false;
+      this.enableBillToedit = true;
+    }
+  }
+  updateSoldToDetail() {
+    this.sociService
+      .postQuery("/opportunity/update-sold-to/" + this.opp_id, {
+        sold_to: this.companyId,
+      })
+      .subscribe(
+        (res: any) => {
+          if ("sold_to" in this.soci_data.quote.opportunity) {
+            this.soci_data.quote.opportunity.sold_to.company_name =
+              res?.data?.sold_to?.company_name;
+            this.soci_data.quote.opportunity.sold_to.address =
+              res?.data?.sold_to?.address;
+            this.isSoldTo = false;
+            this.enableSoldToedit = true;
+            this.alertBody = res.message;
+            this.successModal.show();
+            setTimeout(() => {
+              this.successModal.hide();
+            }, 2000);
+          }
+        },
+        (error: any) => {
+          this.alertBody = error.error.message;
+          this.dangerModal.hide();
+        }
+      );
+  }
+  updateShipToDetail() {
+    this.sociService
+      .postQuery("/opportunity/update-ship-to/" + this.opp_id, {
+        ship_to: this.companyId,
+      })
+      .subscribe(
+        (res: any) => {
+          if ("ship_to" in this.soci_data.quote.opportunity) {
+            this.soci_data.quote.opportunity.ship_to.company_name =
+              res?.data?.ship_to?.company_name;
+            this.soci_data.quote.opportunity.ship_to.address =
+              res?.data?.ship_to?.address;
+            this.isShipTo = false;
+            this.enableShipToedit = true;
+            this.alertBody = res.message;
+            this.successModal.show();
+            setTimeout(() => {
+              this.successModal.hide();
+            }, 2000);
+          }
+        },
+        (error: any) => {
+          this.alertBody = error.error.message;
+          this.dangerModal.hide();
+        }
+      );
+  }
+
+  updateBillToDetail() {
+    this.sociService
+      .postQuery("/opportunity/update-bill-to/" + this.opp_id, {
+        bill_to: this.companyId,
+      })
+      .subscribe(
+        (res: any) => {
+          if ("bill_to" in this.soci_data.quote.opportunity) {
+            this.soci_data.quote.opportunity.bill_to.company_name =
+              res?.data?.bill_to?.company_name;
+            this.soci_data.quote.opportunity.bill_to.address =
+              res?.data?.bill_to?.address;
+            this.isBillTo = false;
+            this.enableBillToedit = true;
+            this.alertBody = res.message;
+            this.successModal.show();
+            setTimeout(() => {
+              this.successModal.hide();
+            }, 2000);
+          }
+        },
+        (error: any) => {
+          this.alertBody = error.error.message;
+          this.dangerModal.hide();
+        }
+      );
+  }
   // Standard Term
 
   editStandardPaymentTerm() {
@@ -406,6 +661,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("days").reset();
             this.form.get("fromDate").reset();
           }, 2000);
@@ -415,6 +671,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -442,6 +699,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("delivery_days").reset();
             this.form.get("delivery_fromDate").reset();
           }, 2000);
@@ -451,6 +709,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -459,6 +718,7 @@ export class EditComponent implements OnInit {
     this.is_payment_term_eidt = false;
     this.is_delivery_term_eidt = false;
   }
+
   // End Standard Term
 
   // ADD Billing_Milestone
@@ -483,6 +743,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("stage").reset();
             this.form.get("amount").reset();
             this.form.get("remarks").reset();
@@ -493,6 +754,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -535,6 +797,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -542,6 +805,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -563,6 +827,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -570,6 +835,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -600,6 +866,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("percentage").reset();
             this.form.get("schedule").reset();
             this.form.get("soc_payment_term").reset();
@@ -613,6 +880,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -633,6 +901,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -640,6 +909,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -660,6 +930,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -667,6 +938,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -689,12 +961,15 @@ export class EditComponent implements OnInit {
           this.additional_costs.push(data["data"]);
           this.total_additional_costs_amount += data["data"]["total_price"];
           this.additional_cost_and_charges += data["data"]["total_price"];
-          this.total_cost += data["data"]["total_price"];
+          data["data"]["total_price"]
+            ? (this.total_cost += data["data"]["total_price"])
+            : 0;
           this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("description").reset();
             this.form.get("quantity").reset();
             this.form.get("unit_price").reset();
@@ -707,6 +982,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -747,6 +1023,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -754,6 +1031,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -772,6 +1050,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -779,6 +1058,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -805,6 +1085,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("schedule").reset();
             this.form.get("percentage").reset();
             this.form.get("amount").reset();
@@ -816,6 +1097,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -838,6 +1120,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -845,6 +1128,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -863,6 +1147,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -870,6 +1155,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -892,6 +1178,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("soci_title").reset();
             this.form.get("description").reset();
           }, 2000);
@@ -901,6 +1188,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -921,6 +1209,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -928,6 +1217,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -943,6 +1233,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -950,6 +1241,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -980,6 +1272,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("cost_item_id").reset();
             this.form.get("description").reset();
             this.form.get("quantity").reset();
@@ -992,6 +1285,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1044,6 +1338,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -1051,6 +1346,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1070,6 +1366,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error) => {
@@ -1077,6 +1374,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1094,6 +1392,7 @@ export class EditComponent implements OnInit {
   }
 
   addPrductData() {
+    this.selectedProductName = "";
     this.sociService
       .postQuery("/soci/product", {
         external_product_number: this.external_product_number,
@@ -1104,7 +1403,7 @@ export class EditComponent implements OnInit {
         quantity: this.form.value.quantity,
         cost: this.product_cost,
         margin: 2,
-        total_price: this.form.value.quantity.total_price,
+        total_price: this.form.value.quantity?.total_price,
         product_id: this.product_id,
         discount: this.form.value.discount,
         amount: this.form.value.amount,
@@ -1126,6 +1425,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.form.get("name").reset();
             this.form.get("sku").reset();
             this.form.get("quantity").reset();
@@ -1136,18 +1436,19 @@ export class EditComponent implements OnInit {
           }, 2000);
         },
         (error) => {
-          this.alertBody =
-            error["error"]["data"]["errors"][0].message ||
-            "Please enter required fields";
+          this.alertBody = error.error.message;
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
   }
 
   productDetails(product, check) {
+    this.searchProductDetails = product;
+    this.searchProductName = product.name;
     this.productCheck = check;
     this.external_product_number = product.external_product_number;
     this.product_data_area_id = product.data_area_id;
@@ -1307,6 +1608,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
           }, 2000);
         },
         (error: any) => {
@@ -1316,6 +1618,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1337,6 +1640,7 @@ export class EditComponent implements OnInit {
         this.successModal.show();
         setTimeout(() => {
           this.successModal.hide();
+          this.modalClassRomve();
         }, 2000);
       },
       (error) => {
@@ -1344,6 +1648,7 @@ export class EditComponent implements OnInit {
         this.dangerModal.show();
         setTimeout(() => {
           this.dangerModal.hide();
+          this.modalClassRomve();
         }, 2000);
       }
     );
@@ -1386,6 +1691,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.request_approval = true;
             this.router.navigate(["/soci/index"]);
           }, 2000);
@@ -1396,6 +1702,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1414,6 +1721,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.request_approval = true;
             this.router.navigate(["/soci/index"]);
             this.is_released = false;
@@ -1424,6 +1732,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1445,6 +1754,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.request_approval = true;
             this.managerViewAction();
             // this.router.navigate(["/managerview/approval"], navigate);
@@ -1455,6 +1765,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1471,6 +1782,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.request_approval = true;
             this.managerViewAction();
             // this.router.navigate(["/managerview/approval"]);
@@ -1481,6 +1793,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1498,6 +1811,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             this.request_approval = true;
             this.managerViewAction();
             // this.router.navigate(["/managerview/approval"]);
@@ -1508,6 +1822,7 @@ export class EditComponent implements OnInit {
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
             this.form.get("cancelled_remarks").reset();
           }, 2000);
         }
@@ -1520,6 +1835,7 @@ export class EditComponent implements OnInit {
       },
     };
     this.successModal.hide();
+    this.modalClassRomve();
     this.request_approval = true;
     this.router.navigate(["/managerview/approval"], navigate);
   }
@@ -1602,6 +1918,7 @@ export class EditComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.successModal.hide();
+            this.modalClassRomve();
             if (showApprovalFlag) this.confirmationModal.show();
           }, 2000);
         },
@@ -1611,6 +1928,7 @@ export class EditComponent implements OnInit {
           this.isRemarksAdded = false;
           setTimeout(() => {
             this.dangerModal.hide();
+            this.modalClassRomve();
           }, 2000);
         }
       );
@@ -1622,5 +1940,36 @@ export class EditComponent implements OnInit {
 
   back() {
     this.location.back();
+  }
+  modalClassRomve() {
+    let body = document.querySelector("body");
+    if (body.classList.contains("modal-open")) {
+      body.classList.remove("modal-open");
+      body.style.paddingRight = "0px";
+    }
+  }
+  searchBar() {
+    // this.searchValue = val;
+    this.searchModal.show();
+  }
+  modalOkButton() {
+    this.selectedProductName = this.searchProductName;
+    if (this.searchProductName !== "") {
+      let sku = this.searchProductDetails.sku;
+      let unit_price = this.searchProductDetails.unit_price;
+      this.form.patchValue({
+        sku: sku,
+        unit_price: unit_price,
+        amount: 0.0,
+      });
+    }
+    this.searchModal.hide();
+  }
+  getAllDropdowns() {
+    this.sociService.getQuery("/soci/all-dropdown").subscribe((data: any) => {
+      this.payment_termValue = data["data"].payment_terms;
+      this.delivery_termValue = data["data"].delivery_terms;
+      this.extended_warranty = data["data"].extended_warranty;
+    });
   }
 }
