@@ -244,6 +244,7 @@ export class EditComponent implements OnInit {
     if (localStorage.getItem("auth-token")) {
       this.token = localStorage.getItem("auth-token");
     }
+
   }
 
   getSociData(soci_id) {
@@ -460,27 +461,27 @@ export class EditComponent implements OnInit {
         this.accordianComment = "";
         this.commentList.push(res.data);
         if (res.data?.section == "soci_detail") {
-          this.soci_data.comment_type_count.soci_detail += 1;
+          this.soci_data.comment_type_count.soci_detail?this.soci_data.comment_type_count.soci_detail += 1:this.soci_data.comment_type_count['soci_detail']=1;
         } else if (res.data?.section == "po_detail") {
-          this.soci_data.comment_type_count.po_detail += 1;
+          this.soci_data.comment_type_count.po_detail?this.soci_data.comment_type_count.po_detail += 1:this.soci_data.comment_type_count['po_detail']=1;
         } else if (res.data?.section == "standard_terms") {
-          this.soci_data.comment_type_count.standard_terms += 1;
+          this.soci_data.comment_type_count.standard_terms?this.soci_data.comment_type_count.standard_terms += 1:this.soci_data.comment_type_count['standard_terms']=1;
         } else if (res.data?.section == "billing_milestone") {
-          this.soci_data.comment_type_count.billing_milestone += 1;
+          this.soci_data.comment_type_count.billing_milestone?this.soci_data.comment_type_count.billing_milestone += 1:this.soci_data.comment_type_count['billing_milestone']=1;
         } else if (res.data?.section == "payment_schedule") {
-          this.soci_data.comment_type_count.payment_schedule += 1;
+          this.soci_data.comment_type_count.payment_schedule?this.soci_data.comment_type_count.payment_schedule += 1:this.soci_data.comment_type_count['payment_schedule']=1;
         } else if (res.data?.section == "additional_cost") {
-          this.soci_data.comment_type_count.additional_cost += 1;
+          this.soci_data.comment_type_count.additional_cost?this.soci_data.comment_type_count.additional_cost += 1:this.soci_data.comment_type_count['additional_cost']=1;
         } else if (res.data?.section == "billing_instruction") {
-          this.soci_data.comment_type_count.billing_instruction += 1;
+          this.soci_data.comment_type_count.billing_instruction?this.soci_data.comment_type_count.billing_instruction += 1:this.soci_data.comment_type_count['billing_instruction'] = 1;
         } else if (res.data?.section == "additional_instruction") {
-          this.soci_data.comment_type_count.additional_instruction += 1;
+          this.soci_data.comment_type_count.additional_instruction ?  this.soci_data.comment_type_count.additional_instruction += 1 : this.soci_data.comment_type_count["additional_instruction"] = 1;
         } else if (res.data?.section == "additional_charges") {
-          this.soci_data.comment_type_count.additional_charges += 1;
+          this.soci_data.comment_type_count.additional_charges?this.soci_data.comment_type_count.additional_charges += 1:this.soci_data.comment_type_count['additional_charges']=1;
         } else if (res.data?.section == "product") {
-          this.soci_data.comment_type_count.product += 1;
+          this.soci_data.comment_type_count.product?this.soci_data.comment_type_count.product += 1:this.soci_data.comment_type_count['product']=1;
         } else if (res.data?.section == "soci_attachment") {
-          this.soci_data.comment_type_count.soci_attachment += 1;
+          this.soci_data.comment_type_count.soci_attachment? this.soci_data.comment_type_count.soci_attachment += 1: this.soci_data.comment_type_count['soci_attachment']=1;
         }
       });
   }
