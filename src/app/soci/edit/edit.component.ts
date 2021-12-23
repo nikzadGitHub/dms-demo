@@ -157,14 +157,16 @@ export class EditComponent implements OnInit {
   enableSoldToedit = true;
   isBillTo = false;
   enableBillToedit = true;
-  searchProductName: any ="";
+  searchProductName: any = "";
   searchProductDetails: any;
   searchValue: string;
-  productName:any;
-  selectedProductName: any="";
+  productName: any;
+  selectedProductName: any = "";
   filteredCompanyData: any = [];
   opp_id: any;
   companyId: any;
+  dash = "_";
+  zero = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -284,7 +286,7 @@ export class EditComponent implements OnInit {
       );
       this.quotation_validity_payment_term_to.setDate(
         this.quotation_validity_payment_term_to.getDate() +
-        this.default_payment_term
+          this.default_payment_term
       );
       // Delivery_terms
       this.default_delivery_term = res["data"]["standard_terms"][
@@ -312,7 +314,7 @@ export class EditComponent implements OnInit {
       );
       this.quotation_validity_delivery_term_to.setDate(
         this.quotation_validity_delivery_term_to.getDate() +
-        this.default_delivery_term
+          this.default_delivery_term
       );
       // billing_milestone
       this.billing_milestone = res["data"]["billing_milestones"];
@@ -424,11 +426,11 @@ export class EditComponent implements OnInit {
     this.sociService
       .getcomment(
         "/comment?type=" +
-        this.type +
-        "&type_id=" +
-        this.soci_id +
-        "&section=" +
-        this.section
+          this.type +
+          "&type_id=" +
+          this.soci_id +
+          "&section=" +
+          this.section
       )
       .subscribe((res: any) => {
         console.log("comment-res:", res);
@@ -440,11 +442,11 @@ export class EditComponent implements OnInit {
     this.sociService
       .postQuery(
         "/comment?type=" +
-        this.type +
-        "&type_id=" +
-        this.soci_id +
-        "&section=" +
-        this.section,
+          this.type +
+          "&type_id=" +
+          this.soci_id +
+          "&section=" +
+          this.section,
         {
           comment: this.accordianComment,
         }
@@ -475,7 +477,6 @@ export class EditComponent implements OnInit {
     this.commentList = null;
     this.accordianComment = "";
   }
-
   // soci-detail
 
   searchCompanyName(event) {
@@ -685,7 +686,7 @@ export class EditComponent implements OnInit {
           this.delivery_term_to = new Date(this.delivery_term_from);
           this.delivery_term_to.setDate(
             this.delivery_term_to.getDate() +
-            parseInt(this.form.value.delivery_days)
+              parseInt(this.form.value.delivery_days)
           );
           this.is_edited = true;
           this.alertBody = data.message;
@@ -1385,7 +1386,7 @@ export class EditComponent implements OnInit {
   }
 
   addPrductData() {
-    this.selectedProductName=""
+    this.selectedProductName = "";
     this.sociService
       .postQuery("/soci/product", {
         external_product_number: this.external_product_number,
@@ -1443,8 +1444,8 @@ export class EditComponent implements OnInit {
   }
 
   productDetails(product, check) {
-    this.searchProductDetails=product
-    this.searchProductName=product.name;
+    this.searchProductDetails = product;
+    this.searchProductName = product.name;
     this.productCheck = check;
     this.external_product_number = product.external_product_number;
     this.product_data_area_id = product.data_area_id;
@@ -1943,21 +1944,21 @@ export class EditComponent implements OnInit {
       body.classList.remove("modal-open");
     }
   }
-  searchBar(val){
-    this.searchValue=val;
+  searchBar(val) {
+    this.searchValue = val;
     this.searchModal.show();
   }
-  modalOkButton(){
-    this.selectedProductName=this.searchProductName
-    if(this.searchProductName !== ''){
-      let sku=this.searchProductDetails.sku;
-      let unit_price =this.searchProductDetails.unit_price
+  modalOkButton() {
+    this.selectedProductName = this.searchProductName;
+    if (this.searchProductName !== "") {
+      let sku = this.searchProductDetails.sku;
+      let unit_price = this.searchProductDetails.unit_price;
       this.form.patchValue({
         sku: sku,
         unit_price: unit_price,
         amount: 0.0,
       });
     }
-    this.searchModal.hide()
+    this.searchModal.hide();
   }
 }
