@@ -199,7 +199,6 @@ export class DefaultLayoutComponent implements OnDestroy {
       console.log("unit-res:", res);
 
       this.allUnits = res.data;
-      this.allUnits.push({ id: 2, title: "new" });
     });
   }
 

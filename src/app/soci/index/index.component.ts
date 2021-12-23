@@ -57,6 +57,7 @@ export class IndexComponent implements OnInit {
     { name: "Unit", key: "unit" },
     { name: "Individual/Company Name:", key: "company_name" },
     { name: "Customer PO Date:", key: "po_date" },
+    { name: "OPC:", key: "opc" },
   ];
   isTooltipSown: any = "";
   sociDate: any;
@@ -163,17 +164,20 @@ export class IndexComponent implements OnInit {
     let exportArr: Array<any> = [];
     for (let i = 0; i < dupArr.length; i++) {
       let compObj: any = {};
-      compObj.created_at = dupArr[i].created_at?dupArr[i].created_at:this.dash;
-      compObj.company_name = dupArr[i].customer?.company_name
-        ? dupArr[i].customer.company_name
-        : "_";
-      compObj.soci_id = dupArr[i].soci_id?dupArr[i].soci_id:this.dash;
-      compObj.quote_full_id = dupArr[i].quote_full_id?dupArr[i].quote_full_id:this.dash;
-      compObj.quote_date = dupArr[i].quote_date?dupArr[i].quote_date:this.dash;
-      compObj.amount = dupArr[i].po_amount ? dupArr[i].po_amount : 0;
-      compObj.po_no = dupArr[i].po_no?dupArr[i].po_no:this.dash;
-      compObj.po_date = dupArr[i].po_date?dupArr[i].po_date:this.dash;
-      compObj.fo_order_number = dupArr[i].fo_order_number?dupArr[i].fo_order_number:this.dash;
+      compObj.Created_at = dupArr[i].created_at?dupArr[i].created_at:this.dash;
+      compObj.Company_name = dupArr[i].customer?.company_name? dupArr[i].customer.company_name: "_";
+      compObj.Soci_id = dupArr[i].soci_id?dupArr[i].soci_id:this.dash;
+      compObj.Quote_full_id = dupArr[i].quote_full_id?dupArr[i].quote_full_id:this.dash;
+      compObj.Quote_date = dupArr[i].quote_date?dupArr[i].quote_date:this.dash;
+      compObj.Customer_PO_Amount = dupArr[i].po_amount ? dupArr[i].po_amount : 0;
+      compObj.Customer_PO_No = dupArr[i].po_no?dupArr[i].po_no:this.dash;
+      compObj.Customer_PO_Date = dupArr[i].po_date?dupArr[i].po_date:this.dash;
+      compObj.Fo_order_number = dupArr[i].fo_order_number?dupArr[i].fo_order_number:this.dash;
+      compObj.Backend_status = dupArr[i].backend_status?dupArr[i].backend_status:this.dash;
+      compObj.Country = dupArr[i].country?dupArr[i].country:this.dash;
+      compObj.Unit = dupArr[i].unit?dupArr[i].unit:this.dash;
+      compObj.Opc = dupArr[i].opc?dupArr[i].opc:this.dash;
+      compObj.Status = dupArr[i].status_desc?dupArr[i].status_desc:this.dash;
       exportArr.push(compObj);
     }
     const fileName = "SOCI_Listing.xlsx";

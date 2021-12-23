@@ -17,6 +17,7 @@ import { Quote } from "../../quote/quote";
 import { QuoteService } from "../../quote/quote.service";
 import { SociService } from "../soci.service";
 import { SystemConfig } from "../../config/system-config";
+import { settings } from "environments/environment";
 
 @Component({
   selector: "app-edit",
@@ -138,7 +139,7 @@ export class EditComponent implements OnInit {
   sociAttachment: any[] = [];
   fileType: any;
   token: any;
-  url: any;
+  url = settings.apiBaseUrl;
   selected_date: any;
   isCancelRemarks: boolean;
   sociDetailId: any;
@@ -169,6 +170,8 @@ export class EditComponent implements OnInit {
   zero = 0;
 
   payment_termValue: [];
+  delivery_termValue: [];
+  extended_warranty: any[] = [];
   constructor(
     private route: ActivatedRoute,
     private quoteService: QuoteService,
@@ -380,12 +383,12 @@ export class EditComponent implements OnInit {
         this.products_total_discount_values +
         this.product_subtotal_before_tax +
         this.additional_cost_and_charges;
-      console.log("total_cost:", this.total_cost);
+
     });
   }
 
   openModel(value) {
-    console.log("value:", value);
+
     this.section = value;
     this.comment_header = "Comment";
 
@@ -435,7 +438,6 @@ export class EditComponent implements OnInit {
           this.section
       )
       .subscribe((res: any) => {
-        console.log("comment-res:", res);
         this.commentList = res.data;
       });
   }
@@ -454,7 +456,7 @@ export class EditComponent implements OnInit {
         }
       )
       .subscribe((res: any) => {
-        console.log("comment-res:", res);
+  
         this.accordianComment = "";
         this.commentList.push(res.data);
         if (res.data?.section == "soci_detail") {
@@ -489,23 +491,18 @@ export class EditComponent implements OnInit {
   // soci-detail
 
   searchCompanyName(event) {
-    console.log("event:", event);
+
     let query = event.query;
     this.sociService
       .getQuery("/dms/customer-list-search?search_text=" + query)
       .subscribe((res: any) => {
-        console.log("search-res:", res);
+
         this.filteredCompanyData = res.data;
       });
   }
 
   selectCompany(company, check) {
-    console.log("company:", company);
     this.companyId = company.id;
-    console.log(
-      "data--->",
-      this.soci_data?.quote?.opportunity?.bill_to?.company_name
-    );
   }
 
   enableEditSociDetail(value) {
@@ -539,22 +536,21 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (res: any) => {
-          console.log("selected-res-->", res);
-          this.isSoldTo = false;
-          this.enableSoldToedit = true;
-          this.soci_data.quote.opportunity.sold_to.company_name =
-            res.data.sold_to.company_name;
-          this.soci_data.quote.opportunity.sold_to.address =
-            res.data.sold_to.address;
-
-          this.alertBody = res.message;
-          this.successModal.show();
-          setTimeout(() => {
-            this.successModal.hide();
-          }, 2000);
+          if ("sold_to" in this.soci_data.quote.opportunity) {
+            this.soci_data.quote.opportunity.sold_to.company_name =
+              res?.data?.sold_to?.company_name;
+            this.soci_data.quote.opportunity.sold_to.address =
+              res?.data?.sold_to?.address;
+            this.isSoldTo = false;
+            this.enableSoldToedit = true;
+            this.alertBody = res.message;
+            this.successModal.show();
+            setTimeout(() => {
+              this.successModal.hide();
+            }, 2000);
+          }
         },
         (error: any) => {
-          console.log("error:", error);
           this.alertBody = error.error.message;
           this.dangerModal.hide();
         }
@@ -567,21 +563,21 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (res: any) => {
-          console.log("selected-res-->", res);
-          this.soci_data.quote.opportunity.ship_to.company_name =
-            res.data.ship_to.company_name;
-          this.soci_data.quote.opportunity.ship_to.address =
-            res.data.ship_to.address;
-          this.isShipTo = false;
-          this.enableShipToedit = true;
-          this.alertBody = res.message;
-          this.successModal.show();
-          setTimeout(() => {
-            this.successModal.hide();
-          }, 2000);
+          if ("ship_to" in this.soci_data.quote.opportunity) {
+            this.soci_data.quote.opportunity.ship_to.company_name =
+              res?.data?.ship_to?.company_name;
+            this.soci_data.quote.opportunity.ship_to.address =
+              res?.data?.ship_to?.address;
+            this.isShipTo = false;
+            this.enableShipToedit = true;
+            this.alertBody = res.message;
+            this.successModal.show();
+            setTimeout(() => {
+              this.successModal.hide();
+            }, 2000);
+          }
         },
         (error: any) => {
-          console.log("error:", error);
           this.alertBody = error.error.message;
           this.dangerModal.hide();
         }
@@ -595,21 +591,21 @@ export class EditComponent implements OnInit {
       })
       .subscribe(
         (res: any) => {
-          console.log("selected-res-->", res);
-          this.soci_data.quote.opportunity.bill_to.company_name =
-            res.data.bill_to.company_name;
-          this.soci_data.quote.opportunity.bill_to.address =
-            res.data.bill_to.address;
-          this.isBillTo = false;
-          this.enableBillToedit = true;
-          this.alertBody = res.message;
-          this.successModal.show();
-          setTimeout(() => {
-            this.successModal.hide();
-          }, 2000);
+          if ("bill_to" in this.soci_data.quote.opportunity) {
+            this.soci_data.quote.opportunity.bill_to.company_name =
+              res?.data?.bill_to?.company_name;
+            this.soci_data.quote.opportunity.bill_to.address =
+              res?.data?.bill_to?.address;
+            this.isBillTo = false;
+            this.enableBillToedit = true;
+            this.alertBody = res.message;
+            this.successModal.show();
+            setTimeout(() => {
+              this.successModal.hide();
+            }, 2000);
+          }
         },
         (error: any) => {
-          console.log("error:", error);
           this.alertBody = error.error.message;
           this.dangerModal.hide();
         }
@@ -1440,13 +1436,10 @@ export class EditComponent implements OnInit {
           }, 2000);
         },
         (error) => {
-          this.alertBody =
-            error["error"]["data"]["errors"][0].message ||
-            "Please enter required fields";
+          this.alertBody = error.error.message;
           this.dangerModal.show();
           setTimeout(() => {
             this.dangerModal.hide();
-            this.modalClassRomve();
             this.modalClassRomve();
           }, 2000);
         }
@@ -1952,6 +1945,7 @@ export class EditComponent implements OnInit {
     let body = document.querySelector("body");
     if (body.classList.contains("modal-open")) {
       body.classList.remove("modal-open");
+      body.style.paddingRight = "0px";
     }
   }
   searchBar() {
@@ -1972,8 +1966,10 @@ export class EditComponent implements OnInit {
     this.searchModal.hide();
   }
   getAllDropdowns() {
-    this.sociService.getQuery("/soci/all-dropdown").subscribe((data) => {
+    this.sociService.getQuery("/soci/all-dropdown").subscribe((data: any) => {
       this.payment_termValue = data["data"].payment_terms;
+      this.delivery_termValue = data["data"].delivery_terms;
+      this.extended_warranty = data["data"].extended_warranty;
     });
   }
 }

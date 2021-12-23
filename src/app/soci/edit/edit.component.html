@@ -297,17 +297,20 @@
                 </span>
               </div>
             </div>
-            <div class="action-icon">
+            <div
+              class="action-icon"
+              *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+            >
               <a
                 [routerLink]=""
-                routerLinkActive="router-link-active"
+                routerLinkActive=""
                 *ngIf="isSoldTo"
                 (click)="updateSoldToDetail()"
                 ><i class="cil-check-circle"></i
               ></a>
               <a
                 [routerLink]=""
-                routerLinkActive="router-link-active"
+                routerLinkActive=""
                 *ngIf="enableSoldToedit"
                 (click)="enableEditSociDetail('sold_to')"
               >
@@ -377,13 +380,10 @@
                         class="item"
                         (click)="selectCompany(item, 'company_name')"
                       >
-                        <div>
-                          {{ item.company_name ? item.company_name : "_" }}
-                        </div>
+                        {{ item.company_name ? item.company_name : "_" }}
                       </div>
                     </ng-template>
                   </p-autoComplete>
-                  <i class="pi pi-search search-country-name-icon"></i>
                 </span>
               </div>
               <div *ngIf="!isShipTo">
@@ -394,7 +394,10 @@
                 }}
               </div>
             </div>
-            <div class="action-icon">
+            <div
+              class="action-icon"
+              *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+            >
               <a
                 [routerLink]=""
                 routerLinkActive="router-link-active"
@@ -489,7 +492,10 @@
                 </span>
               </div>
             </div>
-            <div class="action-icon">
+            <div
+              class="action-icon"
+              *ngIf="!is_preview_check && (sociStatus == 1 || sociStatus == 7)"
+            >
               <a
                 [routerLink]=""
                 routerLinkActive="router-link-active"
@@ -540,8 +546,8 @@
       </p-accordion>
       <!--End SOCI Detaail -->
       <br />
+      <!-- Standard Term Accordion -->
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
-        <!-- Standard Term Accordion -->
         <!-- header="Standard Terms" -->
         <p-accordionTab>
           <ng-template pTemplate="header">
@@ -592,7 +598,7 @@
           <div class="row">
             <div class="col-md-5">
               <b>(As Default) Payment Terms: </b
-              >{{ default_payment_term + " Days" }}
+              >{{ default_payment_term ? default_payment_term : 0 + " Days" }}
             </div>
             <div class="col-md-6" style="text-align: end">
               Quotation Validity: <b>From</b>
@@ -702,7 +708,7 @@
                   align="center"
                   *ngFor="let billing of billing_milestone; let i = index"
                 >
-                  <td>
+                  <td *ngIf="billing.billing_id">
                     <input
                       type="text"
                       class="form-control"
@@ -717,7 +723,8 @@
                     />
                     <!-- {{ billing.billing_id }} -->
                   </td>
-                  <td>
+                  <td *ngIf="!billing.billing_id">_</td>
+                  <td *ngIf="billing.stage">
                     <input
                       type="text"
                       class="form-control"
@@ -731,7 +738,8 @@
                     />
                     <!-- {{ billing.stage }} -->
                   </td>
-                  <td>
+                  <td *ngIf="!billing.stage">_</td>
+                  <td *ngIf="billing.percentage">
                     <input
                       type="text"
                       class="form-control"
@@ -746,7 +754,8 @@
                     />
                     <!-- {{ billing.percentage }} -->
                   </td>
-                  <td>
+                  <td *ngIf="!billing.percentage">_</td>
+                  <td *ngIf="billing.amount">
                     <div
                       *ngIf="
                         editableRowIndex !== i ||
@@ -785,7 +794,8 @@
 
                     <!-- {{ billing.amount }} -->
                   </td>
-                  <td style="width: 20%">
+                  <td *ngIf="!billing.amount">_</td>
+                  <td style="width: 20%" *ngIf="billing.remarks">
                     <input
                       type="text"
                       class="form-control"
@@ -798,6 +808,7 @@
                       "
                     />
                   </td>
+                  <td *ngIf="!billing.remarks">_</td>
                   <td class="text-center"></td>
                   <td
                     class="text-center td-actions"
@@ -806,7 +817,13 @@
                       !is_preview_check && (sociStatus == 1 || sociStatus == 7)
                     "
                   >
-                    <div class="action-icon">
+                    <div
+                      class="action-icon"
+                      *ngIf="
+                        !is_preview_check &&
+                        (sociStatus == 1 || sociStatus == 7)
+                      "
+                    >
                       <a
                         [routerLink]=""
                         routerLinkActive="router-link-active"
@@ -986,7 +1003,7 @@
                   align="center"
                   *ngFor="let payment of payment_schedules; let i = index"
                 >
-                  <td>
+                  <td *ngIf="billing_id">
                     <!-- formControlName="billing_id" -->
                     <select
                       [(ngModel)]="billing_id ? billing_id : dash"
@@ -1016,14 +1033,13 @@
                       readonly
                     /> -->
                   </td>
-                  <td>
+                  <td *ngIf="!billing_id">_</td>
+                  <td *ngIf="payment.percentage">
                     <input
                       type="text"
                       class="form-control"
                       style="text-align: right; width: 100px"
-                      [(ngModel)]="
-                        payment.percentage ? payment.percentage : zero
-                      "
+                      [(ngModel)]="payment.percentage"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['payment'] && controller == payment
@@ -1033,16 +1049,13 @@
                     />
                     <!-- {{ payment.percentage }} -->
                   </td>
+                  <td *ngIf="!payment.percentage">_</td>
                   <td>
                     <input
                       type="date"
                       style="width: 79%"
                       class="form-control"
-                      [ngModel]="
-                        new_payment_schedule_date
-                          ? new_payment_schedule_date
-                          : dash
-                      "
+                      [ngModel]="new_payment_schedule_date"
                       (ngModelChange)="changePaymentSchdule($event)"
                       [ngModelOptions]="{ standalone: true }"
                       *ngIf="enableEdit['payment'] && controller == payment"
@@ -1088,7 +1101,7 @@
                       "
                     />
                   </td> -->
-                  <td>
+                  <td *ngIf="payment.amount">
                     <div
                       *ngIf="editableRowIndex !== i || selectedId !== 'payment'"
                     >
@@ -1096,11 +1109,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right; width: 100px"
-                        [ngModel]="
-                          payment.amount
-                            ? payment.amount
-                            : (zero | number: '1.2')
-                        "
+                        [ngModel]="payment.amount | number: '1.2'"
                         [ngModelOptions]="{ standalone: true }"
                         [attr.disabled]="
                           enableEdit['payment'] && controller == payment
@@ -1114,7 +1123,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right; width: 100px"
-                        [(ngModel)]="payment.amount ? payment.amount : zero"
+                        [(ngModel)]="payment.amount"
                         [ngModelOptions]="{ standalone: true }"
                         [attr.disabled]="
                           enableEdit['payment'] && controller == payment
@@ -1126,11 +1135,12 @@
 
                     <!-- {{ payment.amount }} -->
                   </td>
-                  <td style="width: 16%">
+                  <td *ngIf="!payment.amount">0</td>
+                  <td style="width: 16%" *ngIf="payment.remarks">
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="payment.remarks ? payment.remarks : dash"
+                      [(ngModel)]="payment.remarks"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['payment'] && controller == payment
@@ -1140,6 +1150,7 @@
                     />
                     <!-- {{ payment.remarks }} -->
                   </td>
+                  <td *ngIf="!payment.remarks">_</td>
                   <td
                     class="td-actions"
                     style="width: 10%; padding: none"
@@ -1357,11 +1368,11 @@
                   align="center"
                   *ngFor="let cost of additional_costs; let i = index"
                 >
-                  <td>
+                  <td *ngIf="cost.description">
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="cost.description ? cost.description : dash"
+                      [(ngModel)]="cost.description"
                       [attr.disabled]="
                         enableEdit['addCost'] && controller == cost ? null : ''
                       "
@@ -1369,14 +1380,15 @@
                     />
                     <!-- {{ cost.description }} -->
                   </td>
-                  <td>
+                  <td *ngIf="!cost.description">_</td>
+                  <td *ngIf="cost.quantity">
                     <!-- (input)="changeQuantity()" -->
                     <input
                       type="text"
                       class="form-control"
                       style="text-align: right; width: 65px"
                       (input)="changeCostvalues(cost)"
-                      [(ngModel)]="cost.quantity ? cost.quantity : zero"
+                      [(ngModel)]="cost.quantity"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['addCost'] && controller == cost ? null : ''
@@ -1384,6 +1396,7 @@
                     />
                     <!-- {{ cost.quantity }} -->
                   </td>
+                  <td *ngIf="!cost.quantity">_</td>
                   <td>
                     <!-- (input)="costUnitValue()" -->
                     <div
@@ -1393,11 +1406,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [ngModel]="
-                          cost.unit_price
-                            ? cost.unit_price
-                            : (zero | number: '1.2')
-                        "
+                        [ngModel]="cost.unit_price | number: '1.2'"
                         [ngModelOptions]="{ standalone: true }"
                         [attr.disabled]="
                           enableEdit['addCost'] && controller == cost
@@ -1411,7 +1420,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [(ngModel)]="cost.unit_price ? cost.unit_price : zero"
+                        [(ngModel)]="cost.unit_price"
                         (input)="changeCostvalues(cost)"
                         [ngModelOptions]="{ standalone: true }"
                         [attr.disabled]="
@@ -1424,7 +1433,7 @@
 
                     <!-- {{ cost.unit_price }} -->
                   </td>
-                  <td>
+                  <td *ngIf="cost.total_price">
                     <div
                       *ngIf="editableRowIndex !== i || selectedId !== 'addCost'"
                     >
@@ -1432,11 +1441,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [ngModel]="
-                          cost.total_price
-                            ? cost.total_price
-                            : (zero | number: '1.2')
-                        "
+                        [ngModel]="cost.total_price | number: '1.2'"
                         [ngModelOptions]="{ standalone: true }"
                         readonly
                         [attr.disabled]="
@@ -1451,7 +1456,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [(ngModel)]="cost.total_price ? cost.total_price : zero"
+                        [(ngModel)]="cost.total_price"
                         [ngModelOptions]="{ standalone: true }"
                         readonly
                         [attr.disabled]="
@@ -1464,11 +1469,12 @@
 
                     <!-- {{ cost.total_price }} -->
                   </td>
-                  <td>
+                  <td *ngIf="!cost.total_price">_</td>
+                  <td *ngIf="cost.remarks">
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="cost.remarks ? cost.remarks : dash"
+                      [(ngModel)]="cost.remarks"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['addCost'] && controller == cost ? null : ''
@@ -1476,6 +1482,7 @@
                     />
                     <!-- {{ cost.remarks }} -->
                   </td>
+                  <td *ngIf="!cost.remarks">_</td>
                   <td class="text-center"></td>
                   <td class="text-center"></td>
                   <td
@@ -1628,20 +1635,19 @@
               Billing Instruction
               <div>
                 <p-badge
-                class="soci-comment-badges"
-                [value]="
-                  soci_data?.comment_type_count?.billing_instruction
-                    ? soci_data?.comment_type_count?.billing_instruction
-                    : zero
-                "
-              ></p-badge>
-              <img
-              src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-              alt=""
-              (click)="openModel('billing_instruction')"
-            />
+                  class="soci-comment-badges"
+                  [value]="
+                    soci_data?.comment_type_count?.billing_instruction
+                      ? soci_data?.comment_type_count?.billing_instruction
+                      : zero
+                  "
+                ></p-badge>
+                <img
+                  src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                  alt=""
+                  (click)="openModel('billing_instruction')"
+                />
               </div>
-
             </div>
           </ng-template>
           <div class="row">
@@ -1679,11 +1685,7 @@
                       type="date"
                       class="form-control"
                       style="width: 89%"
-                      [(ngModel)]="
-                        new_billing_instruction_date
-                          ? new_billing_instruction_date
-                          : dash
-                      "
+                      [(ngModel)]="new_billing_instruction_date"
                       (ngModelChange)="changeBillingSchdule($event)"
                       *ngIf="
                         enableEdit['addBillInstruction'] && controller == item
@@ -1705,12 +1707,13 @@
                     </div>
                     <!-- {{ item.schedule }} -->
                   </td>
-                  <td>
+                  <!-- <td *ngIf="!new_billing_instruction_date">_</td> -->
+                  <td *ngIf="item.percentage">
                     <input
                       type="text"
                       class="form-control"
                       style="text-align: right; width: 100px"
-                      [(ngModel)]="item.percentage ? item.percentage : zero"
+                      [(ngModel)]="item.percentage"
                       [attr.disabled]="
                         enableEdit['addBillInstruction'] && controller == item
                           ? null
@@ -1720,6 +1723,7 @@
                     />
                     <!-- {{ item.percentage }} -->
                   </td>
+                  <td *ngIf="!item.percentage">_</td>
                   <td>
                     <div
                       *ngIf="
@@ -1731,9 +1735,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [ngModel]="
-                          item.amount ? item.amount : (zero | number: '1.2')
-                        "
+                        [ngModel]="item.amount | number: '1.2'"
                         [attr.disabled]="
                           enableEdit['addBillInstruction'] && controller == item
                             ? null
@@ -1747,7 +1749,7 @@
                         type="text"
                         class="form-control"
                         style="text-align: right"
-                        [(ngModel)]="item.amount ? item.amount : zero"
+                        [(ngModel)]="item.amount"
                         [attr.disabled]="
                           enableEdit['addBillInstruction'] && controller == item
                             ? null
@@ -1760,11 +1762,11 @@
                     <!-- {{ item.amount }} -->
                   </td>
 
-                  <td>
+                  <td *ngIf="item.remarks">
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="item.remarks ? item.remarks : dash"
+                      [(ngModel)]="item.remarks"
                       [attr.disabled]="
                         enableEdit['addBillInstruction'] && controller == item
                           ? null
@@ -1774,6 +1776,7 @@
                     />
                     <!-- {{ item.remarks }} -->
                   </td>
+                  <td *ngIf="!item.remarks">_</td>
                   <td></td>
                   <td
                     class="td-actions"
@@ -1907,20 +1910,19 @@
               Additional Instruction and Information
               <div>
                 <p-badge
-                class="soci-comment-badges"
-                [value]="
-                  soci_data?.comment_type_count?.additional_instruction
-                    ? soci_data?.comment_type_count?.additional_instruction
-                    : zero
-                "
-              ></p-badge>
-              <img
-              src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-              alt=""
-              (click)="openModel('additional_instruction')"
-            />
+                  class="soci-comment-badges"
+                  [value]="
+                    soci_data?.comment_type_count?.additional_instruction
+                      ? soci_data?.comment_type_count?.additional_instruction
+                      : zero
+                  "
+                ></p-badge>
+                <img
+                  src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                  alt=""
+                  (click)="openModel('additional_instruction')"
+                />
               </div>
-        
             </div>
           </ng-template>
           <!-- Heading -->
@@ -1948,13 +1950,13 @@
             *ngFor="let item of additional_instructions; let i = index"
           >
             <div class="col-md-3">
-              <div class="col-md-10">
+              <div class="col-md-10" *ngIf="item.soci">
                 <!-- [value]="item.soci" -->
                 <input
                   class="text-left form-control"
                   style="width: 146px"
                   type="text"
-                  [(ngModel)]="item.soci ? item.soci : dash"
+                  [(ngModel)]="item.soci"
                   [attr.disabled]="
                     enableEdit['additionalInstruction'] && controller == item
                       ? null
@@ -1964,14 +1966,15 @@
                   placeholder=""
                 />
               </div>
+              <div *ngIf="!item.soci">_</div>
             </div>
             <div class="col-md-8">
-              <div class="col-md-10">
+              <div class="col-md-10" *ngIf="item.description">
                 <input
                   class="text-left form-control"
                   style="width: 600px"
                   type="text"
-                  [(ngModel)]="item.description ? item.description : dash"
+                  [(ngModel)]="item.description"
                   [attr.disabled]="
                     enableEdit['additionalInstruction'] && controller == item
                       ? null
@@ -1981,6 +1984,7 @@
                   placeholder=""
                 />
               </div>
+              <div *ngIf="!item.description">_</div>
             </div>
 
             <div
@@ -2107,20 +2111,19 @@
               Additional/Reduction Charges
               <div>
                 <p-badge
-                class="soci-comment-badges"
-                [value]="
-                  soci_data?.comment_type_count?.additional_charges
-                    ? soci_data?.comment_type_count?.additional_charges
-                    : zero
-                "
-              ></p-badge>
-              <img
-              src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-              alt=""
-              (click)="openModel('additional_charges')"
-            />
+                  class="soci-comment-badges"
+                  [value]="
+                    soci_data?.comment_type_count?.additional_charges
+                      ? soci_data?.comment_type_count?.additional_charges
+                      : zero
+                  "
+                ></p-badge>
+                <img
+                  src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                  alt=""
+                  (click)="openModel('additional_charges')"
+                />
               </div>
-     
             </div>
           </ng-template>
           <!-- Heading -->
@@ -2176,7 +2179,7 @@
                   <!-- formControlName="cost_item_id" -->
                   <div class="col-md-10">
                     <select
-                      [(ngModel)]="cost_item_id ? cost_item_id : dash"
+                      [(ngModel)]="cost_item_id"
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control"
                       style="width: 140px"
@@ -2196,12 +2199,12 @@
               <!-- Description -->
               <div class="col-md-4">
                 <div class="">
-                  <div class="col-md-10">
+                  <div class="col-md-10" *ngIf="item.description">
                     <input
                       class="text-left form-control"
                       style="width: 360px"
                       type="text"
-                      [(ngModel)]="item.description ? item.description : dash"
+                      [(ngModel)]="item.description"
                       [attr.disabled]="
                         enableEdit['additionalCharges'] && controller == item
                           ? null
@@ -2211,18 +2214,19 @@
                       placeholder=""
                     />
                   </div>
+                  <div class="col-md-10" *ngIf="!item.description">_</div>
                 </div>
               </div>
               <!-- qty -->
               <div class="col-md-1">
                 <div class="qty">
-                  <div class="col-md-10">
+                  <div class="col-md-10" *ngIf="item.quantity">
                     <input
                       class="text-left form-control"
                       type="number"
                       style="width: 65px; text-align: right !important"
                       (input)="updateChargesQuantity(item)"
-                      [(ngModel)]="item.quantity ? item.quantity : zero"
+                      [(ngModel)]="item.quantity"
                       [attr.disabled]="
                         enableEdit['additionalCharges'] && controller == item
                           ? null
@@ -2232,12 +2236,13 @@
                       placeholder="0"
                     />
                   </div>
+                  <div class="col-md-10" *ngIf="!item.quantity">_</div>
                 </div>
               </div>
 
               <!-- unit -->
               <div class="col-md-2">
-                <div class="unit">
+                <div class="unit" *ngIf="item.unit_price">
                   <div class="col-md-10" *ngIf="editableRowIndex == i">
                     <input
                       class="text-left form-control"
@@ -2246,7 +2251,7 @@
                         width: 160px !important;
                         text-align: right !important;
                       "
-                      [(ngModel)]="item.unit_price ? item.unit_price : zero"
+                      [(ngModel)]="item.unit_price"
                       (input)="updateChargesUnitPrice(item)"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
@@ -2268,11 +2273,7 @@
                       class="text-left form-control"
                       type="text"
                       style="width: 160px; text-align: right !important"
-                      [ngModel]="
-                        item.unit_price
-                          ? item.unit_price
-                          : (zero | number: '1.2')
-                      "
+                      [ngModel]="item.unit_price | number: '1.2'"
                       [ngModelOptions]="{ standalone: true }"
                       [attr.disabled]="
                         enableEdit['additionalCharges'] && controller == item
@@ -2284,6 +2285,7 @@
                     <!-- {{item.unit_price  | number: '1.2'}} -->
                   </div>
                 </div>
+                <div class="unit" *ngIf="!item.unit_price">_</div>
               </div>
 
               <!-- Amount -->
@@ -2295,11 +2297,7 @@
                       class="text-left form-control"
                       type="text"
                       style="width: 140px; text-align: right !important"
-                      [ngModel]="
-                        item.total_price
-                          ? item.total_price
-                          : (zero | number: '1.2')
-                      "
+                      [ngModel]="item.total_price | number: '1.2'"
                       readonly
                       [attr.disabled]="
                         enableEdit['additionalCharges'] && controller == item
@@ -2390,7 +2388,7 @@
                         *ngFor="let item of additional_costs; let i = index"
                         value="{{ item.id }}"
                       >
-                        {{ item.description ? item.description : "_" }}
+                        {{ item.description }}
                       </option>
                     </select>
                   </div>
@@ -2498,24 +2496,22 @@
               Products
               <div>
                 <p-badge
-                class="soci-comment-badges"
-                [value]="
-                  soci_data?.comment_type_count?.product
-                    ? soci_data?.comment_type_count?.product
-                    : zero
-                "
-              ></p-badge>
-              <img
-              src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-              alt=""
-              (click)="openModel('product')"
-            />
+                  [value]="
+                    soci_data?.comment_type_count?.product
+                      ? soci_data?.comment_type_count?.product
+                      : zero
+                  "
+                  class="soci-comment-badges"
+                ></p-badge>
+                <img
+                  src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                  alt=""
+                  (click)="openModel('product')"
+                />
               </div>
-       
             </div>
           </ng-template>
           <div class="row">
-            <!-- formArrayName="products" -->
             <table class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -2632,16 +2628,18 @@
                       </div>
                     </span>
                   </td>
-                  <td style="width: 14%">
+                  <td>
                     <input
                       class="form-control"
                       formControlName="sku"
-                      type="text"
                       readonly
+                      type="text"
+                      step=".01"
+                      placeholder="0"
+                      (input)="addProductQuantity()"
                     />
                   </td>
                   <td>
-                    <!-- (keyup)="countNetAmount(productC)" -->
                     <input
                       class="form-control"
                       formControlName="quantity"
@@ -2765,20 +2763,19 @@
               SOCI Attachments
               <div>
                 <p-badge
-                class="soci-comment-badges"
-                [value]="
-                  soci_data?.comment_type_count?.soci_attachment
-                    ? soci_data?.comment_type_count?.soci_attachment
-                    : zero
-                "
-              ></p-badge>
-              <img
-              src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
-              alt=""
-              (click)="openModel('soci_attachment')"
-            />
+                  class="soci-comment-badges"
+                  [value]="
+                    soci_data?.comment_type_count?.soci_attachment
+                      ? soci_data?.comment_type_count?.soci_attachment
+                      : zero
+                  "
+                ></p-badge>
+                <img
+                  src="../../../assets/img/icons/3669374_comment_ic_icon.svg"
+                  alt=""
+                  (click)="openModel('soci_attachment')"
+                />
               </div>
-        
             </div>
           </ng-template>
           <table class="table table-bordered table-striped">
@@ -2989,25 +2986,25 @@
           <label for="">Please search product or add dummy sku.</label>
 
           <!-- product-search -->
-          <!-- (completeMethod)="filterProduct($event)" -->
           <div class="search-product">
             <label for="">Product Name</label>
             <p-autoComplete
               formControlName="name"
+              (completeMethod)="filterProduct($event)"
               [suggestions]="filteredProducts"
               field="name"
               [dropdown]="true"
               [style]="{ width: '100%' }"
               [inputStyle]="{ width: '100%' }"
             >
-              <!-- <ng-template let-product pTemplate="item">
+              <ng-template let-product pTemplate="item">
                 <div
                   class="product-item"
                   (click)="productDetails(product, 'update_product')"
                 >
                   <div>{{ product.name }}</div>
                 </div>
-              </ng-template> -->
+              </ng-template>
             </p-autoComplete>
           </div>
           <hr />
@@ -3125,11 +3122,13 @@
               <label>Extended Warranty</label>
               <select class="form-control" formControlName="extendedWarranty">
                 <option display="none">Please select...</option>
-                <option value="180 DAYS">180 DAYS</option>
-                <option value="120 DAYS">120 DAYS</option>
-                <option value="1 YEAR">1 YEAR</option>
-                <option value="5 DAYS">5 DAYS</option>
-                <option value="60 DAYS">60 DAYS</option>
+                <option
+                  value="180 DAYS"
+                  *ngFor="let item of extended_warranty"
+                  [value]="item.num_of_days"
+                >
+                  {{ item.description }}
+                </option>
               </select>
             </div>
             <div class="tax-rate">
@@ -3584,6 +3583,13 @@
                 class="form-control"
                 formControlName="delivery_days"
               />
+              <!-- <p-dropdown
+                [options]="delivery_termValue"
+                class="days"
+                formControlName="delivery_days"
+                optionLabel="description"
+                optionValue="num_of_days"
+              ></p-dropdown> -->
             </div>
             <div class="date-field">
               <label for="">From Date</label>
@@ -3692,6 +3698,7 @@
           <hr />
         </div>
         <textarea
+          [attr.disabled]="is_preview_check"
           placeholder="Comment"
           [(ngModel)]="accordianComment"
         ></textarea>
@@ -3713,6 +3720,7 @@
           label="Send"
           class="p-button-info"
           (click)="addComment()"
+          [attr.disabled]="is_preview_check"
         ></button>
       </div>
     </div>
