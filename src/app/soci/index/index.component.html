@@ -5,8 +5,14 @@
   [rowHover]="true"
   responsiveLayout="scroll"
   [filterDelay]="0"
-  [globalFilterFields]="['quote_id', 'company', 'amount', 'status']"
-  (onFilter)="columnFilter($event)"
+  [globalFilterFields]="[
+     
+    'quote_id',
+    'company',
+    'amount',
+    'status'
+  ]"
+  (onFilter)='columnFilter($event)'
 >
   <ng-template pTemplate="caption">
     <div class="table-header">
@@ -105,19 +111,9 @@
         class="text-center"
         *ngIf="checkItem('company_name')"
       >
-        <div
-          style="
-            white-space: nowrap;
-            flex-direction: column;
-            align-items: center;
-            overflow: hidden;
-            word-break: break-all;
-            text-overflow: ellipsis;
-          "
-          class="p-d-flex p-jc-between p-ai-center"
-        >
-          Individual/Company Name
-          <div class="name-icons">
+        <div style="display: flex; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+          Indiv/Company Name
+          <div class="name-icons">  
             <p-sortIcon field="customer.company_name"></p-sortIcon>
             <p-columnFilter
               type="text"
@@ -279,7 +275,7 @@
           <div class="fo-icons">
             <p-sortIcon field="fo_order_number"></p-sortIcon>
             <p-columnFilter
-              type="date"
+              type="text"
               field="fo_order_number"
               display="menu"
               class="p-ml-auto"

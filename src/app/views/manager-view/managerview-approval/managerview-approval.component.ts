@@ -23,15 +23,18 @@ export class ManagerviewApprovalComponent implements OnInit {
   private ngUnsubscribe = new Subject();
   sort: any;
   search_text: string = "";
-
+  pageItems: number = 10;
+  datasource:any;
   pages: any[];
-  totalRecords: number;
+  totalRecords:number;
+ 
+ 
   totalQuotationApproval: number;
   quotationApprovalLoading: boolean = false;
   pendingSOCI: any[] = [];
   pendingQuotationApproval: any[] = [];
   socis: Soci[] = [];
-  pageItems: number = 10;
+ 
   is_quotation_view = false;
   is_soci_view = false;
   selectedValues: any[] = [];
@@ -69,6 +72,9 @@ export class ManagerviewApprovalComponent implements OnInit {
     }, 1000);
   }
 
+
+  
+
   getPendingSociList() {
     this.is_soci_view = true;
     this.is_quotation_view = false;
@@ -78,9 +84,10 @@ export class ManagerviewApprovalComponent implements OnInit {
       .getPendingSOCI(this.pageItems, this.search_text, this.sort)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((data: any) => {
-        this.pendingSOCI = data["data"]["soci"]["data"];
-        this.pendingSOCI.forEach((value) => {
+          this.pendingSOCI = data["data"]["soci"]["data"];
+          this.pendingSOCI.forEach((value) => {
           value.created_at = new Date(value.created_at);
+         
         });
         this.pages = data["data"]["soci"]["links"];
         this.totalRecords = data["data"]["soci"]["total"];
@@ -99,7 +106,12 @@ export class ManagerviewApprovalComponent implements OnInit {
     .getPendingQuotationApproval(this.pageItems, this.search_text, this.sort)
     .subscribe((data) => {
       this.pendingQuotationApproval = data["data"]["data"];
-      this.totalQuotationApproval = data["data"]["total"];
+      this.pendingQuotationApproval.forEach((value) => {
+        value.created_at = new Date(value.created_at);
+        value.validity_date = new Date(value.validity_date)
+      });
+      this.pages = data["data"]["links"];
+      this.totalRecords = data["data"]["total"];
       this.quotationApprovalLoading = false;
 
     });
@@ -114,6 +126,19 @@ export class ManagerviewApprovalComponent implements OnInit {
     };
     this.router.navigate(["/soci/", soci_id, "edit"], navigate);
   }
+
+  // goToEditApproval(approvalId) {
+  //   alert(approvalId)
+  //   // this.is_approval_view_check = true;
+  //   // let navigate: NavigationExtras = {
+  //   //   queryParams: {
+  //   //     is_approval_view_check: true,
+  //   //   },
+  //   // };
+  //   this.router.navigate(["managerview/edit-approval"]);
+  //   // this.router.navigate(["/approval/", soci_id, "edit"], navigate);
+  // }
+
   searchSoci() {
     this.managerView
       .getPendingSOCI(this.pageItems, this.search_text, this.sort)
@@ -129,14 +154,22 @@ export class ManagerviewApprovalComponent implements OnInit {
   }
 
   onClick(pageNo) {
+    
     let url = this.pages[pageNo].url;
     this.sociService
       .getPage(url, this.pageItems, this.search_text)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((data) => {
         // this.socis = data["data"]["soci"]["data"];
-        this.pendingSOCI = data["data"]["soci"]["data"];
-        this.pages = data["data"]["soci"]["links"];
+        if(this.is_soci_view){
+          this.pendingSOCI = data["data"]["soci"]["data"];
+          this.pages = data["data"]["soci"]["links"];
+        }
+      else{
+        this.pendingQuotationApproval = data["data"]["total"];
+        this.pages=data["data"]["links"];
+      }
+
       });
   }
 

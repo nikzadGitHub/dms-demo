@@ -13,7 +13,7 @@
               </h2>
             </label>
           </div>
-          <div class="col-lg-2">
+          <div class="col-lg-2 quotationIdDiv">
             <!-- <select [(ngModel)]="rev" class="form-control" style="width: 70%;" (change)='changeRev(rev)'>
                             <option *ngFor="let quoteId of quoteIdList" value="{{quoteId.rev_number}}">{{quoteId.quote_id}}</option>
                         </select> -->
@@ -31,7 +31,7 @@
     </div>
     <form [formGroup]="form" (ngSubmit)="submitSelect()">
       <!-- Quotation Accordion -->
-      <p-accordion [multiple]="true" styleClass="customColor">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
         <p-accordionTab header="Quotation">
           <div class="row">
             <table class="table table-borderless">
@@ -72,9 +72,9 @@
 
       <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
         <p-accordionTab header="Products">
-          <div class="row">
-          <p-tabView>
-            <p-tabPanel header="Option 1" [selected]="true">
+          <!-- <div class="row"> -->
+          <!-- <p-tabView> -->
+            <!-- <p-tabPanel header="Option 1" [selected]="true"> -->
             
                   <!-- <button style="width: 0px;border-radius: 50%; height: 26px;" class="btn btn-icon btn-outline-primary btn-in-tab">
                     <i style="display: flex;
@@ -168,14 +168,14 @@
              
 
             
-            </p-tabPanel>
+            <!-- </p-tabPanel> -->
 
-            <p-tabPanel header="option 2"> Content 2 </p-tabPanel>
-            <p-tabPanel header="option 3"> Content 3 </p-tabPanel>
+            <!-- <p-tabPanel header="option 2"> Content 2 </p-tabPanel>
+            <p-tabPanel header="option 3"> Content 3 </p-tabPanel> -->
            
 
-          </p-tabView>
-          </div>
+          <!-- </p-tabView> -->
+          <!-- </div> -->
           <div class="row">
             <div class="card">
               <div class=""></div>
@@ -642,22 +642,16 @@
 
       <div class="col-lg row" align="center">
         <div class="col-lg-4">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Title"
-          /><br /><br />
           <!-- <input
             type="text"
             class="form-control"
-            placeholder="template"
-          /><br /><br /> -->
+            placeholder="Title" -->
 
           <!-- <ng-template let-value pTemplate="selectTemplateData"> -->
           <!-- <p-dropdown placeholder="Select Templates" [options]="selectTemplateData" formControlName="title">
                           
                         </p-dropdown> -->
-                        <button
+                        <!-- <button
                         class="form-control"
                         style="width: 70%"
                         (click)="checkSignature()"
@@ -689,13 +683,13 @@
             >
               {{ item.id }}
             </option>
-          </select>
+          </select> -->
           <!-- </ng-template> -->
 
           
         </div>
         <div class="col-lg-4">
-          <input
+          <!-- <input
             type="text"
             class="form-control"
             placeholder="Subject"
@@ -704,11 +698,11 @@
             type="file"
             class="form-control"
             placeholder="Appendix/Photo"
-          />
+          /> -->
         </div>
         <div class="col-lg-4">
-          <p-accordion>
-            <p-accordionTab header="Quotation Details">
+            <p-accordion [multiple]="true" styleClass="customColor" activeIndex="0">
+                <p-accordionTab header="Quotation Details">
               <div class="row">
                 <div class="col-lg-6">
                   <label>Subtotal before text</label>
@@ -758,62 +752,21 @@
         </div>
       </div>
 
-      <div class="col-lg" align="center">
-        <div class="form-group" *ngIf="requestApproval()">
-          <button
-            class="btn btn-secondary"
-            type="submit"
-            (click)="setSubmitType('save')"
-          >
-            SAVE</button
-          >&nbsp;
-          <button
-            class="btn btn-primary"
-            type="submit"
-            (click)="setSubmitType('request-approval')"
-            [disabled]="!form.valid"
-          >
-            Request Approval
-          </button>
-        </div>
-        <div class="form_group" *ngIf="cancelApprove()">
-          <button
-            class="btn btn-secondary"
-            type="submit"
-            (click)="setSubmitType('cancel')"
-          >
-            Cancel Quote
-          </button>
-          <button
-            class="btn btn-primary"
-            [disabled]= "isButtonDisabled"
-            type="submit"
-            (click)="setSubmitType('approval')"
-          >
-            Approve Quotation
-          </button>
-        </div>
-        <div class="row d-flex justify-content-center">
-          <div class="form-group col-sm-2">
-            <button
-              class="btn btn-primary btn-md"
-              type="submit"
-              (click)="viewQuotationTemplate()"
-            >
-              Preview Quote
-            </button>
-          </div>
-          <div class="form-group" *ngIf="approved_date != null">
-            <button
-              class="btn btn-primary btn-md"
-              type="submit"
-              (click)="setSubmitType('preferred')"
-            >
-              Set Preferred
-            </button>
-          </div>
-        </div>
+      <div class="request-btns">
+        <button class="cancel-btn" (click)="confirmationEscalateModal.show()">
+          <i class="pi pi-arrow-up"></i>
+          ESCALATE
+        </button>
+        <button class="reject-btn" (click)="confirmationRejectModal.show()">
+          <i class="pi pi-times-circle"></i>
+          REJECT
+        </button>
+        <button class="request-btn" (click)="confirmationApproveModal.show()">
+          <i class="pi pi-check"></i>
+          APPROVE
+        </button>
       </div>
+      
     </form>
   </div>
 </div>
@@ -1096,4 +1049,144 @@
     <!-- /.modal-content -->
   </div>
   <!-- /.modal-dialog -->
+</div>
+
+
+
+<!-- confirmation approve mpdel -->
+<div
+  id="success"
+  bsModal
+  #confirmationApproveModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationApproveModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">Are you sure to APPROVE the QUOTATION ?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationApproveModal.hide()"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-info" (click)="approveQuotation()">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- confirmation escalate model -->
+<div
+  id="success"
+  bsModal
+  #confirmationEscalateModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationEscalateModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">Are you sure to ESCALATE the QUOTATION ?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationEscalateModal.hide()"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-info" (click)="escalateQuotation()">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- confirmation reject model -->
+<div
+  id="success"
+  bsModal
+  #confirmationRejectModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirmation</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="confirmationRejectModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form">
+          <div class="reject-remakrs">
+            <label>Reject Reason</label>
+            <textarea
+              type="text"
+              class="form-control"
+              #cancelled_remarks
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="confirmationRejectModal.hide()"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-info"
+          (click)="rejectQuotation()"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

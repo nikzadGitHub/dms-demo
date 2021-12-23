@@ -6,7 +6,7 @@
   [reorderableColumns]="true"
   responsiveLayout="scroll"
   [filterDelay]="0"
-  [globalFilterFields]="['quote_id', 'company', 'amount', 'status']"
+  [globalFilterFields]="['created_at', 'company', 'amount', 'status']"
   [columns]="columns"
 >
   <ng-template pTemplate="caption">
@@ -52,13 +52,10 @@
           />
         </span>
         <img
-          style="width: 22px; margin: 0px 8px 0px 0px"
+          style="width: 22px;"
           src="../../../../assets/img/icons/Vector (2).svg"
         />
-        <img
-          style="width: 22px"
-          src="../../../../assets/img/icons/Vector (1).svg"
-        />
+      
         <img
           style="width: 22px; margin: 7px"
           src="../../../../assets/img/icons/vertcalLines.svg"
@@ -75,7 +72,7 @@
         pReorderableColumn
       >
         <div style="width:100% ;white-space: nowrap;display: flex;flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
-          {{ column.header }}
+          {{ column.header }} 
           <div class="icon-div">
             <p-sortIcon field="{{ column.field }}"></p-sortIcon>
             <p-columnFilter

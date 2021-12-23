@@ -18,6 +18,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import {BadgeModule} from 'primeng/badge';
 import {CheckboxModule} from 'primeng/checkbox';
 import {TooltipModule} from 'primeng/tooltip';
+import { EditQuotationApprovalComponent } from './edit-quotation-approval/edit-quotation-approval.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -38,6 +39,6 @@ import {TooltipModule} from 'primeng/tooltip';
     AccordionModule,
     ModalModule
   ],
-  declarations: [ SalesTargetSetupComponent, ManagerviewApprovalComponent, ManagerViewReassignmentComponent, ManagerViewActiveComponent,  ]
+  declarations: [ SalesTargetSetupComponent, ManagerviewApprovalComponent, ManagerViewReassignmentComponent, ManagerViewActiveComponent, EditQuotationApprovalComponent,  ]
 })
 export class ManagerViewModule { }

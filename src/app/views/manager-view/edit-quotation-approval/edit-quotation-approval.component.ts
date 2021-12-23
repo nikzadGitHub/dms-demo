@@ -1,26 +1,31 @@
 import { DatePipe } from "@angular/common";
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { Term } from "@app/quote/create/terms";
+import { BillingList } from "@app/quote/edit/billing-list";
+import { Quote } from "@app/quote/quote";
+import { QuoteService } from "@app/quote/quote.service";
 import { ModalDirective } from "ngx-bootstrap/modal";
-import { Term } from "../create/terms";
-import { Quote } from "../quote";
-import { QuoteService } from "../quote.service";
-import { BillingList } from "./billing-list";
+import { ManagerViewService } from "../manager-view.service";
 
 @Component({
-  selector: "app-edit",
-  templateUrl: "./edit.component.html",
-  styleUrls: ["./edit.component.scss"],
+  selector: 'app-edit-quotation-approval',
+  templateUrl: './edit-quotation-approval.component.html',
+  styleUrls: ['./edit-quotation-approval.component.scss']
 })
-export class EditComponent implements OnInit {
+export class EditQuotationApprovalComponent implements OnInit {
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("dangerModal1") dangerModal1: ModalDirective;
   @ViewChild("infoModal") infoModal: ModalDirective;
   @ViewChild("paymentRemarkModal") paymentRemarkModal: ModalDirective;
   @ViewChild("billingRemarkModal") billingRemarkModal: ModalDirective;
+  @ViewChild("confirmationApproveModal") confirmationApproveModal: ModalDirective;
+  @ViewChild("confirmationEscalateModal") confirmationEscalateModal: ModalDirective;
+  @ViewChild("confirmationRejectModal") confirmationRejectModal: ModalDirective;
+  @ViewChild("cancelled_remarks") cancelled_remarks: ElementRef
 
   signatureStatus: boolean;
   show: boolean;
@@ -53,11 +58,10 @@ export class EditComponent implements OnInit {
   selectTemplateData: any[]=[];
   templateId: any;
   alertHeader: string;
-  quotationId: any;
-  isButtonDisabled: boolean;
 
   constructor(
     private quoteService: QuoteService,
+    private managerViewService: ManagerViewService,
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -71,16 +75,11 @@ export class EditComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((event) => {
-      this.id = event.quoteId; // fetch ID from url
+      console.log("params =>",event.id)
+      this.id = event.id; // fetch ID from url
       this.quoteService.find(this.id).subscribe((data) => {
         this.quotations = data["data"]["quotation"];
-        this.quotationId = data["data"]["quotation"].id
         this.latestQuotation = data["data"]["quotation"];
-        if(this.latestQuotation.status=="Rejected" || this.latestQuotation.status=="Approved"){
-          this.isButtonDisabled = true
-        } else {
-          this.isButtonDisabled = false
-        }
         this.quotationRevisions = data["data"]["quotationRevision"];
         this.setInitialValue();
         this.addQuoteIdList();
@@ -108,42 +107,42 @@ export class EditComponent implements OnInit {
   }
 
   setInitialValue() {
-    this.company_details["company_name"] = this.quotations.company;
-    this.company_details["quote_id"] = this.quotations.quote_id;
-    this.f.id.setValue(this.quotations.id);
-    this.f.data_area_id.setValue(this.quotations.data_area_id);
-    this.f.external_id.setValue(this.quotations.external_id);
-    this.f.quote_id.setValue(this.quotations.quote_id);
+    this.company_details["company_name"] = this.quotations?.company;
+    this.company_details["quote_id"] = this.quotations?.quote_id;
+    this.f.id.setValue(this.quotations?.id);
+    this.f.data_area_id.setValue(this.quotations?.data_area_id);
+    this.f.external_id.setValue(this.quotations?.external_id);
+    this.f.quote_id.setValue(this.quotations?.quote_id);
     this.f.standard_payment_term.setValue(
-      this.quotations.standard_payment_term
+      this.quotations?.standard_payment_term
     );
-    this.f.fromDate.setValue(this.quotations.fromDate);
-    this.f.toDate.setValue(this.quotations.toDate);
-    this.f.status.setValue(this.quotations.status);
-    this.f.company.setValue(this.quotations.company);
+    this.f.fromDate.setValue(this.quotations?.fromDate);
+    this.f.toDate.setValue(this.quotations?.toDate);
+    this.f.status.setValue(this.quotations?.status);
+    this.f.company.setValue(this.quotations?.company);
 
-    this.fromDate = this.quotations.fromDate;
-    this.toDate = this.quotations.toDate;
-    this.requested_date = this.quotations.requested_date;
-    this.approved_date = this.quotations.approved_date;
-    this.cancelled_date = this.quotations.cancelled_date;
-    this.termSelected = this.terms.find(
-      (x) => x.id == this.quotations.standard_payment_term
-    ).no_of_days;
+    this.fromDate = this.quotations?.fromDate;
+    this.toDate = this.quotations?.toDate;
+    this.requested_date = this.quotations?.requested_date;
+    this.approved_date = this.quotations?.approved_date;
+    this.cancelled_date = this.quotations?.cancelled_date;
+    this.termSelected = this.terms?.find(
+      (x) => x.id == this.quotations?.standard_payment_term
+    )?.no_of_days;
     this.dateInit();
   }
 
   initData() {
-    this.quotations.billing_milestones.forEach((billing) => {
+    this.quotations?.billing_milestones.forEach((billing) => {
       this.billings().push(this.existingBillings(billing));
     });
-    this.quotations.payment_schedules.forEach((payment) => {
+    this.quotations?.payment_schedules.forEach((payment) => {
       this.payments().push(this.existingPayments(payment));
     });
-    this.quotations.additional_costs.forEach((addCost) => {
+    this.quotations?.additional_costs.forEach((addCost) => {
       this.addCosts().push(this.existingCosts(addCost));
     });
-    this.quotations.products.forEach((product) => {
+    this.quotations?.products.forEach((product) => {
       this.products().push(this.existingProducts(product));
     });
     this.subTotal(this.addCosts().controls);
@@ -613,12 +612,6 @@ export class EditComponent implements OnInit {
       .subscribe((res) => {
         this.alertBody = res.message;
         this.successModal.show();
-        setTimeout(() => {
-          this.successModal.hide()
-          if(res){
-            this.redirectPage()
-          }
-        }, 500);
       });
   }
 
@@ -685,5 +678,24 @@ export class EditComponent implements OnInit {
 
   getTemplate(e){
     this.templateId = e.target.value
+  }
+
+  approveQuotation(){
+    this.managerViewService.quotationApproval(this.id).subscribe(res=>{
+    })
+    this.confirmationApproveModal.hide()
+  }
+
+  escalateQuotation(){
+    this.managerViewService.quotationEscalate(this.id).subscribe(res=>{
+    })
+    this.confirmationEscalateModal.hide()
+  }
+
+  rejectQuotation(){
+    let reason = this.cancelled_remarks.nativeElement.value
+    this.managerViewService.quotationReject(this.id,reason).subscribe(res=>{
+    })
+    this.confirmationRejectModal.hide()
   }
 }

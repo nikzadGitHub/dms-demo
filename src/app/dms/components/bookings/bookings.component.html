@@ -121,10 +121,14 @@
             {{ bookingItem.customer }}
         </td>
         <td class="text-center">
-            {{ bookingItem.booking_reason }}
+            {{ 
+              bookingReasonsNames[bookingItem.booking_reason - 1] ? bookingReasonsNames[bookingItem.booking_reason - 1] : 'Null'
+            }}
         </td>
         <td class="text-center">
-          {{ bookingItem.status }}
+          {{
+            bookingStatusNames[bookingItem.status - 1] ? bookingStatusNames[bookingItem.status - 1] : 'Null'
+          }}
         </td>
     </tr>
     </ng-template>
@@ -140,3 +144,21 @@
   </p-table>
   <p-paginator [rows]="pageItems" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
   </p-paginator>
+
+<div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header"><h4 class="modal-title">Error</h4></div>
+      <div class="modal-body"><p>{{ alertBody }}</p></div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>

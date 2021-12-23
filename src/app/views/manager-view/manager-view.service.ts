@@ -48,4 +48,27 @@ export class ManagerViewService {
       .get<Quote[]>(this.apiURL + query, this.httpOptions)
       .pipe(catchError(this.errorHandler));
   }
+
+  quotationApproval(id): Observable<object> {
+    let body ={
+      "quoteId": id
+    }
+    return this.httpClient.post(this.apiURL+"/quote/approval/",body, this.httpOptions);
+  }
+
+  quotationEscalate(id): Observable<object> {
+    let body ={
+      "id": id
+    }
+    return this.httpClient.post(this.apiURL+"/quote/escalate/",body, this.httpOptions);
+  }
+
+  quotationReject(id,reason): Observable<object> {
+    let body ={
+      "cancelled_remarks":reason,
+      "quoteId": id
+    }
+    return this.httpClient.post(this.apiURL+"/quote/request-rejected",JSON.stringify(body), this.httpOptions);
+  }
 }
+

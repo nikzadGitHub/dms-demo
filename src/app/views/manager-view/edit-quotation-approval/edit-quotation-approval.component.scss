@@ -1,0 +1,177 @@
+.rcorners{
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.purple{
+    background-color: #424562;
+    color: white;
+}
+
+.white{
+    background-color: white;
+}
+
+.grey{
+    background-color: rgb(245, 245, 245);
+}
+
+.customBorder{
+    border-color: #70ACF4;
+}
+
+.card{
+    padding: 0%;
+}
+
+.card-header{
+    border: none;
+}
+
+.customCardHeight{
+    height: 10px;
+}
+
+thead{
+    text-align: center;
+    border: none;
+    border-top: gray;
+    border-bottom: gray;
+    background-color: rgb(245, 245, 245);
+}
+
+input{
+    width: 70%;
+}
+
+input:disabled{
+    // background: white;
+    border: none;
+    text-align: center;
+}
+
+.td-actions{
+    font-size: 1.5em;
+}
+
+.scroll {
+    direction: rtl;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.scroll > * {
+    direction: ltr;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.purple{
+    background-color: #424562;
+    color: white;
+}
+.no-border {
+    border: 0;
+    box-shadow: none;
+}
+
+:host ::ng-deep .customColor.p-accordion {
+    .p-accordion-header {
+        font-size: 24px; 
+        font-weight: bolder;
+        // background: white;
+        span.pi{
+            margin-top: -8px;
+            position: absolute;
+            right: 0.5em;
+            top: 50%;
+        }
+        .p-accordion-header-link{
+            // background: white;
+            margin-bottom: 10px;
+        }
+    }
+    .p-accordion-content{
+        padding: 0px;
+        overflow-x: hidden;
+    }
+}
+
+.row{
+    padding: 10px;
+}
+
+.card-body{
+    .quotationIdDiv{
+        height: 25px;
+        background-color: rgb(48, 48, 116);
+        padding-top: 0px;
+        border-radius: 7px;
+        margin-top: 13px;
+        label{
+            background-color: transparent;
+            color: #fff;
+            padding-top: 2px;
+        }
+        }
+    }
+    .approveRejectButtons{
+        margin-top: 30px;
+        button{
+            width: 160px;
+            height: 50px;
+            font-size: 14px;
+            margin-right: 15px;
+        }
+    }
+
+    .request-btns {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 15px;
+        line-height: 24px;
+        margin-top: 30px;
+        i {
+          font-size: 16px;
+          font-weight: 600;
+          letter-spacing: 4px;
+          margin-top: 9px;
+        }
+        button {
+          border-radius: 5px;
+          border: 1px solid #386fa4;
+          line-height: 30px;
+        }
+        .cancel-btn {
+          background: #ffffff;
+          color: #386fa4;
+          margin-right: 10px;
+          width: 120px;
+        }
+        .reject-btn {
+          border-color: red;
+          color: red;
+          width: 120px;
+        }
+        .request-approval-btn {
+          background: #386fa4;
+          color: #ffffff;
+          margin-left: 10px;
+        }
+        .request-btn {
+          background: #386fa4;
+          color: #ffffff;
+          margin-left: 10px;
+          width: 120px;
+        }
+      }

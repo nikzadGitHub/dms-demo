@@ -30,6 +30,16 @@ export class QuoteTemplateComponent implements OnInit {
   @ViewChild("headerQuoteNo") headerQuoteNo: ElementRef;
   @ViewChild("headerRefNo") headerRefNo: ElementRef;
   @ViewChild("headerDate") headerDate: ElementRef;
+  @ViewChild("headerRevisionNo") headerRevisionNo: ElementRef;
+  @ViewChild("headerExpDate") headerExpDate: ElementRef;
+  @ViewChild("headerAttention") headerAttention: ElementRef;
+  @ViewChild("headerAttentionEmail") headerAttentionEmail: ElementRef;
+  @ViewChild("headerAttentionPhone") headerAttentionPhone: ElementRef;
+  @ViewChild("headerAttentionFax") headerAttentionFax: ElementRef;
+  @ViewChild("headerSalesPerson") headerSalesPerson: ElementRef;
+  @ViewChild("headerSalesPersonEmail") headerSalesPersonEmail: ElementRef;
+  @ViewChild("headerSalesPersonPhone") headerSalesPersonPhone: ElementRef;
+  @ViewChild("headerSalesPersonFax") headerSalesPersonFax: ElementRef;
 
   @ViewChild("footerContent") footerData: ElementRef;
   @ViewChild("price") priceFooter: ElementRef;
@@ -166,16 +176,11 @@ export class QuoteTemplateComponent implements OnInit {
     //   this.alertBody = "Template Id is Missing.....";
     //   this.dangerModal.show();
     // }
-    if (this.single == true) {
-      this.generateCompletePDF();
-    } else {
       if (this.url) {
-        this.generateTemplatePDF();
-        this.generateQuotationImagePDF();
+        this.generateCompletePDF();
       } else {
         this.generateTemplatePDF();
       }
-    }
   }
   generateCompletePDF() {
     let data = document.getElementById("pdfTable");
@@ -213,7 +218,7 @@ export class QuoteTemplateComponent implements OnInit {
     html2canvas(data).then((canvas) => {
       var imgData = canvas.toDataURL("image/png");
       var imgWidth = 210;
-      var pageHeight = 300;
+      var pageHeight = 1100;
       var imgHeight = (canvas.height * imgWidth) / canvas.width;
       var heightLeft = imgHeight;
       var doc = new jsPDF("p", "mm");
@@ -288,6 +293,16 @@ export class QuoteTemplateComponent implements OnInit {
       quoteNo: this.headerQuoteNo.nativeElement.innerText,
       refNo: this.headerRefNo.nativeElement.innerText,
       date: this.headerDate.nativeElement.innerText,
+      revisionNo: this.headerRevisionNo.nativeElement.innerText,
+      expDate: this.headerExpDate.nativeElement.innerText,
+      attention: this.headerAttention.nativeElement.innerText,
+      attentionEmail: this.headerAttentionEmail.nativeElement.innerText,
+      attentionPhone: this.headerAttentionPhone.nativeElement.innerText,
+      attentionFax: this.headerAttentionFax.nativeElement.innerText,
+      salesPersonName: this.headerSalesPerson.nativeElement.innerText,
+      salesPersonEmail: this.headerSalesPersonEmail.nativeElement.innerText,
+      salesPersonPhone: this.headerSalesPersonPhone.nativeElement.innerText,
+      salesPersonFax: this.headerSalesPersonFax.nativeElement.innerText,
     }
     // let footer = this.footerData.nativeElement.innerHTML
     let footer = {

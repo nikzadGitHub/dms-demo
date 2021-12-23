@@ -22,7 +22,6 @@ export class DefaultLayoutComponent implements OnDestroy {
   constructor(private router: Router, private authService: AuthService) {
     console.log("version:", this.version);
     let userRole = JSON.parse(localStorage.getItem("userRole"));
-
     if (userRole) {
       this.userRoleName = userRole?.roles[0]?.name;
     }
