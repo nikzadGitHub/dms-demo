@@ -29,14 +29,14 @@
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="created_date" class="text-center">
+      <th pSortableColumn="created_at" class="text-center">
         <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
           Created Date
           <div class="date-icons">
-            <p-sortIcon field="created_date"></p-sortIcon>
+            <p-sortIcon field="created_at"></p-sortIcon>
             <p-columnFilter
               type="date"
-              field="created_date"
+              field="created_at"
               display="menu"
               class="p-ml-auto"
             ></p-columnFilter>
@@ -44,14 +44,14 @@
          
         </div>
       </th>
-      <th pSortableColumn="op_id" class="text-center">
+      <th pSortableColumn="id" class="text-center">
         <div style="display: flex;white-space: nowrap; flex-direction: column; align-items: center;" class="p-d-flex p-jc-between p-ai-center">
           Opportunity ID
           <div class="Opp-ID-icon">
-            <p-sortIcon field="op_id"></p-sortIcon>
+            <p-sortIcon field="id"></p-sortIcon>
             <p-columnFilter
               type="text"
-              field="op_id"
+              field="id"
               display="menu"
               class="p-ml-auto"
             ></p-columnFilter>
@@ -125,13 +125,13 @@
   </ng-template>
   <ng-template pTemplate="body" let-item>
       <tr (click)="openModel(item)">
-      <td class="text-center" scope="row">{{item.created_at | date: 'mediumDate'}}</td>
+      <td class="text-center" scope="row">{{item.created_at?item.created_at:'__'}}</td>
       <td class="text-center"> {{item.id}}</td>
-      <td class="text-center"> {{item.company_name}}</td>
-      <td class="text-center">{{item.owner}}</td>
-      <td class="text-center"> abc@gmail.com</td>
-      <td class="text-center">{{item.company_phone_number}}</td>
-      <td class="text-center">
+      <td class="text-center"> {{item.topic?item.topic:'___'}}</td>
+      <td class="text-center">{{item.company_name}}</td>
+      <td class="text-center"> {{item.status_id?item.status_id:'__'}}</td>
+      <td class="text-center">{{item.amount?item.amount:'___'}}</td>
+      <td class="text-center"></td>
         <!-- <div class="row-icon">
           <a>
             <i class="icon-note icon" (click)="openModel(item)"></i>
@@ -157,7 +157,6 @@
       [totalRecords]="totalRecords"
       [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]">
     </p-paginator>
-
 
 <div
   id="success"
