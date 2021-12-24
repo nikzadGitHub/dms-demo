@@ -37,12 +37,12 @@
         Add User
       </p>
       <div class="row mt-3 mb-3">
-        <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-3">
-          <label style="width: 100px"
+        <div class="col-lg-1 col-md-1 col-sm-2 mt-2">
+          <label style="white-space: nowrap;"
             >Company <span class="red-star">*</span></label
           >
         </div>
-        <div class="col-lg-10 col-md-10 col-sm-10">
+        <div class="col-lg-10 col-md-11 col-sm-10">
           <p-dropdown
             formControlName="companyName"
             placeholder="Select company"
@@ -55,44 +55,33 @@
       </div>
 
       <div class="row">
-        <div class="col-md-1 col-md-1 col-sm-1 mt-2 mr-3">
-          <label style="width: 100px"
+        <div class="col-md-1 col-md-1 col-sm-2 mt-2">
+          <label style="white-space: nowrap;"
             >Name <span class="red-star">*</span></label
           >
         </div>
-        <div class="col-lg-5 col-md-5 col-sm-5">
+        <div class="col-lg-4 col-md-5 col-sm-10 mb-3">
           <input
             type="text"
             formControlName="name"
             pInputText
-            style="width: 340px"
+            style="width: 100%"
           />
         </div>
-
+        <div class="col-lg-1 col-md-1 col-sm-0"></div>
         <!-- user-access -->
-        <div class="col-lg-1 col-md-1 col-sm-1 mt-2 mr-3">
-          <label style="width: 100px"
+        <div class="col-lg-1 col-md-1 col-sm-2 mt-2">
+          <label style="white-space: nowrap;"
             >User Access <span class="red-star">*</span></label
           >
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-4">
+        <div class="col-lg-4 col-md-4 col-sm-10">
           <p-dropdown
-            *ngIf="!this.isEdit"
-            formControlName="userAccess"
-            [options]="userRoleList"
-            placeholder="User Access"
-            optionLabel="name"
-            optionValue="id"
-            [style]="{ width: '351px' }"
-          ></p-dropdown>
-          <p-dropdown
-            *ngIf="this.isEdit"
             formControlName="userAccess"
             [options]="userRoleList"
             optionLabel="name"
             optionValue="id"
-            display="chip"
-            [style]="{ width: '351px' }"
+            [style]="{ width: '100%' }"
           ></p-dropdown>
         </div>
       </div>
@@ -115,32 +104,33 @@
 
       <!-- email-and-phone-field -->
       <div class="row mt-4">
-        <div class="col-md-1 mt-2 mr-3">
-          <label style="width: 100px"
+        <div class="col-md-1 mt-2">
+          <label style=""
             >Email <span class="red-star">*</span></label
           >
         </div>
-        <div class="col-md-5">
+        <div class="col-lg-4 col-md-5 col-sm-10">
           <input
             type="email"
             formControlName="email"
             pInputText
             placeholder="example@gmail.com"
-            style="width: 340px"
+            style="width: 100%"
           />
         </div>
-        <div class="col-md-1 mt-2 mr-3">
+        <div class="col-lg-1 col-md-1"></div>
+        <div class="col-md-1 mt-2">
           <label style="width: 100px"
             >Phone Number<span class="red-star">*</span></label
           >
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-4 col-md-4 col-sm-10">
           <input
             type="text"
             pInputText
             formControlName="phoneNumber"
             placeholder="0"
-            style="width: 351px"
+            style="width: 100%"
           />
         </div>
       </div>
@@ -166,12 +156,12 @@
         </div> -->
 
         <!-- status-field -->
-        <div class="col-md-1 mt-2 mr-3">
-          <label style="width: 100px"
+        <div class="col-md-1 mt-2">
+          <label style=""
             >Status <span class="red-star">*</span></label
           >
         </div>
-        <div class="col-md-5">
+        <div class="col-lg-4 col-md-4 col-sm-5">
           <p-dropdown
             formControlName="status"
             [options]="status"
@@ -179,7 +169,7 @@
             optionValue="code"
             placeholder="Select Status"
             optionValue="code"
-            [style]="{ width: '340px' }"
+            [style]="{ width: '100%' }"
             [required]="true"
           >
           </p-dropdown>
