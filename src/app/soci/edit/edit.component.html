@@ -78,19 +78,19 @@
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Contact Name</b></label>
-              <p *ngIf="soci_data?.quote?.opportunity?.ownner?.full_name">
-                {{ soci_data?.quote?.opportunity?.ownner?.full_name }}
+              <p *ngIf="soci_data?.contact_name">
+                {{ soci_data?.contact_name }}
               </p>
-              <p *ngIf="!soci_data?.quote?.opportunity?.ownner?.full_name">_</p>
+              <p *ngIf="!soci_data?.contact_name">_</p>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="text-center footer-data">
               <label><b>Email</b></label>
-              <p *ngIf="soci_data?.quote?.opportunity?.ownner?.email">
-                {{ soci_data?.quote?.opportunity?.ownner?.email }}
+              <p *ngIf="soci_data?.contact_email">
+                {{ soci_data?.contact_email }}
               </p>
-              <p *ngIf="!soci_data?.quote?.opportunity?.ownner?.email">_</p>
+              <p *ngIf="!soci_data?.contact_email">_</p>
             </div>
           </div>
           <div class="col-lg-3">

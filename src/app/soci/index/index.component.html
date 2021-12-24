@@ -5,14 +5,8 @@
   [rowHover]="true"
   responsiveLayout="scroll"
   [filterDelay]="0"
-  [globalFilterFields]="[
-     
-    'quote_id',
-    'company',
-    'amount',
-    'status'
-  ]"
-  (onFilter)='columnFilter($event)'
+  [globalFilterFields]="['quote_id', 'company', 'amount', 'status']"
+  (onFilter)="columnFilter($event)"
 >
   <ng-template pTemplate="caption">
     <div class="table-header">
@@ -111,9 +105,12 @@
         class="text-center"
         *ngIf="checkItem('company_name')"
       >
-        <div style="display: flex; flex-direction: column; align-items: center;"  class="p-d-flex p-jc-between p-ai-center">
+        <div
+          style="display: flex; flex-direction: column; align-items: center"
+          class="p-d-flex p-jc-between p-ai-center"
+        >
           Indiv/Company Name
-          <div class="name-icons">  
+          <div class="name-icons">
             <p-sortIcon field="customer.company_name"></p-sortIcon>
             <p-columnFilter
               type="text"
@@ -179,7 +176,7 @@
         </div>
       </th>
       <th
-        pSortableColumn="po_no"
+        pSortableColumn="po_amount"
         class="text-center"
         *ngIf="checkItem('po_amount')"
       >
@@ -245,7 +242,7 @@
           "
           class="p-d-flex p-jc-between p-ai-center"
         >
-        Customer PO Date
+          Customer PO Date
           <div class="PO_date-icons">
             <p-sortIcon field="po_date"></p-sortIcon>
             <p-columnFilter
@@ -310,7 +307,7 @@
           </div>
         </div>
       </th>
-      <th pSortableColumn="" class="text-center" *ngIf="checkItem('country')">
+      <th pSortableColumn="customer.primary_contact.country" class="text-center" *ngIf="checkItem('country')">
         <div
           style="
             display: flex;
@@ -322,17 +319,21 @@
         >
           Country
           <div class="quote-icons">
-            <p-sortIcon field=""></p-sortIcon>
+            <p-sortIcon field="customer.primary_contact.country"></p-sortIcon>
             <p-columnFilter
               type="text"
-              field=""
+              field="customer.primary_contact.country"
               display="menu"
               class="p-ml-auto"
             ></p-columnFilter>
           </div>
         </div>
       </th>
-      <th pSortableColumn="customer.reporting_unit" class="text-center" *ngIf="checkItem('unit')">
+      <th
+        pSortableColumn="customer.reporting_unit"
+        class="text-center"
+        *ngIf="checkItem('unit')"
+      >
         <div
           style="
             display: flex;
@@ -354,7 +355,11 @@
           </div>
         </div>
       </th>
-      <th pSortableColumn="customer.opc" class="text-center" *ngIf="checkItem('opc')">
+      <th
+        pSortableColumn="customer.opc"
+        class="text-center"
+        *ngIf="checkItem('opc')"
+      >
         <div
           style="
             display: flex;
@@ -419,7 +424,7 @@
       <td class="text-center" *ngIf="checkItem('soci_id')">
         <a href="" [routerLink]="['/soci/', soci.id, 'edit']">
           <span class="p-column-title"> Soci Id</span>
-          {{ soci.soci_id?soci.soci_id:dash }}
+          {{ soci.soci_id ? soci.soci_id : dash }}
         </a>
       </td>
       <td class="text-center" *ngIf="checkItem('company_name')">
@@ -432,7 +437,7 @@
       </td>
       <td class="text-center" *ngIf="checkItem('quote_full_id')">
         <span class="p-column-title">Quote Id</span>
-        {{ soci.quote_full_id?soci.quote_full_id:dash }}
+        {{ soci.quote_full_id ? soci.quote_full_id : dash }}
       </td>
       <td class="text-center" *ngIf="checkItem('quote_date')">
         <span class="p-column-title">Quote Date</span>
@@ -440,13 +445,12 @@
         <div *ngIf="soci.quote_date">
           {{ soci.quote_date | date: "dd-MMM-yyyy" }}
         </div>
-        
       </td>
 
       <td class="text-center" *ngIf="checkItem('po_amount')">
         <div>
           <span class="p-column-title"> Amount</span>
-          {{ soci.po_amount ? soci.po_amount:zero }}
+          {{ soci.po_amount ? soci.po_amount : zero }}
         </div>
         <!-- <div *ngIf="!soci.po_amount">
           <span class="p-column-title"> Amount</span>
@@ -460,7 +464,7 @@
           *ngIf="soci.po_no == null"
           (click)="createModal.addPo(soci.quote_full_id, soci.id)"
         >
-          Add Po
+          Add Customer Po
         </a>
         <div *ngIf="soci.po_no">
           <span class="p-column-title">Po no</span>
@@ -475,19 +479,20 @@
           *ngIf="soci.po_date == null"
           (click)="createModal.addPo(soci.quote_full_id, soci.id)"
         >
-          Po Date
+          Add Customer Po Date
         </a>
         <div *ngIf="soci.po_date">
           <span class="p-column-title">Po. date</span>
           <div *ngIf="!soci.po_date">_</div>
-          <div *ngIf="soci.po_date">{{ soci.po_date | date: "dd-MMM-yyyy" }}</div>
-          
+          <div *ngIf="soci.po_date">
+            {{ soci?.po_date | date: "dd-MMM-yyyy" }}
+          </div>
         </div>
       </td>
       <td class="text-center" *ngIf="checkItem('fo_order_number')">
         <div>
           <span class="p-column-title">Fo Number</span>
-          {{ soci.fo_order_number ? soci.fo_order_number : "_" }}
+          {{ soci?.fo_order_number ? soci?.fo_order_number : "_" }}
         </div>
         <!-- <div *ngIf="!soci.fo_order_number">
           <span class="p-column-title">Fo Number</span>
@@ -500,7 +505,7 @@
           <span class="p-column-title">backend status</span>
           Success
         </div>
-        <div *ngIf="!soci.backend_status || soci.backend_status == -1">
+        <div *ngIf="!soci?.backend_status || soci?.backend_status == -1">
           <span class="p-column-title">backend status</span>
           _
         </div>
@@ -515,9 +520,21 @@
           Failed
         </div>
       </td>
-      <td class="text-center" *ngIf="checkItem('country')">_</td>
-      <td class="text-center" *ngIf="checkItem('unit')">{{soci?.customer?.reporting_unit? soci?.customer?.reporting_unit:dash}}</td>
-      <td class="text-center" *ngIf="checkItem('opc')">{{soci?.customer?.opc? soci?.customer?.opc:dash}}</td>
+      <td class="text-center" *ngIf="checkItem('country')">
+        {{
+          soci?.customer?.primary_contact?.country
+            ? soci?.customer?.primary_contact?.country
+            : dash
+        }}
+      </td>
+      <td class="text-center" *ngIf="checkItem('unit')">
+        {{
+          soci?.customer?.reporting_unit ? soci?.customer?.reporting_unit : dash
+        }}
+      </td>
+      <td class="text-center" *ngIf="checkItem('opc')">
+        {{ soci?.customer?.opc ? soci?.customer?.opc : dash }}
+      </td>
       <td class="text-center" *ngIf="checkItem('status_desc')">
         <p-badge
           [value]="soci.status_desc"
@@ -677,8 +694,6 @@
             *ngFor="let item of columnValue"
             class="p-field-checkbox check-field"
           >
-            <label>{{ item.name }}</label>
-
             <p-checkbox
               name="group2"
               [value]="item"
@@ -686,6 +701,7 @@
               [inputId]="item.key"
               (onChange)="updateCols($event, item)"
             ></p-checkbox>
+            <label>{{ item.name }}</label>
           </div>
         </div>
       </div>

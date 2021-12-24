@@ -97,16 +97,19 @@ i {
 
 .column-box {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: auto;
 }
 
 .check-field {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding-left: 10px;
+  align-items: center;
+  padding: 0px 0px 12px 25px;
+  label {
+    margin-bottom: 0px;
+    margin-left: 10px;
+  }
 }
 .reject-badge {
   background-color: #f44336;
