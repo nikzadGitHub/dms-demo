@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { AppService } from './app.service';
+import { Column } from '../../soci/column';
 
 @Component({
   templateUrl: 'list-opportunity.component.html',
@@ -8,7 +9,16 @@ import { AppService } from './app.service';
 })
 
 export class ListOpportunityComponent implements OnInit{
-loading:boolean
+	columns: Column[] = [
+		{'header':'Created Date','field':'created_date','type':'date'},
+		{'header':'Opportunity ID','field':'op_id','type':'text'},
+		{'header':'Topic','field':'topic','type':'text'},
+		{'header':'Company Name','field':'company_name','type':'text'},
+		{'header':'Status','field':'status_id','type':'text'},
+		{'header':'Amount (MYR)','field':'amount','type':'numeric'},
+	];
+	
+	loading:boolean
 	opportunities: [];
 	paginate: [];
 	pageItems: number = 200;
