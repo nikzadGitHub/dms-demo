@@ -1,6 +1,7 @@
 import { INavData } from "@coreui/angular";
 
 export const navItems: INavData[] = [
+  { divider: true },
   {
     name: "Home",
     url: "/dashboard",
@@ -144,11 +145,11 @@ export const navItems: INavData[] = [
   // {
   //   divider: true,
   // },
-  {
-    name: "System Admin",
-    url: "/systemadmin",
-    icon: "cil-settings",
-  },
+  // {
+  //   name: "System Admin",
+  //   url: "/systemadmin",
+  //   icon: "cil-settings",
+  // },
   {
     name: "User Access Setup",
     url: "/useraccess/user-access-setup",
@@ -160,7 +161,7 @@ export const navItems: INavData[] = [
     icon: "cil-voice-over-record",
     children: [
       {
-        name: "User",
+        name:"User",
         url: "/user/adduser",
       },
       {

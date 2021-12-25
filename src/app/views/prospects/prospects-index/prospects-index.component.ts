@@ -44,6 +44,9 @@ export class ProspectsIndexComponent implements OnInit {
     this.loading=true
     this.prospectsService.getAll(this.pageItems,this.search_text).subscribe(data => {
       this.datasource = data['data']['data'];
+      this.datasource.forEach(value => {
+        value.created_at = new Date(value.created_at)
+      });
       this.pages = data['data']['links'];
       this.totalRecords = data['data']['total'];
       this.loading=false

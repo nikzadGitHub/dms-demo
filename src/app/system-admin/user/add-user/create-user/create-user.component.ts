@@ -116,7 +116,7 @@ export class CreateUserComponent implements OnInit {
               email: res?.data?.email,
               phoneNumber: res?.data?.phone_number,
               status: res?.data?.is_active,
-              userAccess: res?.data?.user_access_id,
+              userAccess: res?.data?.user_role?.role?.id,
               approvedBy: Number(res?.data?.approved_by),
               companyName: res?.data?.data_area_id,
             });
@@ -133,14 +133,14 @@ export class CreateUserComponent implements OnInit {
       );
   }
 
-  getAllCompany() {
-    this.systemAdminSerive
-      .getQuery("/data-area-id/all")
-      .subscribe((res: any) => {
-        console.log("Company-res:", res);
-        this.companies = res.data;
-      });
-  }
+  // getAllCompany() {
+  //   this.systemAdminSerive
+  //     .getQuery("/data-area-id/all")
+  //     .subscribe((res: any) => {
+  //       console.log("Company-res:", res);
+  //       this.companies = res.data;
+  //     });
+  // }
 
   getAllUnit() {
     this.systemAdminSerive.getQuery("/units").subscribe((res: any) => {

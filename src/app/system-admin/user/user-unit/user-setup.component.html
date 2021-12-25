@@ -91,100 +91,112 @@
     </div>
 
     <!-- div-1 -->
-    <div class="card-list">
+    <!-- class="card-list" -->
+    <div class="row">
       <!-- agency -->
-      <div class="card unit-card">
-        <div class="card-header">Agency</div>
-        <div class="card-body">
-          <div *ngFor="let item of agency" class="p-field-checkbox check-field">
-            <p-checkbox
-              name="group2"
-              [value]="item"
-              [(ngModel)]="selectAgency"
-              [inputId]="item.agency_code"
-              [disabled]="isViewUnit"
-            ></p-checkbox>
-            <label>{{ item.agency }}</label>
+      <div class="col-lg-4 col-md-4 col-sm-4">
+        <div class="card unit-card">
+          <div class="card-header">Agency</div>
+          <div class="card-body">
+            <div
+              *ngFor="let item of agency"
+              class="p-field-checkbox check-field"
+            >
+              <p-checkbox
+                name="group2"
+                [value]="item"
+                [(ngModel)]="selectAgency"
+                [inputId]="item.agency_code"
+                [disabled]="isViewUnit"
+              ></p-checkbox>
+              <label>{{ item.agency }}</label>
+            </div>
           </div>
         </div>
       </div>
-
       <!-- Menufacturer -->
-      <div class="card unit-card">
-        <div class="card-header">Manufactures</div>
-        <div class="card-body">
-          <div
-            *ngFor="let item of manufactures"
-            class="p-field-checkbox check-field"
-          >
-            <p-checkbox
-              name="group2"
-              [value]="item"
-              [inputId]="item.manufacturer_code"
-              [(ngModel)]="selectManufectures"
-              [disabled]="isViewUnit"
-            ></p-checkbox>
-            <label>{{ item.manufacturer }}</label>
+      <div class="col-lg-4 col-md-4 col-sm-4">
+        <div class="card unit-card">
+          <div class="card-header">Manufactures</div>
+          <div class="card-body">
+            <div
+              *ngFor="let item of manufactures"
+              class="p-field-checkbox check-field"
+            >
+              <p-checkbox
+                name="group2"
+                [value]="item"
+                [inputId]="item.manufacturer_code"
+                [(ngModel)]="selectManufectures"
+                [disabled]="isViewUnit"
+              ></p-checkbox>
+              <label>{{ item.manufacturer }}</label>
+            </div>
           </div>
         </div>
       </div>
-
       <!-- OPC -->
-      <div class="card unit-card">
-        <div class="card-header">OPC</div>
-        <div class="card-body">
-          <div *ngFor="let item of opc" class="p-field-checkbox check-field">
-            <p-checkbox
-              name="group2"
-              [value]="item"
-              [inputId]="item.opc_code"
-              [(ngModel)]="selectOpc"
-              [disabled]="isViewUnit"
-            ></p-checkbox>
-            <label>{{ item.opc }}</label>
+      <div class="col-lg-4 col-md-4 col-sm-4">
+        <div class="card unit-card">
+          <div class="card-header">OPC</div>
+          <div class="card-body">
+            <div *ngFor="let item of opc" class="p-field-checkbox check-field">
+              <p-checkbox
+                name="group2"
+                [value]="item"
+                [inputId]="item.opc_code"
+                [(ngModel)]="selectOpc"
+                [disabled]="isViewUnit"
+              ></p-checkbox>
+              <label>{{ item.opc }}</label>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="card-list-2">
+    <!-- class="card-list-2" -->
+    <div class="row">
       <!-- care-area -->
-      <div class="card unit-card">
-        <div class="card-header">Care Area</div>
-        <div class="card-body">
-          <div
-            class="p-field-checkbox check-field"
-            *ngFor="let item of careArea"
-          >
-            <p-checkbox
-              name="group2"
-              [value]="item"
-              [(ngModel)]="selectedCareArea"
-              [inputId]="item.code"
-              [disabled]="isViewUnit"
+      <div class="col-lg-4 col-md-4 col-sm-4">
+        <div class="card unit-card">
+          <div class="card-header">Care Area</div>
+          <div class="card-body">
+            <div
+              class="p-field-checkbox check-field"
+              *ngFor="let item of careArea"
             >
-            </p-checkbox>
-            <label>{{ item.care_area }}</label>
+              <p-checkbox
+                name="group2"
+                [value]="item"
+                [(ngModel)]="selectedCareArea"
+                [inputId]="item.code"
+                [disabled]="isViewUnit"
+              >
+              </p-checkbox>
+              <label>{{ item.care_area }}</label>
+            </div>
           </div>
         </div>
       </div>
-
       <!-- Principles -->
-      <div class="card unit-card">
-        <div class="card-header">Principles</div>
-        <div class="card-body">
-          <div
-            *ngFor="let item of principles"
-            class="p-field-checkbox check-field"
-          >
-            <p-checkbox
-              name="group2"
-              [value]="item"
-              [(ngModel)]="selectPrinciples"
-              [inputId]="item.principal_code"
-              [disabled]="isViewUnit"
-            ></p-checkbox>
-            <label>{{ item.description }}</label>
+      <div class="col-lg-4 col-md-4 col-sm-4">
+        <div class="card unit-card">
+          <div class="card-header">Principles</div>
+          <div class="card-body">
+            <div
+              *ngFor="let item of principles"
+              class="p-field-checkbox check-field"
+            >
+              <p-checkbox
+                name="group2"
+                [value]="item"
+                [(ngModel)]="selectPrinciples"
+                [inputId]="item.principal_code"
+                [disabled]="isViewUnit"
+              ></p-checkbox>
+              <label>{{ item.description }}</label>
+            </div>
           </div>
         </div>
       </div>

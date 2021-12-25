@@ -54,6 +54,7 @@ export class EditComponent implements OnInit {
   templateId: any;
   alertHeader: string;
   quotationId: any;
+  isButtonDisabled: boolean;
 
   constructor(
     private quoteService: QuoteService,
@@ -75,6 +76,11 @@ export class EditComponent implements OnInit {
         this.quotations = data["data"]["quotation"];
         this.quotationId = data["data"]["quotation"].id
         this.latestQuotation = data["data"]["quotation"];
+        if(this.latestQuotation.status=="Rejected" || this.latestQuotation.status=="Approved"){
+          this.isButtonDisabled = true
+        } else {
+          this.isButtonDisabled = false
+        }
         this.quotationRevisions = data["data"]["quotationRevision"];
         this.setInitialValue();
         this.addQuoteIdList();
@@ -607,6 +613,12 @@ export class EditComponent implements OnInit {
       .subscribe((res) => {
         this.alertBody = res.message;
         this.successModal.show();
+        setTimeout(() => {
+          this.successModal.hide()
+          if(res){
+            this.redirectPage()
+          }
+        }, 500);
       });
   }
 
