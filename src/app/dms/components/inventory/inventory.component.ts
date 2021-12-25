@@ -79,7 +79,7 @@ export class InventoryComponent implements OnInit {
     this.activeItem[tabNo];
     this.current_tab = tabName;
     this.loading = true;
-    this.api.getList(tabName).subscribe(
+    this.api.getList(tabName, this.search_text).subscribe(
       (response) => {
         if (response as InventoryList) {
           this.inventoryList = response;
