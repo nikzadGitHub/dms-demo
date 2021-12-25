@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { BookingService } from '../../../dms/components/bookings/services/booking.service';
-import { ModalDirective } from "ngx-bootstrap/modal";
+import { BookingList } from '../../../dms/components/bookings/services/booking.interface';
 
 @Component({
   selector: 'opp-opportunity-booking',
@@ -14,26 +14,48 @@ import { ModalDirective } from "ngx-bootstrap/modal";
  * @class
  */
 export class OpportunityBookingComponent implements OnInit{
-  @ViewChild("dangerModal") dangerModal: ModalDirective;
   @Input() opp_id: number;
 
-  show: boolean;
+  bookingList: BookingList;
+  show: boolean = false;
   alertBody: string;
+
+  bookingReasonsNames = [
+    'event',
+    'demo',
+    'training',
+    'buyin'
+  ];
+  bookingStatusNames = [
+    'approval request',
+    'approve',
+    'review',
+    'endorse',
+    'provision-ally approve',
+    'decline',
+    'conflict',
+    'extension request',
+    'demo item availability'
+  ]
 
   constructor(
     private api: BookingService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
-  ngOnInit(): void {
-    this.show = false;
-  }
 
-  /**
- * This function is used for the show the booking on opportunity section
- */
-  onShow(){
-    this.show = true;
+  ngOnInit(): void {
+    if(this.opp_id !== undefined) {
+      this.show = true;
+      this.api.getListForOpp(this.opp_id).subscribe((response) => {
+        if (response as BookingList) {
+          this.bookingList = response;
+          console.log(this.bookingList);
+        }
+      }, err => {
+        console.log('error in loading bookings list');
+      });
+    }
   }
 
   navToBooking(event) {
@@ -48,12 +70,10 @@ export class OpportunityBookingComponent implements OnInit{
         }
       }, err => {
         console.log(err)
-        this.alertBody = "Unable to create new booking draft!";
-        this.dangerModal.show();
-        setTimeout(() => {
-          this.dangerModal.hide();
-        }, 2000);
+        console.log("Unable to create new booking draft!");
       });
+    }else {
+      console.log("should to save first !");
     }
     return false;
   }

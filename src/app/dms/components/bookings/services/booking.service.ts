@@ -32,4 +32,9 @@ export class BookingService implements BookingInterface {
   createFromOpp(opp_id: number , data: string = 'booking f opportunity'): Observable<SaveResult> {
     return this.apiClient.post('booking/createDraft?opp_id='+opp_id, data);
   }
+
+  getListForOpp(opp_id: number): Observable<BookingList> {
+    return this.apiClient.get<BookingList>('booking?opp_id='+opp_id);
+  }
+
 }

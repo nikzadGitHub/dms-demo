@@ -6,12 +6,55 @@
           <i class="cil-info"></i>
           <span class="accordion-header">Demo Bookings</span>
         </p-header>
-        <div class="form-group" *ngIf="show">
+        <div class="form-group" *ngIf = 'show'>
           <div class="animated fadeIn">
             <!-- bookings list can show here -->
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="text-center">Booking No</th>
+                  <th class="text-center">Request Date</th>
+                  <th class="text-center">Requester</th>
+                  <th class="text-center">SKU</th>
+                  <th class="text-center">Customer</th>
+                  <th class="text-center">Booking Reason</th>
+                  <th class="text-center">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="p-selectable-row" *ngFor="let bookingItem of bookingList">
+                  <td class="text-center">
+                      <a routerLink="/dms/bookings/{{ bookingItem.id }}" routerLinkActive="router-link-active">{{ bookingItem.booking_no ? bookingItem.booking_no : 'Draft' }}</a>
+                  </td>
+                  <td class="text-center">
+                      {{ bookingItem.request_date }}
+                  </td>
+                  <td class="text-center">
+                      {{ bookingItem.requester }}
+                  </td>
+                  <td class="text-center">
+                      {{ bookingItem.sku }}
+                  </td>
+                  <td class="text-center">
+                      {{ bookingItem.customer }}
+                  </td>
+                  <td class="text-center">
+                      {{ 
+                        bookingReasonsNames[bookingItem.booking_reason - 1] ? bookingReasonsNames[bookingItem.booking_reason - 1] : 'Null'
+                      }}
+                  </td>
+                  <td class="text-center">
+                    {{
+                      bookingStatusNames[bookingItem.status - 1] ? bookingStatusNames[bookingItem.status - 1] : 'Null'
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- jfwefjjw  -->
           </div> 
         </div>
-        <div class="d-flex justify-content-center" *ngIf="!show">
+        <div class="d-flex justify-content-center">
           <button type="button" class="btn btn-sm btn-primary create-button" (click)="navToBooking($event)">create booking request</button>
         </div>
       </p-accordionTab>

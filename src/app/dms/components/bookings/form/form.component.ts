@@ -166,6 +166,7 @@ export class FormComponent implements OnInit{
       booking_save: true,
       
       // Booking Opportunity Section by Hossainy
+      opportunity_code: this.bookingDetailList.opportunity_code,
       priority: this.formBooking.get("priority").value,
       probability: this.formBooking.get("probability").value,
       initiator: this.formBooking.get("initiator").value,
