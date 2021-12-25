@@ -52,6 +52,15 @@ export interface EquipmentEntity {
 
 export type MainEquipmentEntity = EquipmentEntity & {
   serial_no: null | string;
+  id: BigInt;
+  name: string|null;
+  sku: string|null;
+  quantity: string|number|null;
+  uom: string|null;
+  availability: string|null;
+  expected_sale_price: number|null;
+  available_quantity: number|null;
+  cost: number|null;
 };
 
 export type EquipmentList = EquipmentEntity[];
