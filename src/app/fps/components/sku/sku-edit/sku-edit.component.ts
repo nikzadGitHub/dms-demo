@@ -441,4 +441,8 @@ export class SkuEditComponent implements OnInit {
       });
   }
   //---------------- End of  SKU Rate Details -------------------
+
+  cancelSkuForm(){
+    // this function created for resloveing error => Property 'cancelSkuForm' does not exist on type 'SkuEditComponent
+  }
 }

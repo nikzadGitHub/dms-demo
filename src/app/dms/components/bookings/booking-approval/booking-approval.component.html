@@ -88,14 +88,14 @@
         </div>
       </div>
       <br>
-      <div class="d-flex justify-content-center" *ngIf="access && !show_decline && _status != 2; else checkDemoApprove">
+      <div class="d-flex justify-content-center" *ngIf="access && !show_decline && _status != '2'; else checkDemoApprove">
         <div *ngFor="let button of buttons; let i=index" class="pr-2">
           <button type="submit" class="btn btn-md btn-primary"
                   (click)="onButtonClick(button.status)">{{ button.title | uppercase }}</button>
         </div>
       </div>
       <ng-template #checkDemoApprove>
-        <div class="d-flex justify-content-center" *ngIf="access && is_demo && _status == 2">
+        <div class="d-flex justify-content-center" *ngIf="access && is_demo && _status == '2'">
           <div class="pr-2">
             <button type="submit" class="btn btn-md btn-primary" (click)="onButtonClick(9)">
               Approve
@@ -105,7 +105,7 @@
             </button>
           </div>
         </div>
-        <div class="d-flex justify-content-center" *ngIf="access && !is_demo && _status == 2">
+        <div class="d-flex justify-content-center" *ngIf="access && !is_demo && _status == '2'">
           <div *ngFor="let button of buttons; let i=index" class="pr-2">
             <button type="submit" class="btn btn-md btn-primary"
                     (click)="onButtonClick(button.status)">{{ button.title | uppercase }}</button>

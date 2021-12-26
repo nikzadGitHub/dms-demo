@@ -113,4 +113,8 @@ export class SkuIndexComponent implements OnInit {
       }
     });   
   }
+
+  getAll() {
+    // created for resloving error => getAll' does not exist on type 'SkuIndexComponent
+  }
 }
