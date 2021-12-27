@@ -426,9 +426,9 @@
       <!--End SOCI Detaail -->
       <br />
       <!-- Standard Term Accordion -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+      <p-accordion [multiple]="true" id="firstaccordion" styleClass="customColor" activeIndex="">
         <!-- header="Standard Terms" -->
-        <p-accordionTab>
+        <p-accordionTab #firstAccordion>
           <ng-template pTemplate="header">
             <div class="accordian-div">
               Standard Periods

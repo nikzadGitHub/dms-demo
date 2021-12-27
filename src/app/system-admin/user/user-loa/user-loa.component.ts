@@ -135,7 +135,6 @@ export class UserLoaComponent implements OnInit {
   }
   goForEdit(id) {
     this.unitId = id;
-    // debugger;
 
     this.systemAdminSerive
       .getQuery("/units/level-approval/" + this.unitId)
