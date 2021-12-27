@@ -4,10 +4,10 @@ import { SalesTargetStructureComponent } from '../sales-target-structure/sales-t
 import { SalesTargetComponent } from './sales-target.component';
 
 const routes: Routes = [
-  { path: '', component: SalesTargetComponent },
+  { path: 'salestarget', component: SalesTargetComponent },
   { path: 'structure', component: SalesTargetStructureComponent },
   // { path: ':id/edit', component: ProspectsEditComponent },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'salestarget' }
 ];
 
 @NgModule({

@@ -1,6 +1,10 @@
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
+.main-content{
+  z-index: 1111;
+  height: auto;
+}
 // [contenteditable] {
 //   padding: 10px;
 // }
@@ -19,7 +23,7 @@
   margin-bottom: 10px;
   // position: fixed;
   z-index: 100;
-  margin-left: 1030px;
+  margin-left: 900px;
   button {
     background-color: #1c5fab;
   }
@@ -202,6 +206,16 @@
     margin-top: -15px;
     color: rgb(41, 136, 224);
   }
+}
+
+.loaderDiv{
+    position: absolute;
+    padding-top: 30%;
+    opacity: 0.7;
+    background: lightgrey;
+    width: 84%;
+    height: 100%;
+    z-index: 111111111111111;
 }
 // #bodyContent{
 //   .addressDetailMain{

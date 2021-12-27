@@ -57,6 +57,10 @@ export class SalesTargetSetupComponent implements OnInit {
   dataLength: number = 0;
   reloadData: boolean = false;
   dataId: string = null;
+  desc_level: [];
+  dimension_disc: [];
+  userRole: any;
+  countryCode: any;
 
   constructor(
     private _fb: FormBuilder,
@@ -79,6 +83,7 @@ export class SalesTargetSetupComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userRole = JSON.parse(localStorage.getItem('userRole'))
     this.currYear = new Date().getFullYear();
     this.data = new SalesTargetSetup(
       "",
@@ -174,8 +179,11 @@ export class SalesTargetSetupComponent implements OnInit {
   }
 
   onCountryChanged(code) {
+    this.countryCode = code
     this.currency = this.countryArr.find((x) => x.code == code).currency_code;
-    this._salesTargetSetupService.getUnitList(code).subscribe((res) => {});
+    this._salesTargetSetupService.getUnitList(code).subscribe((res) => {
+      this.desc_level=res.data.units
+    });
 
     let inputYear = this.currYear;
     if (this.data.year != null && this.data.year != 0) {
@@ -245,9 +253,9 @@ export class SalesTargetSetupComponent implements OnInit {
   onUnitChanged(countryCd, unitCd) {
     this._salesTargetSetupService.getFssList(countryCd, unitCd).subscribe(
       (res) => {
-        if (res) {
-          this.fssArr = res.data.sales_targets;
-        }
+        // if (res) {
+        //   this.fssArr = res.data.sales_targets;
+        // }
       },
       (err) => {
         console.log("Error ", err);
@@ -410,8 +418,8 @@ export class SalesTargetSetupComponent implements OnInit {
     destination.country_code = source.country_code;
     destination.unit_id = source.unit.id;
     //destination.user_id = source.user.id;
-    destination.tl_user_id = source.tl_user_id;
-    destination.opc_pic_user_id = source.opc_pic_user_id;
+    // destination.tl_user_id = source.tl_user_id;
+    // destination.opc_pic_user_id = source.opc_pic_user_id;
     destination.class_id = source.class;
     destination.level_1_type = source.level_1_type;
     destination.level_1_value = source.level_1_value;
@@ -500,32 +508,38 @@ export class SalesTargetSetupComponent implements OnInit {
       country_code: data.country_code,
       unit_id: data.id,
 
-      user_id: data.user_id,
+      user_id: this.userRole.user.id,
       team_lead: data.team_lead,
-      opc_pic_user_id: data.opc_pic_user_id,
+      // opc_pic_user_id: data.opc_pic_user_id,
       class_id: data.class_id,
       dimensions: new_dimen,
       currency_code: data.currency_code,
       year: data.year,
-      target_01: Number(data.month_01_target.toFixed(2)),
-      target_02: Number (data.month_02_target.toFixed(2)),
-      target_03: Number(data.month_03_target.toFixed(2)),
-      target_04: Number (data.month_04_target.toFixed(2)),
-      target_05: Number (data.month_05_target.toFixed(2)),
-      target_06: Number (data.month_06_target.toFixed(2)),
-      target_07: Number (data.month_07_target.toFixed(2)),
-      target_08: Number (data.month_08_target.toFixed(2)),
-      target_09: Number(data.month_09_target.toFixed(2)),
-      target_10: Number(data.month_10_target.toFixed(2)),
-      target_11: Number(data.month_11_target.toFixed(2)),
-      target_12: Number(data.month_12_target.toFixed(2))
+      target_01: Number(data.month_01_target?.toFixed(2)),
+      target_02: Number (data.month_02_target?.toFixed(2)),
+      target_03: Number(data.month_03_target?.toFixed(2)),
+      target_04: Number (data.month_04_target?.toFixed(2)),
+      target_05: Number (data.month_05_target?.toFixed(2)),
+      target_06: Number (data.month_06_target?.toFixed(2)),
+      target_07: Number (data.month_07_target?.toFixed(2)),
+      target_08: Number (data.month_08_target?.toFixed(2)),
+      target_09: Number(data.month_09_target?.toFixed(2)),
+      target_10: Number(data.month_10_target?.toFixed(2)),
+      target_11: Number(data.month_11_target?.toFixed(2)),
+      target_12: Number(data.month_12_target?.toFixed(2))
     };
 
     
     if (this.mode == 'new') {
       this.saveSalesTargetSetup(payload);
+      setTimeout(() => {
+        this.onCountryChanged(this.countryCode)
+      }, 2000);
     } else if (this.mode == "edit") {
       this.updateSalesTargetSetup(payload);
+      setTimeout(() => {
+        this.onCountryChanged(this.countryCode)
+          }, 2000);
     }
     this.resetForm(_frm);
   }
@@ -623,5 +637,10 @@ export class SalesTargetSetupComponent implements OnInit {
 
   isFirstPage(): boolean {
     return this.list ? this.first === 0 : true;
+  }
+  onLevelChange(code,level) {
+    this._salesTargetSetupService.getDimensionDiscription(code,level).subscribe((res) => {
+      this.dimension_disc = res.data;
+    });
   }
 }
