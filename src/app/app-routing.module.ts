@@ -12,7 +12,7 @@ import { LogoutComponent } from './views/logout/logout.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import { RegisterComponent } from './views/register/register.component';
 import { UserActivitiesModule } from "./views/user-activities/user-activities.module";
-
+import { SalesTargetModule } from "./views/sales-target/sales-target.module";
 export const routes: Routes = [
   {
     path: "",
@@ -173,8 +173,8 @@ export const routes: Routes = [
       {
         path: "salestarget",
         loadChildren: () =>
-          import("./views/coming-soon/coming-soon.module").then(
-            (m) => m.ComingSoonModule
+          import("./views/sales-target/sales-target-routing.module").then(
+            (m) => m.SalesTargetRoutingModule
           ),
       },
 
