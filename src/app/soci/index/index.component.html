@@ -413,7 +413,6 @@
   </ng-template>
   <ng-template pTemplate="body" let-soci>
     <tr class="p-selectable-row">
-      <!-- {{ opportunity.created_date | date: "dd-MMM-yyyy" }} -->
       <td class="text-center" *ngIf="checkItem('c_date')">
         <span class="p-column-title">Created Date</span>
         <div *ngIf="soci.created_at">
@@ -452,10 +451,6 @@
           <span class="p-column-title"> Amount</span>
           {{ soci.po_amount ? soci.po_amount : zero }}
         </div>
-        <!-- <div *ngIf="!soci.po_amount">
-          <span class="p-column-title"> Amount</span>
-          0
-        </div> -->
       </td>
       <td class="text-center" *ngIf="checkItem('po_no')">
         <a
@@ -494,10 +489,6 @@
           <span class="p-column-title">Fo Number</span>
           {{ soci?.fo_order_number ? soci?.fo_order_number : "_" }}
         </div>
-        <!-- <div *ngIf="!soci.fo_order_number">
-          <span class="p-column-title">Fo Number</span>
-          _
-        </div> -->
       </td>
 
       <td class="text-center" *ngIf="checkItem('backend_status')">
@@ -568,15 +559,6 @@
           *ngIf="soci.status == 7"
           class="reject-badge"
         />
-        <!-- <p-badge
-          [pTooltip]="soci.cancelled_remarks"
-          tooltipPosition="left"
-          tooltipEvent="focus"
-          [value]="soci.status_desc"
-          *ngIf="soci.status == 7"
-          severity="danger"
-          class="soci-list-badges reject-badge"
-        ></p-badge> -->
       </td>
       <td class="text-center">
         <div class="row-icon">
@@ -664,7 +646,6 @@
 </div>
 
 <!-- column chooser model -->
-<!-- (onHide)="setTermsConditions()" -->
 <div
   bsModal
   #columnChooserModal="bs-modal"

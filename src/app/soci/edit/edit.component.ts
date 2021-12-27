@@ -170,8 +170,15 @@ export class EditComponent implements OnInit {
   zero = 0;
 
   payment_termValue: [];
-  delivery_termValue: [];
   extended_warranty: any[] = [];
+  delivery_termValue: [];
+  customer_catagory: [];
+  customer_sub_category: [];
+  hospital_dept: [];
+  hospital_class: [];
+  tax_code: [];
+  commentError: any;
+  standardTermColor = ''
   constructor(
     private route: ActivatedRoute,
     private quoteService: QuoteService,
@@ -227,6 +234,8 @@ export class EditComponent implements OnInit {
       standardWarranty: "",
       sociRemarks: "",
       cancelled_remarks: "",
+      hospitalClass: "",
+      customer_catagory: ''
     });
   }
 
@@ -234,6 +243,13 @@ export class EditComponent implements OnInit {
     this.getAllDropdowns();
     this.route.queryParams.subscribe((params) => {
       this.is_approval_view_check = params.is_approval_view_check;
+      if(this.is_approval_view_check){
+        if( this.standard_term?.delivery_term_is_updated == true || this.standard_term?.payment_term_is_updated == true ){
+          this.standardTermColor = '#ffc107ad'
+          let body= document.getElementById('p-accordiontab-2')
+          body.style.background=this.standardTermColor
+        }
+      }
       this.is_preview_check = params.is_preview_check;
     });
     this.route.params.subscribe((event) => {
@@ -273,6 +289,11 @@ export class EditComponent implements OnInit {
       this.customer_id = res["data"]["quote"]["opportunity"]["customer_id"];
       // standard_term
       this.standard_term = res["data"]["standard_terms"];
+    if( this.standard_term?.delivery_term_is_updated == true || this.standard_term?.payment_term_is_updated == true ){
+      this.standardTermColor = '#ffc107ad'
+      let body= document.getElementById('p-accordiontab-2')
+      body.style.background=this.standardTermColor
+    }
       this.standerd_payment_term = res["data"]["standard_terms"]["payment_term"]
         ? res["data"]["standard_terms"]["payment_term"]
         : 0;
@@ -292,7 +313,7 @@ export class EditComponent implements OnInit {
       );
       this.quotation_validity_payment_term_to.setDate(
         this.quotation_validity_payment_term_to.getDate() +
-          this.default_payment_term
+        this.default_payment_term
       );
       // Delivery_terms
       this.default_delivery_term = res["data"]["standard_terms"][
@@ -320,7 +341,7 @@ export class EditComponent implements OnInit {
       );
       this.quotation_validity_delivery_term_to.setDate(
         this.quotation_validity_delivery_term_to.getDate() +
-          this.default_delivery_term
+        this.default_delivery_term
       );
       // billing_milestone
       this.billing_milestone = res["data"]["billing_milestones"];
@@ -432,11 +453,11 @@ export class EditComponent implements OnInit {
     this.sociService
       .getcomment(
         "/comment?type=" +
-          this.type +
-          "&type_id=" +
-          this.soci_id +
-          "&section=" +
-          this.section
+        this.type +
+        "&type_id=" +
+        this.soci_id +
+        "&section=" +
+        this.section
       )
       .subscribe((res: any) => {
         this.commentList = res.data;
@@ -447,42 +468,44 @@ export class EditComponent implements OnInit {
     this.sociService
       .postQuery(
         "/comment?type=" +
-          this.type +
-          "&type_id=" +
-          this.soci_id +
-          "&section=" +
-          this.section,
+        this.type +
+        "&type_id=" +
+        this.soci_id +
+        "&section=" +
+        this.section,
         {
           comment: this.accordianComment,
         }
       )
       .subscribe((res: any) => {
-  
+
         this.accordianComment = "";
         this.commentList.push(res.data);
         if (res.data?.section == "soci_detail") {
-          this.soci_data.comment_type_count.soci_detail?this.soci_data.comment_type_count.soci_detail += 1:this.soci_data.comment_type_count['soci_detail']=1;
+          this.soci_data.comment_type_count.soci_detail ? this.soci_data.comment_type_count.soci_detail += 1 : this.soci_data.comment_type_count['soci_detail'] = 1;
         } else if (res.data?.section == "po_detail") {
-          this.soci_data.comment_type_count.po_detail?this.soci_data.comment_type_count.po_detail += 1:this.soci_data.comment_type_count['po_detail']=1;
+          this.soci_data.comment_type_count.po_detail ? this.soci_data.comment_type_count.po_detail += 1 : this.soci_data.comment_type_count['po_detail'] = 1;
         } else if (res.data?.section == "standard_terms") {
-          this.soci_data.comment_type_count.standard_terms?this.soci_data.comment_type_count.standard_terms += 1:this.soci_data.comment_type_count['standard_terms']=1;
+          this.soci_data.comment_type_count.standard_terms ? this.soci_data.comment_type_count.standard_terms += 1 : this.soci_data.comment_type_count['standard_terms'] = 1;
         } else if (res.data?.section == "billing_milestone") {
-          this.soci_data.comment_type_count.billing_milestone?this.soci_data.comment_type_count.billing_milestone += 1:this.soci_data.comment_type_count['billing_milestone']=1;
+          this.soci_data.comment_type_count.billing_milestone ? this.soci_data.comment_type_count.billing_milestone += 1 : this.soci_data.comment_type_count['billing_milestone'] = 1;
         } else if (res.data?.section == "payment_schedule") {
-          this.soci_data.comment_type_count.payment_schedule?this.soci_data.comment_type_count.payment_schedule += 1:this.soci_data.comment_type_count['payment_schedule']=1;
+          this.soci_data.comment_type_count.payment_schedule ? this.soci_data.comment_type_count.payment_schedule += 1 : this.soci_data.comment_type_count['payment_schedule'] = 1;
         } else if (res.data?.section == "additional_cost") {
-          this.soci_data.comment_type_count.additional_cost?this.soci_data.comment_type_count.additional_cost += 1:this.soci_data.comment_type_count['additional_cost']=1;
+          this.soci_data.comment_type_count.additional_cost ? this.soci_data.comment_type_count.additional_cost += 1 : this.soci_data.comment_type_count['additional_cost'] = 1;
         } else if (res.data?.section == "billing_instruction") {
-          this.soci_data.comment_type_count.billing_instruction?this.soci_data.comment_type_count.billing_instruction += 1:this.soci_data.comment_type_count['billing_instruction'] = 1;
+          this.soci_data.comment_type_count.billing_instruction ? this.soci_data.comment_type_count.billing_instruction += 1 : this.soci_data.comment_type_count['billing_instruction'] = 1;
         } else if (res.data?.section == "additional_instruction") {
-          this.soci_data.comment_type_count.additional_instruction ?  this.soci_data.comment_type_count.additional_instruction += 1 : this.soci_data.comment_type_count["additional_instruction"] = 1;
+          this.soci_data.comment_type_count.additional_instruction ? this.soci_data.comment_type_count.additional_instruction += 1 : this.soci_data.comment_type_count["additional_instruction"] = 1;
         } else if (res.data?.section == "additional_charges") {
-          this.soci_data.comment_type_count.additional_charges?this.soci_data.comment_type_count.additional_charges += 1:this.soci_data.comment_type_count['additional_charges']=1;
+          this.soci_data.comment_type_count.additional_charges ? this.soci_data.comment_type_count.additional_charges += 1 : this.soci_data.comment_type_count['additional_charges'] = 1;
         } else if (res.data?.section == "product") {
-          this.soci_data.comment_type_count.product?this.soci_data.comment_type_count.product += 1:this.soci_data.comment_type_count['product']=1;
+          this.soci_data.comment_type_count.product ? this.soci_data.comment_type_count.product += 1 : this.soci_data.comment_type_count['product'] = 1;
         } else if (res.data?.section == "soci_attachment") {
-          this.soci_data.comment_type_count.soci_attachment? this.soci_data.comment_type_count.soci_attachment += 1: this.soci_data.comment_type_count['soci_attachment']=1;
+          this.soci_data.comment_type_count.soci_attachment ? this.soci_data.comment_type_count.soci_attachment += 1 : this.soci_data.comment_type_count['soci_attachment'] = 1;
         }
+      }, (error) =>{
+        this.commentError = error.error.message
       });
   }
   resetModel() {
@@ -652,14 +675,17 @@ export class EditComponent implements OnInit {
           this.is_edited = true;
           this.alertBody = data.message;
           this.standerd_payment_term = this.form.value.days;
-
           this.payment_term_from = this.form.value.fromDate;
           this.payment_term_to = new Date(this.payment_term_from);
           this.payment_term_to.setDate(
             this.payment_term_to.getDate() + parseInt(this.form.value.days)
           );
-
           this.successModal.show();
+          if( data.data.payment_term_is_updated == true ){
+            this.standardTermColor = '#ffc107ad'
+            let body= document.getElementById('p-accordiontab-2')
+            body.style.background=this.standardTermColor
+          }
           setTimeout(() => {
             this.successModal.hide();
             this.modalClassRomve();
@@ -693,11 +719,16 @@ export class EditComponent implements OnInit {
           this.delivery_term_to = new Date(this.delivery_term_from);
           this.delivery_term_to.setDate(
             this.delivery_term_to.getDate() +
-              parseInt(this.form.value.delivery_days)
+            parseInt(this.form.value.delivery_days)
           );
           this.is_edited = true;
           this.alertBody = data.message;
           this.successModal.show();
+          if( data.data.delivery_term_is_updated == true ){
+            this.standardTermColor = '#ffc107ad'
+            let body= document.getElementById('p-accordiontab-2')
+            body.style.background=this.standardTermColor
+          }
           setTimeout(() => {
             this.successModal.hide();
             this.modalClassRomve();
@@ -1892,7 +1923,7 @@ export class EditComponent implements OnInit {
   //Update Remarks
   remarksAdded() {
     this.form.value.sociRemarks ||
-    this.soci_data?.remarks !== this.form.value.sociRemarks
+      this.soci_data?.remarks !== this.form.value.sociRemarks
       ? (this.isRemarksAdded = false)
       : (this.isRemarksAdded = true);
   }
@@ -1969,7 +2000,12 @@ export class EditComponent implements OnInit {
   getAllDropdowns() {
     this.sociService.getQuery("/soci/all-dropdown").subscribe((data: any) => {
       this.payment_termValue = data["data"].payment_terms;
-      this.delivery_termValue = data["data"].delivery_terms;
+      //  this.delivery_termValue = data["data"].delivery_terms;
+      this.customer_catagory = data["data"].customer_category;
+      this.customer_sub_category = data["data"].customer_sub_category;
+      this.hospital_dept = data["data"].hosp_dept;
+      this.hospital_class = data["data"].hospital_class
+      this.tax_code = data["data"].tax_code;
       this.extended_warranty = data["data"].extended_warranty;
     });
   }
