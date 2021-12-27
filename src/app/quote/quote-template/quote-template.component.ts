@@ -77,6 +77,7 @@ export class QuoteTemplateComponent implements OnInit {
   productDetails: any;
   discountedValue: any = 2000;
   netTotal: number;
+  loading: boolean = false;
   constructor(private router: Router,
     private quoteService: QuoteService,
     private route: ActivatedRoute,
@@ -97,6 +98,7 @@ export class QuoteTemplateComponent implements OnInit {
   }
 
   viewQuotationTemplate() {
+    this.loading = true
     this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
       this.quotationsTemplateData = res["data"]
       this.salesPersonData = res["data"].quotations?.sales_person
@@ -106,6 +108,8 @@ export class QuoteTemplateComponent implements OnInit {
       if(this.quotationContent){
         this.quotationContentFooter = JSON.parse(this.quotationContent?.footer_content)
         this.quotationContentHeader = JSON.parse(this.quotationContent?.header_content)
+        this.loading = false
+
       }
       for(let i = 0; i < this.quotationsTemplateData.quotations.products.length; i++){
         this.productTotalPrice = parseFloat(this.productDetails[i].list_price);
@@ -317,10 +321,16 @@ export class QuoteTemplateComponent implements OnInit {
     let fullBody = this.bodyData.nativeElement.innerHTML
 
     this.quoteService.saveTemplateData(this.quotationId,JSON.stringify(header),JSON.stringify(footer),fullBody).subscribe(state=>{
+      if(state){
+        this.successMessage = "Data is Updated Successfully......!!";
+        this.successModal.show();
+      }
+    }, async (error) => {
+      console.log(error);
+      this.alertHeader = "Server Error..!!"
+      this.alertBody = "Failed to Save Data....!!"
+      this.dangerModal.show();
     })
-
-      this.successMessage = "Data is Updated Successfully......!!";
-      this.successModal.show();
   }
 
   // downloadQuotationTemplate(){
