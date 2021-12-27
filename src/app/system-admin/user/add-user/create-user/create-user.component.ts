@@ -28,7 +28,7 @@ export class CreateUserComponent implements OnInit {
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   alertBody: string;
   userRole: any;
-  userFormValue: boolean =true;
+  userFormValue: boolean = true;
 
   constructor(
     private systemAdminSerive: SystemAdminService,
@@ -77,8 +77,8 @@ export class CreateUserComponent implements OnInit {
       this.units = res.data;
       console.log("units", res.data);
     });
-    if(this.userRoleId == undefined){
-      this.addUserUnit()
+    if (this.userRoleId == undefined) {
+      this.addUserUnit();
     }
   }
 
@@ -101,23 +101,26 @@ export class CreateUserComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log("detail-user:", res);
-          res.data.user_units.forEach(ele => {
+          res.data.user_units.forEach((ele) => {
             this.unitUser().push(
               this.formBuilder.group({
                 discount_percentage: ele.allowed_discount_percentage,
                 profit_margin: ele.min_profit_margin_percentage,
                 unit_id: ele.unit_id,
               })
-            )
+            );
+          });
+          this.userform.patchValue({
+            name: res?.data?.full_name,
+            email: res?.data?.email,
+            phoneNumber: res?.data?.phone_number,
+            status: res?.data?.is_active,
+            userAccess: res?.data?.user_role?.role?.id,
+            approvedBy: Number(res?.data?.approved_by),
+            companyName: res?.data?.data_area_id,
           });
           setTimeout(() => {
             this.userform.patchValue({
-              name: res?.data?.full_name,
-              email: res?.data?.email,
-              phoneNumber: res?.data?.phone_number,
-              status: res?.data?.is_active,
-              userAccess: res?.data?.user_role?.role?.id,
-              approvedBy: Number(res?.data?.approved_by),
               companyName: res?.data?.data_area_id,
             });
           }, 300);
@@ -149,51 +152,53 @@ export class CreateUserComponent implements OnInit {
   }
 
   addUser() {
-    let unitUserVal=this.unitUserForm.value.unitUserArray;
-    for(let i=0;i<unitUserVal.length;i++){
-      if(unitUserVal[i].discount_percentage == "" || unitUserVal[i].profit_margin == "" ){
-        this.userFormValue= false
-      }
-      else{
-        this.userFormValue=true
+    let unitUserVal = this.unitUserForm.value.unitUserArray;
+    for (let i = 0; i < unitUserVal.length; i++) {
+      if (
+        unitUserVal[i].discount_percentage == "" ||
+        unitUserVal[i].profit_margin == ""
+      ) {
+        this.userFormValue = false;
+      } else {
+        this.userFormValue = true;
       }
     }
-    if(this.userFormValue ){
+    if (this.userFormValue) {
       this.systemAdminSerive
-      .postQuery("/auth/create-user", {
-        full_name: this.userform.value.name,
-        phone_number: this.userform.value.phoneNumber,
-        data_area_id: this.userform.value.companyName,
-        user_access_id: this.userform.value.userAccess,
-        email: this.userform.value.email,
-        is_active: this.userform.value.status,
-        unit_users: this.unitUserForm.value.unitUserArray,
-      })
-      .subscribe(
-        (res: any) => {
-          console.log("add-user-res:", res);
-          if (res.success) {
-            // let item = this.selectedAllUnits.find(x => x.id == res.data.id)
-            this.alertBody = "User Created successfully.";
-            this.successModal.show();
+        .postQuery("/auth/create-user", {
+          full_name: this.userform.value.name,
+          phone_number: this.userform.value.phoneNumber,
+          data_area_id: this.userform.value.companyName,
+          user_access_id: this.userform.value.userAccess,
+          email: this.userform.value.email,
+          is_active: this.userform.value.status,
+          unit_users: this.unitUserForm.value.unitUserArray,
+        })
+        .subscribe(
+          (res: any) => {
+            console.log("add-user-res:", res);
+            if (res.success) {
+              // let item = this.selectedAllUnits.find(x => x.id == res.data.id)
+              this.alertBody = "User Created successfully.";
+              this.successModal.show();
 
+              setTimeout(() => {
+                this.successModal.hide();
+                this.router.navigate(["/user/adduser"]);
+                this.resetForm();
+              }, 2000);
+            }
+          },
+          (err) => {
+            console.log("error:", err);
+            // this.alertBody = "Error";
+            this.dangerModal.show();
+            this.alertBody = err.error.message;
             setTimeout(() => {
-              this.successModal.hide();
-              this.router.navigate(["/user/adduser"]);
-              this.resetForm();
+              this.dangerModal.hide();
             }, 2000);
           }
-        },
-        (err) => {
-          console.log("error:", err);
-          // this.alertBody = "Error";
-          this.dangerModal.show();
-          this.alertBody = err.error.message;
-          setTimeout(() => {
-            this.dangerModal.hide();
-          }, 2000);
-        }
-      );
+        );
     }
   }
 
@@ -215,7 +220,7 @@ export class CreateUserComponent implements OnInit {
             console.log("update-user-res:", res);
             this.alertBody = "User Updated successfully.";
             this.successModal.show();
-            this.resetForm();
+            // this.resetForm();
 
             setTimeout(() => {
               this.successModal.hide();
