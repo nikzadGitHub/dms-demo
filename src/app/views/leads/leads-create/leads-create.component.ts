@@ -5,6 +5,7 @@ import { ModalDirective } from "ngx-bootstrap/modal";
 import { AgenciesService } from "../../settings/agencies/agencies.service";
 import { LeadsService } from "../leads.service";
 import { AuthService } from "../../../auth/auth.service";
+import { Location } from "@angular/common";
 
 @Component({
   selector: "app-leads-create",
@@ -24,7 +25,12 @@ export class LeadsCreateComponent implements OnInit {
   alretType: string = "company";
   filteredData: any = [];
   filteredCompanyData: any = [];
-  source_items: any = ["Partner", "Partner 1", "Partner 2"];
+  source_items: any = [
+    { title: "Partner", code: "partner" },
+    { title: "Customer", code: "customer" },
+    { title: "Enquiry", code: "enquiry" },
+    { title: "Others", code: "others" },
+  ];
   states: any = ["Selangor", "Kuala Lumpur", "Perak", "aa"];
   items: any = [
     { label: "item 1" },
@@ -38,11 +44,13 @@ export class LeadsCreateComponent implements OnInit {
   isSkipcompany: any = false;
   isSkipcontact: any = false;
   isCheck: any = false;
+  isSourceOther: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
     public leadsService: LeadsService,
     private router: Router,
+    private location: Location,
     private authService: AuthService
   ) {}
 
@@ -106,17 +114,25 @@ export class LeadsCreateComponent implements OnInit {
     this.searchCompany(company_name);
   }
   searchCompany(company_name) {
-    this.leadsService.searchCompany(company_name).subscribe((res) => {
-      if (res.success) {
-        if (res.data.id != 0) {
-          this.alertHeader = this.errorMessage;
-          this.alertBody = this.message;
-          this.foundModal.show();
-        } else {
-          this.create();
+    this.leadsService.searchCompany(company_name).subscribe(
+      (res) => {
+        if (res.success) {
+          if (res.data.id != 0) {
+            this.alertHeader = this.errorMessage;
+            this.alertBody = this.message;
+            this.foundModal.show();
+          } else {
+            this.create();
+          }
         }
+      },
+      (error) => {
+        console.log("Error:", error);
+
+        this.alertBody = error.error.message;
+        this.dangerModal.show();
       }
-    });
+    );
   }
   create() {
     this.leadsService.store(this.form.value).subscribe(
@@ -135,7 +151,7 @@ export class LeadsCreateComponent implements OnInit {
           this.successModal.show();
           setTimeout(() => {
             this.router.navigate(["/leads/", res.data.id, "verify"]);
-          }, 1000);
+          }, 2000);
         }
       },
       (error) => {
@@ -214,7 +230,18 @@ export class LeadsCreateComponent implements OnInit {
     }
   }
 
+  selectSource() {
+    console.log("source:", this.form.value.source);
+    if (this.form.value.source == "others") {
+      this.isSourceOther = true;
+    }
+  }
+
   resetForm() {
     this.form.reset();
+  }
+
+  back() {
+    this.location.back();
   }
 }
