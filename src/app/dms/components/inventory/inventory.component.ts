@@ -13,7 +13,10 @@ export class InventoryComponent implements OnInit {
   loading: boolean;
   searchTimerId: number;
   current_tab: string = 'available'; 
+  totalRecords:number;
   pageItems: number = 10;
+  pages: any[];
+
   search_text: string = '';
   menuItems: MenuItem[] = [
     {
@@ -66,10 +69,10 @@ export class InventoryComponent implements OnInit {
       clearTimeout(this.searchTimerId)
     }
     this.searchTimerId = window.setTimeout(() => {
-      this.api.getList(this.current_tab, this.search_text).subscribe((response) => {
+      this.api.getPagedList(this.current_tab, 1, this.pageItems, this.search_text)
+      .subscribe((response) => {
         if (response as InventoryList) {
           this.inventoryList = response;
-          console.log(this.current_tab);
         }
       });
     },1500)
@@ -79,12 +82,11 @@ export class InventoryComponent implements OnInit {
     this.activeItem[tabNo];
     this.current_tab = tabName;
     this.loading = true;
-    this.api.getList(tabName, this.search_text).subscribe(
-      (response) => {
-        if (response as InventoryList) {
-          this.inventoryList = response;
-        }
-        console.log(response);
+    this.api.getPagedList(tabName, 1, this.pageItems, this.search_text)
+    .subscribe((response) => {
+        this.inventoryList = response['data'];
+        this.pages = response['links'];
+        this.totalRecords = response['total'];
         this.loading = false;
       }, 
       err => {
@@ -93,4 +95,20 @@ export class InventoryComponent implements OnInit {
     );
     
   }
+
+  paginate(event){
+    this.pageItems = event.rows;
+    this.onClick(parseInt(event.page) + 1);
+  }
+
+  onClick(pageNo){
+    this.api.getPagedList(this.current_tab, pageNo, this.pageItems, this.search_text)
+    .subscribe((data)=>{
+      this.inventoryList = data['data'];
+      this.pages = data['links'];
+      this.totalRecords = data['total'];
+    })  
+  }
+
+
 }

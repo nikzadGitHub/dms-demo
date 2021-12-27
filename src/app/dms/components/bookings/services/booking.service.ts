@@ -12,13 +12,13 @@ export class BookingService implements BookingInterface {
 
   constructor(private apiClient: ApiClient) { }
 
-  getList(): Observable<BookingList> {
-    return this.apiClient.get<BookingList>('booking');
+  getList(page, pageItems): Observable<BookingList> {
+    return this.apiClient.get<BookingList>('booking?page=' + page + '&pageItems=' + pageItems);
   }
 
-  getListSearch(data: any): Observable<BookingList> {
+  getListSearch(data: any, page, pageItems): Observable<BookingList> {
     let params = (new URLSearchParams({search: data})).toString();
-    return this.apiClient.get<BookingList>('booking/search?'+ params);
+    return this.apiClient.get<BookingList>('booking/search?'+ params + '&page=' + page + '&pageItems=' + pageItems);
   }
 
   create(data: any): Observable<SaveResult> {
