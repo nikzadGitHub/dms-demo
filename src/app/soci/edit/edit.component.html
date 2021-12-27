@@ -102,10 +102,12 @@
     </div>
     <form [formGroup]="form">
       <!-- PO details -->
-      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="">
+      <p-accordion [multiple]="true" styleClass="customColor" activeIndex="" >
         <!-- header="PO Details" -->
-        <p-accordionTab>
-          <ng-template pTemplate="header">
+        <!-- [style.background-color]="color" -->
+        <!-- [ngStyle]="{'background-color' :color}" -->
+        <p-accordionTab >
+          <ng-template pTemplate="header" class="accc" style="background:black !important">
             <div class="accordian-div">
               PO Details
               <div>

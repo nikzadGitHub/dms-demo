@@ -168,7 +168,7 @@ export class EditComponent implements OnInit {
   companyId: any;
   dash = "_";
   zero = 0;
-
+color="#212529"
   payment_termValue: [];
   extended_warranty: any[] = [];
   delivery_termValue: [];
@@ -240,6 +240,7 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.color
     this.getAllDropdowns();
     this.route.queryParams.subscribe((params) => {
       this.is_approval_view_check = params.is_approval_view_check;
