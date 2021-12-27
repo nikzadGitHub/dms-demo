@@ -48,15 +48,17 @@
       >
         <ng-template pTemplate="header">
           <tr>
-            <th width="40%">User Name</th>
-            <th class="text-center" width="20%">Status</th>
-            <th class="text-center" width="20%">Creaed Date</th>
-            <th class="text-center" width="15%">Action</th>
+            <th class="text-center" width="20%px">User Name</th>
+            <th class="text-center" width="80px">Email</th>
+            <th class="text-center" width="20px">Status</th>
+            <th class="text-center" width="20px">Creaed Date</th>
+            <th class="text-center" width="15px">Action</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>
           <tr>
-            <td>{{ user.full_name }}</td>
+            <td class="text-center">{{ user.full_name }}</td>
+            <td class="text-center">{{user.email}}</td>
             <td class="text-center">{{ user.status }}</td>
             <td class="text-center">
               <div *ngIf="user.created_at">
