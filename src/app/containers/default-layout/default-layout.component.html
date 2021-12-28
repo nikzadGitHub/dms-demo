@@ -32,7 +32,10 @@
     </li>
   </ul> -->
   <ul class="nav navbar-nav ml-auto">
-    <li><span *ngIf="userRoleName">({{userRoleName}})</span> <b> {{userFullname}} </b></li>
+    <li>
+      <b> {{ userFullname + "," }} </b>&nbsp;
+      <span *ngIf="userRoleName">{{ userRoleName }}</span>
+    </li>
     <li class="nav-item d-md-down-none">
       <a class="nav-link" href="#"
         ><i class="icon-bell"></i
@@ -73,7 +76,9 @@
         <a class="dropdown-item" href="#"><i class="fa fa-tasks"></i> Tasks<span class="badge badge-danger">42</span></a>
         <a class="dropdown-item" href="#"><i class="fa fa-comments"></i> Comment<span class="badge badge-warning">42</span></a>-->
         <div class="dropdown-header text-center"><strong>Settings</strong></div>
-        <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
+        <a class="dropdown-item" href="" routerLink="/profile"
+          ><i class="fa fa-user"></i> Profile</a
+        >
         <!--<a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Setting</a>
         <a class="dropdown-item" href="#"><i class="fa fa-usd"></i> Payments<span class="badge badge-dark">42</span></a>
         <a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="badge badge-primary">42</span></a>
@@ -94,11 +99,62 @@
     [minimized]="sidebarMinimized"
     (minimizedChange)="toggleMinimize($event)"
   >
+    <!-- asdasdasdasdads -->
+    <div
+      *ngIf="!appSidebar.minimized"
+      style="display: flex; align-items: center; justify-content: space-between"
+    >
+      <img
+        src="../../../assets/img/icons/users-solid.svg"
+        alt=""
+        style="width: 18px; margin-left: 17px"
+      />
+      <p-dropdown
+        id="opc"
+        name="picList"
+        [(ngModel)]="currentUnit"
+        class="unit-drop"
+        [options]="allUnits"
+        optionLabel="title"
+        optionValue="id"
+        [required]="true"
+        (onChange)="changeUnit($event)"
+      >
+      </p-dropdown>
+    </div>
+    <div
+      *ngIf="appSidebar.minimized"
+      style="
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      "
+    >
+      <img
+        src="../../../assets/img/icons/users-solid.svg"
+        alt=""
+        style="width: 18px; height: 40px"
+      />
+    </div>
+
     <app-sidebar-nav
       [navItems]="navItems"
       [perfectScrollbar]
       [disabled]="appSidebar.minimized"
     ></app-sidebar-nav>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 15px;
+        justify-content: flex-start;
+        padding-left: 23px;
+      "
+    >
+      <p style="margin-bottom: 0px">Version:{{ version }}</p>
+    </div>
     <app-sidebar-minimizer></app-sidebar-minimizer>
   </app-sidebar>
   <!-- Main content -->

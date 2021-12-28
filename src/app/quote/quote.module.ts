@@ -23,6 +23,13 @@ import { QuoteTemplateComponent } from './quote-template/quote-template.componen
 import { QuoteMobileTemplateComponent } from './quote-mobile-template/quote-mobile-template.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import {TabViewModule} from 'primeng/tabview';
+import { FileUploadModule } from 'primeng/fileupload';
+import {DropdownModule} from 'primeng/dropdown';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {BadgeModule} from 'primeng/badge';
+import {CheckboxModule} from 'primeng/checkbox';
+import {TooltipModule} from 'primeng/tooltip';
+
 
 
 
@@ -54,7 +61,13 @@ import {TabViewModule} from 'primeng/tabview';
     AccordionModule,
     TableModule,
     InputTextModule,
-    PaginatorModule
+    PaginatorModule,
+    FileUploadModule,
+    DropdownModule,
+    MultiSelectModule,
+    BadgeModule,
+    CheckboxModule,
+    TooltipModule
   ]
 })
 export class QuoteModule { }

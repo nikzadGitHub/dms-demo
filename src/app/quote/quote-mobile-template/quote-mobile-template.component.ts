@@ -13,6 +13,7 @@ import jsPDF from "jspdf";
 
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { AuthService } from "../../auth/auth.service";
+import { QuoteService } from "../quote.service";
 
 @Component({
   selector: "app-quote-mobile-template",
@@ -23,6 +24,31 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("fileUpload") fileUpload: ElementRef;
+
+  @ViewChild("bodyContent") bodyData: ElementRef;
+  @ViewChild("headerContent") headerData: ElementRef;
+  @ViewChild("headerQuoteNo") headerQuoteNo: ElementRef;
+  @ViewChild("headerRefNo") headerRefNo: ElementRef;
+  @ViewChild("headerDate") headerDate: ElementRef;
+  @ViewChild("headerRevisionNo") headerRevisionNo: ElementRef;
+  @ViewChild("headerExpDate") headerExpDate: ElementRef;
+  @ViewChild("headerAttention") headerAttention: ElementRef;
+  @ViewChild("headerAttentionEmail") headerAttentionEmail: ElementRef;
+  @ViewChild("headerAttentionPhone") headerAttentionPhone: ElementRef;
+  @ViewChild("headerAttentionFax") headerAttentionFax: ElementRef;
+  @ViewChild("headerSalesPerson") headerSalesPerson: ElementRef;
+  @ViewChild("headerSalesPersonEmail") headerSalesPersonEmail: ElementRef;
+  @ViewChild("headerSalesPersonPhone") headerSalesPersonPhone: ElementRef;
+  @ViewChild("headerSalesPersonFax") headerSalesPersonFax: ElementRef;
+
+  @ViewChild("footerContent") footerData: ElementRef;
+  @ViewChild("price") priceFooter: ElementRef;
+  @ViewChild("deliveryP") deliveryPFooter: ElementRef;
+  @ViewChild("validity") validityFooter: ElementRef;
+  @ViewChild("paymentTer") paymentTerFooter: ElementRef;
+  @ViewChild("manufacturer") manufacturerFooter: ElementRef;
+  @ViewChild("warranty") warrantyFooter: ElementRef;
+  @ViewChild("servicing") servicingFooter: ElementRef;
 
   alertBody: string;
   alertHeader: string;
@@ -39,13 +65,25 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
   quotationId: number;
   templateId: number;
   userToken: any;
+  quotationsTemplateData: any;
+  salesPersonData: any;
+  salesPersonSignature: any;
+  quotationContent: any;
+  productDetails: any;
+  quotationContentFooter: any;
+  quotationContentHeader: any;
+  productTotalPrice: number;
+  netTotal: number;
+  discountedValue: string;
+  successMessage: string;
 
   constructor(
     @Inject(DOCUMENT) private document: any,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    private platform: Platform
+    private platform: Platform,
+    private quoteService:QuoteService
   ) {}
   ngAfterViewInit(): void {
     this.getMobileOperatingSystem();
@@ -68,6 +106,13 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.quotationId = params.quotationId;
+      this.templateId = params.templateId;
+      this.viewQuotationTemplate()
+    })
+
     this.setToken();
     let element = Array.from(
       document.getElementsByTagName(
@@ -78,21 +123,39 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
       el.style.visibility = "hidden";
     });
     // this.getMobileOperatingSystem();
-    this.toggleFullScreen();
     this.elem = document.documentElement;
+    // this.toggleFullScreen();
+    // this.elem = document.documentElement;
   }
 
-  downloadPDF() {
-    if (this.single == true) {
-      this.generateCompletePDF();
-    } else {
+  viewQuotationTemplate() { 
+
+    this.quoteService.getQuatation(this.quotationId).subscribe((res) =>{
+      this.quotationsTemplateData = res["data"]
+      this.salesPersonData = res["data"].quotations?.sales_person
+      this.salesPersonSignature = this.salesPersonData?.signature_base64
+      this.quotationContent = res["data"].quotations?.quotation_contents
+      this.productDetails = res["data"].quotations?.products
+      if(this.quotationContent){
+        this.quotationContentFooter = JSON.parse(this.quotationContent?.footer_content)
+        this.quotationContentHeader = JSON.parse(this.quotationContent?.header_content)
+      }
+      for(let i = 0; i < this.quotationsTemplateData.quotations.products.length; i++){
+        this.productTotalPrice = parseFloat(this.productDetails[i].list_price);
+      }
+      this.netTotal = this.productTotalPrice - parseFloat(this.discountedValue)
+      
+    })
+    
+    // this.router.navigateByUrl("quote/view/quote-template");
+  }
+
+  downloadUploadedPDF() {
       if (this.url) {
-        this.generateTemplatePDF();
-        this.generateQuotationImagePDF();
+        this.generateCompletePDF();
       } else {
         this.generateTemplatePDF();
       }
-    }
   }
 
   onFileSelected(event: any) {
@@ -121,7 +184,7 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
       };
       const formData = new FormData();
       formData.append("file", this.file);
-      this.alertBody = "Image uploaded successfully";
+      this.successMessage = "Image uploaded successfully";
       this.successModal.show();
     } else {
       this.alertHeader = "Image type error";
@@ -228,8 +291,8 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
         (this.templateId = params.templateId),
         (this.userToken = params.token);
     });
-    localStorage.setItem("auth-token", this.userToken);
-    await this.authService.setAuthorizationToken(this.userToken);
+    // localStorage.setItem("auth-token", this.userToken);
+    // await this.authService.setAuthorizationToken(this.userToken);
   }
   onePDF() {
     this.successModal.hide();
@@ -245,4 +308,43 @@ export class QuoteMobileTemplateComponent implements OnInit, AfterViewInit {
   reset() {
     this.fileUpload.nativeElement.value = null;
   }
+
+  savePreviewContent(){
+    // let header =  this.headerData.nativeElement.innerHTML
+    let header ={
+      quoteNo: this.headerQuoteNo.nativeElement.innerText,
+      refNo: this.headerRefNo.nativeElement.innerText,
+      date: this.headerDate.nativeElement.innerText,
+      revisionNo: this.headerRevisionNo.nativeElement.innerText,
+      expDate: this.headerExpDate.nativeElement.innerText,
+      attention: this.headerAttention.nativeElement.innerText,
+      attentionEmail: this.headerAttentionEmail.nativeElement.innerText,
+      attentionPhone: this.headerAttentionPhone.nativeElement.innerText,
+      attentionFax: this.headerAttentionFax.nativeElement.innerText,
+      salesPersonName: this.headerSalesPerson.nativeElement.innerText,
+      salesPersonEmail: this.headerSalesPersonEmail.nativeElement.innerText,
+      salesPersonPhone: this.headerSalesPersonPhone.nativeElement.innerText,
+      salesPersonFax: this.headerSalesPersonFax.nativeElement.innerText,
+    }
+    // let footer = this.footerData.nativeElement.innerHTML
+    let footer = {
+      price:this.priceFooter.nativeElement.innerText,
+      deliveryP:this.deliveryPFooter.nativeElement.innerText,
+      validity:this.validityFooter.nativeElement.innerText,
+      paymentTer:this.paymentTerFooter.nativeElement.innerText,
+      manufacturer:this.manufacturerFooter.nativeElement.innerText,
+      warranty:this.warrantyFooter.nativeElement.innerText,
+      servicing:this.servicingFooter.nativeElement.innerText,
+    }
+    let fullBody = this.bodyData.nativeElement.innerHTML
+
+    
+
+    this.quoteService.saveTemplateData(this.quotationId,JSON.stringify(header),JSON.stringify(footer),fullBody).subscribe(state=>{
+    })
+
+      this.successMessage = "Data is Updated Successfully......!!";
+      this.successModal.show();
+  }
+
 }
