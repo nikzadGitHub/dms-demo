@@ -59,6 +59,8 @@ export class SalesTargetSetupComponent implements OnInit {
   dataId: string = null;
   desc_level: [];
   dimension_disc: [];
+  userRole: any;
+  countryCode: any;
 
   constructor(
     private _fb: FormBuilder,
@@ -81,6 +83,7 @@ export class SalesTargetSetupComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userRole = JSON.parse(localStorage.getItem('userRole'))
     this.currYear = new Date().getFullYear();
     this.data = new SalesTargetSetup(
       "",
@@ -176,6 +179,7 @@ export class SalesTargetSetupComponent implements OnInit {
   }
 
   onCountryChanged(code) {
+    this.countryCode = code
     this.currency = this.countryArr.find((x) => x.code == code).currency_code;
     this._salesTargetSetupService.getUnitList(code).subscribe((res) => {
       this.desc_level=res.data.units
@@ -249,9 +253,9 @@ export class SalesTargetSetupComponent implements OnInit {
   onUnitChanged(countryCd, unitCd) {
     this._salesTargetSetupService.getFssList(countryCd, unitCd).subscribe(
       (res) => {
-        if (res) {
-          this.fssArr = res.data.sales_targets;
-        }
+        // if (res) {
+        //   this.fssArr = res.data.sales_targets;
+        // }
       },
       (err) => {
         console.log("Error ", err);
@@ -504,7 +508,7 @@ export class SalesTargetSetupComponent implements OnInit {
       country_code: data.country_code,
       unit_id: data.id,
 
-      user_id: data.user_id,
+      user_id: this.userRole.user.id,
       team_lead: data.team_lead,
       // opc_pic_user_id: data.opc_pic_user_id,
       class_id: data.class_id,
@@ -528,8 +532,14 @@ export class SalesTargetSetupComponent implements OnInit {
     
     if (this.mode == 'new') {
       this.saveSalesTargetSetup(payload);
+      setTimeout(() => {
+        this.onCountryChanged(this.countryCode)
+      }, 2000);
     } else if (this.mode == "edit") {
       this.updateSalesTargetSetup(payload);
+      setTimeout(() => {
+        this.onCountryChanged(this.countryCode)
+          }, 2000);
     }
     this.resetForm(_frm);
   }

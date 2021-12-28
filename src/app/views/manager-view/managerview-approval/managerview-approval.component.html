@@ -151,7 +151,11 @@
         </th>
         <!-- FSS Name -->
         <!-- *ngIf="checkItem('quote_date')" -->
-        <th pSortableColumn="fss_name" class="text-center">
+        <th
+          pSortableColumn="customer.primary_contact.full_name"
+          class="text-center"
+          *ngIf="checkItem('fss_name')"
+        >
           <div
             style="
               display: flex;
@@ -163,10 +167,10 @@
           >
             FSS Name
             <div class="Q-Date-icons">
-              <p-sortIcon field="fss_name"></p-sortIcon>
+              <p-sortIcon field="customer.primary_contact.full_name"></p-sortIcon>
               <p-columnFilter
-                type="date"
-                field="fss_name"
+                type="text"
+                field="customer.primary_contact.full_name"
                 display="menu"
                 class="p-ml-auto"
               ></p-columnFilter>
@@ -371,7 +375,11 @@
 
         <!-- country -->
 
-        <th pSortableColumn="customer.primary_contact.country" class="text-center" *ngIf="checkItem('country')">
+        <th
+          pSortableColumn="customer.primary_contact.country"
+          class="text-center"
+          *ngIf="checkItem('country')"
+        >
           <div
             style="
               display: flex;
@@ -524,7 +532,13 @@
           </div>
           <div *ngIf="!soci.created_at">_</div>
         </td>
-        <td class="text-center">_</td>
+        <td class="text-center" *ngIf="checkItem('fss_name')">
+          {{
+            soci?.customer?.primary_contact?.full_name
+              ? soci?.customer?.primary_contact?.full_name
+              : dash
+          }}
+        </td>
         <td class="text-center" *ngIf="checkItem('quote_full_id')">
           {{ soci.quote_full_id }}
         </td>
@@ -586,7 +600,11 @@
           </div>
         </td>
         <td class="text-center" *ngIf="checkItem('country')">
-          {{soci?.customer?.primary_contact?.country?soci?.customer?.primary_contact?.country:dash}}
+          {{
+            soci?.customer?.primary_contact?.country
+              ? soci?.customer?.primary_contact?.country
+              : dash
+          }}
         </td>
         <td class="text-center" *ngIf="checkItem('unit')">
           {{

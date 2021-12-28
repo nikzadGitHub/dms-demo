@@ -43,21 +43,21 @@ export class ManagerviewApprovalComponent implements OnInit {
   quotationBtn = "btn btn-primary";
   isManagerViewAction: boolean;
   columnValue = [
-    { name: ":Created date", key: "c_date" },
-    { name: ":SOCI ID", key: "soci_id" },
-    { name: ":Quotation ID", key: "quote_full_id" },
-    { name: "FSS Name:", key: "fss_name" },
-    { name: ":Status", key: "status_desc" },
-    { name: ":Customer PO Amount", key: "po_amount" },
-    { name: ":Customer PO No", key: "po_no" },
-    { name: ":FO Status", key: "backend_status" },
-    { name: ":FO Number", key: "fo_order_number" },
-    { name: ":Country", key: "country" },
-    { name: ":Unit", key: "unit" },
-    { name: ":Individual/Company Name", key: "company_name" },
-    { name: ":Customer PO Date", key: "po_date" },
-    { name: ":OPC", key: "opc" },
-    { name: ":Quotation Date", key: "quote_date" },
+    { name: "Created date", key: "c_date" },
+    { name: "SOCI ID", key: "soci_id" },
+    { name: "Quotation ID", key: "quote_full_id" },
+    { name: "FSS Name", key: "fss_name" },
+    { name: "Status", key: "status_desc" },
+    { name: "Customer PO Amount", key: "po_amount" },
+    { name: "Customer PO No", key: "po_no" },
+    { name: "FO Status", key: "backend_status" },
+    { name: "FO Number", key: "fo_order_number" },
+    { name: "Country", key: "country" },
+    { name: "Unit", key: "unit" },
+    { name: "Individual/Company Name", key: "company_name" },
+    { name: "Customer PO Date", key: "po_date" },
+    { name: "OPC", key: "opc" },
+    { name: "Quotation Date", key: "quote_date" },
   ];
   // is_approval_view_check: boolean;
   constructor(
