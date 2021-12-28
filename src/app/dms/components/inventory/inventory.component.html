@@ -101,7 +101,7 @@
     <ng-template pTemplate="body" let-inventoryItem>
         <tr class="p-selectable-row">
             <td class="text-center">
-                {{ inventoryItem.serial_no | number:'3.' }}
+                {{ inventoryItem.serial }}
             </td>
             <td class="text-center">
                 {{ inventoryItem.stock_keep_unit }}
@@ -116,7 +116,7 @@
                 {{ inventoryItem.description }}
             </td>
             <td class="text-center">
-                {{ inventoryItem.status }}
+                {{ current_tab }}
             </td>
             <!-- <td class="text-center">
                 {{ formatBooking(inventoryItem.booking_id) }}
@@ -132,5 +132,10 @@
         </tr>
     </ng-template>
 </p-table>
-<p-paginator [rows]="pageItems" [rowsPerPageOptions]="[10,25,50,{ showAll: 'All' }]">
+<p-paginator 
+    (onPageChange)="paginate($event)"
+    [rows]="pageItems" 
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[10, 25, 50, { showAll: 'All' }]"
+    >
 </p-paginator>

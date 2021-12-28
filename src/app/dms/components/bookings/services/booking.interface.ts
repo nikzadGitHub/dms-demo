@@ -19,8 +19,7 @@ export interface SaveResult {
 }
 
 export interface BookingInterface {
-  getList(): Observable<BookingList>;
-  getListSearch(data: any): Observable<BookingList>;
+  getList(page: number, pageItems: number): Observable<BookingList>;
   create(data: any):Observable<SaveResult>;
   updateBooking(data: any, id: any): Observable<SaveResult>;
 }

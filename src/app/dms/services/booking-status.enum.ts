@@ -41,7 +41,7 @@ export function statusToNumber(input: string | number): number {
  */
 export function statusToText(input: BookingStatus): string {
   const number = statusToNumber(input);
-  return number
+  return (number == 9 ? 2 : number)
     + ' Raising Booking Request - ' + statusFromNumber(number);
 }
 
