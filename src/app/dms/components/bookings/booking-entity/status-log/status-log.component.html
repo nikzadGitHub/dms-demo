@@ -3,14 +3,21 @@
   <!--/.col-->
   <div class="form-group">
     <p-accordion class="p-accordion">
-        <p-accordionTab class="p-accordionTab" [selected]="true">
-            <p-header class="p-header">
-                <i class="cil-briefcase"></i>
-                <span class="accordion-header">Status Log</span>
-            </p-header>
-                  <div>
-                    
-                  </div>
-        </p-accordionTab>
+      <p-accordionTab class="p-accordionTab" [selected]="true">
+        <p-header class="p-header">
+          <i class="cil-briefcase"></i>
+          <span class="accordion-header">Status Log</span>
+        </p-header>
+          <div>
+            <ul *ngIf="logs !== null; else empty" style="margin:0;padding:0;list-style: none;">
+              <li *ngFor="let log of logs" style="list-style: none; padding: 8px 16px;">
+                {{ log }}
+              </li>
+            </ul>
+            <ng-template #empty>
+              <p><small>No logs are available</small></p>
+            </ng-template>
+          </div>
+      </p-accordionTab>
     </p-accordion>
   </div>
