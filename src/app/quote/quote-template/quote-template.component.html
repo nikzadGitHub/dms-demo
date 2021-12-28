@@ -1,4 +1,9 @@
-<div class="main-content" >
+<div class="main-content">
+  <div *ngIf="loading" class="loaderDiv d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
   <div class="topButtons">
     <div class="download-btn">
       <input
@@ -15,123 +20,671 @@
         rel="nofollow"
         target="_blank"
         (click)="fileUpload.click()"
+        style="height: 35px;"
       >
         Upload Image
         <input #fileInput type="file" style="display: none" />
       </button>
-      <button class="btn btn-primary btn-sm" (click)="downloadUploadedPDF()">
-        Download Quotation
-      </button>
+    
+      <button
+      class="btn btn-primary quotationDownload"
+      (click)="downloadUploadedPDF()"
+    >
+      Download Quotation
+    </button>
+
     </div>
-    <div class="loaderText" *ngIf="loader">
-      <div><b>Uploading......</b></div>
-    </div>
+    
   </div>
   <!-- style="width: 100%" -->
-  <div class="card" id="bodyContent" #bodyContent>
-    <div #pdfTable class="" id="pdfTable">
+  <div class="card" #pdfTable id="pdfTable" #bodyContent>
+    <div>
       <div class="template-header">
         <div class="img-text">
-          <div class="">
+          <div class="headerImg" style="width: 780px">
             <img
+              style="
+                width: 150px;
+                height: 60px;
+                margin-top: 50px;
+                margin-left: 55px;
+              "
               src="../../../assets/img/logo.png"
               class="card-img-top"
               alt="..."
             />
           </div>
-          <div class="vl"></div>
-          <div class="v2"></div>
-          <div class="head-text">
-            <p> {{ quotationsTemplateData?.quotations?.companies?.address }}</p>
+          <!-- <div class="vl"></div>
+          <div class="v2"></div> -->
+          <div class="headText" style="text-align: end; width: 475px;">
+            <h4 class="textBlur">
+              IDS {{quotationsTemplateData?.quotations?.companies?.title}}
+            </h4>
+            <h4 style="color: black;">GST Registration No:000220168192</h4>
+            <h5 style="color: black;">8, {{quotationsTemplateData?.quotations?.companies?.address}}</h5>
+            <!-- <h5>4015{{quotationsTemplateData?.quotations?.companies?.address}}</h5> -->
+            <div class="phoneFax" style="display: flex ;margin-left: 105px; color: black;">
+              <h5>
+                <span><b>Telephone: {{quotationsTemplateData?.quotations?.companies?.telephone_number}} </b></span>
+              </h5>
+              <h5 class="fax" style="margin-left: 30px; color: black;">
+                <span><b> Fax: {{quotationsTemplateData?.quotations?.companies?.fax}} </b></span>
+              </h5>
+            </div>
+            <h6 style="color: black;">www.idsMED.com</h6>
+
+            <!-- <p> {{ quotationsTemplateData?.quotations?.companies?.address }}</p>
             <p><b>Telephone:</b> {{quotationsTemplateData?.quotations?.companies?.telephone_number}}</p>
             <p><b>Fax:</b> {{ quotationsTemplateData?.quotations?.companies?.fax }}</p>
             <p><b>Email:</b> {{ quotationsTemplateData?.quotations?.companies?.email }}</p>
-            <a href="#">www.idsMED.com</a>
+            <a href="#">www.idsMED.com</a> -->
           </div>
         </div>
+        <!-- <div
+          class="secondAddress"
+          style="
+            float: right;
+            text-align: end;
+            margin-right: 27px;
+            margin-top: 20px;
+          "
+        >
+          <h4><U>JOHR OFFICE</U></h4>
+          <h5>42 Jalan Pertama, Pusat Perdagangan Danga Utama {{ quotationsTemplateData?.quotations?.customer?.address }}</h5>
+          <h5>81300, Sakudai, Johr</h5>
+          <div class="phoneFax" style="display: flex">
+            <h5>
+              <p><b>Telephone: +923847678632486 </b></p>
+            </h5>
+            <h5 class="fax" style="margin-left: 50px">
+              <p><b> Fax: +923847678632486 </b></p>
+            </h5>
+          </div>
+          <span> www.idsMED.com </span>
+        </div> -->
       </div>
-
-
-      <div class="address-title">
-
-        
-        <div *ngIf="quotationsTemplateData?.quotations?.contacts?.primary_contact?.full_name">
-          {{quotationsTemplateData?.quotations?.contacts?.primary_contact?.full_name}},
-        </div>
-        
-            <div *ngIf="quotationsTemplateData?.quotations?.customer?.company_name">
-              {{  quotationsTemplateData?.quotations?.customer?.company_name}},
-            </div>
-            
-         <div *ngIf="  quotationsTemplateData?.quotations?.customer?.address">
+    </div>
+    <div class="addressDetailMain" style="display: flex">
+      <div class="address-title col-lg-6 col-md-6" 
+      style=
+      "display: flex;
+      margin-left: 40px;
+      margin-top: 13px;
+      font-size: 17px;
+      color: black;
+      flex-direction: column;">
+        <div
+          *ngIf="
+            quotationsTemplateData?.quotations?.contacts?.primary_contact
+              ?.full_name
+          "
+        >
           {{
-            quotationsTemplateData?.quotations?.customer?.address
-          }}
-         </div>
-         
-        
+            quotationsTemplateData?.quotations?.contacts?.primary_contact
+              ?.full_name
+          }},
+        </div>
+
+        <div *ngIf="quotationsTemplateData?.quotations?.customer?.company_name">
+          {{ quotationsTemplateData?.quotations?.customer?.company_name }},
+        </div>
+
+        <div *ngIf="quotationsTemplateData?.quotations?.customer?.address">
+          {{ quotationsTemplateData?.quotations?.customer?.address }}
+        </div>
+        <div *ngIf="quotationsTemplateData?.quotations?.customer?.address">
+          {{ quotationsTemplateData?.quotations?.customer?.state }}
+          {{ quotationsTemplateData?.quotations?.customer?.postal_code }}
+        </div>
+
+        <div >
+            <p>Malayisia</p>
+        </div>
+      </div>
+      <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px" id="headerContent" #headerContent>
+        <table style="color: black;">
+          <tr>
+            <th style="width: 170px">
+              <h5 style="margin-bottom: 15px">Date:</h5>
+            </th>
+            <th style="width: 170px" class="addressDetatilKey">
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" *ngIf="quotationContentHeader?.quoteNo !== '' "  [attr.contenteditable]="editable" #headerDate>{{quotationContentHeader?.date}} </h5>
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" *ngIf="quotationContentHeader?.quoteNo == '' "  [attr.contenteditable]="editable" #headerDate>{{ quotationsTemplateData?.quotations?.created_at | date: "dd-MM-yyyy" }} </h5>
+            </th>
+          </tr>
+          <tr>
+            <th >
+              <h5 style="margin-bottom: 15px">Quotation No:</h5>
+            </th>
+            <th  class="addressDetatilKey">
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" *ngIf="quotationContentHeader?.quoteNo !== '' " [attr.contenteditable]="editable" #headerQuoteNo>{{quotationContentHeader?.quoteNo}}</h5>
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" *ngIf="quotationContentHeader?.quoteNo == '' " [attr.contenteditable]="editable" #headerQuoteNo>{{quotationsTemplateData?.quotations?.quote_id}}</h5>
+            </th>
+          </tr>
+          <tr>
+            <th >
+              <h5 style="margin-bottom: 15px">Revision No:</h5>
+            </th>
+            <th  class="addressDetatilKey">
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerRevisionNo>{{quotationContentHeader?.revisionNo}}</h5>
+            </th>
+          </tr>
+          <tr>
+            <th>
+              <h5 style="margin-bottom: 15px">Your Ref:</h5>
+            </th>
+            <th  class="addressDetatilKey">
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerRefNo>{{quotationContentHeader?.refNo}}</h5>
+            </th>
+          </tr>
+
+          <tr>
+            <th>
+              <h5 style="margin-bottom: 15px">Quote Expiry Date:</h5>
+            </th>
+            <th  class="addressDetatilKey">
+              <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerExpDate>{{quotationContentHeader?.expDate}}</h5>
+            </th>
+          </tr>
+          
+        </table>
+      </div>
+    </div>
+    <div class="card-body" style="margin: 0px 30px;">
+
+      <div class="attentionRelated col-12" style="color: black; display: flex;">
+        <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px;" >
+          <table style="color: black;">
+            <tr>
+              <th style="width: 170px">
+                <h5 style="margin-bottom: 15px">Attention :</h5>
+              </th>
+              <th style="width: 170px" class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerAttention>{{quotationContentHeader?.attention}}</h5>
+              </th>
+            </tr>
+            <tr>
+              <th >
+                <h5 style="margin-bottom: 15px">Email :</h5>
+              </th>
+              <th  class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerAttentionEmail>{{quotationContentHeader?.attentionEmail}}</h5>
+              </th>
+            </tr>
+            <tr>
+              <th >
+                <h5 style="margin-bottom: 15px">Telephone :</h5>
+              </th>
+              <th  class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerAttentionPhone>{{quotationContentHeader?.attentionPhone}}</h5>
+              </th>
+            </tr>
+            <tr>
+              <th>
+                <h5 style="margin-bottom: 15px">FAX :</h5>
+              </th>
+              <th  class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerAttentionFax>{{quotationContentHeader?.attentionFax}}</h5>
+              </th>
+            </tr>
+  
+          </table>
+        </div>
+        <div class="addressDetails col-lg-6 col-md-6" style="margin-top: 15px; margin-left: 40px;">
+          <table style="color: black;">
+            <tr>
+              <th style="width: 170px">
+                <h5 style="margin-bottom: 15px">Sales Person :</h5>
+              </th>
+              <th style="width: 170px" class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" *ngIf="quotationContentHeader?.salesPersonName !== '' " [attr.contenteditable]="editable" #headerSalesPerson>{{quotationContentHeader?.salesPersonName}}</h5>
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" *ngIf="quotationContentHeader?.quoteNo == '' " [attr.contenteditable]="editable" #headerSalesPerson>{{salesPersonData?.full_name}}</h5>
+              </th>
+            </tr>
+            <tr>
+              <th >
+                <h5 style="margin-bottom: 15px">Email :</h5>
+              </th>
+              <th  class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" *ngIf="quotationContentHeader?.salesPersonEmail !== '' " [attr.contenteditable]="editable" #headerSalesPersonEmail>{{quotationContentHeader?.salesPersonEmail}}</h5>
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" *ngIf="quotationContentHeader?.quoteNo == '' " [attr.contenteditable]="editable" #headerSalesPersonEmail>{{salesPersonData?.email}}</h5>
+              </th>
+            </tr>
+            <tr>
+              <th >
+                <h5 style="margin-bottom: 15px">Telephone :</h5>
+              </th>
+              <th  class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" *ngIf="quotationContentHeader?.salesPersonPhone !== '' " [attr.contenteditable]="editable" #headerSalesPersonPhone>{{quotationContentHeader?.salesPersonPhone}}</h5>
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" *ngIf="quotationContentHeader?.quoteNo == '' " [attr.contenteditable]="editable" #headerSalesPersonPhone>{{salesPersonData?.phone_number}}</h5>
+              </th>
+            </tr>
+            <tr>
+              <th>
+                <h5 style="margin-bottom: 15px">FAX :</h5>
+              </th>
+              <th  class="addressDetatilKey">
+                <h5 style="width: 140%;height: 25px;padding: 3px;border: 1px solid lightgray;" [attr.contenteditable]="editable" #headerSalesPersonFax>{{quotationContentHeader?.salesPersonFax}}</h5>
+              </th>
+            </tr>
+  
+          </table>
+        </div>
       </div>
 
+      <div class="main-text">
+        <!-- <div  style="border: 1px solid lightgray;"   contentEditable = true data-placeholder="Enter text here"  [attr.contenteditable]="editable" id="headerContent" #headerContent 
+          [innerText]="quotationContent?.header_content">
 
-      </div> 
-      <div class="card-body">
-        <div class="initial-info">
-          <table class="table table-borderless">
-            <tbody>
-              <tr class="all-th-td-padding-bottom-none">
-                <td >
-                </td>
-                <td></td>
-                <td></td>
+          {{ quotationContent?.header_content }}
+          </div> -->
+
+        <div class="productTable">
+          <table
+            class="table table-bordered table-sm"
+            style="
+              border: 1px solid black;
+              margin-top: 20px;
+              text-align: center;
+            "
+          >
+            <thead>
+              <tr>
+                <th
+                  class="numberCol"
+                  style="width: 50px; border: 1px solid black; font-weight: bold;"
+                  scope="col"
+                >
+                  NO
+                </th>
+                <th
+                  class="descCol"
+                  style="width: 50px; border: 1px solid black; font-weight: bold;"
+                  scope="col"
+                >
+                  DESCRIPTION
+                </th>
+                <th
+                  class="numberCol"
+                  style="width: 50px; border: 1px solid black; font-weight: bold;"
+                  scope="col"
+                >
+                  Quantity
+                </th>
+                <th
+                  class="numberCol"
+                  style="width: 50px; border: 1px solid black; font-weight: bold;"
+                  scope="col"
+                >
+                  UOM
+                </th>
+                <th
+                  class="unitPriceCol"
+                  style="width: 110px; border: 1px solid black; font-weight: bold;"
+                  scope="col"
+                >
+                  UNIT PRICE
+                </th>
+                <th
+                  class="discountCol"
+                  style="width: 110px; border: 1px solid black; font-weight: bold;"
+                  scope="col"
+                >
+                  Discount
+                </th>
+                <th
+                  class="totalPriceCol"
+                  style="width: 110px; border: 1px solid black; font-weight: bold;"
+                  scope="col"
+                >
+                  TOTAL PRICE
+                </th>
               </tr>
-              <tr class="all-th-td-padding-top-bottom-none">
-                <th scope="row"><b>No. Ref: </b></th>
-                <td>
-                  <span>:&nbsp;&nbsp;&nbsp;</span
-                  >{{ quotationsTemplateData?.quotations?.quote_id }}
+                <!-- <tr style="border: 2px solid black">
+                  <th style="border: 2px solid black" scope="col">BRAND</th>
+                  <th style="border: 2px solid black" scope="col">P/N</th>
+                  <th style="border: 2px solid black" scope="col">DESCRIPTION</th>
+                  <th style="border: 2px solid black" scope="col">PRICE LIST</th>
+                </tr> -->
+            </thead>
+            <tbody>
+              <tr class="main-table-data" style="border: 2px solid black"
+              *ngFor="let item of quotationsTemplateData?.quotations?.products">
+                <!-- there should be loop for all the products -->
+                <td style="border: 2px solid black">No Data Available </td>
+                <td style="border: 2px solid black">  {{ item.name }} </td>
+                <td style="border: 2px solid black">  {{ item.name }}  </td>
+                <td style="border: 2px solid black">  {{item.list_price}} </td>
+                <td style="border: 2px solid black">  {{item.list_price}} </td>
+                <td style="border: 2px solid black">  {{item.list_price}} </td>
+                <td style="border: 2px solid black">  {{item.list_price}} </td>
+              </tr>
+
+              <tr style="border-bottom: 2px solid black">
+                <td style="border-left: 2px solid;
+                border-right: 2px solid;
+                border-bottom: 2px solid;">
+                 <ul style="list-style-type: none;font-weight: 600;padding: 0px;margin: 0px;"><li>Gross Total</li>
+                  <li>Discount</li>
+                  <li>Net Total</li>
+                  <li>GST (SR 0%)</li>
+                  <li>Total Amount</li>
+                </ul>
                 </td>
-                <th class="date-field-label"><b>Date :</b></th>
-                <td class="date-field-data">
-                  {{ quotationsTemplateData?.quotations?.created_at  | date: 'dd/MM/yyyy'}}
+                <td style="border-right: unset;"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td
+                  style="border-left: 2px solid;
+                  border-right: 2px solid;
+                  border-top: 2px solid;"
+                ><ul style="list-style-type: none;font-weight: 600; margin: 0px;
+                padding: 0px;">
+
+                  <li>{{productTotalPrice}}</li>
+                  <li style="border-bottom: 2px solid;width: 104%; margin-left: -5px;" >-</li>
+                  <li>-</li>
+                  <li>-</li>
+                  <li style="border-top: 2px solid;
+                            width: 104%;
+                            margin-left: -5px;
+                            margin-bottom: -4px;">{{productTotalPrice}}</li>
+                  </ul>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-
-        <div class="main-text">
-          <div  style="border: 1px solid lightgray;"   contentEditable = true data-placeholder="Enter text here"  [attr.contenteditable]="editable" id="headerContent" #headerContent 
-          [innerText]="quotationContent?.header_content">
-
-          {{ quotationContent?.header_content }}
+        <div style="display: flex; margin-top: 20px;" id="footerContent" #footerContent 
+        >
+        <!-- {{quotationContent?.footer_content}} -->
+          <ul style="list-style-type: none; padding: unset;">
+            <li style="width: 385px;height: 35px;"> <b> PRICE </b> </li>
+            <li style="width: 385px;height: 35px;"> <b> DELIVERY PERIOD </b> </li>
+            <li style="width: 385px;height: 35px;"> <b> QUOTE VALIDITY </b> </li>
+            <li style="width: 385px;height: 35px;"> <b> PAYMENT TERM </b> </li>
+            <li style="width: 385px;height: 35px;"> <b> MANUFACTURER </b> </li>
+            <li style="width: 385px;height: 35px;"> <b> WARRANTY </b> </li>
+            <li style="width: 385px;height: 35px;"> <b> SERVICING </b> </li>
+          </ul>
+          <ul style="list-style-type: none;margin-bottom: 20px;" >
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 385px;height: 35px;" [attr.contenteditable]="editable" #price>{{quotationContentFooter?.price}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 385px;height: 35px;" [attr.contenteditable]="editable" #deliveryP>{{quotationContentFooter?.deliveryP}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 385px;height: 35px;" [attr.contenteditable]="editable" #validity>{{quotationContentFooter?.validity}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 385px;height: 35px;" [attr.contenteditable]="editable" #paymentTer>{{quotationContentFooter?.paymentTer}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 385px;height: 35px;" [attr.contenteditable]="editable" #manufacturer>{{quotationContentFooter?.manufacturer}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 385px;height: 35px;" [attr.contenteditable]="editable" #warranty>{{quotationContentFooter?.warranty}}</li>
+            <li style="border: 1px solid lightgray; margin-bottom: 3px; width: 385px;height: 35px;" [attr.contenteditable]="editable" #servicing>{{quotationContentFooter?.servicing}}</li>  
+          </ul>
+        </div>
+        <div>
+          <p>
+            Please contact 
+            <span *ngIf="!quotationsTemplateData?.quotations?.sales_person?.full_name">_______</span> 
+            <span *ngIf="quotationsTemplateData?.quotations?.sales_person?.full_name"><b>{{quotationsTemplateData?.quotations?.sales_person?.full_name}}</b></span>,
+             <span *ngIf="!quotationsTemplateData?.quotations?.sales_person?.phone_number">_______</span>
+              <span *ngIf="quotationsTemplateData?.quotations?.sales_person?.phone_number"> (<b>{{quotationsTemplateData?.quotations?.sales_person?.phone_number}}</b>) </span> for further
+            information/clarification.<br />Kindly indicate our 
+            quotation no:<span *ngIf="!quotationContentHeader?.quoteNo">____________</span> 
+            <span *ngIf="quotationContentHeader?.quoteNo"><b>{{quotationContentHeader?.quoteNo}}</b></span>
+            on your Purchase Order and email 
+            to:<span *ngIf="!quotationsTemplateData?.quotations?.sales_person?.email">__________ </span>
+             <span *ngIf="quotationsTemplateData?.quotations?.sales_person?.email"><b>{{quotationsTemplateData?.quotations?.sales_person?.email}}</b></span>.<br />Our
+            Standard Term and condition enlose shall apply to this documents.
+          </p>
+        </div>
+        <div class="signatureDiv">
+          <div class="signatureImg">
+            <img style="width: 100px; height: 100px;" [src]="this.salesPersonSignature" alt="">
           </div>
+        </div>
 
-          <div>
-            <table class="table table-bordered table-sm">
-              <thead>
-                <tr>
-                  <th scope="col">BRAND</th>
-                  <th scope="col">P/N</th>
-                  <th scope="col">DESCRIPTION</th>
-                  <th scope="col">PRICE LIST</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="main-table-data" *ngFor="let item of quotationsTemplateData?.quotations?.products">
-                  <!-- there should be loop for all the products -->
-                  <td>No Data Available </td>
-                  <td> {{ item.name }} </td>
-                  <td>{{ item.name }}</td>
-                  <td>  {{item.list_price}} </td>
-                </tr>
-              </tbody>
-            </table>
+        
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br><br>
+        <br><br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br><br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br><br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br><br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        
+        <div class="mainTermCo" id="termsConditions">
+          <h3 class="text-center"> Terms & Conditions </h3>
+          <h5 class="text-center"> lDSMEDY <br>
+            IDS Medical Systems (M) Sdn Ohd <br>
+            Standara Terms -  Conditions
+           </h5>
+          <div class="termsCoList" style="display: flex; margin-top: 50px;">
+            <div class="orderList col-lg-5 col-md-5" style="width: 520px; 
+            margin-right: 130px;
+            margin-left: 30px;" >
+                   <b>1. Acceptance</b> <br> <br>
+                  • The following terms and conditions govern the sale of products (“Product” or "Products") and
+                  provision of services (“Service" or "Sery1ces”) 6y IDS Medical Systems tMj Sdn Bhd (henceforth
+                  known as "Seller”). Setter expressly accepts the purchase order of the customer (henceforth known
+                  as "8uyer"), onty on Buyer‘s acceptance of the following terms and conditions of sate.
+                  Acceptance by Buyer is limited to the following terms and conditions. The following terms and
+                  condit ons wilf replace any other additi0nat or different terms and conditions to which notice
+                  of objection is hereby given. Ne ther Setter's commencement of performance or delivery
+                  Shall be deemed or construed as acceptance of Buyer's addition at or different conditions.
+                  Buyer's acceptance of the terms and conditions set out In this document shaft be conclusively
+                  established either from Buyer's acceptance lpartiat or futl) of any or aft the goods, or from
+                  Buyer's payment for any of or atl the goods. <br> <br>
+                   <b>2. Orders</b> <br> <br>
+                  • Alf orders ptaced by Buyer and received by Seller are considered accepted upon receipt of
+                  the orders, untess otherv•1se notJfJed dy Seller to 8uyer. Orders ptaced cannoc be cancelled or
+                  be rescheduled without Seller‘s consent. Buyer shall inctude the fottoyY1ng information, clearly
+                  and legibly, In Its orders: (a) date of placement of the order; (b) Product or Service type and
+                  quantity of Product or Service required; (c) requested delivery location, date, and recipienti
+                  (d) any critical remarM or comments to the sales order. <br><br>
+
+                  Seller shatl acknowledge Buyer's purchase order within a reasonable response time and
+                  provide confirmation on the acceptance or rejection of the purchase order. Upon
+                  accepLance of tfie order, Seller shalt deliver goods purchased in this document to the best of its
+                  ability to ensure that Buyer's needs are met promptly. Setfer shall retain the right to atlocate
+                  Products to its customers as Seller deems necessary. <br><br>
+                  • Buyer shall have the right to cancel orders submitted to and accepted by Seller, provided
+                  that prior consent of Seller has been obtained on tfie cancellation.
+                  Upon Ake ceofirmation of purchase order, Buyer sha\\ pay a noo- refundable deposit to Seller for
+                  the amount specified Tn the purchase order document. This deposit amount shatl be deducted
+                  from the finat invoice that 1s due upon delivery of products to the better. If this transaction
+                  falls to close for any reason other than defautt by Seller, the deposit shaft remain
+                  non-refundable. <br> <br>
+                   <b>3. Prices</b> <br> <br>
+                  • Prices of Products or that of Services are as specified In this document. $eller may
+                  increase prices of undetivered Products or Services In the event of an Increase In Seller's cost or
+                  that of Its suppliers, a change in market conditions, or effects of Force Majeure events (as
+                  detailed in "Force Majeure" section of Setter's Standard Terms and Conditions of Sale) tfiat
+                  are beyond Setler's reasonable control.<br><br>
+
+                  • Pnces and yaftdity of the prices quoted are effective only for the terms specified In this
+                  document.
+                  Buyer agrees to pay all costs in excess of the quoted prices untess the safe Is exempt from any
+                  additional costs or taxes. Buyer shatl be not fled of any excess costs or taxes where
+                  applicable, and any excess costs or taxes *halt appear as separate items on Seller's
+                  document. <br> <br>
+
+                   <b>4. Payment Terms</b> <br> <br>
+                  • Payment 1s due upon delivery to customer or In accordance to the gayrnent terms stated \n
+                  tbts doc\Jment to Buyer un\ess otherwise stated In writing by Seller, or agreed between Buyer
+                  and Sefter.
+                  Att payments must be received by Seller net of all bank charges and withhotdJng taxes whatsoever.
+                  The Buyer shaft be subject to a late payment penalty of twelve (12) percent per annum above the
+                  local average prime lending rate, the penalty compounded on a daily basis on the amount due,
+                  from the due date to date of Buyer's futt payment.
+                  • Buyer shalt pay for transportaMon charges from 5efter's family to Buyer's designated
+                  delivery location, untess othelse agreed by Seller Tn writing. Seller retains right to select
+                  Buyer’s delivery carrier in absence of specific charter instructions from Buyer. Setter may bitf
+                  each shipment separately; each billing shall be considered a separate, individual contract
+                  between Seller and Buyer. <br> <br>
+                   <b>5. Delivery</b> <br> <br>
+                  • Atl deliveries shall be made, according to the rerms of this document, to Buyer's
+                  designated point of delivery unless otherwise stated Tn writing by Seller, or agreed between
+                  Sefter and Buyer. Selter shall be deemed to have completed deli very upon transfer to Buyer’s
+                  carrier (whether designated by Buyer or better) or Buyer's stated destination of delivery, where
+                  aft risks of damage or loss to the Products shall pass to Buyer.
+                  Buyer shall pay for aft charges and costs Incurred by Seller Tn holding stocM for delayed defiveDes
+                  caused by Buyer, such as, but not limited to, project delays by Buyers and other refusals to accept
+                  delivery afcer order has been confirmed by Selter.
+                  Buyer accepts that Seller's stated delivery dates are provided to the best of Setler's ability and
+                  are estimates only. better shatl not be fiaDte for delays in delivery or for performance failures
+                  due to reasons beyond the control of Setfer, including, but not tJmited to, factors such as
+                  supplier related delays or any factor deemed as an event or events under Force WJeure,
+                  thus excusing Selter from liabilities of any non-performance and from remedy of such
+                  non-performance, unless otherwise agreed between Sefter and Buyer.
+                  Buyer shat\ grant Se\\er a de\fiery deadline extension equa\ to the tlme lost resulting fr0m any
+                  sucfi delay in delivery. Setter shalt be allowed to remedy the delay without Sefter being
+                  subjected to any liability whatsoever. heifer shall, in no way whatsoever, be ITabte for any
+                  compensation or penalties thereafter that Buyer seeks from Seller, due to such late
+                  deliveries as mentioned. <br><br>
+
+                  Seller remains the right to use commercially reasonable efforts to maintain, at Its sole
+                  discretion, its Inventory of stocM at a tevet appropriate and sufficient for better to meet any
+                  orders placed Cth Seller. Setfer shalt not be obliged to maintain Its Inventory according to
+                  Buyer's conditions in any way whatsoever. <br> <br>
+
+                   <b>6. Acceptance and Returns</b> <br> <br>
+                  • 8uyer’s acceptance of any shipment shatl be deemed to be established upon
+                  delivery of said shipment at Buyer's designated delivery destination or carrier. Buyer has
+                  the nght to perform any required Inspection or test necessary. However, Buyer must either accept or
+                  reject the Products upon delivery. Alf claims by Buyer for any defect, shortfall, or fault In
+                  the goods in this document must be made immed atety upon delivery of the goods by Seller to
+                  Buyer’s designated delivery point or carrier. 8uyer shall be presumed to have waived any such
+                  complaint after the glven cure period.
+                  Standard Terms & Conditions VI. 1 iDSMEDY<br><br> 
+
+                  • For returns, Bar sha\\ not be entitled to return any goods purchased in this
+                  document in return for credit In any way, without first obtaining written
+                  permission from better beforehand. Credit shall be provided only on defective products proven
+                  to be caused by Seller's suppliers after return authorization is provided by
+                  $elfer, and upon fult satisfactory inspection of the goods by Seller's suppliers wtiere the
+                  cause of the defect has been fully determined. <br> <br>
+
+                  
+            </div>
+            <div class="orderList col-lg-5 col-md-5" style="width: 520px;">
+               <b>7. Warranty</b> <br> <br>
+                  • Seller warrants that the goods supplied vnder this document shalt conform to
+                  the descriptions and manufacturing specJf cations issued by Setter's suppliers
+                  or the Product manufacturers, for any such stated warranty period, starting from the
+                  date of Buyer's purchase better shatt have no fiabit ty to purchase any extended
+                  warranty from Product manufacturers or third-party vendors beyond the Initial
+                  manufacturing warranties gTyen. <br><br>
+
+                  Setter retains the ight to repair or replace any detective Product, or to refund to
+                  Buyer the Purchase price paid In this document for the Product, at Seller‘s discretion.
+                  Alt cfalms from Buyer shatt not exceed the sum of Buyer's paid amounts for such
+                  defective Products in th1s document. Seller's sa d warranty is the only warranty with
+                  respect to the goods in thus document. I\I other warranties, implied or expressed, shatl be
+                  disclaimed. Sefter's liability for breach of warranty shatl be limited sotety to the
+                  replacement of the defective goods Tn this document. <br><br>
+
+                  Selter's sald warranty shatl not apply to non-conforming Products caused by mlsuse,
+                  mfshandlJng, negligence, or tack of care by Buyer or Buyer's customers, agents, or
+                  employees Involving the use of the goods supplied by Seller. The said warranty shall
+                  not apply ro non-conforming Products operated in a way dJyergent either from usage instrucNpns
+                  provided by the Product's manufacturers, or from Industry standards regarding
+                  Installation, commfssloning, maintenance or operation of such Products. <br><br>
+
+                  • better shall bear no l1ablI1ty for copyright, design, or patent infringements
+                  that are caused by the sate of tfie Products to Buyer. Buyer accepts that all said
+                  liabilities shall be levied on the Product manufacturers who are Jrrefutabfy responsible for
+                  such infringements. <br><br>
+
+                  Seller shall, in no event, be legatty responsible for any incldentat, indirect,
+                  or consequential damages resulting from projected or actuat lost profits, toss of
+                  data or business, business delays, loss of goodwill, incurred expenses, and any other
+                  losses that mlght arise as a dlrect or indirect outcome of tfie sale or use of the Products
+                  sold in this document. Seller shall not be liable for any of the said losses because of
+                  Sefter's tack of advisory or knowledge on the possibility of such damages, or
+                  because of Seller’s non <br><br>
+                  •performance or inadequate performance of lrs obligations,
+                  regardless of any basks on warranty, tort, contract, or any other legal theory. <br><br>
+
+               <b>8. Default</b> <br><br>
+              Seller  reserves  the rJght to cancel any or all outstanding order or orders from  Buyer, and  to 
+              enforce upon  Buyer atl  payments due  and   payable,  at  any  rjme  should  Buyer  demonstrate  a 
+              breach  or  default  in  the terms  and  conditions  set out  in  this document.
+              
+              Buyer  shalt  compensate  Seller  for  att  expenses  Involved   in pursuing  remedies  to Buyer's 
+              default  or  breach  of  conditions, including   atl   attorney   fees   and   legal   expenses   
+              deemed reasonable  by Seller. <br><br>
+              
+              
+                    <b>9. Limftazion of liability</b> <br><br>
+              Sefter's  liability  to  Buyer  shall  not  exceed  the  amount  of  the purchase  price  paid  by  
+              Buyer  in  thls  document,  regardless  of any   basis   In   tort,   in   contract,   under   any  
+               warranty,   in negligence, or In any other legal theory. The goods sold In thls document are 
+              subject to the manufacturing  practices of better's suppliers,  and  Buyer shall not hold Sefter  
+              liable for any dlrect, indirect, or consequential damages.<br><br>
+              
+              •        Buyer agrees to hold Setler harmless from any ctaims, demands, fiabilltfes,  expenses,  or 
+               costs  whatsoever  arising  out  of  the negligence  or  lack  of  care  by  Buyer  or  Buyer's  
+              customers, agents, or employees invof¿ng tfie use of  the goods supplied  by Setler.    euyer's    
+              Indemnification   shatl    include    aft    costs, attorney's  fees,  and  all other expenses  
+              paid  or imposed  upon Setfer  In  defense  of  any  sucfi  liabilities.  Buyer  accepts  that 
+              better shatl not be held resp0nsible, in any way whatsoever,  for any death  or  personal  Injury  
+              adsJng  out  of  the  negligence  or tack   of   care   by   Buyer   or   Buyer's   customers,   
+              agents,   or employees  caused  direct\y or  Indirectly  by the g0ods supplied by Seller. <br><br>
+              
+                  <b>10. Force fitaseure</b> <br><br>
+              •        Seller shatl nof  be liable in the case of Setfer's Inability to futfit obligations  for  
+              any  orders  ptaced  by  Buyer,  or  for  delivery delays, due to factors beyond Sefter‘s 
+              reasonable control.
+              
+              Tfiese events Include,  but are not limited  to: acts of God, riot, war,  strike,   delay   by  any 
+               designated   canter,  shortage   of Product,  acts or omissions  of  other  pa+ties,  acts of  
+              terronsm, natural or artificial  catastrophes,  acts or omissions  of  civil or military   
+              authority,   government   pnioritTes,   Changes   In   law, mateniat shortages,  fire, strikes, 
+              ftoods, epidemics,  quarantine restnctions,  delays  in   transportation  or  inability   to  
+              obtain
+              \abor, matenals, or Produc\s tf+rough its regular sources, which shatl  be considered  Force 
+              Majeure evenU excusing Setler from performance and  barring Seller remedies for non-performance. 
+              Buyer   accepts   that   Seller   shaft   inform   Buyer   about   the occurrence  of  any  Force  
+              Majeure  event  within  a  reasonable time. <br><br>
+              
+                   <b>11. Product  Recall</b> <br><br>
+              •        In  the event  that any government  entity issues or requests,  or II Seller  or  Its 
+              suppliers  consider,  that  a  product  recalt,  flefd safety  correction,  containment  or  hold  
+              action  relating  to  the Products  is  necessary,  Buyer  shall  cooperate  with  Seller  and 
+              comply  with  Seller's  instructions  required  to  remedy such  an event.  Seller  shall   notify  
+              Buyer  as  promptly  as  reasonably practical   on  such  events.  Setler  shall   have  control  
+              of   the manner In which any such  remedy actions shalt be conducted. <br><br>
+              
+              <b>12. Governing Law</b> <br><br>
+              •        Buyer  and  lefter  agree  that  the  laws of  Malaysia  shall govern and  construe  any 
+              agreement  that stems  from  kf\ts document. Buyer  shaft  not  assign  its  obligations  under  
+              this  Agreement (whether In part or In full) without  the prfor written consent of Sefter.  The 
+              jurisdicnon  for  the resolution  of  any disputes shall be assigned  to Kuata Lumpur  Regional 
+              Centre for Arbitration  to resolve any disputes anis4ng from this transaction. <br><br>
+              
+            </div>
           </div>
-          <br>
-          <br>
-          <br>
-          
-          <div style="border: 1px solid lightgray;" class="list-detail" contentEditable = true data-placeholder="Enter text here"  [attr.contenteditable]="editable" id="footerContent" #footerContent
+        </div>
+        
+        <!-- <div style="border: 1px solid lightgray;" class="list-detail" contentEditable = true data-placeholder="Enter text here"  [attr.contenteditable]="editable" id="footerContent" #footerContent
           [innerText]="quotationContent?.footer_content" >
           {{ quotationContent?.footer_content }}
           </div>
@@ -143,49 +696,54 @@
                 {{quotationsTemplateData?.quotations?.sales_person?.full_name}}
               </span
               ><br />
-            </p>
-        </div>
-      </div>
-    </div>
-    <div class="previewSave">
-      <button class="btn btn-primary saveButton" (click)='savePreviewContent()' >Save</button>
-      <button class="btn btn-primary quotationDownload" (click)='downloadQuotationTemplate()' > Download Quotation </button>
-    </div>
-  </div>
-
-  <div #pdfTable class="" id="pdfTable">
-    <div class="card" style="width: 100%" *ngIf="check">
-      <div class="show-image">
-        <img [src]="url" alt="" />
+            </p> -->
       </div>
     </div>
   </div>
+  <div class="previewSave">
+    <button class="btn btn-primary saveButton" (click)="savePreviewContent()">
+      Save
+    </button>
+    <!-- <button
+      class="btn btn-primary quotationDownload"
+      (click)="downloadQuotationTemplate()"
+    >
+      Download Quotation
+    </button> -->
+  </div>
+</div>
 
-
+<div #pdfTable class="" id="pdfTable">
+  <div class="card" style="width: 100%" *ngIf="check">
+    <div class="show-image">
+      <img [src]="url" alt="" />
+    </div>
+  </div>
+</div>
 
 <!-- display succes message -->
 <div
-id="success"
-bsModal
-#successModal="bs-modal"
-class="modal fade"
-tabindex="-1"
-role="dialog"
-aria-labelledby="myModalLabel"
-aria-hidden="true"
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
 >
-<div class="modal-dialog modal-success" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title">Success</h4>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ successMessage }}</p>
+      </div>
     </div>
-    <div class="modal-body">
-      <p>{{ successMessage }}</p>
-    </div>
+    <!-- /.modal-content -->
   </div>
-  <!-- /.modal-content -->
-</div>
-<!-- /.modal-dialog -->
+  <!-- /.modal-dialog -->
 </div>
 
 <div
@@ -253,7 +811,7 @@ aria-hidden="true"
   <div class="modal-dialog modal-danger" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">{{ alertHeader }}</h4>
+        <h3 class="modal-title">{{ alertHeader }}</h3>
       </div>
       <div class="modal-body">
         <p>{{ alertBody }}</p>

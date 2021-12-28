@@ -32,7 +32,7 @@ export class ButtonEvent {
   styleUrls: ['./booking-approval.component.scss']
 })
 export class BookingApprovalComponent implements OnInit {
-  private _status = BookingStatus.unknown;
+  public _status:string = BookingStatus.unknown;
   private _bookingReason: any;
 
   alertBody: string;

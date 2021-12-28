@@ -1,15 +1,20 @@
 <div class="animated fadeIn">
-
   <div class="row">
-
     <div class="col-md-12">
-
-      <div class="card">
-
+      <!-- <div class="card">
         <div class="card-body">
+        </div>
+      </div> -->
 
-          <form [formGroup]="formBooking" (ngSubmit)="onSave()" class="form-horizontal">
-
+      <!-- Start of form --> 
+      <form
+        [formGroup]="formBooking"
+        (ngSubmit)="onSave()"
+        class="form-horizontal"
+      >
+        <!-- start of the form content inside a card -->
+        <div class="card">
+          <div class="card-body">
             <div class="form-group row">
               <label class="col-md-2 col-form-label">Status</label>
               <div class="col-md-9">
@@ -19,37 +24,49 @@
 
             <div class="row">
               <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-md-4 col-form-label" for="booking-reason">Booking reason</label>
-                    <div class="col-md-8" *ngIf="!editable">
-                      <select
-                        formControlName="booking_reason"
-                        (change)="changeReason($event.target.value)"
-                        class="form-control"
-                        [(ngModel)]="selectedBooking"
-                        [attr.disabled]="editable"
+                <div class="form-group row">
+                  <label class="col-md-4 col-form-label" for="booking-reason"
+                    >Booking reason</label
+                  >
+                  <div class="col-md-8" *ngIf="!editable">
+                    <select
+                      formControlName="booking_reason"
+                      (change)="changeReason($event.target.value)"
+                      class="form-control"
+                      [(ngModel)]="selectedBooking"
+                      [attr.disabled]="editable"
+                    >
+                      <option
+                        [value]="reason.id"
+                        [attr.selected]="
+                          bookingDetailList.booking_reason == reason.id
+                            ? true
+                            : null
+                        "
+                        *ngFor="let reason of bookingReasons"
                       >
-                        <option
-                          [value]="reason.id"
-                          [attr.selected] = "bookingDetailList.booking_reason == reason.id ? true : null"
-                          *ngFor="let reason of bookingReasons"
-                        >
-                          {{ reason.name }}
-                        </option>
-
-                      </select>
-                    </div>
-                    <div *ngIf="editable">
-                      <input class="form-control" type="text" value="demo" disabled />
-                    </div>
+                        {{ reason.name }}
+                      </option>
+                    </select>
                   </div>
+                  <div *ngIf="editable">
+                    <input
+                      class="form-control"
+                      type="text"
+                      value="demo"
+                      disabled
+                    />
+                  </div>
+                </div>
               </div>
 
               <div class="col-md-6">
                 <div class="form-group row">
                   <label class="col-md-4 col-form-label">Booking No</label>
                   <div class="col-md-8">
-                    <p class="form-control-static">{{ bookingDetailList.booking_no }}</p>
+                    <p class="form-control-static">
+                      {{ bookingDetailList.booking_no }}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -65,29 +82,37 @@
             <div class="form-group row">
               <label class="col-md-2 col-form-label">Customer</label>
               <div class="col-md-4">
-                <select formControlName="customer" class="form-control" >
+                <select formControlName="customer" class="form-control">
                   <option value="">Please select</option>
-                  <option *ngFor="let customer of customers" value="{{customer.id}}">{{customer.company_name}}</option>
+                  <option
+                    *ngFor="let customer of customers"
+                    value="{{ customer.id }}"
+                    >{{ customer.company_name }}</option
+                  >
                 </select>
               </div>
             </div>
 
             <div class="form-group row">
-              <label class="col-md-2 col-form-label" for="branch">Branch/site</label>
+              <label class="col-md-2 col-form-label" for="branch"
+                >Branch/site</label
+              >
               <div class="col-md-4">
-                <input type="text" formControlName="branch"  class="form-control">
+                <input
+                  type="text"
+                  formControlName="branch"
+                  class="form-control"
+                />
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label
-                    class="col-md-4 col-form-label"
-                    for="date-of-delivery">
+                  <label class="col-md-4 col-form-label" for="date-of-delivery">
                     Preferred Date of Delivery
                   </label>
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <input
                       class="form-control"
                       formControlName="date_of_delivery"
@@ -119,9 +144,7 @@
             </div>
 
             <div class="form-group row">
-              <label
-                class="col-md-2 col-form-label"
-                for="demo-duration">
+              <label class="col-md-2 col-form-label" for="demo-duration">
                 Demo Duration *
               </label>
               <div class="col-md-2">
@@ -129,15 +152,16 @@
                   type="number"
                   formControlName="demo_duration"
                   class="form-control"
-                  (change)="durationChanged()"
                   [value]="duration"
-                  />
+                />
               </div>
               <div class="col-md-2">Days</div>
             </div>
 
             <div class="form-group row">
-              <label class="col-md-2 col-form-label" for="department">Ship-to Department/ Warde</label>
+              <label class="col-md-2 col-form-label" for="department"
+                >Ship-to Department/ Warde</label
+              >
               <div class="col-md-4">
                 <input
                   type="text"
@@ -150,9 +174,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label
-                    class="col-md-4 col-form-label"
-                    for="contact-name"
+                  <label class="col-md-4 col-form-label" for="contact-name"
                     >Ship to Contact Name
                   </label>
                   <div class="col-md-8">
@@ -167,9 +189,7 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label
-                    class="col-md-4 col-form-label"
-                    for="contact-number"
+                  <label class="col-md-4 col-form-label" for="contact-number"
                     >Ship-To Contact Number
                   </label>
                   <div class="col-md-6">
@@ -184,8 +204,71 @@
               </div>
             </div>
 
-            <!-- Start Of Opportunity Section -->
-            <div [ngClass]="selectedBooking == 2 ? 'opportunityAppear' : 'opportunity'">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 col-form-label" for="contact-name"
+                    >Ship to Contact Name
+                  </label>
+                  <div class="col-md-8">
+                    <input
+                      class="form-control"
+                      formControlName="contact_name"
+                      type="text"
+                      name="contact-name"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 col-form-label" for="contact-number"
+                    >Ship-To Contact Number
+                  </label>
+                  <div class="col-md-6">
+                    <input
+                      class="form-control"
+                      formControlName="contact_number"
+                      type="text"
+                      name="contact-number"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Remarks Part -->
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="remarks"
+                >Remarks</label
+              >
+              <div class="col-md-9">
+                <textarea
+                  formControlName="remarks"
+                  rows="9"
+                  class="form-control"
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- save button section  -->
+            <div class="custom-footer d-flex justify-content-center">
+              <button type="submit" class="btn btn-sm btn-primary">
+                <i class="fa fa-plus"></i> Save
+              </button>
+            </div>
+            <!-- save button section end -->
+          </div>
+        </div> 
+        <!-- End of the form content inside a card -->
+
+        <!-- Start Of Opportunity Section -->
+        <div
+          class="card"
+          [ngClass]="selectedBooking == 2 ? 'opportunityAppear' : 'opportunity'"
+        > 
+          <div class="card-body">
+            <div>
               <p><strong class="opportunityTitle">Opportunity</strong></p>
 
               <hr />
@@ -195,15 +278,14 @@
                   <div class="opportunityBoxesSameFirst">
                     <label for="" class="opportunityBoxesLabel"
                       >Opportunity ID-Version</label
-                    > 
+                    >
                     <div>
                       <input
-                        formControlName="opportunity_code"
-                        type="text"
+                        type="text" 
                         class="form-control oppoturiniIdIput disabled"
-                        disabled
+                        [disabled]="true"
                         placeholder="EX: BKYXXXX"
-                      />
+                     />
                     </div>
                   </div>
                   <div class="opportunityBoxesSameFirst">
@@ -212,11 +294,13 @@
                     >
                     <select
                       formControlName="initiator"
+                      (change)="changeAnswer($event.target.value)"
                       class="form-control"
+                      [(ngModel)]="defaultAnswer"
                     >
                       <option
-                        [value]="answer.ans"
-                        *ngFor="let answer of initiatorValues"
+                        [value]="defaultAnswer"
+                        *ngFor="let answer of defaultAnswers"
                         >{{ answer.ans }}</option
                       >
                     </select>
@@ -231,10 +315,12 @@
 
                     <select
                       formControlName="probability"
+                      (change)="changePercentage($event.target.value)"
                       class="form-control"
+                      [(ngModel)]="selectedPercentage"
                     >
                       <option
-                        [value]="percentage.value"
+                        [value]="percentage.id"
                         *ngFor="let percentage of defaultPercentages"
                         >{{ percentage.value }}</option
                       >
@@ -246,11 +332,13 @@
                     >
                     <select
                       formControlName="is_competitor_in_demo"
+                      (change)="changeAnswer($event.target.value)"
                       class="form-control"
+                      [(ngModel)]="defaultAnswer"
                     >
                       <option
-                        [value]="answer.value"
-                        *ngFor="let answer of participateInDemoAns"
+                        [value]="answer.id"
+                        *ngFor="let answer of defaultAnswers"
                         >{{ answer.ans }}</option
                       >
                     </select>
@@ -261,10 +349,12 @@
                     <label for="" class="opportunityBoxesLabel">Priority</label>
                     <select
                       formControlName="priority"
+                      (change)="changePrioritye($event.target.value)"
                       class="form-control"
+                      [(ngModel)]="defaultPriority"
                     >
                       <option
-                        [value]="priority.name"
+                        [value]="priority.id"
                         *ngFor="let priority of defaultPriorities"
                         >{{ priority.value }}</option
                       >
@@ -276,12 +366,14 @@
                     >
                     <select
                       formControlName="squence_of_demo"
+                      (change)="changePriority($event.target.value)"
                       class="form-control"
+                      [(ngModel)]="defaultPriority"
                     >
                       <option
-                        *ngFor="let sod of sequenceOfDemoValues"
-                        [value]="sod.value"
-                        >{{ sod.ans }}</option
+                        [value]="priority.id"
+                        *ngFor="let priority of defaultPriorities"
+                        >{{ priority.value }}</option
                       >
                     </select>
                   </div>
@@ -289,21 +381,7 @@
               </div>
 
               <div class="opportunitiesText">
-                <div><label for="pain_points">Pain Point</label></div>
-                <div>
-                  <textarea
-                    formControlName="pain_points"
-                    cols="30"
-                    rows="4"
-                    style="resize:none;"
-                  ></textarea>
-                </div>
-              </div>
-
-              <div class="opportunitiesText">
-                <div>
-                  <label for="selling_points">Features To highlight</label>
-                </div>
+                <div><label for="selling_points">Point Point</label></div>
                 <div>
                   <textarea
                     formControlName="selling_points"
@@ -315,7 +393,9 @@
               </div>
 
               <div class="opportunitiesText">
-                <div><label for="customer_feedback">users Feedback</label></div>
+                <div>
+                  <label for="customer_feedback">Features To highlight</label>
+                </div>
                 <div>
                   <textarea
                     formControlName="customer_feedback"
@@ -325,122 +405,171 @@
                   ></textarea>
                 </div>
               </div>
-            </div>
-            <!-- End Of Opportunity Seciton -->
 
-            <div class="form-group row">
-              <label class="col-md-2 col-form-label" for="remarks">Remarks</label>
-              <div class="col-md-9">
-                <textarea formControlName="remarks" rows="9" class="form-control"></textarea>
+              <div class="opportunitiesText">
+                <div><label for="opportunity_code">users Feedback</label></div>
+                <div>
+                  <textarea
+                    formControlName="opportunity_code"
+                    cols="30"
+                    rows="4"
+                    style="resize:none;"
+                  ></textarea>
+                </div>
               </div>
             </div>
-
-            <!-- bme log -->
-            <div class="form-group"  *ngIf="showBmeLogSec  == true">
-              <p-accordion class="p-accordion">
-                  <p-accordionTab class="p-accordionTab" [selected]="true">
-                      <p-header class="p-header">
-                          <i class="cil-info"></i>
-                          <span class="accordion-header">Bme Logs</span>
-                      </p-header>
-                      <table class="table table-bordered">
-                          <thead>
-                              <tr>
-                                  <th>Work Order Type</th>
-                                  <th>Required ?</th>
-                                  <th>Work Order Number</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                  <td>Contingency</td>
-                                  <td>
-                                      <select class="form-control" formControlName="wo_con_req">
-                                          <option [value]="1" selected>Yes</option>
-                                          <option value="0">No</option>
-                                      </select>
-                                  </td>
-                                  <td><input type="text" class="form-control" formControlName="wo_con_won" readonly></td>
-                              </tr>
-                              <tr>
-                                <td>PDI</td>
-                                <td>
-                                    <select class="form-control" formControlName="wo_pdi_req">
-                                        <option value="1" selected>Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" class="form-control" formControlName="wo_pdi_won" readonly></td>
-                              </tr>
-                              <tr>
-                                <td>Installation</td>
-                                <td>
-                                    <select class="form-control" formControlName="wo_ins_req">
-                                        <option value="1" selected>Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" class="form-control" formControlName="wo_ins_won" readonly></td>
-                              </tr>
-                              <tr>
-                                <td>TNC</td>
-                                <td>
-                                    <select class="form-control" formControlName="wo_tnc_req" >
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" class="form-control" formControlName="wo_tnc_won" readonly></td>
-                              </tr>
-                              <tr>
-                                <td>Training</td>
-                                <td>
-                                    <select class="form-control" formControlName="wo_trn_req">
-                                        <option value="1" selected>Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" class="form-control" formControlName="wo_trn_won" readonly></td>
-                              </tr>
-                              <tr>
-                                <td>Warehouse QA</td>
-                                <td>
-                                    <select class="form-control" formControlName="wo_wq_req">
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" class="form-control" formControlName="wo_wq_won" readonly></td>
-                              </tr>
-                              <tr>
-                                <td>Post-Deployment Repair</td>
-                                <td>
-                                    <select class="form-control" formControlName="wo_pdr_req">
-                                        <option value="1" selected>Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" class="form-control" formControlName="wo_pdr_won" readonly></td>
-                              </tr>
-
-                          </tbody>
-                      </table>
-                  </p-accordionTab>
-              </p-accordion>
-            </div>
-            <!-- bme log -->
-            
-            <div class="custom-footer d-flex justify-content-center">
-              <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Save</button>
-            </div>
-
-          </form>
+          </div>
+        </div> 
+        <!-- End Of Opportunity Seciton -->
+ 
+        <!-- bme log start-->
+        <div class="form-group" *ngIf="showBmeLogSec == true">
+          <p-accordion class="p-accordion">
+            <p-accordionTab class="p-accordionTab" [selected]="true">
+              <p-header class="p-header">
+                <i class="cil-info"></i>
+                <span class="accordion-header">Bme Logs</span>
+              </p-header>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Work Order Type</th>
+                    <th>Required ?</th>
+                    <th>Work Order Number</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Contingency</td>
+                    <td>
+                      <select class="form-control" formControlName="wo_con_req">
+                        <option [value]="1" selected>Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="wo_con_won"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>PDI</td>
+                    <td>
+                      <select class="form-control" formControlName="wo_pdi_req">
+                        <option value="1" selected>Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="wo_pdi_won"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Installation</td>
+                    <td>
+                      <select class="form-control" formControlName="wo_ins_req">
+                        <option value="1" selected>Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="wo_ins_won"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>TNC</td>
+                    <td>
+                      <select class="form-control" formControlName="wo_tnc_req">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="wo_tnc_won"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Training</td>
+                    <td>
+                      <select class="form-control" formControlName="wo_trn_req">
+                        <option value="1" selected>Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="wo_trn_won"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Warehouse QA</td>
+                    <td>
+                      <select class="form-control" formControlName="wo_wq_req">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="wo_wq_won"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Post-Deployment Repair</td>
+                    <td>
+                      <select class="form-control" formControlName="wo_pdr_req">
+                        <option value="1" selected>Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="wo_pdr_won"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </p-accordionTab>
+          </p-accordion>
         </div>
-      </div>
+        <!-- bme log end-->
+     
+     
+      </form>
+      <!-- End of form -->
     </div>
   </div>
-
-
 
   <div
     id="success"
@@ -464,23 +593,23 @@
     </div>
   </div>
 
-
   <div
-  bsModal
-  #dangerModal="bs-modal"
-  class="modal fade"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="myModalLabel"
-  aria-hidden="true"
+    bsModal
+    #dangerModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
   >
-
-  <div class="modal-dialog modal-danger" role="document">
-    <div class="modal-content">
-      <div class="modal-header"><h4 class="modal-title">Error</h4></div>
-      <div class="modal-body"><p>{{ alertBody }}</p></div>
-      <div class="modal-footer"></div>
+    <div class="modal-dialog modal-danger" role="document">
+      <div class="modal-content">
+        <div class="modal-header"><h4 class="modal-title">Error</h4></div>
+        <div class="modal-body">
+          <p>{{ alertBody }}</p>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
     </div>
   </div>
-
 </div>

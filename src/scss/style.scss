@@ -39,12 +39,13 @@ $ng-theme: mat-light-theme(
   height: 1px !important;
   width: 99%;
 }
-.app-body {
+.app-body { 
+  background-color: #D7D7D7;
   .main {
-    .container-fluid {
+    .container-fluid { 
       padding-top: 10px;
     }
-  }
+  } 
 }
 
 .breadcrumb {

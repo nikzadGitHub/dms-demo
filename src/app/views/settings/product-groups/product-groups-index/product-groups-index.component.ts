@@ -51,7 +51,6 @@ export class ProductGroupsIndexComponent implements OnInit {
   deleteData(id){
     this.pgService.delete(id).subscribe((data)=>{
       this.tableData = this.tableData.filter(item => item.id !== id);
-      console.log('Deleted successfully!');
     })  
   }
 

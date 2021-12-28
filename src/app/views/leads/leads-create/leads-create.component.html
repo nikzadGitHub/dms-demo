@@ -82,9 +82,7 @@
                           <ng-template let-item pTemplate="item">
                             <div class="item">
                               <div>
-                                {{ item.full_name }} ({{
-                                  item.mobile_phone
-                                }})
+                                {{ item.full_name }} ({{ item.mobile_phone }})
                               </div>
                             </div>
                           </ng-template>
@@ -100,13 +98,23 @@
                   <div class="row">
                     <div class="col-md-5 text-header">Department</div>
                     <div class="col-md-6">
-                      <input
+                      <p-dropdown
+                        [options]=""
+                        formControlName="department"
+                        placeholder="Select department"
+                        [virtualScroll]="true"
+                        [itemSize]="31"
+                        [filter]="false"
+                        autoWidth="false"
+                        [style]="{ width: '100%' }"
+                      ></p-dropdown>
+                      <!-- <input
                         pInputText
                         formControlName="department"
                         class="form-control"
                         placeholder=""
                         type="input"
-                      />
+                      /> -->
                     </div>
                   </div>
                 </div>
@@ -243,13 +251,12 @@
                     <div class="col-md-6 d-inline-flex">
                       <div class="col-md-5" style="padding: 0px">
                         <p-dropdown
-                          [options]="source_items"
                           formControlName="source"
                           placeholder="Select Source"
-                          [virtualScroll]="true"
-                          [itemSize]="31"
-                          [filter]="false"
-                          autoWidth="false"
+                          [options]="source_items"
+                          optionLabel="title"
+                          optionValue="code"
+                          (onChange)="selectSource()"
                           [style]="{ width: '100%' }"
                         ></p-dropdown>
                       </div>
@@ -258,6 +265,7 @@
                           pInputText
                           formControlName="other_source"
                           class="form-control"
+                          [attr.disabled]="isSourceOther ? null : ''"
                           placeholder="Others"
                           type="input"
                         />
@@ -273,6 +281,14 @@
             <div class="form-group">
               <!-- <button class="btn btn-primary" type="button" (click)="notFoundModal.show()">Open</button> -->
               <button
+                type="button"
+                class="btn btn-outline-primary mr-2 pr-5 pl-5"
+                (click)="back()"
+              >
+                <i class="pi pi-arrow-left"></i>
+                Cancel
+              </button>
+              <button
                 class="btn btn-primary mr-2 pr-5 pl-5"
                 type="submit"
                 [disabled]="!form.valid"
@@ -285,7 +301,7 @@
                 [disabled]="!form.valid"
                 (click)="verify()"
               >
-                <i class="cil-check-alt mt-1 mr-1"></i>VERIFY
+                <i class="cil-check-alt mt-1 mr-1"></i>Next
               </button>
               <!-- <a routerLink="/leads/verify" class="btn btn-secondary">VERIFY</a> -->
             </div>

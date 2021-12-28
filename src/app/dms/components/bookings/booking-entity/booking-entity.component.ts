@@ -95,7 +95,7 @@ export class BookingEntityComponent implements OnInit, OnDestroy {
       '6 Raising Booking Request - MSC Reviewed (+Country)',
       '7 Raising Booking Request - Provisionally Accepted',
       '8 Raising Booking Request - Confirmed',
-      '9 Raising Booking Request - submitted'
+      '2 Raising Booking Request - submitted'
     ]
     if(status != '' && status != null){
       return statusList[status];

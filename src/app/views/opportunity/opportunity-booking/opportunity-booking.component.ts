@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute } from "@angular/router";
+import { BookingService } from '../../../dms/components/bookings/services/booking.service';
+import { BookingList } from '../../../dms/components/bookings/services/booking.interface';
 
 @Component({
   selector: 'opp-opportunity-booking',
@@ -12,16 +14,77 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
  * @class
  */
 export class OpportunityBookingComponent implements OnInit{
-  show: boolean;
-  constructor() { }
+  @Input() opp_id: number;
+
+  bookingList: BookingList;
+  show: boolean = false;
+  alertBody: string;
+  
+
+  bookingReasonsNames = [
+    'event',
+    'demo',
+    'training',
+    'buyin'
+  ];
+  bookingStatusNames = [
+    'approval request',
+    'approve',
+    'review',
+    'endorse',
+    'provision-ally approve',
+    'decline',
+    'conflict',
+    'extension request',
+    'demo item availability'
+  ]
+
+  constructor(
+    private api: BookingService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
+
   ngOnInit(): void {
-    this.show = false;
+    if(this.opp_id !== undefined) {
+      this.show = true;
+      this.api.getListForOpp(this.opp_id).subscribe((response) => {
+        if (response as BookingList) {
+          this.bookingList = response;
+          console.log(this.bookingList);
+        }
+      }, err => {
+        console.log('error in loading bookings list');
+      });
+    }
   }
 
-  /**
- * This function is used for the show the booking on opportunity section
- */
-  onShow(){
-    this.show = true;
+  toNumber(str: string):number {
+    try {
+      return Number(str);
+    } catch (e) {
+      return 0
+    }
   }
+
+  navToBooking(event) {
+    event.preventDefault()
+    if (this.opp_id !== undefined){
+      this.api.createFromOpp(this.opp_id).subscribe((response) => {
+        if (response) {
+          this.router.navigate(['/dms/bookings', response]);
+        }else {
+          console.log("Unable to create new booking draft!");
+          return false;
+        }
+      }, err => {
+        console.log(err)
+        console.log("Unable to create new booking draft!");
+      });
+    }else {
+      console.log("should to save first !");
+    }
+    return false;
+  }
+
 }

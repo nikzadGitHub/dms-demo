@@ -1,1 +1,54 @@
-<p>sales-target works!</p>
+<div>
+    <p-table [value]="list" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[5,10,25]" styleClass="p-datatable-customers"
+        [rowHover]="true"
+        responsiveLayout="scroll"
+        [filterDelay]="0" >
+        <ng-template pTemplate="caption">
+            <div class="table-header" >
+              <span>
+                Sales Target
+              </span>
+              <span class="p-input-icon-left input-span-icon">
+                <i class="pi pi-search"></i>
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="Search Sales Target"
+                />
+              </span>
+            </div>
+          </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 20%;">Description</th>
+                <th style="width: 13%;">Q1 ({{ currency }})</th>
+                <th style="width: 13%;">Q2 ({{ currency }})</th>
+                <th style="width: 13%;">Q3 ({{ currency }})</th>
+                <th style="width: 13%;">Q4 ({{ currency }})</th>
+                <th style="width: 13%;">Total ({{ currency }})</th>
+                <th style="width: 15%;"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-data>
+            <tr>
+                <td>{{ data.title }}</td>
+                <td>{{ data.q1 }}</td>
+                <td>{{ data.q2 }}</td>
+                <td>{{ data.q3 }}</td>
+                <td>{{ data.q4 }}</td>
+                <td>{{ data.total }}</td>
+                <td>
+                  <button pButton pRipple type="button" icon="pi pi-copy" title="Copy"  class="p-button-rounded p-button-text p-button-plain"></button>
+                  <button pButton pRipple type="button" icon="fa fa-edit" title="Edit"  class="p-button-rounded p-button-text p-button-plain"></button>
+                  <button pButton pRipple type="button" icon="pi pi-trash" title="Delete"  class="p-button-rounded p-button-text p-button-plain"></button>
+              </td>
+            </tr>
+            <tr *ngIf="dataLength==0">
+                <td >
+                    <h4>No record found at this moment.</h4>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

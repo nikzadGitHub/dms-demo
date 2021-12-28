@@ -61,6 +61,10 @@ export class MockBookingService implements BookingInterface {
     return of(mockBookingsData);
   }
 
+  getPagedList(page: number, pageItems: string, search: any): Observable<BookingList> {
+      return of(mockBookingsData);
+  }
+
   getListSearch(data: any): Observable<BookingList> {
     return of(mockBookingsData);
   }

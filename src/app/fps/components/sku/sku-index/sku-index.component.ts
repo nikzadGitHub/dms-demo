@@ -40,7 +40,7 @@ export class SkuIndexComponent implements OnInit {
     {'header':'Quarterly','field':'quarterly_payment','type':'boolean'},
     {'header':'Half-Yearly','field':'half_yearly_payment','type':'boolean'},
     {'header':'Min Usage','field':'min_usage','type':'number'},
-    {'header':'Min Procedure','field':'procedure_per_month','type':'number'}
+    {'header':'Min Procedure','field':'min_procedure','type':'number'}
 
   ];
 
@@ -74,6 +74,7 @@ export class SkuIndexComponent implements OnInit {
   }
 
   fpsTypeList = this.fpsService.getTransSactionTypeList();
+
 
   showFPSType(key) {
     return this.fpsTypeList.find(typeItem => typeItem.id == key).title; 
@@ -112,5 +113,9 @@ export class SkuIndexComponent implements OnInit {
         this.dialogService.showErrorDialog("Payment Method Can't be Updated!<br>" + error );
       }
     });   
+  }
+
+  getAll() {
+    // created for resloving error => getAll' does not exist on type 'SkuIndexComponent
   }
 }

@@ -32,6 +32,7 @@ export class EditComponent implements OnInit {
   @ViewChild("successModal") successModal: ModalDirective;
   @ViewChild("dangerModal") dangerModal: ModalDirective;
   @ViewChild("foundModal") foundModal: ModalDirective;
+  @ViewChild("createModal") fileAddFormModal: ModalDirective;
   @ViewChild('fpsEditFormContainer') fpsEditFormContainerRef: ElementRef;
 
   fpsEditForm : FormGroup;
@@ -42,6 +43,14 @@ export class EditComponent implements OnInit {
   fpsID: string;
   minProcedureAddForm: FormGroup;
   minUsageAddForm: FormGroup;
+  existingProcedureIds = [];
+  existingConsumeIds = [];
+  fileUploadForm: FormGroup;
+  file;
+  fileName;
+  url: any;
+  formData = new FormData();
+  fileList : any = [];
 
   payment_frequency_list = [
     {'value': 'monthly_payment', 'label': 'Monthly'},
@@ -79,6 +88,7 @@ export class EditComponent implements OnInit {
 
   fpsTypeList = this.fpsService.getTransSactionTypeList();
   fpsStatusList = this.fpsService.getFpsStatusList();
+  fileTypeList = this.fpsService.getFileTypeList();
 
   get form_controls() {
     return this.fpsEditForm.controls;
@@ -100,6 +110,17 @@ export class EditComponent implements OnInit {
       addMinUsage: this.fb.array([]),
     });
 
+    this.fileUploadForm = this.fb.group(
+      {
+        file_name: new FormControl('test 1'),
+        file_uploaded_by: new FormControl(1),
+        file_type: new FormControl(1),
+        file_valid_until: new FormControl(),
+        file_ramark: new FormControl('My remark'),
+        file : new FormControl(null),
+      }
+    );
+
     this.fpsEditForm = this.fb.group({
       fps_no: new FormControl('',[Validators.required]),
       fps_opportunity_id: new FormControl(),
@@ -111,14 +132,14 @@ export class EditComponent implements OnInit {
       fps_payment_frequency: new FormControl('',[Validators.required]),
       fps_status_id : new FormControl(1, [Validators.min(1)]),
       fps_tenure_id : new FormControl('',[Validators.required]),
-      fps_adv_payment : new FormControl('0'),
-      fps_adv_payment_percentage : new FormControl('0'),
-      fps_net_financing_amount : new FormControl('0'),
+      fps_adv_payment : new FormControl(0),
+      fps_adv_payment_percentage : new FormControl(0),
+      fps_net_financing_amount : new FormControl(0),
       fps_monthly_payment_amount : new FormControl(),
       fps_interest_rate : new FormControl(),
       fps_validated_by : new FormControl(),
       fps_approved_by : new FormControl(),
-      fps_leas_aggr_no : new FormControl('0'),
+      fps_leas_aggr_no : new FormControl(0),
       fps_internal_aggr_no : new FormControl(),
       fps_remarks : new FormControl(),
       fps_currency_code: new FormControl(),
@@ -195,37 +216,37 @@ export class EditComponent implements OnInit {
         if (res.id) {
 
           let procedures = this.minProcedureAddForm.value.addMinProcedure;
-          let activeProcedureIDs = [];
+          let procedureList = [];
           for(let x = 0; x < procedures.length; x++) {
-            activeProcedureIDs.push(procedures[x].id);
-            let procedure = {
-              'id': procedures[x].id,
+            procedureList.push({
+              'id': this.existingProcedureIds.includes(procedures[x].id) ? procedures[x].id : null,
               'fps_id': res.id,
               'date': procedures[x].date,
               'no_procedure': procedures[x].no_procedure,
               'updated_by': procedures[x].updated_by,
               'updated_on': procedures[x].updated_on,
-            }
-            this.fpsService.storeMinProcedure(procedure);
+            });
           }
-          this.fpsService.minProcedureCheckSum({'activeProcedureIDs' : activeProcedureIDs, 'fps_id' : res.id}).subscribe();
+          if(procedureList.length > 0) {
+          this.fpsService.storeMinProcedure(procedureList);
+          }
 
           let usages = this.minUsageAddForm.value.addMinUsage;
-          let activeUsageIDs = [];
+          let usageList = [];
           for(let x = 0; x <usages.length; x++) {
-            activeUsageIDs.push(usages[x].id);
-            let usage = {
-              'id': usages[x].id,
+            usageList.push({
+              'id': this.existingConsumeIds.includes(usages[x].id) ? usages[x].id : null,
               'fps_id': res.id,
               'date': usages[x].date,
               'usage': usages[x].usage,
               'updated_by': usages[x].updated_by,
               'updated_on': usages[x].updated_on,
-            }
-            this.fpsService.storeMinUsage(usage);
-          } 
-          this.fpsService.minUsageCheckSum({'activeUsageIDs' : activeUsageIDs, 'fps_id' : res.id}).subscribe();
-
+            });
+          }
+          if(usageList.length > 0) {
+          this.fpsService.storeMinUsage(usageList);
+          }
+          
           this.alertBody = "FPS updated successfully.";
           this.successModal.show();
           setTimeout(() => {
@@ -249,6 +270,7 @@ export class EditComponent implements OnInit {
     let percentage = this.fpsEditForm.controls.fps_adv_payment_percentage.value;
     let adv_payment = totalAmount / 100 * percentage;
     
+    this.fpsEditForm.controls.fps_adv_payment.setValue(adv_payment);
     this.fpsEditForm.controls.fps_net_financing_amount.setValue(totalAmount - adv_payment);
   }
 
@@ -257,6 +279,7 @@ export class EditComponent implements OnInit {
     var result = this.getFilteredCodes(this.tenure_list, "id", rateID);
     
     if (result.length > 1) {
+      
       this.fpsEditForm.controls.fps_interest_rate.setValue(result[0].details_interest_rate);
       this.fpsEditForm.controls.fps_min_payment_amount.setValue(result[0].min_payment_amount);
       this.fpsEditForm.controls.fps_required_docs.setValue(result[0].required_docs ?? '');
@@ -317,7 +340,7 @@ export class EditComponent implements OnInit {
       next: (response) => {
         if (response.success) {
           this.zone.run(() => {
-            this.institutions_list = response.data.institutions;
+            this.institutions_list = response.data;
           });
         } else {
           this.dialogService.showErrorDialog(response.message);
@@ -358,12 +381,19 @@ export class EditComponent implements OnInit {
       data.data.min_procedures.forEach((addMinProcedure) => {
         this.has_min_procedure = true;
         this.addMinProcedure().push(this.existingMinProcedure(addMinProcedure));
+        this.existingProcedureIds.push(addMinProcedure.id);
       });
 
       data.data.min_usages.forEach((addMinUsage) => {
         this.has_consumable_usage = true;
         this.addMinUsage().push(this.existingMinUsage(addMinUsage));
+        this.existingConsumeIds.push(addMinUsage.id);
       });
+
+      data.data.files.forEach((file) => {
+        this.fileList.push(file);
+      });
+
       this.updateTenure();      
     });
   }
@@ -435,4 +465,70 @@ export class EditComponent implements OnInit {
       });
     }
   //---------------- End of  Min Usage -------------------
+
+  //---------------- File Library  -------------------
+  
+  resetForm() {
+    
+  }
+
+  onFileSelect(event: any) {
+    this.file = event.target.files[0];
+
+    if (this.file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(this.file);
+      reader.onload = (event: any) => {
+        this.url = reader.result;
+      };
+      this.formData.append("file", this.file);
+    }
+  }
+
+  createFile() {
+    this.fileAddFormModal.show();
+  }
+
+  fileUpload() {
+
+    let file = {
+      file_name: this.fileUploadForm.get('file_name').value,
+      file_type: this.fileUploadForm.get('file_type').value,
+      file_valid_until: this.fileUploadForm.get('file_valid_until').value,
+      file_uploaded_by: this.fileUploadForm.get('file_uploaded_by').value,
+      file_uploaded_on: new Date(),
+      file_ramark: this.fileUploadForm.get('file_ramark').value,
+      file_size: this.file.size,
+    }
+
+    this.fileList.push(file);
+
+    this.formData.append("file_name", this.fileUploadForm.get('file_name').value);
+    this.formData.append("file_type", this.fileUploadForm.get('file_type').value);
+    this.formData.append("file_valid_until", this.fileUploadForm.get('file_valid_until').value);
+    this.formData.append("file_uploaded_by", this.fileUploadForm.get('file_uploaded_by').value);
+    this.formData.append("file_ramark", this.fileUploadForm.get('file_valid_until').value);
+    this.formData.append("fps_id", this.fpsID);
+    this.formData.append("file_size", this.convertSize(this.file.size));
+    
+    this.fpsService.storeFileLibrary(this.formData);
+    this.fileAddFormModal.hide();
+  }
+
+  showFileType(key) {
+    return this.fileTypeList.find(typeItem => typeItem.id == key).title; 
+  }
+
+  showUser(key) {
+    return this.fps_user_list.find(typeItem => typeItem.id == key).full_name; 
+  }
+
+  convertSize(size) {
+    if (typeof size === 'number' ){
+      return this.fpsService.humanFileSize(size);
+    }
+    else {
+      return size;
+    }
+  }
 }

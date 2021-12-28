@@ -53,6 +53,8 @@ export class EditComponent implements OnInit {
   selectTemplateData: any[]=[];
   templateId: any;
   alertHeader: string;
+  quotationId: any;
+  isButtonDisabled: boolean;
 
   constructor(
     private quoteService: QuoteService,
@@ -71,9 +73,14 @@ export class EditComponent implements OnInit {
     this.route.params.subscribe((event) => {
       this.id = event.quoteId; // fetch ID from url
       this.quoteService.find(this.id).subscribe((data) => {
-        console.log(data);
         this.quotations = data["data"]["quotation"];
+        this.quotationId = data["data"]["quotation"].id
         this.latestQuotation = data["data"]["quotation"];
+        if(this.latestQuotation.status=="Rejected" || this.latestQuotation.status=="Approved"){
+          this.isButtonDisabled = true
+        } else {
+          this.isButtonDisabled = false
+        }
         this.quotationRevisions = data["data"]["quotationRevision"];
         this.setInitialValue();
         this.addQuoteIdList();
@@ -103,7 +110,6 @@ export class EditComponent implements OnInit {
   setInitialValue() {
     this.company_details["company_name"] = this.quotations.company;
     this.company_details["quote_id"] = this.quotations.quote_id;
-    console.log(this.quotations);
     this.f.id.setValue(this.quotations.id);
     this.f.data_area_id.setValue(this.quotations.data_area_id);
     this.f.external_id.setValue(this.quotations.external_id);
@@ -121,10 +127,9 @@ export class EditComponent implements OnInit {
     this.requested_date = this.quotations.requested_date;
     this.approved_date = this.quotations.approved_date;
     this.cancelled_date = this.quotations.cancelled_date;
-    console.log(this.approved_date);
-    this.termSelected = this.terms.find(
-      (x) => x.id == this.quotations.standard_payment_term
-    ).no_of_days;
+    this.termSelected = this.terms?.find(
+      (x) => x.id == this.quotations?.standard_payment_term
+    )?.no_of_days;
     this.dateInit();
   }
 
@@ -298,7 +303,6 @@ export class EditComponent implements OnInit {
 
     filteredPayments.forEach((payment) => {
       fullAmount -= parseFloat(payment["controls"].amount.value);
-      console.log(fullAmount);
       if (fullAmount < 0) {
         payment["controls"].amount.setValue(
           parseFloat(payment["controls"].amount.value) + fullAmount
@@ -569,7 +573,6 @@ export class EditComponent implements OnInit {
 
   selectTemplate() {
     this.quoteService.getTemplates().subscribe((res) => {
-      console.log("drop-down-data:",res);
       this.selectTemplateData = res["data"]
       
     });
@@ -598,7 +601,6 @@ export class EditComponent implements OnInit {
   }
 
   submitRev() {
-    console.log(this.form.value);
     this.quoteService.update(this.form.value, this.id).subscribe((res) => {
       this.alertBody = res.message;
       this.successModal.show();
@@ -611,6 +613,12 @@ export class EditComponent implements OnInit {
       .subscribe((res) => {
         this.alertBody = res.message;
         this.successModal.show();
+        setTimeout(() => {
+          this.successModal.hide()
+          if(res){
+            this.redirectPage()
+          }
+        }, 500);
       });
   }
 
@@ -618,7 +626,6 @@ export class EditComponent implements OnInit {
     this.quoteService
       .cancelQuote(this.id, this.cancelRemarks)
       .subscribe((res) => {
-        console.log(res);
         this.alertBody = res["message"];
         this.infoModal.hide();
         this.successModal.show();
@@ -653,7 +660,6 @@ export class EditComponent implements OnInit {
 
   checkSignature() {
     this.quoteService.checkSignature().subscribe((res) => {
-      console.log(res);
       this.signatureStatus = true;
     });
   }
@@ -667,8 +673,6 @@ export class EditComponent implements OnInit {
         }
       }
       // this.quoteService.getQuatation(this.quotations.quote_id).subscribe((res) =>{
-      //   console.log('Quotations Data =>',res);
-        
       // })
       this.router.navigate(["quote/view/quote-template"], navigate)
       // this.router.navigateByUrl("quote/view/quote-template");
