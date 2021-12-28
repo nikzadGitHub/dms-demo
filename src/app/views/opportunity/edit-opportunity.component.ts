@@ -731,8 +731,9 @@ export class EditOpportunityComponent implements OnInit {
   }
 
   getOppertunityQuotationList(quotation_id) {
+    // .getQuery("/quote/" + quotation_id + "/edit")
     this.appService
-      .getQuery("/quote/" + quotation_id + "/edit")
+      .getQuery("/quote/get-opportunity-quotation-list/" + 2)
       .subscribe((data) => {
         this.quotation_detail = data["data"]["quotation"];
 
@@ -761,7 +762,6 @@ export class EditOpportunityComponent implements OnInit {
         id: 9,
       })
       .subscribe((data) => {
-        console.log("approval-data: ", data);
       });
   }
 
@@ -854,6 +854,14 @@ export class EditOpportunityComponent implements OnInit {
           });
         }
       });
+  }
+
+  toNumber(str: string):number {
+    try {
+      return Number(str);
+    } catch (e) {
+      return 0
+    }
   }
 
   increaseProductQuantity() {

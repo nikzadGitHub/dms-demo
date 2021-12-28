@@ -12,13 +12,13 @@ export class BookingService implements BookingInterface {
 
   constructor(private apiClient: ApiClient) { }
 
-  getList(): Observable<BookingList> {
-    return this.apiClient.get<BookingList>('booking');
+  getList(page, pageItems): Observable<BookingList> {
+    return this.apiClient.get<BookingList>('booking?page=' + page + '&pageItems=' + pageItems);
   }
 
-  getListSearch(data: any): Observable<BookingList> {
+  getListSearch(data: any, page, pageItems): Observable<BookingList> {
     let params = (new URLSearchParams({search: data})).toString();
-    return this.apiClient.get<BookingList>('booking/search?'+ params);
+    return this.apiClient.get<BookingList>('booking/search?'+ params + '&page=' + page + '&pageItems=' + pageItems);
   }
 
   create(data: any): Observable<SaveResult> {
@@ -28,4 +28,13 @@ export class BookingService implements BookingInterface {
   updateBooking(data: any, id: any): Observable<SaveResult> {
     return this.apiClient.put('booking/update/' + id, data);
   }
+
+  createFromOpp(opp_id: number , data: string = 'booking f opportunity'): Observable<SaveResult> {
+    return this.apiClient.post('booking/createDraft?opp_id='+opp_id, data);
+  }
+
+  getListForOpp(opp_id: number): Observable<BookingList> {
+    return this.apiClient.get<BookingList>('booking?opp_id='+opp_id);
+  }
+
 }

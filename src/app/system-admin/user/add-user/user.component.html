@@ -1,0 +1,86 @@
+<div class="animated fadeIn">
+  <!-- <form > -->
+  <div class="col-md-12">
+    <div class="row header pt-3 pb-3">
+      <div class="col-lg-11 col-md-8 col-sm-8">
+        <span class="header-icon">
+          <i class="pi pi-user"></i>
+          <h3 class="title text-dark"><b>User</b></h3>
+        </span>
+      </div>
+      <div class="col-lg-1 col-md-2 col-sm-2">
+        <!-- <a href="" [routerLink]="" routerLinkActive="router-link-active"> -->
+          <button
+            class="btn btn-primary btn-fill pull-right form-control"
+            (click)="createUser()"
+          >
+            <i class="pi pi-plus"></i>
+          </button>
+        <!-- </a> -->
+      </div>
+    </div>
+    <div class="card-header row" style="background-color: #f6f6f6">
+      <i class="pi pi-list"></i>
+      <span class="ml-2"><b>User List</b></span>
+    </div>
+    <div class="pt-3 pb-3">
+      <div class="form-group has-search">
+        <span class="fa fa-search form-control-feedback"></span>
+        <input
+          type="text"
+          class="form-control ds-input"
+          id="search-input"
+          placeholder="Search..."
+          style="position: relative; vertical-align: top"
+          (input)="dt.filterGlobal($event.target.value, 'contains')"
+        />
+      </div>
+      <p-table
+        #dt
+        [value]="userList"
+        styleClass="p-datatable-gridlines"
+        [globalFilterFields]="['full_name', 'status', 'created_at']"
+        [paginator]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[{ showAll: 'All' }, 10, 25, 50]"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="text-center" width="20%px">User Name</th>
+            <th class="text-center" width="80px">Email</th>
+            <th class="text-center" width="20px">Status</th>
+            <th class="text-center" width="20px">Creaed Date</th>
+            <th class="text-center" width="15px">Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+          <tr>
+            <td class="text-center">{{ user.full_name }}</td>
+            <td class="text-center">{{user.email}}</td>
+            <td class="text-center">{{ user.status }}</td>
+            <td class="text-center">
+              <div *ngIf="user.created_at">
+                {{ user.created_at | date: "dd-MMM-yyyy" }}
+              </div>
+              <div *ngIf="!user.created_at">_</div>
+            </td>
+            <td class="text-center">
+              <a
+                href=""
+                [routerLink]=""
+                routerLinkActive="router-link-active"
+                title="Edit Record"
+                (click)="getUserRoleDetail(user.id)"
+              >
+                <i class="fa fa-edit"></i>
+              </a>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <!-- </form> -->
+</div>

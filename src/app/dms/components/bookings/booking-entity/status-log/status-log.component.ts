@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ApiClient } from '../../../../services/api-client.service';
+import { Input } from '@angular/core';
 
 @Component({
   selector: 'app-status-log',
@@ -7,6 +8,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./status-log.component.scss']
 })
 export class StatusLogComponent implements OnInit{
-  constructor() { }
-  ngOnInit(): void {}
+  
+  @Input() bookingId;
+  public logs:[]|null = [];
+
+  constructor(
+    private apiClient: ApiClient
+  ) { }
+  ngOnInit(): void {
+    this.getLogs()
+  }
+
+  async getLogs()  {
+    this.apiClient.get<[]>(`booking/logs/${this.bookingId}`).subscribe(res => {
+      this.logs = res;
+    })
+  }
 }

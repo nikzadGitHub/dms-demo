@@ -90,10 +90,10 @@ import { CreateComponent } from './views/customers/create/create.component';
 import { IndexComponent } from './views/customers/index/index.component';
 import { EditComponent } from './views/customers/edit/edit.component';
 import { CustomersModule } from './views/customers/customers.module';
-
+import {ProfileModule} from './views/profile/profile.module'
 import { environment } from '../environments/environment';
 import { SystemConfig } from './config/system-config';
-
+import { SalesTargetModule } from './views/sales-target/sales-target.module';
 import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
 import { MsalGuard, MsalInterceptor, MsalBroadcastService, MsalInterceptorConfiguration, MsalModule, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG, MsalGuardConfiguration, MsalRedirectComponent } from '@azure/msal-angular';
 
@@ -153,6 +153,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 
 @NgModule({
   imports: [
+    ProfileModule,
     FullCalendarModule,
     FormsModule,
     ReactiveFormsModule,
@@ -195,6 +196,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     SplitButtonModule,
     InputNumberModule,
     SelectButtonModule,
+    SalesTargetModule,
     NgxEchartsModule.forRoot({
       echarts
     }),
@@ -212,6 +214,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     LoginComponent,
     RegisterComponent,
     DialogComponent,
+   
+  
     // CreateComponent,
     // IndexComponent,
     // EditComponent,

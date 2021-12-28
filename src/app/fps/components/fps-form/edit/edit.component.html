@@ -143,7 +143,7 @@
                             <div class="col-md-4">
                                 <p-dropdown formControlName="fps_financier_id" id="fps_financier_id" [options]="institutions_list"  optionLabel="title"
                                     optionValue="id" styleClass="form-control" (onChange)="updateTenure()"
-                                    placeholder="Select Institution" emptyMessage="No Institution Available">
+                                    emptyMessage="No Institution Available">
                                 </p-dropdown>
                                 <app-form-error-presentation [displayError]="isFieldValid('fps_financier_id')" errorMsg="Financial Instititue is required.">
                                 </app-form-error-presentation>
@@ -341,10 +341,8 @@
                                                     <input formControlName="updated_on" class="form-control" type="date">
                                                 </td>
                                                 <td class="td-actions" style="width: 10%;">
-                                                    <a [routerLink]="" routerLinkActive="router-link-active"><i
-                                                            class="fa fa-edit"></i></a> &nbsp;
-                                                    <a [routerLink]="" (click)="removeAddMinProcedure(i)"
-                                                        routerLinkActive="router-link-active"><i class="fa fa-trash"></i></a>
+                                                    <i class="fa fa-edit"></i> &nbsp;
+                                                    <i class="fa fa-trash" (click)="removeAddMinProcedure(i)"></i>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -412,10 +410,8 @@
                                                     <input formControlName="updated_on" class="form-control" type="date">
                                                 </td>
                                                 <td class="td-actions" style="width: 10%;">
-                                                    <a [routerLink]="" routerLinkActive="router-link-active"><i
-                                                            class="fa fa-edit"></i></a> &nbsp;
-                                                    <a [routerLink]="" (click)="removeAddMinUsage(i)"
-                                                        routerLinkActive="router-link-active"><i class="fa fa-trash"></i></a>
+                                                    <i class="fa fa-edit"></i> &nbsp;
+                                                    <i class="fa fa-trash" (click)="removeAddMinUsage(i)"></i>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -432,74 +428,237 @@
                         </div>
                     </div>
 
+                    <br>
+    
+                    <div class="col-sm-12 col-md-12 form-group">
+                        <h3>File Library</h3>
+
+                        <div class="col-sm-12 col-md-12 form-group">
+                            <div class="row">
+                                <table class="table table-borderless table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>File Name</th>
+                                            <th>File Type</th>
+                                            <th>Valid Until</th>
+                                            <th>File Uploaded By</th>
+                                            <th>Uploaded On</th>
+                                            <th>File Size</th>
+                                            <th>Remark</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let file of fileList; let i = index" align="center">
+                                            <td>{{i + 1}}</td>
+                                            <td class="bordered"><span><a href="#" >{{file.file_name}}</a></span></td>
+                                            <td>{{ showFileType(file.file_type) }}</td>
+                                            <td class="bordered"><span>{{file.file_valid_until | date: "dd-MMM-yyyy" }}</span></td>
+                                            <td>{{ showUser(file.file_uploaded_by) }}</td>
+                                            <td>{{file.file_uploaded_on | date: "dd-MMM-yyyy" }}</td>
+                                            <td>{{ convertSize(file.file_size) }}</td>
+                                            <td class="bordered" style="width: 15%;"><span>{{ file.file_ramark }}</span></td>
+                                            
+                                            <td class="td-actions" style="width: 5%;">
+                                                <i class="fa fa-trash" ></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td class="td-actions" colspan="8" style="text-align: left;">
+                                                <button type="button" (click)="createFile()" class="btn btn-sm btn-primary"><i class="icon-cloud-upload icons"></i> Upload</button>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-sm-12 col-md-12 form-group">
                         <div class="custom-footer d-flex justify-content-center">
-                            <!-- <button type="button" (click)="cancelSkuForm()" class="btn btn-sm btn-light"> CANCEL</button> -->
+                            <button type="button" class="btn btn-light"> Submit for Approval</button>
+                            <button type="button" class="btn btn-light"> Standard Library</button>
+                            <button type="button" class="btn btn-sm btn-light"> CANCEL</button>
                             <button type="submit" form="fpsEditForm" class="btn btn-sm btn-primary">Save</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <br>
-    
-            <div class="col-sm-12 col-md-12 form-group">
-                <h3>File Library</h3>
-                <!-- Here the fps list related to current opportunity is displayed -->
-                <!-- <app-fps-list></app-fps-list> -->
-                <p>Work on this section will be done later</p>
-            </div>
-
         </div>
     </form>
-  </div>
-  <div
-    id="success"
-    bsModal
-    #successModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="myModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-success" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Success</h4>
-        </div>
-        <div class="modal-body">
-          <p>{{ alertBody }}</p>
-        </div>
-      </div>
-      <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
+</div>
+  
 
-  <div
+<div
   bsModal
-  #dangerModal="bs-modal"
+  (onHide)="resetForm()"
+  #createModal="bs-modal"
   class="modal fade"
   tabindex="-1"
   role="dialog"
   aria-labelledby="myModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-danger" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Error</h4>
+        <h4 class="modal-title">Create File</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="createModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body">
-        <p>{{ alertBody }}</p>
-      </div>
-      <div class="modal-footer">
+        <!-- (ngSubmit)="submit()" -->
+        <form [formGroup]="fileUploadForm" (ngSubmit)="fileUpload()">
+            <div class="modal-body">
+                
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-lg-3">
+                                <label for="quote_id">File Name </label>
+                            </div>
+                            <div class="col-lg-9">
+                                <input formControlName="file_name" class="form-control" type="text" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-lg-3">
+                                <label for="po_date"> Uploaded by </label>
+                            </div>
+                            <div class="col-lg-9">
+                                <p-dropdown formControlName="file_uploaded_by" [options]="fps_user_list" optionLabel="full_name"
+                                    optionValue="id" styleClass="form-control" 
+                                    placeholder="Select User" emptyMessage="No User Available">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-lg-3">
+                                <label for="po_no">File Type </label>
+                            </div>
+                            <div class="col-lg-9">
+                                <p-dropdown formControlName="file_type" [options]="fileTypeList" optionLabel="title"
+                                    optionValue="id" styleClass="form-control" 
+                                    placeholder="Select Type">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-lg-3">
+                                <label for="receive_po_date">Valid Until </label>
+                            </div>
+                            <div class="col-lg-9">
+                                <input formControlName="file_valid_until" class="form-control" type="date" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-lg-3">
+                                <label for="po_amount">File </label>
+                            </div>
+                            <div class="col-lg-9">
+                                <input class="form-control" formControlName="file" type="file" (change)="onFileSelect($event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-lg-3">
+                                <label for="attachment">Remark </label>
+                            </div>
+                            <div class="col-lg-9">
+                                <textarea formControlName="file_ramark" rows="9" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group row" style="width: 100%; text-align: center;" >
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
       </div>
     </div>
     <!-- /.modal-content -->
   </div>
   <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<div
+id="success"
+bsModal
+#successModal="bs-modal"
+class="modal fade"
+tabindex="-1"
+role="dialog"
+aria-labelledby="myModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-success" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Success</h4>
+    </div>
+    <div class="modal-body">
+      <p>{{ alertBody }}</p>
+    </div>
+  </div>
+  <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div
+bsModal
+#dangerModal="bs-modal"
+class="modal fade"
+tabindex="-1"
+role="dialog"
+aria-labelledby="myModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-danger" role="document">
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">Error</h4>
+  </div>
+  <div class="modal-body">
+    <p>{{ alertBody }}</p>
+  </div>
+  <div class="modal-footer">
+  </div>
+</div>
+<!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->

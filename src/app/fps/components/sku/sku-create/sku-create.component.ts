@@ -64,23 +64,24 @@ export class SkuCreateComponent implements OnInit {
     this.skuAddForm = this.fb.group({
       uuid: new FormControl('',[Validators.required]),
       validity_start_at : new FormControl(new Date()),
-      package_type_id : new FormControl('1',[Validators.required]),
+      package_type_id : new FormControl(1,[Validators.required]),
       validity_end_at : new FormControl(new Date()),
       country_code : new FormControl('',[Validators.required]),
       interest_rate : new FormControl(),
       financier_id : new FormControl('', [Validators.required]),
-      has_interest : new FormControl(),
+      has_interest_flag : new FormControl(),
       monthly_payment : new FormControl(),
       quarterly_payment : new FormControl(),
       half_yearly_payment : new FormControl(),
       currency_code : new FormControl(),
-      min_payment_amount : new FormControl('0'),
-      min_usage : new FormControl('0'),
+      min_payment_amount : new FormControl(0),
+      min_usage : new FormControl(0),
       consumable_usage : new FormControl(),
-      procedure_per_month : new FormControl(),
-      required_tenure : new FormControl('0'),
+      min_procedure : new FormControl(0),
+      required_tenure : new FormControl(0),
       required_docs: new FormControl(),
-      agreement_mandatory: new FormControl('0')
+      agreement_mandatory: new FormControl(0)
+
     });
 
     this.rateAddForm = this.fb.group({
@@ -132,9 +133,9 @@ export class SkuCreateComponent implements OnInit {
 
     const interest_rate = this.skuAddForm.get('interest_rate');
 
-    this.skuAddForm.get('has_interest').valueChanges
-      .subscribe(has_interest => {
-        if (has_interest == 1) {
+    this.skuAddForm.get('has_interest_flag').valueChanges
+      .subscribe(has_interest_flag => {
+        if (has_interest_flag == 1) {
           interest_rate.setValidators([Validators.required]);
         }
         else {
@@ -167,26 +168,28 @@ export class SkuCreateComponent implements OnInit {
       agreement_mandatory: (this.skuAddForm.get("agreement_mandatory").value) ? 1 : 0,
       data_area_id : 'test_data_rea_id',
       consumable_usage: this.skuAddForm.get("min_usage").value + "",
-      min_procedure: this.skuAddForm.get("procedure_per_month").value + "",
+      min_procedure: this.skuAddForm.get("min_procedure").value + "",
       min_payment_amount: this.skuAddForm.get("min_payment_amount").value + ""
     
     }).subscribe((res) => {
         if (res.id) {
 
           let rates = this.rateAddForm.value.addRates;
-            
+          let rateData = [];
           for(let x = 0; x <rates.length; x++) {
-            let rate = {
-              'id': rates[x].rate_no,
+            rateData.push({
+              'id': null,
               'financial_package_id': res.id,
               'validity_start_at': rates[x].validity_start_at,
               'validity_end_at': rates[x].validity_end_at,
               'status': rates[x].status,
               'type': rates[x].rate_type,
-            }
-            // Store rate.
-            this.storeRates(rate);
+            });
           } 
+
+          if(rateData.length > 0) {
+            this.storeRates(rateData);
+          }
 
           this.alertBody = "FPS saved successfully.";
           this.successModal.show();
@@ -284,7 +287,7 @@ export class SkuCreateComponent implements OnInit {
         next: (response) => {
           if (response.success) {
             this.zone.run(() => {
-              this.institutions_list = response.data.institutions;
+              this.institutions_list = response.data;
             });
           } else {
             this.dialogService.showErrorDialog(response.message);

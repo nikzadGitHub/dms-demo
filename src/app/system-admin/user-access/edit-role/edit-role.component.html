@@ -1,0 +1,175 @@
+<div class="animated fadeIn">
+  <!-- <form> -->
+  <div class="col-md-12">
+    <div class="row header pt-3 pb-3">
+      <div class="col-lg-11 mr-4">
+        <span class="header-icon">
+          <h3 class="title text-dark"><b>User Access Setup</b></h3>
+        </span>
+      </div>
+      <div class="top-btn">
+        <!-- back-btn -->
+        <p-button
+          styleClass="p-button-outlined"
+          class="back-p-btn"
+          (click)="back()"
+        >
+          <ng-template pTemplate="content">
+            <img
+              src="../../../../assets/img/icons/back-arrow.svg"
+              alt=""
+              style="width: 17px"
+            />
+          </ng-template>
+        </p-button>
+      </div>
+    </div>
+    <div class="card-header row" style="background-color: #f6f6f6">
+      <i class="pi pi-pencil"></i>
+      <span class="ml-2"><b>Add User Access</b></span>
+    </div>
+
+    <!-- name-field -->
+    <div class="row mt-4">
+      <div class="col-md-2 mt-2">
+        <label>User Access Name:</label>
+      </div>
+      <div class="col-md-10">
+        <input
+          type="text"
+          [value]="roleDetail?.name"
+          class="read-only"
+          disabled
+          pInputText
+          style="width: 100%"
+        />
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="form-group has-search">
+          <span class="fa fa-search form-control-feedback"></span>
+          <input
+            type="text"
+            class="form-control ds-input"
+            id="search-input"
+            placeholder="Search..."
+            style="position: relative; vertical-align: top"
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Tables -->
+    <div class="row">
+      <div class="col-md-12">
+        <p-table
+          #dt
+          [value]="rolePermissionsList"
+          styleClass="p-datatable-gridlines"
+          [globalFilterFields]="['name']"
+          [paginator]="true"
+          [rows]="10"
+          [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[{ showAll: 'All' }, 10, 25, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th width="100%">All Permissions</th>
+              <th width="15%" class="text-center">
+                Check
+                <!-- <p-checkbox (onChange)="selectAll($event)"></p-checkbox> -->
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-permission>
+            <tr>
+              <td class="table-text">{{ permission.name }}</td>
+
+              <td class="text-center">
+                <!-- (onChange)="updateCols($event, item)" -->
+                <p-checkbox
+                  name="group2"
+                  [value]="permission"
+                  [(ngModel)]="selectedRolePermission"
+                  [inputId]="permission.key"
+                  (onChange)="updatePermissionArray($event, permission)"
+                ></p-checkbox>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+  <div class="action-btn">
+    <button
+      type="button"
+      class="btn btn-outline-primary cancel-btn"
+      (click)="resetPermissions()"
+    >
+      CANCEL
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary save-btn"
+      (click)="updateRolePermission()"
+    >
+      <div *ngIf="roleId">UPDATE</div>
+      <div *ngIf="!roleId">SAVE</div>
+    </button>
+  </div>
+
+  <!-- </form> -->
+</div>
+
+<!-- succes-model -->
+<div
+  id="success"
+  bsModal
+  #successModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Success</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!-- danger-model -->
+<div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertBody }}</p>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

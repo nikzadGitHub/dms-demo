@@ -8,9 +8,9 @@
 .file-input {
   display: none;
 }
-[contenteditable] {
-  padding: 10px;
-}
+// [contenteditable] {
+//   padding: 10px;
+// }
 [contenteditable]:focus {
   outline: 1px solid lightgray;
   border-radius: 3px;
@@ -52,9 +52,9 @@
       }
     }
   }
-  .card-body {
-    margin-top: -40px;
-  }
+  // .card-body {
+  //   margin-top: -40px;
+  // }
   .address-title {
     display: flex;
     flex-direction: row;
@@ -100,7 +100,8 @@
       }
       .table th {
         border: 1px solid #23282c;
-        background-color: #b7bee9;
+        // background-color: #b7bee9;
+        font-size: 12px;
         color: black;
       }
       td {

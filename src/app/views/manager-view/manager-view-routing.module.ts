@@ -1,5 +1,6 @@
 import { Component, NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { EditQuotationApprovalComponent } from "./edit-quotation-approval/edit-quotation-approval.component";
 import { ManagerViewActiveComponent } from "./manager-view-active/manager-view-active.component";
 import { ManagerViewReassignmentComponent } from "./manager-view-reassignment/manager-view-reassignment.component";
 import { ManagerviewApprovalComponent } from "./managerview-approval/managerview-approval.component";
@@ -15,7 +16,8 @@ const routes: Routes = [
   // { path: '**', redirectTo: 'approval' },
   
   {path: 'reassignment', component:ManagerViewReassignmentComponent},
-  {path: 'active', component:ManagerViewActiveComponent}
+  {path: 'active', component:ManagerViewActiveComponent},
+  {path: 'edit-approval/:id', component:EditQuotationApprovalComponent}
 ];
 
 @NgModule({

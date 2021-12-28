@@ -61,7 +61,7 @@
                     (change)="updateDetail()"
                   />
                 </div>
-
+<!-- 
 				<p-accordionTab>
 					<ng-template pTemplate="header"><i class="cil-columns c-icon"></i>&nbsp;&nbsp;Forecast</ng-template>
 					<form [formGroup]="forecastForm">
@@ -109,7 +109,7 @@
 							</div>
 						</div>
 					</form>
-				</p-accordionTab>
+				</p-accordionTab> -->
 
                 <div>
                   <label>Created Date</label>
@@ -878,6 +878,12 @@
           </p-accordionTab>
         </p-accordion>
       </div>
+
+      <!-- booking request -->
+      <div class="col-md-12 form-group">
+        <opp-opportunity-booking [opp_id] = "toNumber(opportunity_id)"></opp-opportunity-booking>
+      </div>
+      <!-- booking request -->
 
       <!-- Here the fps list related to current opportunity is displayed -->
       <app-fps-list [current_opportunity_id]="opportunity_id" ></app-fps-list>

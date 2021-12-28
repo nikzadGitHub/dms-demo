@@ -1,0 +1,99 @@
+.main{
+    margin: 0px !important;
+    .innerMain{
+        .pdfTable{
+            height: 220px;
+        }
+        .imageDisplayDiv{
+            margin-top: 25px;
+            margin-left: 220px;
+            width: 400px;
+            height: 400px;
+        }
+        .imageDisplayed{
+            width: 350px;
+            height: 200px;
+        }
+    }
+.heading{
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+    font-size: 1.5rem;
+    background-color: #898485;
+    color: white;
+}
+.userName{
+    margin-top: 25px;
+    .userLable{
+    width: 220px;
+    padding-left: 30px;
+    font-size: 16px;
+    color: black;
+    font-weight: 600;
+    }
+    input{
+    height: 45px;
+    width: 350px;
+    border-radius: 7px;
+    border: 2px solid lightgray;
+    padding-left: 20px;
+    font-size: 20px;
+    color: black;
+    background-color: #f3f3f3;
+    }
+
+}
+.userSignature{
+    margin-top: 25px;
+    .userLable{
+    width: 220px;
+    padding-left: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+    }
+    input{
+        height: 55px;
+        width: 350px;
+        border-radius: 7px;
+        border: 2px solid lightgray;
+        padding-left: 20px;
+        padding-top: 8px;
+        font-size: 20px;
+        color: black;
+    }
+    .imageError{
+    font-size: 16px;
+    color: red;
+    display: block;
+    margin-left: 280px;
+    }
+}
+// .userRoles{
+//     margin-top: 25px;
+
+// }
+// .userSignature{
+//     margin-top: 25px;
+// }
+.uploadImage{
+    margin-top: 20px;
+    .uploadBtn{
+        margin-left: 315px;
+        button{
+            height: 50px;
+            width: 120px;
+            font-size: 16px;
+            }
+    }
+
+    .imageError{
+        font-size: 16px;
+        color: rgb(35, 216, 75);
+        display: block;
+        margin-left: 280px;
+    }
+    
+}
+}
