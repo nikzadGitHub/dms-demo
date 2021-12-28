@@ -72,7 +72,8 @@ export class LeadsVerifyComponent implements OnInit {
   }
 
   redirectPage() {
-    this.router.navigateByUrl("leads/index");
+    // this.router.navigateByUrl("leads/index");
+    this.router.navigateByUrl("/prospects/index")
   }
 
   CreateProspect() {

@@ -127,9 +127,9 @@ export class EditComponent implements OnInit {
     this.requested_date = this.quotations.requested_date;
     this.approved_date = this.quotations.approved_date;
     this.cancelled_date = this.quotations.cancelled_date;
-    this.termSelected = this.terms.find(
-      (x) => x.id == this.quotations.standard_payment_term
-    ).no_of_days;
+    this.termSelected = this.terms?.find(
+      (x) => x.id == this.quotations?.standard_payment_term
+    )?.no_of_days;
     this.dateInit();
   }
 
