@@ -6,66 +6,56 @@
           <i class="cil-info"></i>
           <span class="accordion-header">Demo Bookings</span>
         </p-header>
-        <div class="form-group" *ngIf="show">
+        <div class="form-group" *ngIf = 'show'>
           <div class="animated fadeIn">
-            <div class="row">
-              <div class="col-md-6" style="float:none;margin:auto;">
-                <div class="card">
-                    <div class="opportunity-booking-header">
-                        <strong>Identify demo Asset</strong>
-                    </div>
-                    <div class="card-body">
-                        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                            <div class="form-group row">
-                                <div class="col-md-12">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>No</th>
-                                                <th>Product Name</th>
-                                                <th>SKU ID</th>
-                                                <th>Demo SKU ID</th> 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><input type="radio" style="height:25px; width:25px;"></td>
-                                                <td>1</td>
-                                                <td>Product 1</td>
-                                                <td>ZY2332</td>
-                                                <td><input type="text" class="form-control" style="width:100px"></td>
-                                            </tr>
-                                            <tr>
-                                              <td><input type="radio" style="height:25px; width:25px;"></td>
-                                              <td>2</td>
-                                              <td>Product 1</td>
-                                              <td>ZY2332</td>
-                                              <td><input type="text" class="form-control" style="width:100px"></td>
-                                          </tr>
-                                          <tr>
-                                            <td><input type="radio" style="height:25px; width:25px;"></td>
-                                            <td>3</td>
-                                            <td>Product 1</td>
-                                            <td>ZY2332</td>
-                                            <td><input type="text" class="form-control" style="width:100px"></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                      <a routerLink="/dms/bookings/opportunity" routerLinkActive="router-link-active"  class="btn btn-sm btn-primary create-button" style="padding: 5px 20px ; margin-bottom: 10px ;"><i class="fa fa-plus"></i> Proceed</a>
-                    </div>
-                  </div>
-                </div>
-              </div><!--/.row-->
-            </div>  
+            <!-- bookings list can show here -->
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="text-center">Booking No</th>
+                  <th class="text-center">Request Date</th>
+                  <th class="text-center">Requester</th>
+                  <th class="text-center">SKU</th>
+                  <th class="text-center">Customer</th>
+                  <th class="text-center">Booking Reason</th>
+                  <th class="text-center">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="p-selectable-row" *ngFor="let bookingItem of bookingList">
+                  <td class="text-center">
+                      <a routerLink="/dms/bookings/{{ bookingItem.id }}" routerLinkActive="router-link-active">{{ bookingItem.booking_no ? bookingItem.booking_no : 'Draft' }}</a>
+                  </td>
+                  <td class="text-center">
+                      {{ bookingItem.request_date }}
+                  </td>
+                  <td class="text-center">
+                      {{ bookingItem.requester }}
+                  </td>
+                  <td class="text-center">
+                      {{ bookingItem.sku }}
+                  </td>
+                  <td class="text-center">
+                      {{ bookingItem.customer }}
+                  </td>
+                  <td class="text-center">
+                      {{ 
+                        bookingReasonsNames[bookingItem.booking_reason - 1] ? bookingReasonsNames[bookingItem.booking_reason - 1] : 'Null'
+                      }}
+                  </td>
+                  <td class="text-center">
+                    {{
+                      bookingStatusNames[bookingItem.status - 1] ? bookingStatusNames[bookingItem.status - 1] : 'Null'
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- jfwefjjw  -->
+          </div> 
         </div>
-        <div class="d-flex justify-content-center" *ngIf="!show">
-          <button type="button" class="btn btn-sm btn-primary create-button" (click)="onShow()">create booking request</button>
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn btn-sm btn-primary create-button" (click)="navToBooking($event)">create booking request</button>
         </div>
       </p-accordionTab>
     </p-accordion>

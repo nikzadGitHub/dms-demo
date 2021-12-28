@@ -13,8 +13,9 @@ export class BookingsComponent implements OnInit {
   @ViewChild("dangerModal") dangerModal: ModalDirective;
 
   bookingList: BookingList;
-	paginate: [];
-	pageItems: number = 10;
+	totalRecords:number;
+  pageItems: number = 10;
+  pages: any[];
 	search_text: string = '';
 	icons = [];
   id="#"
@@ -47,10 +48,13 @@ export class BookingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.api.getList().subscribe((response) => {
-      if (response as BookingList) {
-        this.bookingList = response;
-      }
+    this.api.getList(1, this.pageItems).subscribe((response) => {
+      console.log(response);
+      // if (response as BookingList) {
+      //   this.bookingList = response;
+      // }
+      this.bookingList = response['data'];
+      this.totalRecords = response['total_rows'];
       this.loading=false;
     }, err => {
       this.loading = false;
@@ -64,10 +68,12 @@ export class BookingsComponent implements OnInit {
     }
     this.searchTimerId = window.setTimeout(() => {
       console.log('once runs');
-      this.api.getListSearch(this.search_text).subscribe((response) => {
-        if (response as BookingList) {
-          this.bookingList = response;
-        }
+      this.api.getListSearch(this.search_text, 1, this.pageItems).subscribe((response) => {
+        // if (response as BookingList) {
+        //   this.bookingList = response;
+        // }
+        this.bookingList = response['data'];
+        this.totalRecords = response['total_rows'];
       })
     },1000)
   }
@@ -86,4 +92,19 @@ export class BookingsComponent implements OnInit {
     });
     return false;
   }
+
+  paginate(event){
+    this.pageItems = event.rows;
+    this.onPageClick(parseInt(event.page) + 1);
+  }
+
+  onPageClick(pageNo){
+    this.api.getListSearch(this.search_text, pageNo, this.pageItems)
+    .subscribe((data)=>{
+      this.bookingList = data['data'];
+      this.totalRecords = data['total_rows'];
+    })  
+  }
+
+
 }
