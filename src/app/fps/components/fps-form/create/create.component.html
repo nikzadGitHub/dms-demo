@@ -129,7 +129,7 @@
                             </label>
                             <div class="col-md-4">                                
                                 <p-dropdown formControlName="fps_tenure_id" id="fps_tenure_id" [options]="tenure_list" optionLabel="details_tenure"
-                                    optionValue="id" styleClass="form-control" (onChange)="updateInterestRate()">
+                                    optionValue="id" styleClass="form-control" (onChange)="updateInterestRate()" > 
                                 </p-dropdown>
                                 <app-form-error-presentation [displayError]="isFieldValid('fps_tenure_id')" errorMsg="Tenure is required.">
                                 </app-form-error-presentation>
@@ -143,7 +143,7 @@
                             <div class="col-md-4">
                                 <p-dropdown formControlName="fps_financier_id" id="fps_financier_id" [options]="institutions_list"  optionLabel="title"
                                     optionValue="id" styleClass="form-control" (onChange)="updateTenure()"
-                                    placeholder="Select Institution" emptyMessage="No Institution Available">
+                                    emptyMessage="No Institution Available">
                                 </p-dropdown>
                                 <app-form-error-presentation [displayError]="isFieldValid('fps_financier_id')" errorMsg="Financial Instititue is required.">
                                 </app-form-error-presentation>
@@ -208,7 +208,9 @@
                                     </label>
                                     <div class="col-md-8">
                                         <!-- percentage field -->
-                                        <input type="number" formControlName="fps_adv_payment"  class="form-control">
+                                        <input type="number" formControlName="fps_adv_payment" id="fps_adv_payment" class="form-control">
+                                        <app-form-error-presentation [displayError]="isFieldValid('fps_adv_payment')" errorMsg="Advance Pyament can't be less than Minimum payment.">
+                                        </app-form-error-presentation>
                                     </div>
                                 </div>
     
@@ -341,10 +343,8 @@
                                                     <input formControlName="updated_on" class="form-control" type="date">
                                                 </td>
                                                 <td class="td-actions" style="width: 10%;">
-                                                    <a [routerLink]="" routerLinkActive="router-link-active"><i
-                                                            class="fa fa-edit"></i></a> &nbsp;
-                                                    <a [routerLink]="" (click)="removeAddMinProcedure(i)"
-                                                        routerLinkActive="router-link-active"><i class="fa fa-trash"></i></a>
+                                                    <i class="fa fa-edit"></i> &nbsp;
+                                                    <i class="fa fa-trash" (click)="removeAddMinProcedure(i)"></i>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -433,21 +433,13 @@
                 
                     <div class="col-sm-12 col-md-12 form-group">
                         <div class="custom-footer d-flex justify-content-center">
-                            <!-- <button type="button" (click)="cancelSkuForm()" class="btn btn-sm btn-light"> CANCEL</button> -->
+                            <button type="button" class="btn btn-light"> Submit for Approval</button>
+                            <button type="button" class="btn btn-light"> Standard Library</button>
+                            <button type="button" class="btn btn-sm btn-light"> CANCEL</button>
                             <button type="submit" form="fpsAddForm" class="btn btn-sm btn-primary">Save</button>
                         </div>
                     </div>
-
                 </div>
-            </div>
-
-            <br>
-    
-            <div class="col-sm-12 col-md-12 form-group">
-                <h3>File Library</h3>
-                <!-- Here the fps list related to current opportunity is displayed -->
-                <!-- <app-fps-list></app-fps-list> -->
-                <p>Work on this section will be done later</p>
             </div>
 
         </div>

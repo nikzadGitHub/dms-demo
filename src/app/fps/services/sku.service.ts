@@ -58,10 +58,6 @@ export class SkuService implements SkuInterface {
     return this.apiClient.post('rateDetails/store', data);
   }
 
-  checksumRates(data: any): Observable<SaveResult> {
-    return this.apiClient.post('rate/checksum', data);
-  }
-
   find(id): Observable<any> {
     return this.httpClient.get(this.apiURL + '/sku-details/' + id).pipe()
   }

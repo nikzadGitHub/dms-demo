@@ -152,4 +152,12 @@ export class SalesTargetSetupService {
     }
     return throwError(errorMessage);
   }
+  getDimensionDiscription(countryCode,level): Observable<any> {
+    let query = '/sales-target/dimension-description/' + countryCode +"/" + level;
+
+    return this.httpClient.get<any[]>(this.apiURL + query,this.httpOptions)
+      .pipe(
+        catchError(this.errorHandler)
+    );
+  }
 }

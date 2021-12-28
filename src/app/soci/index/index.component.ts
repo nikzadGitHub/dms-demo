@@ -27,7 +27,7 @@ export class IndexComponent implements OnInit {
   private ngUnsubscribe = new Subject();
   sort: any;
   search_text: string = "";
-  pageItems: number = 25;
+  pageItems: number = 10;
   totalRecords: number;
   datasource: any;
   pages: any[];
@@ -41,50 +41,57 @@ export class IndexComponent implements OnInit {
   sociStatus: any;
   badgeColor = "";
   selectedValues: any[] = [];
+  dash = "_";
+  zero = 0;
   columnValue = [
-    { name: "Created date:", key: "c_date" },
-    { name: "SOCI ID:", key: "soci_id" },
-    { name: "Company Name:", key: "company_name" },
-    { name: "Quotation ID:", key: "quote_full_id" },
-    { name: "Quotation Date:", key: "quote_date" },
-    { name: "Amount:", key: "po_amount" },
-    { name: "PO No:", key: "po_no" },
-    { name: "PO Date:", key: "po_date" },
-    { name: "FO Number:", key: "fo_order_number" },
-    { name: "Status:", key: "status_desc" },
+    { name: "Created date", key: "c_date" },
+    { name: "SOCI ID", key: "soci_id" },
+    { name: "Quotation ID", key: "quote_full_id" },
+    { name: "Status", key: "status_desc" },
+    { name: "Customer PO Amount", key: "po_amount" },
+    { name: "Customer PO No", key: "po_no" },
+    { name: "FO Status", key: "backend_status" },
+    { name: "FO Number", key: "fo_order_number" },
+    { name: "Country", key: "country" },
+    { name: "Unit", key: "unit" },
+    { name: "Individual/Company Name", key: "company_name" },
+    { name: "Quotation Date", key: "quote_date" },
+    { name: "Customer PO Date", key: "po_date" },
+    { name: "OPC", key: "opc" },
   ];
   isTooltipSown: any = "";
   sociDate: any;
-  loading:boolean
+  loading: boolean;
 
   constructor(public sociService: SociService, private router: Router) {}
 
-  ngOnInit(): void { 
-    this.loading = true 
+  ngOnInit(): void {
+    this.loading = true;
     this.sociService
-      .getAll(this.pageItems, this.search_text, this.sort) 
-      .subscribe((data) => {
-
-        data["data"]["soci"]["data"].forEach((value) => {
-          value.created_at = new Date(value.created_at);
-          if (value.po_date != null) {
-            value.po_date = new Date(value.po_date);
-          }
-          if(value.quote_date != null){
-            value.quote_date = new Date(value.quote_date)
-          }
-        });
-        this.socis = data["data"]["soci"]["data"];
-        this.pages = data["data"]["soci"]["links"];
-        this.totalRecords = data["data"]["soci"]["total"];
-        this.checkPermission();
-        this.loading = false 
-
-      },error => {
+      .getAll(this.pageItems, this.search_text, this.sort)
+      .subscribe(
+        (data) => {
+          data["data"]["soci"]["data"].forEach((value) => {
+            value.created_at = new Date(value.created_at);
+            if (value.po_date != null) {
+              value.po_date = new Date(value.po_date);
+            }
+            if (value.quote_date != null) {
+              value.quote_date = new Date(value.quote_date);
+            }
+          });
+          this.socis = data["data"]["soci"]["data"];
+          this.pages = data["data"]["soci"]["links"];
+          this.totalRecords = data["data"]["soci"]["total"];
+          this.checkPermission();
           this.loading = false;
-        });
+        },
+        (error) => {
+          this.loading = false;
+        }
+      );
     setTimeout(() => {
-      this.selectedValues = this.columnValue.slice(0, 10);
+      this.selectedValues = this.columnValue.slice(1, 8);
     }, 1000);
   }
 
@@ -95,9 +102,9 @@ export class IndexComponent implements OnInit {
       .subscribe((data) => {
         this.socis = data["data"]["soci"]["data"];
         this.totalRecords = data["data"]["soci"]["total"];
-      //   this.loading=false
-      // },error => {
-      //   this.loading = false;
+        //   this.loading=false
+        // },error => {
+        //   this.loading = false;
       });
   }
   addPo(check) {
@@ -157,20 +164,41 @@ export class IndexComponent implements OnInit {
     let exportArr: Array<any> = [];
     for (let i = 0; i < dupArr.length; i++) {
       let compObj: any = {};
-      compObj.created_at = dupArr[i].created_at;
-      compObj.company_name = dupArr[i].customer.company_name
+      compObj.Created_at = dupArr[i].created_at
+        ? dupArr[i].created_at
+        : this.dash;
+      compObj.Company_name = dupArr[i].customer?.company_name
         ? dupArr[i].customer.company_name
-        : "";
-      compObj.soci_id = dupArr[i].soci_id;
-      compObj.quote_full_id = dupArr[i].quote_full_id;
-      compObj.quote_date = dupArr[i].quote_date;
-      compObj.amount = dupArr[i].po_amount ? dupArr[i].po_amount : 0;
-      compObj.po_no = dupArr[i].po_no;
-      compObj.po_date = dupArr[i].po_date;
-      compObj.fo_order_number = dupArr[i].fo_order_number;
+        : "_";
+      compObj.Soci_id = dupArr[i].soci_id ? dupArr[i].soci_id : this.dash;
+      compObj.Quote_full_id = dupArr[i].quote_full_id
+        ? dupArr[i].quote_full_id
+        : this.dash;
+      compObj.Quote_date = dupArr[i].quote_date
+        ? dupArr[i].quote_date
+        : this.dash;
+      compObj.Customer_PO_Amount = dupArr[i].po_amount
+        ? dupArr[i].po_amount
+        : 0;
+      compObj.Customer_PO_No = dupArr[i].po_no ? dupArr[i].po_no : this.dash;
+      compObj.Customer_PO_Date = dupArr[i].po_date
+        ? dupArr[i].po_date
+        : this.dash;
+      compObj.Fo_order_number = dupArr[i].fo_order_number
+        ? dupArr[i].fo_order_number
+        : this.dash;
+      compObj.Backend_status = dupArr[i].backend_status
+        ? dupArr[i].backend_status
+        : this.dash;
+      compObj.Country = dupArr[i].country ? dupArr[i].country : this.dash;
+      compObj.Unit = dupArr[i].unit ? dupArr[i].unit : this.dash;
+      compObj.Opc = dupArr[i].opc ? dupArr[i].opc : this.dash;
+      compObj.Status = dupArr[i].status_desc
+        ? dupArr[i].status_desc
+        : this.dash;
       exportArr.push(compObj);
     }
-    const fileName = "SOCI_Listing.xlsx";
+    const fileName = "SOCI_List.xlsx";
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportArr);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "test");

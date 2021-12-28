@@ -247,6 +247,11 @@ td {
   cursor: pointer;
 }
 
+.custom-footer .btn {
+  width: fit-content;
+  padding: 0 25px;
+}
+
 @media screen and (max-width: 960px) {
   :host ::ng-deep {
       .p-datatable {

@@ -76,7 +76,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-2">
+                        <!-- <div class="row mb-2">
                             <div class="col-6">
                                 <div class="row">
                                     <div class="col-3 mt-2">
@@ -105,7 +105,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row mb-2">
                             <div class="col-6">
                                 <div class="row">
@@ -128,11 +128,169 @@
                             <h5 class="mr-2">
                                 <label><b>Dimensions</b></label>
                             </h5>
-                            <button class="btn btn-icon btn-outline-primary" type="button"
-                                (click)="onAddDimensionRow()"><i class="cil-plus c-icon"></i>
+                            <button class="btn btn-icon btn-outline-primary" type="button" (click)="onAddDimensionRow()"><i class="cil-plus c-icon"></i>
                             </button>
                         </div>
-                        <div class="row mb-2" *ngFor="let a of dimensionRow; let i=index">
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="level1">
+                                            Level
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                      <p-dropdown id="level1" name="dimensionLevel1" placeholder="Select Level"
+                                          [showClear]="true" [style]="{ width: '100%' }"
+                                          [options]="levelArr" optionLabel="name" optionValue="code"
+                                          [(ngModel)]="dimensionLevelArr[0]"
+                                          (onChange)="onLevelChange(data.country_code,dimensionLevelArr[0])">
+                                      </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="Desc1">
+                                            Description
+                                        </label>
+                                    </div>
+                                    <div class="col-9">
+                                      <p-dropdown id="desc1" name="dimensionDesc1" placeholder="Select Description"
+                                          [showClear]="true" [style]="{ width: '100%' }"
+                                          [options]="dimension_disc" optionLabel="name" optionValue="code"
+                                          [(ngModel)]="dimensionDescArr[0]">
+                                      </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2" [hidden]="rowCount < 2">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="level2"></label>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown id="level2" name="dimensionLevel2" placeholder="Select Level"
+                                            [showClear]="true" [style]="{ width: '100%' }"
+                                            [options]="levelArr" optionLabel="name" optionValue="code"
+                                            [(ngModel)]="dimensionLevelArr[1]"
+                                            (onChange)="onLevelChange(data.country_code,dimensionLevelArr[1])">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="Desc2"></label>
+                                    </div>
+                                    <div class="col-9">
+                                      <p-dropdown id="desc2" name="dimensionDesc2" placeholder="Select Description"
+                                          [showClear]="true" [style]="{ width: '100%' }"
+                                          [options]="dimension_disc" optionLabel="name" optionValue="code"
+                                          [(ngModel)]="dimensionDescArr[1]">
+                                      </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2" [hidden]="rowCount < 3">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="level3"></label>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown id="level3" name="dimensionLevel3" placeholder="Select Level"
+                                            [showClear]="true" [style]="{ width: '100%' }"
+                                            [options]="levelArr" optionLabel="name" optionValue="code"
+                                            [(ngModel)]="dimensionLevelArr[2]"
+                                            (onChange)="onLevelChange(data.country_code,dimensionLevelArr[2])">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="Desc3"></label>
+                                    </div>
+                                    <div class="col-9">
+                                      <p-dropdown id="desc3" name="dimensionDesc3" placeholder="Select Description"
+                                          [showClear]="true" [style]="{ width: '100%' }"
+                                          [options]="dimension_disc" optionLabel="name" optionValue="code"
+                                          [(ngModel)]="dimensionDescArr[2]">
+                                      </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2" [hidden]="rowCount < 4">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="level4"></label>
+                                    </div>
+                                    <div class="col-9">
+                                        <p-dropdown id="level4" name="dimensionLevel4" placeholder="Select Level"
+                                            [showClear]="true" [style]="{ width: '100%' }"
+                                            [options]="levelArr" optionLabel="name" optionValue="code"
+                                            [(ngModel)]="dimensionLevelArr[3]"
+                                            (onChange)="onLevelChange(data.country_code,dimensionLevelArr[3])">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-3 mt-2">
+                                        <label for="Desc4"></label>
+                                    </div>
+                                    <div class="col-9">
+                                      <p-dropdown id="desc4" name="dimensionDesc4" placeholder="Select Description"
+                                          [showClear]="true" [style]="{ width: '100%' }"
+                                          [options]="dimension_disc" optionLabel="name" optionValue="code"
+                                          [(ngModel)]="dimensionDescArr[3]">
+                                      </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      <div class="row mb-2" [hidden]="rowCount < 5">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-3 mt-2">
+                                    <label for="level5"></label>
+                                </div>
+                                <div class="col-9">
+                                    <p-dropdown id="level5" name="dimensionLevel5" placeholder="Select Level"
+                                        [showClear]="true" [style]="{ width: '100%' }"
+                                        [options]="levelArr" optionLabel="name" optionValue="code"
+                                        [(ngModel)]="dimensionLevelArr[4]"
+                                        (onChange)="onLevelChange(data.country_code,dimensionLevelArr[4])">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-3 mt-2">
+                                    <label for="Desc5"></label>
+                                </div>
+                                <div class="col-9">
+                                  <p-dropdown id="desc5" name="dimensionDesc5" placeholder="Select Description"
+                                      [showClear]="true" [style]="{ width: '100%' }"
+                                      [options]="dimension_disc" optionLabel="name" optionValue="code"
+                                      [(ngModel)]="dimensionDescArr[4]">
+                                  </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <!--<div class="row mb-2" *ngFor="let a of dimensionRow; let i=index">
                             <div class="col-6">
                                 <div class="row">
                                     <div class="col-3 mt-2">
@@ -145,7 +303,7 @@
                                             [showClear]="true" [style]="{ width: '100%' }"
                                             [options]="levelArr" optionLabel="name" optionValue="code"
                                             [(ngModel)]="dimensionLevelArr[i]" [dataKey]="dimensionLevelArr[i]"
-                                            (onChange)="onLevelChanges(dimensionLevelArr[i], data.country_code)">
+                                            (onChange)="onLevelChanged(dimensionLevelArr[i], data.country_code)">
                                         </p-dropdown>
                                     </div>
                                 </div>
@@ -166,7 +324,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="card-row m-4">
                           <div class="row mt-5 mb-2">

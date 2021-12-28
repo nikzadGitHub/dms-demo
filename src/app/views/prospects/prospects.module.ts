@@ -10,12 +10,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ProspectCreateComponent } from './prospect-create/prospect-create.component';
 
 
 @NgModule({
   declarations: [
     ProspectsEditComponent,
-    ProspectsIndexComponent
+    ProspectsIndexComponent,
+    ProspectCreateComponent
   ],
   imports: [
     CommonModule,
