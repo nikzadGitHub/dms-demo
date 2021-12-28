@@ -270,4 +270,8 @@ export class FormComponent implements OnInit{
       this.duration = Days;
     }
   }
+
+  changePercentage(e) {
+    // do nothing just for resolving err
+  }
 }

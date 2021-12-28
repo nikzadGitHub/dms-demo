@@ -2,8 +2,7 @@
   "name": "idsmed-frontend",
   "version": "1.0.0",
   "description": "idsMED Web Frontend",
-  "contributors": [
-  ],
+  "contributors": [],
   "homepage": "https://gitlab.com/websight-idsmed/web/idsmed-sales-funnel-web-frontend",
   "license": "MIT",
   "scripts": {

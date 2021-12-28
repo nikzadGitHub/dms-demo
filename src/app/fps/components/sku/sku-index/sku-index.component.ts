@@ -75,7 +75,7 @@ export class SkuIndexComponent implements OnInit {
 
   fpsTypeList = this.fpsService.getTransSactionTypeList();
 
-  getAll(){}
+
   showFPSType(key) {
     return this.fpsTypeList.find(typeItem => typeItem.id == key).title; 
   }
@@ -113,5 +113,9 @@ export class SkuIndexComponent implements OnInit {
         this.dialogService.showErrorDialog("Payment Method Can't be Updated!<br>" + error );
       }
     });   
+  }
+
+  getAll() {
+    // created for resloving error => getAll' does not exist on type 'SkuIndexComponent
   }
 }

@@ -19,6 +19,7 @@ export class OpportunityBookingComponent implements OnInit{
   bookingList: BookingList;
   show: boolean = false;
   alertBody: string;
+  
 
   bookingReasonsNames = [
     'event',
@@ -55,6 +56,14 @@ export class OpportunityBookingComponent implements OnInit{
       }, err => {
         console.log('error in loading bookings list');
       });
+    }
+  }
+
+  toNumber(str: string):number {
+    try {
+      return Number(str);
+    } catch (e) {
+      return 0
     }
   }
 

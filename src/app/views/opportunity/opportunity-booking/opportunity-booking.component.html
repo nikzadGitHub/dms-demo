@@ -40,12 +40,12 @@
                   </td>
                   <td class="text-center">
                       {{ 
-                        bookingReasonsNames[bookingItem.booking_reason - 1] ? bookingReasonsNames[bookingItem.booking_reason - 1] : 'Null'
+                        bookingReasonsNames[toNumber(bookingItem.booking_reason) - 1] ? bookingReasonsNames[toNumber(bookingItem.booking_reason) - 1] : 'Null'
                       }}
                   </td>
                   <td class="text-center">
                     {{
-                      bookingStatusNames[bookingItem.status - 1] ? bookingStatusNames[bookingItem.status - 1] : 'Null'
+                      bookingStatusNames[toNumber(bookingItem.status) - 1] ? bookingStatusNames[toNumber(bookingItem.status) - 1] : 'Null'
                     }}
                   </td>
                 </tr>

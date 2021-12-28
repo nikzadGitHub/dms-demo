@@ -1,11 +1,19 @@
 import {
   Component, OnInit,
-  Input, Output, EventEmitter
+  Input, Output, EventEmitter , ViewChild
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApprovalList } from '../../../services/booking-entity';
+import { MainAsset } from '../../../services/asset-entity';
 import { BookingEntityService } from '../../../services/booking-entity.service';
 import {BookingStatus, statusToText} from '../../../services/booking-status.enum';
+import { ApiClient } from '../../../services/api-client.service';
+import { ModalDirective } from "ngx-bootstrap/modal";
+
+interface SubmitEvent {
+  preventDefault: () => void;
+  target: HTMLFormElement; 
+}
 
 export interface Button {
   title: string;
@@ -24,21 +32,29 @@ export class ButtonEvent {
   styleUrls: ['./booking-approval.component.scss']
 })
 export class BookingApprovalComponent implements OnInit {
-  _status = BookingStatus.unknown;
+  public _status:string = BookingStatus.unknown;
   private _bookingReason: any;
 
+  alertBody: string;
+  alertHeader: string;
   statusText: string = 'Unknown';
   isConfirmed: boolean = false;
   show_decline: boolean = false;
   buttons: Button[] = [];
   is_demo: boolean = false;
 
+  @ViewChild("successModal") successModal: ModalDirective;
+  @ViewChild("dangerModal") dangerModal: ModalDirective;
+
   @Input() list: ApprovalList = [];
+  @Input() mainAsset: MainAsset;
+  @Input() bookingId;
   @Input() access: boolean = false;
   @Output() buttonAction = new EventEmitter<ButtonEvent>();
 
   constructor(
     private api: BookingEntityService,
+    private apiClient: ApiClient,
     private route: ActivatedRoute,
     private router: Router, 
   ) {}
@@ -124,5 +140,31 @@ export class BookingApprovalComponent implements OnInit {
   }
   onClose(){
     this.show_decline = false;
+  }
+
+  handleTO(e: SubmitEvent){
+    e.preventDefault();
+    var FData = new FormData(e.target);
+    this.apiClient.post(`booking/transfer-order`,{
+      booking_id: this.bookingId+'',
+      warehouse: FData.get('warehouse'),
+      fromDepartment: FData.get('from-department'),
+      toDepartment: FData.get('to-department')
+    }).subscribe(res => {
+      this.alertBody = "Transaction Order saved successfuly !";
+      this.successModal.show();
+      setTimeout(() => {
+        this.successModal.hide();
+      }, 2000);
+      window.location.reload();
+    },err => {
+      this.alertBody = "Connot save Transaction Order !";
+      this.dangerModal.show();
+      setTimeout(() => {
+        this.dangerModal.hide();
+      }, 2000);
+      console.error('Error from TO:',err);
+    })
+
   }
 }

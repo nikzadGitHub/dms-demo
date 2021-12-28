@@ -9,6 +9,7 @@ import { AppService } from "./app.service";
   providers: [AppService],
 })
 export class ListOpportunityComponent implements OnInit {
+  columns = [6];
   private ngUnsubscribe = new Subject();
   loading: boolean;
   opportunities: [];

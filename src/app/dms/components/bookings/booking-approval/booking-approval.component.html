@@ -33,70 +33,78 @@
         <div class="col-md-8">
           <div *ngIf="isConfirmed" class="animated fadeIn card">
             <div class="card-body">
-              <div class="row">
-                <div class="col-md-5">
-                  Main Asset Serial No
-                </div>
-                <div class="col-md-7">
-                  2
-                </div>
-              </div>
-              <br>
-              <div class="row">
-                <label class="col-md-5" for="warehouse_from">
-                  From Warehouse
-                </label>
-                <div class="col-md-7">
-                  <input id="warehouse_from" type="text"
-                         class="form-control"/>
-                </div>
-              </div>
-              <br>
-              <div class="row">
-                <label class="col-md-5" for="ward_from">
-                  From Ward/ Department
-                </label>
-                <div class="col-md-7">
-                  <input id="ward_from" type="text"
-                         class="form-control"/>
-                </div>
-              </div>
-              <br>
-              <div class="row">
-                <label class="col-md-5" for="destination">
-                  To Ward / Department
-                </label>
-                <div class="col-md-7">
-                  <input id="destination" type="text"
-                         class="form-control"/>
-                </div>
-              </div>
-              <br>
-              <div class="row">
-                <div class="col-2"></div>
-                <div class="col-10">
-                  <div class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary mr-3">SUBMIT</button>
-                    <br>
-                    <button type="button" class="btn btn-primary">CANCEL</button>
+              <form method="get" (submit)="handleTO($event)">
+                <input type="hidden" name="token" value="asdas">
+                <div class="row">
+                  <div class="col-md-5">
+                    Main Asset Serial No
+                  </div>
+                  <div class="col-md-7">
+                    {{mainAsset.main[0].serial_no ? mainAsset.main[0].serial_no : "NULL"}}
+                  </div>
+                  <div class="col-md-5">
+                    Main Asset Name
+                  </div>
+                  <div class="col-md-7">
+                    {{mainAsset.main[0].name ? mainAsset.main[0].name : 'NULL' }}
                   </div>
                 </div>
-              </div>
+                <br>
+                <div class="row">
+                  <label class="col-md-5" for="warehouse_from">
+                    From Warehouse
+                  </label>
+                  <div class="col-md-7">
+                    <input id="warehouse_from" type="text" name="warehouse"
+                           class="form-control"/>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <label class="col-md-5" for="ward_from">
+                    From Ward/ Department
+                  </label>
+                  <div class="col-md-7">
+                    <input id="ward_from" type="text" name="from-department"
+                           class="form-control"/>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <label class="col-md-5" for="destination">
+                    To Ward / Department
+                  </label>
+                  <div class="col-md-7">
+                    <input id="destination" type="text" name="to-department"
+                           class="form-control"/>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-2"></div>
+                  <div class="col-10">
+                    <div class="d-flex justify-content-center">
+                      <button type="submit" class="btn btn-primary mr-3">SUBMIT</button>
+                      <br>
+                      <button type="button" class="btn btn-primary">CANCEL</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
           <ng-content></ng-content>
         </div>
       </div>
       <br>
-<!--       
-      <div class="d-flex justify-content-center" *ngIf="access && !show_decline && _status != 2; else checkDemoApprove">
+      <div class="d-flex justify-content-center" *ngIf="access && !show_decline && _status != '2'; else checkDemoApprove">
         <div *ngFor="let button of buttons; let i=index" class="pr-2">
           <button type="submit" class="btn btn-md btn-primary"
                   (click)="onButtonClick(button.status)">{{ button.title | uppercase }}</button>
         </div>
       </div>
       <ng-template #checkDemoApprove>
-        <div class="d-flex justify-content-center" *ngIf="access && is_demo && _status == 2">
+        <div class="d-flex justify-content-center" *ngIf="access && is_demo && _status == '2'">
           <div class="pr-2">
             <button type="submit" class="btn btn-md btn-primary" (click)="onButtonClick(9)">
               Approve
@@ -106,7 +114,7 @@
             </button>
           </div>
         </div>
-        <div class="d-flex justify-content-center" *ngIf="access && !is_demo && _status == 2">
+        <div class="d-flex justify-content-center" *ngIf="access && !is_demo && _status == '2'">
           <div *ngFor="let button of buttons; let i=index" class="pr-2">
             <button type="submit" class="btn btn-md btn-primary"
                     (click)="onButtonClick(button.status)">{{ button.title | uppercase }}</button>
@@ -122,3 +130,46 @@
     </div>
   </div>
 </dms-expand-panel>
+
+<div
+    id="success"
+    bsModal
+    #successModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Success</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{ alertBody }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+  >
+
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header"><h4 class="modal-title">Error</h4></div>
+      <div class="modal-body"><p>{{ alertBody }}</p></div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+
+</div>

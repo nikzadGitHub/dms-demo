@@ -856,6 +856,14 @@ export class EditOpportunityComponent implements OnInit {
       });
   }
 
+  toNumber(str: string):number {
+    try {
+      return Number(str);
+    } catch (e) {
+      return 0
+    }
+  }
+
   increaseProductQuantity() {
     this.productQuantity++;
   }

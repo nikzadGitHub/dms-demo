@@ -155,7 +155,7 @@ export class SkuEditComponent implements OnInit {
 
     this.setConditionalValidators();
   }
-  cancelSkuForm() {}
+
   setConditionalValidators() {
     const interest_rate = this.skuEditForm.get("interest_rate");
 
@@ -479,4 +479,8 @@ export class SkuEditComponent implements OnInit {
     );
   }
   //---------------- End of  SKU Rate Details -------------------
+
+  cancelSkuForm(){
+    // this function created for resloveing error => Property 'cancelSkuForm' does not exist on type 'SkuEditComponent
+  }
 }

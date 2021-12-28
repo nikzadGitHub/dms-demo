@@ -9,8 +9,8 @@ import { Input } from '@angular/core';
 })
 export class StatusLogComponent implements OnInit{
   
-  @Input() bookingId;
-  private logs:[]|null = [];
+  @Input() bookingId: BigInt;
+  public logs:[]|null = [];
 
   constructor(
     private apiClient: ApiClient
@@ -19,7 +19,7 @@ export class StatusLogComponent implements OnInit{
     this.getLogs()
   }
 
-  async getLogs()  {
+  getLogs()  {
     this.apiClient.get<[]>(`booking/logs/${this.bookingId}`).subscribe(res => {
       this.logs = res;
     })
