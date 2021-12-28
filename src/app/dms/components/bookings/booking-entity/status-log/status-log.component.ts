@@ -9,13 +9,8 @@ import { Input } from '@angular/core';
 })
 export class StatusLogComponent implements OnInit{
   
-<<<<<<< HEAD
   @Input() bookingId: BigInt;
-  private logs:[]|null = [];
-=======
-  @Input() bookingId;
   public logs:[]|null = [];
->>>>>>> development
 
   constructor(
     private apiClient: ApiClient
