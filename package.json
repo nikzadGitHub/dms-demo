@@ -8,7 +8,7 @@
   "scripts": {
     "ng": "ng",
     "postinstall": "ngcc --properties es2015 browser module main --first-only",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build --prod --aot --build-optimizer --common-chunk --vendor-chunk --optimization --progress",
     "build-dev": "ng build --configuration dev --aot --build-optimizer --common-chunk --vendor-chunk --optimization --progress",
     "build-idsmeduat": "ng build --configuration idsmeduat --aot --build-optimizer --common-chunk --vendor-chunk --optimization --progress",
